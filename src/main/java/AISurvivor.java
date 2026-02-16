@@ -96,7 +96,7 @@ public class AISurvivor extends Bot {
      */
     private static final class TargetingWave {
         double   originX, originY;   // our position when we fired
-        double   directAngle;        // absolute angle from origin to enemy at fire time
+        double   baseAngle;          // predicted bearing from origin (linear prediction at fire time)
         double   bulletSpeed;
         int      fireTurn;
         int      targetId;
@@ -117,6 +117,12 @@ public class AISurvivor extends Bot {
 
     // Active targeting waves
     private final List<TargetingWave> targetingWaves = new ArrayList<>();
+
+    // Enemy bullets visible this tick (for bullet-aware dodging)
+    private final List<BulletState> incomingBullets = new ArrayList<>();
+
+    // Radar lock
+    private int radarTargetId = -1;
 
     // Q-Learning
     private double[][] qTable;
@@ -176,9 +182,22 @@ public class AISurvivor extends Bot {
     public void onRoundStarted(RoundStartedEvent e) {
         enemies.clear();
         targetingWaves.clear();
+        incomingBullets.clear();
         pendingReward = 0.0;
         prevState = prevAction = -1;
         dodgeSign = 1;
+        radarTargetId = -1;
+    }
+
+    @Override
+    public void onTick(TickEvent e) {
+        // Collect bullets owned by known enemies for threat-aware dodging
+        incomingBullets.clear();
+        for (BulletState b : e.getBulletStates()) {
+            if (enemies.containsKey(b.getOwnerId())) {
+                incomingBullets.add(b);
+            }
+        }
     }
 
     @Override
@@ -218,13 +237,15 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
-        pendingReward -= bulletDamage(e.getBullet().getPower()) * 0.8;
+        // Use actual damage from event (more accurate than power formula)
+        pendingReward -= e.getDamage() * 0.8;
         dodgeSign = -dodgeSign;
     }
 
     @Override
     public void onBulletHit(BulletHitBotEvent e) {
-        pendingReward += bulletDamage(e.getBullet().getPower()) * 0.6;
+        // Use actual damage from event
+        pendingReward += e.getDamage() * 0.6;
         if (e.getEnergy() <= 0) {
             enemies.remove(e.getVictimId());
             pendingReward += 30.0;
@@ -235,6 +256,7 @@ public class AISurvivor extends Bot {
     public void onBotDeath(BotDeathEvent e) {
         enemies.remove(e.getVictimId());
         pendingReward += 15.0;
+        if (e.getVictimId() == radarTargetId) radarTargetId = -1;
     }
 
     @Override
@@ -253,7 +275,8 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onHitBot(HitBotEvent e) {
-        pendingReward -= 1.5;
+        // Smaller penalty if we rammed them (aggressive), larger if they rammed us
+        pendingReward -= e.isRammed() ? 0.5 : 2.0;
         dodgeSign = -dodgeSign;
     }
 
@@ -279,10 +302,13 @@ public class AISurvivor extends Bot {
             double dist = Math.sqrt(sq(t.x - w.originX) + sq(t.y - w.originY));
             if (traveled < dist - w.bulletSpeed) continue; // not there yet
 
-            // Wave has reached (or passed) the enemy — record actual GF
+            // Wave has reached (or passed) the enemy — record actual GF.
+            // Deviation is measured from the linear-prediction base angle so that
+            // GF=0 means "enemy was exactly where we predicted" and the bins
+            // learn only the residual correction needed on top of linear lead.
             double absAngle  = Math.toDegrees(
                     Math.atan2(t.x - w.originX, t.y - w.originY));
-            double latAngle  = normalizeAngle(absAngle - w.directAngle) * w.lateralDir;
+            double latAngle  = normalizeAngle(absAngle - w.baseAngle) * w.lateralDir;
             double maxAngle  = Math.toDegrees(
                     Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
             double gf        = clamp(latAngle / maxAngle, -1.0, 1.0);
@@ -317,20 +343,22 @@ public class AISurvivor extends Bot {
             }
         }
 
-        // Convert best bin → aim angle offset
-        double gf          = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
-        double maxAngle    = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / bspd)));
-        double latDir      = Math.signum(t.lateralVelocity);
+        double gf       = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
+        double maxAngle = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / bspd)));
+        double latDir   = Math.signum(t.lateralVelocity);
         if (latDir == 0) latDir = 1;
 
-        // Base the aim on a linear prediction of where the enemy will be
-        double ticks = dist / bspd;
-        double predX = clamp(t.x + Math.sin(Math.toRadians(t.direction)) * t.speed * ticks,
+        // Linear prediction: where the enemy will be when the bullet arrives.
+        // This is the base angle — GF=0 means "enemy was at the predicted spot",
+        // and the bins learn only the residual correction on top of that lead.
+        double ticks    = dist / bspd;
+        double predX    = clamp(t.x + Math.sin(Math.toRadians(t.direction)) * t.speed * ticks,
                 18, getArenaWidth()  - 18);
-        double predY = clamp(t.y + Math.cos(Math.toRadians(t.direction)) * t.speed * ticks,
+        double predY    = clamp(t.y + Math.cos(Math.toRadians(t.direction)) * t.speed * ticks,
                 18, getArenaHeight() - 18);
+        double baseAngle = directionTo(predX, predY);
+        double aimAngle  = baseAngle + latDir * gf * maxAngle;
 
-        double aimAngle = directionTo(predX, predY) + latDir * gf * maxAngle;
         double gunTurn  = normalizeAngle(aimAngle - getGunDirection());
         setGunTurnRate(clamp(gunTurn, -20.0, 20.0));
 
@@ -340,15 +368,15 @@ public class AISurvivor extends Bot {
             // Record this targeting wave so we can learn from it
             if (st != null) {
                 TargetingWave tw = new TargetingWave();
-                tw.originX     = getX();
-                tw.originY     = getY();
-                tw.directAngle = directionTo(t.x, t.y);
+                tw.originX    = getX();
+                tw.originY    = getY();
+                tw.baseAngle  = baseAngle;   // predicted bearing — consistent with recording
                 tw.bulletSpeed = bspd;
-                tw.fireTurn    = getTurnNumber();
-                tw.targetId    = t.id;
-                tw.lateralDir  = latDir;
-                tw.segment     = seg;
-                tw.bins        = st[seg];
+                tw.fireTurn   = getTurnNumber();
+                tw.targetId   = t.id;
+                tw.lateralDir = latDir;
+                tw.segment    = seg;
+                tw.bins       = st[seg];
                 targetingWaves.add(tw);
             }
         }
@@ -434,8 +462,44 @@ public class AISurvivor extends Bot {
     }
 
     private void doDodge() {
-        setTurnRate(maxBodyTurn() * dodgeSign);
+        BulletState threat = nearestThreat();
+        if (threat != null) {
+            // Dodge perpendicular to the incoming bullet's direction
+            double bulletDir = threat.getDirection();
+            double perp1 = ((bulletDir + 90.0) % 360 + 360) % 360;
+            double perp2 = ((bulletDir - 90.0) % 360 + 360) % 360;
+            double h1 = wallSmooth(getX(), getY(), perp1,  1);
+            double h2 = wallSmooth(getX(), getY(), perp2, -1);
+            // Pick whichever perpendicular requires the smaller body turn
+            double turn1 = Math.abs(normalizeAngle(h1 - getDirection()));
+            double turn2 = Math.abs(normalizeAngle(h2 - getDirection()));
+            double heading = (turn1 <= turn2) ? h1 : h2;
+            double turn = normalizeAngle(heading - getDirection());
+            setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
+        } else {
+            setTurnRate(maxBodyTurn() * dodgeSign);
+        }
         setTargetSpeed(8.0 * ((getTurnNumber() % 7 < 4) ? 1 : -1));
+    }
+
+    /** Returns the closest enemy bullet that is heading generally toward us. */
+    private BulletState nearestThreat() {
+        BulletState nearest = null;
+        double minDist = Double.MAX_VALUE;
+        double myX = getX(), myY = getY();
+        for (BulletState b : incomingBullets) {
+            double dx   = myX - b.getX();
+            double dy   = myY - b.getY();
+            double dist = Math.sqrt(dx * dx + dy * dy);
+            // Bearing from bullet to us
+            double bearToMe = Math.toDegrees(Math.atan2(dx, dy));
+            double angleDiff = Math.abs(normalizeAngle(b.getDirection() - bearToMe));
+            if (angleDiff < 45.0 && dist < minDist) {
+                minDist = dist;
+                nearest = b;
+            }
+        }
+        return nearest;
     }
 
     private void doHunt() {
@@ -451,14 +515,32 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
 
     private void updateRadar() {
-        EnemyInfo target = nearestEnemy();
+        // Maintain a locked target; re-select only when current lock is lost
+        EnemyInfo target = enemies.get(radarTargetId);
         if (target == null) {
-            setRadarTurnRate(45.0);
-        } else {
-            double radarTurn = normalizeAngle(
-                    directionTo(target.x, target.y) - getRadarDirection());
-            setRadarTurnRate(clamp(radarTurn + Math.signum(radarTurn) * 10.0, -45.0, 45.0));
+            // Lock lost (dead or never set) — pick the bot we're shooting at
+            target = bestTarget();
+            radarTargetId = (target != null) ? target.id : -1;
         }
+
+        if (target == null) {
+            setRadarTurnRate(45.0);   // sweep until we find someone
+            return;
+        }
+
+        // How many turns since we last scanned this bot?
+        int staleness = getTurnNumber() - target.lastScanTurn;
+
+        double radarTurn = normalizeAngle(
+                directionTo(target.x, target.y) - getRadarDirection());
+
+        // Tight overshoot on a fresh scan; widen progressively as data ages
+        // so the sweep catches the enemy even if they moved a lot.
+        double overshoot = (staleness == 0)
+                ? 5.0
+                : Math.min(10.0 + staleness * 7.0, 45.0);
+
+        setRadarTurnRate(clamp(radarTurn + Math.signum(radarTurn) * overshoot, -45.0, 45.0));
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -620,7 +702,5 @@ public class AISurvivor extends Bot {
 
     private static double sq(double v) { return v * v; }
 
-    private static double bulletDamage(double p) {
-        return 4.0 * p + (p > 1.0 ? 2.0 * (p - 1.0) : 0.0);
-    }
+
 }
