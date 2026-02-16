@@ -138,8 +138,8 @@ public class AISurvivor extends Bot {
             // 4. Execute movement strategy
             executeMovement(action);
 
-            // 5. Keep radar spinning at max speed for full arena coverage
-            setRadarTurnRate(45.0);
+            // 5. Radar: lock on nearest known enemy; sweep only when no target
+            updateRadar();
 
             // 6. Aim gun and fire if aligned
             aimAndFire();
@@ -440,6 +440,33 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
     //  Targeting
     // ═════════════════════════════════════════════════════════════════════════
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Radar
+    // ═════════════════════════════════════════════════════════════════════════
+
+    /**
+     * Focused radar: lock on the nearest known enemy so we get a fresh scan
+     * every 1-2 turns instead of once every ~8 turns with a full spin.
+     * When no enemies are in the map (start of round or all stale), sweep at
+     * max speed until something is found.
+     */
+    private void updateRadar() {
+        EnemyInfo target = nearestEnemy();
+        if (target == null) {
+            // No data — sweep at full speed to acquire a target
+            setRadarTurnRate(45.0);
+        } else {
+            // Turn radar toward the last known position of the nearest enemy.
+            // Add a small overshoot in the same direction so the radar
+            // oscillates back and forth over the target, keeping it in the
+            // scan arc every turn.
+            double radarTurn = normalizeAngle(
+                    directionTo(target.x, target.y) - getRadarDirection());
+            double overshoot = Math.signum(radarTurn) * 10.0;
+            setRadarTurnRate(clamp(radarTurn + overshoot, -45.0, 45.0));
+        }
+    }
 
     /**
      * Selects the best target, turns the gun toward the predicted impact
