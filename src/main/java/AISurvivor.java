@@ -5,103 +5,162 @@ import java.io.*;
 import java.util.*;
 
 /**
- * AISurvivor — Robocode Tank Royale bot.
+ * AISurvivor v2 — Robocode Tank Royale melee bot.
  *
- * Uses Q-Learning (tabular reinforcement learning) to improve its battle
- * strategy across rounds and battles, combined with two proven melee
- * heuristics that provide a strong baseline from the very first turn:
+ * Improvements over v1
+ * ─────────────────────
+ *  GuessFactor Targeting
+ *    Records the actual enemy position every time a targeting wave
+ *    passes through it (not just on hits) to build a statistical model
+ *    of how each enemy moves.  Segmented by distance × lateral velocity
+ *    (9 segments × 47 bins per enemy).
  *
- *   • Anti-gravity movement  — naturally repels the bot away from walls and
- *     enemies while weakly pulling it toward the arena centre, producing
- *     smooth, unpredictable evasion without hard-coded rules.
+ *  Wave Surfing
+ *    Detects enemy bullet fires via energy drops each scan.  Creates
+ *    EnemyWave objects that carry a danger profile copied from that
+ *    enemy's observed shooting pattern.  Each turn, evaluates 24
+ *    candidate headings and steers toward the lowest-danger position
+ *    across all active waves.  Danger profiles improve when hit.
  *
- *   • Linear predictive targeting — leads moving targets so bullets arrive
- *     at the predicted position rather than the stale scan position.
+ *  Wall Smoothing
+ *    Every movement strategy adjusts its target heading away from
+ *    walls before committing, preventing the bot from grinding corners.
  *
- * Q-Learning layer
- * ─────────────────
- * State space  : 1 920 states = energy(4) × dist(5) × bearing(8)
- *                               × enemyCount(4) × wallProximity(3)
- * Action space : 6 movement strategies (anti-gravity, circle CW/CCW,
- *                flee, dodge, hunt).
- * Reward       : +0.05/turn survival, +(bullet damage × 0.6) on hit,
- *                +30 kill, +15 enemy death, −(damage × 0.8) when hit,
- *                −100 own death, −3 wall hit.
- * Persistence  : Q-table is serialised to AISurvivor-qtable.dat in the
- *                bot's working directory and reloaded each battle, so
- *                the bot accumulates knowledge indefinitely.
- * Exploration  : ε-greedy, ε decays from 0.40 → 0.05 at rate 0.992/round.
+ *  Q-Learning (kept from v1)
+ *    Selects between wave surfing, anti-gravity, circling, fleeing, and
+ *    hunting.  Action slot 4 (was "dodge") is now "wave surf"; existing
+ *    Q-tables are forward-compatible.  Persistent across battles.
+ *
+ *  Focused radar (from v1)
+ *    Locks on nearest enemy with overshoot oscillation; sweeps when
+ *    no target is known.
  */
 public class AISurvivor extends Bot {
 
-    // ── Q-Learning hyperparameters ────────────────────────────────────────────
+    // ─── GuessFactor constants ────────────────────────────────────────────────
+    private static final int    GF_BINS   = 47;
+    private static final int    GF_MID    = GF_BINS / 2;   // 23 — direct aim
+    private static final int    DIST_SEGS = 3;              // distance buckets
+    private static final int    LAT_SEGS  = 3;              // lateral-vel buckets
+    private static final int    NUM_SEGS  = DIST_SEGS * LAT_SEGS; // 9 per enemy
+    private static final double WALL_MARGIN = 80.0;
+
+    // ─── Q-Learning constants ─────────────────────────────────────────────────
     private static final double LEARNING_RATE = 0.15;
     private static final double DISCOUNT      = 0.95;
     private static final double EPSILON_INIT  = 0.40;
     private static final double EPSILON_MIN   = 0.05;
-    private static final double EPSILON_DECAY = 0.992;   // per-round
+    private static final double EPSILON_DECAY = 0.992;
     private static final String QTABLE_FILE   = "AISurvivor-qtable.dat";
 
-    // ── State-space dimensions ────────────────────────────────────────────────
-    private static final int S_ENERGY  = 4;   // own energy: critical/low/medium/high
-    private static final int S_DIST    = 5;   // nearest enemy distance (5 buckets)
-    private static final int S_BEARING = 8;   // nearest enemy bearing (8 × 45°)
-    private static final int S_COUNT   = 4;   // live enemies: 1 / 2 / 3 / 4+
-    private static final int S_WALL    = 3;   // wall proximity: safe/caution/danger
+    // ─── State space ──────────────────────────────────────────────────────────
+    private static final int S_ENERGY  = 4;
+    private static final int S_DIST    = 5;
+    private static final int S_BEARING = 8;
+    private static final int S_COUNT   = 4;
+    private static final int S_WALL    = 3;
     private static final int NUM_STATES =
-            S_ENERGY * S_DIST * S_BEARING * S_COUNT * S_WALL;  // 1 920
+            S_ENERGY * S_DIST * S_BEARING * S_COUNT * S_WALL; // 1 920
 
-    // ── Action indices ────────────────────────────────────────────────────────
+    // ─── Actions ─────────────────────────────────────────────────────────────
     private static final int NUM_ACTIONS   = 6;
-    private static final int A_ANTIGRAVITY = 0; // anti-gravity vector movement
-    private static final int A_CIRCLE_CW   = 1; // orbit nearest enemy CW
-    private static final int A_CIRCLE_CCW  = 2; // orbit nearest enemy CCW
-    private static final int A_FLEE        = 3; // amplified anti-gravity (defensive)
-    private static final int A_DODGE       = 4; // erratic perpendicular evasion
-    private static final int A_HUNT        = 5; // charge weakest enemy
+    private static final int A_ANTIGRAVITY = 0;
+    private static final int A_CIRCLE_CW   = 1;
+    private static final int A_CIRCLE_CCW  = 2;
+    private static final int A_FLEE        = 3;
+    private static final int A_WAVE_SURF   = 4; // replaces v1 A_DODGE — same slot
+    private static final int A_HUNT        = 5;
 
-    // ── Anti-gravity force constants ──────────────────────────────────────────
+    // ─── Anti-gravity constants ───────────────────────────────────────────────
     private static final double WALL_REPULSE   = 30_000.0;
     private static final double ENEMY_REPULSE  = 10_000.0;
     private static final double CENTER_ATTRACT =    600.0;
 
-    // ── Enemy tracking ────────────────────────────────────────────────────────
-    private static final int STALE_TURNS = 40; // discard scans older than this
+    private static final int STALE_TURNS = 40;
 
-    // ── Inner record: last known state of one enemy bot ──────────────────────
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Inner classes
+    // ═════════════════════════════════════════════════════════════════════════
+
+    /** Last known state of one enemy bot. */
     private static final class EnemyInfo {
-        final int id;
+        int    id;
         double x, y, direction, speed, energy;
+        double lateralVelocity; // signed: component of velocity perpendicular to bearing
+        double prevEnergy;      // energy on the previous scan (for bullet-fire detection)
         int    lastScanTurn;
 
-        EnemyInfo(int id, double x, double y,
-                  double dir, double spd, double en, int turn) {
-            this.id = id;
-            this.x = x; this.y = y;
+        EnemyInfo(int id, double x, double y, double dir, double spd,
+                  double en, double latVel, double prevEn, int turn) {
+            this.id = id; this.x = x; this.y = y;
             this.direction = dir; this.speed = spd; this.energy = en;
+            this.lateralVelocity = latVel; this.prevEnergy = prevEn;
             this.lastScanTurn = turn;
         }
     }
 
-    // ── Q-Learning state ──────────────────────────────────────────────────────
+    /**
+     * A bullet WE fired — travels toward the enemy.
+     * When the wave radius reaches the enemy's position we record the actual
+     * GuessFactor to update our targeting statistics.
+     */
+    private static final class TargetingWave {
+        double   originX, originY;   // our position when we fired
+        double   directAngle;        // absolute angle from origin to enemy at fire time
+        double   bulletSpeed;
+        int      fireTurn;
+        int      targetId;
+        double   lateralDir;         // sign of enemy's lateral velocity at fire time
+        int      segment;            // which stats segment this belongs to
+        double[] bins;               // reference to gfStats[targetId][segment] — mutated on hit
+    }
+
+    /**
+     * A bullet AN ENEMY fired — travels toward us.
+     * Carries a snapshot of that enemy's danger profile at the time of firing.
+     * Used to evaluate where we should move to avoid the bullet.
+     */
+    private static final class EnemyWave {
+        double   originX, originY;   // enemy position when they fired
+        double   directAngle;        // absolute angle from origin to OUR position at fire time
+        double   bulletSpeed;
+        int      fireTurn;
+        int      enemyId;
+        double[] dangerBins;         // copy of surfStats[enemyId] at wave creation time
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Fields
+    // ═════════════════════════════════════════════════════════════════════════
+
+    // Enemy tracking
+    private final Map<Integer, EnemyInfo> enemies = new HashMap<>();
+
+    // GF targeting statistics: gfStats.get(id)[segment][gfBin]
+    private final Map<Integer, double[][]> gfStats   = new HashMap<>();
+
+    // Wave surfing danger profiles: surfStats.get(id)[gfBin]
+    // Records which GF offsets each enemy tends to fire at us with.
+    private final Map<Integer, double[]>   surfStats = new HashMap<>();
+
+    // Active waves
+    private final List<TargetingWave> targetingWaves = new ArrayList<>();
+    private final List<EnemyWave>     enemyWaves     = new ArrayList<>();
+
+    // Q-Learning
     private double[][] qTable;
     private double     epsilon;
     private int        totalRounds;
     private int        prevState  = -1;
     private int        prevAction = -1;
     private double     pendingReward = 0.0;
-
-    // ── Per-round game state ──────────────────────────────────────────────────
-    private final Map<Integer, EnemyInfo> enemies = new HashMap<>();
-    private int dodgeSign = 1; // flips on every hit to break attacker's aim lock
+    private int        dodgeSign = 1;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Entry point
     // ═════════════════════════════════════════════════════════════════════════
 
-    public static void main(String[] args) {
-        new AISurvivor().start();
-    }
+    public static void main(String[] args) { new AISurvivor().start(); }
 
     public AISurvivor() {
         super(BotInfo.fromFile("AISurvivor.json"));
@@ -114,49 +173,41 @@ public class AISurvivor extends Bot {
 
     @Override
     public void run() {
-        // Decouple component rotations so gun/radar move independently of body
         setAdjustGunForBodyTurn(true);
         setAdjustRadarForGunTurn(true);
 
         while (isRunning()) {
-
-            // 1. Drop enemy entries that are too old to be reliable
             pruneStaleEnemies();
+            advanceTargetingWaves();   // update GF stats
+            advanceEnemyWaves();       // remove waves that passed us
 
-            // 2. Q-Learning: update Q-value for the action taken last turn
+            // Q-Learning update
             int state = computeState();
             if (prevState >= 0) {
                 updateQ(prevState, prevAction, pendingReward + 0.05, state);
                 pendingReward = 0.0;
             }
-
-            // 3. Choose this turn's action (ε-greedy)
             int action = selectAction(state);
             prevState  = state;
             prevAction = action;
 
-            // 4. Execute movement strategy
             executeMovement(action);
-
-            // 5. Radar: lock on nearest known enemy; sweep only when no target
             updateRadar();
-
-            // 6. Aim gun and fire if aligned
-            aimAndFire();
-
-            // 7. Commit all queued commands for this turn
+            aimGF();       // GuessFactor gun replaces linear targeting
             go();
         }
     }
 
     // ═════════════════════════════════════════════════════════════════════════
-    //  Round / game lifecycle
+    //  Lifecycle
     // ═════════════════════════════════════════════════════════════════════════
 
     @Override
     public void onRoundStarted(RoundStartedEvent e) {
         enemies.clear();
-        pendingReward  = 0.0;
+        targetingWaves.clear();
+        enemyWaves.clear();
+        pendingReward = 0.0;
         prevState = prevAction = -1;
         dodgeSign = 1;
     }
@@ -169,28 +220,89 @@ public class AISurvivor extends Bot {
     }
 
     @Override
-    public void onGameEnded(GameEndedEvent e) {
-        saveQTable();
-    }
+    public void onGameEnded(GameEndedEvent e) { saveQTable(); }
 
     // ═════════════════════════════════════════════════════════════════════════
-    //  Combat events — update enemy map and accumulate rewards
+    //  Combat events
     // ═════════════════════════════════════════════════════════════════════════
 
     @Override
     public void onScannedBot(ScannedBotEvent e) {
-        enemies.put(e.getScannedBotId(), new EnemyInfo(
-                e.getScannedBotId(),
-                e.getX(), e.getY(),
+        EnemyInfo prev = enemies.get(e.getScannedBotId());
+        double prevEn = (prev != null) ? prev.energy : e.getEnergy();
+
+        // Lateral velocity: component of enemy movement perpendicular to the
+        // line between us.  Positive = moving right relative to the bearing.
+        double bearingToEnemy = directionTo(e.getX(), e.getY());
+        double latVel = e.getSpeed() *
+                Math.sin(Math.toRadians(e.getDirection() - bearingToEnemy));
+
+        EnemyInfo info = new EnemyInfo(
+                e.getScannedBotId(), e.getX(), e.getY(),
                 e.getDirection(), e.getSpeed(), e.getEnergy(),
-                getTurnNumber()
-        ));
+                latVel, prevEn, getTurnNumber());
+        enemies.put(info.id, info);
+
+        // Initialise statistics maps for new enemies
+        gfStats  .computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
+        surfStats.computeIfAbsent(info.id, k -> new double[GF_BINS]);
+
+        // Detect bullet fire: an energy drop of 0.1–3.0 that isn't explained
+        // by normal damage means the enemy fired a bullet of that power.
+        double drop = prevEn - e.getEnergy();
+        if (drop >= 0.1 && drop <= 3.01) {
+            double bspeed = calcBulletSpeed(drop);
+
+            // Angle from enemy's firing position toward our position right now
+            double directAngle = Math.toDegrees(
+                    Math.atan2(getX() - e.getX(), getY() - e.getY()));
+
+            EnemyWave wave    = new EnemyWave();
+            wave.originX      = e.getX();
+            wave.originY      = e.getY();
+            wave.directAngle  = directAngle;
+            wave.bulletSpeed  = bspeed;
+            wave.fireTurn     = getTurnNumber();
+            wave.enemyId      = info.id;
+            wave.dangerBins   = surfStats.get(info.id).clone(); // snapshot
+            enemyWaves.add(wave);
+        }
     }
 
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
         pendingReward -= bulletDamage(e.getBullet().getPower()) * 0.8;
-        dodgeSign = -dodgeSign; // break the attacker's radar/gun lock
+        dodgeSign = -dodgeSign;
+
+        // Find the enemy wave closest to us right now from the shooter,
+        // then record which GF bin the bullet came from to update the
+        // danger profile so future surfing is more accurate.
+        int shooterId = e.getBullet().getOwnerId();
+        double[] stats = surfStats.get(shooterId);
+        if (stats == null) return;
+
+        EnemyWave closest = null;
+        double    minDiff = Double.MAX_VALUE;
+        for (EnemyWave w : enemyWaves) {
+            if (w.enemyId != shooterId) continue;
+            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
+            double myDist   = Math.sqrt(sq(getX() - w.originX) + sq(getY() - w.originY));
+            double diff = Math.abs(traveled - myDist);
+            if (diff < minDiff) { minDiff = diff; closest = w; }
+        }
+        if (closest == null) return;
+
+        double absAngle     = Math.toDegrees(
+                Math.atan2(getX() - closest.originX, getY() - closest.originY));
+        double latAngle     = normalizeAngle(absAngle - closest.directAngle);
+        double maxAngle     = Math.toDegrees(
+                Math.asin(Math.min(1.0, 8.0 / closest.bulletSpeed)));
+        double gf           = clamp(latAngle / maxAngle, -1.0, 1.0);
+        int    bin          = gfBin(gf);
+
+        // Decay all bins slightly so recent hits matter more, then increment
+        for (int i = 0; i < stats.length; i++) stats[i] *= 0.97;
+        stats[bin] += 1.0;
     }
 
     @Override
@@ -198,19 +310,18 @@ public class AISurvivor extends Bot {
         pendingReward += bulletDamage(e.getBullet().getPower()) * 0.6;
         if (e.getEnergy() <= 0) {
             enemies.remove(e.getVictimId());
-            pendingReward += 30.0; // kill bonus
+            pendingReward += 30.0;
         }
     }
 
     @Override
     public void onBotDeath(BotDeathEvent e) {
         enemies.remove(e.getVictimId());
-        pendingReward += 15.0; // surviving as the field narrows is rewarded
+        pendingReward += 15.0;
     }
 
     @Override
     public void onDeath(DeathEvent e) {
-        // Terminal Q-update: no future state, apply large penalty
         if (prevState >= 0 && prevAction >= 0) {
             double old = qTable[prevState][prevAction];
             qTable[prevState][prevAction] = old + LEARNING_RATE * (-100.0 - old);
@@ -230,119 +341,193 @@ public class AISurvivor extends Bot {
     }
 
     // ═════════════════════════════════════════════════════════════════════════
-    //  Q-Learning core
+    //  GuessFactor Targeting
     // ═════════════════════════════════════════════════════════════════════════
 
     /**
-     * Encodes the current game state into a single integer index into qTable.
-     *
-     * Encoding (base-mixed):
-     *   index = eBucket
-     *         + S_ENERGY  * (distBucket
-     *         + S_DIST    * (bearBucket
-     *         + S_BEARING * (cntBucket
-     *         + S_COUNT   * wallBucket)))
+     * For each active targeting wave, check whether it has reached the enemy.
+     * When it does, compute the actual GuessFactor (where the enemy really
+     * was vs. where we aimed) and increment the corresponding bin.
+     * This records data on every shot — hits AND misses.
      */
-    private int computeState() {
-        // Own energy bucket (0 = critical, 3 = healthy)
-        double en = getEnergy();
-        int eBucket = en < 20 ? 0 : en < 40 ? 1 : en < 70 ? 2 : 3;
+    private void advanceTargetingWaves() {
+        Iterator<TargetingWave> it = targetingWaves.iterator();
+        while (it.hasNext()) {
+            TargetingWave w = it.next();
+            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
 
-        // Nearest scanned enemy: distance and relative bearing
-        EnemyInfo nearest = nearestEnemy();
-        int distBucket, bearBucket;
-        if (nearest == null) {
-            distBucket = 4; // "no data" sentinel bucket
-            bearBucket = 0;
-        } else {
-            double d = distanceTo(nearest.x, nearest.y);
-            distBucket = d < 100 ? 0
-                       : d < 220 ? 1
-                       : d < 380 ? 2
-                       : d < 580 ? 3 : 4;
+            EnemyInfo t = enemies.get(w.targetId);
+            if (t == null) { it.remove(); continue; }
 
-            // Relative bearing: absolute direction minus body heading
-            double rel = normalizeAngle(directionTo(nearest.x, nearest.y) - getDirection());
-            if (rel < 0) rel += 360.0;
-            bearBucket = ((int)(rel / 45.0)) % 8;
+            double dist = Math.sqrt(sq(t.x - w.originX) + sq(t.y - w.originY));
+            if (traveled < dist - w.bulletSpeed) continue; // not there yet
+
+            // Wave has reached (or passed) the enemy — record actual GF
+            double absAngle  = Math.toDegrees(
+                    Math.atan2(t.x - w.originX, t.y - w.originY));
+            double latAngle  = normalizeAngle(absAngle - w.directAngle) * w.lateralDir;
+            double maxAngle  = Math.toDegrees(
+                    Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
+            double gf        = clamp(latAngle / maxAngle, -1.0, 1.0);
+            w.bins[gfBin(gf)] += 1.0;
+            it.remove();
         }
-
-        // Live enemy count bucket
-        int cnt     = getEnemyCount();
-        int cBucket = cnt <= 1 ? 0 : cnt == 2 ? 1 : cnt == 3 ? 2 : 3;
-
-        // Wall proximity bucket
-        double wall  = minWallDist();
-        int wBucket  = wall < 70 ? 2 : wall < 160 ? 1 : 0;
-
-        return eBucket
-             + S_ENERGY  * (distBucket
-             + S_DIST    * (bearBucket
-             + S_BEARING * (cBucket
-             + S_COUNT   * wBucket)));
     }
 
-    /** ε-greedy action selection. */
-    private int selectAction(int state) {
-        if (Math.random() < epsilon) {
-            return (int)(Math.random() * NUM_ACTIONS);
-        }
-        int best = 0;
-        for (int a = 1; a < NUM_ACTIONS; a++) {
-            if (qTable[state][a] > qTable[state][best]) best = a;
-        }
-        return best;
-    }
+    /**
+     * Aim using the GF bin with the highest recorded hit count for this
+     * enemy and segment.  Falls back to middle bin (= direct aim + linear
+     * prediction) when no data exists yet.
+     * Creates a new TargetingWave each time we fire.
+     */
+    private void aimGF() {
+        EnemyInfo t = bestTarget();
+        if (t == null) return;
 
-    /** Standard TD(0) Q-update. */
-    private void updateQ(int s, int a, double reward, int ns) {
-        double maxNext = qTable[ns][0];
-        for (int i = 1; i < NUM_ACTIONS; i++) {
-            if (qTable[ns][i] > maxNext) maxNext = qTable[ns][i];
-        }
-        double tdTarget = reward + DISCOUNT * maxNext;
-        qTable[s][a] += LEARNING_RATE * (tdTarget - qTable[s][a]);
-    }
+        double dist  = distanceTo(t.x, t.y);
+        double fp    = firePower(dist);
+        double bspd  = calcBulletSpeed(fp > 0 ? fp : 1.0);
 
-    // ── Q-table persistence ───────────────────────────────────────────────────
-
-    @SuppressWarnings("unchecked")
-    private void loadQTable() {
-        epsilon     = EPSILON_INIT;
-        totalRounds = 0;
-        qTable      = new double[NUM_STATES][NUM_ACTIONS];  // zero-initialised
-
-        File f = new File(QTABLE_FILE);
-        if (!f.exists()) {
-            System.out.println("[AISurvivor] No prior Q-table found — starting fresh.");
-            return;
-        }
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
-            double[][] loaded = (double[][]) in.readObject();
-            epsilon     = in.readDouble();
-            totalRounds = in.readInt();
-            if (loaded.length == NUM_STATES && loaded[0].length == NUM_ACTIONS) {
-                qTable = loaded;
-                System.out.printf("[AISurvivor] Q-table loaded. Rounds trained: %d  ε=%.3f%n",
-                        totalRounds, epsilon);
-            } else {
-                System.out.println("[AISurvivor] Q-table shape mismatch — starting fresh.");
+        // Pick the best-performing GF bin for this enemy and segment
+        int    seg    = segment(dist, Math.abs(t.lateralVelocity));
+        double[][] st = gfStats.get(t.id);
+        int bestBin   = GF_MID; // default: direct aim
+        if (st != null) {
+            double[] bins = st[seg];
+            double   max  = -1;
+            for (int i = 0; i < GF_BINS; i++) {
+                if (bins[i] > max) { max = bins[i]; bestBin = i; }
             }
-        } catch (Exception ex) {
-            System.out.println("[AISurvivor] Could not load Q-table: " + ex.getMessage());
+        }
+
+        // Convert best bin → aim angle offset
+        double gf          = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
+        double maxAngle    = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / bspd)));
+        double latDir      = Math.signum(t.lateralVelocity);
+        if (latDir == 0) latDir = 1;
+
+        // Base the aim on a linear prediction of where the enemy will be
+        double ticks = dist / bspd;
+        double predX = clamp(t.x + Math.sin(Math.toRadians(t.direction)) * t.speed * ticks,
+                18, getArenaWidth()  - 18);
+        double predY = clamp(t.y + Math.cos(Math.toRadians(t.direction)) * t.speed * ticks,
+                18, getArenaHeight() - 18);
+
+        double aimAngle = directionTo(predX, predY) + latDir * gf * maxAngle;
+        double gunTurn  = normalizeAngle(aimAngle - getGunDirection());
+        setGunTurnRate(clamp(gunTurn, -20.0, 20.0));
+
+        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0) {
+            setFire(fp);
+
+            // Record this targeting wave so we can learn from it
+            if (st != null) {
+                TargetingWave tw = new TargetingWave();
+                tw.originX     = getX();
+                tw.originY     = getY();
+                tw.directAngle = directionTo(t.x, t.y);
+                tw.bulletSpeed = bspd;
+                tw.fireTurn    = getTurnNumber();
+                tw.targetId    = t.id;
+                tw.lateralDir  = latDir;
+                tw.segment     = seg;
+                tw.bins        = st[seg];
+                targetingWaves.add(tw);
+            }
         }
     }
 
-    private void saveQTable() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(QTABLE_FILE))) {
-            out.writeObject(qTable);
-            out.writeDouble(epsilon);
-            out.writeInt(totalRounds);
-            System.out.printf("[AISurvivor] Q-table saved. Rounds: %d  ε=%.3f%n",
-                    totalRounds, epsilon);
-        } catch (Exception ex) {
-            System.out.println("[AISurvivor] Could not save Q-table: " + ex.getMessage());
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Wave Surfing
+    // ═════════════════════════════════════════════════════════════════════════
+
+    /** Remove waves that have traveled well past our current position. */
+    private void advanceEnemyWaves() {
+        double myX = getX(), myY = getY();
+        int    now = getTurnNumber();
+        enemyWaves.removeIf(w -> {
+            double traveled = (now - w.fireTurn) * w.bulletSpeed;
+            double myDist   = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
+            return traveled > myDist + 60;
+        });
+    }
+
+    /**
+     * Wave surfing movement.
+     * Evaluates 24 candidate absolute headings (every 15°), applies wall
+     * smoothing to each, sums danger across all active enemy waves, and
+     * steers toward the safest one.
+     * Falls back to anti-gravity when no waves are active.
+     */
+    private void doWaveSurf() {
+        if (enemyWaves.isEmpty()) { doAntiGravity(1.0); return; }
+
+        double myX = getX(), myY = getY();
+        double bestDanger  = Double.MAX_VALUE;
+        double bestHeading = getDirection();
+
+        for (int i = 0; i < 24; i++) {
+            double heading  = i * 15.0;
+            double smoothed = wallSmooth(myX, myY, heading, 1);
+            double danger   = totalDanger(myX, myY, smoothed);
+            if (danger < bestDanger) { bestDanger = danger; bestHeading = smoothed; }
         }
+
+        double turn = normalizeAngle(bestHeading - getDirection());
+        setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
+        setTargetSpeed(8.0);
+    }
+
+    /**
+     * Sums the GF danger across all active enemy waves for a bot that moves
+     * in {@code heading} from ({@code myX}, {@code myY}).
+     * The bot's position is simulated forward until the wave would intersect.
+     */
+    private double totalDanger(double myX, double myY, double heading) {
+        int    now    = getTurnNumber();
+        double sinH   = Math.sin(Math.toRadians(heading));
+        double cosH   = Math.cos(Math.toRadians(heading));
+        double danger = 0;
+
+        for (EnemyWave w : enemyWaves) {
+            double traveled = (now - w.fireTurn) * w.bulletSpeed;
+            double myDist   = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
+            if (traveled > myDist) continue; // already passed
+
+            // Simulate movement until wave catches us (max 30 turns)
+            double simX = myX, simY = myY;
+            int    ticks = Math.min(30, (int)((myDist - traveled) / w.bulletSpeed) + 1);
+            for (int t = 0; t < ticks; t++) {
+                simX = clamp(simX + sinH * 8.0, 18, getArenaWidth()  - 18);
+                simY = clamp(simY + cosH * 8.0, 18, getArenaHeight() - 18);
+            }
+
+            double absAngle  = Math.toDegrees(
+                    Math.atan2(simX - w.originX, simY - w.originY));
+            double latAngle  = normalizeAngle(absAngle - w.directAngle);
+            double maxAngle  = Math.toDegrees(
+                    Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
+            double gf        = clamp(latAngle / maxAngle, -1.0, 1.0);
+            danger          += w.dangerBins[gfBin(gf)] + 1.0; // +1 base so empty bins aren't free
+        }
+        return danger;
+    }
+
+    /**
+     * Iteratively adjusts {@code heading} by 5° in direction {@code rotDir}
+     * until the projected position at {@code WALL_MARGIN} distance is safely
+     * inside the arena.  Returns the adjusted heading (0–360).
+     */
+    private double wallSmooth(double x, double y, double heading, int rotDir) {
+        double h = heading;
+        for (int i = 0; i < 36; i++) {
+            double testX = x + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+            double testY = y + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+            if (testX > WALL_MARGIN && testX < getArenaWidth()  - WALL_MARGIN &&
+                testY > WALL_MARGIN && testY < getArenaHeight() - WALL_MARGIN) break;
+            h = ((h + rotDir * 5.0) % 360 + 360) % 360;
+        }
+        return h;
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -354,184 +539,157 @@ public class AISurvivor extends Bot {
             case A_ANTIGRAVITY -> doAntiGravity(1.0);
             case A_CIRCLE_CW   -> doCircle(true);
             case A_CIRCLE_CCW  -> doCircle(false);
-            case A_FLEE        -> doAntiGravity(2.5);  // amplified repulsion
-            case A_DODGE       -> doDodge();
+            case A_FLEE        -> doAntiGravity(2.5);
+            case A_WAVE_SURF   -> doWaveSurf();
             case A_HUNT        -> doHunt();
             default            -> doAntiGravity(1.0);
         }
     }
 
-    /**
-     * Anti-gravity movement.
-     *
-     * Computes a resultant force from wall repulsion, enemy repulsion, and
-     * weak centre attraction, then steers the bot along that force vector.
-     * The {@code repulseScale} parameter amplifies the enemy component,
-     * allowing the same method to serve both normal and fleeing modes.
-     */
     private void doAntiGravity(double repulseScale) {
-        double[] force      = antiGravForce(repulseScale);
-        // atan2(Fx, Fy) gives angle from North because North = +Y in Tank Royale
-        double   targetDir  = Math.toDegrees(Math.atan2(force[0], force[1]));
-        double   turn       = normalizeAngle(targetDir - getDirection());
+        double[] force     = antiGravForce(repulseScale);
+        double   targetDir = Math.toDegrees(Math.atan2(force[0], force[1]));
+        double   smoothed  = wallSmooth(getX(), getY(), ((targetDir % 360) + 360) % 360, 1);
+        double   turn      = normalizeAngle(smoothed - getDirection());
         setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
         setTargetSpeed(8.0);
     }
 
     private double[] antiGravForce(double repulseScale) {
-        double x  = getX(),  y  = getY();
+        double x  = getX(), y = getY();
         double cx = getArenaWidth()  / 2.0;
         double cy = getArenaHeight() / 2.0;
-        double fx = 0.0, fy = 0.0;
+        double fx = 0, fy = 0;
 
-        // Wall repulsion — each wall pushes the bot away with 1/d² decay
-        fx += WALL_REPULSE / sq(x + 1);                         // left wall  → +x
-        fx -= WALL_REPULSE / sq(getArenaWidth()  - x + 1);      // right wall → -x
-        fy += WALL_REPULSE / sq(y + 1);                         // bottom     → +y
-        fy -= WALL_REPULSE / sq(getArenaHeight() - y + 1);      // top        → -y
+        fx += WALL_REPULSE / sq(x + 1);
+        fx -= WALL_REPULSE / sq(getArenaWidth()  - x + 1);
+        fy += WALL_REPULSE / sq(y + 1);
+        fy -= WALL_REPULSE / sq(getArenaHeight() - y + 1);
 
-        // Enemy repulsion — each known enemy pushes the bot away
         for (EnemyInfo e : enemies.values()) {
-            double dx   = x - e.x,  dy = y - e.y;
+            double dx   = x - e.x, dy = y - e.y;
             double dist = Math.sqrt(dx * dx + dy * dy) + 1.0;
             double mag  = ENEMY_REPULSE * repulseScale / (dist * dist);
             fx += mag * (dx / dist);
             fy += mag * (dy / dist);
         }
 
-        // Weak centre attraction — prevents camping in a corner
-        double cdx  = cx - x,  cdy = cy - y;
-        double cDist = Math.sqrt(cdx * cdx + cdy * cdy) + 1.0;
-        double cMag  = CENTER_ATTRACT / (cDist + 100.0);
-        fx += cMag * (cdx / cDist);
-        fy += cMag * (cdy / cDist);
-
+        double cdx = cx - x, cdy = cy - y;
+        double cd  = Math.sqrt(cdx * cdx + cdy * cdy) + 1.0;
+        double cMag = CENTER_ATTRACT / (cd + 100.0);
+        fx += cMag * (cdx / cd);
+        fy += cMag * (cdy / cd);
         return new double[]{fx, fy};
     }
 
-    /** Orbit the nearest enemy perpendicularly to maintain engagement range. */
-    private void doCircle(boolean clockwise) {
+    private void doCircle(boolean cw) {
         EnemyInfo t = nearestEnemy();
         if (t == null) { doAntiGravity(1.0); return; }
-
-        double relBear = normalizeAngle(directionTo(t.x, t.y) - getDirection());
-        double orbit   = relBear + (clockwise ? 90.0 : -90.0);
-        setTurnRate(clamp(orbit, -maxBodyTurn(), maxBodyTurn()));
+        double absOrbit  = directionTo(t.x, t.y) + (cw ? 90.0 : -90.0);
+        double smoothed  = wallSmooth(getX(), getY(), ((absOrbit % 360) + 360) % 360, cw ? 1 : -1);
+        double turn      = normalizeAngle(smoothed - getDirection());
+        setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
         setTargetSpeed(8.0);
     }
 
-    /** Erratic movement that is hard for enemy guns to track. */
-    private void doDodge() {
-        setTurnRate(maxBodyTurn() * dodgeSign);
-        // Alternate forward/reverse on a prime-number cycle to be unpredictable
-        setTargetSpeed(8.0 * ((getTurnNumber() % 7 < 4) ? 1 : -1));
-    }
-
-    /** Close in on the lowest-energy enemy to finish it off quickly. */
     private void doHunt() {
         EnemyInfo t = weakestEnemy();
         if (t == null) { doAntiGravity(1.0); return; }
-
         double relBear = normalizeAngle(directionTo(t.x, t.y) - getDirection());
         setTurnRate(clamp(relBear * 2.0, -maxBodyTurn(), maxBodyTurn()));
         setTargetSpeed(8.0);
     }
 
     // ═════════════════════════════════════════════════════════════════════════
-    //  Targeting
-    // ═════════════════════════════════════════════════════════════════════════
-
-    // ═════════════════════════════════════════════════════════════════════════
     //  Radar
     // ═════════════════════════════════════════════════════════════════════════
 
-    /**
-     * Focused radar: lock on the nearest known enemy so we get a fresh scan
-     * every 1-2 turns instead of once every ~8 turns with a full spin.
-     * When no enemies are in the map (start of round or all stale), sweep at
-     * max speed until something is found.
-     */
     private void updateRadar() {
         EnemyInfo target = nearestEnemy();
         if (target == null) {
-            // No data — sweep at full speed to acquire a target
             setRadarTurnRate(45.0);
         } else {
-            // Turn radar toward the last known position of the nearest enemy.
-            // Add a small overshoot in the same direction so the radar
-            // oscillates back and forth over the target, keeping it in the
-            // scan arc every turn.
             double radarTurn = normalizeAngle(
                     directionTo(target.x, target.y) - getRadarDirection());
-            double overshoot = Math.signum(radarTurn) * 10.0;
-            setRadarTurnRate(clamp(radarTurn + overshoot, -45.0, 45.0));
+            setRadarTurnRate(clamp(radarTurn + Math.signum(radarTurn) * 10.0, -45.0, 45.0));
         }
     }
 
-    /**
-     * Selects the best target, turns the gun toward the predicted impact
-     * point using linear targeting, and fires when aligned.
-     */
-    private void aimAndFire() {
-        EnemyInfo t = bestTarget();
-        if (t == null) return;
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Q-Learning
+    // ═════════════════════════════════════════════════════════════════════════
 
-        double fp = firePower(distanceTo(t.x, t.y));
-
-        // Always track the target even when the gun is cooling
-        turnGunToward(t, fp > 0 ? fp : 1.0);
-
-        if (fp > 0 && getGunHeat() == 0) {
-            // Fire only when the gun error is within a reasonable cone
-            double gunErr = normalizeAngle(
-                    directionTo(t.x, t.y) - getGunDirection());
-            if (Math.abs(gunErr) < 9.0) {
-                setFire(fp);
-            }
-        }
-    }
-
-    /**
-     * Linear targeting: predicts where the enemy will be when the bullet
-     * arrives and turns the gun toward that predicted position.
-     */
-    private void turnGunToward(EnemyInfo t, double fp) {
-        double bulletSpd = calcBulletSpeed(fp);
-        double dist      = distanceTo(t.x, t.y);
-        double ticks     = dist / bulletSpd;
-
-        // First-order linear prediction (one iteration is sufficient for this speed range)
-        double predX = t.x + Math.sin(Math.toRadians(t.direction)) * t.speed * ticks;
-        double predY = t.y + Math.cos(Math.toRadians(t.direction)) * t.speed * ticks;
-
-        // Clamp to arena so we don't aim at a phantom position outside the walls
-        predX = clamp(predX, 18, getArenaWidth()  - 18);
-        predY = clamp(predY, 18, getArenaHeight() - 18);
-
-        double absAim  = directionTo(predX, predY);
-        double gunTurn = normalizeAngle(absAim - getGunDirection());
-        setGunTurnRate(clamp(gunTurn, -20.0, 20.0));
-    }
-
-    /**
-     * Computes firepower scaled by distance and own energy.
-     * Returns 0 when energy is critically low (preserve for survival).
-     */
-    private double firePower(double dist) {
+    private int computeState() {
         double en = getEnergy();
-        if (en < 12.0) return 0.0;                     // near-death: don't fire
+        int eBucket = en < 20 ? 0 : en < 40 ? 1 : en < 70 ? 2 : 3;
 
-        // Distance-scaled: 3.0 up close → 0.5 at range
-        double fp = clamp(700.0 / (dist + 50.0), 0.5, 3.0);
+        EnemyInfo nearest = nearestEnemy();
+        int distBucket, bearBucket;
+        if (nearest == null) {
+            distBucket = 4; bearBucket = 0;
+        } else {
+            double d = distanceTo(nearest.x, nearest.y);
+            distBucket = d < 100 ? 0 : d < 220 ? 1 : d < 380 ? 2 : d < 580 ? 3 : 4;
+            double rel = normalizeAngle(directionTo(nearest.x, nearest.y) - getDirection());
+            if (rel < 0) rel += 360.0;
+            bearBucket = ((int)(rel / 45.0)) % 8;
+        }
 
-        // Energy conservation tiers
-        if (en < 25.0)      fp = Math.min(fp, 0.8);
-        else if (en < 50.0) fp = Math.min(fp, 1.5);
+        int cnt     = getEnemyCount();
+        int cBucket = cnt <= 1 ? 0 : cnt == 2 ? 1 : cnt == 3 ? 2 : 3;
+        double wall = minWallDist();
+        int wBucket = wall < 70 ? 2 : wall < 160 ? 1 : 0;
 
-        // In crowded melee, moderate firepower stretches energy further
-        if (getEnemyCount() > 3) fp = Math.min(fp, 1.5);
+        return eBucket
+             + S_ENERGY  * (distBucket
+             + S_DIST    * (bearBucket
+             + S_BEARING * (cBucket
+             + S_COUNT   * wBucket)));
+    }
 
-        return fp;
+    private int selectAction(int state) {
+        if (Math.random() < epsilon) return (int)(Math.random() * NUM_ACTIONS);
+        int best = 0;
+        for (int a = 1; a < NUM_ACTIONS; a++) {
+            if (qTable[state][a] > qTable[state][best]) best = a;
+        }
+        return best;
+    }
+
+    private void updateQ(int s, int a, double reward, int ns) {
+        double maxNext = qTable[ns][0];
+        for (int i = 1; i < NUM_ACTIONS; i++) if (qTable[ns][i] > maxNext) maxNext = qTable[ns][i];
+        qTable[s][a] += LEARNING_RATE * (reward + DISCOUNT * maxNext - qTable[s][a]);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadQTable() {
+        epsilon = EPSILON_INIT; qTable = new double[NUM_STATES][NUM_ACTIONS]; totalRounds = 0;
+        File f = new File(QTABLE_FILE);
+        if (!f.exists()) { System.out.println("[AISurvivor] Starting fresh."); return; }
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
+            double[][] loaded = (double[][]) in.readObject();
+            epsilon = in.readDouble(); totalRounds = in.readInt();
+            if (loaded.length == NUM_STATES && loaded[0].length == NUM_ACTIONS) {
+                qTable = loaded;
+                System.out.printf("[AISurvivor] Q-table loaded. Rounds: %d  e=%.3f%n",
+                        totalRounds, epsilon);
+            } else {
+                System.out.println("[AISurvivor] Q-table shape mismatch — starting fresh.");
+            }
+        } catch (Exception ex) {
+            System.out.println("[AISurvivor] Q-table load failed: " + ex.getMessage());
+        }
+    }
+
+    private void saveQTable() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(QTABLE_FILE))) {
+            out.writeObject(qTable); out.writeDouble(epsilon); out.writeInt(totalRounds);
+            System.out.printf("[AISurvivor] Q-table saved. Rounds: %d  e=%.3f%n",
+                    totalRounds, epsilon);
+        } catch (Exception ex) {
+            System.out.println("[AISurvivor] Q-table save failed: " + ex.getMessage());
+        }
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -539,8 +697,7 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
 
     private EnemyInfo nearestEnemy() {
-        EnemyInfo best = null;
-        double minD = Double.MAX_VALUE;
+        EnemyInfo best = null; double minD = Double.MAX_VALUE;
         for (EnemyInfo e : enemies.values()) {
             double d = distanceTo(e.x, e.y);
             if (d < minD) { minD = d; best = e; }
@@ -549,18 +706,13 @@ public class AISurvivor extends Bot {
     }
 
     private EnemyInfo weakestEnemy() {
-        EnemyInfo best = null;
-        double minEn = Double.MAX_VALUE;
-        for (EnemyInfo e : enemies.values()) {
-            if (e.energy < minEn) { minEn = e.energy; best = e; }
-        }
+        EnemyInfo best = null; double minEn = Double.MAX_VALUE;
+        for (EnemyInfo e : enemies.values()) { if (e.energy < minEn) { minEn = e.energy; best = e; } }
         return best;
     }
 
-    /** Combines distance and energy to rank targets: closer + weaker = better. */
     private EnemyInfo bestTarget() {
-        EnemyInfo best = null;
-        double minScore = Double.MAX_VALUE;
+        EnemyInfo best = null; double minScore = Double.MAX_VALUE;
         for (EnemyInfo e : enemies.values()) {
             double score = distanceTo(e.x, e.y) * 0.7 + e.energy * 1.5;
             if (score < minScore) { minScore = score; best = e; }
@@ -572,29 +724,44 @@ public class AISurvivor extends Bot {
     //  Utilities
     // ═════════════════════════════════════════════════════════════════════════
 
-    /** Remove enemy entries not refreshed within STALE_TURNS. */
     private void pruneStaleEnemies() {
         int now = getTurnNumber();
         enemies.values().removeIf(e -> now - e.lastScanTurn > STALE_TURNS);
     }
 
-    /** Distance to the nearest arena wall. */
     private double minWallDist() {
         double x = getX(), y = getY();
-        return Math.min(
-                Math.min(x, getArenaWidth()  - x),
-                Math.min(y, getArenaHeight() - y));
+        return Math.min(Math.min(x, getArenaWidth() - x), Math.min(y, getArenaHeight() - y));
     }
+
+    private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
 
     /**
-     * Maximum body turn rate this turn (speed-dependent per game physics).
-     * Formula: 10 − 0.75 × |speed|
+     * Maps (distance, lateralSpeed) to a segment index 0..NUM_SEGS-1.
+     * Segments separate enemies that behave differently at different ranges
+     * and movement speeds.
      */
-    private double maxBodyTurn() {
-        return 10.0 - 0.75 * Math.abs(getSpeed());
+    private static int segment(double dist, double latSpeed) {
+        int dBucket = dist < 200 ? 0 : dist < 500 ? 1 : 2;
+        int vBucket = latSpeed < 2.0 ? 0 : latSpeed < 5.0 ? 1 : 2;
+        return dBucket * LAT_SEGS + vBucket;
     }
 
-    /** Normalise angle to (−180, +180]. */
+    /** Maps GF in [−1, +1] to a bin index in [0, GF_BINS−1]. */
+    private static int gfBin(double gf) {
+        return (int) clamp(Math.round((gf + 1.0) / 2.0 * (GF_BINS - 1)), 0, GF_BINS - 1);
+    }
+
+    private double firePower(double dist) {
+        double en = getEnergy();
+        if (en < 12.0) return 0.0;
+        double fp = clamp(700.0 / (dist + 50.0), 0.5, 3.0);
+        if (en < 25.0)      fp = Math.min(fp, 0.8);
+        else if (en < 50.0) fp = Math.min(fp, 1.5);
+        if (getEnemyCount() > 3) fp = Math.min(fp, 1.5);
+        return fp;
+    }
+
     private static double normalizeAngle(double a) {
         while (a >  180.0) a -= 360.0;
         while (a < -180.0) a += 360.0;
@@ -607,8 +774,7 @@ public class AISurvivor extends Bot {
 
     private static double sq(double v) { return v * v; }
 
-    /** Bullet damage formula from the game physics spec. */
-    private static double bulletDamage(double power) {
-        return 4.0 * power + (power > 1.0 ? 2.0 * (power - 1.0) : 0.0);
+    private static double bulletDamage(double p) {
+        return 4.0 * p + (p > 1.0 ? 2.0 * (p - 1.0) : 0.0);
     }
 }
