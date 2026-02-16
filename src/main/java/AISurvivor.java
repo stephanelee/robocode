@@ -5,33 +5,23 @@ import java.io.*;
 import java.util.*;
 
 /**
- * AISurvivor v2 — Robocode Tank Royale melee bot.
+ * AISurvivor — Robocode Tank Royale melee bot.
  *
- * Improvements over v1
- * ─────────────────────
  *  GuessFactor Targeting
  *    Records the actual enemy position every time a targeting wave
  *    passes through it (not just on hits) to build a statistical model
  *    of how each enemy moves.  Segmented by distance × lateral velocity
  *    (9 segments × 47 bins per enemy).
  *
- *  Wave Surfing
- *    Detects enemy bullet fires via energy drops each scan.  Creates
- *    EnemyWave objects that carry a danger profile copied from that
- *    enemy's observed shooting pattern.  Each turn, evaluates 24
- *    candidate headings and steers toward the lowest-danger position
- *    across all active waves.  Danger profiles improve when hit.
- *
  *  Wall Smoothing
  *    Every movement strategy adjusts its target heading away from
  *    walls before committing, preventing the bot from grinding corners.
  *
- *  Q-Learning (kept from v1)
- *    Selects between wave surfing, anti-gravity, circling, fleeing, and
- *    hunting.  Action slot 4 (was "dodge") is now "wave surf"; existing
- *    Q-tables are forward-compatible.  Persistent across battles.
+ *  Q-Learning
+ *    Selects between anti-gravity, circling, fleeing, dodging, and
+ *    hunting.  Persistent across battles via Q-table on disk.
  *
- *  Focused radar (from v1)
+ *  Focused radar
  *    Locks on nearest enemy with overshoot oscillation; sweeps when
  *    no target is known.
  */
@@ -68,7 +58,7 @@ public class AISurvivor extends Bot {
     private static final int A_CIRCLE_CW   = 1;
     private static final int A_CIRCLE_CCW  = 2;
     private static final int A_FLEE        = 3;
-    private static final int A_WAVE_SURF   = 4; // replaces v1 A_DODGE — same slot
+    private static final int A_DODGE       = 4; // erratic perpendicular evasion
     private static final int A_HUNT        = 5;
 
     // ─── Anti-gravity constants ───────────────────────────────────────────────
@@ -115,20 +105,6 @@ public class AISurvivor extends Bot {
         double[] bins;               // reference to gfStats[targetId][segment] — mutated on hit
     }
 
-    /**
-     * A bullet AN ENEMY fired — travels toward us.
-     * Carries a snapshot of that enemy's danger profile at the time of firing.
-     * Used to evaluate where we should move to avoid the bullet.
-     */
-    private static final class EnemyWave {
-        double   originX, originY;   // enemy position when they fired
-        double   directAngle;        // absolute angle from origin to OUR position at fire time
-        double   bulletSpeed;
-        int      fireTurn;
-        int      enemyId;
-        double[] dangerBins;         // copy of surfStats[enemyId] at wave creation time
-    }
-
     // ═════════════════════════════════════════════════════════════════════════
     //  Fields
     // ═════════════════════════════════════════════════════════════════════════
@@ -137,15 +113,10 @@ public class AISurvivor extends Bot {
     private final Map<Integer, EnemyInfo> enemies = new HashMap<>();
 
     // GF targeting statistics: gfStats.get(id)[segment][gfBin]
-    private final Map<Integer, double[][]> gfStats   = new HashMap<>();
+    private final Map<Integer, double[][]> gfStats = new HashMap<>();
 
-    // Wave surfing danger profiles: surfStats.get(id)[gfBin]
-    // Records which GF offsets each enemy tends to fire at us with.
-    private final Map<Integer, double[]>   surfStats = new HashMap<>();
-
-    // Active waves
+    // Active targeting waves
     private final List<TargetingWave> targetingWaves = new ArrayList<>();
-    private final List<EnemyWave>     enemyWaves     = new ArrayList<>();
 
     // Q-Learning
     private double[][] qTable;
@@ -179,7 +150,6 @@ public class AISurvivor extends Bot {
         while (isRunning()) {
             pruneStaleEnemies();
             advanceTargetingWaves();   // update GF stats
-            advanceEnemyWaves();       // remove waves that passed us
 
             // Q-Learning update
             int state = computeState();
@@ -206,7 +176,6 @@ public class AISurvivor extends Bot {
     public void onRoundStarted(RoundStartedEvent e) {
         enemies.clear();
         targetingWaves.clear();
-        enemyWaves.clear();
         pendingReward = 0.0;
         prevState = prevAction = -1;
         dodgeSign = 1;
@@ -243,66 +212,14 @@ public class AISurvivor extends Bot {
                 latVel, prevEn, getTurnNumber());
         enemies.put(info.id, info);
 
-        // Initialise statistics maps for new enemies
-        gfStats  .computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
-        surfStats.computeIfAbsent(info.id, k -> new double[GF_BINS]);
-
-        // Detect bullet fire: an energy drop of 0.1–3.0 that isn't explained
-        // by normal damage means the enemy fired a bullet of that power.
-        double drop = prevEn - e.getEnergy();
-        if (drop >= 0.1 && drop <= 3.01) {
-            double bspeed = calcBulletSpeed(drop);
-
-            // Angle from enemy's firing position toward our position right now
-            double directAngle = Math.toDegrees(
-                    Math.atan2(getX() - e.getX(), getY() - e.getY()));
-
-            EnemyWave wave    = new EnemyWave();
-            wave.originX      = e.getX();
-            wave.originY      = e.getY();
-            wave.directAngle  = directAngle;
-            wave.bulletSpeed  = bspeed;
-            wave.fireTurn     = getTurnNumber();
-            wave.enemyId      = info.id;
-            wave.dangerBins   = surfStats.get(info.id).clone(); // snapshot
-            enemyWaves.add(wave);
-        }
+        // Initialise GF statistics map for new enemies
+        gfStats.computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
     }
 
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
         pendingReward -= bulletDamage(e.getBullet().getPower()) * 0.8;
         dodgeSign = -dodgeSign;
-
-        // Find the enemy wave closest to us right now from the shooter,
-        // then record which GF bin the bullet came from to update the
-        // danger profile so future surfing is more accurate.
-        int shooterId = e.getBullet().getOwnerId();
-        double[] stats = surfStats.get(shooterId);
-        if (stats == null) return;
-
-        EnemyWave closest = null;
-        double    minDiff = Double.MAX_VALUE;
-        for (EnemyWave w : enemyWaves) {
-            if (w.enemyId != shooterId) continue;
-            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
-            double myDist   = Math.sqrt(sq(getX() - w.originX) + sq(getY() - w.originY));
-            double diff = Math.abs(traveled - myDist);
-            if (diff < minDiff) { minDiff = diff; closest = w; }
-        }
-        if (closest == null) return;
-
-        double absAngle     = Math.toDegrees(
-                Math.atan2(getX() - closest.originX, getY() - closest.originY));
-        double latAngle     = normalizeAngle(absAngle - closest.directAngle);
-        double maxAngle     = Math.toDegrees(
-                Math.asin(Math.min(1.0, 8.0 / closest.bulletSpeed)));
-        double gf           = clamp(latAngle / maxAngle, -1.0, 1.0);
-        int    bin          = gfBin(gf);
-
-        // Decay all bins slightly so recent hits matter more, then increment
-        for (int i = 0; i < stats.length; i++) stats[i] *= 0.97;
-        stats[bin] += 1.0;
     }
 
     @Override
@@ -437,82 +354,6 @@ public class AISurvivor extends Bot {
         }
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Wave Surfing
-    // ═════════════════════════════════════════════════════════════════════════
-
-    /** Remove waves that have traveled well past our current position. */
-    private void advanceEnemyWaves() {
-        double myX = getX(), myY = getY();
-        int    now = getTurnNumber();
-        enemyWaves.removeIf(w -> {
-            double traveled = (now - w.fireTurn) * w.bulletSpeed;
-            double myDist   = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
-            return traveled > myDist + 60;
-        });
-    }
-
-    /**
-     * Wave surfing movement.
-     * Evaluates 24 candidate absolute headings (every 15°), applies wall
-     * smoothing to each, sums danger across all active enemy waves, and
-     * steers toward the safest one.
-     * Falls back to anti-gravity when no waves are active.
-     */
-    private void doWaveSurf() {
-        if (enemyWaves.isEmpty()) { doAntiGravity(1.0); return; }
-
-        double myX = getX(), myY = getY();
-        double bestDanger  = Double.MAX_VALUE;
-        double bestHeading = getDirection();
-
-        for (int i = 0; i < 24; i++) {
-            double heading  = i * 15.0;
-            double smoothed = wallSmooth(myX, myY, heading, 1);
-            double danger   = totalDanger(myX, myY, smoothed);
-            if (danger < bestDanger) { bestDanger = danger; bestHeading = smoothed; }
-        }
-
-        double turn = normalizeAngle(bestHeading - getDirection());
-        setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
-        setTargetSpeed(8.0);
-    }
-
-    /**
-     * Sums the GF danger across all active enemy waves for a bot that moves
-     * in {@code heading} from ({@code myX}, {@code myY}).
-     * The bot's position is simulated forward until the wave would intersect.
-     */
-    private double totalDanger(double myX, double myY, double heading) {
-        int    now    = getTurnNumber();
-        double sinH   = Math.sin(Math.toRadians(heading));
-        double cosH   = Math.cos(Math.toRadians(heading));
-        double danger = 0;
-
-        for (EnemyWave w : enemyWaves) {
-            double traveled = (now - w.fireTurn) * w.bulletSpeed;
-            double myDist   = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
-            if (traveled > myDist) continue; // already passed
-
-            // Simulate movement until wave catches us (max 30 turns)
-            double simX = myX, simY = myY;
-            int    ticks = Math.min(30, (int)((myDist - traveled) / w.bulletSpeed) + 1);
-            for (int t = 0; t < ticks; t++) {
-                simX = clamp(simX + sinH * 8.0, 18, getArenaWidth()  - 18);
-                simY = clamp(simY + cosH * 8.0, 18, getArenaHeight() - 18);
-            }
-
-            double absAngle  = Math.toDegrees(
-                    Math.atan2(simX - w.originX, simY - w.originY));
-            double latAngle  = normalizeAngle(absAngle - w.directAngle);
-            double maxAngle  = Math.toDegrees(
-                    Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
-            double gf        = clamp(latAngle / maxAngle, -1.0, 1.0);
-            danger          += w.dangerBins[gfBin(gf)] + 1.0; // +1 base so empty bins aren't free
-        }
-        return danger;
-    }
-
     /**
      * Iteratively adjusts {@code heading} by 5° in direction {@code rotDir}
      * until the projected position at {@code WALL_MARGIN} distance is safely
@@ -540,7 +381,7 @@ public class AISurvivor extends Bot {
             case A_CIRCLE_CW   -> doCircle(true);
             case A_CIRCLE_CCW  -> doCircle(false);
             case A_FLEE        -> doAntiGravity(2.5);
-            case A_WAVE_SURF   -> doWaveSurf();
+            case A_DODGE       -> doDodge();
             case A_HUNT        -> doHunt();
             default            -> doAntiGravity(1.0);
         }
@@ -590,6 +431,11 @@ public class AISurvivor extends Bot {
         double turn      = normalizeAngle(smoothed - getDirection());
         setTurnRate(clamp(turn * 2.0, -maxBodyTurn(), maxBodyTurn()));
         setTargetSpeed(8.0);
+    }
+
+    private void doDodge() {
+        setTurnRate(maxBodyTurn() * dodgeSign);
+        setTargetSpeed(8.0 * ((getTurnNumber() % 7 < 4) ? 1 : -1));
     }
 
     private void doHunt() {
