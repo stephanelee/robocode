@@ -2,7 +2,7 @@
 
 Repository: https://github.com/stephanelee/robocode
 
-Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1b8e079ac`. The Java 17 build has since been verified locally and in GitHub Actions (PR #1); battle performance has not yet been verified.
+Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1b8e079ac`. The Java 17 build has since been verified locally and in GitHub Actions (PR #1); headless battle integration and a small reference experiment are recorded in [the baseline report](benchmarks/reference-2026-11-02/README.md). These results do not establish competitive strength.
 
 ## First milestone: reliable baseline
 
@@ -15,19 +15,19 @@ Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1
 - [x] Add focused tests for geometry, targeting defaults, and learning transitions.
 - [x] Add a Gradle wrapper and CI for reproducible builds. (PR #1; local Java 17 build and GitHub Actions verified.)
 - [x] Write a README and update stale architecture and bot metadata documentation.
-- [ ] Run baseline battles and record the results.
+- [x] Run baseline battles and record the results. (PR #3; 140 reference rounds across four scenarios.)
 
 ## Validate and improve learning
 
 - [x] Repair wave-surfing statistics using bullet-hit evidence rather than only the bot's position when a wave passes.
-- [ ] Create automated battle benchmarks against a fixed opponent roster.
-- [ ] Record score, placement, hit rate, wall collisions, and skipped turns.
+- [x] Create automated battle benchmarks against a fixed opponent roster.
+- [x] Record score, placement, hit rate, wall collisions, and skipped turns.
 - [x] Separate training and evaluation modes, with reproducible random seeds.
-- [ ] Compare fixed strategies against untrained and trained DQN policies before expanding the model.
+- [x] Compare a fixed minimum-risk baseline against untrained and trained DQN policies before expanding the model. (Five evaluation rounds per policy/scenario; no strength conclusion.)
 - [x] Improve saved-model handling with version checks and atomic writes.
 
 ## Later improvements
 
-- [ ] Add a results dashboard for scores, hit rates, survival, and learning progress.
+- [x] Add a standalone results dashboard for scores, hit rates, survival, and training/evaluation comparisons.
 
 First milestone is complete when the build is reproducible, movement and targeting checks pass, and baseline battle results are recorded.

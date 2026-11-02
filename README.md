@@ -39,7 +39,7 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 
 ## GitHub Actions
 
-[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) runs on pull requests and pushes to `master`, and supports manual dispatch once the workflow is on the default branch. It builds with Java 17, runs available tests, and uploads the freshly compiled bot as the **AISurvivor-java17** artifact. Download it from a successful Actions run's Artifacts section and extract it into a bot directory. The pipeline does not yet run battles or measure playing strength.
+[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) runs on pull requests and pushes to `master`, and supports manual dispatch once the workflow is on the default branch. It builds with Java 17, runs available tests, and uploads the freshly compiled bot as the **AISurvivor-java17** artifact. Download it from a successful Actions run's Artifacts section and extract it into a bot directory. The separate [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) workflow runs a strict headless smoke battle on PRs and pushes. Dispatch it with `full=true` for fixed-policy, cold-DQN, and trained-DQN reference comparisons; download the **battle-results** artifact for JSON/CSV evidence and the standalone HTML dashboard. See [tools/BENCHMARKS.md](tools/BENCHMARKS.md). Small reference experiments do not establish playing strength.
 
 ## Current design
 
@@ -52,7 +52,7 @@ The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`
 - Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
 - A versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
 
-This is an experimental bot with known correctness issues. See [TODO.md](TODO.md) for the prioritized repair and benchmark plan. Build success alone does not establish battle performance.
+This is an experimental bot. See [TODO.md](TODO.md) for completed repairs and the benchmark plan. Build success alone does not establish battle performance.
 
 ## Training, evaluation, and telemetry
 
@@ -83,3 +83,4 @@ java -jar AISurvivor.jar
 ```
 
 Metrics include actual fired bullets and bullet hits, hit rate, damage dealt/taken, wall and bot collisions, skipped turns, outcome, accumulated reward, mode, seed, and checkpoint status. The benchmark runner can combine these records with official scores and placements.
+
