@@ -1,0 +1,57 @@
+name: Battle benchmark
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Run fixed, cold DQN, training, and trained evaluation scenarios
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  battle:
+    name: Headless battle smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Test benchmark tooling
+        run: python -m unittest discover -s tools -p 'test_*.py' -v
+      - name: Build current bot from source
+        run: ./gradlew --no-daemon clean build
+      - name: Run headless reference experiment
+        env:
+          FULL: ${{ inputs.full || false }}
+        run: |
+          if [ "$FULL" = "true" ]; then
+            python tools/benchmark.py --rounds 3 --training-rounds 10 --timeout 90
+          else
+            python tools/benchmark.py --smoke --timeout 90
+          fi
+      - name: Upload experiment and dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: battle-results
+          path: |
+            build/benchmark/results.json
+            build/benchmark/results.csv
+            build/benchmark/dashboard.html
+            build/benchmark/*/battle.json
+            build/benchmark/*/metrics.jsonl
+            build/benchmark/*/runner.log
+          if-no-files-found: warn

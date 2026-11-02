@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Pinned, isolated Tank Royale experiments; Python 3.10+, Java 17+, no pip dependencies."""
+import argparse
+import csv
+import hashlib
+import html
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import subprocess
+import sys
+import time
+import urllib.request
+import zipfile
+
+VERSION = "1.4.0"
+ASSETS = {
+    "robocode-tankroyale-runner-1.4.0.jar": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "sample-bots-Java-1.4.0.zip": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+}
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def digest(path):
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest() if hasattr(hashlib, "file_digest") else hashlib.sha256(stream.read()).hexdigest()
+
+
+def download(cache, name, expected):
+    cache.mkdir(parents=True, exist_ok=True)
+    target = cache / name
+    if not target.exists() or digest(target) != expected:
+        temporary = target.with_suffix(target.suffix + ".part")
+        request = urllib.request.Request(f"https://github.com/robocode-dev/tank-royale/releases/download/v{VERSION}/{name}", headers={"User-Agent": "AISurvivor-benchmark"})
+        with urllib.request.urlopen(request, timeout=60) as response, temporary.open("wb") as stream:
+            shutil.copyfileobj(response, stream)
+        if digest(temporary) != expected:
+            temporary.unlink()
+            raise ValueError(f"SHA256 mismatch: {name}")
+        temporary.replace(target)
+    return target
+
+
+def extract(archive, destination):
+    destination.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(archive) as zipped:
+        for entry in zipped.infolist():
+            target = (destination / entry.filename).resolve()
+            if not target.is_relative_to(destination.resolve()) or "\\" in entry.filename:
+                raise ValueError(f"Unsafe archive path: {entry.filename}")
+            if (entry.external_attr >> 16) & 0o170000 == 0o120000:
+                raise ValueError("Symlinks are not supported in sample archives")
+        zipped.extractall(destination)
+    for script in destination.rglob("*.sh"):
+        script.chmod(script.stat().st_mode | 0o111)
+
+
+def run_process(command, cwd, env, log, timeout):
+    """Use argv, bound execution, and kill only this process group on POSIX timeout."""
+    with log.open("w", encoding="utf-8") as stream:
+        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=stream, stderr=subprocess.STDOUT,
+                                   start_new_session=(os.name != "nt"))
+        try:
+            code = process.wait(timeout=timeout)
+        except (subprocess.TimeoutExpired, KeyboardInterrupt):
+            if os.name != "nt":
+                os.killpg(process.pid, signal.SIGTERM)
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL)
+            else:
+                # Java runner shutdown hook owns its server/booter/bot cleanup.
+                process.terminate()
+            process.wait(timeout=15)
+            raise
+        if code:
+            raise RuntimeError(f"Command exited {code}; see {log}")
+
+
+def summarize_metrics(records):
+    keys = ("turns", "shotsFired", "bulletHits", "damageDealt", "damageTaken", "wallCollisions", "botCollisions", "skippedTurns")
+    result = {key: sum(row.get(key, 0) for row in records) for key in keys}
+    result["hitRate"] = result["bulletHits"] / result["shotsFired"] if result["shotsFired"] else None
+    result["roundsRecorded"] = len(records)
+    result["checkpointLoaded"] = any(row.get("checkpointLoaded", False) for row in records)
+    return result
+
+
+def write_reports(output, report):
+    (output / "results.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    fields = ["scenario", "policy", "rounds", "rank", "totalScore", "firstPlaces", "hitRate", "wallCollisions", "skippedTurns"]
+    with (output / "results.csv").open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fields)
+        writer.writeheader()
+        for battle in report["battles"]:
+            writer.writerow({key: battle.get(key, battle.get("metrics", {}).get(key, "")) for key in fields})
+    rows = []
+    for battle in report["battles"]:
+        values = [battle.get(key, battle.get("metrics", {}).get(key, "")) for key in fields]
+        rows.append("<tr>" + "".join(f"<td>{html.escape(str(value))}</td>" for value in values) + "</tr>")
+    headers = "".join(f"<th>{html.escape(field)}</th>" for field in fields)
+    notes = html.escape(report["limitations"])
+    page = f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AISurvivor battle results</title>
+<style>body{{font:16px system-ui;background:#111827;color:#e5e7eb;max-width:1200px;margin:40px auto;padding:0 20px}}h1{{color:#67e8f9}}.scroll{{overflow:auto}}table{{border-collapse:collapse;width:100%;background:#1f2937}}th,td{{padding:12px;text-align:left;border-bottom:1px solid #374151}}th{{color:#a5f3fc}}p{{line-height:1.6}}input{{padding:10px;font:inherit;margin:12px 0;width:260px}}</style>
+<h1>AISurvivor battle results</h1><p>Tank Royale {VERSION} · seed {report['seed']} · training budget {report['trainingRounds']} rounds per scenario</p>
+<p>{notes}</p><label>Filter scenarios or policies <input id="filter" placeholder="e.g. trained or Walls"></label><div class="scroll"><table><thead><tr>{headers}</tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<p>Scores are comparable within a scenario and round budget. Downloaded JSON/CSV retain full experiment metadata. Missing telemetry is not a zero measurement.</p>
+<script>document.getElementById('filter').addEventListener('input',e=>{{for(const r of document.querySelectorAll('tbody tr'))r.hidden=!r.textContent.toLowerCase().includes(e.target.value.toLowerCase())}});</script></html>"""
+    (output / "dashboard.html").write_text(page, encoding="utf-8")
+
+
+def battle(args, output, runner, samples, scenario, opponents, policy, rounds, model):
+    run_dir = output / f"{scenario}-{policy}"
+    bot_dir = run_dir / "AISurvivor"
+    bot_dir.mkdir(parents=True)
+    for name in ("AISurvivor.jar", "AISurvivor.json", "AISurvivor.sh", "AISurvivor.cmd"):
+        shutil.copy2(args.bot_dir / name, bot_dir / name)
+    (bot_dir / "AISurvivor.sh").chmod(0o755)
+    metrics = run_dir / "metrics.jsonl"
+    env = os.environ.copy()
+    env.update(AISURVIVOR_MODE="train" if policy == "train" else "fixed" if policy.startswith("fixed") else "eval",
+               AISURVIVOR_SEED=str(args.seed), AISURVIVOR_MODEL_PATH=str(model),
+               AISURVIVOR_METRICS_PATH=str(metrics), AISURVIVOR_ACTION="0")
+    opponent_dirs = []
+    for name in opponents:
+        configs = list(samples.rglob(name + ".json"))
+        if len(configs) != 1:
+            raise ValueError(f"Expected one {name} sample config, found {len(configs)}")
+        opponent_dirs.append(str(configs[0].parent))
+    result_file = run_dir / "battle.json"
+    command = [args.java, "-cp", str(runner), str(ROOT / "tools" / "BenchmarkBattle.java"),
+               str(rounds), str(args.timeout), str(result_file), str(bot_dir), *opponent_dirs]
+    before = digest(model) if model.exists() else None
+    run_process(command, ROOT, env, run_dir / "runner.log", args.timeout + 90)
+    data = json.loads(result_file.read_text(encoding="utf-8"))
+    if data["numberOfRounds"] != rounds:
+        raise ValueError("Battle round count does not match requested budget")
+    candidate = next(row for row in data["results"] if row["name"] == "AISurvivor")
+    records = [json.loads(line) for line in metrics.read_text(encoding="utf-8").splitlines() if line.strip()] if metrics.exists() else []
+    if args.require_metrics and len(records) != rounds:
+        raise ValueError(f"Expected {rounds} telemetry rows, got {len(records)}")
+    if policy != "train" and (digest(model) if model.exists() else None) != before:
+        raise ValueError("Evaluation modified its checkpoint")
+    return dict(scenario=scenario, policy=policy, rounds=rounds, **candidate,
+                metrics=summarize_metrics(records) if records else {}, results=data["results"],
+                modelSHA256=digest(model) if model.exists() else None)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--smoke", action="store_true", help="One evaluation round against Target")
+    parser.add_argument("--rounds", type=int, default=5)
+    parser.add_argument("--training-rounds", type=int, default=20)
+    parser.add_argument("--seed", type=int, default=20261102)
+    parser.add_argument("--timeout", type=int, default=180, help="Battle timeout in seconds")
+    parser.add_argument("--output", type=Path, default=ROOT / "build" / "benchmark")
+    parser.add_argument("--cache", type=Path, default=ROOT / ".benchmark-cache")
+    parser.add_argument("--bot-dir", type=Path, default=ROOT / "AISurvivor")
+    parser.add_argument("--java", default="java")
+    parser.add_argument("--require-metrics", action="store_true")
+    args = parser.parse_args()
+    if min(args.rounds, args.training_rounds, args.timeout) <= 0:
+        parser.error("round and timeout values must be positive")
+    args.bot_dir = args.bot_dir.resolve()
+    args.output = args.output.resolve()
+    if args.output.exists() and any(args.output.iterdir()):
+        parser.error("output directory must be empty to preserve prior experiment evidence")
+    args.output.mkdir(parents=True, exist_ok=True)
+    assets = {name: download(args.cache.resolve(), name, expected) for name, expected in ASSETS.items()}
+    runner = assets["robocode-tankroyale-runner-1.4.0.jar"]
+    samples = args.output / "samples"
+    extract(assets["sample-bots-Java-1.4.0.zip"], samples)
+    report = dict(schemaVersion=1, tankRoyaleVersion=VERSION, seed=args.seed,
+                  trainingRounds=0 if args.smoke else args.training_rounds,
+                  botJarSHA256=digest(args.bot_dir / "AISurvivor.jar"), assetSHA256=ASSETS,
+                  limitations="Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.", battles=[])
+    scenarios = {"Target": ["Target"]} if args.smoke else {"Target": ["Target"], "SpinBot": ["SpinBot"], "Walls": ["Walls"], "melee": ["Target", "SpinBot", "Walls"]}
+    for name, opponents in scenarios.items():
+        policies = ["untrained"] if args.smoke else ["fixed-minrisk", "untrained", "train", "trained"]
+        for policy in policies:
+            model = args.output / f"{name}-{'trained' if policy in ('train', 'trained') else policy}.dat"
+            result = battle(args, args.output, runner, samples, name, opponents, policy,
+                            args.training_rounds if policy == "train" else 1 if args.smoke else args.rounds, model)
+            if policy == "trained" and not model.exists():
+                raise ValueError("Training did not produce a checkpoint")
+            report["battles"].append(result)
+            write_reports(args.output, report)
+            print(f"{name} {policy}: rank={result['rank']} score={result['totalScore']}", flush=True)
+
+
+if __name__ == "__main__":
+    main()
