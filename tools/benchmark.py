@@ -13,6 +13,7 @@ import signal
 import subprocess
 import urllib.request
 import zipfile
+import retcon
 
 VERSION = "1.4.0"
 ASSETS = {
@@ -165,6 +166,7 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
     (bot_dir / "AISurvivor.sh").chmod(0o755)
     metrics = run_dir / "metrics.jsonl"
     env = os.environ.copy()
+    env.update(args.opponent_env)
     if Path(args.java).is_absolute():
         env["PATH"] = str(Path(args.java).parent) + os.pathsep + env.get("PATH", "")
     env.update(AISURVIVOR_MODE="train" if policy == "train" else "fixed" if policy.startswith("fixed") else "eval",
@@ -172,10 +174,12 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
                AISURVIVOR_METRICS_PATH=str(metrics), AISURVIVOR_ACTION="0")
     opponent_dirs = []
     for name in opponents:
-        configs = list(samples.rglob(name + ".json"))
+        configs = [args.retcon_source / "Retcon.json"] if name == "Retcon" and args.retcon_source else list(samples.rglob(name + ".json"))
         if len(configs) != 1:
             raise ValueError(f"Expected one {name} sample config, found {len(configs)}")
-        opponent_dirs.append(str(configs[0].parent))
+        isolated = run_dir / "opponents" / name
+        shutil.copytree(configs[0].parent, isolated)
+        opponent_dirs.append(str(isolated))
     result_file = run_dir / "battle.json"
     command = [args.java, "-cp", str(runner), str(ROOT / "tools" / "BenchmarkBattle.java"),
                str(rounds), str(args.timeout), str(result_file), str(bot_dir), *opponent_dirs]
@@ -202,6 +206,8 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--smoke", action="store_true", help="One evaluation round against Target")
+    parser.add_argument("--suite", choices=("samples", "retcon"), default="samples",
+                        help="Sample regression roster or pinned Retcon 0.2.0 1v1")
     parser.add_argument("--rounds", type=int, default=5)
     parser.add_argument("--training-rounds", type=int, default=20)
     parser.add_argument("--seed", type=int, default=20261102)
@@ -219,6 +225,18 @@ def main():
     if args.output.exists() and any(args.output.iterdir()):
         parser.error("output directory must be empty to preserve prior experiment evidence")
     args.output.mkdir(parents=True, exist_ok=True)
+    args.opponent_env = {}
+    args.retcon_source = None
+    opponent_provenance = []
+    if args.suite == "retcon":
+        args.retcon_source, api_cache, provenance = retcon.prepare(args.cache.resolve())
+        args.opponent_env["RUMBLE_JAVA_CACHE"] = str(api_cache)
+        opponent_provenance.append(provenance)
+        runtime = subprocess.run([args.java, "-XshowSettings:properties", "-version"], capture_output=True, text=True, timeout=15)
+        import re
+        major = re.search(r"java\.specification\.version\s*=\s*(\d+)", runtime.stderr)
+        if runtime.returncode or not major or int(major.group(1)) < 22:
+            parser.error("Retcon's unchanged source launcher requires --java pointing to JDK 22 or newer (CI uses JDK25)")
     assets = {name: download(args.cache.resolve(), name, expected) for name, expected in ASSETS.items()}
     runner = assets["robocode-tankroyale-runner-1.4.0.jar"]
     samples = args.output / "samples"
@@ -229,11 +247,15 @@ def main():
             source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
         except (OSError, subprocess.CalledProcessError):
             source_commit = None
+    java_version = subprocess.run([args.java, "-version"], capture_output=True, text=True, timeout=15, check=True)
     report = dict(schemaVersion=1, tankRoyaleVersion=VERSION, sourceCommit=source_commit, seed=args.seed,
+                  suite=args.suite, runtimeJava=(java_version.stderr + java_version.stdout).strip(),
+                  opponentProvenance=opponent_provenance,
+                  evaluationScope="in-roster adaptation; training and evaluation use the same opponent identities",
                   trainingRounds=0 if args.smoke else args.training_rounds,
                   botJarSHA256=digest(args.bot_dir / "AISurvivor.jar"), assetSHA256=ASSETS,
                   limitations="Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.", battles=[])
-    scenarios = {"Target": ["Target"]} if args.smoke else {"Target": ["Target"], "SpinBot": ["SpinBot"], "Walls": ["Walls"], "melee": ["Target", "SpinBot", "Walls"]}
+    scenarios = {"Retcon": ["Retcon"]} if args.suite == "retcon" else {"Target": ["Target"]} if args.smoke else {"Target": ["Target"], "SpinBot": ["SpinBot"], "Walls": ["Walls"], "melee": ["Target", "SpinBot", "Walls"]}
     for name, opponents in scenarios.items():
         policies = ["untrained"] if args.smoke else ["fixed-minrisk", "untrained", "train", "trained"]
         for policy in policies:
