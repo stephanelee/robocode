@@ -58,4 +58,23 @@ final class CombatMath {
     static int gfBin(double gf, int bins) {
         return (int) Math.max(0, Math.min(bins - 1, Math.round((gf + 1) * (bins - 1) / 2)));
     }
+
+    /**
+     * Smallest-deviation heading, searched in 5-degree steps in both rotation directions over the full circle, whose
+     * point {@code stick} units ahead lies strictly inside the {@code margin} envelope. If none exists (e.g. deep in a
+     * corner), returns the heading toward the arena centre. The result is normalized to [0, 360).
+     */
+    static double nearestSafeHeading(double x, double y, double heading, double width, double height, double margin) {
+        for (int step = 0; step <= 36; step++) {
+            for (int sign : step == 0 ? new int[]{1} : new int[]{1, -1}) {
+                double h = heading + sign * step * 5.0;
+                double rad = Math.toRadians(h);
+                double tx = x + Math.cos(rad) * margin, ty = y + Math.sin(rad) * margin;
+                if (tx > margin && tx < width - margin && ty > margin && ty < height - margin)
+                    return ((h % 360) + 360) % 360;
+            }
+        }
+        double centre = bearing(width / 2 - x, height / 2 - y);
+        return ((centre % 360) + 360) % 360;
+    }
 }

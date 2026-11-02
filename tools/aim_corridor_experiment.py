@@ -1,4 +1,4 @@
-"""Execute the preregistered aim-corridor experiment (docs/improvements/aim-corridor.md).
+"""Execute a preregistered aim-corridor experiment (default plan: docs/improvements/aim-corridor.md).
 
 Stage A: 120-round tactical fixed minimum-risk Retcon primary (compare.py).
 Stage B: official Target/SpinBot/Walls regression, 10 fixed rounds per arm each (always run).
@@ -62,12 +62,14 @@ def final_decision(primary, samples, veto):
 
 
 def run_compare(args, policy, category, output):
+    plan_path = getattr(args, 'plan_path', PLAN_PATH)
+    seeds = getattr(args, 'seeds', SEEDS)
     subprocess.run([sys.executable, str(Path(__file__).with_name('compare.py')),
         '--previous-bot-dir', str(args.previous_bot_dir), '--candidate-bot-dir', str(benchmark.ROOT / 'AISurvivor'),
         '--previous-source', args.previous_source, '--candidate-source', args.candidate_source,
-        '--plan', str(benchmark.ROOT / PLAN_PATH), '--plan-commit', args.plan_commit,
+        '--plan', str(benchmark.ROOT / plan_path), '--plan-commit', args.plan_commit,
         '--purpose', 'primary', '--policy', policy, '--category', category, '--rounds', '20',
-        '--seeds', SEEDS, '--java', args.java, '--timeout', '900', '--require-retcon-stats',
+        '--seeds', seeds, '--java', args.java, '--timeout', '900', '--require-retcon-stats',
         '--output', str(output)], check=True)
     return json.loads((output / 'comparison.json').read_text())
 
@@ -81,6 +83,9 @@ def main():
     parser.add_argument('--plan-commit', required=True)
     parser.add_argument('--java', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--plan-path', default=PLAN_PATH, help='Registered plan path inside the repository')
+    parser.add_argument('--seeds', default=SEEDS, help='Three comma-separated Retcon block seeds')
+    parser.add_argument('--sample-seed', type=int, default=SAMPLE_SEED)
     args = parser.parse_args()
     args.output = args.output.resolve()
     args.previous_bot_dir = args.previous_bot_dir.resolve()
@@ -89,7 +94,7 @@ def main():
     if benchmark.digest(args.previous_bot_dir / 'AISurvivor.jar') != args.expected_previous_jar:
         raise ValueError('Baseline JAR does not match the accepted source')
     args.output.mkdir(parents=True)
-    report = dict(status='running', runtimeOS=retcon_stats.os_provenance(), samples=[], plan=PLAN_PATH,
+    report = dict(status='running', runtimeOS=retcon_stats.os_provenance(), samples=[], plan=args.plan_path, seeds=args.seeds, sampleSeed=args.sample_seed,
                   planCommit=args.plan_commit, previousSource=args.previous_source,
                   candidateSource=args.candidate_source, candidateJarSHA256=benchmark.digest(benchmark.ROOT / 'AISurvivor/AISurvivor.jar'),
                   previousJarSHA256=args.expected_previous_jar)
@@ -115,7 +120,7 @@ def main():
             for arm in row['order']:
                 output = args.output / 'samples' / opponent / arm
                 output.mkdir(parents=True)
-                config = argparse.Namespace(java=args.java, bot_dir=snapshots[arm], seed=SAMPLE_SEED,
+                config = argparse.Namespace(java=args.java, bot_dir=snapshots[arm], seed=args.sample_seed,
                     opponent_env={}, retcon_source=None, timeout=300, training_rounds=20, require_metrics=True)
                 row[arm] = benchmark.battle(config, output, runner, samples, opponent, [opponent],
                     'fixed-minrisk', SAMPLE_ROUNDS, output / 'absent-model.dat')
