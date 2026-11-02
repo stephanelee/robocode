@@ -10,8 +10,6 @@ from pathlib import Path
 import shutil
 import signal
 import subprocess
-import sys
-import time
 import urllib.request
 import zipfile
 
@@ -72,8 +70,11 @@ def run_process(command, cwd, env, log, timeout):
                 except subprocess.TimeoutExpired:
                     os.killpg(process.pid, signal.SIGKILL)
             else:
-                # Java runner shutdown hook owns its server/booter/bot cleanup.
-                process.terminate()
+                # Windows TerminateProcess skips JVM shutdown hooks: terminate the owned tree.
+                subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                               stdout=stream, stderr=subprocess.STDOUT, timeout=15, check=False)
+                if process.poll() is None:
+                    process.kill()
             process.wait(timeout=15)
             raise
         if code:
@@ -121,6 +122,8 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
     (bot_dir / "AISurvivor.sh").chmod(0o755)
     metrics = run_dir / "metrics.jsonl"
     env = os.environ.copy()
+    if Path(args.java).is_absolute():
+        env["PATH"] = str(Path(args.java).parent) + os.pathsep + env.get("PATH", "")
     env.update(AISURVIVOR_MODE="train" if policy == "train" else "fixed" if policy.startswith("fixed") else "eval",
                AISURVIVOR_SEED=str(args.seed), AISURVIVOR_MODEL_PATH=str(model),
                AISURVIVOR_METRICS_PATH=str(metrics), AISURVIVOR_ACTION="0")
@@ -138,10 +141,16 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
     data = json.loads(result_file.read_text(encoding="utf-8"))
     if data["numberOfRounds"] != rounds:
         raise ValueError("Battle round count does not match requested budget")
-    candidate = next(row for row in data["results"] if row["name"] == "AISurvivor")
+    expected_name = json.loads((bot_dir / "AISurvivor.json").read_text(encoding="utf-8"))["name"]
+    candidates = [row for row in data["results"] if row["name"] == expected_name]
+    if len(candidates) != 1 or len(data["results"]) != len(opponents) + 1:
+        raise ValueError("Battle participant identities do not match the requested roster")
+    candidate = candidates[0]
     records = [json.loads(line) for line in metrics.read_text(encoding="utf-8").splitlines() if line.strip()] if metrics.exists() else []
     if args.require_metrics and len(records) != rounds:
         raise ValueError(f"Expected {rounds} telemetry rows, got {len(records)}")
+    if policy == "trained" and records and not all(row.get("checkpointLoaded", False) for row in records):
+        raise ValueError("Trained evaluation did not load its checkpoint")
     if policy != "train" and (digest(model) if model.exists() else None) != before:
         raise ValueError("Evaluation modified its checkpoint")
     return dict(scenario=scenario, policy=policy, rounds=rounds, **candidate,
@@ -173,7 +182,13 @@ def main():
     runner = assets["robocode-tankroyale-runner-1.4.0.jar"]
     samples = args.output / "samples"
     extract(assets["sample-bots-Java-1.4.0.zip"], samples)
-    report = dict(schemaVersion=1, tankRoyaleVersion=VERSION, seed=args.seed,
+    source_commit = os.environ.get("GITHUB_SHA")
+    if not source_commit:
+        try:
+            source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
+        except (OSError, subprocess.CalledProcessError):
+            source_commit = None
+    report = dict(schemaVersion=1, tankRoyaleVersion=VERSION, sourceCommit=source_commit, seed=args.seed,
                   trainingRounds=0 if args.smoke else args.training_rounds,
                   botJarSHA256=digest(args.bot_dir / "AISurvivor.jar"), assetSHA256=ASSETS,
                   limitations="Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.", battles=[])

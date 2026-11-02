@@ -15,7 +15,7 @@ The short smoke runs one cold evaluation round against Target. The full experime
 
 The bot receives `AISURVIVOR_MODE`, `AISURVIVOR_SEED`, `AISURVIVOR_MODEL_PATH`, `AISURVIVOR_ACTION`, and `AISURVIVOR_METRICS_PATH`. Use `--require-metrics` once the learning/configuration PR is integrated to require exactly one telemetry row per round. With older bot builds, absent telemetry is reported as missing rather than zero.
 
-Open `dashboard.html` locally to filter the comparison table. `results.json` records asset hashes, the bot JAR hash, training budget, seed, full opponent results, and bot telemetry aggregates. `results.csv` is suitable for spreadsheets. Raw battle results, per-round telemetry, and runner logs remain in each scenario directory.
+Open `dashboard.html` locally to filter the comparison table. `results.json` records the source commit (GitHub SHA or local Git HEAD when available), asset hashes, the bot JAR hash, training budget, seed, full opponent results, and bot telemetry aggregates. `results.csv` is suitable for spreadsheets. Raw battle results, per-round telemetry, and runner logs remain in each scenario directory. Rebuild before running locally: a source commit alone does not prove an existing JAR was built from that source.
 
 Metrics use actual fired bullets and hit events; hit rate aggregates hits divided by shots across rounds. Score, rank, survival score, and round wins come from the official runner. Training rows describe the training budget and should not be compared with evaluation rows as equal-budget results.
 
@@ -25,4 +25,4 @@ These are reference experiments, not proof that DQN improves performance. The bo
 
 The `Battle benchmark` workflow runs a smoke battle on every PR/push. Run it manually with `full=true` for the four-scenario reference experiment. Download its `battle-results` artifact to view the standalone dashboard; no hosting is required.
 
-Each Java battle has a deadline and uses the official runner's resource cleanup. The Python wrapper also bounds the entire process and terminates its POSIX process group on timeout. For Windows, the runner shutdown hook owns child cleanup; Actions uses Linux.
+Each Java battle has a deadline and uses the official runner's resource cleanup. The Python wrapper also bounds the entire process and terminates its POSIX process group on timeout. On Windows, it uses `taskkill /PID <owned-pid> /T /F` to terminate that runner's process tree because forced termination does not execute JVM shutdown hooks. Actions uses Linux.
