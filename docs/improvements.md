@@ -2,7 +2,7 @@
 
 [Tracker: three measured cycles](https://github.com/stephanelee/robocode/issues/8)
 
-The Retcon 1v1 baseline is recorded; gameplay candidates remain unimplemented in this integration PR. Each cycle compares one narrowly scoped candidate with the previously accepted version. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
+Each cycle compares one narrowly scoped candidate with the previously accepted version. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
 ## Baselines
 
@@ -13,9 +13,9 @@ The Retcon 1v1 baseline is recorded; gameplay candidates remain unimplemented in
 
 | Cycle | Candidate hypothesis | Status | Required evidence |
 | --- | --- | --- | --- |
-| 1 | [Back-as-front steering](https://github.com/stephanelee/robocode/issues/10) may reduce turn exposure and unnecessary full rotations. | Planned; choose after baseline diagnostics. | Candidate vs previous version, repeated Retcon 1v1 trials, damage/score/wall and skipped-turn telemetry. |
+| 1 | [Back-as-front steering](https://github.com/stephanelee/robocode/issues/10) may reduce turn exposure and unnecessary full rotations. | **Rejected after 120 measured rounds; gameplay reverted.** | [Report and preregistration](improvements/cycle-1.md): mean score share 11.545% → 10.262%; walls/1,000 turns 80.72 → 15.94. |
 | 2 | [Wall-smoothing direction](https://github.com/stephanelee/robocode/issues/11) may reduce avoidable wall collisions. | Planned; no implementation/results yet. | Same comparison method, report collision changes and damage/score tradeoffs. |
-| 3 | [Frozen targeting statistics](https://github.com/stephanelee/robocode/issues/12) may limit cold evaluation; examine the intended evaluation contract before changing it. | Planned; no implementation/results yet. | Isolate the behavior change; document checkpoint/statistics semantics and any gains or regressions. |
+| 3 | [Frozen targeting statistics](https://github.com/stephanelee/robocode/issues/12) may discard saved class statistics during trained evaluation. | Planned; no implementation/results yet. | Compare both versions using identical trained checkpoint copies; document statistics semantics and any gains or regressions. |
 
 Candidates are provisional until Retcon diagnostics identify the next useful change. A failed hypothesis is a recorded result, not a reason to omit the trial. Keep or reject each candidate on the evidence and document uncertainty. Preserve the sample regression/smoke suite; new melee work is deferred while the first challenge focuses on 1v1.
 
