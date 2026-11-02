@@ -24,4 +24,8 @@ final class EnemyWave {
         double maxEscape = Math.toDegrees(Math.asin(Math.min(1, 8 / bulletSpeed)));
         return CombatMath.gfBin(CombatMath.relativeAngle(angle - bearingToUs) / maxEscape, bins);
     }
+
+    void learnHit(double[] danger, double x, double y, boolean training) {
+        if (training && danger != null) danger[hitBin(x, y, danger.length)]++;
+    }
 }

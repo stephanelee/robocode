@@ -5,31 +5,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * AISurvivor — Robocode Tank Royale melee bot (v3 — DQN overhaul).
- *
- *  DQN with experience replay + target network
- *    14 continuous features → 32-neuron hidden layer → 6 action Q-values.
- *    Boltzmann exploration, mini-batch replay (5000 buffer), target net sync.
- *    Persists MLP weights + opponent model across battles.
- *
- *  Action blending
- *    Each action produces a force vector; all 6 are blended via softmax
- *    of Q-values for smooth, less exploitable movement.
- *
- *  Minimum-risk movement
- *    Evaluates 48 candidate destination points; scores by wall proximity,
- *    enemy crosshair alignment, bullet intersection, and distance.
- *
- *  Wave surfing
- *    Tracks enemy bullet waves via energy-drop detection.  Orbits
- *    perpendicular to the wave in the direction with a less-targeted GF bin.
- *
- *  Opponent modelling
- *    Classifies enemies (random / oscillator / circular / linear) from
- *    scan history.  Per-class GF profiles bootstrap targeting for new enemies.
- *
- *  GuessFactor targeting (arc prediction, 47 bins × 9 segments)
- *    Blends per-enemy and per-class GF stats.  Stats decay 0.92 per round.
+ * Experimental Tank Royale bot: seeded DQN strategy selection, GuessFactor
+ * targeting, and minimum-risk/wave-aware movement. See CLAUDE.md for architecture.
  */
 public class AISurvivor extends Bot {
 
@@ -53,7 +30,6 @@ public class AISurvivor extends Bot {
 
     // ─── Features ─────────────────────────────────────────────────────────────
     private static final int NUM_FEATURES = 14;
-    private static final int HIDDEN_SIZE  = 32;
 
     // ─── Opponent classes ─────────────────────────────────────────────────────
     private static final int CLASS_UNKNOWN    = 0;
@@ -61,12 +37,10 @@ public class AISurvivor extends Bot {
     private static final int CLASS_OSCILLATOR = 2;
     private static final int CLASS_CIRCULAR   = 3;
     private static final int CLASS_LINEAR     = 4;
-    private static final int NUM_CLASSES      = 5;
 
     // ─── Misc constants ─────────────────────────────────────────────────────
     private static final double SURVIVAL_BONUS = 0.1;
     private static final int    STALE_TURNS    = 40;
-    private static final String AGENT_FILE     = "AISurvivor-qtable.dat";
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Inner classes
@@ -114,229 +88,6 @@ public class AISurvivor extends Bot {
 
     private record FireScan(Enemy previous, Enemy current, double ourX, double ourY) {}
 
-    // ─── MLP (2-layer neural network) ────────────────────────────────────────
-
-    static final class MLP implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        final int inputSize, hiddenSize, outputSize;
-        double[][] W1, W2;
-        double[] b1, b2;
-
-        transient double[] lastInput, lastHidden, lastOutput;
-
-        MLP(int input, int hidden, int output) {
-            inputSize = input; hiddenSize = hidden; outputSize = output;
-            W1 = new double[input][hidden];
-            W2 = new double[hidden][output];
-            b1 = new double[hidden];
-            b2 = new double[output];
-            xavierInit();
-        }
-
-        private void xavierInit() {
-            Random rng = new Random();
-            double s1 = Math.sqrt(2.0 / inputSize);
-            for (int i = 0; i < inputSize; i++)
-                for (int j = 0; j < hiddenSize; j++)
-                    W1[i][j] = rng.nextGaussian() * s1;
-            double s2 = Math.sqrt(2.0 / hiddenSize);
-            for (int i = 0; i < hiddenSize; i++)
-                for (int j = 0; j < outputSize; j++)
-                    W2[i][j] = rng.nextGaussian() * s2;
-        }
-
-        double[] forward(double[] input) {
-            lastInput = input;
-            lastHidden = new double[hiddenSize];
-            for (int j = 0; j < hiddenSize; j++) {
-                double sum = b1[j];
-                for (int i = 0; i < inputSize; i++) sum += input[i] * W1[i][j];
-                lastHidden[j] = sum > 0 ? sum : 0; // ReLU
-            }
-            lastOutput = new double[outputSize];
-            for (int j = 0; j < outputSize; j++) {
-                double sum = b2[j];
-                for (int i = 0; i < hiddenSize; i++) sum += lastHidden[i] * W2[i][j];
-                lastOutput[j] = sum;
-            }
-            return lastOutput.clone();
-        }
-
-        void trainSingle(double[] input, int action, double targetQ, double lr) {
-            double[] output = forward(input);
-            double delta = targetQ - output[action];
-            delta = clampS(delta, -1.0, 1.0); // gradient clipping
-
-            // Hidden gradients (before updating W2)
-            double[] dH = new double[hiddenSize];
-            for (int j = 0; j < hiddenSize; j++)
-                if (lastHidden[j] > 0) dH[j] = delta * W2[j][action];
-
-            // Update output layer
-            for (int j = 0; j < hiddenSize; j++)
-                W2[j][action] += lr * delta * lastHidden[j];
-            b2[action] += lr * delta;
-
-            // Update hidden layer
-            for (int j = 0; j < hiddenSize; j++) {
-                if (dH[j] == 0) continue;
-                for (int i = 0; i < inputSize; i++)
-                    W1[i][j] += lr * dH[j] * lastInput[i];
-                b1[j] += lr * dH[j];
-            }
-        }
-
-        void copyFrom(MLP src) {
-            for (int i = 0; i < inputSize; i++)
-                System.arraycopy(src.W1[i], 0, W1[i], 0, hiddenSize);
-            System.arraycopy(src.b1, 0, b1, 0, hiddenSize);
-            for (int i = 0; i < hiddenSize; i++)
-                System.arraycopy(src.W2[i], 0, W2[i], 0, outputSize);
-            System.arraycopy(src.b2, 0, b2, 0, outputSize);
-        }
-
-        private static double clampS(double v, double lo, double hi) {
-            return Math.max(lo, Math.min(hi, v));
-        }
-    }
-
-    // ─── DQN Agent ───────────────────────────────────────────────────────────
-
-    static final class DQNAgent implements Serializable {
-        private static final long serialVersionUID = 4L;
-
-        private static final double LR           = 0.002;
-        private static final double GAMMA        = 0.95;
-        private static final double TAU_INIT     = 1.0;
-        private static final double TAU_MIN      = 0.15;
-        private static final double TAU_DECAY    = 0.995;
-        private static final int    REPLAY_CAP   = 5000;
-        private static final int    BATCH        = 32;
-        private static final int    MIN_REPLAY   = 64;
-        private static final int    TARGET_SYNC  = 100;
-
-        MLP policy, target;
-        double tau;
-        int totalRounds, totalSteps;
-
-        // Opponent-model GF stats (persisted)
-        double[][][] classGF; // [NUM_CLASSES][NUM_SEGS][GF_BINS]
-
-        // Transient replay state
-        transient ArrayList<double[]> replay;
-        transient int replayPos;
-        transient double[] lastFeatures;
-        transient double[] lastQValues;
-        transient int lastAction;
-
-        DQNAgent(int features, int actions) {
-            policy = new MLP(features, HIDDEN_SIZE, actions);
-            target = new MLP(features, HIDDEN_SIZE, actions);
-            target.copyFrom(policy);
-            tau = TAU_INIT;
-            classGF = new double[NUM_CLASSES][NUM_SEGS][GF_BINS];
-        }
-
-        void startEpisode() {
-            if (replay == null) replay = new ArrayList<>();
-            lastFeatures = null;
-            lastAction = -1;
-        }
-
-        int observe(double[] features, double reward, boolean done) {
-            if (lastFeatures != null) {
-                store(lastFeatures, lastAction, reward, features, done);
-                if (replay.size() >= MIN_REPLAY) replayLearn();
-            }
-
-            totalSteps++;
-            if (totalSteps % TARGET_SYNC == 0) target.copyFrom(policy);
-
-            lastQValues = policy.forward(features);
-            int action = boltzmann(lastQValues);
-            lastFeatures = features.clone();
-            lastAction = action;
-            return action;
-        }
-
-        void onDeath(double penalty) {
-            if (lastFeatures != null) {
-                store(lastFeatures, lastAction, penalty, lastFeatures, true);
-                if (replay.size() >= MIN_REPLAY)
-                    for (int i = 0; i < BATCH; i++) replayLearnOne();
-            }
-        }
-
-        void endEpisode() {
-            if (replay != null && replay.size() >= MIN_REPLAY)
-                for (int i = 0; i < BATCH * 3; i++) replayLearnOne();
-            totalRounds++;
-            tau = Math.max(TAU_MIN, tau * TAU_DECAY);
-        }
-
-        private void store(double[] f, int a, double r, double[] nf, boolean done) {
-            int fLen = f.length;
-            double[] entry = new double[fLen * 2 + 3];
-            System.arraycopy(f, 0, entry, 0, fLen);
-            entry[fLen] = a;
-            entry[fLen + 1] = r;
-            System.arraycopy(nf, 0, entry, fLen + 2, fLen);
-            entry[fLen * 2 + 2] = done ? 1.0 : 0.0;
-
-            if (replay.size() < REPLAY_CAP) {
-                replay.add(entry);
-            } else {
-                if (replayPos >= REPLAY_CAP) replayPos = 0;
-                replay.set(replayPos++, entry);
-            }
-        }
-
-        private void replayLearn() {
-            for (int b = 0; b < BATCH; b++) replayLearnOne();
-        }
-
-        private void replayLearnOne() {
-            double[] entry = replay.get((int)(Math.random() * replay.size()));
-            int fLen = policy.inputSize;
-            double[] f = new double[fLen];
-            System.arraycopy(entry, 0, f, 0, fLen);
-            int    a    = (int) entry[fLen];
-            double r    = entry[fLen + 1];
-            double[] nf = new double[fLen];
-            System.arraycopy(entry, fLen + 2, nf, 0, fLen);
-            boolean done = entry[fLen * 2 + 2] > 0.5;
-
-            double tgt;
-            if (done) {
-                tgt = r;
-            } else {
-                double[] nq = target.forward(nf);
-                double mx = nq[0];
-                for (int i = 1; i < nq.length; i++) if (nq[i] > mx) mx = nq[i];
-                tgt = r + GAMMA * mx;
-            }
-            policy.trainSingle(f, a, tgt, LR);
-        }
-
-        private int boltzmann(double[] q) {
-            double mx = q[0];
-            for (int i = 1; i < q.length; i++) if (q[i] > mx) mx = q[i];
-            double[] p = new double[q.length];
-            double sum = 0;
-            for (int i = 0; i < q.length; i++) {
-                p[i] = Math.exp((q[i] - mx) / tau);
-                sum += p[i];
-            }
-            double r = Math.random() * sum, cum = 0;
-            for (int i = 0; i < p.length; i++) {
-                cum += p[i];
-                if (r <= cum) return i;
-            }
-            return p.length - 1;
-        }
-    }
-
     // ═════════════════════════════════════════════════════════════════════════
     //  Fields
     // ═════════════════════════════════════════════════════════════════════════
@@ -353,9 +104,12 @@ public class AISurvivor extends Bot {
     private int    radarTargetId = -1;
     private int    radarSign     = 1;
     private int    dodgeSign     = 1;
-    private double pendingReward = 0.0;
+    private final RoundLifecycle round = new RoundLifecycle();
 
     private DQNAgent agent;
+    private final BotConfig config = BotConfig.fromEnvironment(System.getenv());
+    private final RoundMetrics metrics = new RoundMetrics();
+    private boolean checkpointLoaded;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Entry point
@@ -383,10 +137,11 @@ public class AISurvivor extends Bot {
             advanceEnemyWaves();
 
             double[] features = encodeFeatures();
-            int action = agent.observe(features, pendingReward + SURVIVAL_BONUS, false);
-            pendingReward = 0.0;
+            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false);
+            metrics.reward += SURVIVAL_BONUS;
+            round.pendingReward = 0.0;
 
-            executeBlendedMovement(agent.lastQValues);
+            executeMovement(action);
             updateRadar();
             aimGF();
             go();
@@ -405,13 +160,15 @@ public class AISurvivor extends Bot {
         pendingFireScans.clear();
         pendingTargetingWave = null;
         enemyWaves.clear();
-        pendingReward = 0.0;
         dodgeSign     = 1;
         radarTargetId = -1;
         radarSign     = 1;
         agent.startEpisode();
+        round.start();
+        metrics.reset();
 
         // Decay GF and surf stats
+        if (!config.training()) return;
         for (double[][] segs : gfStats.values())
             for (double[] bins : segs)
                 for (int i = 0; i < bins.length; i++) bins[i] *= GF_DECAY;
@@ -421,7 +178,7 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onRoundEnded(RoundEndedEvent e) {
-        agent.endEpisode();
+        finishRound(e);
         saveAgent();
     }
 
@@ -462,41 +219,46 @@ public class AISurvivor extends Bot {
         BulletState bullet = e.getBullet();
         fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
         recordSurfHit(bullet, e.getTurnNumber());
-        pendingReward -= e.getDamage() * (0.6 + 0.1 * getEnemyCount());
+        metrics.damageTaken += e.getDamage();
+        addReward(-e.getDamage() * (0.6 + 0.1 * getEnemyCount()));
         dodgeSign = -dodgeSign;
     }
 
     @Override
     public void onBulletHit(BulletHitBotEvent e) {
         fireTracker.recordDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
-        pendingReward += e.getDamage() * 0.6;
+        metrics.bulletHits++;
+        metrics.damageDealt += e.getDamage();
+        addReward(e.getDamage() * 0.6);
         if (e.getEnergy() <= 0) {
             enemies.remove(e.getVictimId());
-            pendingReward += 30.0;
+            addReward(30.0);
         }
     }
 
     @Override
     public void onBotDeath(BotDeathEvent e) {
         enemies.remove(e.getVictimId());
-        pendingReward += 15.0;
+        addReward(15.0);
         if (e.getVictimId() == radarTargetId) radarTargetId = -1;
     }
 
     @Override
     public void onDeath(DeathEvent e) {
-        agent.onDeath(-(60.0 + getEnemyCount() * 12.0));
+        round.died(getEnemyCount());
     }
 
     @Override
     public void onHitWall(HitWallEvent e) {
-        pendingReward -= 3.0;
+        metrics.wallCollisions++;
+        addReward(-3.0);
         dodgeSign = -dodgeSign;
     }
 
     @Override
     public void onHitBot(HitBotEvent e) {
-        pendingReward -= 1.5;
+        metrics.botCollisions++;
+        addReward(-1.5);
         dodgeSign = -dodgeSign;
     }
 
@@ -574,11 +336,11 @@ public class AISurvivor extends Bot {
             int bin = gfBin(gf);
 
             // Update per-enemy stats
-            w.bins[bin] += 1.0;
+            if (config.training()) w.bins[bin] += 1.0;
 
             // Update per-class stats
             int cls = classifyEnemy(t);
-            agent.classGF[cls][w.segment][bin] += 1.0;
+            if (config.training()) agent.classGF[cls][w.segment][bin] += 1.0;
 
             it.remove();
         }
@@ -651,6 +413,7 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onBulletFired(BulletFiredEvent e) {
+        metrics.shotsFired++;
         if (pendingTargetingWave == null) return;
         TargetingWave wave = pendingTargetingWave;
         pendingTargetingWave = null;
@@ -663,26 +426,13 @@ public class AISurvivor extends Bot {
     }
 
     // ═════════════════════════════════════════════════════════════════════════
-    //  Movement — action blending + force-vector interface
+    //  Movement — selected action + force-vector interface
     // ═════════════════════════════════════════════════════════════════════════
 
-    private void executeBlendedMovement(double[] qValues) {
-        if (qValues == null) { steerTo(getDirection(), 8.0); return; }
-
-        double[] weights = softmax(qValues, agent.tau);
-        double fx = 0, fy = 0, speed = 0;
-
-        for (int a = 0; a < NUM_ACTIONS; a++) {
-            if (weights[a] < 0.02) continue;
-            double[] f = actionForce(a);
-            fx    += weights[a] * f[0];
-            fy    += weights[a] * f[1];
-            speed += weights[a] * f[2];
-        }
-
-        double heading = normDir(Math.toDegrees(Math.atan2(fy, fx)));
-        double smoothed = wallSmooth(getX(), getY(), heading, 1);
-        steerTo(smoothed, speed);
+    private void executeMovement(int action) {
+        double[] force = actionForce(action);
+        double heading = normDir(Math.toDegrees(Math.atan2(force[1], force[0])));
+        steerTo(wallSmooth(getX(), getY(), heading, 1), force[2]);
     }
 
     private double[] actionForce(int action) {
@@ -842,7 +592,7 @@ public class AISurvivor extends Bot {
         }
         if (match != null) {
             double[] danger = surfStats.get(match.shooterId);
-            if (danger != null) danger[match.hitBin(bullet.getX(), bullet.getY(), GF_BINS)]++;
+            match.learnHit(danger, bullet.getX(), bullet.getY(), config.training());
             enemyWaves.remove(match);
         }
     }
@@ -912,34 +662,43 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
 
     private void loadAgent() {
-        File f = new File(AGENT_FILE);
-        if (f.exists()) {
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(f))) {
-                Object obj = in.readObject();
-                if (obj instanceof DQNAgent loaded) {
-                    agent = loaded;
-                    System.out.printf("[AISurvivor] DQN loaded. Rounds: %d  τ=%.3f%n",
-                            agent.totalRounds, agent.tau);
-                    return;
-                }
-                System.out.println("[AISurvivor] Incompatible agent — starting fresh DQN.");
-            } catch (Exception ex) {
-                System.out.println("[AISurvivor] Load failed: " + ex.getMessage());
-            }
-        } else {
-            System.out.println("[AISurvivor] No agent file — starting fresh DQN.");
+        agent = new DQNAgent(NUM_FEATURES, NUM_ACTIONS, config);
+        if (config.mode() == BotConfig.Mode.FIXED) return;
+        try {
+            checkpointLoaded = ModelStore.load(config.modelPath(), agent);
+            System.out.println("[AISurvivor] checkpointLoaded=" + checkpointLoaded);
+        } catch (IOException ex) {
+            System.out.println("[AISurvivor] Incompatible or corrupt checkpoint preserved: " + ex.getMessage());
         }
-        agent = new DQNAgent(NUM_FEATURES, NUM_ACTIONS);
     }
 
     private void saveAgent() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(AGENT_FILE))) {
-            out.writeObject(agent);
-            System.out.printf("[AISurvivor] DQN saved. Rounds: %d  τ=%.3f%n",
-                    agent.totalRounds, agent.tau);
-        } catch (Exception ex) {
-            System.out.println("[AISurvivor] Save failed: " + ex.getMessage());
-        }
+        if (!config.training()) return;
+        try { ModelStore.save(config.modelPath(), agent); }
+        catch (IOException ex) { System.out.println("[AISurvivor] Save failed: " + ex.getMessage()); }
+    }
+
+    private void addReward(double reward) {
+        round.addReward(reward);
+        metrics.reward += reward;
+    }
+
+    @Override
+    public void onWonRound(WonRoundEvent e) {
+        round.won();
+    }
+
+    @Override
+    public void onSkippedTurn(SkippedTurnEvent e) { metrics.skippedTurns++; }
+
+    private void finishRound(RoundEndedEvent event) {
+        double finalPending = round.pendingReward;
+        RoundLifecycle.Completion completed = round.finish(event);
+        if (completed == null) return;
+        metrics.reward += completed.reward() - finalPending;
+        agent.finishEpisode(completed.reward());
+        metrics.write(config, completed.round(), completed.turns(), agent.totalRounds,
+                checkpointLoaded, completed.won(), completed.died());
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -998,19 +757,6 @@ public class AISurvivor extends Bot {
             h = normDir(h + rotDir * 5.0);
         }
         return h;
-    }
-
-    private static double[] softmax(double[] q, double tau) {
-        double mx = q[0];
-        for (int i = 1; i < q.length; i++) if (q[i] > mx) mx = q[i];
-        double[] w = new double[q.length];
-        double sum = 0;
-        for (int i = 0; i < q.length; i++) {
-            w[i] = Math.exp((q[i] - mx) / tau);
-            sum += w[i];
-        }
-        for (int i = 0; i < w.length; i++) w[i] /= sum;
-        return w;
     }
 
     private static double normDir(double d) { return ((d % 360) + 360) % 360; }

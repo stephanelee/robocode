@@ -2,6 +2,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnemyWaveTest {
+    @Test void evaluationLeavesSurfDangerFrozen() {
+        EnemyWave wave = new EnemyWave(0, 0, 14, 0, 10, 7);
+        double[] danger = new double[47];
+        wave.learnHit(danger, 140, 0, false);
+        assertEquals(0, java.util.Arrays.stream(danger).sum());
+        wave.learnHit(danger, 140, 0, true);
+        assertEquals(1, danger[23]);
+        assertEquals(1, java.util.Arrays.stream(danger).sum());
+    }
+
     @Test void hitMatchesOnlyShooterPowerAndArrivalRadius() {
         EnemyWave wave = new EnemyWave(0, 0, 14, 0, 10, 7);
         assertEquals(0, wave.matchError(7, 2, 140, 0, 20), 1e-9);
