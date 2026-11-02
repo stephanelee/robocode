@@ -37,4 +37,8 @@ The independent reviewer cleared this fixed design before implementation. The se
 python tools/containment_forecast.py --manifest MANIFEST --events EVENTS --output NEW_FIT_DIR
 # Publish/freeze NEW_FIT_DIR/model.json SHA256 before the single screen:
 python tools/containment_forecast.py --stage screen --manifest MANIFEST --events EVENTS --model NEW_FIT_DIR/model.json --model-sha256 FROZEN_SHA256 --output NEW_SCREEN_DIR
+# Only after a valid development-pass and independent fresh-manifest review:
+python tools/containment_forecast.py --stage confirm --manifest FRESH_MANIFEST --confirmation-manifest-sha256 REVIEWED_MANIFEST_SHA --events FRESH_EVENTS --model NEW_FIT_DIR/model.json --model-sha256 FROZEN_SHA256 --screen-report NEW_SCREEN_DIR/report.json --screen-report-sha256 SCREEN_REPORT_SHA --output NEW_CONFIRM_DIR
 ```
+
+Confirmation accepts new input hashes while preserving and reporting the original training hashes. It requires the same frozen model/tool/dependencies and successful development report, rejects all original game/capture identities, and checks unchanged collector/engine/JAR provenance. Fresh inputs are independently registered; changing input identity strings alone cannot prove a physical game is new, so the reviewed acquisition harness and raw evidence remain essential.
