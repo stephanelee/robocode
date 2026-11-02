@@ -609,9 +609,9 @@ public class AISurvivor extends Bot {
     // ─── Steering helper ─────────────────────────────────────────────────────
 
     private void steerTo(double heading, double speed) {
-        double turn = normalizeAngle(heading - getDirection()) * 2.0;
-        setTurnRate(clamp(turn, -maxBodyTurn(), maxBodyTurn()));
-        setTargetSpeed(speed);
+        Steering.Command command = Steering.toward(getDirection(), heading, speed, getSpeed());
+        setTurnRate(command.turnRate());
+        setTargetSpeed(command.targetSpeed());
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -744,8 +744,6 @@ public class AISurvivor extends Bot {
         return Math.min(Math.min(x, getArenaWidth() - x),
                 Math.min(y, getArenaHeight() - y));
     }
-
-    private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
 
     private double wallSmooth(double x, double y, double heading, int rotDir) {
         double h = heading;
