@@ -4,8 +4,8 @@ import argparse
 import hashlib
 import json
 import math
-import os
 from pathlib import Path
+import re
 import shutil
 import statistics
 import subprocess
@@ -56,6 +56,22 @@ def copy_checkpoint(source, destination, expected):
         raise ValueError("Checkpoint copy does not match the immutable input")
 
 
+def registered_plan(path, commit):
+    """Read the registered Git blob, never a mutable working-tree plan or label."""
+    if not re.fullmatch(r"[0-9a-fA-F]{40}", commit):
+        raise ValueError("Preregistration commit must be a complete Git commit SHA")
+    try:
+        relative = path.resolve().relative_to(benchmark.ROOT.resolve())
+    except ValueError as error:
+        raise ValueError("Preregistered plan path must be inside this repository") from error
+    return subprocess.check_output(["git", "show", f"{commit}:{relative.as_posix()}"], cwd=benchmark.ROOT)
+
+
+def validate_design(args):
+    if args.purpose == "primary" and (args.rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3):
+        raise ValueError("Primary preregistration requires exactly three distinct seed blocks of 20 rounds per arm")
+
+
 def score_share(battle):
     total = sum(row["totalScore"] for row in battle["results"])
     if not math.isfinite(total) or total <= 0:
@@ -99,7 +115,7 @@ def decision(blocks):
     candidate = aggregate(blocks, "candidate")
     deltas = [score_share(block["candidate"]) - score_share(block["previous"]) for block in blocks]
     checks = dict(
-        complete=len(blocks) == 3,
+        complete=len(blocks) == 3 and all(block[arm]["rounds"] == 20 for block in blocks for arm in ("previous", "candidate")),
         meanShareGain=candidate["meanScoreShare"] - previous["meanScoreShare"] >= THRESHOLDS["meanShareGain"] - 1e-12,
         improvedBlocks=sum(delta > 0 for delta in deltas) >= THRESHOLDS["minimumImprovedBlocks"],
         maximumBlockLoss=min(deltas) >= -THRESHOLDS["maximumBlockShareLoss"] - 1e-12,
@@ -124,12 +140,13 @@ def save_report(output, report):
 
 
 def run(args):
+    validate_design(args)
+    plan = registered_plan(args.plan, args.plan_commit)
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         raise ValueError("output must be empty so prior evidence is never overwritten")
     output.mkdir(parents=True, exist_ok=True)
     snapshots, hashes = snapshot_bots(args.previous_bot_dir.resolve(), args.candidate_bot_dir.resolve(), output)
-    plan = args.plan.read_bytes()
     report = dict(schemaVersion=1, status="preparing", policy=args.policy, seeds=args.seeds,
                   purpose=args.purpose,
                   battleTimeoutSeconds=args.timeout,
@@ -148,7 +165,6 @@ def run(args):
     save_report(output, report)
     try:
         runtime = subprocess.run([args.java, "-XshowSettings:properties", "-version"], capture_output=True, text=True, timeout=15, check=True)
-        import re
         major = re.search(r"java\.specification\.version\s*=\s*(\d+)", runtime.stderr)
         if not major or int(major.group(1)) < 22:
             raise ValueError("Retcon source launcher requires JDK22+; use the pinned JDK25 CI runtime")
@@ -175,6 +191,8 @@ def run(args):
                     timeout=args.timeout, training_rounds=args.training_rounds, require_metrics=True,
                     opponent_env={"RUMBLE_JAVA_CACHE": str(api_cache)}, retcon_source=source)
                 result = benchmark.battle(battle_args, arm_output, runner, output, "Retcon", ["Retcon"], args.policy, args.rounds, model)
+                if result["rounds"] != args.rounds or result["metrics"]["roundsRecorded"] != args.rounds:
+                    raise ValueError("Validated battle/telemetry budget differs from requested block")
                 result["scoreShare"] = score_share(result)
                 block[arm] = result
                 report["validatedEvaluationRounds"] += args.rounds

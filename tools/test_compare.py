@@ -12,7 +12,7 @@ def result(share, wins=2, walls=2, skipped=0):
     return dict(rounds=20, firstPlaces=wins, totalScore=share * 100,
                 results=[dict(name="AISurvivor", totalScore=share * 100),
                          dict(name="Retcon", totalScore=(1 - share) * 100)],
-                metrics=dict(turns=1000, shotsFired=10, bulletHits=2, damageDealt=10,
+                metrics=dict(roundsRecorded=20, turns=1000, shotsFired=10, bulletHits=2, damageDealt=10,
                              damageTaken=20, wallCollisions=walls, skippedTurns=skipped))
 
 
@@ -26,6 +26,10 @@ class CompareTests(unittest.TestCase):
         self.assertEqual(measured["status"], "retain")
         self.assertAlmostEqual(measured["candidate"]["meanScoreShare"], 0.3)
         self.assertEqual(compare.decision(blocks[:2])["status"], "incomplete")
+        for block in blocks:
+            block["previous"]["rounds"] = block["candidate"]["rounds"] = 1
+            block["previous"]["firstPlaces"] = block["candidate"]["firstPlaces"] = 0
+        self.assertNotEqual(compare.decision(blocks)["status"], "retain")
         for changes, failed in ((dict(candidate=0.24), "meanShareGain"),
                                 (dict(skipped=1), "noSkippedTurns"),
                                 (dict(walls=3), "wallRate")):
@@ -110,6 +114,7 @@ class CompareTests(unittest.TestCase):
             runner = root / "runner.jar"
             runner.write_bytes(b"runner")
             with patch.object(compare.subprocess, "run", return_value=runtime), \
+                 patch.object(compare, "registered_plan", return_value=b"immutable registered plan"), \
                  patch.object(compare.retcon, "prepare", return_value=(root / "Retcon", root / "api", {"commit": "pinned"})), \
                  patch.object(compare.benchmark, "download", return_value=runner), \
                  patch.object(compare.benchmark, "battle", side_effect=battle):
@@ -124,7 +129,25 @@ class CompareTests(unittest.TestCase):
             self.assertEqual(report["validatedEvaluationRounds"], 120)
             self.assertEqual(json.loads((args.output / "comparison.json").read_text())["status"], "complete")
             with self.assertRaisesRegex(ValueError, "empty"):
-                compare.run(args)
+                with patch.object(compare, "registered_plan", return_value=b"immutable registered plan"):
+                    compare.run(args)
+
+    def test_primary_budget_cannot_be_reduced_to_short_diagnostic_rounds(self):
+        for rounds, seeds in ((1, [1, 2, 3]), (20, [1, 2]), (20, [1, 1, 2])):
+            with self.assertRaisesRegex(ValueError, "Primary preregistration"):
+                compare.validate_design(argparse.Namespace(purpose="primary", rounds=rounds, seeds=seeds))
+        compare.validate_design(argparse.Namespace(purpose="diagnostic", rounds=1, seeds=[1, 2, 3]))
+
+    def test_registered_plan_comes_from_exact_commit_blob_not_mutable_working_copy(self):
+        commit = "c7b08e33927f2fd961d2e81d2076b4039255f5e3"
+        path = compare.benchmark.ROOT / "docs" / "improvements" / "cycle-1.md"
+        with patch.object(compare.subprocess, "check_output", return_value=b"immutable Git plan") as show:
+            self.assertEqual(compare.registered_plan(path, commit), b"immutable Git plan")
+            show.assert_called_once_with(["git", "show", commit + ":docs/improvements/cycle-1.md"], cwd=compare.benchmark.ROOT)
+        with self.assertRaisesRegex(ValueError, "complete Git commit"):
+            compare.registered_plan(path, "an arbitrary label")
+        with self.assertRaisesRegex(ValueError, "inside this repository"):
+            compare.registered_plan(compare.benchmark.ROOT.parent / "outside-plan.md", commit)
 
     def test_seed_list_requires_three_unique_valid_java_longs(self):
         self.assertEqual(compare.seeds_value("1,2,3"), [1, 2, 3])
