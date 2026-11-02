@@ -1,6 +1,6 @@
 # Optional legal motion recorder
 
-This producer implements the accepted [legal-scan dataset schema](legal-scan-dataset.md). It is passive and **off by default**; no model consumes its output. The separate [AI pilot proposal](ai-motion-pilot.md) still requires independent acquisition/model review before real collection or fitting.
+This producer implements the accepted [legal-scan dataset schema](legal-scan-dataset.md). It is passive and **off by default**; no model consumes its output during battle. The independently reviewed [first AI pilot](ai-motion-pilot.md) completed real acquisition and fitting, then rejected the learned model.
 
 Explicit settings are `AISURVIVOR_DATASET_PATH` for a new JSONL file and `AISURVIVOR_GAME_ID` for its unique preassigned game ID. Existing capture or status files are refused. Ordinary launches with no dataset path create no data files.
 
@@ -10,4 +10,4 @@ Records are serialized into a bounded round buffer; no file append occurs in the
 
 Tests cover buffering, fresh paths, previous-intent timing, confirmed-versus-requested shots, shared tick snapshots, round resets, partial-evidence bounds/failures and enabled-recording parity on the 32 fixed accepted targeting cases. Existing 288 accepted command/state goldens remain unchanged with recording disabled. A clearly synthetic Java-produced four-row fixture is replayed through the independent Python label builder: four horizon-one examples, one exact fresh label, no interpolation or future-shot leakage. Placeholder provenance in that fixture is not valid for real acquisition.
 
-No actual dataset, fitted model, or competitive result is claimed here. The next gate is independently reviewed source/JAR/schema and an immutable manifest/protocol with whole-game splits, targeting-relevant horizons, coverage requirements and model budget.
+The [completed pilot report](ai-motion-pilot.md) preserves the actual 45-round dataset and rejected frozen model. This producer adds no live forecasting or competitive strength claim. Future acquisition/model experiments still need new independently reviewed immutable protocols and fresh confirmation data.
