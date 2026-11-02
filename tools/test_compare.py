@@ -2,6 +2,7 @@ import argparse
 import json
 from pathlib import Path
 import tempfile
+import struct
 import unittest
 from unittest.mock import patch
 
@@ -97,7 +98,8 @@ class CompareTests(unittest.TestCase):
             root = Path(directory)
             previous, candidate = self.bundles(root)
             checkpoint = root / "checkpoint.dat"
-            checkpoint.write_bytes(b"original trained checkpoint")
+            checkpoint_bytes = struct.pack(">7i", 0x41495356, 1, 14, 32, 6, 20, 1000) + b"original trained checkpoint"
+            checkpoint.write_bytes(checkpoint_bytes)
             plan = root / "plan.md"
             plan.write_text("preregistered plan", encoding="utf-8")
             args = argparse.Namespace(output=root / "output", previous_bot_dir=previous,
@@ -109,7 +111,9 @@ class CompareTests(unittest.TestCase):
             def battle(options, output, runner, samples, scenario, opponents, policy, rounds, model):
                 calls.append((options.seed, options.bot_dir.name, model))
                 self.assertEqual(model.read_bytes(), checkpoint.read_bytes())
-                return result(0.3 if options.bot_dir.name == "candidate" else 0.2)
+                measured = result(0.3 if options.bot_dir.name == "candidate" else 0.2)
+                measured["modelSHA256"] = compare.benchmark.digest(model)
+                return measured
             runtime = argparse.Namespace(stderr="java.specification.version = 25", stdout="", returncode=0)
             runner = root / "runner.jar"
             runner.write_bytes(b"runner")
@@ -123,7 +127,7 @@ class CompareTests(unittest.TestCase):
                              [(1, "previous"), (1, "candidate"), (2, "candidate"),
                               (2, "previous"), (3, "previous"), (3, "candidate")])
             self.assertEqual(len({model for _, _, model in calls}), 6)
-            self.assertEqual(checkpoint.read_bytes(), b"original trained checkpoint")
+            self.assertEqual(checkpoint.read_bytes(), checkpoint_bytes)
             self.assertEqual(report["decision"]["status"], "retain")
             self.assertEqual(report["plannedEvaluationRounds"], 120)
             self.assertEqual(report["validatedEvaluationRounds"], 120)

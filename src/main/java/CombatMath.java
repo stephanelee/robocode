@@ -55,6 +55,13 @@ final class CombatMath {
         return best;
     }
 
+    static double enemyWeight(double[] segmentBins) {
+        if (segmentBins == null) return 0;
+        double evidence = 0;
+        for (double count : segmentBins) evidence += count;
+        return Math.max(0, Math.min(1, evidence / 30.0));
+    }
+
     static int gfBin(double gf, int bins) {
         return (int) Math.max(0, Math.min(bins - 1, Math.round((gf + 1) * (bins - 1) / 2)));
     }
