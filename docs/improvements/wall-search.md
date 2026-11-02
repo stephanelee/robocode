@@ -193,4 +193,4 @@ Not run; the registered rule requires Stage A to retain.
 - Retcon counters are offline diagnostics only.
 - The development hint (6 local games) did not replicate in the registered run. Registered thresholds were applied unchanged.
 
-PR: (pending). Evidence: [raw evidence and patch](../../benchmarks/wall-search/README.md).
+PR: [#35](https://github.com/stephanelee/robocode/pull/35). Evidence: [raw evidence and patch](../../benchmarks/wall-search/README.md).
