@@ -129,4 +129,68 @@ For each arm:
 
 ## Results
 
-Not yet measured.
+Everything above this heading is byte-identical to the registered plan at `f250c95d093efa245468a4a9fae34c38679e2587`, which is also the measured candidate source; `compare.py` stored the plan blob. The single registered run was [run 41546243537](https://github.com/stephanelee/robocode/actions/runs/41546243537) (job 125622420352, artifact 13188028349, zip SHA256 `f2fcb015b2f965ecf2570e07e2fedbfb9eed3e768bc0c4b641f9d96c0fcdf8eb`). Every step was green and nothing was rerun.
+
+- **Runtime:** actual Ubuntu 26.04.1 LTS; Java 17 JAR parity passed; matches ran on Temurin 25.0.5+8.
+- **Candidate JAR:** `9981c06b716db4ce6eb5dbdeef63fbbd0b29add8df76cfd2985dcfee9bc66f6f`. The baseline JAR hash was verified before launch.
+
+**Decision: reject.** Stage A failed the correctness gate, so the tactical gate also fails and the reviewer's category question is moot. Stage C was not run, as registered. Stage B passed. Gameplay source, tests and the tracked JAR are restored exactly to `241156f` (SHA256 `5ebfa64adf38ab227766b97f7f68e82aefb20251ff8d5f30575bf6b69e67c883`).
+
+### Stage A: 120 fixed minimum-risk Retcon rounds
+
+| Metric (60 rounds per arm) | Baseline | Candidate |
+| --- | ---: | ---: |
+| Mean game score share | 21.6278% | 17.8710% |
+| Round wins | 7 | 4 |
+| AIS turns survived | 41,626 | 43,100 |
+| AIS shots / hit rate | 2,128 / 10.009% | 2,150 / 9.349% |
+| AIS damage dealt per 1,000 turns | 36.64 | 31.92 |
+| AIS damage taken per 1,000 turns | 83.13 | 82.92 |
+| Wall collisions (per 1,000 turns) | 13 (0.312) | 36 (0.835) |
+| AIS skipped turns | 0 | 0 |
+
+Block deltas were +1.346051, −0.226620 and −12.389851 pp (seeds 20261221/22/23), for a mean of −3.756807 pp.
+
+Correctness checks:
+- mean ≥ 0: **fail**
+- ≥ 2 nonnegative blocks: **fail** (1)
+- no block below −5 pp: **fail**
+- wins no more than 3 lower: pass (7→4)
+- zero skipped turns: pass
+- wall rate ≤ 1.2×: **fail** (2.68×)
+
+`tacticalStrengthGatePassed`: false.
+
+### Mechanism, from Retcon's offline native export (not a gate)
+
+| Retcon counter, 60 rounds per arm | Baseline | Candidate |
+| --- | ---: | ---: |
+| Actual hits / shots | 464 / 2,681 (17.31%) | 492 / 2,769 (17.77%) |
+| Linear virtual hits / completed | 385 / 2,593 (14.85%) | 437 / 2,681 (16.30%) |
+| Head-on virtual hits / completed | 342 / 2,593 (13.19%) | 402 / 2,681 (14.99%) |
+
+**H1 is not supported in this run.** Baseline wall collisions here were low and spread across blocks: 6, 3 and 4 per block. There was no pinning burst like the 323-hit block in the v2 run. The candidate recorded more collisions in every block (14, 13 and 9).
+
+Pinning bursts are rare, high-impact events. Removing them did not show up as a benefit here. The nearest-safe heading may itself cause more light grazing contacts, for example by keeping the bot closer along walls than the one-way search did. That explanation is untested. The candidate's turns survived and damage taken were nearly unchanged. Damage dealt fell, and the third block lost 12.4 pp. Score differences of this size are within the large game-to-game variance seen across these experiments.
+
+### Stage B: official samples, 10 fixed rounds per arm (pass)
+
+| Opponent | Baseline share / wins / walls | Candidate share / wins / walls |
+| --- | --- | --- |
+| Target | 100.000% / 10 / 9 | 99.619% / 10 / 7 |
+| SpinBot | 95.518% / 10 / 22 | 96.141% / 10 / 5 |
+| Walls | 97.453% / 10 / 0 | 97.571% / 10 / 2 |
+
+### Stage C
+
+Not run; the registered rule requires Stage A to retain.
+
+### Limitations
+
+- Starts are unpaired and unseeded, with three blocks per arm.
+- Retcon adapts within each game.
+- Wall collision counts are small and bursty.
+- Retcon counters are offline diagnostics only.
+- The development hint (6 local games) did not replicate in the registered run. Registered thresholds were applied unchanged.
+
+PR: (pending). Evidence: [raw evidence and patch](../../benchmarks/wall-search/README.md).

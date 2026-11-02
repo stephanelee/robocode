@@ -1,0 +1,111 @@
+diff --git a/AISurvivor/AISurvivor.jar b/AISurvivor/AISurvivor.jar
+index 7e1ba1c..0537401 100644
+Binary files a/AISurvivor/AISurvivor.jar and b/AISurvivor/AISurvivor.jar differ
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index c26b30b..69a5f06 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -443,7 +443,7 @@ public class AISurvivor extends Bot {
+     private void executeMovement(int action) {
+         double[] force = actionForce(action);
+         double heading = normDir(Math.toDegrees(Math.atan2(force[1], force[0])));
+-        steerTo(wallSmooth(getX(), getY(), heading, 1), force[2]);
++        steerTo(wallSmooth(getX(), getY(), heading), force[2]);
+     }
+ 
+     private double[] actionForce(int action) {
+@@ -758,16 +758,8 @@ public class AISurvivor extends Bot {
+ 
+     private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
+ 
+-    private double wallSmooth(double x, double y, double heading, int rotDir) {
+-        double h = heading;
+-        for (int i = 0; i < 36; i++) {
+-            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+-            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+-            if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
+-                ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
+-            h = normDir(h + rotDir * 5.0);
+-        }
+-        return h;
++    private double wallSmooth(double x, double y, double heading) {
++        return CombatMath.nearestSafeHeading(x, y, heading, getArenaWidth(), getArenaHeight(), WALL_MARGIN);
+     }
+ 
+     private static double normDir(double d) { return ((d % 360) + 360) % 360; }
+diff --git a/src/main/java/CombatMath.java b/src/main/java/CombatMath.java
+index b7aab1a..2402833 100644
+--- a/src/main/java/CombatMath.java
++++ b/src/main/java/CombatMath.java
+@@ -58,4 +58,23 @@ final class CombatMath {
+     static int gfBin(double gf, int bins) {
+         return (int) Math.max(0, Math.min(bins - 1, Math.round((gf + 1) * (bins - 1) / 2)));
+     }
++
++    /**
++     * Smallest-deviation heading, searched in 5-degree steps in both rotation directions over the full circle, whose
++     * point {@code margin} units ahead lies strictly inside the {@code margin} envelope. If none exists (e.g. deep in a
++     * corner), returns the heading toward the arena centre. The result is normalized to [0, 360).
++     */
++    static double nearestSafeHeading(double x, double y, double heading, double width, double height, double margin) {
++        for (int step = 0; step <= 36; step++) {
++            for (int sign : step == 0 ? new int[]{1} : new int[]{1, -1}) {
++                double h = heading + sign * step * 5.0;
++                double rad = Math.toRadians(h);
++                double tx = x + Math.cos(rad) * margin, ty = y + Math.sin(rad) * margin;
++                if (tx > margin && tx < width - margin && ty > margin && ty < height - margin)
++                    return ((h % 360) + 360) % 360;
++            }
++        }
++        double centre = bearing(width / 2 - x, height / 2 - y);
++        return ((centre % 360) + 360) % 360;
++    }
+ }
+diff --git a/src/test/java/WallSmoothTest.java b/src/test/java/WallSmoothTest.java
+new file mode 100644
+index 0000000..5fc1690
+--- /dev/null
++++ b/src/test/java/WallSmoothTest.java
+@@ -0,0 +1,42 @@
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++class WallSmoothTest {
++    private static boolean safe(double x, double y, double h) {
++        double tx = x + Math.cos(Math.toRadians(h)) * 80, ty = y + Math.sin(Math.toRadians(h)) * 80;
++        return tx > 80 && tx < 720 && ty > 80 && ty < 520;
++    }
++
++    @Test void safeHeadingIsReturnedUnchanged() {
++        assertEquals(30, CombatMath.nearestSafeHeading(400, 300, 30, 800, 600, 80), 1e-9);
++    }
++
++    @Test void topWallPicksNearestInwardHeadingNotTheOppositeHalfTurn() {
++        // Recorded pinning case: (275,582) wanting 330; old one-way half search returned 150 (into the wall).
++        double h = CombatMath.nearestSafeHeading(275, 582, 330, 800, 600, 80);
++        assertEquals(305, h, 1e-9);
++        assertTrue(safe(275, 582, h));
++    }
++
++    @Test void eastWallSearchesTheShorterDirection() {
++        // Recorded case: (782,402) wanting 243; old search returned 62/63 (into the wall).
++        double h = CombatMath.nearestSafeHeading(782, 402, 243, 800, 600, 80);
++        assertEquals(218, h, 1e-9);
++        assertTrue(safe(782, 402, h));
++    }
++
++    @Test void searchIsSymmetricAndNormalized() {
++        double up = CombatMath.nearestSafeHeading(400, 582, 10, 800, 600, 80);
++        double down = CombatMath.nearestSafeHeading(400, 582, 170, 800, 600, 80);
++        assertTrue(safe(400, 582, up) && safe(400, 582, down));
++        assertEquals(305, up, 1e-9);
++        assertEquals(235, down, 1e-9);
++        double wrapped = CombatMath.nearestSafeHeading(400, 300, -30, 800, 600, 80);
++        assertEquals(330, wrapped, 1e-9);
++    }
++
++    @Test void cornerWithoutSafeHeadingPointsToCentre() {
++        double h = CombatMath.nearestSafeHeading(18, 18, 200, 800, 600, 80);
++        assertEquals(Math.toDegrees(Math.atan2(300 - 18, 400 - 18)), h, 1e-9);
++    }
++}
