@@ -31,3 +31,13 @@ Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1
 - [x] Add a standalone results dashboard for scores, hit rates, survival, and training/evaluation comparisons.
 
 First milestone is complete when the build is reproducible, movement and targeting checks pass, and baseline battle results are recorded.
+
+## Stronger 1v1 challenge and measured improvement cycles
+
+- [x] Integrate pinned external Java Retcon 0.2.0 with source/dependency hash checks and actual server 1.4.0 compatibility.
+- [x] Record the 35-round Retcon 1v1 baseline and organize methodology/reports under docs/.
+- [ ] Cycle 1: compare the first targeted gameplay candidate with the previous accepted version. ([Issue #10](https://github.com/stephanelee/robocode/issues/10))
+- [ ] Cycle 2: record the next candidate's measured gains/regressions. ([Issue #11](https://github.com/stephanelee/robocode/issues/11))
+- [ ] Cycle 3: record the third controlled hypothesis and final accept/reject decision. ([Issue #12](https://github.com/stephanelee/robocode/issues/12))
+
+See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github.com/stephanelee/robocode/issues/8). Gameplay candidates are not implemented in the Retcon integration PR.

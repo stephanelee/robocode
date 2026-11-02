@@ -2,6 +2,8 @@
 
 A Java bot for [Robocode Tank Royale](https://robocode.dev/). This project uses Tank Royale's WebSocket bot API, rather than the original Robocode Java engine.
 
+Project notes: [documentation index](docs/README.md), [benchmark methodology](docs/benchmarks.md), and [measured improvement log](docs/improvements.md).
+
 ## Build and test
 
 Install a Java 17 JDK and set `JAVA_HOME` to that JDK. The checked-in Gradle wrapper downloads Gradle 8.14.3 on first use; a separate Gradle installation is unnecessary. Initial builds need internet access to download Gradle and Maven dependencies.
@@ -41,9 +43,11 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 
 ## GitHub Actions
 
-[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) runs on pull requests and pushes to `master`, and supports manual dispatch once the workflow is on the default branch. It builds with Java 17, runs available tests, and uploads the freshly compiled bot as the **AISurvivor-java17** artifact. Download it from a successful Actions run's Artifacts section and extract it into a bot directory. The separate [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) workflow runs a strict headless smoke battle on PRs and pushes. Dispatch it with `full=true` for fixed-policy, cold-DQN, and trained-DQN reference comparisons; download the **battle-results** artifact for JSON/CSV evidence and the standalone HTML dashboard. See [tools/BENCHMARKS.md](tools/BENCHMARKS.md). Small reference experiments do not establish playing strength.
+[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) runs on pull requests and pushes to `master`, and supports manual dispatch once the workflow is on the default branch. It builds with Java 17, runs available tests, and uploads the freshly compiled bot as the **AISurvivor-java17** artifact. Download it from a successful Actions run's Artifacts section and extract it into a bot directory. The separate [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) workflow runs a strict headless smoke battle on PRs and pushes. Dispatch it with `full=true` for fixed-policy, cold-DQN, and trained-DQN reference comparisons; download the **battle-results** artifact for JSON/CSV evidence and the standalone HTML dashboard. See [docs/benchmarks.md](docs/benchmarks.md). Small reference experiments do not establish playing strength.
 
 ## Current design
+
+The [Retcon benchmark](https://github.com/stephanelee/robocode/actions/workflows/retcon.yml) adds a pinned Java Retcon 0.2.0 opponent for a stronger 1v1 challenge. It builds/verifies AISurvivor with Java 17, then uses JDK 25 for Retcon's unchanged source launcher. See the [measured baseline](docs/benchmarks/retcon-2026-11-02.md) and [improvement log](docs/improvements.md).
 
 The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`; learning, configuration, persistence, and pure combat calculations are separate classes:
 

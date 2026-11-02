@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "tankRoyaleVersion": "1.4.0",
+  "sourceCommit": "bf90f7d17c14e9ad9f03e09da7f659ab656f4055",
+  "seed": 20261102,
+  "suite": "retcon",
+  "runtimeJava": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)",
+  "opponentProvenance": [
+    {
+      "name": "Retcon",
+      "version": "0.2.0",
+      "repository": "robocode-dev/rumble-bots",
+      "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+      "sourcePath": "bots/java/Retcon",
+      "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+      "license": "MIT",
+      "authors": [
+        "Flemming N. Larsen"
+      ],
+      "botApi": {
+        "version": "1.3.1",
+        "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+        "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+      }
+    }
+  ],
+  "evaluationScope": "in-roster adaptation; training and evaluation use the same opponent identities",
+  "trainingRounds": 20,
+  "botJarSHA256": "0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2",
+  "assetSHA256": {
+    "robocode-tankroyale-runner-1.4.0.jar": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "sample-bots-Java-1.4.0.zip": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2"
+  },
+  "limitations": "Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.",
+  "battles": [
+    {
+      "scenario": "Retcon",
+      "policy": "fixed-minrisk",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 2,
+      "totalScore": 248,
+      "survival": 50,
+      "bulletDamage": 188,
+      "firstPlaces": 1,
+      "metrics": {
+        "turns": 3902,
+        "shotsFired": 185,
+        "bulletHits": 24,
+        "damageDealt": 187.73438,
+        "damageTaken": 313.237771,
+        "wallCollisions": 4,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.12972972972972974,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "Retcon",
+          "rank": 1,
+          "totalScore": 592,
+          "survival": 200,
+          "bulletDamage": 304,
+          "firstPlaces": 4
+        },
+        {
+          "name": "AISurvivor",
+          "rank": 2,
+          "totalScore": 248,
+          "survival": 50,
+          "bulletDamage": 188,
+          "firstPlaces": 1
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Retcon",
+      "policy": "untrained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 2,
+      "totalScore": 173,
+      "survival": 0,
+      "bulletDamage": 122,
+      "firstPlaces": 0,
+      "metrics": {
+        "turns": 1662,
+        "shotsFired": 88,
+        "bulletHits": 16,
+        "damageDealt": 121.632228,
+        "damageTaken": 393.84963700000003,
+        "wallCollisions": 23,
+        "botCollisions": 48,
+        "skippedTurns": 0,
+        "hitRate": 0.18181818181818182,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "Retcon",
+          "rank": 1,
+          "totalScore": 844,
+          "survival": 250,
+          "bulletDamage": 392,
+          "firstPlaces": 5
+        },
+        {
+          "name": "AISurvivor",
+          "rank": 2,
+          "totalScore": 173,
+          "survival": 0,
+          "bulletDamage": 122,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Retcon",
+      "policy": "train",
+      "rounds": 20,
+      "name": "AISurvivor",
+      "rank": 2,
+      "totalScore": 554,
+      "survival": 0,
+      "bulletDamage": 503,
+      "firstPlaces": 0,
+      "metrics": {
+        "turns": 6517,
+        "shotsFired": 305,
+        "bulletHits": 54,
+        "damageDealt": 502.786293,
+        "damageTaken": 1698.378534,
+        "wallCollisions": 194,
+        "botCollisions": 49,
+        "skippedTurns": 0,
+        "hitRate": 0.17704918032786884,
+        "roundsRecorded": 20,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "Retcon",
+          "rank": 1,
+          "totalScore": 3279,
+          "survival": 1000,
+          "bulletDamage": 1678,
+          "firstPlaces": 20
+        },
+        {
+          "name": "AISurvivor",
+          "rank": 2,
+          "totalScore": 554,
+          "survival": 0,
+          "bulletDamage": 503,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "4355513770b7078c1ea62bf97f89cbf9bba8c1406ab7f98afb4e704b1c6a3544"
+    },
+    {
+      "scenario": "Retcon",
+      "policy": "trained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 2,
+      "totalScore": 79,
+      "survival": 0,
+      "bulletDamage": 74,
+      "firstPlaces": 0,
+      "metrics": {
+        "turns": 1677,
+        "shotsFired": 70,
+        "bulletHits": 8,
+        "damageDealt": 74.325672,
+        "damageTaken": 403.73499,
+        "wallCollisions": 24,
+        "botCollisions": 4,
+        "skippedTurns": 0,
+        "hitRate": 0.11428571428571428,
+        "roundsRecorded": 5,
+        "checkpointLoaded": true
+      },
+      "results": [
+        {
+          "name": "Retcon",
+          "rank": 1,
+          "totalScore": 785,
+          "survival": 250,
+          "bulletDamage": 402,
+          "firstPlaces": 5
+        },
+        {
+          "name": "AISurvivor",
+          "rank": 2,
+          "totalScore": 79,
+          "survival": 0,
+          "bulletDamage": 74,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "4355513770b7078c1ea62bf97f89cbf9bba8c1406ab7f98afb4e704b1c6a3544"
+    }
+  ]
+}

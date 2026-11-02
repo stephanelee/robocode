@@ -205,7 +205,7 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--smoke", action="store_true", help="One evaluation round against Target")
+    parser.add_argument("--smoke", action="store_true", help="One cold evaluation round against the selected suite's first opponent")
     parser.add_argument("--suite", choices=("samples", "retcon"), default="samples",
                         help="Sample regression roster or pinned Retcon 0.2.0 1v1")
     parser.add_argument("--rounds", type=int, default=5)
@@ -254,7 +254,7 @@ def main():
                   evaluationScope="in-roster adaptation; training and evaluation use the same opponent identities",
                   trainingRounds=0 if args.smoke else args.training_rounds,
                   botJarSHA256=digest(args.bot_dir / "AISurvivor.jar"), assetSHA256=ASSETS,
-                  limitations="Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.", battles=[])
+                  limitations="Reference experiment, not evidence that learning improves strength. AISurvivor RNG is seeded; opponent randomness, arena starting positions, and engine scheduling are not seeded. Training and evaluation use the same roster, so this is in-roster adaptation rather than held-out generalization. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.", battles=[])
     scenarios = {"Retcon": ["Retcon"]} if args.suite == "retcon" else {"Target": ["Target"]} if args.smoke else {"Target": ["Target"], "SpinBot": ["SpinBot"], "Walls": ["Walls"], "melee": ["Target", "SpinBot", "Walls"]}
     for name, opponents in scenarios.items():
         policies = ["untrained"] if args.smoke else ["fixed-minrisk", "untrained", "train", "trained"]

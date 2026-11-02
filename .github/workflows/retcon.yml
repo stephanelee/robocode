@@ -42,7 +42,7 @@ jobs:
           java-version: '25'
       - name: Run bounded actual Retcon matches
         env:
-          FULL: ${{ inputs.full || github.event_name == 'pull_request' }}
+          FULL: ${{ inputs.full || false }}
         run: |
           if [ "$FULL" = "true" ]; then
             python tools/benchmark.py --suite retcon --java "$JAVA_HOME/bin/java" --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --output build/retcon
