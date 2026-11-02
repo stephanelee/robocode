@@ -18,7 +18,7 @@ Windows PowerShell:
 .\gradlew.bat clean build
 ```
 
-This compiles the source, runs available JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/` when tests exist. Regression tests cover seeded learning, terminal transitions, frozen evaluation, configuration, and checkpoint validation. Battle performance is tracked separately in [TODO.md](TODO.md).
+This compiles the source, runs JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/`. Tests cover geometry, targeting defaults, enemy fire accounting, bullet-wave matching, learning transitions, frozen evaluation, and checkpoint validation.
 
 ## Run a battle
 
@@ -43,12 +43,14 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 
 ## Current design
 
-The implementation is in `src/main/java/AISurvivor.java`:
+The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`; learning, configuration, persistence, and pure combat calculations are separate classes:
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.
 - GuessFactor targeting combines per-enemy and per-class statistics with motion prediction.
-- Enemy energy changes infer bullet waves; a versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
+- Consecutive enemy scans infer bullet waves after correcting known damage and hit-energy bonuses. Scan gaps are skipped because fire timing is uncertain. Enemy bullets are not exposed by the bot API; unobserved third-party damage in melee can still make inferred waves inaccurate.
+- Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
+- A versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
 
 This is an experimental bot with known correctness issues. See [TODO.md](TODO.md) for the prioritized repair and benchmark plan. Build success alone does not establish battle performance.
 
