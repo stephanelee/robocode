@@ -14,7 +14,7 @@ Require complete official results/round telemetry, zero AIS skipped turns, no mo
 
 ## Supervised proof, before live deployment
 
-Use only legal histories ending at the anchor. Future labels exist only when the same target has a fresh observed scan at exactly horizons **4/8/16/32**; mask missing labels, never interpolate or cross rounds/games. Split whole games before window construction, normalization or fitting. Exclude game/capture/target IDs and splits from learned features. Report coverage and errors by horizon and whole game; correlated turns are not independent samples.
+Use only legal histories ending at the anchor. Future labels exist only when the same target has a fresh observed scan at exactly horizons **8/16/24/32/40**; mask missing labels, never interpolate or cross rounds/games. The 24–40-turn range covers relevant Retcon bullet-flight times rather than only short synthetic horizons. Split whole games before window construction, normalization or fitting. Exclude game/capture/target IDs and splits from learned features. Report coverage and errors by horizon and whole game; correlated turns are not independent samples.
 
 Compare frozen head-on, linear, circular and current accepted projection baselines on identical masks. First learned candidate should be a small separately supervised residual predictor, not a DQN rewrite. Fit normalization and coefficients on train games only; select only preregistered hyperparameters using development games; freeze source/model/preprocessing hashes before a single withheld/transfer evaluation. Include legal own-shot timing because Retcon reacts to us, while treating the model as predictive rather than a causal simulator.
 

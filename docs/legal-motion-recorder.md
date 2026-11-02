@@ -1,0 +1,13 @@
+# Optional legal motion recorder
+
+This producer implements the accepted [legal-scan dataset schema](legal-scan-dataset.md). It is passive and **off by default**; no model consumes its output. The separate [AI pilot proposal](ai-motion-pilot.md) still requires independent acquisition/model review before real collection or fitting.
+
+Explicit settings are `AISURVIVOR_DATASET_PATH` for a new JSONL file and `AISURVIVOR_GAME_ID` for its unique preassigned game ID. Existing capture or status files are refused. Ordinary launches with no dataset path create no data files.
+
+The run loop snapshots legal own state and cached target scans before encoding features/selecting current commands. It records only prior intent with `submittedTurn < turn`; requested firepower stays null because it is not inferred from actual shots. Own shots enter separately from confirmed BulletFired callbacks, with their true event turn, ID, power, direction and position. The same own/intent/newly delivered-shot snapshot repeats across targets in a tick; shot IDs deduplicate within a round. Histories reset across rounds, and no Retcon private exports, observer truth, future state, or current decision enters these records.
+
+Records are serialized into a bounded round buffer; no file append occurs in the decision path. Bounds are 20,000 rows and 8 MiB of serialized ASCII data per round. Round end appends the buffer and updates `PATH.status.json`; game end marks completion. Any overflow, future-event violation, conflicting bullet, repeated round/turn, incomplete lifecycle or I/O failure marks the acquisition invalid, preserves available partial rows, and disables recording without changing bot decisions. An acquisition harness must reject failed/incomplete captures and missing expected round IDs; it must not silently truncate or replace games. Captured data is research evidence, not a bot model or automatic input.
+
+Tests cover buffering, fresh paths, previous-intent timing, confirmed-versus-requested shots, shared tick snapshots, round resets, partial-evidence bounds/failures and enabled-recording parity on the 32 fixed accepted targeting cases. Existing 288 accepted command/state goldens remain unchanged with recording disabled. A clearly synthetic Java-produced four-row fixture is replayed through the independent Python label builder: four horizon-one examples, one exact fresh label, no interpolation or future-shot leakage. Placeholder provenance in that fixture is not valid for real acquisition.
+
+No actual dataset, fitted model, or competitive result is claimed here. The next gate is independently reviewed source/JAR/schema and an immutable manifest/protocol with whole-game splits, targeting-relevant horizons, coverage requirements and model budget.
