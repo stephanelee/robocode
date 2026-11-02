@@ -1,0 +1,410 @@
+{
+  "development": {
+    "schemaVersion": 1,
+    "suiteVersion": "dual-aim-v1",
+    "suite": "development",
+    "engine": "v1.4.0",
+    "retconCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "arena": [
+      1000,
+      1000
+    ],
+    "horizon": 130,
+    "commands": [
+      [
+        -8,
+        -10
+      ],
+      [
+        -8,
+        0
+      ],
+      [
+        -8,
+        10
+      ],
+      [
+        0,
+        -10
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        10
+      ],
+      [
+        8,
+        -10
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        10
+      ]
+    ],
+    "powers": [
+      1.2,
+      2,
+      3
+    ],
+    "criterion": "worst-case continuous angular corridor, swept bullet vs post-move circle; conservative after bullet wall removal",
+    "scope": "single shot at t0; stationary shooter; hypothetical scan histories; no opponent private input; finite commands only; not scores",
+    "summary": [
+      {
+        "profile": "fresh-alignment",
+        "delay": 0,
+        "states": 816,
+        "baselineSafe": 167,
+        "proposedSafe": 686,
+        "noCertifiedCommand": 130,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 73.387271,
+        "wallContactChosen": 633
+      },
+      {
+        "profile": "fresh-alignment",
+        "delay": 1,
+        "states": 816,
+        "baselineSafe": 167,
+        "proposedSafe": 663,
+        "noCertifiedCommand": 153,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 65.152847,
+        "wallContactChosen": 639
+      },
+      {
+        "profile": "fresh-alignment",
+        "delay": 3,
+        "states": 816,
+        "baselineSafe": 167,
+        "proposedSafe": 630,
+        "noCertifiedCommand": 186,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 55.388735,
+        "wallContactChosen": 590
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 0,
+        "states": 816,
+        "baselineSafe": 130,
+        "proposedSafe": 618,
+        "noCertifiedCommand": 198,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 66.654748,
+        "wallContactChosen": 645
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 1,
+        "states": 816,
+        "baselineSafe": 130,
+        "proposedSafe": 606,
+        "noCertifiedCommand": 210,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 61.551321,
+        "wallContactChosen": 659
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 3,
+        "states": 816,
+        "baselineSafe": 130,
+        "proposedSafe": 552,
+        "noCertifiedCommand": 264,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 51.717956,
+        "wallContactChosen": 633
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 0,
+        "states": 816,
+        "baselineSafe": 47,
+        "proposedSafe": 285,
+        "noCertifiedCommand": 531,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 52.113705,
+        "wallContactChosen": 699
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 1,
+        "states": 816,
+        "baselineSafe": 47,
+        "proposedSafe": 212,
+        "noCertifiedCommand": 604,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 50.298851,
+        "wallContactChosen": 687
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 3,
+        "states": 816,
+        "baselineSafe": 47,
+        "proposedSafe": 103,
+        "noCertifiedCommand": 713,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 40.698382,
+        "wallContactChosen": 709
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 0,
+        "states": 816,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 816,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 30.155127,
+        "wallContactChosen": 810
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 1,
+        "states": 816,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 816,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 33.314803,
+        "wallContactChosen": 782
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 3,
+        "states": 816,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 816,
+        "baselineWallContact": 816,
+        "baselineForecastRmse20": 29.448904,
+        "proposedForecastRmse20": 31.823187,
+        "wallContactChosen": 793
+      }
+    ],
+    "toolSha256": "fab7093fd8294dadfbaccbde651a270a20b573955c30b04e1563c55fcc5cdc3e"
+  },
+  "withheld": {
+    "schemaVersion": 1,
+    "suiteVersion": "dual-aim-v1",
+    "suite": "withheld",
+    "engine": "v1.4.0",
+    "retconCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "arena": [
+      1000,
+      1000
+    ],
+    "horizon": 130,
+    "commands": [
+      [
+        -8,
+        -10
+      ],
+      [
+        -8,
+        0
+      ],
+      [
+        -8,
+        10
+      ],
+      [
+        0,
+        -10
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        10
+      ],
+      [
+        8,
+        -10
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        10
+      ]
+    ],
+    "powers": [
+      1.2,
+      2,
+      3
+    ],
+    "criterion": "worst-case continuous angular corridor, swept bullet vs post-move circle; conservative after bullet wall removal",
+    "scope": "single shot at t0; stationary shooter; hypothetical scan histories; no opponent private input; finite commands only; not scores",
+    "summary": [
+      {
+        "profile": "fresh-alignment",
+        "delay": 0,
+        "states": 90,
+        "baselineSafe": 29,
+        "proposedSafe": 76,
+        "noCertifiedCommand": 14,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 70.890198,
+        "wallContactChosen": 71
+      },
+      {
+        "profile": "fresh-alignment",
+        "delay": 1,
+        "states": 90,
+        "baselineSafe": 29,
+        "proposedSafe": 70,
+        "noCertifiedCommand": 20,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 63.345446,
+        "wallContactChosen": 67
+      },
+      {
+        "profile": "fresh-alignment",
+        "delay": 3,
+        "states": 90,
+        "baselineSafe": 29,
+        "proposedSafe": 64,
+        "noCertifiedCommand": 26,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 56.336563,
+        "wallContactChosen": 66
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 0,
+        "states": 90,
+        "baselineSafe": 22,
+        "proposedSafe": 56,
+        "noCertifiedCommand": 34,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 62.287891,
+        "wallContactChosen": 72
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 1,
+        "states": 90,
+        "baselineSafe": 22,
+        "proposedSafe": 54,
+        "noCertifiedCommand": 36,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 57.45025,
+        "wallContactChosen": 71
+      },
+      {
+        "profile": "age2-extra5deg",
+        "delay": 3,
+        "states": 90,
+        "baselineSafe": 22,
+        "proposedSafe": 50,
+        "noCertifiedCommand": 40,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 49.790587,
+        "wallContactChosen": 70
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 0,
+        "states": 90,
+        "baselineSafe": 2,
+        "proposedSafe": 3,
+        "noCertifiedCommand": 87,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 41.876069,
+        "wallContactChosen": 75
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 1,
+        "states": 90,
+        "baselineSafe": 2,
+        "proposedSafe": 5,
+        "noCertifiedCommand": 85,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 36.094041,
+        "wallContactChosen": 79
+      },
+      {
+        "profile": "age5-extra15deg",
+        "delay": 3,
+        "states": 90,
+        "baselineSafe": 2,
+        "proposedSafe": 4,
+        "noCertifiedCommand": 86,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 38.354858,
+        "wallContactChosen": 79
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 0,
+        "states": 90,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 90,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 39.602124,
+        "wallContactChosen": 77
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 1,
+        "states": 90,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 90,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 36.435451,
+        "wallContactChosen": 81
+      },
+      {
+        "profile": "unknown-heading",
+        "delay": 3,
+        "states": 90,
+        "baselineSafe": 0,
+        "proposedSafe": 0,
+        "noCertifiedCommand": 90,
+        "baselineWallContact": 81,
+        "baselineForecastRmse20": 36.435451,
+        "proposedForecastRmse20": 36.435451,
+        "wallContactChosen": 81
+      }
+    ],
+    "toolSha256": "fab7093fd8294dadfbaccbde651a270a20b573955c30b04e1563c55fcc5cdc3e"
+  }
+}
