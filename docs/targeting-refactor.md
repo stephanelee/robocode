@@ -6,9 +6,9 @@ The purpose is a small testable boundary for later targeting experiments, includ
 
 ## Frozen boundary
 
-Extract only the existing GuessFactor aiming geometry and fire-request eligibility from `aimGF`: maximum escape angle and lateral sign; five iterations of the current motion projection; final arena clamp; base/aim direction; normalized gun-turn error; command clamped to ±20 degrees; and existing `power > 0 && gunHeat == 0 && abs(error) < 10` eligibility.
+Extract only the existing GuessFactor aiming geometry from `aimGF`: maximum escape angle and lateral sign; five iterations of the current motion projection; final arena clamp; base/aim direction; normalized gun-turn error; and command clamped to ±20 degrees. Independent pre-edit review specifically leaves `power > 0 && gunHeat == 0 && abs(error) < 10` and `setFire` in AISurvivor, exactly where they are.
 
-Inputs are an immutable snapshot: shooter x/y, target x/y/direction/speed/turn rate/last-scan turn, current turn, initial target distance, bullet speed, selected GuessFactor, lateral velocity, arena width/height, requested power, current gun heading and heat. Outputs contain predicted point, base/aim direction, lateral sign, raw/clamped gun turn, and fire eligibility. The helper reads no API, RNG, model, stat array, or opponent-private data and mutates no state.
+Inputs are an immutable snapshot: shooter x/y, target x/y/direction/speed/turn rate/last-scan turn, current turn, initial target distance, bullet speed, selected GuessFactor, lateral velocity, arena width/height, and current gun heading. Outputs contain predicted point, base/aim direction, lateral sign, and raw/clamped gun turn. The helper reads no API, RNG, model, stat array, or opponent-private data and mutates no state.
 
 Keep target selection, enemy classification, segmentation, histogram argmax/weight, fire-power calculation, and stat-array identity in AISurvivor. Keep command application, `setFire` success handling, pending-wave creation, actual bullet callback anchoring, virtual-wave advancement, and event timing in AISurvivor. No helper chooses a different target, action, power, model, or random number.
 
@@ -16,7 +16,7 @@ Preserve floating-point order and quirks: `Math.hypot`; the API's absolute-beari
 
 ## Characterization before extraction
 
-First freeze the accepted source provenance and a reference computation copied from its current math, including pinned Bot API distance/bearing semantics. Capture fixed snapshot results before introducing the helper. Cover near/far targets, zero and positive/negative speed/turn rates, scan gaps, all wall/corner clamps, wraparound at 0/360 and ±180, positive/zero power, gun heat, exact ten-degree boundaries, and the intentionally known distant-shot/wall-projection quirks.
+First freeze accepted-source provenance and characterize the actual existing private `aimGF` method with test-only API mocks, including real pinned Bot API default distance/bearing methods. Capture fixed snapshot results before introducing the helper. Cover near/far targets, zero and positive/negative speed/turn rates, scan gaps, all wall/corner clamps, wraparound at 0/360 and ±180, positive/zero power, gun heat, exact ten-degree boundaries, setFire rejection, missing per-enemy stats, and the intentionally known distant-shot/wall-projection quirks. Test-only final-method mocking bypasses network startup; it is excluded from the bot JAR.
 
 Then compare old and extracted outputs bit for bit on those golden cases and a deterministic wide input grid. Compare raw/clamped gun commands, request eligibility, and every numeric field used to create pending waves. Assert state/stat inputs remain unchanged, preserve wave-bin references and setFire success behavior, and keep the onBulletFired implementation unchanged. Existing lifecycle, model, RNG, geometry, and evaluation-freeze checks must continue passing. No new bot RNG calls are allowed.
 
