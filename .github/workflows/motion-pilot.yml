@@ -1,0 +1,106 @@
+name: First legal motion AI pilot
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  capture:
+    name: Capture 45 registered legal-data rounds
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Test producer neutrality and tracked JAR parity
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/recorder-tracked.jar"
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/recorder-tracked.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_*.py' -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Acquire exact 15 games and preserve every outcome
+        run: python tools/acquire_motion_pilot.py --plan-commit 3b63589112518e71207ba427912e0224f14640bc --java "$JAVA_HOME/bin/java"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-pilot-raw-capture
+          path: build/ai-pilot/
+          if-no-files-found: warn
+  fit:
+    name: Fit fixed ridge on train and freeze model
+    needs: capture
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    outputs:
+      model_sha: ${{ steps.freeze.outputs.model_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: ai-pilot-raw-capture
+          path: build/ai-pilot
+      - name: Fit only train games and select baseline only on development games
+        run: python tools/motion_forecast.py --manifest build/ai-pilot/manifest.json --events build/ai-pilot/events.jsonl --output build/ai-fit
+      - name: Publish immutable model hash before held-out job can start
+        id: freeze
+        run: |
+          MODEL_SHA=$(sha256sum build/ai-fit/model.json | cut -d ' ' -f 1)
+          echo "model_sha=$MODEL_SHA" >> "$GITHUB_OUTPUT"
+          echo "FROZEN_MODEL_SHA256=$MODEL_SHA"
+          cat build/ai-fit/report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-pilot-frozen-model
+          path: build/ai-fit/
+          if-no-files-found: error
+  evaluate:
+    name: Single frozen withheld and transfer evaluation
+    needs: fit
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: ai-pilot-raw-capture
+          path: build/ai-pilot
+      - uses: actions/download-artifact@v4
+        with:
+          name: ai-pilot-frozen-model
+          path: build/ai-fit
+      - name: Evaluate once against already published exact model hash
+        env:
+          MODEL_SHA: ${{ needs.fit.outputs.model_sha }}
+        run: |
+          python tools/motion_forecast.py --stage evaluate --manifest build/ai-pilot/manifest.json --events build/ai-pilot/events.jsonl --model build/ai-fit/model.json --model-sha256 "$MODEL_SHA" --output build/ai-heldout
+          cat build/ai-heldout/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-pilot-withheld-results
+          path: build/ai-heldout/
+          if-no-files-found: warn
