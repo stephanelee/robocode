@@ -17,3 +17,16 @@ python tools/own_wave_context_diagnostic.py --manifest benchmarks/ai-motion-v1/m
 ```
 
 Any later learned feature or fresh confirmation experiment requires its own prospective model/measurement rules. This diagnostic authorizes neither fitting nor gameplay changes.
+
+## Single declared count: result
+
+Source/declaration `4049c449d6ecccb116816ccdf6341eabfeab3c7f` was published before the count. Four synthetic timing/leakage tests passed. The [per-game output](../benchmarks/own-wave-context/coverage.json) records exact tool/manifest/compressed-input hashes. Only nine train/dev games entered reconstruction; no future labels or held-out/transfer metrics were computed.
+
+| Split | Known-target anchors | Unique confirmed shots | Any missing eight-frame radial context | Earliest eligible wave missing | Missing context with ETA in[0,40] |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Train | 11,533 | 609 | 7,426 | 6,717 | 7,045 |
+| Development | 6,069 | 278 | 3,347 | 3,013 | 3,165 |
+
+These are pooled descriptive counts, not independent samples or equal-game performance estimates. All 887 actual first-seen deliveries have creation-turn availability in this corpus, and first-delivery versus actual recorded-window visibility has zero disagreements. The delayed-delivery/repeated-copy fixtures remain important for defining a reusable legal boundary rather than assuming those properties universally. No missing scans occurred; per-game cached-scan age bands remain in the output. Old-wave ETA bands are wave-anchor counts and can exceed anchor counts when several estimates coexist.
+
+There is enough observed missing legal context to justify a separately preregistered feature-family test. Nothing here establishes conditional target response, actual surviving bullets, Retcon's private wave state, or improved containment. No model was fitted or changed during this diagnostic.
