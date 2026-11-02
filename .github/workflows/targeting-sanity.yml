@@ -1,0 +1,42 @@
+name: Targeting refactor sanity
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  sanity:
+    name: Five fixed-policy compatibility rounds
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build, replay accepted behavior, and verify tracked JAR
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/targeting-tracked.jar"
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/targeting-tracked.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_*.py' -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run only the five registered compatibility rounds
+        run: python tools/targeting_sanity.py --java "$JAVA_HOME/bin/java"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: targeting-refactor-sanity
+          path: build/targeting-sanity/
+          if-no-files-found: warn
