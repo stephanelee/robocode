@@ -5,4 +5,3 @@
 - Respect the user's existing author identity, Stéphane Lee. Do not add Codex/AI `Co-authored-by` or `Generated-by` trailers to future commits or merges. Preserve published history and evidence SHAs unless the user explicitly requests a rewrite.
 - For each gameplay change, document the hypothesis and comparison protocol prospectively in `docs/` and the relevant issue, then benchmark it. Record outcomes, failures, rejected candidates, source/JAR hashes, opponent pins, and runtime provenance; do not invent improvement claims.
 - Implementation agents create PRs. A separate agent independently reviews and merges after required CI checks pass. An implementation agent must not merge its own PR.
-- After every experiment, update `docs/improvements.md` with its measured round budget and key benchmark results, accept/reject decision, and links to its PR, report, and raw evidence. An experiment is not complete until this index entry is published and independently reviewed.
