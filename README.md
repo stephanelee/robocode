@@ -18,7 +18,7 @@ Windows PowerShell:
 .\gradlew.bat clean build
 ```
 
-This compiles the source, runs available JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/` when tests exist. The initial bootstrap has no gameplay tests; these are tracked in [TODO.md](TODO.md).
+This compiles the source, runs available JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/` when tests exist. Regression tests cover seeded learning, terminal transitions, frozen evaluation, configuration, and checkpoint validation. Battle performance is tracked separately in [TODO.md](TODO.md).
 
 ## Run a battle
 
@@ -46,8 +46,38 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 The implementation is in `src/main/java/AISurvivor.java`:
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
-- Movement currently blends six strategies: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, and hunt.
+- Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.
 - GuessFactor targeting combines per-enemy and per-class statistics with motion prediction.
-- Enemy energy changes infer bullet waves; Java serialization persists the DQN and class targeting statistics across launches.
+- Enemy energy changes infer bullet waves; a versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
 
 This is an experimental bot with known correctness issues. See [TODO.md](TODO.md) for the prioritized repair and benchmark plan. Build success alone does not establish battle performance.
+
+## Training, evaluation, and telemetry
+
+Set these environment variables before launching the bot. Paths are relative to the bot working directory unless absolute. Invalid modes, seeds, and action IDs fail at startup.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| AISURVIVOR_MODE | train | train, eval, or fixed |
+| AISURVIVOR_SEED | 0 | Signed 64-bit seed for network initialization, exploration, and replay sampling |
+| AISURVIVOR_MODEL_PATH | AISurvivor-qtable.dat | Checkpoint to load/save |
+| AISURVIVOR_ACTION | 0 | Fixed strategy ID: 0 minimum risk, 1 clockwise orbit, 2 counterclockwise orbit, 3 flee, 4 wave surf, 5 hunt |
+| AISURVIVOR_METRICS_PATH | unset | Optional JSONL output, one record per completed round |
+
+Training uses Boltzmann exploration and updates model weights and targeting statistics. Evaluation chooses the highest-valued action, freezes learning and exploration temperature, and never writes the checkpoint. A missing checkpoint in evaluation creates a fresh seeded policy; check the telemetry's checkpointLoaded flag to distinguish trained from cold evaluation. Fixed mode always executes AISURVIVOR_ACTION and neither reads nor writes a checkpoint. Evaluation and fixed modes also freeze local GuessFactor and surfing statistics. Bot RNG seeding does not seed the game server or guarantee identical whole-battle outcomes.
+
+At round completion, the final transition includes pending combat rewards plus +60 for winning or the existing death penalty of -(60 + 12 × remaining enemies). Duplicate completion notifications do not create duplicate transitions. Per-turn survival remains +0.1.
+
+Checkpoints contain an explicit format version, dimensions, weights, counters, temperature, and class targeting statistics. Replay is deliberately not persisted; restarting begins a fresh seeded RNG stream, rather than resuming an interrupted training sequence exactly. Legacy Java-serialized or corrupt files are logged and left untouched when loading fails. On the next training save, they are backed up beside the original as .rejected-UUID before replacement. New checkpoints are validated and replaced atomically; a filesystem lacking atomic replacement leaves the previous checkpoint in place and reports an error.
+
+For example, evaluate a trained checkpoint from PowerShell:
+
+```powershell
+$env:AISURVIVOR_MODE = 'eval'
+$env:AISURVIVOR_SEED = '123'
+$env:AISURVIVOR_MODEL_PATH = 'trained.dat'
+$env:AISURVIVOR_METRICS_PATH = 'evaluation.jsonl'
+java -jar AISurvivor.jar
+```
+
+Metrics include actual fired bullets and bullet hits, hit rate, damage dealt/taken, wall and bot collisions, skipped turns, outcome, accumulated reward, mode, seed, and checkpoint status. The benchmark runner can combine these records with official scores and placements.
