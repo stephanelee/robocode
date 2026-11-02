@@ -137,15 +137,12 @@ public class AISurvivor extends Bot {
     private int    radarTargetId = -1;
     private int    radarSign     = 1;
     private int    dodgeSign     = 1;
-    private double pendingReward = 0.0;
+    private final RoundLifecycle round = new RoundLifecycle();
 
     private DQNAgent agent;
     private final BotConfig config = BotConfig.fromEnvironment(System.getenv());
     private final RoundMetrics metrics = new RoundMetrics();
     private boolean checkpointLoaded;
-    private boolean roundFinished = true;
-    private boolean won, died;
-    private double outcomeReward;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Entry point
@@ -173,9 +170,9 @@ public class AISurvivor extends Bot {
             advanceEnemyWaves();
 
             double[] features = encodeFeatures();
-            int action = agent.observe(features, pendingReward + SURVIVAL_BONUS, false);
+            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false);
             metrics.reward += SURVIVAL_BONUS;
-            pendingReward = 0.0;
+            round.pendingReward = 0.0;
 
             executeMovement(action);
             updateRadar();
@@ -194,14 +191,11 @@ public class AISurvivor extends Bot {
         targetingWaves.clear();
         incomingBullets.clear();
         enemyWaves.clear();
-        pendingReward = 0.0;
         dodgeSign     = 1;
         radarTargetId = -1;
         radarSign     = 1;
         agent.startEpisode();
-        roundFinished = false;
-        won = died = false;
-        outcomeReward = 0.0;
+        round.start();
         metrics.reset();
 
         // Decay GF and surf stats
@@ -215,17 +209,12 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onRoundEnded(RoundEndedEvent e) {
-        // Results make completion independent of WonRound callback ordering.
-        if (!died && e.getResults() != null && e.getResults().getRank() == 1) {
-            won = true;
-            outcomeReward = 60.0;
-        }
-        finishRound();
+        finishRound(e);
         saveAgent();
     }
 
     @Override
-    public void onGameEnded(GameEndedEvent e) { finishRound(); saveAgent(); }
+    public void onGameEnded(GameEndedEvent e) { saveAgent(); }
 
     @Override
     public void onTick(TickEvent e) {
@@ -299,8 +288,7 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onDeath(DeathEvent e) {
-        died = true;
-        outcomeReward = -(60.0 + getEnemyCount() * 12.0);
+        round.died(getEnemyCount());
     }
 
     @Override
@@ -715,14 +703,13 @@ public class AISurvivor extends Bot {
     }
 
     private void addReward(double reward) {
-        pendingReward += reward;
+        round.addReward(reward);
         metrics.reward += reward;
     }
 
     @Override
     public void onWonRound(WonRoundEvent e) {
-        won = true;
-        outcomeReward = 60.0;
+        round.won();
     }
 
     @Override
@@ -731,14 +718,14 @@ public class AISurvivor extends Bot {
     @Override
     public void onSkippedTurn(SkippedTurnEvent e) { metrics.skippedTurns++; }
 
-    private void finishRound() {
-        if (roundFinished) return;
-        roundFinished = true;
-        agent.finishEpisode(pendingReward + outcomeReward);
-        metrics.reward += outcomeReward;
-        pendingReward = 0.0;
-        metrics.write(config, getRoundNumber(), getTurnNumber(), agent.totalRounds,
-                checkpointLoaded, won, died);
+    private void finishRound(RoundEndedEvent event) {
+        double finalPending = round.pendingReward;
+        RoundLifecycle.Completion completed = round.finish(event);
+        if (completed == null) return;
+        metrics.reward += completed.reward() - finalPending;
+        agent.finishEpisode(completed.reward());
+        metrics.write(config, completed.round(), completed.turns(), agent.totalRounds,
+                checkpointLoaded, completed.won(), completed.died());
     }
 
     // ═════════════════════════════════════════════════════════════════════════
