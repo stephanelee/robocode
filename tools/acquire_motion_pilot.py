@@ -23,17 +23,20 @@ def run(args):
     if output.exists() and any(output.iterdir()):
         raise ValueError("Fresh output required; never replace a previous attempt")
     output.mkdir(parents=True, exist_ok=True)
-    plan = blob(args.plan_commit, "docs/ai-motion-pilot.md")
-    layout_bytes = blob(args.plan_commit, "tools/fixtures/motion-pilot-v1/games.json")
+    confirmation = getattr(args, "confirmation", False)
+    plan = blob(args.plan_commit, "docs/ai-containment-proposal.md" if confirmation else "docs/ai-motion-pilot.md")
+    layout_bytes = blob(args.plan_commit, "tools/fixtures/containment-v2/games.json" if confirmation else "tools/fixtures/motion-pilot-v1/games.json")
     layout = json.loads(layout_bytes)
     games = layout["games"]
-    if (layout["roundsPerGame"] != 3 or len(games) != 15
-            or collections.Counter(g["split"] for g in games) != dict(train=6, dev=3, withheld=3, transfer=3)
+    expected_games, expected_rounds = (6, 18) if confirmation else (15, 45)
+    expected_splits = dict(withheld=3, transfer=3) if confirmation else dict(train=6, dev=3, withheld=3, transfer=3)
+    if (layout["roundsPerGame"] != 3 or len(games) != expected_games
+            or collections.Counter(g["split"] for g in games) != expected_splits
             or layout["horizons"] != [8, 16, 24, 32, 40] or layout["history"] != 8):
         raise ValueError("Registration differs from reviewed exact pilot budget/split")
     source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=benchmark.ROOT, text=True).strip()
     jar_hash = benchmark.digest(args.bot_dir / "AISurvivor.jar")
-    manifest = dict(schemaVersion=1, datasetId="ais-motion-pilot-v1", provenance=dict(sourceCommit=source_commit,
+    manifest = dict(schemaVersion=1, datasetId="ais-containment-confirm-v2" if confirmation else "ais-motion-pilot-v1", provenance=dict(sourceCommit=source_commit,
         botJarSha256=jar_hash, engineVersion=benchmark.VERSION, collectorVersion="legal-scan-v1"), games=games)
     legal_scan_dataset.validate_manifest(manifest)
     if source_commit == "0" * 40 or jar_hash == "0" * 64:
@@ -43,7 +46,7 @@ def run(args):
     (output / "registered-games.json").write_bytes(layout_bytes)
     report = dict(schemaVersion=1, status="preparing", sourceCommit=source_commit, botJarSha256=jar_hash,
         registrationCommit=args.plan_commit, planSHA256=hashlib.sha256(plan).hexdigest(),
-        layoutSHA256=hashlib.sha256(layout_bytes).hexdigest(), plannedGames=15, plannedRounds=45,
+        layoutSHA256=hashlib.sha256(layout_bytes).hexdigest(), plannedGames=expected_games, plannedRounds=expected_rounds,
         validatedGames=0, validatedRounds=0, games=[], runtimeOS=retcon_stats.os_provenance())
     path = output / "acquisition.json"
     def save():
@@ -96,7 +99,7 @@ def run(args):
             report["validatedGames"] += 1; report["validatedRounds"] += 3
             del report["inProgressGame"]; save()
             print(f"CAPTURED {game_id}: 3 rounds, {len(records)} legal rows", flush=True)
-        if report["validatedRounds"] != 45 or report["validatedGames"] != 15:
+        if report["validatedRounds"] != expected_rounds or report["validatedGames"] != expected_games:
             raise ValueError("Incomplete declared pilot budget")
         legal_scan_dataset.validated_groups(all_records, manifest)
         report.update(status="complete", eventsSHA256=benchmark.digest(output / "events.jsonl"), inputRecords=len(all_records))
@@ -110,6 +113,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan-commit", required=True)
+    parser.add_argument("--confirmation", action="store_true", help="Only the separately registered six-game/18-round fresh containment confirmation")
     parser.add_argument("--java", default="java")
     parser.add_argument("--bot-dir", type=Path, default=benchmark.ROOT / "AISurvivor")
     parser.add_argument("--cache", type=Path, default=benchmark.ROOT / ".benchmark-cache")
