@@ -68,14 +68,18 @@ class LegalScanRecorderTest {
             if (type == 0) recorder.submitted(intent(1));
             if (type == 2) recorder.confirmed(shot(2));
             recorder.frame(1, 1, OWN, List.of(target(1, type == 1 ? 2 : 1)));
-            assertFalse(recorder.enabled()); assertEquals("failed", status(path).get("status").getAsString());
+            assertFalse(recorder.enabled()); assertEquals("", Files.readString(path));
+            assertEquals("recording", status(path).get("status").getAsString());
+            recorder.finishRound(1);
+            assertEquals("failed", status(path).get("status").getAsString());
         }
     }
     @Test void rowBoundPreservesPartialEvidenceAndMakesCaptureInvalid() throws Exception {
         Path path = temp.resolve("bounded"); var recorder = new LegalScanRecorder(path, "game-4", 1);
         recorder.startRound(1); recorder.frame(1, 1, OWN, List.of(target(1, 1)));
         recorder.frame(1, 2, OWN, List.of(target(1, 2)));
-        assertFalse(recorder.enabled()); assertEquals(1, rows(path).size());
+        assertFalse(recorder.enabled()); assertEquals("", Files.readString(path));
+        recorder.finishRound(1); assertEquals(1, rows(path).size());
         assertEquals("failed", status(path).get("status").getAsString());
     }
     @Test void absentRoundEndIsInvalidRatherThanSilentlyDiscardingRows() throws Exception {

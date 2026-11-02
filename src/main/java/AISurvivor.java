@@ -186,13 +186,13 @@ public class AISurvivor extends Bot {
     public void onRoundEnded(RoundEndedEvent e) {
         finishRound(e);
         saveAgent();
-        if (scanRecorder.enabled()) scanRecorder.finishRound(e.getRoundNumber());
+        if (scanRecorder.configured()) scanRecorder.finishRound(e.getRoundNumber());
     }
 
     @Override
     public void onGameEnded(GameEndedEvent e) {
         saveAgent();
-        if (scanRecorder.enabled()) scanRecorder.finishGame();
+        if (scanRecorder.configured()) scanRecorder.finishGame();
     }
 
     private void recordLegalFrame() {

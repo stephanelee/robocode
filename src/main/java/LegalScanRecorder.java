@@ -24,7 +24,7 @@ final class LegalScanRecorder {
     private final JsonArray rounds = new JsonArray();
     private Intent previousIntent;
     private int round, rows, lastTurn;
-    private boolean failed, finished, gameFinished;
+    private boolean failed, finished, gameFinished, failureFlushed;
     private String error;
 
     private LegalScanRecorder() { path = null; gameId = null; maxRows = 0; }
@@ -46,6 +46,7 @@ final class LegalScanRecorder {
         catch (IOException error) { throw new IllegalArgumentException("Cannot create fresh dataset capture", error); }
     }
     boolean enabled() { return path != null && !failed; }
+    boolean configured() { return path != null; }
 
     synchronized void startRound(int number) {
         if (!enabled()) return;
@@ -94,20 +95,23 @@ final class LegalScanRecorder {
         } catch (RuntimeException error) { fail(error.getMessage()); }
     }
     synchronized void finishRound(int number) {
-        if (!enabled() || finished) return;
-        if (number != round) { fail("Mismatched capture round end"); return; }
+        if (!configured()) return;
+        if (failed) { flushFailure(); return; }
+        if (finished) return;
+        if (number != round) { fail("Mismatched capture round end"); flushFailure(); return; }
         try {
             append();
             JsonObject result = new JsonObject(); result.addProperty("round", round);
             result.addProperty("records", rows); result.addProperty("complete", true); rounds.add(result);
             finished = true; status();
-        } catch (IOException error) { fail("Round flush failed: " + error.getMessage()); }
+        } catch (IOException error) { fail("Round flush failed: " + error.getMessage()); flushFailure(); }
     }
     synchronized void finishGame() {
-        if (!enabled()) return;
-        if (round != 0 && !finished) { fail("Game ended before capture round completion"); return; }
+        if (!configured()) return;
+        if (failed) { flushFailure(); return; }
+        if (round != 0 && !finished) { fail("Game ended before capture round completion"); flushFailure(); return; }
         gameFinished = true;
-        try { status(); } catch (IOException error) { fail("Game status flush failed: " + error.getMessage()); }
+        try { status(); } catch (IOException error) { fail("Game status flush failed: " + error.getMessage()); flushFailure(); }
     }
     private void append() throws IOException {
         if (buffer.length() != 0) {
@@ -124,8 +128,12 @@ final class LegalScanRecorder {
     }
     private void fail(String message) {
         failed = true; error = message;
+    }
+    private void flushFailure() {
+        if (failureFlushed) return;
+        failureFlushed = true;
         try { append(); status(); }
         catch (IOException secondary) { System.err.println("[AISurvivor] Dataset evidence flush failed: " + secondary.getMessage()); }
-        System.err.println("[AISurvivor] Dataset capture invalid: " + message);
+        System.err.println("[AISurvivor] Dataset capture invalid: " + error);
     }
 }
