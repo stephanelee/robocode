@@ -21,6 +21,19 @@ jobs:
         run: |
           python tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json
           python tools/dual_aim_diagnostic.py --suite withheld --output component-evidence/withheld.json
+      - name: Verify raw artifacts reproduce recorded summaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = json.loads(Path('benchmarks/dual-aim-v1/summary.json').read_text())
+          for suite in ('development', 'withheld'):
+              actual = json.loads(Path(f'component-evidence/{suite}.json').read_text())
+              rows = actual.pop('rows')
+              assert len(rows) == (9792 if suite == 'development' else 1080)
+              assert actual == expected[suite], f'{suite} evidence differs from recorded summary'
+              print(f'{suite}: {len(rows)} rows reproduce the frozen result')
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: dual-aim-v1-raw
