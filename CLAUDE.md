@@ -9,7 +9,7 @@ Use a Java 17 JDK and the checked-in Gradle 8.14.3 wrapper:
 ./gradlew test
 ```
 
-On Windows use `.\gradlew.bat`. The build creates the fat JAR at `AISurvivor/AISurvivor.jar`; HTML test reports are in `build/reports/tests/test/`. CI builds from source on pull requests and `master`, and publishes the bot directory as an Actions artifact. Do not include locally rebuilt JAR changes in source PRs.
+On Windows use `.\gradlew.bat`. The build creates the fat JAR at `AISurvivor/AISurvivor.jar`; HTML test reports are in `build/reports/tests/test/`. The runnable JAR is intentionally tracked in Git. Rebuild and commit it whenever bot source or runtime dependencies change. CI preserves the checked-in JAR, builds from source, compares every file entry with `tools/verify_jar.py` (ignoring ZIP timestamps/order), and publishes the fresh bot directory as an Actions artifact. A stale or otherwise different checked-in JAR fails CI.
 
 The dependency is `dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0`. Use the matching Tank Royale 1.4.0 GUI/server and sample bots for battle validation. From the `AISurvivor` directory run `java -jar AISurvivor.jar` after starting the server. See README.md for installation and environment variables.
 

@@ -22,6 +22,8 @@ This compiles the source, runs JUnit 5 tests, and builds `AISurvivor/AISurvivor.
 
 ## Run a battle
 
+The repository includes a ready-built [AISurvivor.jar](AISurvivor/AISurvivor.jar). Clone or download this repository and launch it from the `AISurvivor` directory with Java 17; Gradle is only needed to rebuild it. Keep the JSON descriptor and launchers beside the JAR. CI verifies that the checked-in JAR's file contents match a fresh source build.
+
 The dependency is pinned to Tank Royale bot API **1.4.0**. Use the matching [Tank Royale 1.4.0 release](https://github.com/robocode-dev/tank-royale/releases/tag/v1.4.0). The upstream GUI/server requires Java 11 or newer; this bot is built for Java 17, so use Java 17 for both. Compatibility with other server versions has not been verified.
 
 1. Install the Tank Royale GUI/server and sample opponents from that release.

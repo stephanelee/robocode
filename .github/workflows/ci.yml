@@ -21,10 +21,16 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Build and test from source
         run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-checked-in.jar"
           rm -f AISurvivor/AISurvivor.jar
           ./gradlew --no-daemon clean build
+      - name: Verify checked-in JAR matches source
+        run: python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
