@@ -51,3 +51,19 @@ A further collection requires a separate immutable registration and independent 
 The first failed attempt's full six registered game/acquisition IDs are excluded permanently, including the four never run. The new fixed layout `tools/fixtures/own-wave-v3/retry-games.json` contains `w3b-retcon-01`, `w3b-target-01`, `w3b-retcon-02`, `w3b-spinbot-01`, `w3b-retcon-03`, `w3b-walls-01`, unique `own-wave-v3b-` acquisition IDs and predetermined seeds2026110501..06. Exactly18 rounds are authorized only after independent review of the immutable collector compatibility registration and workflow. All former budgets/guards remain unchanged; this new attempt cannot select/exclude games using previous outcomes.
 
 `tools/fixtures/own-wave-v3/collector-compat.json` explicitly binds the original and repaired collector/JAR pair, original model/report hashes, engine1.4.0, collector source and exact six new games. The wrapper requires the actual manifest source to be the captured PR head and verifies production/test/JAR tree equality with the published collector-fix commit. It verifies the original model, screen, model/helper/dependency bytes before calling the unchanged scoring and decision functions. It records both original training provenance and actual new capture provenance. It does not rewrite the manifest/model or weaken the original evaluator's strict collector check. No refit, rescreen, old-test reuse, gate change or live predictor is authorized. Any further invalid attempt again stops and preserves evidence; no automatic rerun.
+
+## Fresh confirmation outcome: reject for transfer
+
+The separately preregistered collector-compatible [run41537758736](https://github.com/stephanelee/robocode/actions/runs/41537758736), source `f1886f27db755f110bb0fcff9947a88a9a97a2c4`, completed all18 new rounds/six games and8,243 legal rows. Every status/official result matched, all three Retcon native exports completed, AIS skipped turns were zero and no DQN models were written. The original model/source/dependency bytes stayed frozen. Independent review reproduced all counts/cells and the exact decision.
+
+**Reject; no learned gun deployment.** Fresh Retcon equal-game/equal24/32/40-turn containment proxy rose3.584676%→6.318742% (**+2.734066pp**); all three game gains were positive (+2.290460,+3.079746,+2.831992pp). Retcon primary/coverage/improved-game/worst-game/short-horizon guards passed. Mean radial error158.197926→103.135305pixels is diagnostic, not bullet accuracy or a live strength claim.
+
+| Fresh transfer game | Current→scorer containment | Current→scorer mean error | Guard |
+| --- | --- | --- | --- |
+| Target | 54.781972%→55.928350% | 45.431717→38.563978px | Pass |
+| SpinBot | 98.894176%→23.157008% | 6.027874→69.592086px | Fail both |
+| Walls | 51.876150%→12.875550% | 60.940628→167.854896px | Fail both |
+
+The sole failed decision category is transfer: SpinBot containment loss75.737168pp/error increase63.564212px and Walls loss39.000601pp/increase106.914268px exceed the original2pp/5px limits. No rounding exception, threshold waiver, retraining or additional confirmation follows. These fresh games are now spent, just as the old test set remains spent. Retcon-only training may be relevant to transfer failure, but this experiment does not establish its cause.
+
+[Exact fresh report](../benchmarks/ai-own-wave-v3/fresh-report.json), [lossless raw data and provenance](../benchmarks/ai-own-wave-v3/confirmation/preservation.json), [PR #31](https://github.com/stephanelee/robocode/pull/31). The complete experiment used one fit/one dev screen, six invalid-attempt physical rounds plus18 valid confirmation rounds; all failures remain preserved. The default-off collector boundary repair is retained as instrumentation correctness only. Production targeting/movement/DQN and the absence of a live learned gun remain unchanged. Future improvements require a separate prospective protocol and fresh confirmation data.
