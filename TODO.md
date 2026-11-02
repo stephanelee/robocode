@@ -41,3 +41,10 @@ First milestone is complete when the build is reproducible, movement and targeti
 - [x] Cycle 3: record the third controlled hypothesis and final accept/reject decision. (60 training + 120 evaluation rounds; candidate rejected and gameplay reverted. [Report](docs/improvements/cycle-3.md); [issue #12](https://github.com/stephanelee/robocode/issues/12) remains open.)
 
 See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github.com/stephanelee/robocode/issues/8). Only candidates that meet their preregistered criteria are retained.
+
+## Source-grounded Retcon counterstrategy
+
+- [x] Publish the opponent-source-grounded [strategy and prospective gate categories](docs/retcon-strategy.md).
+- [x] Capture unchanged Retcon native statistics as offline diagnostics, with actual Ubuntu26.04 provenance. [Report](docs/retcon-observability.md).
+- [x] Test the isolated bullet-energy scan-lag correction with an actual pinned-engine trace and 120 fixed-policy rounds. [Report](docs/improvements/foundation-scan-lag.md): rejected by mean score-share and wall-rate guards; online stage skipped, gameplay/JAR reverted.
+- [ ] Resolve [bullet scan visibility issue #18](https://github.com/stephanelee/robocode/issues/18) under a new approved design; the actual engine contract is proven, but the tested repair was not retained.

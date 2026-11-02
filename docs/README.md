@@ -6,7 +6,9 @@ For performance work, start with **Retcon 1v1**: the [Retcon benchmark workflow]
 
 - [Benchmark methodology and runtime setup](benchmarks.md)
 - [Source-grounded plan to beat Retcon](retcon-strategy.md)
-- [Measured improvement log and three completed experiments](improvements.md)
+- [Measured experiment log](improvements.md)
+- [Rejected bullet-scan visibility foundation experiment](improvements/foundation-scan-lag.md)
+- [Actual pinned-engine bullet-energy trace](engine-energy-trace.md)
 - [Cycle 3: rejected saved-targeting experiment](improvements/cycle-3.md)
 - [Cycle 2 wall-smoothing report and preregistration](improvements/cycle-2.md)
 - [Immutable version-comparison tooling](version-comparisons.md)
