@@ -14,6 +14,7 @@ import subprocess
 import urllib.request
 import zipfile
 import retcon
+import retcon_stats
 
 VERSION = "1.4.0"
 ASSETS = {
@@ -186,15 +187,40 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
         configs = [args.retcon_source / "Retcon.json"] if name == "Retcon" and args.retcon_source else list(samples.rglob(name + ".json"))
         if len(configs) != 1:
             raise ValueError(f"Expected one {name} sample config, found {len(configs)}")
+        if name == "Retcon" and retcon.source_hash(configs[0].parent) != retcon_stats.SOURCE_SHA256:
+            raise ValueError("Observed Retcon source differs from the approved unchanged pin")
         isolated = run_dir / "opponents" / name
         isolate_opponent(configs[0].parent, isolated)
         opponent_dirs.append(str(isolated))
     result_file = run_dir / "battle.json"
     command = [args.java, "-cp", str(runner), str(ROOT / "tools" / "BenchmarkBattle.java"),
                str(rounds), str(args.timeout), str(result_file), str(bot_dir), *opponent_dirs]
+    capture = retcon_stats.Capture(retcon_stats.java_temp_directory(args.java)) if "Retcon" in opponents else None
+    env.pop("RETCON_STATS_DIR", None)
+    if capture:
+        env["RETCON_STATS_DIR"] = str(capture.path)
+    opponent_stats = None
+    opponent_id = None
     before = digest(model) if model.exists() else None
-    run_process(command, ROOT, env, run_dir / "runner.log", args.timeout + 90)
-    data = json.loads(result_file.read_text(encoding="utf-8"))
+    try:
+        run_process(command, ROOT, env, run_dir / "runner.log", args.timeout + 90)
+        data = json.loads(result_file.read_text(encoding="utf-8"))
+        if capture:
+            native_opponents = [row for row in data["results"] if row["name"] == "Retcon"]
+            if len(native_opponents) != 1:
+                raise ValueError("Expected one Retcon result for native stats matching")
+            if native_opponents[0].get("version") != "0.2.0":
+                raise ValueError("Observed Retcon version differs from the approved source pin")
+            opponent_id = native_opponents[0]["id"]
+            opponent_stats = capture.collect(run_dir / "retcon-stats", rounds, opponent_id,
+                                             require=getattr(args, "require_retcon_stats", False))
+    finally:
+        if capture:
+            try:
+                if opponent_stats is None:
+                    capture.collect(run_dir / "retcon-stats", rounds, opponent_id, require=False)
+            finally:
+                capture.close()
     if data["numberOfRounds"] != rounds:
         raise ValueError("Battle round count does not match requested budget")
     expected_name = json.loads((bot_dir / "AISurvivor.json").read_text(encoding="utf-8"))["name"]
@@ -209,6 +235,7 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
         raise ValueError("Evaluation modified its checkpoint")
     return dict(scenario=scenario, policy=policy, rounds=rounds, **candidate,
                 metrics=summarize_metrics(records) if records else {}, results=data["results"],
+                retconStats=opponent_stats if capture else dict(status="not-applicable"),
                 modelSHA256=digest(model) if model.exists() else None)
 
 
@@ -226,9 +253,12 @@ def main():
     parser.add_argument("--bot-dir", type=Path, default=ROOT / "AISurvivor")
     parser.add_argument("--java", default="java")
     parser.add_argument("--require-metrics", action="store_true")
+    parser.add_argument("--require-retcon-stats", action="store_true", help="Fail if the native Retcon export is missing, partial, or invalid")
     args = parser.parse_args()
     if min(args.rounds, args.training_rounds, args.timeout) <= 0:
         parser.error("round and timeout values must be positive")
+    if args.require_retcon_stats and args.suite != "retcon":
+        parser.error("--require-retcon-stats requires --suite retcon")
     args.bot_dir = args.bot_dir.resolve()
     args.output = args.output.resolve()
     if args.output.exists() and any(args.output.iterdir()):
