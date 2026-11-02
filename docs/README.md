@@ -15,6 +15,7 @@ For performance work, start with **Retcon 1v1**: the [Retcon benchmark workflow]
 - [First AI motion-data and forecast pilot proposal](ai-motion-pilot.md)
 - [Containment scorer: rejected development screen](ai-containment-proposal.md)
 - [Old-own-wave AI context: development passed, fresh transfer rejected](ai-old-wave-context-v3.md)
+- [Mixed-opponent training population: development rejected](ai-mixed-population-v4.md)
 - [Cycle 3: rejected saved-targeting experiment](improvements/cycle-3.md)
 - [Cycle 2 wall-smoothing report and preregistration](improvements/cycle-2.md)
 - [Immutable version-comparison tooling](version-comparisons.md)
