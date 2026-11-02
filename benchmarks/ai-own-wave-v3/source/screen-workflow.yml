@@ -1,0 +1,81 @@
+name: Learned old-wave context screen
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  fit:
+    name: One train-only containment fit
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    outputs:
+      model_sha: ${{ steps.freeze.outputs.model_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test frozen ranker implementation
+        run: python -m unittest discover -s tools -p 'test_containment_forecast_v3.py' -v
+      - name: Unpack exact previous legal corpus
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, os
+          from pathlib import Path
+          data = gzip.decompress(Path('benchmarks/ai-motion-v1/events.jsonl.gz').read_bytes())
+          assert hashlib.sha256(data).hexdigest() == 'd2cb8e055659485d89648eec6cd3aebe8cbfce8dfb4dd19f83e7ba3efa1d11e2'
+          Path(os.environ['RUNNER_TEMP'], 'legal-events.jsonl').write_bytes(data)
+          PY
+      - name: Fit once using original training games only
+        run: python tools/containment_forecast_v3.py --manifest benchmarks/ai-motion-v1/manifest.json --events "$RUNNER_TEMP/legal-events.jsonl" --output build/wave-context-fit
+      - name: Publish frozen model hash before screen job
+        id: freeze
+        run: |
+          MODEL_SHA=$(sha256sum build/wave-context-fit/model.json | cut -d ' ' -f 1)
+          echo "model_sha=$MODEL_SHA" >> "$GITHUB_OUTPUT"
+          echo "FROZEN_CONTAINMENT_MODEL_SHA256=$MODEL_SHA"
+          cat build/wave-context-fit/report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: containment-v3-frozen-model
+          path: build/wave-context-fit/
+          if-no-files-found: error
+  screen:
+    name: Single development-only containment screen
+    needs: fit
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: containment-v3-frozen-model
+          path: build/wave-context-fit
+      - name: Unpack same hash-pinned corpus
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, os
+          from pathlib import Path
+          data = gzip.decompress(Path('benchmarks/ai-motion-v1/events.jsonl.gz').read_bytes())
+          assert hashlib.sha256(data).hexdigest() == 'd2cb8e055659485d89648eec6cd3aebe8cbfce8dfb4dd19f83e7ba3efa1d11e2'
+          Path(os.environ['RUNNER_TEMP'], 'legal-events.jsonl').write_bytes(data)
+          PY
+      - name: Screen once using only development games and published model
+        env:
+          MODEL_SHA: ${{ needs.fit.outputs.model_sha }}
+        run: |
+          python tools/containment_forecast_v3.py --stage screen --manifest benchmarks/ai-motion-v1/manifest.json --events "$RUNNER_TEMP/legal-events.jsonl" --model build/wave-context-fit/model.json --model-sha256 "$MODEL_SHA" --output build/wave-context-screen
+          cat build/wave-context-screen/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: containment-v3-development-screen
+          path: build/wave-context-screen/
+          if-no-files-found: warn

@@ -1,0 +1,14 @@
+Nov 02, 2026 10:12:37 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+INFO: Starting battle: rounds=3, bots=2
+Nov 02, 2026 10:12:38 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+INFO: Booting bots...
+Nov 02, 2026 10:12:40 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+INFO: Starting game...
+Nov 02, 2026 10:12:40 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+INFO: Battle started successfully
+Nov 02, 2026 10:12:42 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync$lambda$6
+INFO: Battle finished, cleaning up...
+Exception in thread "main" java.lang.IllegalStateException: Legal dataset capture failed: {"schemaVersion":1,"collectorVersion":"legal-scan-v1","gameId":"w3-target-01","status":"failed","rounds":[{"round":1,"records":292,"complete":true},{"round":2,"records":321,"complete":true},{"round":3,"records":311,"complete":true}],"error":"Invalid or repeated capture turn"}
+
+	at BenchmarkBattle.awaitLegalDataset(BenchmarkBattle.java:50)
+	at BenchmarkBattle.main(BenchmarkBattle.java:33)

@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "sourceCommit": "ecca8e273248419c18dd1696c95fd7c12aaa467e",
+  "botJarSha256": "1b99fa0ac303e5e5f89ed91bb3803841ded54910628f335fe1aeaeba65e34c9a",
+  "registrationCommit": "036a2358c125e0e253d299971f4b3080c2495e86",
+  "planSHA256": "d4e1ecabfe603ddcfb6b7a6747bc4fd3401ecf3cfc43b6d3ccd72b448013bab3",
+  "layoutSHA256": "c472d2427246f9eddb4f8dbb8c103c6a5c9c9c0f8381d581f97493fcc711c416",
+  "plannedGames": 6,
+  "plannedRounds": 18,
+  "validatedGames": 1,
+  "validatedRounds": 3,
+  "games": [
+    {
+      "gameId": "w3-retcon-01",
+      "split": "withheld",
+      "records": 2212,
+      "eventsSHA256": "6afd5cce298c43127b087cf05653471ee1fbadb0208757fc8dd997879160480b",
+      "statusSHA256": "0223999b2fb2e97f788979a809eec3ed027cbaaae059104ff8e8f0cf8d24e5df",
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 3,
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 2,
+        "totalScore": 44,
+        "survival": 0,
+        "bulletDamage": 44,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 2266,
+          "shotsFired": 110,
+          "bulletHits": 6,
+          "damageDealt": 43.746750999999996,
+          "damageTaken": 161.71986099999998,
+          "wallCollisions": 4,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.05454545454545454,
+          "roundsRecorded": 3,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 1,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 369,
+            "survival": 150,
+            "bulletDamage": 157,
+            "firstPlaces": 3
+          },
+          {
+            "id": 2,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 2,
+            "totalScore": 44,
+            "survival": 0,
+            "bulletDamage": 44,
+            "firstPlaces": 0
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 3,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-1-67399570855.json",
+              "sha256": "955e5e16b1e5c0c0a252de508b97f78b634a23b0192de9ee03ed88dd628640d7"
+            }
+          ],
+          "actualGun": {
+            "shots": 151,
+            "hits": 20,
+            "hitRate": 0.13245033112582782
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 24,
+              "shots": 145,
+              "hitRate": 0.16551724137931034
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 22,
+              "shots": 145,
+              "hitRate": 0.15172413793103448
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 1,
+            "roundsRecorded": 3,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 2265,
+            "computeP50Micros": 20,
+            "computeP99Micros": 130,
+            "computeMaxMicros": 10373,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:263,10:1186,20:399,30:160,40:76,50:70,60:43,70:19,80:13,90:5,100:6,110:1,120:2,130:2,140:2,150:1,160:1,190:2,200:1,230:2,240:1,270:1,330:1,340:1,720:1,780:1,820:1,1300:1,1650:1,2760:1,10370:1",
+            "timing": {
+              "firesChecked": 151,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 151,
+              "originMatches": 151,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 151,
+              "stillHitsChecked": 0,
+              "stillHitMatches": 0,
+              "hitsOnMovingTargets": 20,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 110,
+              "unanchoredShots": 0,
+              "hitsTaken": 6,
+              "hitsOnWave": 6,
+              "wavePowerCorrected": 0,
+              "waveHitsExact": 6,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 2262,
+              "moveMatches": 2262,
+              "moveWallHitsChecked": 0,
+              "moveNotChecked": 2,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 151,
+              "bulletHits": 20,
+              "virtualGuns": "LinearAimModel:24/145 HeadOnAimModel:22/145"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    }
+  ],
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "sampleArchiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "opponentProvenance": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "inProgressGame": "w3-target-01",
+  "error": "Command exited 1; see /home/runner/work/robocode/robocode/build/own-wave-confirm/games/w3-target-01/Target-fixed-minrisk/runner.log\nNov 02, 2026 10:12:37 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\nINFO: Starting battle: rounds=3, bots=2\nNov 02, 2026 10:12:38 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\nINFO: Booting bots...\nNov 02, 2026 10:12:40 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\nINFO: Starting game...\nNov 02, 2026 10:12:40 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\nINFO: Battle started successfully\nNov 02, 2026 10:12:42 PM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync$lambda$6\nINFO: Battle finished, cleaning up...\nException in thread \"main\" java.lang.IllegalStateException: Legal dataset capture failed: {\"schemaVersion\":1,\"collectorVersion\":\"legal-scan-v1\",\"gameId\":\"w3-target-01\",\"status\":\"failed\",\"rounds\":[{\"round\":1,\"records\":292,\"complete\":true},{\"round\":2,\"records\":321,\"complete\":true},{\"round\":3,\"records\":311,\"complete\":true}],\"error\":\"Invalid or repeated capture turn\"}\n\n\tat BenchmarkBattle.awaitLegalDataset(BenchmarkBattle.java:50)\n\tat BenchmarkBattle.main(BenchmarkBattle.java:33)"
+}
