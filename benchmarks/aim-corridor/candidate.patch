@@ -1,0 +1,246 @@
+diff --git a/AISurvivor/AISurvivor.jar b/AISurvivor/AISurvivor.jar
+index 76df971..0ed3967 100644
+Binary files a/AISurvivor/AISurvivor.jar and b/AISurvivor/AISurvivor.jar differ
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index c26b30b..942f7ee 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -41,6 +41,8 @@ public class AISurvivor extends Bot {
+     // ─── Misc constants ─────────────────────────────────────────────────────
+     private static final double SURVIVAL_BONUS = 0.1;
+     private static final int    STALE_TURNS    = 40;
++    private static final double AIM_RAY_WEIGHT = 5.0;
++    private static final int    OWN_HISTORY    = 64;
+ 
+     // ═════════════════════════════════════════════════════════════════════════
+     //  Inner classes
+@@ -100,6 +102,7 @@ public class AISurvivor extends Bot {
+     private TargetingWave pendingTargetingWave;
+     private final List<EnemyWave>            enemyWaves     = new ArrayList<>();
+     private final Map<Integer, double[]>     surfStats      = new HashMap<>();
++    private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
+ 
+     private int    radarTargetId = -1;
+     private int    radarSign     = 1;
+@@ -133,6 +136,7 @@ public class AISurvivor extends Bot {
+         setAdjustRadarForGunTurn(true);
+ 
+         while (isRunning()) {
++            recordOwnState();
+             pruneStaleEnemies();
+             advanceTargetingWaves();
+             advanceEnemyWaves();
+@@ -165,6 +169,7 @@ public class AISurvivor extends Bot {
+         pendingFireScans.clear();
+         pendingTargetingWave = null;
+         enemyWaves.clear();
++        ownHistory.clear();
+         dodgeSign     = 1;
+         radarTargetId = -1;
+         radarSign     = 1;
+@@ -509,6 +514,9 @@ public class AISurvivor extends Bot {
+             double radialGap = Math.abs(Math.hypot(px - wave.originX, py - wave.originY)
+                     - (getTurnNumber() + travelTurns - wave.fireTurn) * wave.bulletSpeed);
+             if (radialGap < 50) risk += 4 * (1 - radialGap / 50);
++            // Avoid the head-on and linear aim corridors of waves that have not reached us yet.
++            if (wave.remaining(getX(), getY(), getTurnNumber()) > 0)
++                risk += AIM_RAY_WEIGHT * wave.aimDanger(px, py);
+         }
+ 
+         // Slight center preference
+@@ -580,9 +588,15 @@ public class AISurvivor extends Bot {
+                     current.lastScanTurn, prev.energy, current.energy);
+             if (power > 0) {
+                 current.lastFireTurn = prev.lastScanTurn;
+-                enemyWaves.add(new EnemyWave(prev.x, prev.y, calcBulletSpeed(power),
++                double bulletSpeed = calcBulletSpeed(power);
++                EnemyWave wave = new EnemyWave(prev.x, prev.y, bulletSpeed,
+                         CombatMath.bearing(scan.ourX() - prev.x, scan.ourY() - prev.y),
+-                        prev.lastScanTurn, current.id));
++                        prev.lastScanTurn, current.id);
++                AimCorridor.OwnState own = ownHistory.get(prev.lastScanTurn);
++                if (own != null) wave.setAims(AimCorridor.headOn(prev.x, prev.y, own),
++                        AimCorridor.linear(prev.x, prev.y, own, bulletSpeed, getArenaWidth(), getArenaHeight()),
++                        Math.hypot(own.x() - prev.x, own.y() - prev.y));
++                enemyWaves.add(wave);
+                 surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
+             }
+         }
+@@ -745,6 +759,12 @@ public class AISurvivor extends Bot {
+     //  Utilities
+     // ═════════════════════════════════════════════════════════════════════════
+ 
++    private void recordOwnState() {
++        int now = getTurnNumber();
++        ownHistory.put(now, new AimCorridor.OwnState(now, getX(), getY(), getDirection(), getSpeed()));
++        ownHistory.keySet().removeIf(turn -> turn <= now - OWN_HISTORY);
++    }
++
+     private void pruneStaleEnemies() {
+         int now = getTurnNumber();
+         enemies.values().removeIf(e -> now - e.lastScanTurn > STALE_TURNS);
+diff --git a/src/main/java/AimCorridor.java b/src/main/java/AimCorridor.java
+new file mode 100644
+index 0000000..075766c
+--- /dev/null
++++ b/src/main/java/AimCorridor.java
+@@ -0,0 +1,50 @@
++/**
++ * Pure geometry for dodging the two simple aim models a duel opponent can fire along an inferred wave:
++ * head-on at our position when it aimed, and iterative wall-clamped linear prediction from our velocity then.
++ * Inputs are only our own recorded state and the inferred wave origin/speed; no opponent-private state is used.
++ */
++final class AimCorridor {
++    static final double BOT_RADIUS = 18.0;
++    static final int MAX_LINEAR_TURNS = 150;
++
++    private AimCorridor() {}
++
++    /** Our own state at a turn, as recorded by this bot. */
++    record OwnState(int turn, double x, double y, double direction, double speed) {}
++
++    static double headOn(double originX, double originY, OwnState own) {
++        return CombatMath.bearing(own.x() - originX, own.y() - originY);
++    }
++
++    /** Constant-velocity prediction stepped one turn at a time and clamped to the arena by bot radius. */
++    static double linear(double originX, double originY, OwnState own, double bulletSpeed,
++                         double arenaWidth, double arenaHeight) {
++        double heading = Math.toRadians(own.direction());
++        double dx = Math.cos(heading) * own.speed(), dy = Math.sin(heading) * own.speed();
++        double x = own.x(), y = own.y();
++        for (int k = 1; k <= MAX_LINEAR_TURNS; k++) {
++            x = clamp(x + dx, BOT_RADIUS, arenaWidth - BOT_RADIUS);
++            y = clamp(y + dy, BOT_RADIUS, arenaHeight - BOT_RADIUS);
++            if (bulletSpeed * k >= Math.hypot(x - originX, y - originY)) break;
++        }
++        return CombatMath.bearing(x - originX, y - originY);
++    }
++
++    /**
++     * Danger in [0, 1] for standing at (px, py) when a bullet aimed at {@code aim} arrives. The angular corridor
++     * combines the shooter's alignment tolerance at the aiming distance with our hit radius at the point.
++     */
++    static double danger(double originX, double originY, double aimDistance, double aim, double px, double py) {
++        double distance = Math.hypot(px - originX, py - originY);
++        if (!(distance > 0) || !Double.isFinite(aim) || !Double.isFinite(aimDistance)) return 0;
++        double tolerance = Math.toDegrees(Math.atan(BOT_RADIUS / Math.max(aimDistance, BOT_RADIUS)));
++        double body = Math.toDegrees(Math.atan(BOT_RADIUS / Math.max(distance, BOT_RADIUS)));
++        double corridor = tolerance + body;
++        double offset = Math.abs(CombatMath.relativeAngle(CombatMath.bearing(px - originX, py - originY) - aim));
++        return offset < corridor ? 1 - offset / corridor : 0;
++    }
++
++    private static double clamp(double value, double low, double high) {
++        return Math.max(low, Math.min(high, value));
++    }
++}
+diff --git a/src/main/java/EnemyWave.java b/src/main/java/EnemyWave.java
+index bd783ef..702841e 100644
+--- a/src/main/java/EnemyWave.java
++++ b/src/main/java/EnemyWave.java
+@@ -2,12 +2,25 @@
+ final class EnemyWave {
+     final double originX, originY, bulletSpeed, bearingToUs;
+     final int fireTurn, shooterId;
++    /** Head-on and linear aim bearings reconstructed from our own state at the inferred aim turn, if known. */
++    double headOnAim = Double.NaN, linearAim = Double.NaN, aimDistance = Double.NaN;
+ 
+     EnemyWave(double x, double y, double speed, double bearing, int turn, int shooter) {
+         originX = x; originY = y; bulletSpeed = speed;
+         bearingToUs = bearing; fireTurn = turn; shooterId = shooter;
+     }
+ 
++    void setAims(double headOn, double linear, double distance) {
++        headOnAim = headOn; linearAim = linear; aimDistance = distance;
++    }
++
++    /** Larger of the two aim-corridor dangers at a point; zero when our aiming-time state is unknown. */
++    double aimDanger(double x, double y) {
++        if (Double.isNaN(aimDistance)) return 0;
++        return Math.max(AimCorridor.danger(originX, originY, aimDistance, headOnAim, x, y),
++                AimCorridor.danger(originX, originY, aimDistance, linearAim, x, y));
++    }
++
+     double remaining(double x, double y, int turn) {
+         return Math.hypot(x - originX, y - originY) - (turn - fireTurn) * bulletSpeed;
+     }
+diff --git a/src/test/java/AimCorridorTest.java b/src/test/java/AimCorridorTest.java
+new file mode 100644
+index 0000000..9545596
+--- /dev/null
++++ b/src/test/java/AimCorridorTest.java
+@@ -0,0 +1,73 @@
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++class AimCorridorTest {
++    private static final AimCorridor.OwnState STILL = new AimCorridor.OwnState(10, 450, 300, 90, 0);
++
++    @Test void headOnUsesEastZeroBearingToOurAimingPosition() {
++        assertEquals(0, AimCorridor.headOn(0, 300, STILL), 1e-9);
++        assertEquals(90, AimCorridor.headOn(450, 0, STILL), 1e-9);
++    }
++
++    @Test void stationaryLinearAimEqualsHeadOn() {
++        assertEquals(0, AimCorridor.linear(0, 300, STILL, 16.4, 800, 600), 1e-9);
++    }
++
++    @Test void linearAimMatchesIterativeInterceptForPerpendicularMotion() {
++        // Moving north at 8 from 450 units east: first k with 16.4k >= hypot(450, 8k) is 32 (lateral 256).
++        var own = new AimCorridor.OwnState(10, 450, 100, 90, 8);
++        double expected = Math.toDegrees(Math.atan2(256, 450));
++        assertEquals(expected, AimCorridor.linear(0, 100, own, 16.4, 800, 1000), 1e-9);
++    }
++
++    @Test void linearPredictionStopsAtTheWallClampLikeTheOpponentModel() {
++        var own = new AimCorridor.OwnState(10, 450, 500, 90, 8);
++        // Northward path clamps at y = 600 - 18 = 582.
++        assertEquals(Math.toDegrees(Math.atan2(82, 450)), AimCorridor.linear(0, 500, own, 11, 800, 600), 1e-9);
++    }
++
++    @Test void reversingSpeedPredictsTheOppositeSide() {
++        var forward = new AimCorridor.OwnState(10, 450, 300, 90, 8);
++        var backward = new AimCorridor.OwnState(10, 450, 300, 90, -8);
++        double a = AimCorridor.linear(0, 300, forward, 16.4, 800, 600);
++        double b = AimCorridor.linear(0, 300, backward, 16.4, 800, 600);
++        assertTrue(a > 0 && b < 0);
++        assertEquals(a, -b, 1e-9);
++    }
++
++    @Test void dangerIsOneOnTheRayAndFallsToZeroAtTheCorridorEdge() {
++        assertEquals(1, AimCorridor.danger(0, 0, 450, 0, 450, 0), 1e-12);
++        double corridor = 2 * Math.toDegrees(Math.atan(18.0 / 450));
++        double inside = Math.toRadians(corridor * 0.5);
++        assertEquals(0.5, AimCorridor.danger(0, 0, 450, 0, 450 * Math.cos(inside), 450 * Math.sin(inside)), 1e-9);
++        double edge = Math.toRadians(corridor);
++        assertEquals(0, AimCorridor.danger(0, 0, 450, 0, 450 * Math.cos(edge), 450 * Math.sin(edge)), 1e-12);
++        // Sixty units of lateral displacement at range 450 is outside both corridors.
++        assertEquals(0, AimCorridor.danger(0, 0, 450, 0, 450, 60), 1e-12);
++    }
++
++    @Test void dangerWrapsAnglesAndRejectsInvalidInputs() {
++        assertEquals(1, AimCorridor.danger(0, 0, 450, 180, -450, 0), 1e-9);
++        assertEquals(1, AimCorridor.danger(0, 0, 450, -180, -450, 0), 1e-9);
++        assertEquals(0, AimCorridor.danger(0, 0, 450, 0, 0, 0));
++        assertEquals(0, AimCorridor.danger(0, 0, 450, Double.NaN, 450, 0));
++        assertEquals(0, AimCorridor.danger(0, 0, Double.NaN, 0, 450, 0));
++    }
++
++    @Test void closeRangeCorridorIsWiderThanLongRange() {
++        double nearOffset = Math.toRadians(8);
++        assertTrue(AimCorridor.danger(0, 0, 100, 0, 100 * Math.cos(nearOffset), 100 * Math.sin(nearOffset)) > 0);
++        assertEquals(0, AimCorridor.danger(0, 0, 500, 0, 500 * Math.cos(nearOffset), 500 * Math.sin(nearOffset)));
++    }
++
++    @Test void waveWithoutAimingStateAddsNoDanger() {
++        EnemyWave wave = new EnemyWave(0, 0, 16.4, 0, 10, 7);
++        assertEquals(0, wave.aimDanger(450, 0));
++        wave.setAims(0, 30, 450);
++        assertEquals(1, wave.aimDanger(450, 0), 1e-12);
++        double linear = Math.toRadians(30);
++        assertEquals(1, wave.aimDanger(450 * Math.cos(linear), 450 * Math.sin(linear)), 1e-9);
++        double between = Math.toRadians(15);
++        assertEquals(0, wave.aimDanger(450 * Math.cos(between), 450 * Math.sin(between)));
++    }
++}
