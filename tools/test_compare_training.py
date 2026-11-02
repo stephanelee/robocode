@@ -37,7 +37,7 @@ class SharedTrainingTests(unittest.TestCase):
     def run_mock(self, args, runner, battle):
         runtime = argparse.Namespace(stderr="java.specification.version = 25", stdout="", returncode=0)
         with patch.object(compare.subprocess, "run", return_value=runtime), \
-             patch.object(compare, "registered_plan", return_value=b"immutable training plan"), \
+             patch.object(compare, "registered_plan", side_effect=lambda path, commit: b"prospective diagnostics addendum" if commit == getattr(args, "plan_addendum_commit", None) else b"immutable training plan"), \
              patch.object(compare.retcon, "prepare", return_value=(args.output.parent / "Retcon", args.output.parent / "api", {"commit": "pinned"})), \
              patch.object(compare.benchmark, "download", return_value=runner), \
              patch.object(compare.benchmark, "battle", side_effect=battle):
@@ -47,6 +47,8 @@ class SharedTrainingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             args, runner = self.prepare(root)
+            args.plan_addendum = args.plan
+            args.plan_addendum_commit = "a" * 40
             calls = []
             evaluation_models = {}
             def battle(options, output, runner, samples, scenario, opponents, policy, rounds, model):
@@ -75,6 +77,9 @@ class SharedTrainingTests(unittest.TestCase):
             self.assertAlmostEqual(report["decision"]["candidate"]["meanScoreShare"], 0.3)
             self.assertEqual(report["decision"]["previous"]["rounds"], 60)
             self.assertEqual(report["decision"]["status"], "retain")
+            self.assertEqual(report["preregistrationAddendumCommit"], "a" * 40)
+            self.assertEqual((args.output / "preregistered-plan.md").read_bytes(), b"immutable training plan")
+            self.assertEqual((args.output / "preregistered-addendum.md").read_bytes(), b"prospective diagnostics addendum")
             for seed in args.seeds:
                 previous = evaluation_models[(seed, "previous")]
                 candidate = evaluation_models[(seed, "candidate")]

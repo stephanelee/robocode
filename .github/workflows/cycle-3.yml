@@ -1,0 +1,83 @@
+name: Cycle 3 saved targeting experiment
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    if: github.head_ref == 'codex/improve-cycle3-gf-confidence'
+    name: Cycle 3 measured comparison
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify source, tests, and tracked candidate before measuring
+        run: |
+          python -m unittest discover -s tools -p 'test_*.py' -v
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/candidate-checked-in.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/candidate-checked-in.jar" AISurvivor/AISurvivor.jar
+      - name: Snapshot the accepted previous version
+        env:
+          PREVIOUS_SOURCE: 5ef03cf74f8709e5b86385a598cde8def0f7abdf
+        run: |
+          mkdir -p "$RUNNER_TEMP/previous-bot"
+          for name in AISurvivor.jar AISurvivor.json AISurvivor.sh AISurvivor.cmd; do
+            git show "$PREVIOUS_SOURCE:AISurvivor/$name" > "$RUNNER_TEMP/previous-bot/$name"
+          done
+          chmod +x "$RUNNER_TEMP/previous-bot/AISurvivor.sh"
+          python - <<'PY'
+          import hashlib, os
+          from pathlib import Path
+          jar = Path(os.environ['RUNNER_TEMP']) / 'previous-bot' / 'AISurvivor.jar'
+          expected = '0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2'
+          assert hashlib.sha256(jar.read_bytes()).hexdigest() == expected, 'Previous JAR differs from accepted baseline'
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Train incumbent 60 rounds and compare both frozen versions for 120 rounds
+        env:
+          CANDIDATE_SOURCE: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/compare.py \
+            --previous-bot-dir "$RUNNER_TEMP/previous-bot" --candidate-bot-dir AISurvivor \
+            --previous-source 5ef03cf74f8709e5b86385a598cde8def0f7abdf --candidate-source "$CANDIDATE_SOURCE" \
+            --plan docs/improvements/cycle-3.md --plan-commit 39af977116d27e0792fb1d653f8a743cf81568ab \
+            --plan-addendum docs/improvements/cycle-3.md --plan-addendum-commit 21d4a9622c9013aa42af2b57dd0a4ffa1aed86e4 \
+            --policy trained --train-previous --training-rounds 20 --rounds 20 \
+            --seeds 20261102,20261103,20261104 --timeout 300 --output build/comparison-cycle3
+      - name: Print canonical measured evidence
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('build/comparison-cycle3/comparison.json')
+          if path.exists():
+              print('CYCLE3_JSON_BEGIN')
+              print(path.read_text())
+              print('CYCLE3_JSON_END')
+          PY
+      - name: Preserve immutable models, version bundles, and all training/evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cycle-3-comparison
+          path: build/comparison-cycle3/
+          retention-days: 30
+          if-no-files-found: warn

@@ -185,6 +185,7 @@ def save_report(output, report):
 def run(args):
     validate_design(args)
     plan = registered_plan(args.plan, args.plan_commit)
+    addendum = registered_plan(args.plan_addendum, args.plan_addendum_commit) if getattr(args, "plan_addendum", None) else None
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         raise ValueError("output must be empty so prior evidence is never overwritten")
@@ -207,6 +208,10 @@ def run(args):
                        else "Seeds initialize matching cold networks, not matching game states. ")
                     + "Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent."))
     (output / "preregistered-plan.md").write_bytes(plan)
+    if addendum is not None:
+        (output / "preregistered-addendum.md").write_bytes(addendum)
+        report.update(preregistrationAddendumCommit=args.plan_addendum_commit,
+                      preregistrationAddendumSHA256=hashlib.sha256(addendum).hexdigest())
     checkpoint = None
     if args.policy == "trained" and not train_previous:
         checkpoint = output / "artifacts" / "input-checkpoint.dat"
@@ -320,6 +325,8 @@ def main():
     parser.add_argument("--candidate-source", required=True)
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--plan-commit", required=True)
+    parser.add_argument("--plan-addendum", type=Path)
+    parser.add_argument("--plan-addendum-commit")
     parser.add_argument("--policy", choices=("untrained", "fixed-minrisk", "trained"), default="untrained")
     parser.add_argument("--purpose", choices=("primary", "diagnostic"), default="primary")
     model_input = parser.add_mutually_exclusive_group()
@@ -335,6 +342,8 @@ def main():
     args = parser.parse_args()
     if min(args.rounds, args.timeout, args.training_rounds) <= 0:
         parser.error("round counts and timeout must be positive")
+    if bool(args.plan_addendum) != bool(args.plan_addendum_commit):
+        parser.error("--plan-addendum and --plan-addendum-commit must be supplied together")
     if (args.checkpoint is not None or args.train_previous) != (args.policy == "trained"):
         parser.error("trained evaluation requires exactly one of --checkpoint or --train-previous; other policies accept neither")
     run(args)
