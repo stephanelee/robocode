@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare immutable AISurvivor versions against pinned Retcon with shared frozen models."""
+"""Compare AISurvivor versions with explicit frozen or default online-training objectives."""
 import argparse
 import hashlib
 import json
@@ -18,6 +18,9 @@ BOT_FILES = ("AISurvivor.jar", "AISurvivor.json", "AISurvivor.sh", "AISurvivor.c
 THRESHOLDS = dict(meanShareGain=0.05, minimumImprovedBlocks=2, maximumBlockShareLoss=0.05,
                   maximumWinsLost=3, maximumWallRateRatio=1.2, maximumSkippedTurns=0,
                   earlyShareLoss=0.15, earlyPreviousWins=4)
+CORRECTNESS_THRESHOLDS = dict(meanShareGain=0.0, minimumNonnegativeBlocks=2,
+                             maximumBlockShareLoss=0.05, maximumWinsLost=3,
+                             maximumWallRateRatio=1.2, maximumSkippedTurns=0)
 
 
 def seeds_value(value):
@@ -71,6 +74,10 @@ def registered_plan(path, commit):
 def validate_design(args):
     if args.purpose == "primary" and (args.rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3):
         raise ValueError("Primary preregistration requires exactly three distinct seed blocks of 20 rounds per arm")
+    if getattr(args, "category", "tactical") not in ("tactical", "correctness"):
+        raise ValueError("Unknown experiment category")
+    if getattr(args, "policy", None) == "online-train" and (getattr(args, "train_previous", False) or getattr(args, "checkpoint", None) is not None):
+        raise ValueError("Online training requires fresh independent models; imported/shared checkpoints are forbidden")
     if getattr(args, "train_previous", False):
         if args.policy != "trained" or args.training_rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3:
             raise ValueError("Train-previous preregistration requires trained evaluation and exactly 20 training rounds for each of three distinct seeds")
@@ -153,20 +160,30 @@ def aggregate(blocks, arm):
                 wallsPer1000Turns=1000 * totals["wallCollisions"] / totals["turns"], **totals)
 
 
-def decision(blocks):
+def decision(blocks, category="tactical"):
+    if category not in ("tactical", "correctness"):
+        raise ValueError("Unknown experiment category")
+    thresholds = CORRECTNESS_THRESHOLDS if category == "correctness" else THRESHOLDS
     previous = aggregate(blocks, "previous")
     candidate = aggregate(blocks, "candidate")
     deltas = [score_share(block["candidate"]) - score_share(block["previous"]) for block in blocks]
     checks = dict(
         complete=len(blocks) == 3 and all(block[arm]["rounds"] == 20 for block in blocks for arm in ("previous", "candidate")),
-        meanShareGain=candidate["meanScoreShare"] - previous["meanScoreShare"] >= THRESHOLDS["meanShareGain"] - 1e-12,
-        improvedBlocks=sum(delta > 0 for delta in deltas) >= THRESHOLDS["minimumImprovedBlocks"],
-        maximumBlockLoss=min(deltas) >= -THRESHOLDS["maximumBlockShareLoss"] - 1e-12,
-        winsNotMateriallyLower=candidate["wins"] >= previous["wins"] - THRESHOLDS["maximumWinsLost"],
+        meanShareGain=candidate["meanScoreShare"] - previous["meanScoreShare"] >= thresholds["meanShareGain"] - 1e-12,
+        maximumBlockLoss=min(deltas) >= -thresholds["maximumBlockShareLoss"] - 1e-12,
+        winsNotMateriallyLower=candidate["wins"] >= previous["wins"] - thresholds["maximumWinsLost"],
         noSkippedTurns=candidate["skippedTurns"] == 0,
-        wallRate=candidate["wallsPer1000Turns"] <= previous["wallsPer1000Turns"] * THRESHOLDS["maximumWallRateRatio"] + 1e-12)
-    return dict(status="retain" if all(checks.values()) else "reject" if len(blocks) == 3 else "incomplete",
-                checks=checks, previous=previous, candidate=candidate, scoreShareDeltas=deltas)
+        wallRate=candidate["wallsPer1000Turns"] <= previous["wallsPer1000Turns"] * thresholds["maximumWallRateRatio"] + 1e-12)
+    if category == "correctness":
+        checks["nonnegativeBlocks"] = sum(delta >= -1e-12 for delta in deltas) >= thresholds["minimumNonnegativeBlocks"]
+    else:
+        # Keep the historical tactical rule and canonical decision shape unchanged.
+        checks["improvedBlocks"] = sum(delta > 0 for delta in deltas) >= THRESHOLDS["minimumImprovedBlocks"]
+    result = dict(status="retain" if all(checks.values()) else "reject" if len(blocks) == 3 else "incomplete",
+                  checks=checks, previous=previous, candidate=candidate, scoreShareDeltas=deltas)
+    if category == "correctness":
+        result.update(classification="correctness nonregression", tacticalStrengthGatePassed=decision(blocks)["status"] == "retain")
+    return result
 
 
 def catastrophic_first_block(block):
@@ -192,18 +209,26 @@ def run(args):
     output.mkdir(parents=True, exist_ok=True)
     snapshots, hashes = snapshot_bots(args.previous_bot_dir.resolve(), args.candidate_bot_dir.resolve(), output)
     train_previous = getattr(args, "train_previous", False)
+    online = args.policy == "online-train"
+    category = getattr(args, "category", "tactical")
     report = dict(schemaVersion=1, status="preparing", policy=args.policy, seeds=args.seeds,
-                  purpose=args.purpose,
+                  purpose=args.purpose, category=category,
+                  scoreObjective="default online-training game score" if online else "frozen evaluation game score",
                   battleTimeoutSeconds=args.timeout,
-                  plannedEvaluationRounds=2 * len(args.seeds) * args.rounds, validatedEvaluationRounds=0,
+                  plannedScoredRounds=2 * len(args.seeds) * args.rounds, validatedScoredRounds=0,
+                  plannedEvaluationRounds=0 if online else 2 * len(args.seeds) * args.rounds, validatedEvaluationRounds=0,
+                  plannedOnlineTrainingRounds=2 * len(args.seeds) * args.rounds if online else 0, validatedOnlineTrainingRounds=0,
+                  onlineCheckpointSHA256BySeedArm={},
                   plannedTrainingRounds=len(args.seeds) * args.training_rounds if train_previous else 0,
                   validatedTrainingRounds=0, trainingBattles=[], checkpointSHA256BySeed={}, checkpointDiagnosticsBySeed={},
                   roundsPerBlock=args.rounds, trainingRounds=args.training_rounds if args.policy == "trained" else 0,
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
-                  thresholds=THRESHOLDS, bundleSHA256=hashes, blocks=[],
+                  thresholds=CORRECTNESS_THRESHOLDS if category == "correctness" else THRESHOLDS,
+                  earlyStoppingEnabled=category == "tactical", bundleSHA256=hashes, blocks=[],
                   limitations=("Retcon adaptation only. Starts and scheduling are unpaired/unseeded. "
-                    + ("Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
+                    + ("Both arms start with fresh equal-seed initialization and train independently online. Model writes are intentional; all scored rounds include learning. No checkpoint is shared. " if online
+                       else "Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
                        else "Both frozen arms load the same immutable checkpoint; seed labels do not generally alter a loaded greedy policy or pair game states. " if args.policy == "trained"
                        else "Seeds initialize matching cold networks, not matching game states. ")
                     + "Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent."))
@@ -221,6 +246,7 @@ def run(args):
             raise ValueError("Imported checkpoint counter differs from requested training budget")
         report["checkpointDiagnostics"] = checkpoint_diagnostics(checkpoint)
     immutable_checkpoints = {}
+    completed_online_models = {}
     save_report(output, report)
     try:
         runtime = subprocess.run([args.java, "-XshowSettings:properties", "-version"], capture_output=True, text=True, timeout=15, check=True)
@@ -280,23 +306,35 @@ def run(args):
                     copy_checkpoint(seed_checkpoint, model, seed_checkpoint_hash)
                 battle_args = argparse.Namespace(java=args.java, bot_dir=snapshots[arm], seed=seed,
                     timeout=args.timeout, training_rounds=args.training_rounds, require_metrics=True,
+                    require_retcon_stats=getattr(args, "require_retcon_stats", False),
                     opponent_env={"RUMBLE_JAVA_CACHE": str(api_cache)}, retcon_source=source)
-                result = benchmark.battle(battle_args, arm_output, runner, output, "Retcon", ["Retcon"], args.policy, args.rounds, model)
+                runtime_policy = "train" if online else args.policy
+                result = benchmark.battle(battle_args, arm_output, runner, output, "Retcon", ["Retcon"], runtime_policy, args.rounds, model)
                 if result["rounds"] != args.rounds or result["metrics"]["roundsRecorded"] != args.rounds:
                     raise ValueError("Validated battle/telemetry budget differs from requested block")
                 if seed_checkpoint and (benchmark.digest(model) != seed_checkpoint_hash or result.get("modelSHA256") != seed_checkpoint_hash):
                     raise ValueError("Evaluation changed or loaded a different seed checkpoint")
+                if online:
+                    if not model.exists() or checkpoint_rounds(model) != args.rounds or benchmark.digest(model) != result.get("modelSHA256"):
+                        raise ValueError("Online training must retain its own exact-round checkpoint")
+                    saved = output / "artifacts" / f"online-{arm}-seed-{seed}.dat"
+                    copy_checkpoint(model, saved, result["modelSHA256"])
+                    completed_online_models[saved] = result["modelSHA256"]
+                    report["onlineCheckpointSHA256BySeedArm"].setdefault(str(seed), {})[arm] = result["modelSHA256"]
+                    result.update(policy="online-train", runtimeMode="train", scoreObjective="online-training",
+                                  onlineModelSource=args.previous_source if arm == "previous" else args.candidate_source)
                 result["scoreShare"] = score_share(result)
                 block[arm] = result
-                report["validatedEvaluationRounds"] += args.rounds
+                report["validatedScoredRounds"] += args.rounds
+                report["validatedOnlineTrainingRounds" if online else "validatedEvaluationRounds"] += args.rounds
                 report["inProgressBlock"][arm] = result
                 save_report(output, report)
             report["blocks"].append(block)
             del report["inProgressBlock"]
-            report["decision"] = decision(report["blocks"])
+            report["decision"] = decision(report["blocks"], category)
             if args.purpose == "diagnostic":
                 report["decision"]["status"] = "diagnostic"
-            if args.purpose == "primary" and index == 0 and args.rounds >= 20 and catastrophic_first_block(block):
+            if category == "tactical" and args.purpose == "primary" and index == 0 and args.rounds >= 20 and catastrophic_first_block(block):
                 report.update(status="early-rejected", earlyStopReason="Preregistered catastrophic first-block loss")
                 report["decision"]["status"] = "reject"
                 break
@@ -308,6 +346,9 @@ def run(args):
         for model, expected in immutable_checkpoints.items():
             if benchmark.digest(model) != expected:
                 raise ValueError("Immutable input checkpoint changed")
+        for model, expected in completed_online_models.items():
+            if benchmark.digest(model) != expected:
+                raise ValueError("Completed source-specific online model artifact changed")
         save_report(output, report)
         print(f"Decision: {report['decision']['status']}; see {output / 'comparison.json'}", flush=True)
     except BaseException as error:
@@ -327,7 +368,9 @@ def main():
     parser.add_argument("--plan-commit", required=True)
     parser.add_argument("--plan-addendum", type=Path)
     parser.add_argument("--plan-addendum-commit")
-    parser.add_argument("--policy", choices=("untrained", "fixed-minrisk", "trained"), default="untrained")
+    parser.add_argument("--policy", choices=("untrained", "fixed-minrisk", "trained", "online-train"), default="untrained")
+    parser.add_argument("--category", choices=("tactical", "correctness"), default="tactical")
+    parser.add_argument("--require-retcon-stats", action="store_true")
     parser.add_argument("--purpose", choices=("primary", "diagnostic"), default="primary")
     model_input = parser.add_mutually_exclusive_group()
     model_input.add_argument("--checkpoint", type=Path)

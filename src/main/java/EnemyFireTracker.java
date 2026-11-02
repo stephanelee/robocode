@@ -1,16 +1,18 @@
 import java.util.HashMap;
 import java.util.Map;
 
-/** Accounts for observable energy changes before inferring an enemy shot. */
+/** Accounts for observable energy changes at the scan that first exposes them. */
 final class EnemyFireTracker {
     private final Map<Integer, Map<Integer, Double>> corrections = new HashMap<>();
 
-    void recordDamage(int botId, int turn, double damage) {
-        record(botId, turn, -damage);
+    /** Bullet damage only: wall/ram effects have different visibility timing. */
+    void recordDamage(int botId, int eventTurn, double damage) {
+        // Bullet hits occur after this turn's scan; their energy change appears next turn.
+        record(botId, eventTurn + 1, -damage);
     }
 
-    void recordHitBonus(int botId, int turn, double power) {
-        record(botId, turn, 3 * power);
+    void recordHitBonus(int botId, int eventTurn, double power) {
+        record(botId, eventTurn + 1, 3 * power);
     }
 
     private void record(int botId, int turn, double amount) {
