@@ -156,7 +156,7 @@ class SplitAndValidationFixtures(unittest.TestCase):
         for row in (event(1, observed=2), {**event(1), "round": True}):
             with self.assertRaises(ValueError):
                 samples([row])
-        for value in (float("nan"), float("inf"), True):
+        for value in (float("nan"), float("inf"), True, 10 ** 400):
             row = event(1)
             row["own"]["x"] = value
             with self.assertRaises(ValueError):

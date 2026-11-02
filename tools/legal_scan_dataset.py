@@ -29,7 +29,13 @@ def integer(value, minimum=1):
 
 
 def number(value, minimum=-math.inf, maximum=math.inf):
-    if type(value) not in (int, float) or not math.isfinite(value) or not minimum <= value <= maximum:
+    if type(value) not in (int, float) or not minimum <= value <= maximum:
+        raise ValueError("Invalid finite number")
+    try:
+        finite = math.isfinite(value)
+    except OverflowError as error:
+        raise ValueError("Number exceeds finite machine range") from error
+    if not finite:
         raise ValueError("Invalid finite number")
     return value
 

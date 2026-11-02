@@ -48,3 +48,5 @@ See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github
 - [x] Capture unchanged Retcon native statistics as offline diagnostics, with actual Ubuntu26.04 provenance. [Report](docs/retcon-observability.md).
 - [x] Test the isolated bullet-energy scan-lag correction with an actual pinned-engine trace and 120 fixed-policy rounds. [Report](docs/improvements/foundation-scan-lag.md): rejected by mean score-share and wall-rate guards; online stage skipped, gameplay/JAR reverted.
 - [ ] Resolve [bullet scan visibility issue #18](https://github.com/stephanelee/robocode/issues/18) under a new approved design; the actual engine contract is proven, but the tested repair was not retained.
+- [x] Extract a minimal pure targeting-geometry boundary while preserving accepted command/state behavior. [PR #25](https://github.com/stephanelee/robocode/pull/25) / [report](docs/targeting-refactor.md): 288 exact replay cases and five compatibility rounds pass; no strength claim.
+- [ ] Collect legal scan histories and evaluate a separately learned opponent-motion predictor with whole-game withheld data before live gun promotion.

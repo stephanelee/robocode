@@ -376,26 +376,12 @@ public class AISurvivor extends Bot {
                 agent.classGF[cls][seg], w);
 
         double gf       = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
-        double maxAngle = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / bspd)));
-        double latDir   = Math.signum(t.lateralVelocity);
-        if (latDir == 0) latDir = 1;
-
-        // Include scan age and iterate intercept time against the projected position.
-        double ticks = dist / bspd;
-        double[] prediction = null;
-        for (int i = 0; i < 5; i++) {
-            prediction = CombatMath.project(t.x, t.y, t.direction, t.speed, t.turnRate,
-                    ticks + getTurnNumber() - t.lastScanTurn);
-            ticks = distanceTo(prediction[0], prediction[1]) / bspd;
-        }
-        double predX = prediction[0], predY = prediction[1];
-        predX = clamp(predX, 18, getArenaWidth()  - 18);
-        predY = clamp(predY, 18, getArenaHeight() - 18);
-        double baseAngle = directionTo(predX, predY);
-        double aimAngle  = baseAngle + latDir * gf * maxAngle;
-
-        double gunTurn = normalizeAngle(aimAngle - getGunDirection());
-        setGunTurnRate(clamp(gunTurn, -20.0, 20.0));
+        TargetingGeometry.Aim aim = TargetingGeometry.calculate(new TargetingGeometry.Snapshot(
+                getX(), getY(), getArenaWidth(), getArenaHeight(), getTurnNumber(), getGunDirection(),
+                t.x, t.y, t.direction, t.speed, t.turnRate, t.lastScanTurn, dist, bspd, gf, t.lateralVelocity));
+        double predX = aim.x(), predY = aim.y(), baseAngle = aim.baseAngle();
+        double latDir = aim.lateralDirection(), gunTurn = aim.gunTurn();
+        setGunTurnRate(aim.gunTurnRate());
 
         if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0 && setFire(fp)) {
             if (st != null) {
