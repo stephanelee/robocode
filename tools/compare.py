@@ -232,6 +232,7 @@ def run(args):
                     + ("Both arms start with fresh equal-seed initialization and train independently online. Model writes are intentional; all scored rounds include learning. No checkpoint is shared. " if online
                        else "Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
                        else "Both frozen arms load the same immutable checkpoint; seed labels do not generally alter a loaded greedy policy or pair game states. " if args.policy == "trained"
+                       else "Fixed minimum-risk uses no bot RNG; seeds label independent game replicates, not paired starts. " if args.policy == "fixed-minrisk"
                        else "Seeds initialize matching cold networks, not matching game states. ")
                     + "Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent."))
     (output / "preregistered-plan.md").write_bytes(plan)

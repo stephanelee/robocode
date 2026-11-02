@@ -1,7 +1,32 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.nio.file.*;
+import com.google.gson.JsonParser;
 
 class EnemyFireTrackerTest {
+    @Test void replaysRecordedPinnedEngineHitWindows() throws Exception {
+        var report = JsonParser.parseString(Files.readString(Path.of(
+                "benchmarks/foundation-scan-lag/engine-trace/trace.json"))).getAsJsonObject();
+        assertEquals("verified", report.get("status").getAsString());
+        assertEquals(4, report.getAsJsonArray("assertions").size());
+        for (var assertion : report.getAsJsonArray("assertions")) {
+            var row = assertion.getAsJsonObject();
+            int turn = row.get("hitTurn").getAsInt(), enemy = row.get("enemy").getAsInt();
+            double before = row.get("previousScan").getAsDouble();
+            double current = row.get("sameTurnScan").getAsDouble();
+            double after = row.get("nextTurnScan").getAsDouble();
+            for (boolean callbackFirst : new boolean[]{false, true}) {
+                EnemyFireTracker tracker = new EnemyFireTracker();
+                Runnable hit = row.get("effect").getAsDouble() < 0
+                        ? () -> tracker.recordDamage(enemy, turn, 2)
+                        : () -> tracker.recordHitBonus(enemy, turn, 0.5);
+                if (callbackFirst) hit.run();
+                assertEquals(0, tracker.inferPower(enemy, turn - 1, turn, before, current));
+                if (!callbackFirst) hit.run();
+                assertEquals(0, tracker.inferPower(enemy, turn, turn + 1, current, after));
+            }
+        }
+    }
     @Test void detectsFireCostInItsOwnTurnWithoutRoundingPower() {
         EnemyFireTracker tracker = new EnemyFireTracker();
         assertEquals(1.23, tracker.inferPower(7, 10, 11, 100, 98.77), 1e-9);
