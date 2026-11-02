@@ -1,6 +1,6 @@
 # Next AI pilot: select a footprint, not a mean coordinate
 
-Prospective proposal, not yet fitted or approved for live deployment. The first45-round pilot and its original withheld/transfer rejection remain final. This proposal uses only its six training and three development games for development; its already inspected withheld/transfer games cannot become fresh confirmation. The existing model/data/results are preserved.
+Registered prospectively before fitting; the completed development result is below. The first45-round pilot and its original withheld/transfer rejection remain final. This experiment uses only its six training and three development games for development; its already inspected withheld/transfer games cannot become fresh confirmation. The existing model/data/results are preserved. No live deployment is approved.
 
 ## Read-only diagnosis
 
@@ -29,7 +29,30 @@ If independently approved and the development screen passes, freeze the model un
 
 Proposed fresh Retcon confirmation gates match the development containment screen, including label coverage,2point gain,2/3 improving games and worst/short loss bounds. Each fresh transfer game must lose no more than2containment points at primary horizons and have no more than5pixels additional primary mean error versus current. Zero AIS skipped turns, complete valid records/rounds, no model writes and all raw outcomes remain acquisition requirements; invalid attempts are retained and stop for review without automatic replacements. No whole-match score claim follows from an offline pass: an independently reviewed, bounded live gun-only A/B with actual intercept timing and legal inputs is required afterwards.
 
-This is a proposed next experiment. Independent review must lock the exact rules before fitting; fresh acquisition additionally needs the frozen successful development result and confirmation manifest. It offers a small test of a concrete objective mismatch, not a promise to beat Retcon.
+These rules were independently locked before fitting. Fresh acquisition would additionally require a frozen successful development result and reviewed confirmation manifest. This is a small test of a concrete objective mismatch, not a promise to beat Retcon; the actual development rejection below prevented fresh acquisition.
+
+## Actual development result
+
+**Reject before fresh confirmation.** [PR #29](https://github.com/stephanelee/robocode/pull/29) completed exactly one training fit, published the frozen model, and ran one development screen in [run41525051072](https://github.com/stephanelee/robocode/actions/runs/41525051072). No new games ran. Only the original six training and three development games were used; the original withheld/transfer observations were excluded from this fit/screen.
+
+Equal-game containment at horizons24/32/40 increased from **6.551200% to8.173801%**, a **+1.6226011933-percentage-point** gain. This is below the registered **2-point** minimum. Exactly `primaryGain` failed; coverage, improving-game count, worst-game and short-horizon guards all passed. The unchanged, unrounded criterion rejects this candidate, so the planned18 fresh confirmation rounds were **not launched**. There is no live gun/model deployment or competitive improvement claim.
+
+| Original development game | Current projection proxy | Learned scorer proxy | Gain |
+| --- | ---: | ---: | ---: |
+| r-dev-01 | 7.464175% | 8.838342% | +1.374168 pp |
+| r-dev-02 | 6.087930% | 8.669144% | +2.581214 pp |
+| r-dev-03 | 6.101495% | 7.013917% | +0.912422 pp |
+
+All three development games improved, and mean radial error fell148.020468→115.778010pixels as a diagnostic. This supports investigating containment-based selection rather than averaging positions, but development measurements are not fresh generalization evidence, and the registered gate still failed. Radius-18 point containment remains an offline proxy, not an actual bullet hit rate or battle score. The ridge outputs are ranking scores, not calibrated probabilities.
+
+### Frozen evidence and disposition
+
+- Exact measured source `1516813a02ede80d673d9562fd853d4f866d01ff`, reviewed ranker source equivalent to precleared `81ba5330e49796b7b39b3b1257a5fccf16875fae`; the protocol and reserve six-game layout were published before fitting. No alpha/feature/candidate/threshold search, rescue fit, second screen or old-withheld confirmation occurred.
+- Frozen model SHA-256 `eacae24357e378e857ef2a37ad7e7533dac847773921556494e3c36a079e48dc` was [published in its own completed fit artifact](https://github.com/stephanelee/robocode/actions/runs/41525051072/artifacts/13178642759) before the separate screen job used it. [Screen artifact](https://github.com/stephanelee/robocode/actions/runs/41525051072/artifacts/13179511790).
+- [Durable model/reports/protocol/source](../benchmarks/ai-containment-v2/README.md) and exact input/dependency hashes are preserved. The original16,215,891 raw bytes remain in the [first dataset archive](../benchmarks/ai-motion-v1/README.md); no duplicate corpus or JAR is committed.
+- Both jobs used exactPRhead and Ubuntu26.04. No bot source, tracked JAR, controller, DQN or model format changed. The temporary fit/screen workflow was removed after capturing the outcome, before documentation pushes. Standard CI still validates integration.
+
+The diagnostic/model tooling and rejected research weights remain for reproduction. Future candidates need new prospectively reviewed hypotheses/rules; the failed threshold is not waived, and any eventual confirmation must use genuinely fresh games after development succeeds. The reserved18-round layout here records what was planned, not games that occurred.
 
 The independent reviewer cleared this fixed design before implementation. The separate tool preserves the original fitter and has two stages; publish the exact model SHA between them. Both stages filter whole games to their permitted split before window construction. The screen never evaluates the spent withheld/transfer games.
 
