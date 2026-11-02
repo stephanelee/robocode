@@ -120,11 +120,6 @@ class TargetingCharacterizationTest {
     }
 
     @Test void actualAimCommandsAndPendingWaveStateMatchAcceptedGoldens() throws Exception {
-        // Preserve the immutable historical recording under its explicitly historical gate.
-        // FiringGeometryTest separately exercises the candidate gate through this handler.
-        try (var historicalGate = mockStatic(FiringGeometry.class)) {
-            historicalGate.when(() -> FiringGeometry.aligned(anyDouble(), anyDouble()))
-                    .thenAnswer(call -> Math.abs((double) call.getArgument(0)) < 10.0);
         JsonArray actual = new JsonArray();
         for (Scenario scenario : scenarios()) actual.add(record(scenario));
         if ("1".equals(System.getenv("CAPTURE_TARGETING_GOLDENS"))) {
@@ -138,6 +133,5 @@ class TargetingCharacterizationTest {
         JsonObject golden = JsonParser.parseString(Files.readString(GOLDEN)).getAsJsonObject();
         assertEquals(ACCEPTED, golden.get("acceptedSource").getAsString());
         assertEquals(golden.getAsJsonArray("outcomes"), actual);
-        }
     }
 }

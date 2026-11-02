@@ -1,0 +1,133 @@
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index c26b30b..db083be 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -403,7 +403,8 @@ public class AISurvivor extends Bot {
+         double latDir = aim.lateralDirection(), gunTurn = aim.gunTurn();
+         setGunTurnRate(aim.gunTurnRate());
+ 
+-        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0 && setFire(fp)) {
++        if (fp > 0 && getGunHeat() == 0
++                && FiringGeometry.aligned(gunTurn, Math.hypot(predX - getX(), predY - getY())) && setFire(fp)) {
+             if (st != null) {
+                 TargetingWave tw = new TargetingWave();
+                 tw.originX    = getX();    tw.originY    = getY();
+diff --git a/src/main/java/FiringGeometry.java b/src/main/java/FiringGeometry.java
+new file mode 100644
+index 0000000..d203f88
+--- /dev/null
++++ b/src/main/java/FiringGeometry.java
+@@ -0,0 +1,13 @@
++/** Current-heading firing gate; the server fires before this turn's gun rotation. */
++final class FiringGeometry {
++    private FiringGeometry() {}
++
++    static double tolerance(double predictedRange) {
++        if (!Double.isFinite(predictedRange) || predictedRange < 0) return 0;
++        return Math.min(10.0, Math.toDegrees(Math.atan2(18.0, predictedRange)));
++    }
++
++    static boolean aligned(double gunTurn, double predictedRange) {
++        return Double.isFinite(gunTurn) && Math.abs(gunTurn) < tolerance(predictedRange);
++    }
++}
+diff --git a/src/test/java/FiringGeometryTest.java b/src/test/java/FiringGeometryTest.java
+new file mode 100644
+index 0000000..256017c
+--- /dev/null
++++ b/src/test/java/FiringGeometryTest.java
+@@ -0,0 +1,50 @@
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++class FiringGeometryTest {
++    @Test void distantMisalignmentIsBlockedWhileNearToleranceStays() {
++        assertFalse(FiringGeometry.aligned(9, 500));
++        assertTrue(FiringGeometry.aligned(2, 500));
++        assertTrue(FiringGeometry.aligned(9, 100));
++        assertEquals(10, FiringGeometry.tolerance(100));
++        assertEquals(10, FiringGeometry.tolerance(0));
++    }
++
++    @Test void strictBoundaryAndSignsAgree() {
++        double limit = FiringGeometry.tolerance(500);
++        assertFalse(FiringGeometry.aligned(limit, 500));
++        assertFalse(FiringGeometry.aligned(-limit, 500));
++        assertTrue(FiringGeometry.aligned(Math.nextDown(limit), 500));
++        assertTrue(FiringGeometry.aligned(-Math.nextDown(limit), 500));
++        assertFalse(FiringGeometry.aligned(10, 50));
++    }
++
++    @Test void invalidInputsFailClosed() {
++        for (double range : new double[]{-1, Double.NaN, Double.POSITIVE_INFINITY})
++            assertFalse(FiringGeometry.aligned(0, range));
++        assertFalse(FiringGeometry.aligned(Double.NaN, 500));
++        assertFalse(FiringGeometry.aligned(Double.POSITIVE_INFINITY, 500));
++    }
++
++    @Test void actualHandlerKeepsGunCommandsButBlocksDistantRequest() throws Exception {
++        var near = scenario("near", 100, 9);
++        var far = scenario("far", 500, 9);
++        var aligned = scenario("far-aligned", 500, 2);
++        var nearResult = TargetingCharacterizationTest.record(near);
++        var farResult = TargetingCharacterizationTest.record(far);
++        var alignedResult = TargetingCharacterizationTest.record(aligned);
++        assertEquals(nearResult.get("gun"), farResult.get("gun"));
++        assertEquals(1, nearResult.getAsJsonArray("fire").size());
++        assertEquals(0, farResult.getAsJsonArray("fire").size());
++        assertFalse(farResult.get("waveChanged").getAsBoolean());
++        assertTrue(farResult.get("wavePresent").getAsBoolean(), "keep existing pending wave");
++        assertEquals(1, alignedResult.getAsJsonArray("fire").size());
++        assertEquals(TargetingCharacterizationTest.bits(700.0 / 550.0),
++                alignedResult.getAsJsonArray("fire").get(0).getAsString());
++    }
++
++    private static TargetingCharacterizationTest.Scenario scenario(String name, double range, double gun) {
++        return new TargetingCharacterizationTest.Scenario(name, 100, 300, 100 + range, 300,
++                0, 0, 0, 0, 0, gun, 100, 0, 40, 23, true, true, true, true);
++    }
++}
+diff --git a/src/test/java/LegalScanRecorderTest.java b/src/test/java/LegalScanRecorderTest.java
+index e05fa56..2257df0 100644
+--- a/src/test/java/LegalScanRecorderTest.java
++++ b/src/test/java/LegalScanRecorderTest.java
+@@ -89,14 +89,13 @@ class LegalScanRecorderTest {
+         assertEquals("failed", status(path).get("status").getAsString());
+     }
+     @Test void enabledPreDecisionHookPreservesAcceptedCommandsAndState() throws Exception {
+-        JsonArray golden = JsonParser.parseString(Files.readString(TargetingCharacterizationTest.GOLDEN))
+-                .getAsJsonObject().getAsJsonArray("outcomes");
+         var scenarios = TargetingCharacterizationTest.scenarios();
+         for (int index = 0; index < 32; index++) {
+             Path path = temp.resolve("neutral-" + index + ".jsonl");
+             var recorder = new LegalScanRecorder(path, "neutral-" + index, 100);
+             recorder.startRound(1);
+-            assertEquals(golden.get(index), TargetingCharacterizationTest.record(scenarios.get(index), recorder));
++            assertEquals(TargetingCharacterizationTest.record(scenarios.get(index)),
++                    TargetingCharacterizationTest.record(scenarios.get(index), recorder));
+             recorder.finishRound(1); recorder.finishGame();
+             assertEquals("complete", status(path).get("status").getAsString());
+         }
+diff --git a/src/test/java/TargetingCharacterizationTest.java b/src/test/java/TargetingCharacterizationTest.java
+index 71456f8..599127d 100644
+--- a/src/test/java/TargetingCharacterizationTest.java
++++ b/src/test/java/TargetingCharacterizationTest.java
+@@ -120,6 +120,11 @@ class TargetingCharacterizationTest {
+     }
+ 
+     @Test void actualAimCommandsAndPendingWaveStateMatchAcceptedGoldens() throws Exception {
++        // Preserve the immutable historical recording under its explicitly historical gate.
++        // FiringGeometryTest separately exercises the candidate gate through this handler.
++        try (var historicalGate = mockStatic(FiringGeometry.class)) {
++            historicalGate.when(() -> FiringGeometry.aligned(anyDouble(), anyDouble()))
++                    .thenAnswer(call -> Math.abs((double) call.getArgument(0)) < 10.0);
+         JsonArray actual = new JsonArray();
+         for (Scenario scenario : scenarios()) actual.add(record(scenario));
+         if ("1".equals(System.getenv("CAPTURE_TARGETING_GOLDENS"))) {
+@@ -133,5 +138,6 @@ class TargetingCharacterizationTest {
+         JsonObject golden = JsonParser.parseString(Files.readString(GOLDEN)).getAsJsonObject();
+         assertEquals(ACCEPTED, golden.get("acceptedSource").getAsString());
+         assertEquals(golden.getAsJsonArray("outcomes"), actual);
++        }
+     }
+ }

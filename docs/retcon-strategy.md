@@ -106,6 +106,8 @@ Retaining this repair establishes correctness plus the declared non-regression c
 
 ### Tactical firing-cone candidate and later counters
 
+Measured update: the narrower current-heading gate failed its separately approved48-round fast screen; [method and rejection](improvements/fire-alignment-screen.md) preserve the geometric rationale, actual score/efficiency regressions and exact gameplay restoration. The full confirmation gates below were not run or weakened. This counter has no accepted strength gain.
+
 The firing-cone candidate keeps a **5-percentage-point minimum mean score-share gain** in a 120-round fixed minimum-risk primary, using the same three seeds and 20 rounds per arm. At least two blocks must **strictly improve**; the maximum block loss, win-loss allowance, zero-skips and wall-rate guards stay as above. Primary success must then pass the same mandatory 120-round fresh-model default online-training veto. The planned interface is `--category tactical --policy fixed-minrisk` for that primary and `--category correctness --policy online-train` for its non-regression veto. This is a separate tactical experiment, not part of the scan-lag repair.
 
 Each later candidate needs its own reviewed registration, category, mechanism diagnostics, budgets and stopping rules before outcomes. No numerical guard is changed after a result is available. For the two designs above, complete the declared blocks unless evidence or process validity fails; invalid evidence stops the run and is not counted as a loss. Preserve and disclose a failed attempt before any corrected retry. Additional frozen-DQN diagnostics are optional only if declared prospectively; they cannot replace the mandatory default-online check.

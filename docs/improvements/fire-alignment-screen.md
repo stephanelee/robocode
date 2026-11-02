@@ -15,3 +15,21 @@ Then one independent three-round game per arm against each official1.4.0 Target,
 Proposed screen advance criteria: mean of three Retcon game score-share deltas>=0; at least2/3 nonnegative blocks; worst block>=-10percentage points; zero AIS skipped turns; aggregate shot hit rate OR damage per shot strictly improves; candidate shots per1000 own turns>=50% baseline. Samples each lose no more than5score-share points and have zero AIS skipped turns. All ratios use aggregate counts, not averages of round rates. Report official score shares, wins, shots, turns, hit rate, damage/shot, wall rate and skipped turns for both arms and each game. Wall rate is descriptive at this short screen; record rather than reinterpret it afterwards.
 
 This is a limited-power screening decision, not a strength or retention claim. Failure rejects/reverts the gameplay source/JAR while preserving patch, fixtures and raw evidence. Success only advances to separately preregistered120fixed-policy rounds under the existing+5point tactical gate and mandatory120default-online-training veto; that stronger confirmation must precede gameplay merge. Passing this small screen does not close the strategy tracker or establish beating Retcon.
+
+## Measured result: reject
+
+Independent review cleared the exact source/workflow before the single[48-round run41525955712](https://github.com/stephanelee/robocode/actions/runs/41525955712). All12games and48rounds completed; actualUbuntu26.04 provenance, Java17 source/JAR parity and Java25 runtime were verified. No rescue rerun or confirmation followed. Canonical summaries and raw data are[retained with hashes](../../benchmarks/fire-alignment-screen/README.md). [PR30](https://github.com/stephanelee/robocode/pull/30) records the candidate and restoration.
+
+| Retcon metric,15rounds per arm | Accepted | Candidate |
+| --- | ---: | ---: |
+| Mean game score share | 24.9990% | 17.3112% |
+| Wins | 2 | 1 |
+| Shots | 547 | 540 |
+| Hits / shots | 11.7002% | 7.2222% |
+| Bullet damage / shot | 0.808131 | 0.578223 |
+| Wall collisions /1000turns | 7.9497 | 0.5672 |
+| AIS skipped turns | 0 | 0 |
+
+Mean score-share delta−7.687809pp fails the nonnegative rule. Seed-block deltas are−33.674033,+10.266221,+0.344386pp: two blocks are nonnegative but the worst violates−10pp. Shot volume per1000turns remains86.54%of accepted and passes the50%floor; neither hit rate nor damage/shot improves. The sample score-share losses are0pp(Target),3.088803pp(SpinBot),10.321489pp(Walls), so Walls fails the5ppguard. Zero-shot rates were prospectively treated as inconclusive; both arms here fired hundreds of shots and the rejection is defined.
+
+The narrower gate therefore **fails this bounded screen**. The geometric observation remains valid, but it does not imply a useful combat change under uncertain prediction and unpaired starts. Lower wall counts do not override failed combat gates. Source, tests and JAR are restored exactly to204; rejected patch and actual outcomes remain preserved. No240-round confirmation or gameplay promotion is authorized by this result.

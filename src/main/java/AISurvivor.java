@@ -403,8 +403,7 @@ public class AISurvivor extends Bot {
         double latDir = aim.lateralDirection(), gunTurn = aim.gunTurn();
         setGunTurnRate(aim.gunTurnRate());
 
-        if (fp > 0 && getGunHeat() == 0
-                && FiringGeometry.aligned(gunTurn, Math.hypot(predX - getX(), predY - getY())) && setFire(fp)) {
+        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0 && setFire(fp)) {
             if (st != null) {
                 TargetingWave tw = new TargetingWave();
                 tw.originX    = getX();    tw.originY    = getY();
