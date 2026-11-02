@@ -30,3 +30,11 @@ If independently approved and the development screen passes, freeze the model un
 Proposed fresh Retcon confirmation gates match the development containment screen, including label coverage,2point gain,2/3 improving games and worst/short loss bounds. Each fresh transfer game must lose no more than2containment points at primary horizons and have no more than5pixels additional primary mean error versus current. Zero AIS skipped turns, complete valid records/rounds, no model writes and all raw outcomes remain acquisition requirements; invalid attempts are retained and stop for review without automatic replacements. No whole-match score claim follows from an offline pass: an independently reviewed, bounded live gun-only A/B with actual intercept timing and legal inputs is required afterwards.
 
 This is a proposed next experiment. Independent review must lock the exact rules before fitting; fresh acquisition additionally needs the frozen successful development result and confirmation manifest. It offers a small test of a concrete objective mismatch, not a promise to beat Retcon.
+
+The independent reviewer cleared this fixed design before implementation. The separate tool preserves the original fitter and has two stages; publish the exact model SHA between them. Both stages filter whole games to their permitted split before window construction. The screen never evaluates the spent withheld/transfer games.
+
+```sh
+python tools/containment_forecast.py --manifest MANIFEST --events EVENTS --output NEW_FIT_DIR
+# Publish/freeze NEW_FIT_DIR/model.json SHA256 before the single screen:
+python tools/containment_forecast.py --stage screen --manifest MANIFEST --events EVENTS --model NEW_FIT_DIR/model.json --model-sha256 FROZEN_SHA256 --output NEW_SCREEN_DIR
+```
