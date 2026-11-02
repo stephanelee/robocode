@@ -26,6 +26,7 @@ The [new strategy](retcon-strategy.md) separates opponent observability, narrowl
 | Experiment | Outcome | Evidence |
 | --- | --- | --- |
 | [Bullet-energy scan visibility, issue #18](https://github.com/stephanelee/robocode/issues/18) / [PR #22](https://github.com/stephanelee/robocode/pull/22) | **Rejected after 120 fixed-policy rounds; online veto skipped; gameplay/JAR reverted.** | [Report and preregistration](improvements/foundation-scan-lag.md) / [raw evidence](../benchmarks/foundation-scan-lag/README.md): actual engine confirms `k+1` visibility, but mean score share 18.507%→18.418% (−0.089543 pp, required ≥0) and wall-rate ratio 1.671 (>1.2) failed the approved guards. |
+| Pure targeting geometry extraction / [PR #25](https://github.com/stephanelee/robocode/pull/25) | **Retain refactor: exact accepted replay and five-round compatibility passed; no strength gain established.** | [Plan and report](targeting-refactor.md) / [raw evidence](../benchmarks/targeting-refactor/README.md): 288 actual command/state recordings and every pure numeric field match; fixed Retcon 0/2 wins, official Target/SpinBot/Walls each 1/1; zero AIS skipped turns and no model writes. |
 
 The new foundation experiment adds 120 scored rounds without changing the original three outcomes or their criteria. A real source-contract defect remains documented, but its tested correction is not retained; issue #18 stays open. No strength improvement has been established.
 

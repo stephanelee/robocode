@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "purpose": "refactor compatibility; no strength inference",
+  "sourceCommit": "438e16de5cef95e10fb8a8d2d6b8254a0e47a68f",
+  "characterizationCommit": "74bcb6f8e79a97513c93a77425d8e631ba34cc64",
+  "planCommit": "c7f64d3be25220d4574f1b5b31bfe9d8bc6c6db7",
+  "jarSHA256": "6b5a448fa1f5edba38aae04f364e44d0943f6eeb6b4b938580085f87dd668170",
+  "planSHA256": "781cd235d7f7f294a768ecfa0f2e78d209ebcb94ddd840d109e0fc048ff0049d",
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "sampleArchiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "opponentProvenance": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "plannedRounds": 5,
+  "validatedRounds": 5,
+  "battles": [
+    {
+      "scenario": "Retcon",
+      "policy": "fixed-minrisk",
+      "rounds": 2,
+      "id": 2,
+      "name": "AISurvivor",
+      "version": "1.1.0",
+      "rank": 2,
+      "totalScore": 48,
+      "survival": 0,
+      "bulletDamage": 48,
+      "firstPlaces": 0,
+      "metrics": {
+        "turns": 1354,
+        "shotsFired": 63,
+        "bulletHits": 6,
+        "damageDealt": 48.437719,
+        "damageTaken": 125.43410800000001,
+        "wallCollisions": 0,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.09523809523809523,
+        "roundsRecorded": 2,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "id": 1,
+          "name": "Retcon",
+          "version": "0.2.0",
+          "rank": 1,
+          "totalScore": 270,
+          "survival": 100,
+          "bulletDamage": 125,
+          "firstPlaces": 2
+        },
+        {
+          "id": 2,
+          "name": "AISurvivor",
+          "version": "1.1.0",
+          "rank": 2,
+          "totalScore": 48,
+          "survival": 0,
+          "bulletDamage": 48,
+          "firstPlaces": 0
+        }
+      ],
+      "retconStats": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 2,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-64117845588.json",
+            "sha256": "69c38579fe1bf272e974f0fd42548bb1a82a0636dd45fa435db1e3a1038f4572"
+          }
+        ],
+        "actualGun": {
+          "shots": 88,
+          "hits": 17,
+          "hitRate": 0.19318181818181818
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 14,
+            "shots": 85,
+            "hitRate": 0.16470588235294117
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 10,
+            "shots": 85,
+            "hitRate": 0.11764705882352941
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 2,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 1354,
+          "computeP50Micros": 40,
+          "computeP99Micros": 410,
+          "computeMaxMicros": 12532,
+          "overBudgetTurns": 0,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "10:113,20:292,30:406,40:220,50:136,60:65,70:34,80:30,90:16,100:11,110:1,120:2,130:1,140:4,150:2,210:1,240:2,250:1,310:1,340:1,380:1,400:1,410:1,520:1,650:1,810:1,960:1,1050:1,1100:1,1380:1,1430:1,1770:1,1970:1,2080:1,12530:1",
+          "timing": {
+            "firesChecked": 88,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 88,
+            "originMatches": 88,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 88,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 17,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 63,
+            "unanchoredShots": 0,
+            "hitsTaken": 6,
+            "hitsOnWave": 6,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 6,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 1352,
+            "moveMatches": 1352,
+            "moveWallHitsChecked": 0,
+            "moveNotChecked": 1,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 88,
+            "bulletHits": 17,
+            "virtualGuns": "LinearAimModel:14/85 HeadOnAimModel:10/85"
+          }
+        }
+      },
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Target",
+      "policy": "fixed-minrisk",
+      "rounds": 1,
+      "id": 1,
+      "name": "AISurvivor",
+      "version": "1.1.0",
+      "rank": 1,
+      "totalScore": 180,
+      "survival": 50,
+      "bulletDamage": 100,
+      "firstPlaces": 1,
+      "metrics": {
+        "turns": 219,
+        "shotsFired": 13,
+        "bulletHits": 9,
+        "damageDealt": 108.641077,
+        "damageTaken": 0.0,
+        "wallCollisions": 0,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.6923076923076923,
+        "roundsRecorded": 1,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "id": 1,
+          "name": "AISurvivor",
+          "version": "1.1.0",
+          "rank": 1,
+          "totalScore": 180,
+          "survival": 50,
+          "bulletDamage": 100,
+          "firstPlaces": 1
+        },
+        {
+          "id": 2,
+          "name": "Target",
+          "version": "1.0",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "retconStats": {
+        "status": "not-applicable"
+      },
+      "modelSHA256": null
+    },
+    {
+      "scenario": "SpinBot",
+      "policy": "fixed-minrisk",
+      "rounds": 1,
+      "id": 1,
+      "name": "AISurvivor",
+      "version": "1.1.0",
+      "rank": 1,
+      "totalScore": 169,
+      "survival": 50,
+      "bulletDamage": 91,
+      "firstPlaces": 1,
+      "metrics": {
+        "turns": 153,
+        "shotsFired": 8,
+        "bulletHits": 8,
+        "damageDealt": 102.217489,
+        "damageTaken": 0.0,
+        "wallCollisions": 0,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 1.0,
+        "roundsRecorded": 1,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "id": 1,
+          "name": "AISurvivor",
+          "version": "1.1.0",
+          "rank": 1,
+          "totalScore": 169,
+          "survival": 50,
+          "bulletDamage": 91,
+          "firstPlaces": 1
+        },
+        {
+          "id": 2,
+          "name": "Spin Bot",
+          "version": "1.0",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "retconStats": {
+        "status": "not-applicable"
+      },
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Walls",
+      "policy": "fixed-minrisk",
+      "rounds": 1,
+      "id": 2,
+      "name": "AISurvivor",
+      "version": "1.1.0",
+      "rank": 1,
+      "totalScore": 166,
+      "survival": 50,
+      "bulletDamage": 88,
+      "firstPlaces": 1,
+      "metrics": {
+        "turns": 210,
+        "shotsFired": 12,
+        "bulletHits": 8,
+        "damageDealt": 90.542739,
+        "damageTaken": 0.0,
+        "wallCollisions": 0,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.6666666666666666,
+        "roundsRecorded": 1,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "id": 2,
+          "name": "AISurvivor",
+          "version": "1.1.0",
+          "rank": 1,
+          "totalScore": 166,
+          "survival": 50,
+          "bulletDamage": 88,
+          "firstPlaces": 1
+        },
+        {
+          "id": 1,
+          "name": "Walls",
+          "version": "1.0",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "retconStats": {
+        "status": "not-applicable"
+      },
+      "modelSHA256": null
+    }
+  ],
+  "decision": "compatibility passed; deterministic parity remains primary"
+}
