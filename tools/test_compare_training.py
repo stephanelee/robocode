@@ -10,8 +10,12 @@ import compare
 from test_compare import result
 
 
-def model_bytes(seed, rounds=20):
-    return struct.pack(">7i", 0x41495356, 1, 14, 32, 6, rounds, 1000) + str(seed).encode()
+def model_bytes(seed, rounds=20, evidence=None):
+    data = struct.pack(">7id", 0x41495356, 1, 14, 32, 6, rounds, 1000 + seed, 1.0)
+    data += b"\0" * (2 * (14 * 32 + 32 + 32 * 6 + 6)) * 8
+    stats = [0.0] * (5 * 9 * 47)
+    stats[0] = float(seed if evidence is None else evidence)
+    return data + struct.pack(f">{len(stats)}d", *stats)
 
 
 class SharedTrainingTests(unittest.TestCase):
@@ -125,6 +129,42 @@ class SharedTrainingTests(unittest.TestCase):
                 path.write_bytes(data)
                 with self.assertRaises(ValueError):
                     compare.checkpoint_rounds(path)
+
+    def test_targeting_diagnostics_record_zero_or_positive_evidence_without_mutation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "model.dat"
+            for mass in (0, 12.5):
+                original = model_bytes(1, evidence=mass)
+                path.write_bytes(original)
+                diagnostic = compare.checkpoint_diagnostics(path)
+                self.assertEqual(diagnostic["classGFMass"], mass)
+                self.assertEqual(diagnostic["classGFNonzeroBins"], int(mass > 0))
+                self.assertEqual(diagnostic["targetingEvidenceActive"], mass > 0)
+                self.assertEqual(diagnostic["classGFByClass"][0]["mass"], mass)
+                self.assertEqual(path.read_bytes(), original)
+            for mass in (-1, float("nan"), float("inf")):
+                path.write_bytes(model_bytes(1, evidence=mass))
+                with self.assertRaisesRegex(ValueError, "finite and nonnegative"):
+                    compare.checkpoint_diagnostics(path)
+
+    def test_zero_saved_targeting_evidence_does_not_exclude_a_seed_or_retrain(self):
+        with tempfile.TemporaryDirectory() as directory:
+            args, runner = self.prepare(Path(directory))
+            calls = []
+            def battle(options, output, runner, samples, scenario, opponents, policy, rounds, model):
+                calls.append((options.seed, policy))
+                if policy == "train":
+                    model.write_bytes(model_bytes(options.seed, evidence=0 if options.seed == 1 else options.seed))
+                measured = result(0.3 if options.bot_dir.name == "candidate" else 0.2)
+                measured["modelSHA256"] = compare.benchmark.digest(model)
+                return measured
+            report = self.run_mock(args, runner, battle)
+            self.assertEqual(sum(policy == "train" for _, policy in calls), 3)
+            self.assertEqual(len(report["blocks"]), 3)
+            self.assertFalse(report["checkpointDiagnosticsBySeed"]["1"]["targetingEvidenceActive"])
+            self.assertEqual(report["validatedTrainingRounds"], 60)
+            self.assertEqual(report["validatedEvaluationRounds"], 120)
+            self.assertNotIn("matching cold networks", report["limitations"])
 
 
 if __name__ == "__main__":

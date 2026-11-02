@@ -98,7 +98,8 @@ class CompareTests(unittest.TestCase):
             root = Path(directory)
             previous, candidate = self.bundles(root)
             checkpoint = root / "checkpoint.dat"
-            checkpoint_bytes = struct.pack(">7i", 0x41495356, 1, 14, 32, 6, 20, 1000) + b"original trained checkpoint"
+            checkpoint_bytes = struct.pack(">7id", 0x41495356, 1, 14, 32, 6, 20, 1000, 1.0)
+            checkpoint_bytes += b"\0" * (2 * (14 * 32 + 32 + 32 * 6 + 6) + 5 * 9 * 47) * 8
             checkpoint.write_bytes(checkpoint_bytes)
             plan = root / "plan.md"
             plan.write_text("preregistered plan", encoding="utf-8")

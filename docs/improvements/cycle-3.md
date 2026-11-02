@@ -36,3 +36,11 @@ Bot seeds control incumbent learning randomness. Matching checkpoints ensure equ
 ## Results
 
 Pending. No cycle-3 matches start before cycle 2's final accept/reject decision and accepted-master integration. If rejected, revert gameplay/JAR while retaining the harness extension and measured evidence.
+
+## Prospective diagnostic addendum
+
+The original registration was published at `39af977116d27e0792fb1d653f8a743cf81568ab`. Before any actual cycle-3 matches, independent review requested explicit saved-targeting-evidence diagnostics and precise wording about trained-policy seeds. This addendum changes neither the candidate nor budgets, seeds, acceptance thresholds, or stopping rules. The match workflow will read this complete amended plan from its newly published immutable commit; both registration revisions remain in Git history.
+
+Record total saved class-GF mass, number of nonzero bins, and mass/nonzero counts per opponent class for each trained checkpoint. Report these as mechanism diagnostics only. Zero mass means the proposed saved-statistics mechanism is inactive for that seed; retain that seed and its matches in the primary analysis. Do not retrain, discard, substitute, or select checkpoints according to these values. The comparator records diagnostics without mutating the checkpoint, and tests cover an inactive seed still receiving its full budget.
+
+Seeds control the incumbent's training randomness. Each evaluation arm loads that seed's byte-identical trained weights/statistics; a frozen greedy policy does not generally use RNG. Matching seed labels do not pair arena starts or scheduling, and the report must not describe trained comparison models as cold networks.

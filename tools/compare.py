@@ -90,6 +90,31 @@ def checkpoint_rounds(path):
     return rounds
 
 
+def checkpoint_diagnostics(path):
+    """Describe saved targeting evidence without selecting or modifying a model."""
+    rounds = checkpoint_rounds(path)
+    data = path.read_bytes()
+    network_parameters = 14 * 32 + 32 + 32 * 6 + 6
+    offset = 28 + 8 + 2 * network_parameters * 8
+    class_count, segments, bins = 5, 9, 47
+    count = class_count * segments * bins
+    if len(data) != offset + count * 8:
+        raise ValueError("Checkpoint length differs from the supported numeric model format")
+    values = struct.unpack(f">{count}d", data[offset:])
+    if any(not math.isfinite(value) or value < 0 for value in values):
+        raise ValueError("Saved targeting statistics must be finite and nonnegative")
+    mass = sum(values)
+    if not math.isfinite(mass):
+        raise ValueError("Saved targeting mass is not finite")
+    per_class = []
+    for index in range(class_count):
+        group = values[index * segments * bins:(index + 1) * segments * bins]
+        per_class.append(dict(classId=index, mass=sum(group), nonzeroBins=sum(value > 0 for value in group)))
+    return dict(trainingRounds=rounds, classGFMass=mass,
+                classGFNonzeroBins=sum(value > 0 for value in values), classGFByClass=per_class,
+                targetingEvidenceActive=mass > 0)
+
+
 def score_share(battle):
     total = sum(row["totalScore"] for row in battle["results"])
     if not math.isfinite(total) or total <= 0:
@@ -171,12 +196,16 @@ def run(args):
                   battleTimeoutSeconds=args.timeout,
                   plannedEvaluationRounds=2 * len(args.seeds) * args.rounds, validatedEvaluationRounds=0,
                   plannedTrainingRounds=len(args.seeds) * args.training_rounds if train_previous else 0,
-                  validatedTrainingRounds=0, trainingBattles=[], checkpointSHA256BySeed={},
+                  validatedTrainingRounds=0, trainingBattles=[], checkpointSHA256BySeed={}, checkpointDiagnosticsBySeed={},
                   roundsPerBlock=args.rounds, trainingRounds=args.training_rounds if args.policy == "trained" else 0,
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
                   thresholds=THRESHOLDS, bundleSHA256=hashes, blocks=[],
-                  limitations="Retcon adaptation only. Starts and scheduling are unpaired/unseeded. Seeds initialize matching cold networks, not matching game states. Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent.")
+                  limitations=("Retcon adaptation only. Starts and scheduling are unpaired/unseeded. "
+                    + ("Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
+                       else "Both frozen arms load the same immutable checkpoint; seed labels do not generally alter a loaded greedy policy or pair game states. " if args.policy == "trained"
+                       else "Seeds initialize matching cold networks, not matching game states. ")
+                    + "Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent."))
     (output / "preregistered-plan.md").write_bytes(plan)
     checkpoint = None
     if args.policy == "trained" and not train_previous:
@@ -185,6 +214,7 @@ def run(args):
         report["checkpointSHA256"] = benchmark.digest(checkpoint)
         if checkpoint_rounds(checkpoint) != args.training_rounds:
             raise ValueError("Imported checkpoint counter differs from requested training budget")
+        report["checkpointDiagnostics"] = checkpoint_diagnostics(checkpoint)
     immutable_checkpoints = {}
     save_report(output, report)
     try:
@@ -221,13 +251,16 @@ def run(args):
                     raise ValueError("Training result checkpoint hash differs from actual model")
                 seed_checkpoint = output / "artifacts" / f"checkpoint-seed-{seed}.dat"
                 copy_checkpoint(training_model, seed_checkpoint, seed_checkpoint_hash)
-                report["trainingBattles"].append(dict(seed=seed, trainerSource=args.previous_source, **training))
+                diagnostic = checkpoint_diagnostics(seed_checkpoint)
+                report["trainingBattles"].append(dict(seed=seed, trainerSource=args.previous_source,
+                    checkpointDiagnostics=diagnostic, **training))
                 report["validatedTrainingRounds"] += 20
                 del report["inProgressTraining"]
                 print(f"seed {seed}: incumbent training complete (20 rounds), model={seed_checkpoint_hash}", flush=True)
             if seed_checkpoint:
                 immutable_checkpoints[seed_checkpoint] = seed_checkpoint_hash
                 report["checkpointSHA256BySeed"][str(seed)] = seed_checkpoint_hash
+                report["checkpointDiagnosticsBySeed"][str(seed)] = checkpoint_diagnostics(seed_checkpoint)
                 save_report(output, report)
             order = ["previous", "candidate"] if index % 2 == 0 else ["candidate", "previous"]
             block = dict(seed=seed, order=order, checkpointSHA256=seed_checkpoint_hash)
