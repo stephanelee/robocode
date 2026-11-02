@@ -1,0 +1,41 @@
+name: Component diagnostics
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixtures:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline movement and swept-corridor fixtures
+        run: python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v
+      - name: Frozen development then withheld component suites
+        run: |
+          python tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json
+          python tools/dual_aim_diagnostic.py --suite withheld --output component-evidence/withheld.json
+      - name: Verify raw artifacts reproduce recorded summaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = json.loads(Path('benchmarks/dual-aim-v2/summary.json').read_text())
+          for suite in ('development', 'withheld'):
+              actual = json.loads(Path(f'component-evidence/{suite}.json').read_text())
+              rows = actual.pop('rows')
+              assert len(rows) == (9792 if suite == 'development' else 1080)
+              assert actual == expected[suite], f'{suite} evidence differs from recorded summary'
+              print(f'{suite}: {len(rows)} rows reproduce the frozen result')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dual-aim-v2-raw
+          path: component-evidence/
+          if-no-files-found: error

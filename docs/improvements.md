@@ -29,3 +29,11 @@ The [new strategy](retcon-strategy.md) separates opponent observability, narrowl
 
 The new foundation experiment adds 120 scored rounds without changing the original three outcomes or their criteria. A real source-contract defect remains documented, but its tested correction is not retained; issue #18 stays open. No strength improvement has been established.
 
+
+## Controlled component benchmarks
+
+| Experiment | Measured budget / decision | Evidence |
+| --- | --- | --- |
+| Dual-model swept-corridor v2 / [PR #24](https://github.com/stephanelee/robocode/pull/24) | **Offline diagnostic retained; live selector not promoted.** 816 development +90 withheld states ×4 uncertainty profiles ×3 delays =10,872 deterministic rows; 13 fixture tests; zero score matches. Fresh/delay0 conditional safety167→686/816 and29→76/90, but age5+15°/delay3 only47→103/816 and2→4/90; unrestricted heading certifies none. Wall contact remains common. | [Method/results](dual-aim-diagnostic.md), [summary](../benchmarks/dual-aim-v2/summary.json), full raw rows in the PR's `Component diagnostics` workflow artifact `dual-aim-v2-raw`. Conditional geometry is not gameplay strength or independent collision-rate evidence. |
+
+Conformance correction: [v1 exploratory report](dual-aim-v1-invalid.md) is invalidated by a missing second engine corner-constraint pass; its source/raw artifacts are preserved. Repaired v2 reran the unchanged full matrix:167 development rows changed (wall counters plus2 clearances), no safety decision/command/withheld row changed. The fixed withheld set was already inspected and is not fresh generalization evidence. [Full comparison](../benchmarks/dual-aim-v2/conformance-diff.json).
