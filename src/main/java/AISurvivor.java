@@ -41,8 +41,6 @@ public class AISurvivor extends Bot {
     // ─── Misc constants ─────────────────────────────────────────────────────
     private static final double SURVIVAL_BONUS = 0.1;
     private static final int    STALE_TURNS    = 40;
-    private static final double AIM_RAY_WEIGHT = 5.0;
-    private static final int    OWN_HISTORY    = 64;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Inner classes
@@ -102,7 +100,6 @@ public class AISurvivor extends Bot {
     private TargetingWave pendingTargetingWave;
     private final List<EnemyWave>            enemyWaves     = new ArrayList<>();
     private final Map<Integer, double[]>     surfStats      = new HashMap<>();
-    private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
 
     private int    radarTargetId = -1;
     private int    radarSign     = 1;
@@ -136,7 +133,6 @@ public class AISurvivor extends Bot {
         setAdjustRadarForGunTurn(true);
 
         while (isRunning()) {
-            recordOwnState();
             pruneStaleEnemies();
             advanceTargetingWaves();
             advanceEnemyWaves();
@@ -169,7 +165,6 @@ public class AISurvivor extends Bot {
         pendingFireScans.clear();
         pendingTargetingWave = null;
         enemyWaves.clear();
-        ownHistory.clear();
         dodgeSign     = 1;
         radarTargetId = -1;
         radarSign     = 1;
@@ -514,9 +509,6 @@ public class AISurvivor extends Bot {
             double radialGap = Math.abs(Math.hypot(px - wave.originX, py - wave.originY)
                     - (getTurnNumber() + travelTurns - wave.fireTurn) * wave.bulletSpeed);
             if (radialGap < 50) risk += 4 * (1 - radialGap / 50);
-            // Avoid the head-on and linear aim corridors of waves that have not reached us yet.
-            if (wave.remaining(getX(), getY(), getTurnNumber()) > 0)
-                risk += AIM_RAY_WEIGHT * wave.aimDanger(px, py);
         }
 
         // Slight center preference
@@ -588,15 +580,9 @@ public class AISurvivor extends Bot {
                     current.lastScanTurn, prev.energy, current.energy);
             if (power > 0) {
                 current.lastFireTurn = prev.lastScanTurn;
-                double bulletSpeed = calcBulletSpeed(power);
-                EnemyWave wave = new EnemyWave(prev.x, prev.y, bulletSpeed,
+                enemyWaves.add(new EnemyWave(prev.x, prev.y, calcBulletSpeed(power),
                         CombatMath.bearing(scan.ourX() - prev.x, scan.ourY() - prev.y),
-                        prev.lastScanTurn, current.id);
-                AimCorridor.OwnState own = ownHistory.get(prev.lastScanTurn);
-                if (own != null) wave.setAims(AimCorridor.headOn(prev.x, prev.y, own),
-                        AimCorridor.linear(prev.x, prev.y, own, bulletSpeed, getArenaWidth(), getArenaHeight()),
-                        Math.hypot(own.x() - prev.x, own.y() - prev.y));
-                enemyWaves.add(wave);
+                        prev.lastScanTurn, current.id));
                 surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
             }
         }
@@ -758,12 +744,6 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
     //  Utilities
     // ═════════════════════════════════════════════════════════════════════════
-
-    private void recordOwnState() {
-        int now = getTurnNumber();
-        ownHistory.put(now, new AimCorridor.OwnState(now, getX(), getY(), getDirection(), getSpeed()));
-        ownHistory.keySet().removeIf(turn -> turn <= now - OWN_HISTORY);
-    }
 
     private void pruneStaleEnemies() {
         int now = getTurnNumber();

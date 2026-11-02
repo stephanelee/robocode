@@ -61,4 +61,59 @@ Reported per arm from Retcon's offline native export and AISurvivor telemetry: R
 
 ## Results
 
-Not yet measured.
+Everything above this heading is byte-identical to the registered plan at commit `b2f4ccbe69cf2cdecb103b9d501f9d3f934e56e5`, which was also the measured candidate source (`compare.py` stored the plan blob in `preregistered-plan.md`). The single registered [run 41532956899](https://github.com/stephanelee/robocode/actions/runs/41532956899) (job 125577564106, artifact 13183485154, zip SHA256 `c841e19b8d923fd2028913c8933080724151acba1783fe9b17d7db8a01d8c793`) ran on actual Ubuntu 26.04.1 (kernel 7.0.0-1017-azure, x86_64). It built with Temurin 17.0.21 and passed the Java 17 JAR parity check. Matches ran on Temurin 25.0.5+8. Candidate JAR SHA256 was `a804716b881710488c980e64b84428346060dc28a07554417e57eba8bfd05bac`; the baseline JAR hash was verified before launch. The experiment step completed. A later log-printing step exited 1 only because the online-veto file was legitimately absent; this did not affect the evidence. No match was rerun.
+
+**Decision: reject.** Stage A failed, so Stage C (online veto) was not run, as registered. Stage B passed. Gameplay source, tests and tracked JAR are restored exactly to `cea19c8` (SHA256 `1b99fa0ac303e5e5f89ed91bb3803841ded54910628f335fe1aeaeba65e34c9a`; a local OpenJDK 17 rebuild of the restored source matched all 800 entries).
+
+### Stage A: 120 fixed minimum-risk Retcon rounds
+
+| Metric (60 rounds per arm) | Baseline | Candidate |
+| --- | ---: | ---: |
+| Mean game score share | 15.6958% | 15.1193% |
+| Round wins | 3 | 2 |
+| AIS turns survived | 41,941 | 35,963 |
+| AIS shots / hit rate | 2,112 / 8.097% | 1,779 / 10.062% |
+| AIS damage dealt per 1,000 turns | 28.11 | 36.01 |
+| AIS damage taken per 1,000 turns | 80.87 | 109.85 |
+| Wall collisions per 1,000 turns | 2.670 | 14.737 |
+| AIS skipped turns | 0 | 0 |
+
+The block deltas were +0.868789, −2.448578 and −0.149835 percentage points (seeds 20261201/02/03), for a mean of −0.576541 pp. Checks:
+- mean gain ≥ +5 pp: **fail**
+- ≥ 2 improved blocks: **fail** (1)
+- no block loses > 5 pp: pass
+- wins not more than 3 lower: pass (3→2)
+- zero skips: pass
+- wall rate ≤ 1.2×: **fail** (5.52×)
+
+### Mechanism, from Retcon's offline native export (not a gate)
+
+| Retcon counter, 60 rounds per arm | Baseline | Candidate |
+| --- | ---: | ---: |
+| Actual hits / shots | 480 / 2,724 (17.62%) | 495 / 2,344 (21.12%) |
+| Linear virtual hits / completed | 414 / 2,638 (15.69%) | 429 / 2,257 (19.01%) |
+| Head-on virtual hits / completed | 383 / 2,638 (14.52%) | 424 / 2,257 (18.79%) |
+
+H1 is contradicted. Instead of falling, both modelled guns and Retcon's actual hit rate rose by about 3.3–4.3 points. AIS damage taken per turn rose 36%. Wall collisions rose fivefold.
+
+A plausible explanation is unverified: the +5 corridor penalty frequently outweighs the existing wall term (at most 3). That pulls the selected point toward walls, where collisions stop the bot. A stopped bot sits on both the head-on and the linear prediction. The penalty also re-selects destinations every turn as rays change, which may reduce lateral speed. The aim reconstruction itself was only unit-tested; it was not validated against Retcon's actual bullet headings in play. These explanations are hypotheses for any future candidate; they were not tested here.
+
+### Stage B: official samples, 10 fixed rounds per arm (pass)
+
+| Opponent | Baseline share / wins / walls | Candidate share / wins / walls |
+| --- | --- | --- |
+| Target | 99.89% / 10 / 7 | 100.00% / 10 / 91 |
+| SpinBot | 95.23% / 10 / 98 | 99.03% / 10 / 5 |
+| Walls | 96.94% / 10 / 3 | 96.95% / 10 / 3 |
+
+All candidate sample shares were within the 5-point guard, with zero skipped turns. Sample wall counts moved in both directions and are descriptive only.
+
+### Stage C: not run
+
+The registered rule runs it only after Stage A retains.
+
+### Limitations
+
+These are unpaired, unseeded starts. There are three game blocks per arm. Retcon adapts within each game. The sample stage used one game per opponent per arm. Retcon counters are offline diagnostics, never AIS inputs. No strength claim follows in either direction beyond this protocol. The registered thresholds were applied unchanged.
+
+Evidence: [raw evidence and patch](../../benchmarks/aim-corridor/README.md).
