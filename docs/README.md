@@ -2,6 +2,8 @@
 
 - [Benchmark methodology and runtime setup](benchmarks.md)
 - [Measured improvement log and three planned cycles](improvements.md)
+- [Immutable version-comparison tooling](version-comparisons.md)
+- [Cycle 1: rejected back-as-front experiment](improvements/cycle-1.md)
 - [Retcon 0.2.0 1v1 baseline](benchmarks/retcon-2026-11-02.md)
 - [Original sample reference experiment](benchmarks/samples-2026-11-02.md)
 
