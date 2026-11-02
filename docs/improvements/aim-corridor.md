@@ -116,4 +116,4 @@ The registered rule runs it only after Stage A retains.
 
 These are unpaired, unseeded starts. There are three game blocks per arm. Retcon adapts within each game. The sample stage used one game per opponent per arm. Retcon counters are offline diagnostics, never AIS inputs. No strength claim follows in either direction beyond this protocol. The registered thresholds were applied unchanged.
 
-Evidence: [raw evidence and patch](../../benchmarks/aim-corridor/README.md).
+PR: [#32](https://github.com/stephanelee/robocode/pull/32). Evidence: [raw evidence and patch](../../benchmarks/aim-corridor/README.md).
