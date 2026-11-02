@@ -24,8 +24,13 @@ def run(args):
         raise ValueError("Fresh output required; never replace a previous attempt")
     output.mkdir(parents=True, exist_ok=True)
     confirmation = getattr(args, "confirmation", False)
-    plan = blob(args.plan_commit, "docs/ai-containment-proposal.md" if confirmation else "docs/ai-motion-pilot.md")
-    layout_bytes = blob(args.plan_commit, "tools/fixtures/containment-v2/games.json" if confirmation else "tools/fixtures/motion-pilot-v1/games.json")
+    wave_context = getattr(args, "wave_context", False)
+    if wave_context and not confirmation:
+        raise ValueError("Old-wave context acquisition is fresh confirmation only")
+    plan_path = "docs/ai-old-wave-context-v3.md" if wave_context else "docs/ai-containment-proposal.md" if confirmation else "docs/ai-motion-pilot.md"
+    layout_path = "tools/fixtures/own-wave-v3/games.json" if wave_context else "tools/fixtures/containment-v2/games.json" if confirmation else "tools/fixtures/motion-pilot-v1/games.json"
+    plan = blob(args.plan_commit, plan_path)
+    layout_bytes = blob(args.plan_commit, layout_path)
     layout = json.loads(layout_bytes)
     games = layout["games"]
     expected_games, expected_rounds = (6, 18) if confirmation else (15, 45)
@@ -36,7 +41,8 @@ def run(args):
         raise ValueError("Registration differs from reviewed exact pilot budget/split")
     source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=benchmark.ROOT, text=True).strip()
     jar_hash = benchmark.digest(args.bot_dir / "AISurvivor.jar")
-    manifest = dict(schemaVersion=1, datasetId="ais-containment-confirm-v2" if confirmation else "ais-motion-pilot-v1", provenance=dict(sourceCommit=source_commit,
+    dataset_id = "ais-own-wave-confirm-v3" if wave_context else "ais-containment-confirm-v2" if confirmation else "ais-motion-pilot-v1"
+    manifest = dict(schemaVersion=1, datasetId=dataset_id, provenance=dict(sourceCommit=source_commit,
         botJarSha256=jar_hash, engineVersion=benchmark.VERSION, collectorVersion="legal-scan-v1"), games=games)
     legal_scan_dataset.validate_manifest(manifest)
     if source_commit == "0" * 40 or jar_hash == "0" * 64:
@@ -114,6 +120,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan-commit", required=True)
     parser.add_argument("--confirmation", action="store_true", help="Only the separately registered six-game/18-round fresh containment confirmation")
+    parser.add_argument("--wave-context", action="store_true", help="Use only the separately registered v3 fresh IDs/plan")
     parser.add_argument("--java", default="java")
     parser.add_argument("--bot-dir", type=Path, default=benchmark.ROOT / "AISurvivor")
     parser.add_argument("--cache", type=Path, default=benchmark.ROOT / ".benchmark-cache")
