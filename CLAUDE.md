@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build
 
-Requires Java 17+ and Gradle 8+.
+Requires a Java 17 JDK. Use the checked-in Gradle 8.14.3 wrapper.
 
 ```bash
 # Build fat JAR → outputs to AISurvivor/AISurvivor.jar
-gradle jar
+./gradlew jar
 
 # Clean and rebuild
-gradle clean jar
+./gradlew clean jar
 ```
 
 The `jar` task bundles the bot-api and all transitive dependencies into `AISurvivor/AISurvivor.jar` (configured in `build.gradle`).
@@ -93,7 +93,7 @@ All in `AISurvivor.java` near the top:
 ## Bot API dependency
 
 ```
-dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.35.5
+dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.36.1
 ```
 
 Check [Maven Central](https://mvnrepository.com/artifact/dev.robocode.tankroyale/robocode-tankroyale-bot-api) for newer versions and update `build.gradle` accordingly.

@@ -17,7 +17,19 @@ repositories {
 }
 
 dependencies {
-    implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.35.5'
+    implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.36.1'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }
 
 // Build a fat JAR directly into the AISurvivor/ bot directory
