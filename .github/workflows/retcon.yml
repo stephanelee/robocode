@@ -45,9 +45,9 @@ jobs:
           FULL: ${{ inputs.full || false }}
         run: |
           if [ "$FULL" = "true" ]; then
-            python tools/benchmark.py --suite retcon --java "$JAVA_HOME/bin/java" --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --output build/retcon
+            python tools/benchmark.py --suite retcon --java "$JAVA_HOME/bin/java" --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --require-retcon-stats --output build/retcon
           else
-            python tools/benchmark.py --suite retcon --smoke --java "$JAVA_HOME/bin/java" --timeout 180 --require-metrics --output build/retcon
+            python tools/benchmark.py --suite retcon --smoke --java "$JAVA_HOME/bin/java" --timeout 180 --require-metrics --require-retcon-stats --output build/retcon
           fi
       - name: Print canonical Retcon evidence and failure diagnostics
         if: always()
@@ -62,6 +62,11 @@ jobs:
           for log in Path('build/retcon').glob('*/runner.log'):
               print(f'RUNNER_LOG_TAIL {log}')
               print('\n'.join(log.read_text(errors='replace').splitlines()[-30:]))
+          diagnostic = Path('build/retcon-observability/results.json')
+          if diagnostic.exists():
+              print('RETCON_OBSERVABILITY_JSON_BEGIN')
+              print(diagnostic.read_text())
+              print('RETCON_OBSERVABILITY_JSON_END')
           PY
       - name: Upload Retcon evidence
         if: always()
@@ -75,4 +80,10 @@ jobs:
             build/retcon/*/battle.json
             build/retcon/*/metrics.jsonl
             build/retcon/*/runner.log
+            build/retcon/*/retcon-stats/**
+            build/retcon-observability/results.json
+            build/retcon-observability/block-*/*/battle.json
+            build/retcon-observability/block-*/*/metrics.jsonl
+            build/retcon-observability/block-*/*/runner.log
+            build/retcon-observability/block-*/*/retcon-stats/**
           if-no-files-found: warn

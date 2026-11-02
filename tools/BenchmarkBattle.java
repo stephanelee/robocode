@@ -23,10 +23,11 @@ public class BenchmarkBattle {
                 try {
                     var future = executor.submit(handle::awaitResults);
                     var results = future.get(timeout, TimeUnit.SECONDS);
+                    awaitRetconStats(results, rounds);
                     var rows = new ArrayList<String>();
                     for (var r : results.getResults()) rows.add(String.format(Locale.ROOT,
-                            "{\"name\":%s,\"rank\":%d,\"totalScore\":%d,\"survival\":%d,\"bulletDamage\":%d,\"firstPlaces\":%d}",
-                            quote(r.getName()), r.getRank(), r.getTotalScore(), r.getSurvival(), r.getBulletDamage(), r.getFirstPlaces()));
+                            "{\"id\":%d,\"name\":%s,\"version\":%s,\"rank\":%d,\"totalScore\":%d,\"survival\":%d,\"bulletDamage\":%d,\"firstPlaces\":%d}",
+                            r.getId(), quote(r.getName()), quote(r.getVersion()), r.getRank(), r.getTotalScore(), r.getSurvival(), r.getBulletDamage(), r.getFirstPlaces()));
                     Files.writeString(Path.of(args[2]), "{\"numberOfRounds\":" + results.getNumberOfRounds()
                             + ",\"results\":[" + String.join(",", rows) + "]}\n");
                 } catch (TimeoutException e) {
@@ -35,6 +36,29 @@ public class BenchmarkBattle {
                 } finally { executor.shutdownNow(); }
             }
         }
+    }
+    private static void awaitRetconStats(BattleResults results, int rounds) throws Exception {
+        var configured = System.getenv("RETCON_STATS_DIR");
+        if (configured == null || configured.isBlank()) return;
+        var directory = Path.of(configured).toAbsolutePath().normalize();
+        var temporary = Path.of(System.getProperty("java.io.tmpdir")).toAbsolutePath().normalize();
+        if (!directory.startsWith(temporary) || directory.equals(temporary))
+            throw new IllegalArgumentException("Retcon capture must be a Java-temp child");
+        var opponent = results.getResults().stream().filter(r -> r.getName().equals("Retcon")).findFirst();
+        if (opponent.isEmpty()) return;
+        var filename = java.util.regex.Pattern.compile("Retcon-" + opponent.get().getId() + "--?[0-9]+\\.json");
+        var coverage = java.util.regex.Pattern.compile("\"roundsRecorded\"\\s*:\\s*" + rounds + "\\s*[,}]");
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
+        while (System.nanoTime() < deadline) {
+            try (var files = Files.list(directory)) {
+                for (var file : files.filter(p -> filename.matcher(p.getFileName().toString()).matches()).toList()) {
+                    if (!Files.isSymbolicLink(file) && Files.isRegularFile(file) && Files.size(file) <= 2_000_000
+                            && coverage.matcher(Files.readString(file)).find()) return;
+                }
+            }
+            Thread.sleep(20);
+        }
+        System.err.println("Retcon final stats did not cover every round within the bounded flush wait");
     }
     private static String quote(String value) {
         var out = new StringBuilder("\"");
