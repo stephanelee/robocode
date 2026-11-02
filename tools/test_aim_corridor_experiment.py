@@ -33,6 +33,15 @@ class AimCorridorExperimentTests(unittest.TestCase):
         rows[0]['candidate'] = battle(.5)
         self.assertEqual(final_decision(retain, rows, retain)['status'], 'reject')
 
+    def test_correctness_primary_reports_tactical_gate_separately(self):
+        rows = [dict(previous=battle(.8), candidate=battle(.8)) for _ in range(3)]
+        primary = dict(decision=dict(status='retain', tacticalStrengthGatePassed=False))
+        veto = dict(decision=dict(status='retain'))
+        result = final_decision(primary, rows, veto)
+        self.assertEqual(result['status'], 'retain')
+        self.assertFalse(result['tacticalStrengthGatePassed'])
+        self.assertTrue(final_decision(dict(decision=dict(status='retain')), rows, veto)['tacticalStrengthGatePassed'])
+
     def test_mechanism_aggregates_retcon_counters_per_arm(self):
         comparison = dict(blocks=[dict(previous=battle(.2), candidate=battle(.3)) for _ in range(3)])
         result = retcon_mechanism(comparison)

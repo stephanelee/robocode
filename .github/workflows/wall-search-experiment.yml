@@ -1,0 +1,73 @@
+name: Wall search experiment
+
+# Temporary preregistered experiment (docs/improvements/wall-search.md). Removed after results are recorded.
+on:
+  push:
+    branches: [claude/wall-search]
+    paths: [.github/workflows/wall-search-experiment.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wall-search-experiment
+  cancel-in-progress: false
+
+jobs:
+  experiment:
+    name: Wall search Retcon/sample experiment
+    runs-on: ubuntu-26.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build candidate and verify committed JAR parity under Java 17
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-checked-in.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_*.py'
+          sha256sum AISurvivor/AISurvivor.jar
+      - name: Materialize accepted baseline bot
+        run: |
+          git worktree add "$RUNNER_TEMP/baseline" 241156f7d6b78c4ca2365859884b1486c9f41194
+          sha256sum "$RUNNER_TEMP/baseline/AISurvivor/AISurvivor.jar"
+      - name: Install Retcon source-launch runtime after Gradle finishes
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run preregistered experiment once
+        run: |
+          python tools/aim_corridor_experiment.py \
+            --previous-bot-dir "$RUNNER_TEMP/baseline/AISurvivor" \
+            --previous-source 241156f7d6b78c4ca2365859884b1486c9f41194 \
+            --expected-previous-jar 5ebfa64adf38ab227766b97f7f68e82aefb20251ff8d5f30575bf6b69e67c883 \
+            --candidate-source "$GITHUB_SHA" --plan-commit "$GITHUB_SHA" \
+            --java "$JAVA_HOME/bin/java" --output build/wall-search \
+            --plan-path docs/improvements/wall-search.md --seeds 20261221,20261222,20261223 --sample-seed 20261224 --primary-category correctness
+      - name: Print canonical evidence
+        if: always()
+        run: |
+          for f in build/wall-search/experiment.json build/wall-search/primary/comparison.json build/wall-search/online-veto/comparison.json; do
+            [ -f "$f" ] || continue; { echo "BEGIN $f"; python -c "import json,sys;d=json.load(open('$f'));print(json.dumps({k:d[k] for k in d if k in ('status','decision','primary','onlineVeto','samples','failure','candidateJarSHA256','runtimeOS')}, indent=1)[:200000])"; echo "END $f"; }
+          done
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wall-search-evidence
+          path: |
+            build/wall-search/**
+            !build/wall-search/official-samples/**
+            !build/wall-search/**/artifacts/**
+          if-no-files-found: warn
