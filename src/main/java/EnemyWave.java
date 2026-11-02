@@ -2,23 +2,10 @@
 final class EnemyWave {
     final double originX, originY, bulletSpeed, bearingToUs;
     final int fireTurn, shooterId;
-    /** Head-on and linear aim bearings reconstructed from our own state at the inferred aim turn, if known. */
-    double headOnAim = Double.NaN, linearAim = Double.NaN, aimDistance = Double.NaN;
 
     EnemyWave(double x, double y, double speed, double bearing, int turn, int shooter) {
         originX = x; originY = y; bulletSpeed = speed;
         bearingToUs = bearing; fireTurn = turn; shooterId = shooter;
-    }
-
-    void setAims(double headOn, double linear, double distance) {
-        headOnAim = headOn; linearAim = linear; aimDistance = distance;
-    }
-
-    /** Larger of the two aim-corridor dangers at a point; zero when our aiming-time state is unknown. */
-    double aimDanger(double x, double y) {
-        if (Double.isNaN(aimDistance)) return 0;
-        return Math.max(AimCorridor.danger(originX, originY, aimDistance, headOnAim, x, y),
-                AimCorridor.danger(originX, originY, aimDistance, linearAim, x, y));
     }
 
     double remaining(double x, double y, int turn) {

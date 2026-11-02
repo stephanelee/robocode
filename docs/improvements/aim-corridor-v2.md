@@ -116,4 +116,68 @@ The report covers, per arm:
 
 ## Results
 
-Not yet measured.
+Everything above this heading is byte-identical to the registered plan at `15d2b02795f6353c5380483f30769714f8b0b32d`, which was also the measured candidate source; `compare.py` stored the plan blob. The single registered [run 41542518773](https://github.com/stephanelee/robocode/actions/runs/41542518773) completed with every step green and no reruns:
+- job 125609967831;
+- artifact 13187208307, zip SHA256 `c1faf43fcf1c51705d7e4a3951ea47e57a3ce1ba1afd84c05aeb45c6dcc328a7`.
+
+The runtime was actual Ubuntu 26.04.1 LTS. The Java 17 build passed the JAR parity check. Matches ran on Temurin 25.0.5+8. The candidate JAR was `3619be973d3417111703df3d69622a8447285abda2e7a866d6c1e49f2f973ebc`, and the baseline JAR hash was verified before launch.
+
+**Decision: reject.** Stage A failed, so Stage C was not run, as registered. Stage B passed. Gameplay source, tests and the tracked JAR are restored exactly to `116c47c` (SHA256 `1b99fa0ac303e5e5f89ed91bb3803841ded54910628f335fe1aeaeba65e34c9a`).
+
+### Stage A: 120 fixed minimum-risk Retcon rounds
+
+| Metric (60 rounds per arm) | Baseline | Candidate |
+| --- | ---: | ---: |
+| Mean game score share | 18.0439% | 13.0071% |
+| Round wins | 4 | 0 |
+| AIS turns survived | 38,562 | 37,374 |
+| AIS shots / hit rate | 2,000 / 10.150% | 1,800 / 9.778% |
+| AIS damage dealt per 1,000 turns | 37.08 | 32.90 |
+| AIS damage taken per 1,000 turns | 98.06 | 105.75 |
+| Wall collisions (per 1,000 turns) | 355 (9.206) | 104 (2.783) |
+| AIS skipped turns | 0 | 0 |
+
+The block deltas were −1.493700, −5.965504 and −7.651210 pp (seeds 20261211/12/13), for a mean of −5.036805 pp. Checks:
+- mean gain ≥ +5 pp: **fail**
+- ≥ 2 improved blocks: **fail** (0)
+- no block loses > 5 pp: **fail**
+- wins not more than 3 lower: **fail** (4→0)
+- zero skips: pass
+- wall rate ≤ 1.2×: pass (0.30×)
+
+Baseline wall collisions were concentrated in one block (323 in seed 20261213, against 22 and 10 in the others). This is consistent with the one-way `wallSmooth` pinning defect diagnosed in development.
+
+### Mechanism, from Retcon's offline native export (not a gate)
+
+| Retcon counter, 60 rounds per arm | Baseline | Candidate |
+| --- | ---: | ---: |
+| Actual hits / shots | 496 / 2,464 (20.13%) | 511 / 2,427 (21.05%) |
+| Linear virtual hits / completed | 426 / 2,383 (17.88%) | 446 / 2,334 (19.11%) |
+| Head-on virtual hits / completed | 385 / 2,383 (16.16%) | 374 / 2,334 (16.02%) |
+
+**What the run showed:**
+- The two-way wall search did what it was designed to do: wall collisions fell 70% and pinning blocks disappeared.
+- H1 is again not supported. With walls fixed, the corridor term still does not lower Retcon's hit rate: actual and linear rates rose slightly, and head-on was unchanged.
+- Score share fell in every block.
+
+**Interpretation, untested:** the corridor penalty makes movement less effective against Retcon even when wall pinning is removed. The [v1 report](aim-corridor.md) and this result together argue against further corridor-weight tuning without a new mechanism. The wall-search repair on its own has not been registered or measured; development hints are not evidence.
+
+### Stage B: official samples, 10 fixed rounds per arm (pass)
+
+| Opponent | Baseline share / wins / walls | Candidate share / wins / walls |
+| --- | --- | --- |
+| Target | 99.887% / 10 / 233 | 99.944% / 10 / 20 |
+| SpinBot | 94.517% / 10 / 9 | 94.737% / 10 / 17 |
+| Walls | 98.747% / 10 / 0 | 98.113% / 10 / 6 |
+
+All candidate shares were within 5 pp, with zero skipped turns.
+
+### Stage C: not run
+
+The registered rule runs it only after Stage A retains.
+
+### Limitations
+
+Starts are unpaired and unseeded, there are three blocks per arm, and Retcon adapts within each game. Retcon counters are offline diagnostics only. The candidate bundles two changes, so the score loss is not attributed to either part alone. Local development games were exploratory and are excluded from this decision. The registered thresholds were applied unchanged.
+
+Evidence: [raw evidence and patch](../../benchmarks/aim-corridor-v2/README.md).
