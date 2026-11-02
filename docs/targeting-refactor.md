@@ -34,4 +34,24 @@ The next AI milestone is legal scan-history data feasibility: current round aggr
 
 ## Characterization milestone
 
-Commit `74bcb6f8e79a97513c93a77425d8e631ba34cc64` froze the accepted source snapshot and **288 actual private-aimGF command/state outcomes before any production edit**: 32 named boundary/lifecycle cases and 256 wide snapshots from fixture seed 13371337. IEEE-754 output bits, gun/fire commands, pending-wave fields and array identity are recorded; stat arrays and bot RNG remain unchanged. Test-only Mockito is excluded from the runnable JAR. The extracted geometry and actual bot adapter now pass those unchanged recordings, plus bitwise comparison of every pure result field against the accepted arithmetic using real API distance/bearing defaults. Java17 clean build and 62 Python tests pass locally. The registered five-round sanity run is still pending independent exact-workflow preclear.
+Commit `74bcb6f8e79a97513c93a77425d8e631ba34cc64` froze the accepted source snapshot and **288 actual private-aimGF command/state outcomes before any production edit**: 32 named boundary/lifecycle cases and 256 wide snapshots from fixture seed 13371337. IEEE-754 output bits, gun/fire commands, pending-wave fields and array identity are recorded; stat arrays and bot RNG remain unchanged. Test-only Mockito is excluded from the runnable JAR. The extracted geometry and actual bot adapter passed those unchanged recordings, plus bitwise comparison of every pure result field against the accepted arithmetic using real API distance/bearing defaults. At that milestone, Java17 clean build and 62 Python tests passed locally; the registered five-round sanity run was still pending independent exact-workflow preclear.
+
+## Measured result and decision
+
+**Retain the minimal refactor, subject to final independent review and required checks.** The deterministic before/after replay passed exactly, and all **five registered compatibility rounds** completed with valid fixed-policy telemetry, zero AIS skipped turns, no model writes, and complete native Retcon statistics. No score-gain or statistical-equivalence claim is made; the accepted ten-degree firing gate, final wall clamp, scan-lag behavior, selection, learning and event handling remain unchanged.
+
+| Opponent | Fixed rounds | AIS / opponent score | AIS wins | AIS skipped turns |
+| --- | ---: | ---: | ---: | ---: |
+| Retcon 0.2.0 | 2 | 48 / 270 | 0 | 0 |
+| Official Target 1.4.0 | 1 | 180 / 0 | 1 | 0 |
+| Official SpinBot 1.4.0 | 1 | 169 / 0 | 1 | 0 |
+| Official Walls 1.4.0 | 1 | 166 / 0 | 1 | 0 |
+
+The hard opponent remains unbeaten in this tiny sanity check. Sample wins validate launch/integration and are not evidence of broad competitive strength. This is not a paired incumbent/candidate score experiment, and five rounds cannot establish unchanged win probability. Exact accepted command/state replay is the primary refactor evidence.
+
+- [PR #25](https://github.com/stephanelee/robocode/pull/25), [actual run 41515841364 / job 125519071370](https://github.com/stephanelee/robocode/actions/runs/41515841364/job/125519071370), exact candidate `438e16de5cef95e10fb8a8d2d6b8254a0e47a68f`.
+- [Durable raw evidence](../benchmarks/targeting-refactor/README.md): original plan bytes/hash, canonical report, all four games/five AIS rows, complete native Retcon export, original accepted source/goldens/provenance. [Complete artifact](https://github.com/stephanelee/robocode/actions/runs/41515841364/artifacts/13173474829) preserves runnable bundles without duplicating their JARs in Git.
+- Plan `c7f64d3be25220d4574f1b5b31bfe9d8bc6c6db7` was published and independently precleared before extraction/measurement; actual accepted characterization `74bcb6f8e79a97513c93a77425d8e631ba34cc64` predates production edits. No additional scored sanity run or rescued attempt occurred.
+- Candidate JAR SHA-256 `6b5a448fa1f5edba38aae04f364e44d0943f6eeb6b4b938580085f87dd668170`; Java17 build/parity, Temurin25.0.5+8-LTS matches, actual Ubuntu26.04.1, SHA-pinned Runner/server1.4.0, Retcon0.2.0/API1.3.1, official 1.4.0 sample archive. Exact provenance appears in `sanity.json`.
+
+The temporary sanity workflow is removed after capturing the valid outcome. The small geometry boundary, unchanged firing/state adapter, frozen behavior recordings, evidence, and reusable bounded sanity tool remain. The next AI experiment still requires legal-scan acquisition and an independently reviewed dataset/model protocol; this refactor alone adds no learned targeting feature.
