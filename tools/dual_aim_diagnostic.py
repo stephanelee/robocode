@@ -72,7 +72,11 @@ def step(state, command, width=WIDTH, height=HEIGHT):
     turn = clamp(command[1], -(10 - .75 * abs(speed)), 10 - .75 * abs(speed))
     heading = (state.heading + turn) % 360
     nx, ny = constrain(state.x, state.y, x, y, width, height)
-    wall = abs(nx - x) > 1e-10 or abs(ny - y) > 1e-10
+    wall = nx != x or ny != y
+    # TurnProcessor first applies the wall outcome, THEN constrainBotPositions.
+    # The Y branch of constrain can overwrite the X clamp at a corner, so this
+    # second pass is observable and necessary (same pre-turn origin).
+    nx, ny = constrain(state.x, state.y, nx, ny, width, height)
     return State(nx, ny, heading, 0.0 if wall else speed), wall
 
 
@@ -215,7 +219,7 @@ def diagnose(suite="development"):
                                 baselineForecastRmse20=round(sum(r["baselineLinearForecastRmse20"] for r in group) / len(group), 6),
                                 proposedForecastRmse20=round(sum(r["proposedLinearForecastRmse20"] for r in group) / len(group), 6),
                                 wallContactChosen=sum(r["proposedWallTurns"] > 0 for r in group)))
-    return dict(schemaVersion=1, suiteVersion="dual-aim-v1", suite=suite, engine=ENGINE, retconCommit=RETCON,
+    return dict(schemaVersion=1, suiteVersion="dual-aim-v2", suite=suite, engine=ENGINE, retconCommit=RETCON,
                 arena=[WIDTH, HEIGHT], horizon=horizon, commands=commands, powers=[1.2, 2, 3],
                 criterion="worst-case continuous angular corridor, swept bullet vs post-move circle; conservative after bullet wall removal",
                 scope="single shot at t0; stationary shooter; hypothetical scan histories; no opponent private input; finite commands only; not scores",

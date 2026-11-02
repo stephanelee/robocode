@@ -37,6 +37,27 @@ class MovementFixtures(unittest.TestCase):
         self.assertEqual(path[0][0], State(508, 500, 0, 8))
         self.assertEqual(path[1][0], State(508, 500, 10, 0))
 
+    def test_engine_second_constraint_pass_at_reverse_corner(self):
+        # First pass's Y correction overwrites X and leaves983.5 outside bounds.
+        heading = math.degrees(math.atan2(4, 7))
+        state, wall = step(State(980, 980, heading, 8), (8, 0))
+        self.assertTrue(wall)
+        self.assertAlmostEqual(state.x, 982)
+        self.assertAlmostEqual(state.y, 981.1428571428571)
+        self.assertEqual(state.speed, 0)
+
+    def test_corner_positions_remain_in_bounds_for_legal_commands(self):
+        for x in (18, 20, 980, 982):
+            for y in (18, 20, 980, 982):
+                for heading in range(0, 360, 15):
+                    for speed in range(-8, 9):
+                        for target in (-8, 0, 8):
+                            state, _ = step(State(x, y, heading, speed), (target, 10))
+                            self.assertGreaterEqual(state.x, 18 - 1e-9)
+                            self.assertLessEqual(state.x, 982 + 1e-9)
+                            self.assertGreaterEqual(state.y, 18 - 1e-9)
+                            self.assertLessEqual(state.y, 982 + 1e-9)
+
     def test_linear_retcon_iteration_not_headon_time(self):
         aim, turns, point = linear_aim((100, 300), State(550, 300, 90, 8), 16.4)
         self.assertEqual(turns, 32)
