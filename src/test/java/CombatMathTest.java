@@ -2,6 +2,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CombatMathTest {
+    @Test void clockwiseOrbitEastOfTargetHeadsSouth() {
+        // At the east side of an enemy, bearing toward it is west (180).
+        assertArrayEquals(new double[]{0, -8}, CombatMath.project(0, 0,
+                CombatMath.orbitHeading(180, true), 8, 0, 1), 1e-9);
+        assertArrayEquals(new double[]{0, 8}, CombatMath.project(0, 0,
+                CombatMath.orbitHeading(180, false), 8, 0, 1), 1e-9);
+    }
+
+    @Test void delayedFreshScanCannotTrainAnAlreadyPassedTargetWave() {
+        assertEquals(CombatMath.WaveObservation.BEFORE, CombatMath.observeTargetWave(70, 140, 14));
+        assertEquals(CombatMath.WaveObservation.CROSSING, CombatMath.observeTargetWave(140, 140, 14));
+        // No scans for ten more turns: this fresh position is too late to score.
+        assertEquals(CombatMath.WaveObservation.PASSED, CombatMath.observeTargetWave(280, 140, 14));
+        assertEquals(CombatMath.WaveObservation.PASSED, CombatMath.observeTargetWave(173, 140, 14));
+    }
+
     @Test void cardinalHeadingsUseEastZeroCounterclockwiseAngles() {
         assertArrayEquals(new double[]{108, 100}, CombatMath.project(100, 100, 0, 8, 0, 1), 1e-9);
         assertArrayEquals(new double[]{100, 108}, CombatMath.project(100, 100, 90, 8, 0, 1), 1e-9);

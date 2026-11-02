@@ -2,6 +2,21 @@
 final class CombatMath {
     private CombatMath() {}
 
+    enum WaveObservation { BEFORE, CROSSING, PASSED }
+
+    static WaveObservation observeTargetWave(double traveled, double distance, double bulletSpeed) {
+        // One turn of travel plus bot collision radius bounds scan/tick uncertainty.
+        double margin = bulletSpeed + 18;
+        if (traveled > distance + margin) return WaveObservation.PASSED;
+        if (traveled < distance - margin) return WaveObservation.BEFORE;
+        return WaveObservation.CROSSING;
+    }
+
+    static double orbitHeading(double bearingToEnemy, boolean clockwise) {
+        // The bearing points inward: +90 is clockwise around the enemy.
+        return bearingToEnemy + (clockwise ? 90 : -90);
+    }
+
     static double relativeAngle(double angle) {
         return ((angle + 180) % 360 + 360) % 360 - 180;
     }

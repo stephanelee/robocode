@@ -562,7 +562,10 @@ public class AISurvivor extends Bot {
             if (t.lastScanTurn != getTurnNumber()) continue;
 
             double dist = Math.sqrt(sq(t.x - w.originX) + sq(t.y - w.originY));
-            if (traveled < dist - w.bulletSpeed) continue;
+            CombatMath.WaveObservation observation = CombatMath.observeTargetWave(
+                    traveled, dist, w.bulletSpeed);
+            if (observation == CombatMath.WaveObservation.PASSED) { it.remove(); continue; }
+            if (observation == CombatMath.WaveObservation.BEFORE) continue;
 
             double absAngle = Math.toDegrees(Math.atan2(t.y - w.originY, t.x - w.originX));
             double latAngle = normalizeAngle(absAngle - w.baseAngle) * w.lateralDir;
@@ -759,7 +762,7 @@ public class AISurvivor extends Bot {
     private double[] circleForce(boolean cw) {
         Enemy t = nearestEnemy();
         if (t == null) return minRiskForce(1.0);
-        double orbitAngle = Math.toRadians(directionTo(t.x, t.y) + (cw ? -90 : 90));
+        double orbitAngle = Math.toRadians(CombatMath.orbitHeading(directionTo(t.x, t.y), cw));
         double speed = 8.0 * ((getTurnNumber() % 11 < 7) ? 1.0 : 0.5);
         return new double[]{ Math.cos(orbitAngle), Math.sin(orbitAngle), speed };
     }
