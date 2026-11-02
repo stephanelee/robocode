@@ -26,7 +26,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          expected = json.loads(Path('benchmarks/dual-aim-v1/summary.json').read_text())
+          expected = json.loads(Path('benchmarks/dual-aim-v2/summary.json').read_text())
           for suite in ('development', 'withheld'):
               actual = json.loads(Path(f'component-evidence/{suite}.json').read_text())
               rows = actual.pop('rows')
@@ -36,6 +36,6 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: dual-aim-v1-raw
+          name: dual-aim-v2-raw
           path: component-evidence/
           if-no-files-found: error

@@ -1,18 +1,18 @@
-# Dual-aim component diagnostic v1
+# Dual-aim component diagnostic v2
 
 This tooling experiment implements the [delegated next tests](retcon-next-experiments.md) using the [audited Retcon hints](retcon-review-response.md). It runs no game and changes no bot/JAR. Results are geometric command feasibility, not competitive scores. The prospective controller remains a hypothesis.
 
 ## Frozen matrix and command family
 
-Before the first full run, freeze `dual-aim-v1` and its nine constant commands: target speed −8/0/+8 crossed with body turn −10/0/+10 degrees per turn. Baseline holds full speed in its current travel sign and zero turn. Both use legal engine acceleration/turn/wall mechanics. The selector maximizes the worst signed clearance, preferring baseline on exact ties, then fewer wall turns, smaller turn, and smaller target speed. Selection is in-sample optimization from this fixed command family, not an estimate of generalization or the accepted AIS behavior.
+Before the first full run, freeze `dual-aim-v2` and its nine constant commands: target speed −8/0/+8 crossed with body turn −10/0/+10 degrees per turn. Baseline holds full speed in its current travel sign and zero turn. Both use legal engine acceleration/turn/wall mechanics. The selector maximizes the worst signed clearance, preferring baseline on exact ties, then fewer wall turns, smaller turn, and smaller target speed. Selection is in-sample optimization from this fixed command family, not an estimate of generalization or the accepted AIS behavior.
 
-Development: 816 states, ranges 150/250/350/450/550/650, every integer speed −8..8, headings 0/90 degrees, layouts open/wall-gap0/wall-gap32/corner. Withheld: 90 predetermined distinct states, ranges 200/400/600, speeds −7/−3/0/3/7, headings45/135, layouts open/wall-gap16/corner. Both use a 1000×1000 arena, a stationary shooter directly west, and delay0/1/3 after the hypothetical shot decision. Withheld outputs must be recorded after development without altering commands or thresholds; they are component holdout cases, not fresh competitive confirmation.
+Development: 816 states, ranges 150/250/350/450/550/650, every integer speed −8..8, headings 0/90 degrees, layouts open/wall-gap0/wall-gap32/corner. Withheld: 90 predetermined distinct states, ranges 200/400/600, speeds −7/−3/0/3/7, headings45/135, layouts open/wall-gap16/corner. Both use a 1000×1000 arena, a stationary shooter directly west, and delay0/1/3 after the hypothetical shot decision. The fixed withheld set was first evaluated after development in v1 and is rerun unchanged after the v2 conformance repair. Its outputs have now been seen: it is not fresh untouched generalization evidence.
 
 For each state, test both Retcon model requests and powers1.2/2/3 simultaneously. These discrete power scenarios do not cover every legal power or finishing cap. Four uncertainty profiles: fresh scan plus Retcon alignment tolerance `atan(18/d)`; constant-heading back-extrapolated scan age2 plus5degrees; age5 plus15degrees; unrestricted heading. The age profiles are sensitivity scenarios, not proven bounds on Retcon private history. This single-body diagnostic omits bot-to-bot collision/ram responses, shooter movement, multiple shots, damage and shot-induced behavioral changes; paths approaching the hypothetical shooter are not certified for those interactions. Stationary shooter position, firing time, and observed target state are fixture inputs; the tool never accesses Retcon private variables. A live controller would need explicit legal estimates and wider origin/time uncertainty.
 
 ## Mechanics and collision meaning
 
-The movement port follows Tank Royale v1.4.0: speed update, movement along old heading, turn limited using new speed, first-wall intersection, speed zero after contact. In this version target speed0 stops immediately and reversal8→3; do not substitute textbook braking. A wall/corner does not independently clamp coordinates and slide the bot. Golden tests cover these source facts, positive/negative velocity, and delayed commands.
+The movement port follows Tank Royale v1.4.0: speed update, movement along old heading, turn limited using new speed, first-wall intersection, speed zero after contact, then the engine's second position-constraint pass using the same previous origin. In this version target speed0 stops immediately and reversal8→3; do not substitute textbook braking. A wall/corner does not independently clamp coordinates and slide the bot. Golden tests cover these source facts, positive/negative velocity, and delayed commands.
 
 Head-on uses the hypothetical target scan. Iterative linear aim uses Retcon's own coordinate-clamped constant-velocity forecast until bullet travel reaches forecast distance; that forecast is intentionally distinct from real movement physics. Gun firing occurs before same-turn gun rotation. Unknown actual gun direction is represented by the complete continuous alignment corridor around each model request, never an exact ray.
 
@@ -22,7 +22,7 @@ Report baseline/proposed safe counts, uncertified finite-command states, wall co
 
 ## Reproduction and decision
 
-Run bounded tests with `python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v`. Run `python tools/dual_aim_diagnostic.py --suite development --output benchmarks/dual-aim-v1/development.json`, then the unchanged command with `--suite withheld` and `withheld.json`. Outputs retain all rows and the exact tool SHA256. Python standard library only; no server/JDK/network needed. CI fixture job uses exactly Ubuntu26.04.
+Run bounded tests with `python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v`. Run `python tools/dual_aim_diagnostic.py --suite development --output benchmarks/dual-aim-v2/development.json`, then the unchanged command with `--suite withheld` and `withheld.json`. Outputs retain all rows and the exact tool SHA256. Python standard library only; no server/JDK/network needed. CI fixture job uses exactly Ubuntu26.04.
 
 Before gameplay, inspect conditional safety sensitivity, uncertified states and wall cost; unrestricted-heading results expose what cannot be guaranteed without a justified observation model. Do not implement a live exact-ray controller from a fresh-scan result alone. An isolated movement hypothesis, if justified, must use legal shot inference, uncertainty-aware reachable commands, a wall veto, and fallback; it needs an independently reviewed immutable mechanism/score protocol before performance matches. Keep firing alignment separate.
 
@@ -31,37 +31,35 @@ Before gameplay, inspect conditional safety sensitivity, uncertified states and 
 - [Engine speed/turn rules](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/rules/math.kt), [turn pipeline](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/TurnProcessor.kt), [wall/circle collision](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/CollisionDetector.kt), and [BulletLine](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/model/BulletLine.kt).
 - [Pinned Retcon linear aim](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/retcon/gun/LinearAimModel.java) and [gun alignment](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/framework/roles/Gun.java#L45-L67).
 
-## Completed offline results
+## Completed v2 results and decision
 
-Decision: **retain the diagnostic, do not promote this selector to live gameplay**. The finite commands can evade the narrowly modeled shots, but sensitivity to unobserved history and wall contact prevents a deployable safety claim. This is not a rejection based on competitive scores: zero score matches were run.
+**Retain the diagnostic; do not promote this selector to live gameplay.** Zero performance matches or gameplay/JAR changes. Independent review found v1 omitted the engine's second position-constraint pass and used an epsilon wall-contact comparison. At a corner the first pass can leave an invalid X because Y correction overwrites it. V2 preserves exact source comparisons and both passes; a reverse-corner regression plus19,584 legal corner state/command checks now pass (13 tests total). [Archived invalid v1 report](dual-aim-v1-invalid.md), [v1 summary](../benchmarks/dual-aim-v1/summary.json) and [v1 full raw artifact run](https://github.com/stephanelee/robocode/actions/runs/41513915658) remain available. Do not use v1 as an engine-conformant baseline.
 
-Commands/matrix were published at [1dc69bd](https://github.com/stephanelee/robocode/commit/1dc69bd0a05f1d96a028eaede7c1d993219a9e0d) before either full suite. The unchanged tool ran development first, then withheld. Exact tool SHA256: `fab7093fd8294dadfbaccbde651a270a20b573955c30b04e1563c55fcc5cdc3e`. Initial execution used local Windows/Python, without Java/server/network; CI reproduces on Ubuntu26.04/Python3.12. [Machine-readable summaries](../benchmarks/dual-aim-v1/summary.json) retain all profile/delay counts and forecast-error measures. Full row artifacts are produced by [Component diagnostics](../.github/workflows/component-diagnostics.yml), artifact `dual-aim-v1-raw`; [PR #24](https://github.com/stephanelee/robocode/pull/24) links the exact-head workflow runs.
+The repair was frozen at [69e1f693](https://github.com/stephanelee/robocode/commit/69e1f693a5a52edf76e0d46a9214ff5fd4e197c5) before rerunning the entire unchanged816 development/90 fixed withheld matrix. No command, profile, ranking or threshold changed in response to outputs. Exact repaired tool SHA256: `21fc67d80540ec566ddc613fa41284fd0add99f02bf1d9fbc4d99804c8d45465`. Both suites ran locally development first then withheld; CI reproduces all10,872 rows on Ubuntu26.04/Python3.12 and asserts exact summary parity. [V2 summaries](../benchmarks/dual-aim-v2/summary.json), [full-row conformance comparison](../benchmarks/dual-aim-v2/conformance-diff.json), raw artifact `dual-aim-v2-raw` on the [PR #24 component workflow](https://github.com/stephanelee/robocode/pull/24/checks).
 
-Each cell below is baseline → selector conditional safe states. There are 816 distinct development states and90 withheld states, each evaluated under four profiles and three delays: 9,792 +1,080 condition rows. Counts are deterministic coverage, not independent random samples or collision probabilities.
+The full comparison found167/9,792 development rows changed:167 selected wall-turn counters and2 clearances; no chosen command, safety flag, forecast error or withheld row changed. Aggregate conditional safety counts therefore remain unchanged, while wall-contact totals rise. No earlier row/artifact is discarded, and the already inspected withheld set is not presented as new holdout evidence.
 
-| Uncertainty profile | Delay | Development /816 | Withheld /90 |
+Each cell is baseline → selector conditional safe states, not independent samples or collision probabilities.
+
+| Profile | Delay | Development /816 | Fixed withheld /90 |
 | --- | ---: | ---: | ---: |
-| Fresh +alignment tolerance | 0 | 167 →686 | 29 →76 |
-| Fresh +alignment tolerance | 1 | 167 →663 | 29 →70 |
-| Fresh +alignment tolerance | 3 | 167 →630 | 29 →64 |
-| Age2 +5degrees | 0 | 130 →618 | 22 →56 |
-| Age2 +5degrees | 1 | 130 →606 | 22 →54 |
-| Age2 +5degrees | 3 | 130 →552 | 22 →50 |
-| Age5 +15degrees | 0 | 47 →285 | 2 →3 |
-| Age5 +15degrees | 1 | 47 →212 | 2 →5 |
-| Age5 +15degrees | 3 | 47 →103 | 2 →4 |
-| Unrestricted heading | 0/1/3 | 0 →0 | 0 →0 |
+| fresh-alignment | 0 | 167 → 686 | 29 → 76 |
+| fresh-alignment | 1 | 167 → 663 | 29 → 70 |
+| fresh-alignment | 3 | 167 → 630 | 29 → 64 |
+| age2-extra5deg | 0 | 130 → 618 | 22 → 56 |
+| age2-extra5deg | 1 | 130 → 606 | 22 → 54 |
+| age2-extra5deg | 3 | 130 → 552 | 22 → 50 |
+| age5-extra15deg | 0 | 47 → 285 | 2 → 3 |
+| age5-extra15deg | 1 | 47 → 212 | 2 → 5 |
+| age5-extra15deg | 3 | 47 → 103 | 2 → 4 |
+| unknown-heading | 0 | 0 → 0 | 0 → 0 |
+| unknown-heading | 1 | 0 → 0 | 0 → 0 |
+| unknown-heading | 3 | 0 → 0 | 0 → 0 |
 
-Even the fresh/delay0 case leaves130 development states uncertified. For example, range150/speed−8/heading0/open arena remains uncertified at clearance−17.84 despite selecting reversal+turn; stopping/turning/reversing is not instantly attainable sideways displacement. The unknown-heading profile certifies no command. It is an intentionally broad sensitivity limit, not evidence Retcon chooses arbitrary headings.
+Fresh/delay0 still leaves130 development states uncertified, including range150/speed−8/heading0/open. Age5+15degrees/delay3 leaves713 development and86 fixed withheld states uncertified; unrestricted-heading certifies none. These finite-command, single-shot scenarios do not bound hidden scan/shot-origin histories, ramming or multiple bullets.
 
-Wall contacts are counted across the full130-turn horizon, including time after the modeled encounter. Thus all816 straight development paths eventually contact a wall; selector contacts633 in fresh/delay0 and709 in age5/delay3. Withheld straight paths contact81/90, selector71/90 and79/90 respectively. These counts cannot be called collision-rate improvement during a battle. A future live wall veto and receding-horizon controller remain untested.
+Across the full130-turn horizon, including post-encounter motion, the baseline contacts a wall in816/816 development and81/90 withheld paths. V2 selector contacts645/816 and71/90 in fresh/delay0,724/816 and79/90 in age5/delay3. This is not a measured battle wall rate. A live wall veto/receding-horizon policy is untested.
 
-The20-turn opponent linear-forecast RMSE averages29.45 units for the development baseline and73.39 for fresh/delay0 selector; corresponding withheld values36.44 and70.89. This shows the selected motions deviate from constant velocity, not that our simulator is inaccurate or that shots will miss in real games. Under age5/delay3 the selector RMSE falls40.70/38.35, while conditional clearance collapses: forecast error alone is an inadequate promotion metric.
+The20-turn linear-forecast RMSE is unchanged: development baseline29.45 vs fresh/delay0 selector73.39 units; withheld36.44 vs70.89. It measures deviation from constant velocity, not simulator error or real-game strength. Wider uncertainty sharply degrades clearance despite forecast mismatch.
 
-Next action: preserve these limitations, finish the behavior-preserving targeting seam independently, and prioritize a legal-scan supervised forecast dataset/component baseline. Revisit movement only with a justified legal observation model and separately preregistered wall-safe mechanism. Do not turn this best-of-nine fixture search into a strength claim.
-
-## Conformance repair and rerun protocol
-
-Independent review found the v1 simulator omitted the engine's second position-constraint pass after applying a wall outcome. Because the Y correction can overwrite X at a corner, one pass can leave an invalid position. The13-test v2 repair includes the reverse-corner regression and19,584 legal corner/speed/heading/target-speed in-bounds checks. V1 remains preserved at the frozen source commit and its `dual-aim-v1-raw` artifact and summary; its full-trajectory results are invalid exploratory evidence, not an accepted engine-conformant baseline.
-
-Before v2 outcomes, freeze this repair and rerun the unchanged complete development816/withheld90 matrix and nine-command family. No uncertainty profiles, command ranking, thresholds or selected cases are changed in response to results. Previously withheld outputs have now been seen: the v2 withheld set is a fixed holdout rerun after a conformance repair, not fresh untouched generalization evidence. Compare full rows and disclose affected fields/counts. No competitive matches or gameplay gates are involved.
+Next: retain this bounded negative deployment decision; prioritize the separate behavior-preserving targeting seam and legal-scan supervised forecast baseline. No extra geometry search or live movement change follows from these outputs.
