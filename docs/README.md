@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Retcon native observability and Ubuntu 26.04 diagnostic cohorts](retcon-observability.md)
+
 For performance work, start with **Retcon 1v1**: the [Retcon benchmark workflow](https://github.com/stephanelee/robocode/actions/workflows/retcon.yml) or explicit `--suite retcon` commands in the methodology. Build with Java 17 and run Retcon matches with JDK 25. The default easy sample roster is retained for regression/integration checks.
 
 - [Benchmark methodology and runtime setup](benchmarks.md)

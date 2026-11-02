@@ -1,12 +1,15 @@
 import copy
+import hashlib
 import json
 from pathlib import Path
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 import retcon_stats
 import retcon_diagnostics
+import benchmark
 
 
 def fixture(rounds=5):
@@ -26,6 +29,54 @@ def fixture(rounds=5):
 
 
 class RetconStatsTests(unittest.TestCase):
+    def test_retained_cohorts_preserve_original_native_hashes_and_ubuntu_provenance(self):
+        root = Path(__file__).resolve().parents[1] / "benchmarks/retcon-observability-2026-11-02"
+        for number in (1, 2):
+            cohort = root / f"cohort-{number}"
+            report = json.loads((cohort / "results.json").read_text(encoding="utf-8"))
+            self.assertEqual(report["runtimeOS"]["osRelease"]["VERSION_ID"], "26.04")
+            self.assertEqual(report["botJarSHA256"], "0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2")
+            self.assertEqual(len(report["blocks"]), 3)
+            for block in report["blocks"]:
+                capture = block["retconStats"]
+                self.assertEqual(capture["status"], "complete")
+                native_root = cohort / f"block-{block['block']}" / "Retcon-fixed-minrisk/retcon-stats"
+                for artifact in capture["rawArtifacts"]:
+                    raw = (native_root / artifact["path"]).read_bytes()
+                    self.assertEqual(hashlib.sha256(raw).hexdigest(), artifact["sha256"])
+                    self.assertEqual(json.loads(raw), capture["data"])
+            self.assertEqual(retcon_diagnostics.aggregate(report["blocks"]), report["aggregateRetconStats"])
+
+    def test_existing_namespace_caller_captures_without_new_cli_attribute(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            candidate = root / "candidate"
+            candidate.mkdir()
+            for name in ("AISurvivor.jar", "AISurvivor.sh", "AISurvivor.cmd"):
+                (candidate / name).write_text("fixture")
+            (candidate / "AISurvivor.json").write_text('{"name":"AISurvivor"}')
+            source = root / "Retcon"
+            source.mkdir()
+            (source / "Retcon.json").write_text('{"name":"Retcon"}')
+            options = SimpleNamespace(bot_dir=candidate, java="selected-java", opponent_env={},
+                retcon_source=source, require_metrics=False, training_rounds=0, seed=42, timeout=1)
+            temporary_paths = []
+            def run(command, cwd, env, log, timeout):
+                native = Path(env["RETCON_STATS_DIR"])
+                temporary_paths.append(native)
+                (native / "Retcon-2-100.json").write_text(json.dumps(fixture(1)))
+                Path(command[6]).write_text(json.dumps(dict(numberOfRounds=1, results=[
+                    dict(id=1, name="AISurvivor", version="1", rank=2, totalScore=1, firstPlaces=0),
+                    dict(id=2, name="Retcon", version="0.2.0", rank=1, totalScore=2, firstPlaces=1)])))
+            with patch.object(benchmark.retcon_stats, "java_temp_directory", return_value=root), \
+                    patch.object(benchmark.retcon, "source_hash", return_value=retcon_stats.SOURCE_SHA256), \
+                    patch.object(benchmark, "run_process", side_effect=run):
+                result = benchmark.battle(options, root / "output", root / "runner.jar", None,
+                    "Retcon", ["Retcon"], "fixed-minrisk", 1, root / "never-loaded.dat")
+            self.assertEqual(result["retconStats"]["status"], "complete")
+            self.assertTrue((root / "output/Retcon-fixed-minrisk/retcon-stats/capture.json").exists())
+            self.assertFalse(temporary_paths[0].exists())
+
     def test_aggregation_counts_each_game_final_snapshot_once(self):
         data = fixture()
         capture = dict(status="complete", data=data, **retcon_stats.validate(data, 5, 2))
