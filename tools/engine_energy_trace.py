@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import benchmark
+import retcon_stats
 
 
 def validate(records):
@@ -73,6 +74,7 @@ def run(args):
                   runnerAdapterSHA256=benchmark.digest(benchmark.ROOT / "tools" / "BenchmarkBattle.java"),
                   sourceCommit=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=benchmark.ROOT, text=True).strip(),
                   javaRuntime=runtime.stdout + runtime.stderr,
+                  os=retcon_stats.os_provenance(),
                   purpose="Actual event recording; no AISurvivor or Retcon gameplay is loaded")
     path = output / "trace.json"
     path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
