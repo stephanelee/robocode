@@ -1,5 +1,18 @@
 # Benchmark methodology
 
+## Recommended performance direction: Retcon 1v1
+
+Use the [Retcon benchmark workflow](https://github.com/stephanelee/robocode/actions/workflows/retcon.yml) with manual `full=true`, or select `--suite retcon` explicitly. Build/test AISurvivor with Java 17, then run the unchanged Retcon source launcher with JDK 25:
+
+```sh
+./gradlew clean build
+python tools/benchmark.py --suite retcon --java /path/to/jdk25/bin/java --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --output build/retcon-evaluation
+```
+
+See the pinned-opponent details below and [completed measured cycles](improvements.md). These small, in-roster experiments do not establish general playing strength. The default CLI sample roster remains backward compatible but is intended for regression/integration checks.
+
+## Legacy sample regression/integration suite
+
 Requires Python 3.10+ and Java 17 on PATH. No pip packages or GUI are needed.
 
 ```sh

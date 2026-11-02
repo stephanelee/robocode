@@ -35,7 +35,39 @@ Bot seeds control incumbent learning randomness. Matching checkpoints ensure equ
 
 ## Results
 
-Pending. No cycle-3 matches start before cycle 2's final accept/reject decision and accepted-master integration. If rejected, revert gameplay/JAR while retaining the harness extension and measured evidence.
+**Decision: reject the gameplay candidate.** All **60 incumbent training + 120 frozen evaluation rounds** completed. Mean evaluation score share rose from 12.294% to 13.440% (+1.146 percentage points), below the registered 5-point minimum. Seed 20261102 lost 5.037142 points, beyond the registered 5-point maximum loss. These two failed criteria were applied without changing or rounding the thresholds. Every other guard passed.
+
+| Seed | Previous AIS / Retcon score | Candidate AIS / Retcon score | Previous share | Candidate share | Change | Wins previous / candidate |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20261102 | 338 / 2993 | 158 / 2934 | 10.147% | 5.110% | -5.037 pp | 0 / 0 |
+| 20261103 | 390 / 3139 | 598 / 3151 | 11.051% | 15.951% | +4.900 pp | 0 / 0 |
+| 20261104 | 603 / 3242 | 758 / 3178 | 15.683% | 19.258% | +3.575 pp | 0 / 1 |
+
+Each score pair covers 20 evaluation rounds; the primary mean weights the three games equally. Training scores are excluded. Previous won 0/60 rounds, candidate 1/60; descriptive 95% Wilson intervals are 0%–6.017% and 0.295%–8.855%. The registered dependence and sample-size limitations apply.
+
+Actual hit rate fell from 154/1,121 (13.74%) to 116/1,096 (10.58%). Damage dealt fell from 1,209.74 to 1,093.42; damage taken fell from 4,755.44 to 4,549.07. Wall collisions fell from 493 in 22,334 turns to 256 in 23,018 turns (22.07 → 11.12 per 1,000 turns). Both versions recorded zero skipped turns. These secondary measurements do not override the primary decision.
+
+### Shared-model diagnostics
+
+The unchanged incumbent trained once for 20 rounds per seed. Every frozen evaluation loaded its seed's exact model, kept a training counter of 20, and left its SHA256 unchanged. No model was discarded, substituted, or retrained based on targeting evidence.
+
+| Seed | Saved class-GF mass | Nonzero bins | Checkpoint SHA256 |
+| --- | ---: | ---: | --- |
+| 20261102 | 372 | 153 | `8e0be07f656c58bac56b9c0b8889d414d0ca86da0f649775780b8c7d54a9b3fe` |
+| 20261103 | 311 | 137 | `2fbaf2b750d44ff367e9c9c733c53c4b1cd7bf32cdda468163ccfbbbf3384995` |
+| 20261104 | 295 | 132 | `5a8300d9c8f5c88893515784fddf91dcd98ecc089a319cc1bbf61ee8ec7d580d` |
+
+All three checkpoints contained saved evidence, mostly in the linear class; full per-class counts are in the JSON. This establishes that saved statistics existed for the mechanism under test, not that their learned aim offsets were accurate. Mixed per-seed performance and the lower aggregate hit rate do not support retaining the candidate under the registered rule.
+
+### Provenance and final disposition
+
+- [Successful measured run](https://github.com/stephanelee/robocode/actions/runs/41495051167), job `125447677502`, checked out candidate `3b47803f7b2321b84abecd678d2c22fd65459ebb` exactly. Previous source: accepted cycle-2 master `5ef03cf74f8709e5b86385a598cde8def0f7abdf`.
+- Original plan `39af977116d27e0792fb1d653f8a743cf81568ab` and prospective amendment `21d4a9622c9013aa42af2b57dd0a4ffa1aed86e4` were loaded from exact Git blobs before matches. [Both immutable copies](../../benchmarks/cycle-3/) and hashes are retained.
+- [Canonical comparison JSON](../../benchmarks/cycle-3/comparison.json), all nine games' official results/telemetry/logs, candidate source patch, and all three original [numeric checkpoints](../../benchmarks/cycle-3/checkpoints/) are checked in for durable verification. These research models live outside the bot directory and are not automatically loaded by normal launches.
+- [Original complete artifact](https://github.com/stephanelee/robocode/actions/runs/41495051167/artifacts/13165233666) includes both immutable version bundles and every per-arm model copy. Artifacts may expire; canonical checkpoint bytes remain in Git. Previous JAR SHA256: `0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2`; candidate: `712283e805f947dd6bced62e7af95eb91b28fd76bf94567804f088ea5baa945d`.
+- Build: Java 17. Matches: Temurin 25.0.5+8-LTS, Tank Royale 1.4.0 runner/server, unchanged Retcon 0.2.0 source `28981c7a469ac064194b41001cd7183ec5ecf189` and pinned bot API 1.3.1. Exact dependency hashes are recorded in the JSON.
+
+The final PR restores gameplay source and the tracked JAR to accepted master, and removes the temporary workflow and candidate-only targeting tests. The shared-checkpoint harness, diagnostics, raw evidence, and report remain. Issue #12 stays open; this targeting change is not retained. All three planned cycles have measured outcomes; no additional candidate was tested here.
 
 ## Prospective diagnostic addendum
 

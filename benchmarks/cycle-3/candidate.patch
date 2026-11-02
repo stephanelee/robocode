@@ -1,0 +1,76 @@
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index 64f99d1..1954e7e 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -371,7 +371,7 @@ public class AISurvivor extends Bot {
+ 
+         // Blend per-enemy + per-class GF stats
+         int cls = classifyEnemy(t);
+-        double w = Math.min(1.0, t.scanCount / 30.0);
++        double w = CombatMath.enemyWeight(st != null ? st[seg] : null);
+         int bestBin = CombatMath.bestBin(st != null ? st[seg] : new double[GF_BINS],
+                 agent.classGF[cls][seg], w);
+ 
+diff --git a/src/main/java/CombatMath.java b/src/main/java/CombatMath.java
+index b7aab1a..b992ed5 100644
+--- a/src/main/java/CombatMath.java
++++ b/src/main/java/CombatMath.java
+@@ -55,6 +55,13 @@ final class CombatMath {
+         return best;
+     }
+ 
++    static double enemyWeight(double[] segmentBins) {
++        if (segmentBins == null) return 0;
++        double evidence = 0;
++        for (double count : segmentBins) evidence += count;
++        return Math.max(0, Math.min(1, evidence / 30.0));
++    }
++
+     static int gfBin(double gf, int bins) {
+         return (int) Math.max(0, Math.min(bins - 1, Math.round((gf + 1) * (bins - 1) / 2)));
+     }
+diff --git a/src/test/java/TargetConfidenceTest.java b/src/test/java/TargetConfidenceTest.java
+new file mode 100644
+index 0000000..4680964
+--- /dev/null
++++ b/src/test/java/TargetConfidenceTest.java
+@@ -0,0 +1,39 @@
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++class TargetConfidenceTest {
++    @Test void emptyFrozenLocalStatsKeepThePersistedClassPeakWithoutMutation() {
++        double[] local = new double[47];
++        double[] savedClass = new double[47];
++        savedClass[35] = 12;
++        double[] localBefore = local.clone(), classBefore = savedClass.clone();
++        for (int scan = 1; scan <= 100; scan++) {
++            assertEquals(0, CombatMath.enemyWeight(local));
++            assertEquals(35, CombatMath.bestBin(local, savedClass, CombatMath.enemyWeight(local)));
++        }
++        assertArrayEquals(localBefore, local);
++        assertArrayEquals(classBefore, savedClass);
++    }
++
++    @Test void confidenceCountsActualSamplesOnlyInTheSelectedSegment() {
++        double[] segment = new double[47];
++        assertEquals(0, CombatMath.enemyWeight(null));
++        segment[10] = 2; segment[30] = 1;
++        assertEquals(0.1, CombatMath.enemyWeight(segment), 1e-12);
++        segment[10] = 29;
++        assertEquals(1, CombatMath.enemyWeight(segment));
++        segment[10] = 100;
++        assertEquals(1, CombatMath.enemyWeight(segment));
++        assertEquals(0, CombatMath.enemyWeight(new double[47]));
++    }
++
++    @Test void realLocalEvidenceCanTakeOverWhileEmptyClassAndLocalRemainCentered() {
++        double[] local = new double[47], savedClass = new double[47];
++        assertEquals(23, CombatMath.bestBin(local, savedClass, CombatMath.enemyWeight(local)));
++        savedClass[35] = 50;
++        local[10] = 1;
++        assertEquals(35, CombatMath.bestBin(local, savedClass, CombatMath.enemyWeight(local)));
++        local[10] = 30;
++        assertEquals(10, CombatMath.bestBin(local, savedClass, CombatMath.enemyWeight(local)));
++    }
++}

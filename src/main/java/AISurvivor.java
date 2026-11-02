@@ -371,7 +371,7 @@ public class AISurvivor extends Bot {
 
         // Blend per-enemy + per-class GF stats
         int cls = classifyEnemy(t);
-        double w = CombatMath.enemyWeight(st != null ? st[seg] : null);
+        double w = Math.min(1.0, t.scanCount / 30.0);
         int bestBin = CombatMath.bestBin(st != null ? st[seg] : new double[GF_BINS],
                 agent.classGF[cls][seg], w);
 
