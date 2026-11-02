@@ -5,30 +5,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * AISurvivor — Robocode Tank Royale melee bot (v3 — DQN overhaul).
- *
- *  DQN with experience replay + target network
- *    14 continuous features → 32-neuron hidden layer → 6 action Q-values.
- *    Boltzmann exploration, mini-batch replay (5000 buffer), target net sync.
- *    Persists MLP weights + opponent model across battles.
- *
- *  Discrete strategy selection
- *    Executes the selected strategy so replay credits the actual action.
- *
- *  Minimum-risk movement
- *    Evaluates 48 candidate destination points; scores by wall proximity,
- *    enemy crosshair alignment, bullet intersection, and distance.
- *
- *  Wave surfing
- *    Tracks enemy bullet waves via energy-drop detection.  Orbits
- *    perpendicular to the wave in the direction with a less-targeted GF bin.
- *
- *  Opponent modelling
- *    Classifies enemies (random / oscillator / circular / linear) from
- *    scan history.  Per-class GF profiles bootstrap targeting for new enemies.
- *
- *  GuessFactor targeting (arc prediction, 47 bins × 9 segments)
- *    Blends per-enemy and per-class GF stats.  Stats decay 0.92 per round.
+ * Experimental Tank Royale bot: seeded DQN strategy selection, GuessFactor
+ * targeting, and minimum-risk/wave-aware movement. See CLAUDE.md for architecture.
  */
 public class AISurvivor extends Bot {
 
@@ -73,8 +51,6 @@ public class AISurvivor extends Bot {
         double x, y, direction, speed, energy;
         double lateralVelocity, prevEnergy, turnRate;
         int    lastScanTurn;
-        boolean justFired;
-        double  firedPower;
 
         // Opponent-modelling accumulators (carried forward across scans)
         int    scanCount;
@@ -89,13 +65,6 @@ public class AISurvivor extends Bot {
             this.direction = dir; this.speed = spd; this.energy = en;
             this.lateralVelocity = latVel; this.prevEnergy = prevEn;
             this.turnRate = tr; this.lastScanTurn = turn;
-
-            double drop = prevEn - en;
-            if (drop >= 0.09 && drop <= 3.01) {
-                justFired = true;
-                firedPower = Math.round(drop * 10.0) / 10.0;
-                lastFireTurn = turn;
-            }
         }
 
         void carryForward(Enemy prev) {
@@ -105,7 +74,7 @@ public class AISurvivor extends Bot {
                     (Math.signum(speed) != Math.signum(prev.speed)
                             && Math.abs(speed) > 0.5 ? 1 : 0);
             sumAbsTurnRate = prev.sumAbsTurnRate + Math.abs(turnRate);
-            if (!justFired) lastFireTurn = prev.lastFireTurn;
+            lastFireTurn = prev.lastFireTurn;
         }
     }
 
@@ -114,14 +83,10 @@ public class AISurvivor extends Bot {
         int fireTurn, targetId, segment;
         double lateralDir;
         double[] bins;
+        double aimX, aimY;
     }
 
-    private static final class EnemyWave {
-        double originX, originY, bulletSpeed, bearingToUs;
-        int fireTurn, shooterId;
-    }
-
-    // ─── MLP (2-layer neural network) ────────────────────────────────────────
+    private record FireScan(Enemy previous, Enemy current, double ourX, double ourY) {}
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Fields
@@ -130,7 +95,9 @@ public class AISurvivor extends Bot {
     private final Map<Integer, Enemy>        enemies        = new HashMap<>();
     private final Map<Integer, double[][]>   gfStats        = new HashMap<>();
     private final List<TargetingWave>        targetingWaves = new ArrayList<>();
-    private final List<BulletState>          incomingBullets = new ArrayList<>();
+    private final EnemyFireTracker fireTracker = new EnemyFireTracker();
+    private final List<FireScan> pendingFireScans = new ArrayList<>();
+    private TargetingWave pendingTargetingWave;
     private final List<EnemyWave>            enemyWaves     = new ArrayList<>();
     private final Map<Integer, double[]>     surfStats      = new HashMap<>();
 
@@ -189,7 +156,9 @@ public class AISurvivor extends Bot {
     public void onRoundStarted(RoundStartedEvent e) {
         enemies.clear();
         targetingWaves.clear();
-        incomingBullets.clear();
+        fireTracker.clear();
+        pendingFireScans.clear();
+        pendingTargetingWave = null;
         enemyWaves.clear();
         dodgeSign     = 1;
         radarTargetId = -1;
@@ -216,12 +185,6 @@ public class AISurvivor extends Bot {
     @Override
     public void onGameEnded(GameEndedEvent e) { saveAgent(); }
 
-    @Override
-    public void onTick(TickEvent e) {
-        incomingBullets.clear();
-        for (BulletState b : e.getBulletStates())
-            if (enemies.containsKey(b.getOwnerId())) incomingBullets.add(b);
-    }
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Combat events
@@ -232,7 +195,8 @@ public class AISurvivor extends Bot {
         Enemy prev = enemies.get(e.getScannedBotId());
         double prevEn   = (prev != null) ? prev.energy : e.getEnergy();
         double turnRate = (prev != null)
-                ? normalizeAngle(e.getDirection() - prev.direction) : 0.0;
+                ? CombatMath.turnRate(prev.direction, e.getDirection(),
+                        e.getTurnNumber() - prev.lastScanTurn) : 0.0;
 
         double bearingToEnemy = directionTo(e.getX(), e.getY());
         double latVel = e.getSpeed() *
@@ -241,28 +205,20 @@ public class AISurvivor extends Bot {
         Enemy info = new Enemy(
                 e.getScannedBotId(), e.getX(), e.getY(),
                 e.getDirection(), e.getSpeed(), e.getEnergy(),
-                latVel, prevEn, turnRate, getTurnNumber());
+                latVel, prevEn, turnRate, e.getTurnNumber());
         if (prev != null) info.carryForward(prev);
         enemies.put(info.id, info);
         gfStats.computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
 
-        // Emit enemy wave on detected fire
-        if (info.justFired) {
-            EnemyWave w = new EnemyWave();
-            w.originX    = info.x;
-            w.originY    = info.y;
-            w.bulletSpeed = 20.0 - 3.0 * info.firedPower;
-            w.fireTurn   = getTurnNumber();
-            w.shooterId  = info.id;
-            w.bearingToUs = Math.toDegrees(
-                    Math.atan2(getX() - info.x, getY() - info.y));
-            enemyWaves.add(w);
-            surfStats.computeIfAbsent(info.id, k -> new double[GF_BINS]);
-        }
+        // Process after the turn's damage/bonus events, independent of event priority.
+        if (prev != null) pendingFireScans.add(new FireScan(prev, info, getX(), getY()));
     }
 
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
+        BulletState bullet = e.getBullet();
+        fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
+        recordSurfHit(bullet, e.getTurnNumber());
         metrics.damageTaken += e.getDamage();
         addReward(-e.getDamage() * (0.6 + 0.1 * getEnemyCount()));
         dodgeSign = -dodgeSign;
@@ -270,6 +226,7 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onBulletHit(BulletHitBotEvent e) {
+        fireTracker.recordDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
         metrics.bulletHits++;
         metrics.damageDealt += e.getDamage();
         addReward(e.getDamage() * 0.6);
@@ -322,7 +279,7 @@ public class AISurvivor extends Bot {
 
             // Closing speed: target's radial velocity component toward us
             double bearingFromTarget = Math.toDegrees(
-                    Math.atan2(getX() - t.x, getY() - t.y));
+                    Math.atan2(getY() - t.y, getX() - t.x));
             f[7]  = clamp(-t.speed * Math.cos(
                     Math.toRadians(t.direction - bearingFromTarget)) / 16.0, -1, 1);
             f[8]  = clamp((getTurnNumber() - t.lastFireTurn) / 20.0, 0, 1);
@@ -340,15 +297,13 @@ public class AISurvivor extends Bot {
         f[4] = clamp(1.0 - minWallDist() / 200.0, 0, 1);
         f[5] = getGunHeat() / 3.0;
 
-        // Count incoming bullets aimed at us
-        int aimed = 0;
-        double myX = getX(), myY = getY();
-        for (BulletState b : incomingBullets) {
-            double dx = myX - b.getX(), dy = myY - b.getY();
-            double bear = Math.toDegrees(Math.atan2(dx, dy));
-            if (Math.abs(normalizeAngle(b.getDirection() - bear)) < 45) aimed++;
+        // Enemy bullets are not exposed by TickEvent; use inferred approaching waves.
+        int threats = 0;
+        for (EnemyWave wave : enemyWaves) {
+            double remaining = wave.remaining(getX(), getY(), getTurnNumber());
+            if (remaining > 0 && remaining < wave.bulletSpeed * 20) threats++;
         }
-        f[6] = aimed / 5.0;
+        f[6] = Math.min(1, threats / 5.0);
         f[9] = getSpeed() / 8.0;
 
         return f;
@@ -366,11 +321,15 @@ public class AISurvivor extends Bot {
 
             Enemy t = enemies.get(w.targetId);
             if (t == null) { it.remove(); continue; }
+            if (t.lastScanTurn != getTurnNumber()) continue;
 
             double dist = Math.sqrt(sq(t.x - w.originX) + sq(t.y - w.originY));
-            if (traveled < dist - w.bulletSpeed) continue;
+            CombatMath.WaveObservation observation = CombatMath.observeTargetWave(
+                    traveled, dist, w.bulletSpeed);
+            if (observation == CombatMath.WaveObservation.PASSED) { it.remove(); continue; }
+            if (observation == CombatMath.WaveObservation.BEFORE) continue;
 
-            double absAngle = Math.toDegrees(Math.atan2(t.x - w.originX, t.y - w.originY));
+            double absAngle = Math.toDegrees(Math.atan2(t.y - w.originY, t.x - w.originX));
             double latAngle = normalizeAngle(absAngle - w.baseAngle) * w.lateralDir;
             double maxAngle = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
             double gf = clamp(latAngle / maxAngle, -1.0, 1.0);
@@ -411,36 +370,25 @@ public class AISurvivor extends Bot {
         double[][] st      = gfStats.get(t.id);
 
         // Blend per-enemy + per-class GF stats
-        int bestBin = GF_MID;
-        double bestVal = -1;
         int cls = classifyEnemy(t);
-        double w = Math.min(1.0, t.scanCount / 30.0); // trust per-enemy more as data grows
-
-        for (int i = 0; i < GF_BINS; i++) {
-            double perEnemy = (st != null) ? st[seg][i] : 0;
-            double perClass = agent.classGF[cls][seg][i];
-            double blended  = w * perEnemy + (1.0 - w) * perClass;
-            if (blended > bestVal) { bestVal = blended; bestBin = i; }
-        }
+        double w = Math.min(1.0, t.scanCount / 30.0);
+        int bestBin = CombatMath.bestBin(st != null ? st[seg] : new double[GF_BINS],
+                agent.classGF[cls][seg], w);
 
         double gf       = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
         double maxAngle = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / bspd)));
         double latDir   = Math.signum(t.lateralVelocity);
         if (latDir == 0) latDir = 1;
 
-        // Arc prediction
+        // Include scan age and iterate intercept time against the projected position.
         double ticks = dist / bspd;
-        double predX, predY;
-        if (Math.abs(t.turnRate) < 0.1) {
-            predX = t.x + Math.sin(Math.toRadians(t.direction)) * t.speed * ticks;
-            predY = t.y + Math.cos(Math.toRadians(t.direction)) * t.speed * ticks;
-        } else {
-            double trRad  = Math.toRadians(t.turnRate);
-            double radius = t.speed / trRad;
-            double angle  = Math.toRadians(t.direction);
-            predX = t.x + radius * (Math.sin(angle + trRad * ticks) - Math.sin(angle));
-            predY = t.y + radius * (Math.cos(angle) - Math.cos(angle + trRad * ticks));
+        double[] prediction = null;
+        for (int i = 0; i < 5; i++) {
+            prediction = CombatMath.project(t.x, t.y, t.direction, t.speed, t.turnRate,
+                    ticks + getTurnNumber() - t.lastScanTurn);
+            ticks = distanceTo(prediction[0], prediction[1]) / bspd;
         }
+        double predX = prediction[0], predY = prediction[1];
         predX = clamp(predX, 18, getArenaWidth()  - 18);
         predY = clamp(predY, 18, getArenaHeight() - 18);
         double baseAngle = directionTo(predX, predY);
@@ -449,8 +397,7 @@ public class AISurvivor extends Bot {
         double gunTurn = normalizeAngle(aimAngle - getGunDirection());
         setGunTurnRate(clamp(gunTurn, -20.0, 20.0));
 
-        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0) {
-            setFire(fp);
+        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0 && setFire(fp)) {
             if (st != null) {
                 TargetingWave tw = new TargetingWave();
                 tw.originX    = getX();    tw.originY    = getY();
@@ -458,18 +405,33 @@ public class AISurvivor extends Bot {
                 tw.fireTurn   = getTurnNumber(); tw.targetId = t.id;
                 tw.lateralDir = latDir;    tw.segment    = seg;
                 tw.bins       = st[seg];
-                targetingWaves.add(tw);
+                tw.aimX = predX; tw.aimY = predY;
+                pendingTargetingWave = tw;
             }
         }
     }
 
+    @Override
+    public void onBulletFired(BulletFiredEvent e) {
+        metrics.shotsFired++;
+        if (pendingTargetingWave == null) return;
+        TargetingWave wave = pendingTargetingWave;
+        pendingTargetingWave = null;
+        BulletState bullet = e.getBullet();
+        wave.originX = bullet.getX(); wave.originY = bullet.getY();
+        wave.baseAngle = CombatMath.bearing(wave.aimX - wave.originX, wave.aimY - wave.originY);
+        wave.bulletSpeed = bullet.getSpeed();
+        wave.fireTurn = e.getTurnNumber();
+        targetingWaves.add(wave);
+    }
+
     // ═════════════════════════════════════════════════════════════════════════
-    //  Movement — action blending + force-vector interface
+    //  Movement — selected action + force-vector interface
     // ═════════════════════════════════════════════════════════════════════════
 
     private void executeMovement(int action) {
         double[] force = actionForce(action);
-        double heading = normDir(Math.toDegrees(Math.atan2(force[0], force[1])));
+        double heading = normDir(Math.toDegrees(Math.atan2(force[1], force[0])));
         steerTo(wallSmooth(getX(), getY(), heading, 1), force[2]);
     }
 
@@ -497,9 +459,9 @@ public class AISurvivor extends Bot {
             int count = ring == 0 ? 24 : 12;
             for (int i = 0; i < count; i++) {
                 double angle = i * (2 * Math.PI / count);
-                double px = clamp(myX + Math.sin(angle) * radius,
+                double px = clamp(myX + Math.cos(angle) * radius,
                         WALL_MARGIN, getArenaWidth()  - WALL_MARGIN);
-                double py = clamp(myY + Math.cos(angle) * radius,
+                double py = clamp(myY + Math.sin(angle) * radius,
                         WALL_MARGIN, getArenaHeight() - WALL_MARGIN);
                 double risk = evaluateRisk(px, py, enemyScale);
                 if (risk < bestRisk) { bestRisk = risk; bestX = px; bestY = py; }
@@ -524,19 +486,18 @@ public class AISurvivor extends Bot {
             double dist = Math.sqrt(sq(px - e.x) + sq(py - e.y)) + 1;
             risk += enemyScale * e.energy / dist * 0.5;
 
-            double bearFromEnemy = Math.toDegrees(Math.atan2(px - e.x, py - e.y));
+            // Body direction is a movement-risk heuristic; enemy gun direction is not visible.
+            double bearFromEnemy = Math.toDegrees(Math.atan2(py - e.y, px - e.x));
             double angleOff = Math.abs(normalizeAngle(e.direction - bearFromEnemy));
             if (angleOff < 30) risk += enemyScale * 2.0 * (1.0 - angleOff / 30.0);
         }
 
-        // Bullet intersection (project bullet 5 ticks forward)
-        for (BulletState b : incomingBullets) {
-            double bdir = Math.toRadians(b.getDirection());
-            double bSpeed = 20.0 - 3.0 * b.getPower();
-            double bx = b.getX() + Math.sin(bdir) * bSpeed * 5;
-            double by = b.getY() + Math.cos(bdir) * bSpeed * 5;
-            double dist = Math.sqrt(sq(px - bx) + sq(py - by));
-            if (dist < 50) risk += 4.0 * (1.0 - dist / 50.0);
+        // Score inferred wave fronts at this candidate's estimated arrival time.
+        double travelTurns = Math.hypot(px - getX(), py - getY()) / 8.0;
+        for (EnemyWave wave : enemyWaves) {
+            double radialGap = Math.abs(Math.hypot(px - wave.originX, py - wave.originY)
+                    - (getTurnNumber() + travelTurns - wave.fireTurn) * wave.bulletSpeed);
+            if (radialGap < 50) risk += 4 * (1 - radialGap / 50);
         }
 
         // Slight center preference
@@ -551,9 +512,9 @@ public class AISurvivor extends Bot {
     private double[] circleForce(boolean cw) {
         Enemy t = nearestEnemy();
         if (t == null) return minRiskForce(1.0);
-        double orbitAngle = Math.toRadians(directionTo(t.x, t.y) + (cw ? 90 : -90));
+        double orbitAngle = Math.toRadians(CombatMath.orbitHeading(directionTo(t.x, t.y), cw));
         double speed = 8.0 * ((getTurnNumber() % 11 < 7) ? 1.0 : 0.5);
-        return new double[]{ Math.sin(orbitAngle), Math.cos(orbitAngle), speed };
+        return new double[]{ Math.cos(orbitAngle), Math.sin(orbitAngle), speed };
     }
 
     // ─── Wave surfing ────────────────────────────────────────────────────────
@@ -566,7 +527,7 @@ public class AISurvivor extends Bot {
         if (danger == null) return minRiskForce(1.0);
 
         double bearFromWave = Math.toDegrees(
-                Math.atan2(getX() - closest.originX, getY() - closest.originY));
+                Math.atan2(getY() - closest.originY, getX() - closest.originX));
         double maxEscape = Math.toDegrees(
                 Math.asin(Math.min(1.0, 8.0 / closest.bulletSpeed)));
 
@@ -582,7 +543,7 @@ public class AISurvivor extends Bot {
         double orbitDir = (cwDanger <= ccwDanger)
                 ? bearFromWave + 90 : bearFromWave - 90;
         double rad = Math.toRadians(orbitDir);
-        return new double[]{ Math.sin(rad), Math.cos(rad), 8.0 };
+        return new double[]{ Math.cos(rad), Math.sin(rad), 8.0 };
     }
 
     private EnemyWave closestWave() {
@@ -602,22 +563,37 @@ public class AISurvivor extends Bot {
     }
 
     private void advanceEnemyWaves() {
-        double myX = getX(), myY = getY();
-        Iterator<EnemyWave> it = enemyWaves.iterator();
-        while (it.hasNext()) {
-            EnemyWave w = it.next();
-            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
-            double dist = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
-            if (traveled >= dist - w.bulletSpeed) {
-                // Wave reached us — record our GF in surf stats
-                double bear = Math.toDegrees(Math.atan2(myX - w.originX, myY - w.originY));
-                double maxEsc = Math.toDegrees(
-                        Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
-                double gf = clamp(normalizeAngle(bear - w.bearingToUs) / maxEsc, -1, 1);
-                double[] bins = surfStats.get(w.shooterId);
-                if (config.training() && bins != null) bins[gfBin(gf)] += 1.0;
-                it.remove();
+        for (FireScan scan : pendingFireScans) {
+            Enemy prev = scan.previous(), current = scan.current();
+            double power = fireTracker.inferPower(current.id, prev.lastScanTurn,
+                    current.lastScanTurn, prev.energy, current.energy);
+            if (power > 0) {
+                current.lastFireTurn = prev.lastScanTurn;
+                enemyWaves.add(new EnemyWave(prev.x, prev.y, calcBulletSpeed(power),
+                        CombatMath.bearing(scan.ourX() - prev.x, scan.ourY() - prev.y),
+                        prev.lastScanTurn, current.id));
+                surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
             }
+        }
+        pendingFireScans.clear();
+        fireTracker.prune(getTurnNumber());
+        // Keep a collision margin so a hit event can still match the wave.
+        enemyWaves.removeIf(w -> w.remaining(getX(), getY(), getTurnNumber())
+                < -w.bulletSpeed - 36);
+    }
+
+    private void recordSurfHit(BulletState bullet, int turn) {
+        EnemyWave match = null;
+        double bestError = Double.POSITIVE_INFINITY;
+        for (EnemyWave wave : enemyWaves) {
+            double error = wave.matchError(bullet.getOwnerId(), bullet.getPower(),
+                    bullet.getX(), bullet.getY(), turn);
+            if (error < bestError) { match = wave; bestError = error; }
+        }
+        if (match != null) {
+            double[] danger = surfStats.get(match.shooterId);
+            match.learnHit(danger, bullet.getX(), bullet.getY(), config.training());
+            enemyWaves.remove(match);
         }
     }
 
@@ -627,7 +603,7 @@ public class AISurvivor extends Bot {
         Enemy t = weakestEnemy();
         if (t == null) return minRiskForce(1.0);
         double angle = Math.toRadians(directionTo(t.x, t.y));
-        return new double[]{ Math.sin(angle), Math.cos(angle), 8.0 };
+        return new double[]{ Math.cos(angle), Math.sin(angle), 8.0 };
     }
 
     // ─── Steering helper ─────────────────────────────────────────────────────
@@ -713,9 +689,6 @@ public class AISurvivor extends Bot {
     }
 
     @Override
-    public void onBulletFired(BulletFiredEvent e) { metrics.shotsFired++; }
-
-    @Override
     public void onSkippedTurn(SkippedTurnEvent e) { metrics.skippedTurns++; }
 
     private void finishRound(RoundEndedEvent event) {
@@ -777,8 +750,8 @@ public class AISurvivor extends Bot {
     private double wallSmooth(double x, double y, double heading, int rotDir) {
         double h = heading;
         for (int i = 0; i < 36; i++) {
-            double tx = x + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
-            double ty = y + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
             if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
                 ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
             h = normDir(h + rotDir * 5.0);

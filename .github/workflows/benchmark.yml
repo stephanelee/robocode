@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   battle:
-    name: Headless battle smoke
+    name: Headless reference experiment
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -35,13 +35,24 @@ jobs:
         run: ./gradlew --no-daemon clean build
       - name: Run headless reference experiment
         env:
-          FULL: ${{ inputs.full || false }}
+          FULL: ${{ inputs.full || github.event_name == 'pull_request' }}
         run: |
           if [ "$FULL" = "true" ]; then
-            python tools/benchmark.py --rounds 3 --training-rounds 10 --timeout 90 --require-metrics
+            python tools/benchmark.py --rounds 5 --training-rounds 20 --timeout 90 --require-metrics
           else
             python tools/benchmark.py --smoke --timeout 90 --require-metrics
           fi
+      - name: Print canonical experiment evidence
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          evidence = Path('build/benchmark/results.json')
+          if evidence.exists():
+              print('BENCHMARK_JSON_BEGIN')
+              print(evidence.read_text())
+              print('BENCHMARK_JSON_END')
+          PY
       - name: Upload experiment and dashboard
         if: always()
         uses: actions/upload-artifact@v4
@@ -55,3 +66,4 @@ jobs:
             build/benchmark/*/metrics.jsonl
             build/benchmark/*/runner.log
           if-no-files-found: warn
+
