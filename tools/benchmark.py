@@ -80,7 +80,16 @@ def run_process(command, cwd, env, log, timeout):
             process.wait(timeout=15)
             raise
         if code:
-            raise RuntimeError(f"Command exited {code}; see {log}")
+            tail = "\n".join(log.read_text(encoding="utf-8", errors="replace").splitlines()[-40:])
+            raise RuntimeError(f"Command exited {code}; see {log}\n{tail}")
+
+
+def isolate_opponent(source, destination):
+    shutil.copytree(source, destination)
+    # Official Java samples launch source with ../lib/*; retain their shared runtime.
+    shared = source.parent / "lib"
+    if shared.is_dir():
+        shutil.copytree(shared, destination.parent / "lib", dirs_exist_ok=True)
 
 
 def summarize_metrics(records):
@@ -178,7 +187,7 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
         if len(configs) != 1:
             raise ValueError(f"Expected one {name} sample config, found {len(configs)}")
         isolated = run_dir / "opponents" / name
-        shutil.copytree(configs[0].parent, isolated)
+        isolate_opponent(configs[0].parent, isolated)
         opponent_dirs.append(str(isolated))
     result_file = run_dir / "battle.json"
     command = [args.java, "-cp", str(runner), str(ROOT / "tools" / "BenchmarkBattle.java"),

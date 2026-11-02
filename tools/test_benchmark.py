@@ -3,10 +3,26 @@ from pathlib import Path
 import tempfile
 import unittest
 import zipfile
-from benchmark import extract, summarize_metrics, validate_metrics, write_reports
+from benchmark import extract, isolate_opponent, summarize_metrics, validate_metrics, write_reports
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_isolated_java_sample_retains_sibling_runtime_and_independent_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "samples" / "Target"
+            source.mkdir(parents=True)
+            (source / "Target.sh").write_text("java -cp ../lib/* Target.java")
+            (source / "Target.java").write_text("original")
+            shared = source.parent / "lib"
+            shared.mkdir()
+            (shared / "bot-api.jar").write_bytes(b"shared runtime")
+            destination = root / "battle" / "opponents" / "Target"
+            isolate_opponent(source, destination)
+            self.assertEqual((destination.parent / "lib" / "bot-api.jar").read_bytes(), b"shared runtime")
+            (destination / "Target.java").write_text("round-local state")
+            self.assertEqual((source / "Target.java").read_text(), "original")
+
     def metric(self, round_id=1, **overrides):
         return dict(dict(schemaVersion=1, round=round_id, turns=100, mode="eval", seed=42,
                          action=None, totalRounds=0, checkpointLoaded=False, shotsFired=10,
