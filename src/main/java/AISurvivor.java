@@ -748,8 +748,15 @@ public class AISurvivor extends Bot {
     private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
 
     private double wallSmooth(double x, double y, double heading, int rotDir) {
-        return WallSmoothing.heading(x, y, getArenaWidth(), getArenaHeight(),
-                WALL_MARGIN, WALL_MARGIN, heading, rotDir);
+        double h = heading;
+        for (int i = 0; i < 36; i++) {
+            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+            if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
+                ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
+            h = normDir(h + rotDir * 5.0);
+        }
+        return h;
     }
 
     private static double normDir(double d) { return ((d % 360) + 360) % 360; }

@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "policy": "untrained",
+  "seeds": [
+    20261102,
+    20261103,
+    20261104
+  ],
+  "purpose": "primary",
+  "battleTimeoutSeconds": 300,
+  "plannedEvaluationRounds": 120,
+  "validatedEvaluationRounds": 120,
+  "roundsPerBlock": 20,
+  "trainingRounds": 0,
+  "previousSource": "18f2659f6f55f10a7a30b1ec54460eb7159ce101",
+  "candidateSource": "4ead24ad85b6851ab5d2f336b1fe32be15f6ace8",
+  "preregistrationCommit": "f34cffbf5bbe8c79fb55d1b4acba5b581ac802d6",
+  "preregistrationSHA256": "3e635c893281c938652506214ec708b2a464e0eedddcc870390eaf5d9c59cfc3",
+  "thresholds": {
+    "meanShareGain": 0.05,
+    "minimumImprovedBlocks": 2,
+    "maximumBlockShareLoss": 0.05,
+    "maximumWinsLost": 3,
+    "maximumWallRateRatio": 1.2,
+    "maximumSkippedTurns": 0,
+    "earlyShareLoss": 0.15,
+    "earlyPreviousWins": 4
+  },
+  "bundleSHA256": {
+    "previous": {
+      "AISurvivor.jar": "0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2",
+      "AISurvivor.json": "8194eaa1a0aa6b7d5f58f31d383c8f9ad877ecc8a5547b96655c1856ff53543e",
+      "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+      "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+    },
+    "candidate": {
+      "AISurvivor.jar": "959e0494f0e6ff0787257b8e881f496b7d9264941ae744b1931463dc2a2def90",
+      "AISurvivor.json": "8194eaa1a0aa6b7d5f58f31d383c8f9ad877ecc8a5547b96655c1856ff53543e",
+      "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+      "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+    }
+  },
+  "blocks": [
+    {
+      "seed": 20261102,
+      "order": [
+        "previous",
+        "candidate"
+      ],
+      "previous": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 507,
+        "survival": 0,
+        "bulletDamage": 442,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 9132,
+          "shotsFired": 405,
+          "bulletHits": 58,
+          "damageDealt": 441.970558,
+          "damageTaken": 1507.403167,
+          "wallCollisions": 35,
+          "botCollisions": 68,
+          "skippedTurns": 0,
+          "hitRate": 0.14320987654320988,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 3068,
+            "survival": 1000,
+            "bulletDamage": 1496,
+            "firstPlaces": 20
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 507,
+            "survival": 0,
+            "bulletDamage": 442,
+            "firstPlaces": 0
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.14181818181818182
+      },
+      "candidate": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 617,
+        "survival": 0,
+        "bulletDamage": 417,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 8049,
+          "shotsFired": 372,
+          "bulletHits": 50,
+          "damageDealt": 416.755517,
+          "damageTaken": 1474.231978,
+          "wallCollisions": 38,
+          "botCollisions": 176,
+          "skippedTurns": 0,
+          "hitRate": 0.13440860215053763,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 3177,
+            "survival": 1000,
+            "bulletDamage": 1466,
+            "firstPlaces": 20
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 617,
+            "survival": 0,
+            "bulletDamage": 417,
+            "firstPlaces": 0
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.16262519768054823
+      }
+    },
+    {
+      "seed": 20261103,
+      "order": [
+        "candidate",
+        "previous"
+      ],
+      "candidate": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 402,
+        "survival": 0,
+        "bulletDamage": 374,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 13904,
+          "shotsFired": 673,
+          "bulletHits": 58,
+          "damageDealt": 373.543656,
+          "damageTaken": 1212.007946,
+          "wallCollisions": 140,
+          "botCollisions": 27,
+          "skippedTurns": 0,
+          "hitRate": 0.0861812778603269,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 2665,
+            "survival": 1000,
+            "bulletDamage": 1192,
+            "firstPlaces": 20
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 402,
+            "survival": 0,
+            "bulletDamage": 374,
+            "firstPlaces": 0
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.13107270948809913
+      },
+      "previous": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 315,
+        "survival": 0,
+        "bulletDamage": 309,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 8942,
+          "shotsFired": 501,
+          "bulletHits": 48,
+          "damageDealt": 308.697446,
+          "damageTaken": 1418.96943,
+          "wallCollisions": 1287,
+          "botCollisions": 5,
+          "skippedTurns": 0,
+          "hitRate": 0.09580838323353294,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 2867,
+            "survival": 1000,
+            "bulletDamage": 1397,
+            "firstPlaces": 20
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 315,
+            "survival": 0,
+            "bulletDamage": 309,
+            "firstPlaces": 0
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.09899434318038969
+      }
+    },
+    {
+      "seed": 20261104,
+      "order": [
+        "previous",
+        "candidate"
+      ],
+      "previous": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 572,
+        "survival": 0,
+        "bulletDamage": 521,
+        "firstPlaces": 0,
+        "metrics": {
+          "turns": 11609,
+          "shotsFired": 618,
+          "bulletHits": 76,
+          "damageDealt": 521.288996,
+          "damageTaken": 1311.729314,
+          "wallCollisions": 499,
+          "botCollisions": 56,
+          "skippedTurns": 0,
+          "hitRate": 0.12297734627831715,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 2798,
+            "survival": 1000,
+            "bulletDamage": 1296,
+            "firstPlaces": 20
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 572,
+            "survival": 0,
+            "bulletDamage": 521,
+            "firstPlaces": 0
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.16973293768545994
+      },
+      "candidate": {
+        "scenario": "Retcon",
+        "policy": "untrained",
+        "rounds": 20,
+        "name": "AISurvivor",
+        "rank": 2,
+        "totalScore": 483,
+        "survival": 50,
+        "bulletDamage": 393,
+        "firstPlaces": 1,
+        "metrics": {
+          "turns": 12704,
+          "shotsFired": 620,
+          "bulletHits": 61,
+          "damageDealt": 407.51099,
+          "damageTaken": 1192.514046,
+          "wallCollisions": 48,
+          "botCollisions": 19,
+          "skippedTurns": 0,
+          "hitRate": 0.09838709677419355,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "name": "Retcon",
+            "rank": 1,
+            "totalScore": 2563,
+            "survival": 950,
+            "bulletDamage": 1176,
+            "firstPlaces": 19
+          },
+          {
+            "name": "AISurvivor",
+            "rank": 2,
+            "totalScore": 483,
+            "survival": 50,
+            "bulletDamage": 393,
+            "firstPlaces": 1
+          }
+        ],
+        "modelSHA256": null,
+        "scoreShare": 0.15856861457649377
+      }
+    }
+  ],
+  "limitations": "Retcon adaptation only. Starts and scheduling are unpaired/unseeded. Seeds initialize matching cold networks, not matching game states. Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent.",
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)",
+  "opponentProvenance": [
+    {
+      "name": "Retcon",
+      "version": "0.2.0",
+      "repository": "robocode-dev/rumble-bots",
+      "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+      "sourcePath": "bots/java/Retcon",
+      "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+      "license": "MIT",
+      "authors": [
+        "Flemming N. Larsen"
+      ],
+      "botApi": {
+        "version": "1.3.1",
+        "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+        "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+      }
+    }
+  ],
+  "tankRoyaleVersion": "1.4.0",
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "decision": {
+    "status": "reject",
+    "checks": {
+      "complete": true,
+      "meanShareGain": false,
+      "improvedBlocks": true,
+      "maximumBlockLoss": true,
+      "winsNotMateriallyLower": true,
+      "noSkippedTurns": true,
+      "wallRate": true
+    },
+    "previous": {
+      "rounds": 60,
+      "wins": 0,
+      "winRate": 0.0,
+      "winRateWilson95": {
+        "lower": 0,
+        "upper": 0.06017185214208986
+      },
+      "meanScoreShare": 0.13684848756134382,
+      "hitRate": 0.1194225721784777,
+      "wallsPer1000Turns": 61.348246471044035,
+      "turns": 29683,
+      "shotsFired": 1524,
+      "bulletHits": 182,
+      "damageDealt": 1271.9569999999999,
+      "damageTaken": 4238.101911,
+      "wallCollisions": 1821,
+      "skippedTurns": 0
+    },
+    "candidate": {
+      "rounds": 60,
+      "wins": 1,
+      "winRate": 0.016666666666666666,
+      "winRateWilson95": {
+        "lower": 0.0029481597947862495,
+        "upper": 0.08855129727590061
+      },
+      "meanScoreShare": 0.15075550724838038,
+      "hitRate": 0.1015015015015015,
+      "wallsPer1000Turns": 6.521049138702138,
+      "turns": 34657,
+      "shotsFired": 1665,
+      "bulletHits": 169,
+      "damageDealt": 1197.810163,
+      "damageTaken": 3878.7539699999998,
+      "wallCollisions": 226,
+      "skippedTurns": 0
+    },
+    "scoreShareDeltas": [
+      0.020807015862366413,
+      0.03207836630770944,
+      -0.011164323108966173
+    ]
+  }
+}
