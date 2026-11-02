@@ -2,7 +2,7 @@
 
 A Java bot for [Robocode Tank Royale](https://robocode.dev/). This project uses Tank Royale's WebSocket bot API, rather than the original Robocode Java engine.
 
-Project notes: [documentation index](docs/README.md), [benchmark methodology](docs/benchmarks.md), and [measured improvement log](docs/improvements.md).
+Project notes: [documentation index](docs/README.md), [benchmark methodology](docs/benchmarks.md), [measured improvement log](docs/improvements.md), and [the source-grounded Retcon strategy plan](docs/retcon-strategy.md).
 
 ## Build and test
 
