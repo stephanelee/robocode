@@ -4,4 +4,6 @@ Actual event recording: [run 41506306635, job 125486396339](https://github.com/s
 
 `Alpha.jsonl` and `Beta.jsonl` are unmodified raw probe callback records. `trace.json` derives four scan windows from their actual power-0.5 hits at turns 57 and 207: both victim damage −2 and shooter bonus +1.5 first appear on the next scan. The report contains raw/source/release asset hashes. Python tests recompute the raw hashes and all derived assertions; Java tests replay those recorded windows against the candidate tracker for both callback delivery orders. Callback delivery order does not itself establish engine processing order.
 
+`source/` preserves the three exact source blobs from the recording commit. Their hashes are rechecked without requiring full Git history in a shallow CI checkout.
+
 An earlier successful recording is available as [run 41506076794](https://github.com/stephanelee/robocode/actions/runs/41506076794), before explicit OS-release reporting was added. Both runs verified the same contract; neither was a performance match. See [method](../../../docs/engine-energy-trace.md) and [prospective Retcon protocol](../../../docs/retcon-strategy.md).

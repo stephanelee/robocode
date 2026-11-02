@@ -3,7 +3,6 @@ import copy
 import unittest
 import hashlib
 import json
-import subprocess
 import engine_energy_trace
 
 
@@ -37,7 +36,7 @@ class TraceValidatorTests(unittest.TestCase):
         for field, name in (("probeSourceSHA256", "EngineEnergyProbe.java"),
                             ("recorderSHA256", "engine_energy_trace.py"),
                             ("runnerAdapterSHA256", "BenchmarkBattle.java")):
-            original = subprocess.check_output(["git", "show", report["sourceCommit"] + ":tools/" + name], cwd=root)
+            original = (directory / "source" / name).read_bytes()
             self.assertEqual(hashlib.sha256(original).hexdigest(), report[field])
 
     def test_accepts_both_actual_effects_without_assuming_callback_delivery_order(self):
