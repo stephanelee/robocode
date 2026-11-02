@@ -37,7 +37,7 @@ First milestone is complete when the build is reproducible, movement and targeti
 - [x] Integrate pinned external Java Retcon 0.2.0 with source/dependency hash checks and actual server 1.4.0 compatibility.
 - [x] Record the 35-round Retcon 1v1 baseline and organize methodology/reports under docs/.
 - [x] Cycle 1: compare the first targeted gameplay candidate with the previous accepted version. (120 rounds; candidate rejected and gameplay reverted. [Report](docs/improvements/cycle-1.md); [issue #10](https://github.com/stephanelee/robocode/issues/10) remains open.)
-- [ ] Cycle 2: record the next candidate's measured gains/regressions. ([Issue #11](https://github.com/stephanelee/robocode/issues/11))
+- [x] Cycle 2: record the next candidate's measured gains/regressions. (120 rounds; candidate rejected and gameplay reverted. [Report](docs/improvements/cycle-2.md); [issue #11](https://github.com/stephanelee/robocode/issues/11) remains open.)
 - [ ] Cycle 3: record the third controlled hypothesis and final accept/reject decision. ([Issue #12](https://github.com/stephanelee/robocode/issues/12))
 
 See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github.com/stephanelee/robocode/issues/8). Only candidates that meet their preregistered criteria are retained.

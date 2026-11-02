@@ -1,0 +1,139 @@
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index 64f99d1..da3e459 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -748,15 +748,8 @@ public class AISurvivor extends Bot {
+     private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
+ 
+     private double wallSmooth(double x, double y, double heading, int rotDir) {
+-        double h = heading;
+-        for (int i = 0; i < 36; i++) {
+-            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+-            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+-            if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
+-                ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
+-            h = normDir(h + rotDir * 5.0);
+-        }
+-        return h;
++        return WallSmoothing.heading(x, y, getArenaWidth(), getArenaHeight(),
++                WALL_MARGIN, WALL_MARGIN, heading, rotDir);
+     }
+ 
+     private static double normDir(double d) { return ((d % 360) + 360) % 360; }
+diff --git a/src/main/java/WallSmoothing.java b/src/main/java/WallSmoothing.java
+new file mode 100644
+index 0000000..2f32027
+--- /dev/null
++++ b/src/main/java/WallSmoothing.java
+@@ -0,0 +1,47 @@
++/** Full-circle heading lookahead using Tank Royale's east-zero coordinates. */
++final class WallSmoothing {
++    private static final double EPSILON = 1e-9;
++
++    private WallSmoothing() {}
++
++    static double heading(double x, double y, double width, double height,
++                          double margin, double stick, double desired, int rotation) {
++        if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(width)
++                || !Double.isFinite(height) || !Double.isFinite(margin)
++                || !Double.isFinite(stick) || !Double.isFinite(desired)
++                || width <= 0 || height <= 0 || margin < 0 || stick <= 0
++                || x < 0 || x > width || y < 0 || y > height
++                || (rotation != 1 && rotation != -1)) {
++            throw new IllegalArgumentException("Invalid wall-smoothing geometry or rotation");
++        }
++        // Include the desired heading, then every remaining five-degree sample.
++        for (int step = 0; step < 72; step++) {
++            double candidate = normalize(desired + rotation * step * 5.0);
++            double[] endpoint = endpoint(x, y, candidate, stick);
++            if (inside(endpoint[0], endpoint[1], width, height, margin)) return candidate;
++        }
++
++        // Near a corner the inner margin may be unreachable with this stick length.
++        // Aim inward and check the segment ending at or before the arena centre.
++        double dx = width / 2 - x, dy = height / 2 - y;
++        double distance = Math.hypot(dx, dy);
++        double inward = distance > EPSILON ? normalize(CombatMath.bearing(dx, dy)) : normalize(desired);
++        double[] endpoint = endpoint(x, y, inward, Math.min(stick, distance));
++        if (!inside(endpoint[0], endpoint[1], width, height, 0)) {
++            throw new IllegalStateException("Inward wall-smoothing fallback left the arena");
++        }
++        return inward;
++    }
++
++    private static double[] endpoint(double x, double y, double heading, double distance) {
++        double angle = Math.toRadians(heading);
++        return new double[]{x + Math.cos(angle) * distance, y + Math.sin(angle) * distance};
++    }
++
++    private static boolean inside(double x, double y, double width, double height, double margin) {
++        return x >= margin - EPSILON && x <= width - margin + EPSILON
++                && y >= margin - EPSILON && y <= height - margin + EPSILON;
++    }
++
++    private static double normalize(double angle) { return ((angle % 360) + 360) % 360; }
++}
+diff --git a/src/test/java/WallSmoothingTest.java b/src/test/java/WallSmoothingTest.java
+new file mode 100644
+index 0000000..9496799
+--- /dev/null
++++ b/src/test/java/WallSmoothingTest.java
+@@ -0,0 +1,58 @@
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++class WallSmoothingTest {
++    @Test void findsSafeDirectionBeyondTheOldHalfTurnSearch() {
++        double heading = WallSmoothing.heading(120, 120, 800, 600, 80, 80, 125, 1);
++        assertEquals(330, heading, 1e-9);
++        assertInnerEndpoint(120, 120, heading);
++    }
++
++    @Test void negativeRotationFindsTheFirstSafeHeadingInItsOwnDirection() {
++        double heading = WallSmoothing.heading(120, 120, 800, 600, 80, 80, 125, -1);
++        assertEquals(120, heading, 1e-9);
++        assertInnerEndpoint(120, 120, heading);
++    }
++
++    @Test void keepsAnAlreadySafeDesiredHeading() {
++        assertEquals(37, WallSmoothing.heading(400, 300, 800, 600, 80, 80, 37, 1));
++        assertEquals(270, WallSmoothing.heading(400, 300, 800, 600, 80, 80, -90, -1));
++    }
++
++    @Test void unreachableCornerEnvelopeFallsBackTowardCentre() {
++        double heading = WallSmoothing.heading(18, 18, 800, 600, 80, 80, 225, 1);
++        double expected = Math.toDegrees(Math.atan2(300 - 18, 400 - 18));
++        assertEquals(expected, heading, 1e-9);
++        double[] endpoint = CombatMath.project(18, 18, heading, 80, 0, 1);
++        assertTrue(endpoint[0] > 18 && endpoint[1] > 18);
++        assertTrue(endpoint[0] < 800 && endpoint[1] < 600);
++        assertTrue(Math.hypot(endpoint[0] - 400, endpoint[1] - 300) < Math.hypot(382, 282));
++    }
++
++    @Test void headingsStayFiniteAndNormalizedAtEachArenaCorner() {
++        for (double x : new double[]{18, 782}) {
++            for (double y : new double[]{18, 582}) {
++                for (int rotation : new int[]{-1, 1}) {
++                    double heading = WallSmoothing.heading(x, y, 800, 600, 80, 80, 1085, rotation);
++                    assertTrue(Double.isFinite(heading) && heading >= 0 && heading < 360);
++                    double[] endpoint = CombatMath.project(x, y, heading, 80, 0, 1);
++                    assertTrue(endpoint[0] >= 0 && endpoint[0] <= 800);
++                    assertTrue(endpoint[1] >= 0 && endpoint[1] <= 600);
++                }
++            }
++        }
++    }
++
++    @Test void rejectsInvalidGeometryInsteadOfReturningAnUncheckedHeading() {
++        assertThrows(IllegalArgumentException.class,
++                () -> WallSmoothing.heading(18, 18, 800, 600, 80, 80, Double.NaN, 1));
++        assertThrows(IllegalArgumentException.class,
++                () -> WallSmoothing.heading(18, 18, 800, 600, 80, 80, 125, 0));
++    }
++
++    private static void assertInnerEndpoint(double x, double y, double heading) {
++        double[] endpoint = CombatMath.project(x, y, heading, 80, 0, 1);
++        assertTrue(endpoint[0] >= 80 - 1e-9 && endpoint[0] <= 720 + 1e-9);
++        assertTrue(endpoint[1] >= 80 - 1e-9 && endpoint[1] <= 520 + 1e-9);
++    }
++}
