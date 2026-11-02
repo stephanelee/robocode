@@ -30,12 +30,28 @@ public class BenchmarkBattle {
                             r.getId(), quote(r.getName()), quote(r.getVersion()), r.getRank(), r.getTotalScore(), r.getSurvival(), r.getBulletDamage(), r.getFirstPlaces()));
                     Files.writeString(Path.of(args[2]), "{\"numberOfRounds\":" + results.getNumberOfRounds()
                             + ",\"results\":[" + String.join(",", rows) + "]}\n");
+                    awaitLegalDataset();
                 } catch (TimeoutException e) {
                     handle.stop();
                     throw new IllegalStateException("Battle exceeded " + timeout + " seconds", e);
                 } finally { executor.shutdownNow(); }
             }
         }
+    }
+    private static void awaitLegalDataset() throws Exception {
+        String configured = System.getenv("AISURVIVOR_DATASET_PATH");
+        if (configured == null || configured.isBlank()) return;
+        Path status = Path.of(configured + ".status.json");
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
+        while (System.nanoTime() < deadline) {
+            if (Files.isRegularFile(status) && Files.size(status) < 1_000_000) {
+                String json = Files.readString(status);
+                if (json.contains("\"status\":\"complete\"")) return;
+                if (json.contains("\"status\":\"failed\"")) throw new IllegalStateException("Legal dataset capture failed: " + json);
+            }
+            Thread.sleep(20);
+        }
+        throw new IllegalStateException("Legal dataset did not finish within bounded flush wait");
     }
     private static void awaitRetconStats(BattleResults results, int rounds) throws Exception {
         var configured = System.getenv("RETCON_STATS_DIR");

@@ -109,6 +109,7 @@ public class AISurvivor extends Bot {
     private DQNAgent agent;
     private final BotConfig config = BotConfig.fromEnvironment(System.getenv());
     private final RoundMetrics metrics = new RoundMetrics();
+    private final LegalScanRecorder scanRecorder = LegalScanRecorder.fromEnvironment(System.getenv());
     private boolean checkpointLoaded;
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -136,6 +137,8 @@ public class AISurvivor extends Bot {
             advanceTargetingWaves();
             advanceEnemyWaves();
 
+            if (scanRecorder.enabled()) recordLegalFrame();
+
             double[] features = encodeFeatures();
             int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false);
             metrics.reward += SURVIVAL_BONUS;
@@ -144,6 +147,8 @@ public class AISurvivor extends Bot {
             executeMovement(action);
             updateRadar();
             aimGF();
+            if (scanRecorder.enabled()) scanRecorder.submitted(new LegalScanRecorder.Intent(getTurnNumber(),
+                    getTargetSpeed(), getTurnRate(), getGunTurnRate(), getRadarTurnRate(), null, action));
             go();
         }
     }
@@ -166,6 +171,7 @@ public class AISurvivor extends Bot {
         agent.startEpisode();
         round.start();
         metrics.reset();
+        if (scanRecorder.enabled()) scanRecorder.startRound(e.getRoundNumber());
 
         // Decay GF and surf stats
         if (!config.training()) return;
@@ -180,10 +186,24 @@ public class AISurvivor extends Bot {
     public void onRoundEnded(RoundEndedEvent e) {
         finishRound(e);
         saveAgent();
+        if (scanRecorder.configured()) scanRecorder.finishRound(e.getRoundNumber());
     }
 
     @Override
-    public void onGameEnded(GameEndedEvent e) { saveAgent(); }
+    public void onGameEnded(GameEndedEvent e) {
+        saveAgent();
+        if (scanRecorder.configured()) scanRecorder.finishGame();
+    }
+
+    private void recordLegalFrame() {
+        var own = new LegalScanRecorder.Own(getX(), getY(), getDirection(), getSpeed(),
+                getGunDirection(), getRadarDirection(), getEnergy());
+        var targets = new ArrayList<LegalScanRecorder.Target>();
+        for (Enemy enemy : enemies.values()) targets.add(new LegalScanRecorder.Target(enemy.id,
+                new LegalScanRecorder.Scan(enemy.lastScanTurn, enemy.x, enemy.y, enemy.direction,
+                        enemy.speed, enemy.energy)));
+        scanRecorder.frame(getRoundNumber(), getTurnNumber(), own, targets);
+    }
 
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -400,6 +420,11 @@ public class AISurvivor extends Bot {
     @Override
     public void onBulletFired(BulletFiredEvent e) {
         metrics.shotsFired++;
+        if (scanRecorder.enabled()) {
+            BulletState shot = e.getBullet();
+            scanRecorder.confirmed(new LegalScanRecorder.Shot(e.getTurnNumber(), shot.getBulletId(),
+                    shot.getPower(), shot.getDirection(), shot.getX(), shot.getY()));
+        }
         if (pendingTargetingWave == null) return;
         TargetingWave wave = pendingTargetingWave;
         pendingTargetingWave = null;

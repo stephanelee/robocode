@@ -63,6 +63,9 @@ class TargetingCharacterizationTest {
     static String bits(double number) { return Long.toHexString(Double.doubleToRawLongBits(number)); }
 
     static JsonObject record(Scenario s) throws Exception {
+        return record(s, null);
+    }
+    static JsonObject record(Scenario s, LegalScanRecorder recorder) throws Exception {
         AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
         doReturn(s.sx).when(bot).getX(); doReturn(s.sy).when(bot).getY();
         doReturn(s.energy).when(bot).getEnergy(); doReturn(s.heat).when(bot).getGunHeat();
@@ -91,6 +94,14 @@ class TargetingCharacterizationTest {
         Object previous = s.pending ? wave() : null;
         set(bot, "pendingTargetingWave", previous);
         int statsHash = Arrays.deepHashCode(stats), classHash = Arrays.deepHashCode(agent.classGF);
+        if (recorder != null) {
+            set(bot, "scanRecorder", recorder);
+            doReturn(1).when(bot).getRoundNumber();
+            doReturn(0.0).when(bot).getDirection(); doReturn(0.0).when(bot).getSpeed();
+            doReturn(0.0).when(bot).getRadarDirection();
+            Method capture = AISurvivor.class.getDeclaredMethod("recordLegalFrame");
+            capture.setAccessible(true); capture.invoke(bot);
+        }
         Method aim = AISurvivor.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
         assertEquals(statsHash, Arrays.deepHashCode(stats)); assertEquals(classHash, Arrays.deepHashCode(agent.classGF));
         assertEquals(control.rng.nextLong(), agent.rng.nextLong(), "aiming must not consume bot RNG");

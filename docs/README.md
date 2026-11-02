@@ -10,6 +10,8 @@ For performance work, start with **Retcon 1v1**: the [Retcon benchmark workflow]
 - [Rejected bullet-scan visibility foundation experiment](improvements/foundation-scan-lag.md)
 - [Actual pinned-engine bullet-energy trace](engine-energy-trace.md)
 - [Minimal targeting refactor: exact replay and five-round sanity](targeting-refactor.md)
+- [Optional legal motion recorder](legal-motion-recorder.md)
+- [First AI motion-data and forecast pilot proposal](ai-motion-pilot.md)
 - [Cycle 3: rejected saved-targeting experiment](improvements/cycle-3.md)
 - [Cycle 2 wall-smoothing report and preregistration](improvements/cycle-2.md)
 - [Immutable version-comparison tooling](version-comparisons.md)
