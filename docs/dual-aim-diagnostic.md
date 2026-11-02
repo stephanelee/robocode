@@ -30,3 +30,32 @@ Before gameplay, inspect conditional safety sensitivity, uncertified states and 
 
 - [Engine speed/turn rules](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/rules/math.kt), [turn pipeline](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/TurnProcessor.kt), [wall/circle collision](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/CollisionDetector.kt), and [BulletLine](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/model/BulletLine.kt).
 - [Pinned Retcon linear aim](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/retcon/gun/LinearAimModel.java) and [gun alignment](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/framework/roles/Gun.java#L45-L67).
+
+## Completed offline results
+
+Decision: **retain the diagnostic, do not promote this selector to live gameplay**. The finite commands can evade the narrowly modeled shots, but sensitivity to unobserved history and wall contact prevents a deployable safety claim. This is not a rejection based on competitive scores: zero score matches were run.
+
+Commands/matrix were published at [1dc69bd](https://github.com/stephanelee/robocode/commit/1dc69bd0a05f1d96a028eaede7c1d993219a9e0d) before either full suite. The unchanged tool ran development first, then withheld. Exact tool SHA256: `fab7093fd8294dadfbaccbde651a270a20b573955c30b04e1563c55fcc5cdc3e`. Initial execution used local Windows/Python, without Java/server/network; CI reproduces on Ubuntu26.04/Python3.12. [Machine-readable summaries](../benchmarks/dual-aim-v1/summary.json) retain all profile/delay counts and forecast-error measures. Full row artifacts are produced by [Component diagnostics](../.github/workflows/component-diagnostics.yml), artifact `dual-aim-v1-raw`; [PR #24](https://github.com/stephanelee/robocode/pull/24) links the exact-head workflow runs.
+
+Each cell below is baseline → selector conditional safe states. There are 816 distinct development states and90 withheld states, each evaluated under four profiles and three delays: 9,792 +1,080 condition rows. Counts are deterministic coverage, not independent random samples or collision probabilities.
+
+| Uncertainty profile | Delay | Development /816 | Withheld /90 |
+| --- | ---: | ---: | ---: |
+| Fresh +alignment tolerance | 0 | 167 →686 | 29 →76 |
+| Fresh +alignment tolerance | 1 | 167 →663 | 29 →70 |
+| Fresh +alignment tolerance | 3 | 167 →630 | 29 →64 |
+| Age2 +5degrees | 0 | 130 →618 | 22 →56 |
+| Age2 +5degrees | 1 | 130 →606 | 22 →54 |
+| Age2 +5degrees | 3 | 130 →552 | 22 →50 |
+| Age5 +15degrees | 0 | 47 →285 | 2 →3 |
+| Age5 +15degrees | 1 | 47 →212 | 2 →5 |
+| Age5 +15degrees | 3 | 47 →103 | 2 →4 |
+| Unrestricted heading | 0/1/3 | 0 →0 | 0 →0 |
+
+Even the fresh/delay0 case leaves130 development states uncertified. For example, range150/speed−8/heading0/open arena remains uncertified at clearance−17.84 despite selecting reversal+turn; stopping/turning/reversing is not instantly attainable sideways displacement. The unknown-heading profile certifies no command. It is an intentionally broad sensitivity limit, not evidence Retcon chooses arbitrary headings.
+
+Wall contacts are counted across the full130-turn horizon, including time after the modeled encounter. Thus all816 straight development paths eventually contact a wall; selector contacts633 in fresh/delay0 and709 in age5/delay3. Withheld straight paths contact81/90, selector71/90 and79/90 respectively. These counts cannot be called collision-rate improvement during a battle. A future live wall veto and receding-horizon controller remain untested.
+
+The20-turn opponent linear-forecast RMSE averages29.45 units for the development baseline and73.39 for fresh/delay0 selector; corresponding withheld values36.44 and70.89. This shows the selected motions deviate from constant velocity, not that our simulator is inaccurate or that shots will miss in real games. Under age5/delay3 the selector RMSE falls40.70/38.35, while conditional clearance collapses: forecast error alone is an inadequate promotion metric.
+
+Next action: preserve these limitations, finish the behavior-preserving targeting seam independently, and prioritize a legal-scan supervised forecast dataset/component baseline. Revisit movement only with a justified legal observation model and separately preregistered wall-safe mechanism. Do not turn this best-of-nine fixture search into a strength claim.

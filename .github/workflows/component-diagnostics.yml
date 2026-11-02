@@ -17,3 +17,12 @@ jobs:
           python-version: '3.12'
       - name: Offline movement and swept-corridor fixtures
         run: python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v
+      - name: Frozen development then withheld component suites
+        run: |
+          python tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json
+          python tools/dual_aim_diagnostic.py --suite withheld --output component-evidence/withheld.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dual-aim-v1-raw
+          path: component-evidence/
+          if-no-files-found: error

@@ -1,0 +1,36 @@
+name: Pinned engine energy trace
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    name: Record actual 1.4.0 bullet scan timing
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record two stationary probes using the pinned official runner
+        run: python tools/engine_energy_trace.py --java "$JAVA_HOME/bin/java"
+      - name: Preserve raw events and source/runtime provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinned-engine-energy-trace
+          path: |
+            build/engine-trace/trace.json
+            build/engine-trace/Alpha.jsonl
+            build/engine-trace/Beta.jsonl
+            build/engine-trace/battle.json
+            build/engine-trace/runner.log
+          if-no-files-found: warn
