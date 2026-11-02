@@ -133,6 +133,7 @@ def run(args):
     report = dict(schemaVersion=1, status="preparing", policy=args.policy, seeds=args.seeds,
                   purpose=args.purpose,
                   battleTimeoutSeconds=args.timeout,
+                  plannedEvaluationRounds=2 * len(args.seeds) * args.rounds, validatedEvaluationRounds=0,
                   roundsPerBlock=args.rounds, trainingRounds=args.training_rounds if args.policy == "trained" else 0,
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
@@ -176,6 +177,7 @@ def run(args):
                 result = benchmark.battle(battle_args, arm_output, runner, output, "Retcon", ["Retcon"], args.policy, args.rounds, model)
                 result["scoreShare"] = score_share(result)
                 block[arm] = result
+                report["validatedEvaluationRounds"] += args.rounds
                 report["inProgressBlock"][arm] = result
                 save_report(output, report)
             report["blocks"].append(block)

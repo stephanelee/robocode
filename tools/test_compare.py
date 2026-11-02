@@ -120,6 +120,8 @@ class CompareTests(unittest.TestCase):
             self.assertEqual(len({model for _, _, model in calls}), 6)
             self.assertEqual(checkpoint.read_bytes(), b"original trained checkpoint")
             self.assertEqual(report["decision"]["status"], "retain")
+            self.assertEqual(report["plannedEvaluationRounds"], 120)
+            self.assertEqual(report["validatedEvaluationRounds"], 120)
             self.assertEqual(json.loads((args.output / "comparison.json").read_text())["status"], "complete")
             with self.assertRaisesRegex(ValueError, "empty"):
                 compare.run(args)
