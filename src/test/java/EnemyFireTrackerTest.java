@@ -12,7 +12,7 @@ class EnemyFireTrackerTest {
     @Test void bulletDamageAppearsOnNextScanForBothCallbackOrders() {
         for (boolean hitCallbackFirst : new boolean[]{false, true}) {
             EnemyFireTracker tracker = new EnemyFireTracker();
-            // Engine trace: scan(11)=100, then our power-0.5 bullet deals 2 in turn 11.
+            // Synthetic contract fixture; the separate official-engine probe records real events.
             if (hitCallbackFirst) tracker.recordDamage(7, 11, 2);
             assertEquals(0, tracker.inferPower(7, 10, 11, 100, 100));
             if (!hitCallbackFirst) tracker.recordDamage(7, 11, 2);
@@ -38,6 +38,19 @@ class EnemyFireTrackerTest {
             if (!bonusCallbackFirst) tracker.recordHitBonus(7, 11, 2);
             assertEquals(2, tracker.inferPower(7, 11, 12, 99, 103), 1e-9);
             assertEquals(1, tracker.inferPower(7, 12, 13, 103, 102), 1e-9);
+        }
+    }
+
+    @Test void smallHitBonusCannotManufactureAPowerOnePointFiveShot() {
+        for (boolean callbackFirst : new boolean[]{false, true}) {
+            for (double actualFire : new double[]{0, 0.7}) {
+                EnemyFireTracker tracker = new EnemyFireTracker();
+                if (callbackFirst) tracker.recordHitBonus(7, 11, 0.5);
+                assertEquals(0, tracker.inferPower(7, 10, 11, 100, 100));
+                if (!callbackFirst) tracker.recordHitBonus(7, 11, 0.5);
+                assertEquals(actualFire, tracker.inferPower(7, 11, 12, 100, 101.5 - actualFire), 1e-9);
+                assertEquals(0, tracker.inferPower(7, 12, 13, 101.5 - actualFire, 101.5 - actualFire));
+            }
         }
     }
 

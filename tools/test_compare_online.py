@@ -117,6 +117,13 @@ class OnlineComparisonTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "fresh independent"):
                 compare.validate_design(args)
 
+    def test_online_veto_cannot_be_relabelled_a_short_diagnostic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            args, _ = self.prepare(Path(directory))
+            args.purpose = "diagnostic"
+            with self.assertRaisesRegex(ValueError, "purpose=primary"):
+                compare.validate_design(args)
+
     def test_online_telemetry_requires_fresh_loaded_flags_and_each_round_counter(self):
         factory = test_benchmark.BenchmarkTests()
         records = [factory.metric(round_id=index, mode="train", totalRounds=index) for index in range(1, 21)]
@@ -143,6 +150,21 @@ class OnlineComparisonTests(unittest.TestCase):
             self.assertEqual(report["validatedOnlineTrainingRounds"], 120)
             self.assertEqual(report["status"], "complete")
             self.assertEqual(report["decision"]["status"], "reject")
+
+    def test_future_tactical_protocol_also_completes_every_declared_block(self):
+        with tempfile.TemporaryDirectory() as directory:
+            args, runner = self.prepare(Path(directory))
+            args.category = "tactical"
+            def battle(options, output, runner, samples, scenario, opponents, policy, rounds, model):
+                model.write_bytes(model_bytes(options.seed))
+                measured = result(0.1 if options.bot_dir.name == "candidate" else 0.5,
+                                  wins=0 if options.bot_dir.name == "candidate" else 4)
+                measured["modelSHA256"] = compare.benchmark.digest(model)
+                return measured
+            report = self.run_mock(args, runner, battle)
+            self.assertEqual(len(report["blocks"]), 3)
+            self.assertEqual(report["validatedScoredRounds"], 120)
+            self.assertFalse(report["earlyStoppingEnabled"])
 
 
 if __name__ == "__main__":

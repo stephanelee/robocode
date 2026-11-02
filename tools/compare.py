@@ -72,6 +72,8 @@ def registered_plan(path, commit):
 
 
 def validate_design(args):
+    if getattr(args, "policy", None) == "online-train" and args.purpose != "primary":
+        raise ValueError("Online-training veto requires purpose=primary and the full scored budget")
     if args.purpose == "primary" and (args.rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3):
         raise ValueError("Primary preregistration requires exactly three distinct seed blocks of 20 rounds per arm")
     if getattr(args, "category", "tactical") not in ("tactical", "correctness"):
@@ -225,7 +227,7 @@ def run(args):
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
                   thresholds=CORRECTNESS_THRESHOLDS if category == "correctness" else THRESHOLDS,
-                  earlyStoppingEnabled=category == "tactical", bundleSHA256=hashes, blocks=[],
+                  earlyStoppingEnabled=False, bundleSHA256=hashes, blocks=[],
                   limitations=("Retcon adaptation only. Starts and scheduling are unpaired/unseeded. "
                     + ("Both arms start with fresh equal-seed initialization and train independently online. Model writes are intentional; all scored rounds include learning. No checkpoint is shared. " if online
                        else "Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
@@ -334,10 +336,6 @@ def run(args):
             report["decision"] = decision(report["blocks"], category)
             if args.purpose == "diagnostic":
                 report["decision"]["status"] = "diagnostic"
-            if category == "tactical" and args.purpose == "primary" and index == 0 and args.rounds >= 20 and catastrophic_first_block(block):
-                report.update(status="early-rejected", earlyStopReason="Preregistered catastrophic first-block loss")
-                report["decision"]["status"] = "reject"
-                break
             save_report(output, report)
             print(f"seed {seed}: previous={block['previous']['scoreShare']:.2%}, candidate={block['candidate']['scoreShare']:.2%}", flush=True)
         else:
