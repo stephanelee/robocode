@@ -43,6 +43,8 @@ def main():
     parser.add_argument('--java', required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    args.output = args.output.resolve()
+    args.previous_bot_dir = args.previous_bot_dir.resolve()
     if args.output.exists():
         raise ValueError('Preserve prior evidence; output must be new')
     if benchmark.digest(args.previous_bot_dir / 'AISurvivor.jar') != BASE_JAR:
