@@ -17,6 +17,26 @@ jobs:
           python-version: '3.12'
       - name: Offline movement and swept-corridor fixtures
         run: python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v
+      - name: Legal-scan schema and leakage fixtures
+        run: python -m unittest discover -s tools -p test_legal_scan_dataset.py -v
+      - name: Synthetic label preparation only (no collection or training)
+        run: |
+          python tools/legal_scan_dataset.py --manifest tools/fixtures/legal-scan/synthetic-manifest.json --events tools/fixtures/legal-scan/synthetic-events.jsonl --output legal-scan-synthetic
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('legal-scan-synthetic/dataset.json').read_text())
+          assert result['inputRecords'] == 6
+          assert result['counts']['train'] == {'examples': 9, 'observedLabels': 1}
+          assert result['counts']['dev'] == {'examples': 6, 'observedLabels': 1}
+          assert result['gameInputRecords'] == {'A': 3, 'B': 3, 'C': 0, 'D': 0}
+          print('Synthetic example: 15 horizon rows, 2 fresh labels, zero real games')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: legal-scan-synthetic
+          path: legal-scan-synthetic/
+          if-no-files-found: error
       - name: Frozen development then withheld component suites
         run: |
           python tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json
