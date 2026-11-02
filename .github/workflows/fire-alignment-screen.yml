@@ -1,16 +1,20 @@
 name: Fire alignment screen
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ready_for_review]
 permissions:
   contents: read
 jobs:
   screen:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'codex/fire-alignment'
     runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -32,7 +36,9 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Run immutable 48-round diagnostic
-        run: python tools/fire_alignment_screen.py --previous-bot-dir build/fire-baseline/AISurvivor --candidate-source "$GITHUB_SHA" --java "$JAVA_HOME/bin/java" --output build/fire-screen
+        env:
+          CANDIDATE_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python tools/fire_alignment_screen.py --previous-bot-dir build/fire-baseline/AISurvivor --candidate-source "$CANDIDATE_SOURCE" --java "$JAVA_HOME/bin/java" --output build/fire-screen
       - name: Preserve every outcome and partial failure
         if: always()
         uses: actions/upload-artifact@v4

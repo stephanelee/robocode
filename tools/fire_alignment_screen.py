@@ -20,7 +20,7 @@ def screen_decision(comparison, samples):
     mechanism_defined = previous['shotsFired'] > 0 and candidate['shotsFired'] > 0
     checks = dict(complete=len(deltas) == 3 and all(b[a]['rounds'] == 5 for b in comparison['blocks'] for a in ('previous', 'candidate')),
         meanShare=sum(deltas) / 3 >= 0, nonnegativeBlocks=sum(d >= 0 for d in deltas) >= 2,
-        worstBlock=min(deltas) >= -.10, noSkippedTurns=candidate['skippedTurns'] == 0,
+        worstBlock=min(deltas) >= -.10, noSkippedTurns=candidate['skippedTurns'] == previous['skippedTurns'] == 0,
         shotRate=candidate['shotsFired'] / candidate['turns'] >= .5 * previous['shotsFired'] / previous['turns'])
     if mechanism_defined:
         checks['shotEfficiency'] = (candidate['hitRate'] > previous['hitRate'] or
@@ -28,7 +28,7 @@ def screen_decision(comparison, samples):
     checks['samples'] = len(samples) == 3 and all(
         row['candidate']['rounds'] == row['previous']['rounds'] == 3 and
         compare.score_share(row['candidate']) - compare.score_share(row['previous']) >= -.05 and
-        row['candidate']['metrics']['skippedTurns'] == 0 for row in samples)
+        row['candidate']['metrics']['skippedTurns'] == row['previous']['metrics']['skippedTurns'] == 0 for row in samples)
     return dict(status='inconclusive' if not mechanism_defined else 'advance-to-confirmation' if all(checks.values()) else 'reject',
         checks=checks, previous=previous, candidate=candidate, scoreShareDeltas=deltas,
         damagePerShot={arm: value['damageDealt'] / value['shotsFired'] if value['shotsFired'] else None
