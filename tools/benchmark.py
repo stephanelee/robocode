@@ -289,6 +289,7 @@ def main():
     java_version = subprocess.run([args.java, "-version"], capture_output=True, text=True, timeout=15, check=True)
     report = dict(schemaVersion=1, tankRoyaleVersion=VERSION, sourceCommit=source_commit, seed=args.seed,
                   suite=args.suite, runtimeJava=(java_version.stderr + java_version.stdout).strip(),
+                  runtimeOS=retcon_stats.os_provenance(),
                   opponentProvenance=opponent_provenance,
                   evaluationScope="in-roster adaptation; training and evaluation use the same opponent identities",
                   trainingRounds=0 if args.smoke else args.training_rounds,

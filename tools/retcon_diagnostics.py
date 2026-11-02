@@ -8,6 +8,7 @@ import subprocess
 
 import benchmark
 import retcon
+import retcon_stats
 
 
 def aggregate(blocks):
@@ -42,10 +43,16 @@ def main():
     parser.add_argument("--cache", type=Path, default=benchmark.ROOT / ".benchmark-cache")
     parser.add_argument("--output", type=Path, default=benchmark.ROOT / "build" / "retcon-observability")
     parser.add_argument("--expected-bot-sha256", required=True)
+    parser.add_argument("--expected-ubuntu", help="Require the actual Linux os-release Ubuntu VERSION_ID")
     parser.add_argument("--rounds", type=int, default=5)
     parser.add_argument("--seeds", default="20261102,20261103,20261104")
     parser.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
+    operating_system = retcon_stats.os_provenance()
+    if args.expected_ubuntu:
+        release = operating_system.get("osRelease", {})
+        if release.get("ID") != "ubuntu" or release.get("VERSION_ID") != args.expected_ubuntu:
+            raise ValueError("Diagnostic host does not match the explicitly required Ubuntu release")
     args.bot_dir, args.output = args.bot_dir.resolve(), args.output.resolve()
     if args.rounds < 1 or args.timeout < 1:
         parser.error("rounds and timeout must be positive")
@@ -67,6 +74,7 @@ def main():
     version = subprocess.run([args.java, "-version"], capture_output=True, text=True, timeout=15, check=True)
     report = dict(schemaVersion=1, purpose="unchanged-opponent observability; no gameplay change",
                   sourceCommit=os.environ.get("GITHUB_SHA"), botJarSHA256=actual, opponentProvenance=provenance,
+                  runtimeOS=operating_system,
                   runtimeJava=(version.stderr + version.stdout).strip(), roundsPerBlock=args.rounds,
                   blocks=[], limitations="Retcon's own observed counters, not causal AISurvivor defect frequencies. "
                   "Virtual shots are completed wave evaluations and differ from actual fired bullets. "

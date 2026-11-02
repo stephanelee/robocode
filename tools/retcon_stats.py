@@ -1,6 +1,7 @@
 """Capture the pinned Retcon StatsWriter export without changing opponent source."""
 import hashlib
 import json
+import platform
 from pathlib import Path
 import re
 import shutil
@@ -12,6 +13,13 @@ SOURCE_COMMIT = "28981c7a469ac064194b41001cd7183ec5ecf189"
 SOURCE_SHA256 = "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2"
 MAX_BYTES = 2_000_000
 FILE_PATTERN = re.compile(r"Retcon-(\d+)-(-?\d+)\.json")
+
+
+def os_provenance():
+    result = dict(system=platform.system(), release=platform.release(), machine=platform.machine())
+    if platform.system() == "Linux":
+        result["osRelease"] = platform.freedesktop_os_release()
+    return result
 
 
 def java_temp_directory(java):

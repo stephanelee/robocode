@@ -17,7 +17,7 @@ permissions:
 jobs:
   retcon:
     name: Retcon 1v1 compatibility
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
           fi
       - name: Record unchanged-opponent diagnostic baseline
         if: github.event_name == 'pull_request'
-        run: python tools/retcon_diagnostics.py --java "$JAVA_HOME/bin/java" --expected-bot-sha256 0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2
+        run: python tools/retcon_diagnostics.py --java "$JAVA_HOME/bin/java" --expected-ubuntu 26.04 --expected-bot-sha256 0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2
       - name: Print canonical Retcon evidence and failure diagnostics
         if: always()
         run: |
