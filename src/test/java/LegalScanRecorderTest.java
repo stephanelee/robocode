@@ -89,14 +89,13 @@ class LegalScanRecorderTest {
         assertEquals("failed", status(path).get("status").getAsString());
     }
     @Test void enabledPreDecisionHookPreservesAcceptedCommandsAndState() throws Exception {
-        JsonArray golden = JsonParser.parseString(Files.readString(TargetingCharacterizationTest.GOLDEN))
-                .getAsJsonObject().getAsJsonArray("outcomes");
         var scenarios = TargetingCharacterizationTest.scenarios();
         for (int index = 0; index < 32; index++) {
             Path path = temp.resolve("neutral-" + index + ".jsonl");
             var recorder = new LegalScanRecorder(path, "neutral-" + index, 100);
             recorder.startRound(1);
-            assertEquals(golden.get(index), TargetingCharacterizationTest.record(scenarios.get(index), recorder));
+            assertEquals(TargetingCharacterizationTest.record(scenarios.get(index)),
+                    TargetingCharacterizationTest.record(scenarios.get(index), recorder));
             recorder.finishRound(1); recorder.finishGame();
             assertEquals("complete", status(path).get("status").getAsString());
         }
