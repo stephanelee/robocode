@@ -18,7 +18,7 @@ Windows PowerShell:
 .\gradlew.bat clean build
 ```
 
-This compiles the source, runs available JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/` when tests exist. The initial bootstrap has no gameplay tests; these are tracked in [TODO.md](TODO.md).
+This compiles the source, runs JUnit 5 tests, and builds `AISurvivor/AISurvivor.jar` with its runtime dependencies. Run `./gradlew test` (Windows: `.\gradlew.bat test`) for tests alone. HTML test reports appear in `build/reports/tests/test/`. Tests cover geometry, targeting defaults, enemy fire accounting, and bullet-wave matching.
 
 ## Run a battle
 
@@ -48,6 +48,8 @@ The implementation is in `src/main/java/AISurvivor.java`:
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement currently blends six strategies: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, and hunt.
 - GuessFactor targeting combines per-enemy and per-class statistics with motion prediction.
-- Enemy energy changes infer bullet waves; Java serialization persists the DQN and class targeting statistics across launches.
+- Consecutive enemy scans infer bullet waves after correcting known damage and hit-energy bonuses. Scan gaps are skipped because fire timing is uncertain. Enemy bullets are not exposed by the bot API; unobserved third-party damage in melee can still make inferred waves inaccurate.
+- Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
+- Java serialization persists the DQN and class targeting statistics across launches.
 
 This is an experimental bot with known correctness issues. See [TODO.md](TODO.md) for the prioritized repair and benchmark plan. Build success alone does not establish battle performance.
