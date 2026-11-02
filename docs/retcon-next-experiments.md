@@ -5,11 +5,15 @@ This is the prospective roadmap after the [source-audited external review](retco
 ## Assignments and current boundary
 
 - Research agent (`battle_research`): deterministic offline dual-model dodging diagnostic, movement/collision fixtures, feasibility artifact, and a proposed isolated movement controller.
-- Foundation/learning agent: the separately registered alignment/firing foundation work. It must remain independent of the movement candidate, with its own source/JAR and evidence.
+- Foundation/learning agent: first extract a focused behavior-preserving targeting seam, then develop a supervised opponent-motion predictor using legal scan history and our actions. Freeze models and whole-game train/dev/withheld splits before evaluation. Keep any later firing-alignment A/B independent of movement, with its own source/JAR and evidence.
 - Independent review agent: review source fidelity, legal information boundaries, fixtures, prospective protocols, CI, and eventual outcomes; merge approved PRs. Implementation agents do not merge their own changes.
 - Coordinating agent: track the experiments and document accepted/rejected results with the user. No performance matches are authorized by this document alone: publish an immutable prospective mechanism/score protocol and obtain independent preclearance first.
 
 Retcon is the hard competitive target. The already pinned official Java samples remain a fast 1v1 regression/transfer baseline as requested; sample wins do not establish general strength. No new opponent download or Python bot dependency is required. Live opponent-private telemetry is never used.
+
+## AI forecast data requirements
+
+The next AI benchmark must use only information AIS actually receives: timestamped own state/actions, own fire decisions/outcomes, and opponent scans with age/missingness. Retcon reacts to our shots, so retain our shot/action history. Targets are future positions when legally observed at explicit horizons; do not silently interpolate missing scans or treat unobserved turns as truth. Current aggregate round metrics are insufficient for this dataset. Propose bounded nonbehavioral AIS event instrumentation with source/JAR provenance, a schema, and an immutable acquisition protocol before data runs. Exclude observer state, Retcon native/private statistics and future labels from model inputs. Split by whole fresh game before fitting/preprocessing; never split adjacent turns across partitions. Compare frozen supervised forecasts with head-on/Retcon-style linear baselines on horizon-aware held-out error/coverage before a live candidate. Existing pinned official samples offer fast regression/transfer cases; Retcon remains the hard target. Independent review precedes acquisition and live score protocols; no game behavior change is authorized by these data requirements alone.
 
 ## Hints translated into tests
 
