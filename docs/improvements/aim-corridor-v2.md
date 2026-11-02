@@ -180,4 +180,4 @@ The registered rule runs it only after Stage A retains.
 
 Starts are unpaired and unseeded, there are three blocks per arm, and Retcon adapts within each game. Retcon counters are offline diagnostics only. The candidate bundles two changes, so the score loss is not attributed to either part alone. Local development games were exploratory and are excluded from this decision. The registered thresholds were applied unchanged.
 
-Evidence: [raw evidence and patch](../../benchmarks/aim-corridor-v2/README.md).
+PR: [#34](https://github.com/stephanelee/robocode/pull/34). Evidence: [raw evidence and patch](../../benchmarks/aim-corridor-v2/README.md).
