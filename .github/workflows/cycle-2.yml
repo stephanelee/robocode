@@ -1,0 +1,98 @@
+name: Cycle 2 wall-smoothing experiment
+
+on:
+  pull_request:
+    types: [ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    if: github.head_ref == 'codex/improve-cycle2-walls'
+    name: Cycle 2 measured comparison
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify immutable preregistration and candidate before measuring
+        run: |
+          python - <<'PY'
+          import hashlib
+          import subprocess
+          plan = subprocess.check_output(['git', 'show', 'f34cffbf5bbe8c79fb55d1b4acba5b581ac802d6:docs/improvements/cycle-2.md'])
+          expected = '3e635c893281c938652506214ec708b2a464e0eedddcc870390eaf5d9c59cfc3'
+          if hashlib.sha256(plan).hexdigest() != expected:
+              raise SystemExit('Immutable cycle 2 preregistration hash mismatch')
+          print('Verified immutable preregistration:', expected)
+          PY
+          python -m unittest discover -s tools -p 'test_*.py' -v
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/candidate-checked-in.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/candidate-checked-in.jar" AISurvivor/AISurvivor.jar
+      - name: Snapshot the accepted previous version
+        env:
+          PREVIOUS_SOURCE: 18f2659f6f55f10a7a30b1ec54460eb7159ce101
+        run: |
+          mkdir -p "$RUNNER_TEMP/previous-bot"
+          for name in AISurvivor.jar AISurvivor.json AISurvivor.sh AISurvivor.cmd; do
+            git show "$PREVIOUS_SOURCE:AISurvivor/$name" > "$RUNNER_TEMP/previous-bot/$name"
+          done
+          printf '0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2  %s\n' "$RUNNER_TEMP/previous-bot/AISurvivor.jar" | sha256sum --check
+          chmod +x "$RUNNER_TEMP/previous-bot/AISurvivor.sh"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run preregistered 120-round primary comparison
+        env:
+          CANDIDATE_SOURCE: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/compare.py \
+            --previous-bot-dir "$RUNNER_TEMP/previous-bot" --candidate-bot-dir AISurvivor \
+            --previous-source 18f2659f6f55f10a7a30b1ec54460eb7159ce101 --candidate-source "$CANDIDATE_SOURCE" \
+            --plan docs/improvements/cycle-2.md --plan-commit f34cffbf5bbe8c79fb55d1b4acba5b581ac802d6 \
+            --policy untrained --seeds 20261102,20261103,20261104 \
+            --rounds 20 --timeout 300 --output build/comparison-primary
+      - name: Run fixed-policy diagnostic only after primary passes
+        env:
+          CANDIDATE_SOURCE: ${{ github.event.pull_request.head.sha }}
+        run: |
+          decision=$(python -c "import json; print(json.load(open('build/comparison-primary/comparison.json'))['decision']['status'])")
+          if [ "$decision" = "retain" ]; then
+            python tools/compare.py \
+              --previous-bot-dir "$RUNNER_TEMP/previous-bot" --candidate-bot-dir AISurvivor \
+              --previous-source 18f2659f6f55f10a7a30b1ec54460eb7159ce101 --candidate-source "$CANDIDATE_SOURCE" \
+              --plan docs/improvements/cycle-2.md --plan-commit f34cffbf5bbe8c79fb55d1b4acba5b581ac802d6 \
+              --policy fixed-minrisk --purpose diagnostic --seeds 20261102,20261103,20261104 \
+              --rounds 5 --timeout 180 --output build/comparison-fixed
+          fi
+      - name: Print canonical comparison summaries
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for path in sorted(Path('build').glob('comparison-*/comparison.json')):
+              print(f'COMPARISON_JSON_BEGIN {path}')
+              print(path.read_text())
+              print('COMPARISON_JSON_END')
+          PY
+      - name: Preserve complete experiment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cycle-2-comparison
+          path: build/comparison-*/
+          retention-days: 30
+          if-no-files-found: warn
