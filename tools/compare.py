@@ -132,6 +132,7 @@ def run(args):
     plan = args.plan.read_bytes()
     report = dict(schemaVersion=1, status="preparing", policy=args.policy, seeds=args.seeds,
                   purpose=args.purpose,
+                  battleTimeoutSeconds=args.timeout,
                   roundsPerBlock=args.rounds, trainingRounds=args.training_rounds if args.policy == "trained" else 0,
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
