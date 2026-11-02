@@ -10,6 +10,9 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRATION = '044e4e28265dc175213469a8b87a941c82f1cf1c'
+# Exact blobs from REGISTRATION; constants also work in shallow Actions checkouts.
+MANIFEST_SHA = '24d0c6bfe49f62d3a44b1941e032c5514b0950b29bbb3befad573976cc6c5308'
+FRESH_SHA = '30174a9315ced64f6d3ff20802a77707b75243dfc17131ec2c9c8fde27c5f6b7'
 MANIFEST = 'tools/fixtures/mixed-population-v4/manifest.json'
 FRESH = 'tools/fixtures/mixed-population-v4/fresh-games.json'
 ORIGINAL = 'benchmarks/ai-motion-v1/manifest.json'
@@ -42,7 +45,7 @@ class MixedPopulationRegistrationTests(unittest.TestCase):
         self.assertEqual(collections.Counter(g['split'] for g in mixed['games']),
                          {'train': 9, 'dev': 3, 'withheld': 3})
         self.assertTrue(all(g['opponent'] == 'Retcon' for g in mixed['games'] if g['split'] in ('dev', 'withheld')))
-        self.assertEqual(blob(MANIFEST), blob(MANIFEST, REGISTRATION))
+        self.assertEqual(hashlib.sha256(blob(MANIFEST)).hexdigest(), MANIFEST_SHA)
 
     def test_original_corpus_and_capture_provenance_remain_exact(self):
         original = document(ORIGINAL)
@@ -67,7 +70,7 @@ class MixedPopulationRegistrationTests(unittest.TestCase):
 
     def test_fresh_layout_is_registered_disjoint_and_exact_budget(self):
         fresh = document(FRESH)
-        self.assertEqual(blob(FRESH), blob(FRESH, REGISTRATION))
+        self.assertEqual(hashlib.sha256(blob(FRESH)).hexdigest(), FRESH_SHA)
         self.assertEqual((fresh['roundsPerGame'], fresh['history'], fresh['horizons']),
                          (3, 8, [8, 16, 24, 32, 40]))
         games = fresh['games']
