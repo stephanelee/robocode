@@ -22,7 +22,7 @@ This compiles the source, runs available JUnit 5 tests, and builds `AISurvivor/A
 
 ## Run a battle
 
-The dependency is pinned to Tank Royale bot API **0.36.1**. Start with the matching [Tank Royale 0.36.1 release](https://github.com/robocode-dev/tank-royale/releases/tag/v0.36.1); compatibility with newer server versions has not been verified.
+The dependency is pinned to Tank Royale bot API **1.4.0**. Use the matching [Tank Royale 1.4.0 release](https://github.com/robocode-dev/tank-royale/releases/tag/v1.4.0). The upstream GUI/server requires Java 11 or newer; this bot is built for Java 17, so use Java 17 for both. Compatibility with other server versions has not been verified.
 
 1. Install the Tank Royale GUI/server and sample opponents from that release.
 2. Start the server from the GUI (default WebSocket address: `ws://localhost:7654`).
