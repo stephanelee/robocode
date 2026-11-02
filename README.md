@@ -43,11 +43,19 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 
 ## GitHub Actions
 
-[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) runs on pull requests and pushes to `master`, and supports manual dispatch once the workflow is on the default branch. It builds with Java 17, runs available tests, and uploads the freshly compiled bot as the **AISurvivor-java17** artifact. Download it from a successful Actions run's Artifacts section and extract it into a bot directory. The separate [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) workflow runs a strict headless smoke battle on PRs and pushes. Dispatch it with `full=true` for fixed-policy, cold-DQN, and trained-DQN reference comparisons; download the **battle-results** artifact for JSON/CSV evidence and the standalone HTML dashboard. See [docs/benchmarks.md](docs/benchmarks.md). Small reference experiments do not establish playing strength.
+[CI](https://github.com/stephanelee/robocode/actions/workflows/ci.yml) builds/tests with Java 17 on PRs and pushes to `master`, and uploads the **AISurvivor-java17** runnable artifact.
+
+**For performance evaluation, start with the [Retcon 1v1 benchmark](https://github.com/stephanelee/robocode/actions/workflows/retcon.yml)** and dispatch `full=true`. It verifies the bot under Java 17, then uses JDK 25 for the unchanged Retcon launcher. For a local run after building with Java 17:
+
+```sh
+python tools/benchmark.py --suite retcon --java /path/to/jdk25/bin/java --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --output build/retcon-evaluation
+```
+
+Use the [methods](docs/benchmarks.md), [Retcon baseline](docs/benchmarks/retcon-2026-11-02.md), and [three completed controlled experiments](docs/improvements.md) to interpret the evidence. These are in-roster adaptation trials; none of the three candidates met its full retain rule.
+
+The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
 ## Current design
-
-The [Retcon benchmark](https://github.com/stephanelee/robocode/actions/workflows/retcon.yml) adds a pinned Java Retcon 0.2.0 opponent for a stronger 1v1 challenge. It builds/verifies AISurvivor with Java 17, then uses JDK 25 for Retcon's unchanged source launcher. See the [measured baseline](docs/benchmarks/retcon-2026-11-02.md) and [improvement log](docs/improvements.md).
 
 The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`; learning, configuration, persistence, and pure combat calculations are separate classes:
 

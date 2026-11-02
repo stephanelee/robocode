@@ -13,7 +13,9 @@ class CycleOneEvidenceTests(unittest.TestCase):
         report = json.loads((root / "comparison.json").read_text(encoding="utf-8"))
         self.assertEqual(report["validatedEvaluationRounds"], 120)
         self.assertEqual(report["plannedEvaluationRounds"], 120)
-        self.assertEqual(hashlib.sha256((root / "preregistered-plan.md").read_bytes()).hexdigest(), report["preregistrationSHA256"])
+        # Git may check text out as CRLF on Windows; the artifact/Git blob uses canonical LF.
+        canonical_plan = (root / "preregistered-plan.md").read_text(encoding="utf-8").encode("utf-8")
+        self.assertEqual(hashlib.sha256(canonical_plan).hexdigest(), report["preregistrationSHA256"])
         for block in report["blocks"]:
             for arm in ("previous", "candidate"):
                 directory = root / f"seed-{block['seed']}" / arm / "Retcon-untrained"

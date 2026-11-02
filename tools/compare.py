@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare immutable AISurvivor versions against pinned Retcon without retraining."""
+"""Compare immutable AISurvivor versions against pinned Retcon with shared frozen models."""
 import argparse
 import hashlib
 import json
@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import shutil
 import statistics
+import struct
 import subprocess
 
 import benchmark
@@ -70,6 +71,48 @@ def registered_plan(path, commit):
 def validate_design(args):
     if args.purpose == "primary" and (args.rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3):
         raise ValueError("Primary preregistration requires exactly three distinct seed blocks of 20 rounds per arm")
+    if getattr(args, "train_previous", False):
+        if args.policy != "trained" or args.training_rounds != 20 or len(args.seeds) != 3 or len(set(args.seeds)) != 3:
+            raise ValueError("Train-previous preregistration requires trained evaluation and exactly 20 training rounds for each of three distinct seeds")
+        if args.checkpoint is not None:
+            raise ValueError("Train-previous cannot also import a checkpoint")
+
+
+def checkpoint_rounds(path):
+    """Check the numeric checkpoint header before any evaluation arm loads it."""
+    with path.open("rb") as stream:
+        header = stream.read(28)
+    if len(header) != 28:
+        raise ValueError("Checkpoint header is truncated")
+    magic, version, features, hidden, actions, rounds, steps = struct.unpack(">7i", header)
+    if (magic, version, features, hidden, actions) != (0x41495356, 1, 14, 32, 6) or min(rounds, steps) < 0:
+        raise ValueError("Unsupported checkpoint format, dimensions, or counters")
+    return rounds
+
+
+def checkpoint_diagnostics(path):
+    """Describe saved targeting evidence without selecting or modifying a model."""
+    rounds = checkpoint_rounds(path)
+    data = path.read_bytes()
+    network_parameters = 14 * 32 + 32 + 32 * 6 + 6
+    offset = 28 + 8 + 2 * network_parameters * 8
+    class_count, segments, bins = 5, 9, 47
+    count = class_count * segments * bins
+    if len(data) != offset + count * 8:
+        raise ValueError("Checkpoint length differs from the supported numeric model format")
+    values = struct.unpack(f">{count}d", data[offset:])
+    if any(not math.isfinite(value) or value < 0 for value in values):
+        raise ValueError("Saved targeting statistics must be finite and nonnegative")
+    mass = sum(values)
+    if not math.isfinite(mass):
+        raise ValueError("Saved targeting mass is not finite")
+    per_class = []
+    for index in range(class_count):
+        group = values[index * segments * bins:(index + 1) * segments * bins]
+        per_class.append(dict(classId=index, mass=sum(group), nonzeroBins=sum(value > 0 for value in group)))
+    return dict(trainingRounds=rounds, classGFMass=mass,
+                classGFNonzeroBins=sum(value > 0 for value in values), classGFByClass=per_class,
+                targetingEvidenceActive=mass > 0)
 
 
 def score_share(battle):
@@ -142,26 +185,42 @@ def save_report(output, report):
 def run(args):
     validate_design(args)
     plan = registered_plan(args.plan, args.plan_commit)
+    addendum = registered_plan(args.plan_addendum, args.plan_addendum_commit) if getattr(args, "plan_addendum", None) else None
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
         raise ValueError("output must be empty so prior evidence is never overwritten")
     output.mkdir(parents=True, exist_ok=True)
     snapshots, hashes = snapshot_bots(args.previous_bot_dir.resolve(), args.candidate_bot_dir.resolve(), output)
+    train_previous = getattr(args, "train_previous", False)
     report = dict(schemaVersion=1, status="preparing", policy=args.policy, seeds=args.seeds,
                   purpose=args.purpose,
                   battleTimeoutSeconds=args.timeout,
                   plannedEvaluationRounds=2 * len(args.seeds) * args.rounds, validatedEvaluationRounds=0,
+                  plannedTrainingRounds=len(args.seeds) * args.training_rounds if train_previous else 0,
+                  validatedTrainingRounds=0, trainingBattles=[], checkpointSHA256BySeed={}, checkpointDiagnosticsBySeed={},
                   roundsPerBlock=args.rounds, trainingRounds=args.training_rounds if args.policy == "trained" else 0,
                   previousSource=args.previous_source, candidateSource=args.candidate_source,
                   preregistrationCommit=args.plan_commit, preregistrationSHA256=hashlib.sha256(plan).hexdigest(),
                   thresholds=THRESHOLDS, bundleSHA256=hashes, blocks=[],
-                  limitations="Retcon adaptation only. Starts and scheduling are unpaired/unseeded. Seeds initialize matching cold networks, not matching game states. Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent.")
+                  limitations=("Retcon adaptation only. Starts and scheduling are unpaired/unseeded. "
+                    + ("Incumbent training is seeded separately; both evaluation arms share the exact immutable checkpoint within each seed. Seeds do not pair game states. " if train_previous
+                       else "Both frozen arms load the same immutable checkpoint; seed labels do not generally alter a loaded greedy policy or pair game states. " if args.policy == "trained"
+                       else "Seeds initialize matching cold networks, not matching game states. ")
+                    + "Three game blocks provide limited uncertainty evidence. Wilson win intervals are descriptive because rounds share an adaptive opponent."))
     (output / "preregistered-plan.md").write_bytes(plan)
+    if addendum is not None:
+        (output / "preregistered-addendum.md").write_bytes(addendum)
+        report.update(preregistrationAddendumCommit=args.plan_addendum_commit,
+                      preregistrationAddendumSHA256=hashlib.sha256(addendum).hexdigest())
     checkpoint = None
-    if args.policy == "trained":
+    if args.policy == "trained" and not train_previous:
         checkpoint = output / "artifacts" / "input-checkpoint.dat"
         shutil.copy2(args.checkpoint.resolve(), checkpoint)
         report["checkpointSHA256"] = benchmark.digest(checkpoint)
+        if checkpoint_rounds(checkpoint) != args.training_rounds:
+            raise ValueError("Imported checkpoint counter differs from requested training budget")
+        report["checkpointDiagnostics"] = checkpoint_diagnostics(checkpoint)
+    immutable_checkpoints = {}
     save_report(output, report)
     try:
         runtime = subprocess.run([args.java, "-XshowSettings:properties", "-version"], capture_output=True, text=True, timeout=15, check=True)
@@ -176,8 +235,40 @@ def run(args):
                       runnerSHA256=benchmark.digest(runner), status="running")
         save_report(output, report)
         for index, seed in enumerate(args.seeds):
+            seed_checkpoint = checkpoint
+            seed_checkpoint_hash = report.get("checkpointSHA256")
+            if train_previous:
+                verify_snapshots(snapshots, hashes)
+                training_output = output / f"seed-{seed}" / "training-previous"
+                training_output.mkdir(parents=True)
+                training_model = training_output / "checkpoint.dat"
+                training_args = argparse.Namespace(java=args.java, bot_dir=snapshots["previous"], seed=seed,
+                    timeout=args.timeout, training_rounds=args.training_rounds, require_metrics=True,
+                    opponent_env={"RUMBLE_JAVA_CACHE": str(api_cache)}, retcon_source=source)
+                report["inProgressTraining"] = dict(seed=seed, source=args.previous_source, rounds=args.training_rounds)
+                save_report(output, report)
+                training = benchmark.battle(training_args, training_output, runner, output, "Retcon", ["Retcon"],
+                    "train", args.training_rounds, training_model)
+                if training["rounds"] != 20 or training["metrics"]["roundsRecorded"] != 20 or checkpoint_rounds(training_model) != 20:
+                    raise ValueError("Incumbent training did not produce the exact 20-round checkpoint")
+                seed_checkpoint_hash = benchmark.digest(training_model)
+                if training.get("modelSHA256") != seed_checkpoint_hash:
+                    raise ValueError("Training result checkpoint hash differs from actual model")
+                seed_checkpoint = output / "artifacts" / f"checkpoint-seed-{seed}.dat"
+                copy_checkpoint(training_model, seed_checkpoint, seed_checkpoint_hash)
+                diagnostic = checkpoint_diagnostics(seed_checkpoint)
+                report["trainingBattles"].append(dict(seed=seed, trainerSource=args.previous_source,
+                    checkpointDiagnostics=diagnostic, **training))
+                report["validatedTrainingRounds"] += 20
+                del report["inProgressTraining"]
+                print(f"seed {seed}: incumbent training complete (20 rounds), model={seed_checkpoint_hash}", flush=True)
+            if seed_checkpoint:
+                immutable_checkpoints[seed_checkpoint] = seed_checkpoint_hash
+                report["checkpointSHA256BySeed"][str(seed)] = seed_checkpoint_hash
+                report["checkpointDiagnosticsBySeed"][str(seed)] = checkpoint_diagnostics(seed_checkpoint)
+                save_report(output, report)
             order = ["previous", "candidate"] if index % 2 == 0 else ["candidate", "previous"]
-            block = dict(seed=seed, order=order)
+            block = dict(seed=seed, order=order, checkpointSHA256=seed_checkpoint_hash)
             report["inProgressBlock"] = dict(seed=seed, order=order)
             save_report(output, report)
             for arm in order:
@@ -185,14 +276,16 @@ def run(args):
                 arm_output = output / f"seed-{seed}" / arm
                 arm_output.mkdir(parents=True)
                 model = arm_output / "checkpoint.dat"
-                if checkpoint:
-                    copy_checkpoint(checkpoint, model, report["checkpointSHA256"])
+                if seed_checkpoint:
+                    copy_checkpoint(seed_checkpoint, model, seed_checkpoint_hash)
                 battle_args = argparse.Namespace(java=args.java, bot_dir=snapshots[arm], seed=seed,
                     timeout=args.timeout, training_rounds=args.training_rounds, require_metrics=True,
                     opponent_env={"RUMBLE_JAVA_CACHE": str(api_cache)}, retcon_source=source)
                 result = benchmark.battle(battle_args, arm_output, runner, output, "Retcon", ["Retcon"], args.policy, args.rounds, model)
                 if result["rounds"] != args.rounds or result["metrics"]["roundsRecorded"] != args.rounds:
                     raise ValueError("Validated battle/telemetry budget differs from requested block")
+                if seed_checkpoint and (benchmark.digest(model) != seed_checkpoint_hash or result.get("modelSHA256") != seed_checkpoint_hash):
+                    raise ValueError("Evaluation changed or loaded a different seed checkpoint")
                 result["scoreShare"] = score_share(result)
                 block[arm] = result
                 report["validatedEvaluationRounds"] += args.rounds
@@ -212,8 +305,9 @@ def run(args):
         else:
             report["status"] = "complete"
         verify_snapshots(snapshots, hashes)
-        if checkpoint and benchmark.digest(checkpoint) != report["checkpointSHA256"]:
-            raise ValueError("Immutable input checkpoint changed")
+        for model, expected in immutable_checkpoints.items():
+            if benchmark.digest(model) != expected:
+                raise ValueError("Immutable input checkpoint changed")
         save_report(output, report)
         print(f"Decision: {report['decision']['status']}; see {output / 'comparison.json'}", flush=True)
     except BaseException as error:
@@ -231,9 +325,13 @@ def main():
     parser.add_argument("--candidate-source", required=True)
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--plan-commit", required=True)
+    parser.add_argument("--plan-addendum", type=Path)
+    parser.add_argument("--plan-addendum-commit")
     parser.add_argument("--policy", choices=("untrained", "fixed-minrisk", "trained"), default="untrained")
     parser.add_argument("--purpose", choices=("primary", "diagnostic"), default="primary")
-    parser.add_argument("--checkpoint", type=Path)
+    model_input = parser.add_mutually_exclusive_group()
+    model_input.add_argument("--checkpoint", type=Path)
+    model_input.add_argument("--train-previous", action="store_true", help="Train only the incumbent for 20 rounds per seed, then share frozen copies between arms")
     parser.add_argument("--training-rounds", type=int, default=20)
     parser.add_argument("--rounds", type=int, default=20)
     parser.add_argument("--seeds", type=seeds_value, default=seeds_value("20261102,20261103,20261104"))
@@ -244,8 +342,10 @@ def main():
     args = parser.parse_args()
     if min(args.rounds, args.timeout, args.training_rounds) <= 0:
         parser.error("round counts and timeout must be positive")
-    if (args.checkpoint is not None) != (args.policy == "trained"):
-        parser.error("--checkpoint is required only for trained evaluation")
+    if bool(args.plan_addendum) != bool(args.plan_addendum_commit):
+        parser.error("--plan-addendum and --plan-addendum-commit must be supplied together")
+    if (args.checkpoint is not None or args.train_previous) != (args.policy == "trained"):
+        parser.error("trained evaluation requires exactly one of --checkpoint or --train-previous; other policies accept neither")
     run(args)
 
 

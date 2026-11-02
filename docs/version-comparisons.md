@@ -1,6 +1,6 @@
 # Comparing two bot versions
 
-`tools/compare.py` evaluates immutable copies of two AISurvivor bundles against the pinned Retcon opponent. It performs no training. Build both versions first and retain their separate directories containing the JAR, descriptor, and launchers. Descriptors and launchers must match between versions.
+`tools/compare.py` evaluates immutable copies of two AISurvivor bundles against the pinned Retcon opponent. Build both versions first and retain their separate directories containing the JAR, descriptor, and launchers. Descriptors and launchers must match between versions. Evaluation never trains; an explicit `--train-previous` option can prepare per-seed incumbent checkpoints before frozen evaluation.
 
 Example primary experiment, using JDK 25 on `PATH`:
 
@@ -19,6 +19,12 @@ Policies:
 - `untrained`: fresh seeded networks and frozen evaluation; no checkpoint is loaded or created.
 - `fixed-minrisk`: fixed minimum-risk action, no network/checkpoint learning. Seeds label game replicates but do not alter the fixed strategy.
 - `trained`: add `--checkpoint /path/to/model.dat --training-rounds 20`, where the round count must equal the checkpoint's training counter. The input model is snapshotted and copied separately for every arm/game. All input and per-game copies must remain unchanged.
+
+For a controlled targeting-statistics experiment, use `--policy trained --train-previous --training-rounds 20` instead of importing a checkpoint. The harness trains only the previous version for exactly 20 rounds separately for each of the three seeds, snapshots each resulting model, and gives both arms byte-identical copies of that seed's checkpoint. It validates the persisted training counter and evaluation telemetry, records all training battle results and model hashes, and excludes training scores from the primary decision. Planned budgets are 60 training rounds plus 120 evaluation rounds; early rejection records the actual smaller budget explicitly. Changing the training budget or combining this option with an imported checkpoint is rejected.
+
+Checkpoint diagnostics report saved class-targeting mass and nonzero bins, including per-class counts. Zero evidence is recorded as an inactive mechanism; it never triggers extra training, model replacement, or exclusion of a seed. Trained comparisons share checkpoint bytes within a seed rather than comparing cold networks, and frozen-policy seed labels do not imply paired game states.
+
+An optional prospective amendment can be bound with `--plan-addendum PATH --plan-addendum-commit FULL_COMMIT_SHA`. Both the original plan and amendment are read from their exact immutable Git blobs, copied separately into the artifact, and hashed in the report. Cycle 3 keeps its original registration plus the premeasurement diagnostics amendment this way.
 
 Exactly three distinct Java-compatible integer seeds are required. Primary experiments enforce exactly 20 rounds per version per seed; short runs must be diagnostic and cannot yield a retain decision. Each seed runs both arms, alternating launch order between blocks. The plan path must be inside this repository; the harness reads its immutable Git blob at the complete `--plan-commit` SHA, rather than trusting the working-tree file or an arbitrary label. The output directory must be empty. The artifact contains both complete bundle snapshots and hashes, input checkpoint when applicable, registered plan copy/hash, source identifiers, opponent provenance, runtime, official scores, raw per-round telemetry, and runner logs. `comparison.json` is updated after each arm so failures retain partial evidence. A failed or invalid battle is not a measured loss.
 
