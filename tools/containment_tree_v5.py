@@ -13,12 +13,19 @@ PARAMETERS = dict(maxLeafDepth=3, minLeaf=200, quantileCount=32,
     quantileRule='sorted[floor(j*(n-1)/33)],j=1..32,deduplicate;left<=threshold',
     minReduction=1e-12, minimumGain=.02, objective='sum-three-output-squared-error',
     target='candidate-containment-minus-current-containment',
-    tieOrder='feature-index,ascending-threshold;candidate=linear,circular,headon')
+    tieOrder='within1e-12:feature-index,ascending-threshold;candidate=linear,circular,headon')
 
 
 def thresholds(values):
     ordered = sorted(values)
     return sorted({ordered[j * (len(ordered) - 1) // 33] for j in range(1, 33)})
+
+
+def better_split(reduction, best_reduction):
+    # First split needs >1e-12; subsequent near ties preserve earlier traversal.
+    if best_reduction is None:
+        return reduction > PARAMETERS['minReduction']
+    return reduction > best_reduction + PARAMETERS['minReduction']
 
 
 def build_tree(xs, ys, depth=0):
@@ -29,7 +36,7 @@ def build_tree(xs, ys, depth=0):
     node = dict(count=n, means=[value / n for value in totals])
     if depth == PARAMETERS['maxLeafDepth'] or n < 2 * PARAMETERS['minLeaf']:
         return node
-    best, best_reduction = None, PARAMETERS['minReduction']
+    best, best_reduction = None, None
     parent_term = sum(value * value / n for value in totals)
     for feature in range(len(v3.FEATURES)):
         order = sorted(range(n), key=lambda i: xs[i][feature])
@@ -45,7 +52,7 @@ def build_tree(xs, ys, depth=0):
                 continue
             reduction = sum(sums[a] ** 2 / left_count + (totals[a] - sums[a]) ** 2 / (n - left_count)
                             for a in range(3)) - parent_term
-            if reduction > best_reduction:
+            if better_split(reduction, best_reduction):
                 best_reduction = reduction
                 best = feature, positions[left_count]
     if best is None:

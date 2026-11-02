@@ -19,6 +19,12 @@ def synthetic_rows():
 
 
 class GainTreeTests(unittest.TestCase):
+    def test_first_split_floor_and_later_near_ties_are_distinct(self):
+        self.assertFalse(tree.better_split(1e-12, None))
+        self.assertTrue(tree.better_split(1.5e-12, None), 'do not double the initial floor')
+        self.assertFalse(tree.better_split(1 + .5e-12, 1), 'within-tolerance tie keeps earlier feature')
+        self.assertTrue(tree.better_split(1 + 2e-12, 1))
+
     def test_exact_quantiles_and_deduplication(self):
         self.assertEqual(tree.thresholds(list(reversed(range(101)))), list(range(3, 97, 3)))
         self.assertEqual(tree.thresholds([0] * 200 + [1] * 200), [0, 1])
