@@ -1,0 +1,19 @@
+name: Component diagnostics
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixtures:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline movement and swept-corridor fixtures
+        run: python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v

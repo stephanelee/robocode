@@ -1,0 +1,32 @@
+# Dual-aim component diagnostic v1
+
+This tooling experiment implements the [delegated next tests](retcon-next-experiments.md) using the [audited Retcon hints](retcon-review-response.md). It runs no game and changes no bot/JAR. Results are geometric command feasibility, not competitive scores. The prospective controller remains a hypothesis.
+
+## Frozen matrix and command family
+
+Before the first full run, freeze `dual-aim-v1` and its nine constant commands: target speed −8/0/+8 crossed with body turn −10/0/+10 degrees per turn. Baseline holds full speed in its current travel sign and zero turn. Both use legal engine acceleration/turn/wall mechanics. The selector maximizes the worst signed clearance, preferring baseline on exact ties, then fewer wall turns, smaller turn, and smaller target speed. Selection is in-sample optimization from this fixed command family, not an estimate of generalization or the accepted AIS behavior.
+
+Development: 816 states, ranges 150/250/350/450/550/650, every integer speed −8..8, headings 0/90 degrees, layouts open/wall-gap0/wall-gap32/corner. Withheld: 90 predetermined distinct states, ranges 200/400/600, speeds −7/−3/0/3/7, headings45/135, layouts open/wall-gap16/corner. Both use a 1000×1000 arena, a stationary shooter directly west, and delay0/1/3 after the hypothetical shot decision. Withheld outputs must be recorded after development without altering commands or thresholds; they are component holdout cases, not fresh competitive confirmation.
+
+For each state, test both Retcon model requests and powers1.2/2/3 simultaneously. These discrete power scenarios do not cover every legal power or finishing cap. Four uncertainty profiles: fresh scan plus Retcon alignment tolerance `atan(18/d)`; constant-heading back-extrapolated scan age2 plus5degrees; age5 plus15degrees; unrestricted heading. The age profiles are sensitivity scenarios, not proven bounds on Retcon private history. Stationary shooter position, firing time, and observed target state are fixture inputs; the tool never accesses Retcon private variables. A live controller would need explicit legal estimates and wider origin/time uncertainty.
+
+## Mechanics and collision meaning
+
+The movement port follows Tank Royale v1.4.0: speed update, movement along old heading, turn limited using new speed, first-wall intersection, speed zero after contact. In this version target speed0 stops immediately and reversal8→3; do not substitute textbook braking. A wall/corner does not independently clamp coordinates and slide the bot. Golden tests cover these source facts, positive/negative velocity, and delayed commands.
+
+Head-on uses the hypothetical target scan. Iterative linear aim uses Retcon's own coordinate-clamped constant-velocity forecast until bullet travel reaches forecast distance; that forecast is intentionally distinct from real movement physics. Gun firing occurs before same-turn gun rotation. Unknown actual gun direction is represented by the complete continuous alignment corridor around each model request, never an exact ray.
+
+The collision test minimizes distance analytically over the union of bullet radial segments for every angle in each corridor, against each post-move bot circle of radius18. This sweeps the bullet, matching the server's collision convention; the engine does not simultaneously sweep the moving bot. The creation turn uses bullet segment `[v,2v]`, because the server advances its tick before constructing `BulletLine`. We conservatively retain hypothetical bullets through arena walls: a removed bullet cannot invalidate positive clearance against this larger threat set. Therefore nonpositive clearance means **uncertified**, not a proven live collision. Horizon is the arena diagonal divided by minimum tested speed11 plus one turn; thereafter the extended radial threats lie outside all legal bot positions.
+
+Report baseline/proposed safe counts, uncertified finite-command states, wall contacts, and 20-turn RMS error of the opponent's constant-velocity forecast against each actual command trajectory. The latter measures forecast mismatch, not simulator prediction error. Golden conformance fixtures separately compare predicted states with explicit engine-derived numeric expectations; passing fixtures does not imply arbitrary live state accuracy. The dense independent segment oracle checks the analytic angular geometry, including interior headings, wraparound, and endpoint-miss/swept-hit cases.
+
+## Reproduction and decision
+
+Run bounded tests with `python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v`. Run `python tools/dual_aim_diagnostic.py --suite development --output benchmarks/dual-aim-v1/development.json`, then the unchanged command with `--suite withheld` and `withheld.json`. Outputs retain all rows and the exact tool SHA256. Python standard library only; no server/JDK/network needed. CI fixture job uses exactly Ubuntu26.04.
+
+Before gameplay, inspect conditional safety sensitivity, uncertified states and wall cost; unrestricted-heading results expose what cannot be guaranteed without a justified observation model. Do not implement a live exact-ray controller from a fresh-scan result alone. An isolated movement hypothesis, if justified, must use legal shot inference, uncertainty-aware reachable commands, a wall veto, and fallback; it needs an independently reviewed immutable mechanism/score protocol before performance matches. Keep firing alignment separate.
+
+## Primary sources
+
+- [Engine speed/turn rules](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/rules/math.kt), [turn pipeline](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/TurnProcessor.kt), [wall/circle collision](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/core/CollisionDetector.kt), and [BulletLine](https://github.com/robocode-dev/tank-royale/blob/v1.4.0/server/src/main/kotlin/dev/robocode/tankroyale/server/model/BulletLine.kt).
+- [Pinned Retcon linear aim](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/retcon/gun/LinearAimModel.java) and [gun alignment](https://github.com/robocode-dev/rumble-bots/blob/28981c7a469ac064194b41001cd7183ec5ecf189/bots/java/Retcon/src/fnl/bots/framework/roles/Gun.java#L45-L67).
