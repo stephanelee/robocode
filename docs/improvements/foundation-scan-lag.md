@@ -34,3 +34,28 @@ Retain only after both stages pass, actual engine-contract proof, required check
 Preserve canonical stage JSON, all 12 official game results/raw AIS metrics/native Retcon exports if both stages run, all six online endpoint models, immutable plans, source/JAR/runtime/opponent provenance, and process failures. Full bundle/JAR snapshots remain in the Actions artifact; do not duplicate the rejected candidate JAR in Git. Final report and independent review must distinguish correctness, compatibility, non-regression, and strength.
 
 At registration, the actual-engine trace and deterministic tests have passed; no candidate-versus-incumbent performance comparison has run. Root authorization and independent workflow preclear are still required before the first comparison.
+
+## Measured outcome
+
+**Decision: reject; restore incumbent gameplay and JAR.** All **120 fixed-policy rounds** completed in six valid 20-round games. Mean score share was **18.507154% → 18.417611%**, a **−0.0895434353 percentage-point** change, below the registered nonnegative threshold. Walls per 1,000 bot turns increased **2.407054 → 4.022308**, a **1.6710498411** ratio exceeding 1.2. Exactly these two guards failed. The mandatory online stage was correctly **skipped**, with no online games or models; a failed primary cannot be rescued by the veto stage.
+
+| Seed | Previous AIS / Retcon score | Candidate AIS / Retcon score | Previous share | Candidate share | Change | Wins previous / candidate |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 20261102 | 507 / 2711 | 536 / 2455 | 15.755% | 17.920% | +2.165301 pp | 1 / 2 |
+| 20261103 | 716 / 2616 | 567 / 2674 | 21.489% | 17.495% | −3.993995 pp | 1 / 1 |
+| 20261104 | 537 / 2401 | 636 / 2570 | 18.278% | 19.838% | +1.560064 pp | 2 / 2 |
+
+The mean weights the three games equally and the guard calculations use unrounded fractions. Two blocks improved; the worst loss stayed within five points. Candidate wins increased 4→5 of 60 rounds, and both versions recorded zero skipped turns. These passing secondary guards do not override the failed mean and wall-rate guards. Starts remain unpaired and the sample is small; the wall difference is an observation, not proof that the corrected ledger causes more collisions.
+
+Previous/candidate AIS hit rates were 212/2,093 (**10.129%**) versus 199/2,009 (**9.905%**); damage dealt 1,482.929 versus 1,377.503, damage taken 3,690.813 versus 3,672.504. Wall totals were 101 in 41,960 turns versus 163 in 40,524. Native Retcon exports were **complete for all six games**. Retcon's actual gun recorded 504/2,680 hits against previous and 505/2,657 against candidate; its internal exports are offline diagnostics and did not affect the decision or either bot's inputs.
+
+The actual pinned-engine precondition also passed under the **same JDK25 match runtime**: hits at turns 52 and 202 left scan `k` unchanged and changed scan `k+1` by damage −2 / bonus +1.5. This and the earlier Java17 recording establish the observation contract. They do not establish that retaining the bot correction meets the declared product-performance guards. The candidate is therefore not retained and issue #18 stays open; future work needs a separate prospective design.
+
+### Recorded provenance and disposition
+
+- [Measured run 41511115116 / job 125502888515](https://github.com/stephanelee/robocode/actions/runs/41511115116/job/125502888515) checked out exact candidate `78315b77eb4e763bb438cf0cb7df5e7535aa5638`; previous source remained `a1417774d4f31c43dca0cb83b13c9b216989fbb0`.
+- [Canonical JSON and all raw evidence](../../benchmarks/foundation-scan-lag/README.md), including original plan `9b5a5313f13719920b8abf04094dd9438a74b7df` and candidate addendum `677f622c8b90b89783b224e59d90e0da9942eca2`, are preserved with hash checks. No criteria changed after outcomes, no performance early stop, no failed performance attempt, and no rescue rerun occurred.
+- [Complete original artifact](https://github.com/stephanelee/robocode/actions/runs/41511115116/artifacts/13173640726) contains both immutable bundles; source/test changes remain as `candidate.patch`. Previous JAR SHA-256 `0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2`; rejected candidate `ecf46a218ed3c33ca904c0f94fb25dee2ddd44bd85e3847456833fe4944d6ce5`.
+- Build/parity: Java17. Matches: Temurin25.0.5+8-LTS, actual Ubuntu26.04.1, official Runner/server1.4.0, unchanged pinned Retcon0.2.0/API1.3.1. Runtime, opponent source, release asset, source and raw hashes are retained.
+
+The final PR reverts the candidate-only tracker source/regressions and tracked JAR exactly to the incumbent, and removes the temporary performance workflow. The tested comparison protocol, actual-engine recording tool/fixtures, raw evidence, and report remain. Independent review and final required checks govern merge; this report makes no strength or non-regression claim.
