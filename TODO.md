@@ -2,7 +2,7 @@
 
 Repository: https://github.com/stephanelee/robocode
 
-Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1b8e079ac`. Build and battle performance have not yet been verified.
+Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1b8e079ac`. The Java 17 build has since been verified locally and in GitHub Actions (PR #1); battle performance has not yet been verified.
 
 ## First milestone: reliable baseline
 
@@ -13,7 +13,7 @@ Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1
 - [ ] Fix round-end learning to preserve pending rewards and record terminal transitions for both death and survival.
 - [ ] Correct enemy turn-rate estimates for elapsed turns between scans.
 - [ ] Add focused tests for geometry, targeting defaults, and learning transitions.
-- [ ] Add a Gradle wrapper and CI for reproducible builds.
+- [x] Add a Gradle wrapper and CI for reproducible builds. (PR #1; local Java 17 build and GitHub Actions verified.)
 - [ ] Write a README and update stale architecture and bot metadata documentation.
 - [ ] Run baseline battles and record the results.
 

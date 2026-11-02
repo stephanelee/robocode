@@ -93,7 +93,7 @@ All in `AISurvivor.java` near the top:
 ## Bot API dependency
 
 ```
-dev.robocode.tankroyale:robocode-tankroyale-bot-api:0.36.1
+dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0
 ```
 
 Check [Maven Central](https://mvnrepository.com/artifact/dev.robocode.tankroyale/robocode-tankroyale-bot-api) for newer versions and update `build.gradle` accordingly.
