@@ -38,9 +38,9 @@ jobs:
           FULL: ${{ inputs.full || false }}
         run: |
           if [ "$FULL" = "true" ]; then
-            python tools/benchmark.py --rounds 3 --training-rounds 10 --timeout 90
+            python tools/benchmark.py --rounds 3 --training-rounds 10 --timeout 90 --require-metrics
           else
-            python tools/benchmark.py --smoke --timeout 90
+            python tools/benchmark.py --smoke --timeout 90 --require-metrics
           fi
       - name: Upload experiment and dashboard
         if: always()

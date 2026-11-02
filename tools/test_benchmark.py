@@ -3,10 +3,46 @@ from pathlib import Path
 import tempfile
 import unittest
 import zipfile
-from benchmark import extract, summarize_metrics, write_reports
+from benchmark import extract, summarize_metrics, validate_metrics, write_reports
 
 
 class BenchmarkTests(unittest.TestCase):
+    def metric(self, round_id=1, **overrides):
+        return dict(dict(schemaVersion=1, round=round_id, turns=100, mode="eval", seed=42,
+                         action=None, totalRounds=0, checkpointLoaded=False, shotsFired=10,
+                         bulletHits=2, hitRate=0.2, damageDealt=8.0, damageTaken=4.0,
+                         wallCollisions=0, botCollisions=0, skippedTurns=0,
+                         won=True, died=False, reward=15.0), **overrides)
+
+    def test_valid_cold_fixed_train_and_trained_evidence(self):
+        validate_metrics([self.metric()], 1, "untrained", 42, 10)
+        validate_metrics([self.metric(mode="fixed", action=0)], 1, "fixed-minrisk", 42, 10)
+        validate_metrics([self.metric(mode="train", totalRounds=1)], 1, "train", 42, 10)
+        validate_metrics([self.metric(totalRounds=10, checkpointLoaded=True)], 1, "trained", 42, 10)
+
+    def test_duplicate_rounds_do_not_pass_count_check(self):
+        with self.assertRaisesRegex(ValueError, "round IDs"):
+            validate_metrics([self.metric(), self.metric()], 2, "untrained", 42, 10)
+
+    def test_wrong_mode_seed_checkpoint_action_or_schema_is_rejected(self):
+        for changes in ({"mode": "train"}, {"seed": 43}, {"checkpointLoaded": True},
+                        {"action": 1}, {"schemaVersion": 2}, {"totalRounds": 10}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                validate_metrics([self.metric(**changes)], 1, "untrained", 42, 10)
+        with self.assertRaisesRegex(ValueError, "checkpoint status"):
+            validate_metrics([self.metric(totalRounds=10)], 1, "trained", 42, 10)
+
+    def test_nonfinite_negative_and_inconsistent_metrics_are_rejected(self):
+        for changes in ({"reward": float("nan")}, {"damageTaken": float("inf")},
+                        {"wallCollisions": -1}, {"shotsFired": True}, {"hitRate": 0.5},
+                        {"bulletHits": 11}, {"won": True, "died": True}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                validate_metrics([self.metric(**changes)], 1, "untrained", 42, 10)
+
+    def test_missing_telemetry_fails_required_gate(self):
+        with self.assertRaisesRegex(ValueError, "Expected 1 telemetry rows"):
+            validate_metrics([], 1, "untrained", 42, 10)
+
     def test_rejects_archive_traversal_before_extracting_anything(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

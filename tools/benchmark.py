@@ -5,6 +5,7 @@ import csv
 import hashlib
 import html
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -90,6 +91,46 @@ def summarize_metrics(records):
     return result
 
 
+def validate_metrics(records, rounds, policy, seed, training_rounds):
+    """Reject stale, duplicated, wrong-policy, or non-finite experiment evidence."""
+    if len(records) != rounds:
+        raise ValueError(f"Expected {rounds} telemetry rows, got {len(records)}")
+    expected_mode = "train" if policy == "train" else "fixed" if policy.startswith("fixed") else "eval"
+    round_ids = []
+    counters = ("turns", "totalRounds", "shotsFired", "bulletHits", "wallCollisions", "botCollisions", "skippedTurns")
+    for row in records:
+        if not isinstance(row, dict) or type(row.get("schemaVersion")) is not int or row["schemaVersion"] != 1:
+            raise ValueError("Unsupported telemetry schema")
+        if type(row.get("round")) is not int:
+            raise ValueError("Round ID must be an integer")
+        round_ids.append(row["round"])
+        if row.get("mode") != expected_mode or type(row.get("seed")) is not int or row["seed"] != seed:
+            raise ValueError("Telemetry mode or seed does not match requested experiment")
+        if type(row.get("checkpointLoaded")) is not bool or row["checkpointLoaded"] != (policy == "trained"):
+            raise ValueError("Telemetry checkpoint status does not match cold/trained policy")
+        expected_action = 0 if expected_mode == "fixed" else None
+        if "action" not in row or row["action"] != expected_action or (expected_action is not None and type(row["action"]) is not int):
+            raise ValueError("Telemetry action does not match requested policy")
+        for key in counters:
+            if type(row.get(key)) is not int or row[key] < 0:
+                raise ValueError(f"Telemetry {key} must be a non-negative integer")
+        for key in ("damageDealt", "damageTaken", "reward", "hitRate"):
+            if type(row.get(key)) not in (int, float) or not math.isfinite(row[key]):
+                raise ValueError(f"Telemetry {key} must be finite")
+        if min(row["damageDealt"], row["damageTaken"]) < 0 or row["bulletHits"] > row["shotsFired"]:
+            raise ValueError("Invalid damage or hit counts")
+        expected_rate = row["bulletHits"] / row["shotsFired"] if row["shotsFired"] else 0
+        if not math.isclose(row["hitRate"], expected_rate, abs_tol=0.000001):
+            raise ValueError("Telemetry hit rate disagrees with hit/shot counts")
+        expected_total = row["round"] if policy == "train" else training_rounds if policy == "trained" else 0
+        if row["totalRounds"] != expected_total:
+            raise ValueError("Telemetry training budget does not match requested experiment")
+        if any(type(row.get(key)) is not bool for key in ("won", "died")) or (row["won"] and row["died"]):
+            raise ValueError("Invalid round outcome flags")
+    if set(round_ids) != set(range(1, rounds + 1)):
+        raise ValueError("Telemetry round IDs must cover each requested round exactly once")
+
+
 def write_reports(output, report):
     (output / "results.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     fields = ["scenario", "policy", "rounds", "rank", "totalScore", "firstPlaces", "hitRate", "wallCollisions", "skippedTurns"]
@@ -147,10 +188,8 @@ def battle(args, output, runner, samples, scenario, opponents, policy, rounds, m
         raise ValueError("Battle participant identities do not match the requested roster")
     candidate = candidates[0]
     records = [json.loads(line) for line in metrics.read_text(encoding="utf-8").splitlines() if line.strip()] if metrics.exists() else []
-    if args.require_metrics and len(records) != rounds:
-        raise ValueError(f"Expected {rounds} telemetry rows, got {len(records)}")
-    if policy == "trained" and records and not all(row.get("checkpointLoaded", False) for row in records):
-        raise ValueError("Trained evaluation did not load its checkpoint")
+    if args.require_metrics or records:
+        validate_metrics(records, rounds, policy, args.seed, args.training_rounds)
     if policy != "train" and (digest(model) if model.exists() else None) != before:
         raise ValueError("Evaluation modified its checkpoint")
     return dict(scenario=scenario, policy=policy, rounds=rounds, **candidate,
