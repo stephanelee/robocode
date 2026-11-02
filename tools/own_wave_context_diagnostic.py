@@ -9,9 +9,11 @@ from pathlib import Path
 from legal_scan_dataset import load_events, parse_json, validated_groups, validate_manifest
 
 
-def contexts(records, manifest):
+def contexts(records, manifest, allowed_splits=('train', 'dev')):
     """Yield (game, round, turn, target), past-only context. No future label access."""
-    permitted = {g['gameId'] for g in manifest['games'] if g['split'] in ('train', 'dev')}
+    if not allowed_splits or set(allowed_splits) - {'train', 'dev', 'withheld', 'transfer'}:
+        raise ValueError('Explicit known context splits required')
+    permitted = {g['gameId'] for g in manifest['games'] if g['split'] in allowed_splits}
     restricted = dict(manifest, games=[g for g in manifest['games'] if g['gameId'] in permitted])
     _, groups = validated_groups([r for r in records if r['gameId'] in permitted], restricted)
     rounds = {}
