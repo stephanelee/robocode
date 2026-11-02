@@ -88,6 +88,34 @@ class LegalScanRecorderTest {
         assertFalse(recorder.enabled()); assertEquals(1, rows(path).size());
         assertEquals("failed", status(path).get("status").getAsString());
     }
+    @Test void lateSameRoundLoopAfterRoundEndDoesNotInvalidateOrLeakIntoNextRound() throws Exception {
+        Path path = temp.resolve("late-loop"); var recorder = new LegalScanRecorder(path, "late-loop", 100);
+        recorder.startRound(1); recorder.frame(1, 1, OWN, List.of(target(1, 1)));
+        recorder.finishRound(1);
+        String closedRows = Files.readString(path);
+        recorder.frame(1, 1, OWN, List.of(target(1, 1))); // go() resumed after round-end delivery
+        recorder.submitted(intent(1)); recorder.confirmed(shot(1));
+        assertTrue(recorder.enabled()); assertEquals(closedRows, Files.readString(path));
+        recorder.startRound(2); recorder.frame(2, 1, OWN, List.of(target(1, 1)));
+        recorder.finishRound(2); recorder.finishGame();
+        JsonObject next = rows(path).get(1);
+        assertTrue(next.get("previousIntent").isJsonNull());
+        assertEquals(0, next.getAsJsonArray("confirmedShots").size());
+        recorder.frame(2, 1, OWN, List.of(target(1, 1)));
+        assertTrue(recorder.enabled()); assertEquals("complete", status(path).get("status").getAsString());
+        assertEquals(2, rows(path).size());
+    }
+    @Test void duplicateActiveTurnAndWrongRoundAfterClosureStillFail() throws Exception {
+        for (boolean closed : List.of(false, true)) {
+            Path path = temp.resolve("invalid-loop-" + closed);
+            var recorder = new LegalScanRecorder(path, "invalid-loop", 100);
+            recorder.startRound(1); recorder.frame(1, 1, OWN, List.of(target(1, 1)));
+            if (closed) recorder.finishRound(1);
+            recorder.frame(closed ? 2 : 1, 1, OWN, List.of(target(1, 1)));
+            assertFalse(recorder.enabled()); recorder.finishGame();
+            assertEquals("failed", status(path).get("status").getAsString());
+        }
+    }
     @Test void enabledPreDecisionHookPreservesAcceptedCommandsAndState() throws Exception {
         JsonArray golden = JsonParser.parseString(Files.readString(TargetingCharacterizationTest.GOLDEN))
                 .getAsJsonObject().getAsJsonArray("outcomes");

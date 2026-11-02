@@ -56,16 +56,19 @@ final class LegalScanRecorder {
         buffer.setLength(0); pendingShots.clear(); seenShots.clear();
     }
     synchronized void submitted(Intent intent) {
-        if (enabled()) previousIntent = intent;
+        if (enabled() && !finished) previousIntent = intent;
     }
     synchronized void confirmed(Shot shot) {
-        if (!enabled()) return;
+        if (!enabled() || finished) return;
         Shot old = seenShots.putIfAbsent(shot.bulletId, shot);
         if (old != null && !old.equals(shot)) { fail("Conflicting confirmed own bullet identity"); return; }
         if (old == null) pendingShots.add(shot);
     }
     synchronized void frame(int number, int turn, Own own, List<Target> targets) {
         if (!enabled() || targets.isEmpty()) return;
+        // The bot loop can resume from go() after RoundEnded has closed this round.
+        // That snapshot is outside the capture, rather than another active turn.
+        if (finished && number == round) return;
         try {
             if (number != round || finished || turn <= lastTurn || turn < 1)
                 throw new IllegalArgumentException("Invalid or repeated capture turn");
@@ -121,7 +124,7 @@ final class LegalScanRecorder {
     }
     private void status() throws IOException {
         JsonObject result = new JsonObject(); result.addProperty("schemaVersion", 1);
-        result.addProperty("collectorVersion", "legal-scan-v1"); result.addProperty("gameId", gameId);
+        result.addProperty("collectorVersion", "legal-scan-v1.1-closed-round"); result.addProperty("gameId", gameId);
         result.addProperty("status", failed ? "failed" : gameFinished ? "complete" : "recording");
         result.add("rounds", rounds.deepCopy()); result.addProperty("error", error);
         Files.writeString(Path.of(path + ".status.json"), JSON.toJson(result) + "\n");

@@ -43,7 +43,7 @@ def run(args):
     jar_hash = benchmark.digest(args.bot_dir / "AISurvivor.jar")
     dataset_id = "ais-own-wave-confirm-v3" if wave_context else "ais-containment-confirm-v2" if confirmation else "ais-motion-pilot-v1"
     manifest = dict(schemaVersion=1, datasetId=dataset_id, provenance=dict(sourceCommit=source_commit,
-        botJarSha256=jar_hash, engineVersion=benchmark.VERSION, collectorVersion="legal-scan-v1"), games=games)
+        botJarSha256=jar_hash, engineVersion=benchmark.VERSION, collectorVersion="legal-scan-v1.1-closed-round"), games=games)
     legal_scan_dataset.validate_manifest(manifest)
     if source_commit == "0" * 40 or jar_hash == "0" * 64:
         raise ValueError("Synthetic provenance is forbidden for real acquisition")
@@ -86,6 +86,7 @@ def run(args):
             status = json.loads(Path(str(events) + ".status.json").read_text())
             records = list(legal_scan_dataset.load_events(events))
             if (status["status"] != "complete" or status["gameId"] != game_id or status["error"] is not None
+                    or status["collectorVersion"] != manifest["provenance"]["collectorVersion"]
                     or {r["round"] for r in status["rounds"]} != {1, 2, 3}
                     or len(status["rounds"]) != 3 or any(not r["complete"] for r in status["rounds"])
                     or {r["round"] for r in records} != {1, 2, 3}
