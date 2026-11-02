@@ -31,3 +31,15 @@ Keep accepted fixed-minimum-risk controller, pinned Retcon28981c7a/official1.4 s
 Fresh gates stay unchanged: Retcon gain at least2points,2/3 improving games, worst/short losses at most2points, coverage; each transfer game's primary containment loss at most2points AND mean radial error increase at most5pixels. All six games are required; no Retcon-only deployment if transfer fails. A pass would establish only a bounded offline mechanism. A separate prospectively reviewed live gun-only A/B is required before any gameplay promotion.
 
 Retain every outcome in docs/improvements.md with measured budgets, decision, PR/report/raw links. Independent reviewer owns merge. No automatic fit/collection retries, threshold changes or further model variation are authorized.
+
+## Measured result: reject at development
+
+The exact single [fit/screen run41540789004](https://github.com/stephanelee/robocode/actions/runs/41540789004), source `dd2ce34c55f413b0b6fcd075be367cd27cf8076c`, completed successfully under the prospectively reviewed044e manifest/protocol. Frozen model SHA-256 `10599435a4fa41480efa011b6cc4a0ff63ccc61a8f3c280f31cedff0c7ec6f4b` was published before the development job. No model/source/hyperparameter changes or second fit occurred.
+
+**Reject:** development containment6.551200%→7.794587% (**+1.243387pp**, required≥2). All three development games improved (+0.638350,+1.801202,+1.290609pp); coverage, improved-game, worst-game and short-horizon checks passed. The sole failed check is primaryGain. Mean radial error148.020468→125.686838pixels is diagnostic and does not override rejection. Independent review reproduced all cells, selection/containment counts and the exact gate decision from raw data and frozen weights.
+
+The declared training population supplied14,128 raw anchors:11,533 Retcon and2,595 reused sample anchors. Eligible fitted counts at horizons8/16/24/32/40 were13,487/13,272/13,056/12,840/12,625. The unchanged row weighting is dominated by long Retcon games; this was declared before fitting. No sample training error is presented as transfer success.
+
+**The18 fresh rounds were not run.** Their mf4 IDs/layout remain unused. Zero new observation games, old-withheld scoring, live gun changes, refits, rescue runs or gate waivers follow. This test does not establish whether mixed training improves fresh sample behavior; it failed the prerequisite Retcon development gate. Existing v3 fresh-transfer rejection remains unchanged.
+
+[PR #33](https://github.com/stephanelee/robocode/pull/33), [exact frozen model/reports/provenance](../benchmarks/ai-mixed-population-v4/README.md), [experiment index](improvements.md). The optional collector and all production source/JAR remain byte-identical to accepted50b2. These research weights are never loaded by AISurvivor. Any further variation requires a new prospective protocol and independent review.
