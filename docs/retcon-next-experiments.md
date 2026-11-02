@@ -9,7 +9,7 @@ This is the prospective roadmap after the [source-audited external review](retco
 - Independent review agent: review source fidelity, legal information boundaries, fixtures, prospective protocols, CI, and eventual outcomes; merge approved PRs. Implementation agents do not merge their own changes.
 - Coordinating agent: track the experiments and document accepted/rejected results with the user. No performance matches are authorized by this document alone: publish an immutable prospective mechanism/score protocol and obtain independent preclearance first.
 
-No opponent besides pinned Java Retcon is added. No Python bot dependency or live opponent-private telemetry is used.
+Retcon is the hard competitive target. The already pinned official Java samples remain a fast 1v1 regression/transfer baseline as requested; sample wins do not establish general strength. No new opponent download or Python bot dependency is required. Live opponent-private telemetry is never used.
 
 ## Hints translated into tests
 
@@ -29,7 +29,7 @@ Baseline: maintain current travel sign at full speed, without turning. Proposed 
 
 Version the small deterministic suite independently of competitive battles. Development cases cover open arena, wall and corner contact, positive/negative velocity, turn/brake/reverse commands, scan delays, and legal-observation uncertainty. Freeze a separate predetermined withheld set before examining its output; do not tune against it. Report exact grid coverage and baseline/candidate swept incoming-collision exposure to head-on/linear corridors, wall contacts, and trajectory prediction error against explicit golden fixtures or held-out trajectories. Distinguish simulator conformance error from an opponent constant-velocity forecast error. Fixture exposure is not a gameplay win rate. CI should run the bounded component tests; full grid artifacts remain reproducible offline.
 
-Retcon remains the only competitive opponent. After component development, a separately registered fresh Retcon confirmation is required before claiming strength improvement. Neither development fixtures nor the withheld suite substitutes for it.
+Use the already pinned official samples for fast regression/transfer checks and Retcon for hard-target confirmation. After component development, a separately registered fresh Retcon confirmation is required before claiming improvement against Retcon. Neither development fixtures nor the withheld suite substitutes for it.
 
 ## Decision before gameplay implementation
 
