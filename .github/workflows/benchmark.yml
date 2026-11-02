@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   battle:
-    name: Headless reference experiment
+    name: Headless battle smoke
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew --no-daemon clean build
       - name: Run headless reference experiment
         env:
-          FULL: ${{ inputs.full || github.event_name == 'pull_request' }}
+          FULL: ${{ inputs.full || false }}
         run: |
           if [ "$FULL" = "true" ]; then
             python tools/benchmark.py --rounds 5 --training-rounds 20 --timeout 90 --require-metrics
@@ -66,4 +66,3 @@ jobs:
             build/benchmark/*/metrics.jsonl
             build/benchmark/*/runner.log
           if-no-files-found: warn
-

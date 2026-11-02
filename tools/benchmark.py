@@ -133,7 +133,7 @@ def validate_metrics(records, rounds, policy, seed, training_rounds):
 
 def write_reports(output, report):
     (output / "results.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    fields = ["scenario", "policy", "rounds", "rank", "totalScore", "firstPlaces", "hitRate", "wallCollisions", "skippedTurns"]
+    fields = ["scenario", "policy", "rounds", "rank", "totalScore", "survival", "firstPlaces", "hitRate", "wallCollisions", "skippedTurns"]
     with (output / "results.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fields)
         writer.writeheader()
@@ -142,13 +142,15 @@ def write_reports(output, report):
     rows = []
     for battle in report["battles"]:
         values = [battle.get(key, battle.get("metrics", {}).get(key, "")) for key in fields]
+        values[fields.index("hitRate")] = f"{battle['metrics']['hitRate']:.1%}" if battle.get("metrics", {}).get("hitRate") is not None else "—"
         rows.append("<tr>" + "".join(f"<td>{html.escape(str(value))}</td>" for value in values) + "</tr>")
-    headers = "".join(f"<th>{html.escape(field)}</th>" for field in fields)
+    labels = {"scenario": "Scenario", "policy": "Policy", "rounds": "Rounds", "rank": "Rank", "totalScore": "Score", "survival": "Survival", "firstPlaces": "Wins", "hitRate": "Hit rate", "wallCollisions": "Walls", "skippedTurns": "Skipped"}
+    headers = "".join(f"<th>{labels[field]}</th>" for field in fields)
     notes = html.escape(report["limitations"])
     page = f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AISurvivor battle results</title>
 <style>body{{font:16px system-ui;background:#111827;color:#e5e7eb;max-width:1200px;margin:40px auto;padding:0 20px}}h1{{color:#67e8f9}}.scroll{{overflow:auto}}table{{border-collapse:collapse;width:100%;background:#1f2937}}th,td{{padding:12px;text-align:left;border-bottom:1px solid #374151}}th{{color:#a5f3fc}}p{{line-height:1.6}}input{{padding:10px;font:inherit;margin:12px 0;width:260px}}</style>
 <h1>AISurvivor battle results</h1><p>Tank Royale {VERSION} · seed {report['seed']} · training budget {report['trainingRounds']} rounds per scenario</p>
-<p>{notes}</p><label>Filter scenarios or policies <input id="filter" placeholder="e.g. trained or Walls"></label><div class="scroll"><table><thead><tr>{headers}</tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<p>{notes}</p><p>Learning comparison: compare <strong>untrained</strong> with <strong>trained</strong> for the same scenario. Training rows show the separate training budget, not evaluation strength.</p><label>Filter scenarios or policies <input id="filter" placeholder="e.g. trained or Walls"></label><div class="scroll"><table><thead><tr>{headers}</tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p>Scores are comparable within a scenario and round budget. Downloaded JSON/CSV retain full experiment metadata. Missing telemetry is not a zero measurement.</p>
 <script>document.getElementById('filter').addEventListener('input',e=>{{for(const r of document.querySelectorAll('tbody tr'))r.hidden=!r.textContent.toLowerCase().includes(e.target.value.toLowerCase())}});</script></html>"""
     (output / "dashboard.html").write_text(page, encoding="utf-8")

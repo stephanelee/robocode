@@ -1,0 +1,767 @@
+{
+  "schemaVersion": 1,
+  "tankRoyaleVersion": "1.4.0",
+  "sourceCommit": "dce935530f20e8be78e1530963085576adfca273",
+  "seed": 20261102,
+  "trainingRounds": 20,
+  "botJarSHA256": "0d120a0461a7bf32b1c6d6277da34f9480309f255caa44e168e6bcdf8636bff2",
+  "assetSHA256": {
+    "robocode-tankroyale-runner-1.4.0.jar": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "sample-bots-Java-1.4.0.zip": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2"
+  },
+  "limitations": "Reference experiment, not evidence that learning improves strength. Bot RNG is seeded; arena starting positions and engine scheduling are not seeded. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.",
+  "battles": [
+    {
+      "scenario": "Target",
+      "policy": "fixed-minrisk",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 889,
+      "survival": 250,
+      "bulletDamage": 491,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1560,
+        "shotsFired": 97,
+        "bulletHits": 63,
+        "damageDealt": 495.830136,
+        "damageTaken": 0,
+        "wallCollisions": 6,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.6494845360824743,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 889,
+          "survival": 250,
+          "bulletDamage": 491,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Target",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Target",
+      "policy": "untrained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 900,
+      "survival": 250,
+      "bulletDamage": 496,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1200,
+        "shotsFired": 69,
+        "bulletHits": 46,
+        "damageDealt": 520.046325,
+        "damageTaken": 0,
+        "wallCollisions": 7,
+        "botCollisions": 4,
+        "skippedTurns": 0,
+        "hitRate": 0.6666666666666666,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 900,
+          "survival": 250,
+          "bulletDamage": 496,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Target",
+          "rank": 2,
+          "totalScore": 1,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Target",
+      "policy": "train",
+      "rounds": 20,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 3614,
+      "survival": 1000,
+      "bulletDamage": 1934,
+      "firstPlaces": 20,
+      "metrics": {
+        "turns": 5147,
+        "shotsFired": 306,
+        "bulletHits": 210,
+        "damageDealt": 2024.811763,
+        "damageTaken": 0,
+        "wallCollisions": 264,
+        "botCollisions": 62,
+        "skippedTurns": 0,
+        "hitRate": 0.6862745098039216,
+        "roundsRecorded": 20,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 3614,
+          "survival": 1000,
+          "bulletDamage": 1934,
+          "firstPlaces": 20
+        },
+        {
+          "name": "Target",
+          "rank": 2,
+          "totalScore": 6,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "513ce6c9a75143b862d52ef5ff796234fcb983ae1c6f29628df3e42635b4677a"
+    },
+    {
+      "scenario": "Target",
+      "policy": "trained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 906,
+      "survival": 250,
+      "bulletDamage": 483,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1171,
+        "shotsFired": 69,
+        "bulletHits": 49,
+        "damageDealt": 496.062433,
+        "damageTaken": 0,
+        "wallCollisions": 10,
+        "botCollisions": 22,
+        "skippedTurns": 0,
+        "hitRate": 0.7101449275362319,
+        "roundsRecorded": 5,
+        "checkpointLoaded": true
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 906,
+          "survival": 250,
+          "bulletDamage": 483,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Target",
+          "rank": 2,
+          "totalScore": 2,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "513ce6c9a75143b862d52ef5ff796234fcb983ae1c6f29628df3e42635b4677a"
+    },
+    {
+      "scenario": "SpinBot",
+      "policy": "fixed-minrisk",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 864,
+      "survival": 250,
+      "bulletDamage": 457,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1146,
+        "shotsFired": 68,
+        "bulletHits": 42,
+        "damageDealt": 470.503376,
+        "damageTaken": 48,
+        "wallCollisions": 2,
+        "botCollisions": 12,
+        "skippedTurns": 0,
+        "hitRate": 0.6176470588235294,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 864,
+          "survival": 250,
+          "bulletDamage": 457,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 2,
+          "totalScore": 54,
+          "survival": 0,
+          "bulletDamage": 48,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "SpinBot",
+      "policy": "untrained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 800,
+      "survival": 250,
+      "bulletDamage": 417,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1227,
+        "shotsFired": 73,
+        "bulletHits": 40,
+        "damageDealt": 436.642362,
+        "damageTaken": 16,
+        "wallCollisions": 24,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.547945205479452,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 800,
+          "survival": 250,
+          "bulletDamage": 417,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 2,
+          "totalScore": 16,
+          "survival": 0,
+          "bulletDamage": 16,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "SpinBot",
+      "policy": "train",
+      "rounds": 20,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 3375,
+      "survival": 1000,
+      "bulletDamage": 1795,
+      "firstPlaces": 20,
+      "metrics": {
+        "turns": 4294,
+        "shotsFired": 247,
+        "bulletHits": 168,
+        "damageDealt": 1855.310195,
+        "damageTaken": 112,
+        "wallCollisions": 73,
+        "botCollisions": 32,
+        "skippedTurns": 0,
+        "hitRate": 0.680161943319838,
+        "roundsRecorded": 20,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 3375,
+          "survival": 1000,
+          "bulletDamage": 1795,
+          "firstPlaces": 20
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 2,
+          "totalScore": 124,
+          "survival": 0,
+          "bulletDamage": 112,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "49a59e9e8e38e900e82e4ca5d21a5e80a268a79cd32e22ea0262c8b3aa92b3b8"
+    },
+    {
+      "scenario": "SpinBot",
+      "policy": "trained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 876,
+      "survival": 250,
+      "bulletDamage": 462,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 883,
+        "shotsFired": 49,
+        "bulletHits": 35,
+        "damageDealt": 474.010821,
+        "damageTaken": 48,
+        "wallCollisions": 10,
+        "botCollisions": 16,
+        "skippedTurns": 0,
+        "hitRate": 0.7142857142857143,
+        "roundsRecorded": 5,
+        "checkpointLoaded": true
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 876,
+          "survival": 250,
+          "bulletDamage": 462,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 2,
+          "totalScore": 54,
+          "survival": 0,
+          "bulletDamage": 48,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "49a59e9e8e38e900e82e4ca5d21a5e80a268a79cd32e22ea0262c8b3aa92b3b8"
+    },
+    {
+      "scenario": "Walls",
+      "policy": "fixed-minrisk",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 789,
+      "survival": 250,
+      "bulletDamage": 407,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1474,
+        "shotsFired": 94,
+        "bulletHits": 53,
+        "damageDealt": 422.98508,
+        "damageTaken": 30,
+        "wallCollisions": 2,
+        "botCollisions": 1,
+        "skippedTurns": 0,
+        "hitRate": 0.5638297872340425,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 789,
+          "survival": 250,
+          "bulletDamage": 407,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 31,
+          "survival": 0,
+          "bulletDamage": 30,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Walls",
+      "policy": "untrained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 803,
+      "survival": 250,
+      "bulletDamage": 419,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1432,
+        "shotsFired": 90,
+        "bulletHits": 47,
+        "damageDealt": 419.158406,
+        "damageTaken": 10,
+        "wallCollisions": 16,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.5222222222222223,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 803,
+          "survival": 250,
+          "bulletDamage": 419,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 10,
+          "survival": 0,
+          "bulletDamage": 10,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "Walls",
+      "policy": "train",
+      "rounds": 20,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 3212,
+      "survival": 1000,
+      "bulletDamage": 1702,
+      "firstPlaces": 20,
+      "metrics": {
+        "turns": 5626,
+        "shotsFired": 348,
+        "bulletHits": 200,
+        "damageDealt": 1809.848396,
+        "damageTaken": 110,
+        "wallCollisions": 150,
+        "botCollisions": 3,
+        "skippedTurns": 0,
+        "hitRate": 0.5747126436781609,
+        "roundsRecorded": 20,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 3212,
+          "survival": 1000,
+          "bulletDamage": 1702,
+          "firstPlaces": 20
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 112,
+          "survival": 0,
+          "bulletDamage": 110,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "5247001a635c60a7de3f466db9ec4b853dcd442cb0584361e6089e0403793ad4"
+    },
+    {
+      "scenario": "Walls",
+      "policy": "trained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 838,
+      "survival": 250,
+      "bulletDamage": 448,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 1235,
+        "shotsFired": 73,
+        "bulletHits": 44,
+        "damageDealt": 459.143419,
+        "damageTaken": 60,
+        "wallCollisions": 59,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.6027397260273972,
+        "roundsRecorded": 5,
+        "checkpointLoaded": true
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 838,
+          "survival": 250,
+          "bulletDamage": 448,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 60,
+          "survival": 0,
+          "bulletDamage": 60,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "5247001a635c60a7de3f466db9ec4b853dcd442cb0584361e6089e0403793ad4"
+    },
+    {
+      "scenario": "melee",
+      "policy": "fixed-minrisk",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 2184,
+      "survival": 750,
+      "bulletDamage": 1087,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 3812,
+        "shotsFired": 256,
+        "bulletHits": 164,
+        "damageDealt": 1116.424442,
+        "damageTaken": 100,
+        "wallCollisions": 0,
+        "botCollisions": 13,
+        "skippedTurns": 0,
+        "hitRate": 0.640625,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 2184,
+          "survival": 750,
+          "bulletDamage": 1087,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 584,
+          "survival": 450,
+          "bulletDamage": 125,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 3,
+          "totalScore": 427,
+          "survival": 200,
+          "bulletDamage": 210,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Target",
+          "rank": 4,
+          "totalScore": 102,
+          "survival": 100,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "melee",
+      "policy": "untrained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 2231,
+      "survival": 750,
+      "bulletDamage": 1108,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 4172,
+        "shotsFired": 280,
+        "bulletHits": 165,
+        "damageDealt": 1162.525232,
+        "damageTaken": 82,
+        "wallCollisions": 0,
+        "botCollisions": 1,
+        "skippedTurns": 0,
+        "hitRate": 0.5892857142857143,
+        "roundsRecorded": 5,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 2231,
+          "survival": 750,
+          "bulletDamage": 1108,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 652,
+          "survival": 500,
+          "bulletDamage": 150,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 3,
+          "totalScore": 297,
+          "survival": 200,
+          "bulletDamage": 96,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Target",
+          "rank": 4,
+          "totalScore": 50,
+          "survival": 50,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": null
+    },
+    {
+      "scenario": "melee",
+      "policy": "train",
+      "rounds": 20,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 8659,
+      "survival": 3000,
+      "bulletDamage": 4163,
+      "firstPlaces": 20,
+      "metrics": {
+        "turns": 15246,
+        "shotsFired": 1009,
+        "bulletHits": 584,
+        "damageDealt": 4394.69769,
+        "damageTaken": 390,
+        "wallCollisions": 107,
+        "botCollisions": 136,
+        "skippedTurns": 0,
+        "hitRate": 0.578790882061447,
+        "roundsRecorded": 20,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 8659,
+          "survival": 3000,
+          "bulletDamage": 4163,
+          "firstPlaces": 20
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 2311,
+          "survival": 1650,
+          "bulletDamage": 628,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 3,
+          "totalScore": 1597,
+          "survival": 750,
+          "bulletDamage": 805,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Target",
+          "rank": 4,
+          "totalScore": 606,
+          "survival": 600,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "5cf77b0d136104dd040391018d46c92652f4e8d61911fa7b2cb1ac504ae9c648"
+    },
+    {
+      "scenario": "melee",
+      "policy": "trained",
+      "rounds": 5,
+      "name": "AISurvivor",
+      "rank": 1,
+      "totalScore": 2169,
+      "survival": 750,
+      "bulletDamage": 1073,
+      "firstPlaces": 5,
+      "metrics": {
+        "turns": 3961,
+        "shotsFired": 263,
+        "bulletHits": 148,
+        "damageDealt": 1100.990287,
+        "damageTaken": 80,
+        "wallCollisions": 32,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.5627376425855514,
+        "roundsRecorded": 5,
+        "checkpointLoaded": true
+      },
+      "results": [
+        {
+          "name": "AISurvivor",
+          "rank": 1,
+          "totalScore": 2169,
+          "survival": 750,
+          "bulletDamage": 1073,
+          "firstPlaces": 5
+        },
+        {
+          "name": "Walls",
+          "rank": 2,
+          "totalScore": 574,
+          "survival": 400,
+          "bulletDamage": 170,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Spin Bot",
+          "rank": 3,
+          "totalScore": 318,
+          "survival": 150,
+          "bulletDamage": 156,
+          "firstPlaces": 0
+        },
+        {
+          "name": "Target",
+          "rank": 4,
+          "totalScore": 200,
+          "survival": 200,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "modelSHA256": "5cf77b0d136104dd040391018d46c92652f4e8d61911fa7b2cb1ac504ae9c648"
+    }
+  ]
+}
