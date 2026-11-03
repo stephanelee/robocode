@@ -28,3 +28,25 @@ Seeds initialize AIS RNG, not server starts; rounds adapt within games and are d
 ## Evidence
 
 Preserve the immutable Git plan/layout bytes before matches, complete200 per-round records, ten official arrays/logs, ten native exports/hashes, ten independent20-round numeric model endpoints, labelled/original launcher and bundle pins, runtime provenance, both batch reports, original execution driver/workflow and one canonical aggregate decision. No private opponent data enters the live bot. Report every outcome and update `docs/improvements.md` with this PR/result/evidence. Independent review and required protected-branch CI precede merge; no gameplay/JAR changes are authorized by this experiment.
+
+## Actual outcome: invalid acquisition; reliability not confirmed
+
+[PR #44](https://github.com/stephanelee/robocode/pull/44), [single run41575285157](https://github.com/stephanelee/robocode/actions/runs/41575285157), execution `e631f152fd06468e541552a962d7256407fc1216`. The frozen946 source/9679 JAR and acquisition helpers were unchanged. Batch1 completed five games/100 rounds. Batch2 completed its first game, then its second game `dc946-b2-g02` recorded **one AIS skipped turn in round4**, with `checkpointLoaded=false`. The existing strict harness rejected that game after its20 rounds finished and stopped batch2; the aggregate job was correctly skipped.
+
+The attempt therefore contains **140 physical rounds /140 raw records /seven official games /seven native exports /seven model endpoints**, with **120 strictly validated rounds** and **60 planned rounds unplayed**. All seven checkpoints have finite numeric state and header counter20. No loaded model, source substitution or performance retry occurred. The cause of the skipped turn is not established; it is not attributed to CI infrastructure or waived as harmless.
+
+**Reliable beating is not confirmed by this attempt.** Completeness and zero-skip requirements failed. The complete-cohort performance rules and binding ten-game Student-t gate were not evaluated on this incomplete population. No complete confirmation decision was fabricated, no subset was promoted, and the skipped game was not replaced. PR43's accepted whole-product improvement remains intact. This closes the finite automatic benchmark sequence with an unconfirmed outcome; no additional tuning, rescue or benchmark is scheduled.
+
+The following are every actually played game's descriptive official outcomes, including the invalid game. They are not a substitute for the registered confirmation:
+
+| Game | Share | Official wins /20 | Acquisition |
+| --- | --- | --- | --- |
+| dc946-b1-g01 | 89.910667% | 20 | Valid |
+| dc946-b1-g02 | 81.217985% | 17 | Valid |
+| dc946-b1-g03 | 87.843137% | 19 | Valid |
+| dc946-b1-g04 | 93.914917% | 20 | Valid |
+| dc946-b1-g05 | 82.523759% | 18 | Valid |
+| dc946-b2-g01 | 95.020325% | 20 | Valid |
+| dc946-b2-g02 | 93.434874% | 20 | **Invalid: one skipped turn, round4** |
+
+[Preserved original reports/raw/models and explicit invalid-attempt summary](../../benchmarks/final-default-confirmation/README.md). Both batch artifacts and the original registered layout/plan are retained. The one-shot workflow was removed before any further push. The round-level Wilson formula assumes IID binomial trials and would be descriptive only here; no interval or t gate is computed from this incomplete population.
