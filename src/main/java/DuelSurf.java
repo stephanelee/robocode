@@ -1,14 +1,14 @@
 import java.util.List;
 
 /**
- * Pure 1v1 movement controller using matched-hit danger, with head-on/linear fallback. The body stays roughly
+ * Pure 1v1 movement controller against an opponent that fires head-on or linear aim. The body stays roughly
  * perpendicular to the opponent (tilted to hold range) and each turn the controller chooses a travel option:
  * full speed in either direction along that line (driving forward or backward, whichever keeps the body
  * orientation), or stopping. Each option is simulated in the pinned Tank Royale 1.4.0 order: new speed from
  * {@code calcNewBotSpeed}, movement along the current body heading, then a turn limited by the new speed. The option
- * with the best worst-wave safety wins: learned matched-hit mass covered by our footprint when sufficient, or
- * lateral clearance from both reconstructed analytic aim points otherwise. Paths that touch a wall or move further
- * into the wall envelope are rejected. Inputs are only our own state, scans, legally inferred waves and matched hits.
+ * that keeps the largest minimum lateral clearance from both reconstructed aim points of every known incoming wave
+ * wins; paths that touch a wall or move further into the wall envelope are rejected. Inputs are only our own state,
+ * the opponent's scanned position and legally inferred waves.
  */
 final class DuelSurf {
     static final double PREFERRED_RANGE = 450;
@@ -18,24 +18,13 @@ final class DuelSurf {
     static final double CLEARANCE_CAP = 60;
     static final int HORIZON = 90;
     static final int WALL_HORIZON = 20;
-    static final double MIN_PROFILE_HITS = 3;
 
     private static final double ACCELERATION = 1, DECELERATION = -2, MAX_SPEED = 8, MAX_TURN = 10;
 
     private DuelSurf() {}
 
     /** An inferred wave whose shooter aimed at {@code aimTurn} from the origin with the given bearings. */
-    record Threat(double originX, double originY, double bulletSpeed, int aimTurn, double headOn, double linear,
-                  double bearingToUs, double[] danger) {
-        Threat {
-            // Each decision sees only the legal matched-hit history available when this threat was constructed.
-            danger = danger == null ? null : danger.clone();
-        }
-
-        Threat(double originX, double originY, double bulletSpeed, int aimTurn, double headOn, double linear) {
-            this(originX, originY, bulletSpeed, aimTurn, headOn, linear, Double.NaN, null);
-        }
-    }
+    record Threat(double originX, double originY, double bulletSpeed, int aimTurn, double headOn, double linear) {}
 
     /** Body heading to turn toward, signed target speed, and the chosen travel sign (+1, -1, or 0 to stop). */
     record Command(double bodyHeading, double targetSpeed, int travelSign) {}
@@ -121,7 +110,7 @@ final class DuelSurf {
     }
 
     /**
-     * Minimum safety score over threats when executing a command every turn, or a very negative score
+     * Minimum capped lateral clearance over threats when executing a command every turn, or a very negative score
      * if the simulated path touches a wall or moves further into the wall envelope. Each simulated turn follows the
      * engine: speed update, movement along the current heading, then a turn limited both by the bot's request (current
      * speed) and by the engine (new speed).
@@ -163,52 +152,12 @@ final class DuelSurf {
                 done[i] = true;
                 remaining--;
                 double bearing = CombatMath.bearing(px - t.originX(), py - t.originY());
-                double probability = profileDanger(t, bearing, distance);
-                if (Double.isFinite(probability)) {
-                    clearance = Math.min(clearance, CLEARANCE_CAP * (1 - probability));
-                } else {
-                    double lateral = Math.min(lateral(bearing, t.headOn()), lateral(bearing, t.linear())) * distance;
-                    clearance = Math.min(clearance, lateral);
-                }
+                double lateral = Math.min(lateral(bearing, t.headOn()), lateral(bearing, t.linear())) * distance;
+                clearance = Math.min(clearance, lateral);
             }
             if (remaining == 0 && step >= WALL_HORIZON) break;
         }
         return clearance;
-    }
-
-    /**
-     * Fraction of the legally learned hit distribution covered by the predicted bot footprint. A one-bin
-     * triangular kernel (1/4, 1/2, 1/4, renormalized at the edges) prevents a single bin boundary from appearing
-     * perfectly safe. Returns NaN until at least three finite, nonnegative effective matched hits exist, so the
-     * original analytic score remains exact without adequate evidence. This uses EnemyWave.hitBin's unsigned
-     * geometric GF convention; no lateral-direction mirroring or unobserved opponent bullet is introduced.
-     */
-    static double profileDanger(Threat threat, double bearing, double distance) {
-        double[] bins = threat.danger;
-        if (bins == null || bins.length < 3 || !Double.isFinite(threat.bearingToUs())
-                || !Double.isFinite(threat.bulletSpeed()) || threat.bulletSpeed() <= 0
-                || !Double.isFinite(bearing) || !Double.isFinite(distance) || distance <= 0) return Double.NaN;
-        double total = 0;
-        for (double value : bins) {
-            if (!Double.isFinite(value) || value < 0) return Double.NaN;
-            total += value;
-        }
-        if (!Double.isFinite(total) || total < MIN_PROFILE_HITS) return Double.NaN;
-        double escape = Math.toDegrees(Math.asin(Math.min(1, 8 / threat.bulletSpeed())));
-        if (!Double.isFinite(escape) || escape <= 0) return Double.NaN;
-        double offset = CombatMath.relativeAngle(bearing - threat.bearingToUs());
-        double halfWidth = Math.toDegrees(Math.asin(Math.min(1, BOT_RADIUS / distance)));
-        int low = CombatMath.gfBin((offset - halfWidth) / escape, bins.length);
-        int high = CombatMath.gfBin((offset + halfWidth) / escape, bins.length);
-        double probability = 0;
-        for (int i = 0; i < bins.length; i++) {
-            double available = 0.5 + (i > 0 ? 0.25 : 0) + (i + 1 < bins.length ? 0.25 : 0);
-            double covered = i >= low && i <= high ? 0.5 : 0;
-            if (i > 0 && i - 1 >= low && i - 1 <= high) covered += 0.25;
-            if (i + 1 < bins.length && i + 1 >= low && i + 1 <= high) covered += 0.25;
-            probability += (bins[i] / total) * covered / available;
-        }
-        return Math.max(0, Math.min(1, probability));
     }
 
     static double wallDistance(double x, double y, double width, double height) {
