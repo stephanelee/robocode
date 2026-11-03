@@ -96,7 +96,7 @@ Reported per arm and stage:
 
 ## Results
 
-Everything above this heading is byte-identical to the registered plan at `5f5ff460eaad190a6bc3dec507f6eee732474164`, which was also the measured candidate source; the driver stored the plan blob.
+The text above this heading is the registered plan, unchanged since `5f5ff460eaad190a6bc3dec507f6eee732474164`, which was also the measured candidate source. The driver stored that commit's Git blob, which has LF line endings, as `raw/primary/preregistered-plan.md`. That copy is byte-identical to the blob. A working-tree checkout converted to CRLF differs only in line endings. *(Wording corrected after the PR #38 review, 2026-11-03.)*
 
 There was a single registered run, [41551240407](https://github.com/stephanelee/robocode/actions/runs/41551240407), with no reruns:
 - **CI:** job 125639064038, every step green.
@@ -185,17 +185,32 @@ The score gain comes from survival. Our own hit rate and damage dealt per turn w
 - **Score:** the mean delta was +3.507 pp. The registered z lower bound was +2.011 pp, against a non-inferiority margin of −5 pp. The t lower bound was +1.784 pp.
 - **Other measures:** wins went from 0 to 5, with zero skipped turns.
 - **Retcon hit rate:** Retcon's actual hit rate fell from 40.18% to 32.19% in this mode.
-- **Why the gain is small here:** default training mode lets the DQN choose among six actions, so the duel controller runs only when the DQN picks action 0. Its default-mode benefit is therefore small. This stage is a safety veto, not evidence of a learning benefit.
+- **Why the gain is small here (hypothesis):** default training mode lets the DQN choose among six actions, and the duel controller runs only when the DQN picks action 0. A plausible explanation for the small default-mode benefit is that action 0 is chosen only part of the time. Action-frequency telemetry was not captured, so this is untested. *(Qualified after the PR #38 review.)* This stage is a safety veto, not evidence of a learning benefit.
 
 ### Interpretation and limitations
 
 - **Fact:** under the registered fixed duel policy, AISurvivor now outscores pinned Retcon 0.2.0 on average (58.56% share), wins a majority of rounds (87 of 160) and wins 7 of 8 blocks.
 - **Hypothesis:** whether AISurvivor robustly beats Retcon in fresh games is a separate question. Per the [strategy](../retcon-strategy.md), that needs a frozen-version confirmation on fresh games, with its own prospectively registered budget and pass rules. Development games and this run cannot serve as that confirmation.
-- **Default mode:** default training mode remains much weaker (about 18% share), because the DQN rarely relies on action 0. Making the duel controller dominant in default play would be a separate, registered change.
+- **Default mode:** default training mode remains much weaker (about 18% share). Whether this is because the DQN rarely selects action 0 is a hypothesis; action frequencies were not recorded. Making the duel controller dominant in default play would be a separate, registered change.
 - **Rule caveats** (disclosed in the PR #37 review correction):
   - The registered z bound is a large-sample approximation.
   - The wins and wall guards are uncalibrated under an effect.
-  - The effect here is about eight standard errors above the floor, so neither caveat changes the decision.
+  - The effect here is about 14.9 standard errors above the +5 pp floor ((43.769 − 5) / 2.602), so neither caveat changes the decision. *(Arithmetic corrected after the PR #38 review; the earlier text said "about eight".)*
 - **Exclusions:** starts are unpaired and unseeded, Retcon adapts within each game, and Retcon counters are offline diagnostics only. The development games disclosed above are excluded from this decision.
 
 PR: [#38](https://github.com/stephanelee/robocode/pull/38). Evidence: [raw evidence](../../benchmarks/duel-surf/README.md).
+
+## Review outcome and follow-up (2026-11-03)
+
+The independent PR #38 review reproduced all 700 telemetry rows, the official games, the Retcon exports, the 180 file hashes, the 16 online trajectories and checkpoints, the source/JAR identity and the registered decisions.
+
+It also found two physics defects in the controller's own simulation:
+1. `nextSpeed` used textbook braking instead of the pinned engine's `calcNewBotSpeed`. The engine stops immediately for a target of 0, and goes 8 → +3 on a full reversal.
+2. `score()` translated along the proposed direction, whereas the server moves along the current heading and only then applies a speed-limited turn. A near-wall counterexample showed a chosen reversal that would actually hit the wall.
+
+**What this result does and does not establish.**
+- These defects do not invalidate the measured result above, which concerns the code exactly as measured.
+- Fixing them changes the candidate. Gameplay is therefore not merged on this run's evidence.
+- The corrected controller is registered as a fresh comparison in [duel-surf-v2](duel-surf-v2.md).
+- The 16 online-training `model.dat` files are now preserved under `benchmarks/duel-surf/raw/online/`, with hashes matching `experiment.json`.
+

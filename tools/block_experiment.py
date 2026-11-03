@@ -18,15 +18,26 @@ import benchmark
 import compare
 import retcon
 import retcon_stats
+from decision_rule_analysis import T95
 
-Z = 1.6448536269514722  # one-sided 95%
+Z = 1.6448536269514722  # one-sided 95% (large-sample; registered for duel-surf v1)
 SAMPLE_ROUNDS = 10
 
 
-def block_stats(blocks):
+def quantile(bound, blocks):
+    """One-sided 95% quantile: 'z' (v1 registration) or Student-t with blocks - 1 df (PR #37 review correction)."""
+    if bound == 'z':
+        return Z
+    if bound == 't':
+        return T95[blocks - 1]
+    raise ValueError('bound must be z or t')
+
+
+def block_stats(blocks, bound='z'):
     deltas = [b['candidate']['scoreShare'] - b['previous']['scoreShare'] for b in blocks]
     mean = statistics.mean(deltas)
     se = statistics.stdev(deltas) / math.sqrt(len(deltas))
+    Z = quantile(bound, len(deltas))
     totals = {}
     for arm in ('previous', 'candidate'):
         turns = sum(b[arm]['metrics']['turns'] for b in blocks)
@@ -39,11 +50,12 @@ def block_stats(blocks):
                            damageDealt=sum(b[arm]['metrics']['damageDealt'] for b in blocks),
                            shots=sum(b[arm]['metrics']['shotsFired'] for b in blocks),
                            hits=sum(b[arm]['metrics']['bulletHits'] for b in blocks))
-    return dict(deltas=deltas, meanDelta=mean, deltaSE=se, lowerBound95=mean - Z * se, arms=totals)
+    return dict(deltas=deltas, meanDelta=mean, deltaSE=se, bound=bound, quantile=Z, lowerBound95=mean - Z * se,
+                arms=totals)
 
 
-def primary_decision(blocks, blocks_required):
-    s = block_stats(blocks)
+def primary_decision(blocks, blocks_required, bound='z'):
+    s = block_stats(blocks, bound)
     prev, cand = s['arms']['previous'], s['arms']['candidate']
     checks = dict(complete=len(blocks) == blocks_required,
                   meanGain=s['meanDelta'] >= 0.05 - 1e-12,
@@ -54,8 +66,8 @@ def primary_decision(blocks, blocks_required):
     return dict(status='pass' if all(checks.values()) else 'fail', checks=checks, **s)
 
 
-def online_decision(blocks, blocks_required):
-    s = block_stats(blocks)
+def online_decision(blocks, blocks_required, bound='z'):
+    s = block_stats(blocks, bound)
     checks = dict(complete=len(blocks) == blocks_required,
                   nonInferior=s['lowerBound95'] >= -0.05 - 1e-12,
                   noSkippedTurns=s['arms']['candidate']['skippedTurns'] == 0)
@@ -107,6 +119,8 @@ def main():
     parser.add_argument('--sample-seed', type=int, required=True)
     parser.add_argument('--java', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--bound', choices=('z', 't'), default='z',
+                        help="One-sided 95%% bound: 'z' reproduces v1, 't' is the PR #37 Student-t correction")
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -121,7 +135,7 @@ def main():
     report = dict(schemaVersion=1, status='running', plan=str(args.plan), planCommit=args.plan_commit,
                   previousSource=args.previous_source, candidateSource=args.candidate_source, bundleSHA256=hashes,
                   blocksPerArm=args.blocks, roundsPerBlock=args.rounds, seedBase=args.seed_base,
-                  sampleSeed=args.sample_seed, runtimeOS=retcon_stats.os_provenance(),
+                  sampleSeed=args.sample_seed, bound=args.bound, runtimeOS=retcon_stats.os_provenance(),
                   primaryBlocks=[], samples=[], onlineBlocks=[])
     destination = output / 'experiment.json'
 
@@ -164,7 +178,7 @@ def main():
                       f"candidate={block['candidate']['scoreShare']:.2%}", flush=True)
 
         retcon_stage('primary', 'fixed-minrisk', 'primaryBlocks')
-        report['primary'] = primary_decision(report['primaryBlocks'], args.blocks)
+        report['primary'] = primary_decision(report['primaryBlocks'], args.blocks, args.bound)
         report['primaryMechanism'] = retcon_mechanism(report['primaryBlocks'])
         save()
         archive = benchmark.download(cache, 'sample-bots-Java-1.4.0.zip', benchmark.ASSETS['sample-bots-Java-1.4.0.zip'])
@@ -186,7 +200,7 @@ def main():
         online = None
         if report['primary']['status'] == 'pass':
             retcon_stage('online', 'train', 'onlineBlocks')
-            online = report['online'] = online_decision(report['onlineBlocks'], args.blocks)
+            online = report['online'] = online_decision(report['onlineBlocks'], args.blocks, args.bound)
             report['onlineMechanism'] = retcon_mechanism(report['onlineBlocks'])
         compare.verify_snapshots(snapshots, hashes)
         report.update(status='complete', decision=final_decision(report['primary'], report['samples'], online))

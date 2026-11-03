@@ -2,19 +2,24 @@ import java.util.List;
 
 /**
  * Pure 1v1 movement controller against an opponent that fires head-on or linear aim. The body stays roughly
- * perpendicular to the opponent (tilted to hold range) and the controller chooses a travel option each turn:
- * full speed in either direction along that line, or stopping. Each option is simulated with Tank Royale
- * acceleration (1) and deceleration (2) until every known incoming wave arrives, and the option that keeps the
- * largest minimum lateral clearance from both reconstructed aim points wins. Paths that leave the wall envelope
- * are rejected. Inputs are only our own state, the opponent's scanned position and legally inferred waves.
+ * perpendicular to the opponent (tilted to hold range) and each turn the controller chooses a travel option:
+ * full speed in either direction along that line (driving forward or backward, whichever keeps the body
+ * orientation), or stopping. Each option is simulated in the pinned Tank Royale 1.4.0 order: new speed from
+ * {@code calcNewBotSpeed}, movement along the current body heading, then a turn limited by the new speed. The option
+ * that keeps the largest minimum lateral clearance from both reconstructed aim points of every known incoming wave
+ * wins; paths that touch a wall or move further into the wall envelope are rejected. Inputs are only our own state,
+ * the opponent's scanned position and legally inferred waves.
  */
 final class DuelSurf {
     static final double PREFERRED_RANGE = 450;
     static final double MAX_TILT = 30;
     static final double WALL_MARGIN = 30;
+    static final double BOT_RADIUS = 18;
     static final double CLEARANCE_CAP = 60;
     static final int HORIZON = 90;
     static final int WALL_HORIZON = 20;
+
+    private static final double ACCELERATION = 1, DECELERATION = -2, MAX_SPEED = 8, MAX_TURN = 10;
 
     private DuelSurf() {}
 
@@ -24,16 +29,27 @@ final class DuelSurf {
     /** Body heading to turn toward, signed target speed, and the chosen travel sign (+1, -1, or 0 to stop). */
     record Command(double bodyHeading, double targetSpeed, int travelSign) {}
 
-    static double nextSpeed(double speed, double target) {
-        if (speed == target) return speed;
-        if (speed == 0 || Math.signum(speed) == Math.signum(target)) {
-            if (Math.abs(target) > Math.abs(speed)) return speed + Math.signum(target) * Math.min(1, Math.abs(target - speed));
-            return speed - Math.signum(speed) * Math.min(2, Math.abs(speed - target));
+    /** Port of Tank Royale 1.4.0 {@code calcNewBotSpeed} (rules/math.kt), including its zero-crossing rule. */
+    static double nextSpeed(double current, double target) {
+        if (current < 0) return -nextSpeed(-current, -target);
+        if (current > 0) {
+            if (Math.signum(current) == Math.signum(target)) {
+                double diff = target - current;
+                if (diff >= 0) return Math.min(current + Math.min(diff, ACCELERATION), MAX_SPEED);
+                return Math.max(current + Math.max(diff, DECELERATION), -MAX_SPEED);
+            }
+            if (target == 0) return 0;
+            double decelerationTime = current / -DECELERATION;
+            return (1 - decelerationTime) * -ACCELERATION;
         }
-        // Opposite sign or stopping: decelerate by 2; crossing zero keeps only what deceleration leaves.
-        double magnitude = Math.abs(speed) - 2;
-        if (magnitude >= 0) return Math.signum(speed) * magnitude;
-        return target == 0 ? 0 : Math.signum(target) * Math.min(1, -magnitude / 2);
+        double diff = target - current;
+        double acceleration = Math.min(Math.abs(diff), ACCELERATION);
+        return diff >= 0 ? Math.min(current + acceleration, MAX_SPEED) : Math.max(current - acceleration, -MAX_SPEED);
+    }
+
+    /** Engine body turn limit for a speed. */
+    static double maxTurn(double speed) {
+        return MAX_TURN - 0.75 * Math.min(MAX_SPEED, Math.abs(speed));
     }
 
     /** Travel direction for a sign: perpendicular to the opponent, tilted inward when far and outward when close. */
@@ -44,30 +60,36 @@ final class DuelSurf {
         return bearing + sign * (90 - tilt);
     }
 
+    /** The command that realises a travel option: forward or backward along the travel line, or stop. */
+    static Command command(double bodyDirection, double travel, int sign) {
+        if (sign == 0) return new Command(normalize(bodyDirection), 0, 0);
+        boolean forward = Math.abs(CombatMath.relativeAngle(travel - bodyDirection)) <= 90;
+        return new Command(normalize(forward ? travel : travel + 180), forward ? MAX_SPEED : -MAX_SPEED, sign);
+    }
+
     static Command choose(double x, double y, double bodyDirection, double speed, int now,
                           double enemyX, double enemyY, List<Threat> threats, int currentSign,
                           double width, double height) {
         int first = currentSign == 0 ? 1 : currentSign;
-        int bestSign = first;
-        double bestScore = Double.NEGATIVE_INFINITY, bestDirection = bodyDirection;
         // Rotate toward the centre only when neither perpendicular direction can be held (e.g. in a corner).
         boolean cornered = true;
-        for (int sign : new int[]{1, -1})
-            if (score(x, y, bodyDirection, speed, travelDirection(x, y, enemyX, enemyY, sign), sign, now,
-                    List.of(), width, height) > -500) cornered = false;
+        for (int sign : new int[]{1, -1}) {
+            Command plain = command(bodyDirection, travelDirection(x, y, enemyX, enemyY, sign), sign);
+            if (score(x, y, bodyDirection, speed, plain, now, List.of(), width, height) > -500) cornered = false;
+        }
+        Command best = null;
+        double bestScore = Double.NEGATIVE_INFINITY;
         for (int sign : new int[]{first, -first, 0}) {
-            double direction = sign == 0 ? (speed >= 0 ? bodyDirection : bodyDirection + 180)
-                    : cornered ? safeTravelDirection(x, y, bodyDirection, speed, now, enemyX, enemyY, sign, width, height)
+            double travel = sign == 0 ? bodyDirection : cornered
+                    ? safeTravelDirection(x, y, bodyDirection, speed, now, enemyX, enemyY, sign, width, height)
                     : travelDirection(x, y, enemyX, enemyY, sign);
-            double score = score(x, y, bodyDirection, speed, direction, sign, now, threats, width, height);
+            Command candidate = command(bodyDirection, travel, sign);
+            double score = score(x, y, bodyDirection, speed, candidate, now, threats, width, height);
             if (sign == currentSign) score += 3;  // hysteresis
             if (sign != 0) score += 1;            // prefer moving when equally safe
-            if (score > bestScore) { bestScore = score; bestSign = sign; bestDirection = direction; }
+            if (score > bestScore) { bestScore = score; best = candidate; }
         }
-        if (bestSign == 0) return new Command(bodyDirection, 0, 0);
-        // Drive forward or backward, whichever body orientation is closer to the current one.
-        boolean forward = Math.abs(CombatMath.relativeAngle(bestDirection - bodyDirection)) <= 90;
-        return new Command(forward ? normalize(bestDirection) : normalize(bestDirection + 180), forward ? 8 : -8, bestSign);
+        return best;
     }
 
     /**
@@ -81,43 +103,47 @@ final class DuelSurf {
         double turn = Math.signum(CombatMath.relativeAngle(centre - direction));
         for (int step = 0; step <= 9; step++) {
             double candidate = direction + turn * step * 10;
-            if (score(x, y, bodyDirection, speed, candidate, sign, now, List.of(), width, height) > -500)
-                return candidate;
+            if (score(x, y, bodyDirection, speed, command(bodyDirection, candidate, sign), now, List.of(),
+                    width, height) > -500) return candidate;
         }
         return direction;
     }
 
     /**
-     * Minimum capped lateral clearance over threats when holding one option, or a very negative score if the
-     * path leaves the wall envelope. The initial speed along {@code direction} is the projection of the current
-     * velocity (body heading times signed speed); afterwards the bot accelerates toward 8 (or brakes to 0).
+     * Minimum capped lateral clearance over threats when executing a command every turn, or a very negative score
+     * if the simulated path touches a wall or moves further into the wall envelope. Each simulated turn follows the
+     * engine: speed update, movement along the current heading, then a turn limited both by the bot's request (current
+     * speed) and by the engine (new speed).
      */
-    static double score(double x, double y, double bodyDirection, double speed, double direction, int sign, int now,
+    static double score(double x, double y, double bodyDirection, double speed, Command command, int now,
                         List<Threat> threats, double width, double height) {
-        double rad = Math.toRadians(direction);
-        double cos = Math.cos(rad), sin = Math.sin(rad);
-        double along = speed * Math.cos(Math.toRadians(bodyDirection - direction));
-        double px = x, py = y;
+        double px = x, py = y, heading = bodyDirection, v = speed;
         double clearance = CLEARANCE_CAP;
         boolean[] done = new boolean[threats.size()];
         int remaining = threats.size();
         for (int i = 0; i < threats.size(); i++) {
             Threat t = threats.get(i);
             // A wave whose front is already more than a bot radius past us cannot hit any option.
-            if (t.bulletSpeed() * (now - t.aimTurn() + 1) > Math.hypot(x - t.originX(), y - t.originY()) + 18) {
+            if (t.bulletSpeed() * (now - t.aimTurn() + 1) > Math.hypot(x - t.originX(), y - t.originY()) + BOT_RADIUS) {
                 done[i] = true;
                 remaining--;
             }
         }
         int horizon = remaining == 0 ? WALL_HORIZON : HORIZON;
         for (int step = 1; step <= horizon; step++) {
-            along = nextSpeed(along, sign == 0 ? 0 : 8);
             double before = wallDistance(px, py, width, height);
-            px += cos * along;
-            py += sin * along;
+            double requested = Math.max(-maxTurn(v), Math.min(maxTurn(v),
+                    CombatMath.relativeAngle(command.bodyHeading() - heading)));
+            v = nextSpeed(v, command.targetSpeed());
+            double rad = Math.toRadians(heading);
+            px += Math.cos(rad) * v;
+            py += Math.sin(rad) * v;
+            if (px < BOT_RADIUS || py < BOT_RADIUS || px > width - BOT_RADIUS || py > height - BOT_RADIUS)
+                return -1000 + step;  // wall contact
             double after = wallDistance(px, py, width, height);
-            // Only moving further into the envelope counts: a bot already touching a wall may slide along or leave it.
+            // Moving further into the envelope is rejected; a bot already near a wall may slide along or leave it.
             if (after < WALL_MARGIN && after < before - 1e-9) return -1000 + step;
+            heading += Math.max(-maxTurn(v), Math.min(maxTurn(v), requested));
             for (int i = 0; i < threats.size(); i++) {
                 if (done[i]) continue;
                 Threat t = threats.get(i);

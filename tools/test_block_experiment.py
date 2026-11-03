@@ -47,5 +47,15 @@ class BlockExperimentTests(unittest.TestCase):
         self.assertEqual(final_decision(passed, rows, passed)['status'], 'reject')
 
 
+    def test_student_t_bound_is_stricter_than_z(self):
+        deltas = [.30, -.05, .20, .02, .15, -.02, .10, .00]
+        z = primary_decision(blocks(deltas), 8, 'z')
+        t = primary_decision(blocks(deltas), 8, 't')
+        self.assertAlmostEqual(t['quantile'], 1.894579)
+        self.assertLess(t['lowerBound95'], z['lowerBound95'])
+        self.assertAlmostEqual(z['meanDelta'], t['meanDelta'])
+        with self.assertRaises(ValueError):
+            primary_decision(blocks(deltas), 8, 'normal')
+
 if __name__ == '__main__':
     unittest.main()

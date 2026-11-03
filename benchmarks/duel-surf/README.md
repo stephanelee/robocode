@@ -16,13 +16,14 @@ The protocol, results and decision are in the [report](../../docs/improvements/d
 ## Files
 
 - `raw/experiment.json`: all 32 Retcon battles, the 6 sample battles, the decisions, the Retcon mechanism aggregates, and bundle/opponent/runtime hashes.
-- `raw/preregistered-plan.md`: byte-identical to `docs/improvements/duel-surf.md` at `5f5ff46`.
+- `raw/preregistered-plan.md`: byte-identical to the Git blob (LF) of `docs/improvements/duel-surf.md` at `5f5ff46`.
+- `raw/online/block-*/*/Retcon-train/model.dat`: the 16 online-training endpoint checkpoints, added after the review from the same artifact. Their SHA256 values match `modelSHA256` in `experiment.json`.
 - Per-battle files under `raw/{primary,online}/block-*/{previous,candidate}/` and `raw/samples/*/`:
   - `battle.json`: official results.
   - `metrics.jsonl`: AIS telemetry.
   - `runner.log`: runner log.
   - `retcon-stats/*`: unmodified Retcon native exports.
-- `files.sha256.json`: SHA256 of all 180 retained files, plus the source run and artifact.
+- `files.sha256.json`: SHA256 of all 196 retained files (180 original plus 16 models), plus the source run and artifact.
 
 ## How the evidence was collected
 
