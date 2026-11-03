@@ -78,7 +78,7 @@ The text above this heading is the registered plan, unchanged since `f3db2d4ee9c
 - Every step was green and nothing was rerun.
 - It ran on actual Ubuntu 26.04.1 LTS. Java 17 JAR parity passed, and the matches ran on Temurin 25.0.5+8.
 - The candidate JAR was `21c5c3d2cb4007e3e0603556af313df7f5717732e384f039b005e9e72b2daecd`. The baseline JAR hash was verified before launch.
-- All 60 games (240 rounds) completed with validated telemetry.
+- All 60 games (**120 rounds**: 60 battles of 2 rounds each) completed with validated telemetry.
 
 **Decision: retain-neutral.** The candidate never skipped more than the baseline, but it did not skip less either. No reliability effect is claimed. The warm-up and the latency telemetry stay, as registered.
 
@@ -95,12 +95,12 @@ The text above this heading is the registered plan, unchanged since `f3db2d4ee9c
 - Mean score shares were descriptive only: Retcon 91.9% (baseline) and 96.2% (candidate); melee 30.3% and 29.6%.
 
 **Root-cause diagnostic (exploratory, after the run, not registered).**
-- *Setup.* I wrote a probe bot whose run loop does nothing but call `go()` and logs its own `SkippedTurnEvent`s. I added it as an eighth opponent in three local 2-round melees (Ubuntu 24.04, development seeds 7000–7002).
-- *Result.* The probe itself logged a skip at **round 1, turn 1**, and AISurvivor skipped in one of the three games.
-- *Interpretation.* The round-1 melee skip happens at the start of a multi-bot game regardless of a bot's own work. Its likely cause is contention while the runner starts and source-compiles eight bot JVMs, but that remains a hypothesis. It is not caused by AISurvivor's decision code. That is why warming up the decision code could not remove it.
+- *Setup.* I wrote a probe bot whose run loop does nothing but call `go()` and logs its own `SkippedTurnEvent`s. I added it as an eighth opponent in three local 2-round melees (Ubuntu 24.04, development seeds 7000–7002). Its source, descriptor, log and the three games' official results and AISurvivor telemetry are in [`benchmarks/warmup-reliability/exploratory-probe/`](../../benchmarks/warmup-reliability/exploratory-probe/).
+- *Result.* The probe logged one skip at **round 1, turn 1**. Its log does not identify which of the three games that was. AISurvivor skipped once, in round 1 of the first game.
+- *Interpretation (hypothesis).* The round-1 melee skip may occur at the start of a multi-bot game regardless of a bot's own work. Contention while the runner starts and source-compiles eight bot JVMs is one plausible cause. This is a single small local observation with round-level records only, not per-turn attribution. It is **not** sufficient grounds to exclude skips from future confirmation protocols. The CI fact that AISurvivor's own decision latency never exceeded 12.3 ms does show its decision code was not slow, which explains why warming that code up could not help.
 - *Not explained.* The single skip that invalidated [#44](final-default-confirmation.md) occurred in a **1v1 Retcon** game at round 4, so it is a different event and remains unexplained. Future runs now record `maxTurnMicros` and `slowTurns`, so such an event can be attributed or ruled out.
 
-**Recommendation for future confirmation protocols.** Treat round-1 skips in melee as an environmental start-up effect. Either measure the bot's own decision latency instead, or start scoring after a warm-up round. Skips at any later turn should still be counted.
+**Suggestion for future confirmation protocols (needs its own evidence).** If the start-up hypothesis is confirmed with per-turn attribution, a protocol could pair each skip with the bot's own decision latency, or begin scoring after a warm-up round. Until then, every skip counts.
 
 **Local observations, disclosed before registration (not evidence):**
 - *Cloud container.* The baseline skipped in 3/8 melee games and the candidate in 0/8. That apparent effect did not reproduce under registered conditions.
@@ -112,3 +112,16 @@ The text above this heading is the registered plan, unchanged since `f3db2d4ee9c
 - The probe diagnostic is small and was run outside CI.
 
 Evidence: [raw evidence](../../benchmarks/warmup-reliability/README.md).
+
+## Review correction (2026-11-03)
+
+The independent review of PR #47 found an arithmetic error. This correction is appended; the registered text above is left as written.
+
+**The error.** The plan's procedure line reads "60 games, 120 game starts across both arms, and 240 rounds", and its limitations mention "30 game starts per arm per scenario". Both double the actual design. The design was 15 games per arm per scenario, and each arm played 15 Retcon and 15 melee games. That is 60 battles of 2 rounds each:
+- **60** game starts in total, **15 per arm per scenario**;
+- **120** rounds.
+
+**What it changes.** The executed procedure (`--games 15 --rounds 2`) is what the plan's command line specified, and the decision rule never depended on the doubled numbers. So the registered decision, retain-neutral, is unchanged.
+
+The results line above is corrected. The index row in `docs/improvements.md` and the PR description are corrected to match.
+
