@@ -76,6 +76,7 @@ final class WaveSurfMove {
         State state=initial;
         double[] lower=new double[waves.size()],upper=new double[waves.size()];
         boolean[] contact=new boolean[waves.size()],done=new boolean[waves.size()];
+        int remaining=waves.size();
         java.util.Arrays.fill(lower,Double.POSITIVE_INFINITY);
         java.util.Arrays.fill(upper,Double.NEGATIVE_INFINITY);
         for(int k=1;k<=HORIZON;k++) {
@@ -99,8 +100,11 @@ final class WaveSurfMove {
                     lower[i]=Math.min(lower[i],center-span);upper[i]=Math.max(upper[i],center+span);
                     contact[i]=true;
                 }
-                if(lo>distance+BODY) done[i]=true;
+                if(lo>distance+BODY) {done[i]=true;remaining--;}
             }
+            // Future decisions replan. Walls after every selected wave is gone and the existing 20-turn
+            // wall horizon has elapsed must not retroactively invalidate an otherwise safe avoidance path.
+            if(remaining==0 && k>=DuelSurf.WALL_HORIZON) break;
         }
         double risk=0;
         for(int i=0;i<waves.size();i++) {

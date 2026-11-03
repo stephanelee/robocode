@@ -24,3 +24,6 @@ Schema1 per-round JSONL records name/version, mode=train, seed, round, roundsCom
 
 
 v0.3 inferred-wave defense pilot:20 rounds rejected,0wins/1.524562% share; no fresh60. [Registered family and outcome](../../docs/improvements/diamond-surf-v3.md). Production AIS unchanged; ContextGun/power/radar code fixed, no paired-causal claim.
+
+
+v0.4 relevant-wave termination correction: deterministic late-wall scoring defect reproduced, but fresh20-round progress pilot rejected (1win/8.301405%share); no fresh60. [Source proof/protocol/outcome](../../docs/improvements/diamond-wave-horizon-v4.md). No production transfer or paired-causal claim.

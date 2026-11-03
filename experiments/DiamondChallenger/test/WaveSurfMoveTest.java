@@ -75,4 +75,27 @@ class WaveSurfMoveTest {
         var choice=WaveSurfMove.choose(780,300,0,8,10,500,300,List.of(imminent),1,800,600);
         assertEquals(0,choice.command().targetSpeed(),1e-12);
     }
+    @Test void wallAfterWavePassageAndTwentySafeTurnsCannotVetoCurrentMovement() {
+        // A reachable straight approach: own x=352 at decision94, six eastward speed8 steps to x=400.
+        // Enemy stays at (500,300), giving the legal frozen bearing180 and zero lateral speed.
+        var t=new WaveSurfMove.Threat(500,300,14,95,180,1,0,null);
+        for(int sign:new int[]{1,-1}) {
+            var s=new WaveSurfMove.State(400,300,0,8);int passed=0,wall=0;
+            for(int k=1;k<=90;k++) {
+                var command=DuelSurf.command(s.heading(),DuelSurf.travelDirection(s.x(),s.y(),500,300,sign),sign);
+                var next=WaveSurfMove.step(s,command);
+                double before=DuelSurf.wallDistance(s.x(),s.y(),800,600);
+                double after=DuelSurf.wallDistance(next.x(),next.y(),800,600);
+                if(next.x()<18||next.y()<18||next.x()>782||next.y()>582
+                        ||(after<30&&after<before-1e-9)){wall=k;break;}
+                s=next;
+                if(passed==0&&WaveSurfMove.segmentStart(t,100+k)>Math.hypot(s.x()-500,s.y()-300)+18)passed=k;
+            }
+            assertEquals(3,passed);assertEquals(50,wall);
+        }
+        // The original90-step planner returned STOP solely because both future walls made risk infinite.
+        // The finite contact risk ties STOP, so the unchanged current-option tie rule now retains movement.
+        var choice=WaveSurfMove.choose(400,300,0,8,100,500,300,List.of(t),1,800,600);
+        assertEquals(1,choice.option());assertTrue(choice.plannerUsed());
+    }
 }
