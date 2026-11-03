@@ -1,0 +1,61 @@
+name: Isolated Aegis bullet-shield pilot
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+jobs:
+  aegis:
+    if: github.head_ref == 'experiment/aegis-shield-v1' && github.event.label.name == 'run-aegis-v1'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Freeze Aegis source/JAR, registration and prove production unchanged (Java 17)
+        shell: bash
+        run: |
+          test -z "$(git diff --name-only 7fd5b8b2064dd66de0aa9f9076064e5cc70cd00e HEAD -- experiments/Aegis)"
+          test -z "$(git diff --name-only dfff83366be12ab2e302d02a1465f421a5a21b27 HEAD -- docs/improvements/aegis-shield-v1.md)"
+          test -z "$(git diff --name-only 9b1624da2d9b09ec9cc4f580b51bc82edd2c1485 HEAD -- src/main/java src/test/java AISurvivor build.gradle settings.gradle)"
+          echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  AISurvivor/AISurvivor.jar' | sha256sum -c -
+          echo '50a6b48fc1c20c1153c02702de3c69d345f12bf02125e3eb67585e7bf0505e24  experiments/Aegis/Aegis.jar' | sha256sum -c -
+          ./gradlew -p experiments/Aegis --no-daemon clean build
+          python tools/verify_jar.py experiments/Aegis/Aegis.jar experiments/Aegis/build/bot/Aegis/Aegis.jar
+          cp experiments/Aegis/Aegis.jar experiments/Aegis/build/bot/Aegis/Aegis.jar
+          python -m unittest discover -s tools -p 'test_aegis_experiment.py' -v
+          python -m unittest discover -s tools -p 'test_strong*.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: One fresh 20-round pilot, conditional fresh 3x20 confirmation
+        run: >-
+          python tools/aegis_experiment.py
+          --bot-dir experiments/Aegis/build/bot/Aegis
+          --java "$JAVA_HOME/bin/java" --output build/aegis-shield-v1
+      - name: Preserve every original outcome and runtime pin
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aegis-shield-v1-${{ github.event.pull_request.head.sha }}
+          path: |
+            build/aegis-shield-v1/
+            tools/aegis_experiment.py
+            tools/test_aegis_experiment.py
+            tools/strong_melee_opponents.py
+            tools/opponents/strong-melee.lock.json
+            experiments/Aegis/
+            .github/workflows/aegis-shield-v1.yml
+          retention-days: 30
+          if-no-files-found: warn
