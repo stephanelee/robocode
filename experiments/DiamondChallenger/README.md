@@ -33,3 +33,6 @@ Default-OFF bounded diagnostic (CHALLENGER_DIAGNOSTIC_PATH) preserves tested fix
 
 
 v0.5 guarded learned-ray selector: shared four-ray completed cohorts with fixedN8/strict2pp margin, unchanged fallback/model/power/radar/defense. Fresh20-round pilot rejected (1win/8.161933%share); no fresh60. [Prospective family and outcome](../../docs/improvements/diamond-guarded-ray-v6.md). No production transfer or causal improvement claim.
+
+
+v0.6 two estimated own-wave contexts: sole20physical-round attempt INVALID (endpoint531vs logged530cohort completions),0validated summaries/no strength decision/no60. [Fixed semantics and failed evidence](../../docs/improvements/diamond-outgoing-context-v7.md). No retry/waiver/production transfer; actual callback cause remains unknown.
