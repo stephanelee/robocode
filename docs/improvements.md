@@ -11,6 +11,10 @@ Earlier cycles compare narrow candidates with the previously accepted version. C
 
 ## Completed experiments
 
+| Whole-product experiment | Measured result and decision | Evidence |
+| --- | --- | --- |
+| Coherent default duel / [PR #42](https://github.com/stephanelee/robocode/pull/42) | **Registered retain gates passed.**168 physical rounds/198 AIS records: default Retcon share14.2052→58.3831% (+44.1779pp), wins1→39/60; self-match30/30 wins; all samples/safety guards pass, zero skips. Gun hit rate12.20→1.07% and damage1328.16→162.7 fell, so no isolated gun/AI benefit is established. Absolute game-mean t lower bound46.34% does not establish reliable superiority. | [Immutable protocol/results](improvements/coherent-duel-v1.md), [raw198 rows/18 endpoints/official/native](../benchmarks/coherent-duel-v1/README.md), [single actual run](https://github.com/stephanelee/robocode/actions/runs/41564742819). Whole default composition, frozen baseline and source; no component performance attribution. |
+
 | Cycle | Candidate hypothesis | Status | Required evidence |
 | --- | --- | --- | --- |
 | 1 | [Back-as-front steering](https://github.com/stephanelee/robocode/issues/10) may reduce turn exposure and unnecessary full rotations. | **Rejected after 120 measured rounds; gameplay reverted.** | [Report and preregistration](improvements/cycle-1.md): mean score share 11.545% → 10.262%; walls/1,000 turns 80.72 → 15.94. |

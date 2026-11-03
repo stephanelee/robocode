@@ -1,6 +1,7 @@
 # Project documentation
 
 - [Coherent default duel candidate: composition and scope](coherent-duel.md)
+- [Coherent default duel: measured whole-product comparison](improvements/coherent-duel-v1.md)
 
 - [Retcon native observability and Ubuntu 26.04 diagnostic cohorts](retcon-observability.md)
 

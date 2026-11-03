@@ -32,3 +32,20 @@ A pass supports retention of this bundled product change in this roster, subject
 ## Durable evidence
 
 Preserve all198 per-bot round records,15 official result arrays (six Retcon, three self, six samples), six native Retcon exports/capture hashes,18 independently cold model endpoints (six Retcon, six self, six sample), source/bundle/labelled-launcher/runtime pins, immutable registration and runner/workflow source, per-game aggregates, executed-action mechanism, exact unrounded gate report and every partial failure. External Retcon private exports are offline diagnostics only and never enter the live controller.
+
+## Measured outcome: registered retention gates passed
+
+[PR #42](https://github.com/stephanelee/robocode/pull/42), [single actual run41564742819](https://github.com/stephanelee/robocode/actions/runs/41564742819), execution `addae500040fe8507afc654f00ee3dd229f4dace`. The complete168 physical rounds/198 AIS records,15 official games, six native Retcon exports and18 independent cold checkpoints validated. Every registered condition passed; the canonical decision is **retain**, subject to independent review and merge. There were no replacements, extra performance attempts or skipped AIS turns. Production remains exactly the frozen9c79 source/9daf JAR above. [Original registration, raw evidence, endpoints and exact decision](../../benchmarks/coherent-duel-v1/README.md).
+
+| Retcon20-round block | Previous share / wins | Candidate share / wins | Share difference |
+| --- | --- | --- | --- |
+| 1 | 15.187850% /0 | 53.319502% /12 | +38.131652pp |
+| 2 | 16.326531% /1 | 55.278174% /12 | +38.951643pp |
+| 3 | 11.101137% /0 | 66.551486% /15 | +55.450349pp |
+| Equal-game mean / total wins | 14.205172% /1 of60 | 58.383054% /39 of60 | +44.177882pp |
+
+Retcon walls/1,000 turns fell8.092445→0.145357 (229→11 collisions). Self-match candidate shares were87.669544%,85.489722%,80.641653% (mean84.600306%), with30/30 round wins. Target/SpinBot/Walls shares were100% for the candidate, against100%/97.026022%/94.186047% for the previous bot; both versions won all nine sample rounds.
+
+**The gun did not demonstrate an accuracy improvement.** Against Retcon, confirmed shot hit rate fell12.195122%→1.070252%, recorded damage dealt1328.158881→162.7, while shots increased1312→3644 and recorded turns28298→75676. Damage taken fell4534.591066→506.085. These aggregate observations are consistent with a much longer-lived composition; this experiment cannot attribute the outcome to movement, selection, radar, wave inference, power, virtual-gun learning or any individual change. The selector's reported confidence is only a support factor, and no per-model use telemetry establishes a learning benefit.
+
+All three candidate Retcon game shares exceeded50%, and39/60 round wins were observed. Nevertheless, the descriptive one-sided95% Student-t lower bound for its three-game mean is46.343461%, below50%; the round-level Wilson interval52.362619–75.832226% treats dependent/adaptive rounds as if independent and must not override that caveat. Three games against one pinned opponent do not establish reliable broad superiority. The equal-block improvement's descriptive lower bound is+27.705653pp; alternating order does not pair arena starts. This is a measured improvement of the actual default product against this frozen baseline and roster, not an isolated gun/AI gain or a general tournament claim.

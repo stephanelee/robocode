@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Build and benchmark one coherent default duel composition. [PR42](https://github.com/stephanelee/robocode/pull/42) / [results](docs/improvements/coherent-duel-v1.md): all registered168-round whole-product gates pass; Retcon39/60 wins and self-match30/30. Gun accuracy fell and broad superiority is not established.
+
 Repository: https://github.com/stephanelee/robocode
 
 Based on a source review of `master` at commit `fb735035811e60bf30366a0952b5dfe1b8e079ac`. The Java 17 build has since been verified locally and in GitHub Actions (PR #1); headless battle integration and a small reference experiment are recorded in [the baseline report](benchmarks/reference-2026-11-02/README.md). These results do not establish competitive strength.
