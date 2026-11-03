@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** Online three-model virtual gun; fresh legal scans and confirmed own shots only. */
+/** Conditional passage targeting with the former three virtual models as insufficient-data fallback. */
 final class PressureGun {
     record Plan(double direction, double power, boolean fire, int model) {}
-    private record Pending(int turn, int target, double power, double[] angles, int maxAge) {}
+    private record Pending(int turn, int target, double power, double[] angles, int maxAge,
+                           ContextGun.Query query,boolean learned) {}
     private static final class Flight {
         final int turn, target, maxAge;
         final double x, y, speed;
@@ -19,14 +20,23 @@ final class PressureGun {
     }
     private final int[] attempts = new int[3], hits = new int[3];
     private final List<Flight> flights = new ArrayList<>();
+    private final ContextGun context = new ContextGun();
     private DuelGun.Scan latest, previous;
     private int target = -1;
     private Pending pending;
+    private int learnedAimDecisions,fallbackAimDecisions,confirmedLearnedShots;
 
-    void startRound() { latest=previous=null; pending=null; flights.clear(); }
+    void startRound() {
+        latest=previous=null;pending=null;flights.clear();context.startRound();
+        learnedAimDecisions=fallbackAimDecisions=confirmedLearnedShots=0;
+    }
     int[] attempts() { return attempts.clone(); }
     int[] hits() { return hits.clone(); }
     DuelGun.Scan latest() { return latest; }
+    int learnedAimDecisions() { return learnedAimDecisions; }
+    int fallbackAimDecisions() { return fallbackAimDecisions; }
+    int confirmedLearnedShots() { return confirmedLearnedShots; }
+    ContextGun context() { return context; }
     double turnRate() {
         return previous==null || latest==null || latest.turn()-previous.turn()>3 ? 0
                 : CombatMath.relativeAngle(latest.direction()-previous.direction())/(latest.turn()-previous.turn());
@@ -35,10 +45,11 @@ final class PressureGun {
     void onScan(DuelGun.Scan scan) {
         if (scan==null || scan.targetId()<1 || !finite(scan.x(),scan.y(),scan.direction(),scan.speed(),scan.energy())) return;
         if (scan.targetId()!=target) {
-            target=scan.targetId(); Arrays.fill(attempts,0); Arrays.fill(hits,0); startRound();
+            target=scan.targetId(); Arrays.fill(attempts,0); Arrays.fill(hits,0);
+            latest=previous=null;pending=null;flights.clear();
         }
         if (latest!=null && scan.turn()<=latest.turn()) return;
-        previous=latest; latest=scan; score(scan);
+        previous=latest; latest=scan; context.onScan(scan);score(scan);
     }
 
     private void score(DuelGun.Scan scan) {
@@ -63,7 +74,10 @@ final class PressureGun {
 
     void onFired(int turn,double x,double y,double power) {
         Pending p=pending; pending=null;
-        if (p==null || p.turn()!=turn || p.target()!=target || Math.abs(p.power()-power)>1e-9) return;
+        boolean matched=p!=null && p.turn()==turn && p.target()==target && Math.abs(p.power()-power)<=1e-9;
+        context.confirmed(matched?p.query():null,turn,x,y,power);
+        if(!matched)return;
+        if(p.learned())confirmedLearnedShots++;
         if (flights.size()>=48) flights.remove(0); // An unobserved/discarded cohort is not a miss.
         flights.add(new Flight(turn,target,x,y,power,p.angles(),p.maxAge()));
         if (latest!=null && latest.turn()==turn) score(latest);
@@ -92,11 +106,16 @@ final class PressureGun {
             angles[model]=CombatMath.bearing(point[0]-x,point[1]-y);
             ranges[model]=Math.hypot(point[0]-x,point[1]-y);
         }
-        // Fire on the CURRENT ray, not on the requested gun rotation for the next tick.
-        double tolerance=Math.toDegrees(Math.asin(Math.min(1,17/Math.max(17,ranges[selected]))));
-        boolean fire=heat<=1e-9 && Math.abs(CombatMath.relativeAngle(angles[selected]-gun))<=tolerance;
-        pending=fire?new Pending(now+1,target,power,angles,horizon):null;
-        return new Plan(angles[selected],power,fire,selected);
+        var query=context.query(now,latest,previous,x,y,power,angles[1],ranges[1],width,height);
+        double learned=context.predict(query);
+        boolean useLearned=Double.isFinite(learned);
+        double chosen=useLearned?learned:angles[selected],range=useLearned?ranges[1]:ranges[selected];
+        if(useLearned)learnedAimDecisions++;else fallbackAimDecisions++;
+        // Same estimated radial range as linear; only the conditional angle changes the current-ray gate.
+        double tolerance=Math.toDegrees(Math.asin(Math.min(1,17/Math.max(17,range))));
+        boolean fire=heat<=1e-9 && Math.abs(CombatMath.relativeAngle(chosen-gun))<=tolerance;
+        pending=fire?new Pending(now+1,target,power,angles,horizon,query,useLearned):null;
+        return new Plan(chosen,power,fire,useLearned?3:selected);
     }
 
     static double power(double ownEnergy,double enemyEnergy,double range) {

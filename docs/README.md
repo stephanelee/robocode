@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Separate Challenger context gun: active learning, rejected pilot](improvements/diamond-context-v2.md)
+
 - [Separate DiamondChallenger: rejected first pressure pilot](improvements/diamond-pressure-v1.md)
 
 - [Pinned opponent analysis: Diamond Port, Adaptive Prime and Retcon; challenger counterplan](opponents/README.md)
