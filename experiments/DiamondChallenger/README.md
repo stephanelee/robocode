@@ -1,5 +1,7 @@
 # DiamondChallenger0.2.0
 
+**Rejected context-gun prototype:** the [fresh0.2.0 pilot](../../docs/improvements/diamond-context-v2.md) produced0/20 wins/10.79561% share despite185 learned shots and227 accepted passages. The60-round confirmation was not run. Production AIS is unchanged; this remains experimental reference code, not a promoted bot.
+
 **Rejected first prototype:** the [registered20-round pilot](../../docs/improvements/diamond-pressure-v1.md) produced0/20 wins and2.59294% score share. The fresh60-round confirmation was not run. This historical experiment does not replace production AIS or claim competitive strength.
 
 A separate experimental1v1 bot for the [pinned Diamond counter-hypothesis](../../docs/opponents/diamond-port.md). It does not subclass or rename AISurvivor, load an AIS/DQN model, or change production sources/JARs.

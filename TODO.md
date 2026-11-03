@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Test the fixed bounded online context gun in the separate challenger. [PR60](https://github.com/stephanelee/robocode/pull/60) / [report](docs/improvements/diamond-context-v2.md):20-round pilot rejected (0wins/10.80% share), despite185 learned shots/227 admitted passages; no fresh60. All raw/memory retained, production AIS unchanged. Beating Diamond remains open; new hypotheses require fresh registration.
+
 - [x] Build and measure the separate first Diamond pressure challenger. [PR59](https://github.com/stephanelee/robocode/pull/59) / [report](docs/improvements/diamond-pressure-v1.md):20-round pilot rejected (0wins/2.59% share), no fresh60; ownsource/JAR/state/raw retained, production AIS unchanged. Beating Diamond remains open; no automatic rescue of this cohort.
 
 - [x] Measure the fixed analytic-prior danger blend against advanced opponents and Retcon. [PR55](https://github.com/stephanelee/robocode/pull/55) / [report](docs/improvements/blended-duel-danger.md):330 rounds, screen passed but fresh Diamond+0.29pp/Adaptive−0.89pp failed gains; Retcon+4.62pp/all safety and sample guards passed. Accepted AIS source/JAR restored; all24 models/raw retained. Subsequent work follows the separate DiamondChallenger direction, not another AIS parameter trial.

@@ -41,3 +41,29 @@ No threshold waiver, seed selection, replacement games, reruns, support/kernel/p
 Independently review exact source/JAR, this immutable Git plan, thin direct official-runner driver, native packaging and workflow before the sole execution. No extra root acknowledgment is required after that exact clearance. Always preserve original logs/official results/metrics, every own-model endpoint, source/JAR/runtime/asset/opponent hashes, identities, executed tooling and failures. Update docs/improvements.md with measured budget, decision, report/raw and PR links; a separate reviewer audits and merges after protected CI. No production AIS promotion or transfer is implied.
 
 Local Java17 standalone clean build passed all11 tests (five unchanged strategy cases and six context/gap/support/causality/geometry cases). Power-function and main run movement/radar wiring are text-identical to0.1.0, as is PressureMove. These are source checks, not competitive outcomes.
+
+## Actual pilot: learned predictor active, progress gate rejected
+
+[PR #60](https://github.com/stephanelee/robocode/pull/60) / [sole run41670832690](https://github.com/stephanelee/robocode/actions/runs/41670832690), execution `046eb89921a4b1982e4f66114a95993ae1628f24`, completed all20 pilot rounds with valid official identities, sequential cold metrics and one finite own counter20 endpoint. [Original raw,227-sample memory and source/runtime evidence](../../benchmarks/diamond-context-v2/README.md) preserve the immutable d2739aa registration and canonical decision.
+
+**Reject at the development screen:** Challenger403 versus Diamond3330 official points = **10.79560675% share**, **0/20 first places**. Both unchanged progress checks failed (>20% share and at least one win). Evidence completeness and zero-skips passed. The conditional fresh60-round confirmation was not run; no repeat, threshold change, sample reuse or tuning followed.
+
+| Challenger measurement | Original pilot result |
+| --- | ---: |
+| Actual hits / shots | 40 /244 (16.393443%) |
+| Damage dealt / taken | 403.2 /1771.5 |
+| Confirmed shot energy spent | 464.8 |
+| Wall contacts / bot contacts / skipped turns | 0 /0 /0 |
+| Reported round turns | 4,877 |
+| Fresh range observations / mean range | 4,735 /205.707123px |
+| Fresh observations below180px | 1,926 (40.675818%) |
+| Phase decisions | 159 |
+| Learned / fallback aim decisions | 3,320 /1,377 |
+| Confirmed learned shots | 185 of244 |
+| Accepted center-passage samples / endpoint memory | 227 /227 |
+
+The activation counters establish that the learned branch actually supplied aims and shots in this cohort; it was not an entirely cold fallback-only run. They do not establish a causal strength benefit or calibrated confidence. All227 stored GF proxies can be reconstructed from their recorded confirmed origins, frozen reference points, observed centers, sign and escape angle; sequence/generation metadata distinguish past availability and round boundaries. The three old kinematic virtual models have226 completed cohorts each, hits[39,38,48]; these differ from both227 center-passage labels and40 actual hits by design. Unresolved cohorts are not counted as misses.
+
+The prior0.1.0 pilot had2.59% share/4.01% hit rate, but it used a different fresh seed/game/arena population. The source scope was controlled (movement/power/radar fixed), **not a paired causal A/B**. Do not pool its20 rounds with this pilot or claim that learning caused the numerical difference. Higher observed hit rate still did not produce a single win or pass the progress floor. Incoming damage, range and energy diagnostics do not independently identify the failure's cause.
+
+Production AIS remains accepted9b1624/JARb41b unchanged. This failed0.2.0 experimental source and distinct JAR remain for reproducibility, not as a promoted strategy or AIS transfer. Any next hypothesis needs new source and prospective review/fresh games; no same-candidate rescue is authorized.
