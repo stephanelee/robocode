@@ -37,7 +37,7 @@ The new foundation experiment adds 120 scored rounds without changing the origin
 
 | Experiment | Measured budget / result | Evidence |
 | --- | --- | --- |
-| A/A Retcon noise calibration / PR (pending) | **No gameplay change; proposal only.** 400 fixed minimum-risk rounds, identical bundle in both arms (10 blocks × 20 per arm). The block-delta SD is 5.586 pp, so 80% power at +5 pp needs **8 blocks per arm**. The current 3-block tactical score checks pass a true +5 pp only 49.3% of the time. Exploratory: identical arms differed 5.0× in wall rate, and the existing correctness gate passed only 10.8% of 3-block A/A subsets. | [Plan and results](aa-calibration.md) / [raw evidence](../benchmarks/aa-calibration/README.md) / [run 41548798991](https://github.com/stephanelee/robocode/actions/runs/41548798991) |
+| A/A Retcon noise calibration / [PR #37](https://github.com/stephanelee/robocode/pull/37) | **No gameplay change; proposal only.** 400 fixed minimum-risk rounds, identical bundle in both arms (10 blocks × 20 per arm). The block-delta SD is 5.586 pp, so 80% power at +5 pp needs **8 blocks per arm**. The current 3-block tactical score checks pass a true +5 pp only 49.3% of the time. Exploratory: identical arms differed 5.0× in wall rate, and the existing correctness gate passed only 10.8% of 3-block A/A subsets. | [Plan and results](aa-calibration.md) / [raw evidence](../benchmarks/aa-calibration/README.md) / [run 41548798991](https://github.com/stephanelee/robocode/actions/runs/41548798991) |
 
 ## Controlled component benchmarks
 
