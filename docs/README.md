@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Bounded analytic-prior danger blend: screen passed, fresh confirmation rejected](improvements/blended-duel-danger.md)
+
 - [Replay extraction: separate fresh parity confirmation passed](improvements/replay-harness-parity-redo.md)
 
 - [Rejected learned duel danger: advanced gains, Retcon relative guard failed](improvements/learned-duel-danger.md)

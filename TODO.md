@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Measure the fixed analytic-prior danger blend against advanced opponents and Retcon. [PR55](https://github.com/stephanelee/robocode/pull/55) / [report](docs/improvements/blended-duel-danger.md):330 rounds, screen passed but fresh Diamond+0.29pp/Adaptive−0.89pp failed gains; Retcon+4.62pp/all safety and sample guards passed. Accepted AIS source/JAR restored; all24 models/raw retained. Subsequent work follows the separate DiamondChallenger direction, not another AIS parameter trial.
+
 - [x] Benchmark the requested stronger native melee roster including Retcon and user-authorized Python opponents. [PR52](https://github.com/stephanelee/robocode/pull/52) / [results](docs/improvements/strong-melee-baseline.md):60 rounds,AIS rank4 each,12.21% share,1/60 first places; all losses/collisions retained,zero skips. No gameplay edit; zero-game acquisition failure/correction separately preserved.
 
 - [x] Measure the requested frozen default four-bot sample melee baseline. [PR49](https://github.com/stephanelee/robocode/pull/49) / [results](docs/improvements/melee-default-baseline.md):60 rounds,rank1 each,60/60 first places,66.37% share,zero skips;184 wall/169 bot collisions retained. Descriptive only; no optimization or source change.
