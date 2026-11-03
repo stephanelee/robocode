@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Build and measure the separate first Diamond pressure challenger. [PR59](https://github.com/stephanelee/robocode/pull/59) / [report](docs/improvements/diamond-pressure-v1.md):20-round pilot rejected (0wins/2.59% share), no fresh60; ownsource/JAR/state/raw retained, production AIS unchanged. Beating Diamond remains open; no automatic rescue of this cohort.
+
 - [x] Measure the fixed analytic-prior danger blend against advanced opponents and Retcon. [PR55](https://github.com/stephanelee/robocode/pull/55) / [report](docs/improvements/blended-duel-danger.md):330 rounds, screen passed but fresh Diamond+0.29pp/Adaptive−0.89pp failed gains; Retcon+4.62pp/all safety and sample guards passed. Accepted AIS source/JAR restored; all24 models/raw retained. Subsequent work follows the separate DiamondChallenger direction, not another AIS parameter trial.
 
 - [x] Benchmark the requested stronger native melee roster including Retcon and user-authorized Python opponents. [PR52](https://github.com/stephanelee/robocode/pull/52) / [results](docs/improvements/strong-melee-baseline.md):60 rounds,AIS rank4 each,12.21% share,1/60 first places; all losses/collisions retained,zero skips. No gameplay edit; zero-game acquisition failure/correction separately preserved.
