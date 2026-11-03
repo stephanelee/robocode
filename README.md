@@ -88,7 +88,7 @@ The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/wor
 
 ## Current design
 
-The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`; learning, configuration, persistence, and pure combat calculations are separate classes:
+The bot entry point is the thin adapter `src/main/java/AISurvivor.java`; `SurvivorBrain` owns combat decisions through `BotPort`. Learning, configuration, persistence, and pure combat calculations are separate classes:
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.

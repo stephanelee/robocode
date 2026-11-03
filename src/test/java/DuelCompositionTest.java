@@ -12,30 +12,29 @@ import static org.mockito.Mockito.*;
 
 class DuelCompositionTest {
     @Test void disabledZeroEnergyTargetReachesRealGunAndActualFireRequest() throws Exception {
-        AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
+        SurvivorBrain bot = mock(SurvivorBrain.class, CALLS_REAL_METHODS); BotPort port = mock(BotPort.class); TargetingCharacterizationTest.set(bot, "port", port);
         var config = new BotConfig(BotConfig.Mode.TRAIN, 5, Path.of("unused"), 0, null);
         TargetingCharacterizationTest.set(bot, "config", config);
         TargetingCharacterizationTest.set(bot, "duelGun", new DuelGun());
         TargetingCharacterizationTest.set(bot, "agent", new DQNAgent(14, 6, config));
         TargetingCharacterizationTest.set(bot, "gfStats", new HashMap<>(Map.of(7, new double[9][47])));
-        var constructor = Class.forName("AISurvivor$Enemy").getDeclaredConstructors()[0];
+        var constructor = Class.forName("SurvivorBrain$Enemy").getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         Object target = constructor.newInstance(7, 600., 300., 0., 0., 0., 0., 0., 0., 100);
         TargetingCharacterizationTest.set(bot, "enemies", new HashMap<>(Map.of(7, target)));
-        doReturn(1).when(bot).getEnemyCount(); doReturn(100).when(bot).getTurnNumber();
-        doReturn(400.).when(bot).getX(); doReturn(300.).when(bot).getY();
-        doReturn(800).when(bot).getArenaWidth(); doReturn(600).when(bot).getArenaHeight();
-        doReturn(10.).when(bot).getEnergy();
-        doReturn(0.).when(bot).getGunDirection(); doReturn(0.).when(bot).getGunHeat();
-        doAnswer(call -> 20 - 3 * (double) call.getArgument(0)).when(bot).calcBulletSpeed(anyDouble());
-        doNothing().when(bot).setGunTurnRate(anyDouble()); doReturn(true).when(bot).setFire(.1);
-        Method aim = AISurvivor.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
-        verify(bot).setFire(.1);
+        doReturn(1).when(port).enemyCount(); doReturn(100).when(port).turnNumber();
+        doReturn(400.).when(port).x(); doReturn(300.).when(port).y();
+        doReturn(800).when(port).arenaWidth(); doReturn(600).when(port).arenaHeight();
+        doReturn(10.).when(port).energy();
+        doReturn(0.).when(port).gunDirection(); doReturn(0.).when(port).gunHeat();
+        doNothing().when(port).commandGunTurnRate(anyDouble()); doReturn(true).when(port).commandFire(.1);
+        Method aim = SurvivorBrain.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
+        verify(port).commandFire(.1);
         assertEquals(true, TargetingCharacterizationTest.get(bot, "pendingDuelShot"));
     }
 
     @Test void actualAimWiringUsesLegalSnapshotAndOnlyConfirmedShotsReachGun(@TempDir Path temporary) throws Exception {
-        AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
+        SurvivorBrain bot = mock(SurvivorBrain.class, CALLS_REAL_METHODS); BotPort port = mock(BotPort.class); TargetingCharacterizationTest.set(bot, "port", port);
         DuelGun gun = mock(DuelGun.class);
         var config = new BotConfig(BotConfig.Mode.TRAIN, 3, Path.of("unused"), 0, null);
         TargetingCharacterizationTest.set(bot, "config", config);
@@ -49,22 +48,21 @@ class DuelCompositionTest {
         TargetingCharacterizationTest.set(bot, "gfStats", new HashMap<>(Map.of(7, profile)));
         var waves = new ArrayList<>();
         TargetingCharacterizationTest.set(bot, "targetingWaves", waves);
-        var constructor = Class.forName("AISurvivor$Enemy").getDeclaredConstructors()[0];
+        var constructor = Class.forName("SurvivorBrain$Enemy").getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         Object enemy = constructor.newInstance(7, 600., 300., 90., 8., 20., 8., 20., 4., 100);
         TargetingCharacterizationTest.set(bot, "enemies", new HashMap<>(Map.of(7, enemy)));
-        doReturn(1).when(bot).getEnemyCount(); doReturn(100).when(bot).getTurnNumber();
-        doReturn(400.).when(bot).getX(); doReturn(300.).when(bot).getY();
-        doReturn(800).when(bot).getArenaWidth(); doReturn(600).when(bot).getArenaHeight();
-        doReturn(100.).when(bot).getEnergy();
-        doReturn(0.).when(bot).getGunDirection(); doReturn(0.).when(bot).getGunHeat();
-        doNothing().when(bot).setGunTurnRate(anyDouble());
-        doAnswer(call -> 20 - 3 * (double) call.getArgument(0)).when(bot).calcBulletSpeed(anyDouble());
-        doReturn(true).when(bot).setFire(1.8);
+        doReturn(1).when(port).enemyCount(); doReturn(100).when(port).turnNumber();
+        doReturn(400.).when(port).x(); doReturn(300.).when(port).y();
+        doReturn(800).when(port).arenaWidth(); doReturn(600).when(port).arenaHeight();
+        doReturn(100.).when(port).energy();
+        doReturn(0.).when(port).gunDirection(); doReturn(0.).when(port).gunHeat();
+        doNothing().when(port).commandGunTurnRate(anyDouble());
+        doReturn(true).when(port).commandFire(1.8);
         when(gun.decide(any())).thenReturn(new DuelGun.Plan(30, 1.8, true, true, "current", 0, 0, 0));
-        Method aim = AISurvivor.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
-        verify(bot).setGunTurnRate(20);
-        verify(bot).setFire(1.8);
+        Method aim = SurvivorBrain.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
+        verify(port).commandGunTurnRate(20);
+        verify(port).commandFire(1.8);
         verify(gun, never()).onFired(anyInt(), anyDouble(), anyDouble(), anyDouble());
         var input = org.mockito.ArgumentCaptor.forClass(DuelGun.Input.class);
         verify(gun).decide(input.capture());
@@ -93,11 +91,11 @@ class DuelCompositionTest {
         assertEquals(101, TargetingCharacterizationTest.get(wave, "fireTurn"));
         assertEquals(14.6, TargetingCharacterizationTest.get(wave, "bulletSpeed"));
         // A fresh observation at the wave's passage trains residual GF even with no hit callback.
-        doReturn(120).when(bot).getTurnNumber();
+        doReturn(120).when(port).turnNumber();
         TargetingCharacterizationTest.set(enemy, "lastScanTurn", 120);
         TargetingCharacterizationTest.set(enemy, "x", 401 + 19 * 14.6);
         TargetingCharacterizationTest.set(enemy, "y", 302.);
-        Method advance = AISurvivor.class.getDeclaredMethod("advanceTargetingWaves");
+        Method advance = SurvivorBrain.class.getDeclaredMethod("advanceTargetingWaves");
         advance.setAccessible(true); advance.invoke(bot);
         assertTrue(waves.isEmpty());
         assertEquals(1, java.util.Arrays.stream(profile[5]).sum());
@@ -122,19 +120,19 @@ class DuelCompositionTest {
     }
 
     @Test void defaultDuelFullyDecouplesRadarButOtherModesKeepLegacyPath() throws Exception {
-        Method radar = AISurvivor.class.getDeclaredMethod("updateRadar");
+        Method radar = SurvivorBrain.class.getDeclaredMethod("updateRadar");
         radar.setAccessible(true);
         for (BotConfig.Mode mode : BotConfig.Mode.values()) {
-            AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
+            SurvivorBrain bot = mock(SurvivorBrain.class, CALLS_REAL_METHODS); BotPort port = mock(BotPort.class); TargetingCharacterizationTest.set(bot, "port", port);
             TargetingCharacterizationTest.set(bot, "config", new BotConfig(mode, 3, Path.of("unused"), 0, null));
             TargetingCharacterizationTest.set(bot, "enemies", new HashMap<>());
             TargetingCharacterizationTest.set(bot, "radarSign", 1);
-            doReturn(1).when(bot).getEnemyCount();
-            doNothing().when(bot).setAdjustRadarForBodyTurn(anyBoolean());
-            doNothing().when(bot).setRadarTurnRate(anyDouble());
+            doReturn(1).when(port).enemyCount();
+            doNothing().when(port).adjustRadarForBodyTurn(anyBoolean());
+            doNothing().when(port).commandRadarTurnRate(anyDouble());
             radar.invoke(bot);
-            verify(bot).setAdjustRadarForBodyTurn(mode == BotConfig.Mode.TRAIN);
-            verify(bot).setRadarTurnRate(45);
+            verify(port).adjustRadarForBodyTurn(mode == BotConfig.Mode.TRAIN);
+            verify(port).commandRadarTurnRate(45);
         }
     }
 

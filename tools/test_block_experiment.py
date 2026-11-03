@@ -1,6 +1,6 @@
 import unittest
 
-from block_experiment import final_decision, online_decision, primary_decision, samples_pass
+from block_experiment import final_decision, noninferiority_decision, online_decision, primary_decision, samples_pass
 
 
 def arm(share, wins=1, walls=1, turns=1000, skipped=0, rounds=20):
@@ -56,6 +56,20 @@ class BlockExperimentTests(unittest.TestCase):
         self.assertAlmostEqual(z['meanDelta'], t['meanDelta'])
         with self.assertRaises(ValueError):
             primary_decision(blocks(deltas), 8, 'normal')
+
+    def test_noninferiority_rule(self):
+        small = [-.02, .01, .00, -.01, .02, -.03, .01, .00]
+        self.assertEqual(noninferiority_decision(blocks(small), 8, 't')['status'], 'pass')
+        self.assertEqual(noninferiority_decision(blocks([-.08] * 8), 8, 't')['status'], 'fail')
+        worse = noninferiority_decision(blocks(small, skipped=1), 8, 't')
+        self.assertFalse(worse['checks']['skippedNotMore'])
+        self.assertFalse(noninferiority_decision(blocks(small, walls=12), 8, 't')['checks']['wallRate'])
+
+    def test_final_decision_can_omit_online_stage(self):
+        ok = [dict(previous=arm(.95, rounds=10), candidate=arm(.95, rounds=10)) for _ in range(3)]
+        passed = dict(status='pass')
+        self.assertEqual(final_decision(passed, ok, None, online_required=False)['status'], 'retain')
+        self.assertEqual(final_decision(passed, ok, None)['status'], 'reject')
 
 if __name__ == '__main__':
     unittest.main()

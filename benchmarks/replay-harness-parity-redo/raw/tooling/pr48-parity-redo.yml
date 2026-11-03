@@ -1,0 +1,79 @@
+name: PR48 user-authorized fresh parity
+on:
+  pull_request:
+    types: [synchronize]
+    paths: [.github/workflows/pr48-parity-redo.yml]
+permissions:
+  contents: read
+concurrency:
+  group: pr48-user-authorized-parity-redo
+  cancel-in-progress: false
+jobs:
+  parity:
+    if: github.event.pull_request.number == 48
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify frozen source and fresh Java17 build parity
+        run: |
+          test -z "$(git diff --name-only f224bc7c4bb0ac854874e5832c7df9e8e9ae4e24 HEAD -- src/main/java src/test/java AISurvivor tools/block_experiment.py tools/benchmark.py tools/compare.py tools/retcon.py tools/retcon_stats.py tools/BenchmarkBattle.java tools/decision_rule_analysis.py)"
+          echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  AISurvivor/AISurvivor.jar' | sha256sum -c -
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/pr48-committed.jar"
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/pr48-committed.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/pr48-committed.jar" AISurvivor/AISurvivor.jar
+          mkdir -p "$RUNNER_TEMP/pr48-baseline"
+          git archive cfdb508b0492df88667696f9bc0de9c61751a273 AISurvivor | tar -x -C "$RUNNER_TEMP/pr48-baseline"
+          echo "21c5c3d2cb4007e3e0603556af313df7f5717732e384f039b005e9e72b2daecd  $RUNNER_TEMP/pr48-baseline/AISurvivor/AISurvivor.jar" | sha256sum -c -
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Execute the sole registered fresh parity check
+        env:
+          PLAN_COMMIT: 2edd072b365bfc2b3e50f66adf970b6de37fd8b7
+        run: |
+          python tools/block_experiment.py \
+            --previous-bot-dir "$RUNNER_TEMP/pr48-baseline/AISurvivor" \
+            --expected-previous-jar 21c5c3d2cb4007e3e0603556af313df7f5717732e384f039b005e9e72b2daecd \
+            --previous-source cfdb508b0492df88667696f9bc0de9c61751a273 \
+            --candidate-source "$(git rev-parse HEAD)" \
+            --plan docs/improvements/replay-harness-parity-redo.md --plan-commit "$PLAN_COMMIT" \
+            --policy train --primary-rule noninferiority --bound t --skip-online \
+            --blocks 30 --rounds 20 --seed-base 20262801 --sample-seed 20262899 \
+            --java "$JAVA_HOME/bin/java" --output build/replay-parity-redo
+      - name: Preserve executed tooling and original outcome
+        if: always()
+        run: |
+          mkdir -p build/replay-parity-redo/tooling
+          cp .github/workflows/pr48-parity-redo.yml tools/block_experiment.py tools/decision_rule_analysis.py tools/fixtures/replay-parity-redo/power.py build/replay-parity-redo/tooling/
+          git rev-parse HEAD > build/replay-parity-redo/tooling/execution-sha.txt
+          if test -f build/replay-parity-redo/experiment.json; then cat build/replay-parity-redo/experiment.json; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr48-fresh-parity-original
+          compression-level: 9
+          path: |
+            build/replay-parity-redo/experiment.json
+            build/replay-parity-redo/preregistered-plan.md
+            build/replay-parity-redo/tooling/**
+            build/replay-parity-redo/**/battle.json
+            build/replay-parity-redo/**/metrics.jsonl
+            build/replay-parity-redo/**/runner.log
+            build/replay-parity-redo/**/model.dat
+            build/replay-parity-redo/**/retcon-stats/**
+          if-no-files-found: error
