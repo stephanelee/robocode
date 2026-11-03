@@ -17,3 +17,20 @@ Each game uses a fresh build/meridian-staging/ID and build/meridian/ID. The latt
 **Reproduction.** The [workflow](../../.github/workflows/meridian-hit-angles.yml) gives the exact Ubuntu 26.04 setup. Start in a clean checkout with full Git history for the v1 control. Build with Java 17 using the Gradle wrapper, compare all JAR entries with tools/verify_jar.py, then switch to JDK 25 and run tools/meridian_profile.py with the pinned Python 3.13 environment. After byte-comparing both profiles execute tools/meridian_hit_angles.py once. Reproduction uses fresh physical games. The [v1 instructions](../../benchmarks/meridian-v1/README.md) also describe offline reduction from a recording.
 
 The [hosted preflight](https://github.com/stephanelee/robocode/actions/runs/41735518958) published Ubuntu image 20261101.186.1 and Python 3.13.18 before any games. The initial reference from the v1 run used image 20261026.180.1 and Python 3.13.17. The candidate, v1 control, opponents, locked wheels, Java artifacts and thresholds matched. Register the measured profile byte-for-byte for both arms and request Python 3.13.18 explicitly.
+
+## Outcome
+
+**Reject the candidate at the screen.** Meridian 0.2.0 won its five-round games against Retcon and production AISurvivor. Experimental Python Diamond Port won all five rounds against both versions. All four games and all 20 rounds were valid, with zero own skips. No confirmation games ran. [PR #79](https://github.com/stephanelee/robocode/pull/79) · [registered execution](https://github.com/stephanelee/robocode/actions/runs/41735907101) · [raw decision](../../benchmarks/meridian-hit-angles/raw/decision.json) · [complete recordings, commands, endpoints and cold model](../../benchmarks/meridian-hit-angles/raw/).
+
+| Arm and opponent | Official score M / opponent | M share | M wins | M hits / shots | M damage dealt / taken | M shot energy | Enemy hits / shots | Damage taken per 100 enemy shots | M wall / bot / skip |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| v1 control vs Diamond Port | 34 / 713 | 4.55% | 0/5 | 5/123 (4.07%) | 34.29 / 348.94 | 177.39 | 38/151 | 231.09 | 0 / 0 / 0 |
+| v2 vs Diamond Port | 43 / 565 | 7.07% | 0/5 | 7/228 (3.07%) | 42.93 / 224.91 | 302.09 | 37/302 | 74.47 | 0 / 0 / 0 |
+| v2 vs Retcon | 318 / 82 | 79.50% | 4/5 | 10/299 (3.34%) | 74.07 / 22.08 | 429.32 | 6/308 | 7.17 | 0 / 0 / 0 |
+| v2 vs AISurvivor TRAIN | 283 / 219 | 56.37% | 3/5 | 11/332 (3.31%) | 96.74 / 90.81 | 444.34 | 21/345 | 26.32 | 0 / 0 / 0 |
+
+Against Diamond, incoming damage per 100 enemy shots was 67.8% lower in the candidate game. Diamond's hit fraction fell from 25.2% to 12.3%, while Meridian's own gun spent 302.09 energy for 42.93 uncapped damage. Both registered comparisons with the fresh control favored the candidate. Its 7.07% score share and zero round wins failed both absolute Diamond gates.
+
+Meridian accepted 35 of 37 confirmed hits against Diamond, 5 of 6 against Retcon and 21 of 21 against AISurvivor. The remaining three had no matching inferred launch. No match was ambiguous, unoriented or outside the accepted range. Observer and callback totals agreed in all candidate games. These observations establish that legal hits reached the histogram. They cannot separate its effect from different starting positions, power choices and subsequent interactions across games.
+
+Within-game round shares spanned 0.0–11.5% against Diamond for the control and 0.0–11.3% for the candidate. The v2 Retcon range was 10.3–100.0%, and the AISurvivor range was 4.2–92.1%. Each arm/opponent cell has a single game, and learning persists across rounds. Between-game variability and a reproducible winning matchup remain unmeasured. [Offline reproduction](../../benchmarks/meridian-hit-angles/README.md).
