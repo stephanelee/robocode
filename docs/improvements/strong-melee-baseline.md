@@ -17,3 +17,32 @@ Reuse existing `benchmark.battle(policy='train')` with four opponents total: AIS
 There are **no strength/skip acceptance thresholds**: preserve every round, skip, collision, failure and opponent result. No tuning, policy suite, replacement seed/game or favorable retry. Acquisition/config/schema failure stops and retains partial evidence for independent review. Native Python/olderAPI compatibility is measured, not assumed. Require exact official names/versions/unique IDs and three finite cold AIS endpoints with counters1..20; native Retcon export is collected as offline diagnostics, never controller input. Other opponents' timing/skip data may be unavailable and must not be invented.
 
 Before outcomes, independently clear the exact source/pin/setup/workflow. Report per-game official rank, score/share and first-place counts for all four bots, AIS shooting/damage/collisions/skips/selection counts, cold checkpoint hashes and Retcon native diagnostics with scope limits. Keep the earlier sample60 and Retcon1v1 cohorts separate. Preserve immutable registration/layout/source/launch/runtime/license/API hashes, all actual raw results/logs/models and failures; document outcome/PR/evidence in `docs/improvements.md`. No gameplay/instrumentation changes or automatic optimization loop follows this baseline.
+
+## Actual result: completed negative baseline
+
+[PR #52](https://github.com/stephanelee/robocode/pull/52), [completed scored run41648769599](https://github.com/stephanelee/robocode/actions/runs/41648769599), frozen execution `4411f6bdd8459af73d85bce81c6b49d4c71ea8fd`. All60 rounds, three cold finite20-round AIS endpoints, official four-bot identities and complete native Retcon exports validated. **Retain the complete descriptive evidence: AISurvivor finished fourth in every game.** There is no strength acceptance gate or gameplay promotion; losses, collisions and all opponent results are retained.
+
+| Bot | Official ranks across three games | Equal-game mean share | Official first places /60 |
+| --- | --- | --- | --- |
+| Diamond Port | 1,1,1 | 46.505442% | 51 |
+| Adaptive Prime | 2,2,2 | 24.396867% | 4 |
+| Retcon | 3,3,3 | 16.885499% | 4 |
+| AISurvivor | 4,4,4 | **12.212192%** | **1** |
+
+| Game | Diamond score /share /first places | Adaptive score /share /first places | Retcon score /share /first places | AIS score /share /first places |
+| --- | --- | --- | --- | --- |
+| strong946-g01 | 6380 /46.168319% /18 | 3372 /24.401187% /2 | 2257 /16.332586% /0 | 1810 /13.097909% /0 |
+| strong946-g02 | 6314 /46.256410% /16 | 3283 /24.051282% /1 | 2142 /15.692308% /2 | 1911 /14.000000% /1 |
+| strong946-g03 | 6339 /47.091598% /17 | 3330 /24.738132% /1 | 2508 /18.631602% /2 | 1284 /9.538667% /0 |
+
+AIS telemetry totals:1372 confirmed shots,347 hits (**25.291545%**), damage dealt2659.078721/taken5468.135071,549 wall collisions,309 bot collisions and zero skipped turns. The `turns` field sums83232 round-scope values; action counts sum24222. **Do not interpret83232 as precise AIS time alive or use it to infer the skipped-turn/latency cause.** Strategy counts0..5 are `[6298,3262,3375,3617,3912,3758]`;2652 selections were duel-eligible/forced (0/1397/1255 across games). The default product includes a multi-enemy phase and later duel transitions; these counters are not a full component timeline.
+
+Native Retcon exports cover20 rounds each, with zero self-reported skips/over-budget turns and compute maxima9507/11245/11863µs. Those timings describe **Retcon only**, not AIS or Python timing; equivalent Python skip/timing data was not collected. The native Python runtime was CPython3.13.17, the private12-wheel installation passed `pip check`, and all109 staged Python/core/license file hashes per game matched the immutable source lock. No developer environment/config files or private opponent input entered AIS.
+
+This is evidence of a serious weakness against this specific more sophisticated roster. The earlier60 sample rounds and Retcon1v1 confirmation are separate populations, not pooled or controlled replacements. Three games do not establish a universal ranking, isolate movement/gun/learning causes or prove the native port equivalent to a classic champion. No score-driven tuning, replacements or additional performance attempts occurred.
+
+### Acquisition chronology and final integration
+
+The initial [run41647764010](https://github.com/stephanelee/robocode/actions/runs/41647764010) failed **before any battle**, because absent pinned zero-byte package files were mistaken for existing empty bytes. Its original artifact13234364075, source/report and failure log are preserved. The [immutable prospective continuation](strong-melee-baseline-continuation.md) and minimal1131851 file-existence regression were independently cleared before the corrected acquisition. The original60-round IDs/seeds were unspent, not favorable replacements. Only the corrected run contains scored games; both executions remain auditable.
+
+The **measured** AIS snapshot remains pre-warm-up1e31/production946/JAR9679. Accepted master later merged warm-up PR47 and the separate negative1v1 report PR51; final documentation integration preserves those accepted changes and the root README rather than reverting production. This report does **not** claim to benchmark the newer warm-up JAR. The one-shot workflow was removed before integration/publication. [All original60 records, three models, official/native results, licenses, pins and zero-game failure](../../benchmarks/strong-melee-baseline/README.md).
