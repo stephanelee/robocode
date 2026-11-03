@@ -79,6 +79,12 @@ class GuardedGunTest {
         assertArrayEquals(new int[]{8,8,8,8},gun.pairedAttempts());
         assertTrue(PressureGun.learnedQualified(gun.pairedAttempts(),gun.pairedHits()));
         gun.onScan(scan(4999));gun.onScan(scan(5000));
-        assertEquals(3,gun.decide(5000,300,300,0,100,0,800,600).model());
+        var qualified=gun.decide(5000,300,300,0,100,0,800,600);
+        assertEquals(3,qualified.model());assertFalse(qualified.fire(),"guard never bypasses the actual current gun-ray gate");
+        assertTrue(gun.decide(5000,300,300,qualified.direction(),100,0,800,600).fire());
+        gun.onScan(new DuelGun.Scan(2,5099,500,300,170,7,100));
+        gun.onScan(new DuelGun.Scan(2,5100,500,300,180,8,100));
+        assertNotEquals(3,gun.decide(5100,300,300,0,100,0,800,600).model(),
+                "past paired wins cannot override an unsupported current query");
     }
 }
