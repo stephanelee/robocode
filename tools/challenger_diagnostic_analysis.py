@@ -52,7 +52,7 @@ def distribution(values):
 
 def analyze(records):
     """Join confirmed shot IDs within rounds; never manufacture hit labels from virtual rays."""
-    shots, passages, virtuals, hits, rounds = {}, [], [], [], []
+    shots, passages, virtuals, hits, rounds, removals = {}, [], [], [], [], {}
     event_counts = {}
     for record in records:
         kind = record.get("type", record.get("event", record.get("eventtype")))
@@ -66,6 +66,8 @@ def analyze(records):
         elif kind == "virtual": virtuals.append(record)
         elif kind == "hit": hits.append(record)
         elif kind == "round": rounds.append(record)
+        elif kind == "removal" and record.get("shotId") is not None:
+            removals[(record["round"],record["shotId"])]=record.get("reason","unknown")
     aiming, firing, gf_errors, origin_shift, raw_gfs = [], [], [], [], []
     model_errors = {}
     containment = {"predicted": [0, 0], "actualRay": [0, 0]}
@@ -117,6 +119,21 @@ def analyze(records):
             key=(v["round"],v["shotId"])
             actual=True if key in actual_hit_keys else False if v["round"] in complete_rounds else None
             selected_virtual.append((bool(v["hit"]),actual))
+    passage_outcomes={}
+    fixed_errors={"learned":[],"linear":[],"headOn":[]}
+    half_widths=[]
+    for p in passages:
+        key=(p["round"],p.get("shotId"));s=shots.get(key)
+        if s is None: continue
+        xy=[s.get("originX"),s.get("originY"),p.get("x"),p.get("y")]
+        if all(finite_number(v) for v in xy) and finite_number(s.get("direction")):
+            g=passage_geometry(*xy,s["direction"]);half_widths.append(g["bodyHalfWidth"])
+            outcome="actualHit" if key in actual_hit_keys else removals.get(key,"noHit" if p["round"] in complete_rounds else "unknown")
+            label=("contained" if g["contained"] else "outside")+":"+outcome
+            passage_outcomes[label]=passage_outcomes.get(label,0)+1
+        if s.get("learned") and all(finite_number(v) for v in [p.get("predictedGF"),s.get("linearGF"),p.get("rawObservedGF"),p.get("escape")]):
+            for name,gf in [("learned",p["predictedGF"]),("linear",s["linearGF"]),("headOn",0)]:
+                fixed_errors[name].append(abs(gf-p["rawObservedGF"])*p["escape"])
     return {
         "warning": "Legal passage angular containment and virtual intersections are proxies, not actual hit rate. Truncated/censored cohorts stay missing.",
         "eventCounts": event_counts, "confirmedShotsRecorded": len(shots),
@@ -139,6 +156,11 @@ def analyze(records):
             "virtualMissActualHit":sum(not a and b is True for a,b in selected_virtual)},
         "roundSummaries": rounds,
         "recordedPowerSpent": sum(s["power"] for s in shots.values() if finite_number(s.get("power"))),
+        "recordedActualDamage":sum(h["damage"] for h in hits if finite_number(h.get("damage"))),
+        "passageActualRayOutcomes":passage_outcomes,
+        "bodyAngularHalfWidthDegrees":distribution(half_widths),
+        "exploratorySameLearnedShotAngularError":{k:distribution(v) for k,v in fixed_errors.items()},
+        "counterfactualWarning":"Fixed linear/head-on comparison uses the SAME observed future scan, not fresh competitive evidence; no alternative command or opponent reaction was executed.",
     }
 
 

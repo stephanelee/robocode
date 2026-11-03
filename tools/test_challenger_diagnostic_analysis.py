@@ -55,6 +55,14 @@ class GeometryTests(unittest.TestCase):
         self.assertEqual(3,result["selectedLegacyVirtualVsActual"]["unknownActualOutcome"])
         self.assertEqual(0,result["selectedLegacyVirtualVsActual"]["virtualHitNoActualHit"])
 
+    def test_bullet_collision_is_preserved_as_an_explanation_not_an_aiming_miss(self):
+        rows=[dict(type="shot",round=1,shotId=1,originX=0,originY=0,direction=0),
+              dict(type="passage",round=1,shotId=1,x=100,y=0),
+              dict(type="removal",round=1,shotId=1,reason="bulletCollision"),
+              dict(type="round",round=1,shots=1,hits=0,truncated=False,failed=False,droppedRecords=0)]
+        result=analyze(rows)
+        self.assertEqual({"contained:bulletCollision":1},result["passageActualRayOutcomes"])
+
 
 if __name__ == "__main__":
     unittest.main()
