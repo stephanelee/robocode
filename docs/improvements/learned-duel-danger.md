@@ -41,3 +41,19 @@ No outcome-dependent tuning, favorable repeats, replacement games, threshold cha
 ## Evidence and review
 
 Independent exact source/protocol/workflow clearance precedes games. Preserve raw official arrays, every metric row, all actual model endpoints, Retcon native exports, unchanged Python source hashes and runtime packages, original logs and executed tooling, including invalid attempts. Update docs/improvements.md after each screen/confirmation with budgets/results/decisions/reasons and PR/report/raw links. A separate agent audits and merges only after required protected CI; implementers never self-merge.
+
+## Measured outcome: rejected at screen
+
+[PR #54](https://github.com/stephanelee/robocode/pull/54), [single run 41652803853](https://github.com/stephanelee/robocode/actions/runs/41652803853), execution `e3ae719b7a8e2529669c0a0060386e65441d4ac5`, completed all six screen games / 60 rounds. [Preserved evidence](../../benchmarks/learned-duel-danger/README.md) includes the original immutable registration, raw rows, official results, six cold counter-10 models, native Retcon exports and candidate patch. No acquisition failed or was repeated. Ubuntu 26.04.1, Java 25 and the pinned Python 3.13 environment ran the games after Java 17 fresh build/parity.
+
+| Opponent | Baseline share | Candidate share | Difference | Baseline / candidate first places |
+| --- | ---: | ---: | ---: | ---: |
+| Diamond Port | 3.088326% | 7.291667% | +4.203341 pp | 0 / 0 of 10 |
+| Adaptive Prime | 19.612591% | 23.066577% | +3.453986 pp | 1 / 1 of 10 |
+| Retcon | 81.369248% | 65.354331% | −16.014917 pp | 9 / 6 of 10 |
+
+**Reject; accepted gameplay and JAR restored.** The advanced-opponent mean gain was +3.828663 pp and both differences were positive, passing the registered screen thresholds. The candidate also passed Retcon's absolute share/win requirements, all skip guards (zero in both arms), and all wall-rate guards. However, Retcon's −16.014917 pp difference failed the binding −5 pp relative guard. It was the sole failed check. The planned 240 confirmation and 30 sample rounds were therefore not run; no gate was waived, tuned or replaced.
+
+Damage dealt / taken was 50 / 823.2 → 105.2 / 619.136513 against Diamond, 252.800001 / 697 → 272.400001 / 519.4 against Adaptive, and 160.4 / 101.28 → 195.740002 / 63.2 against Retcon. Hits/shots were 10/183 → 21/405, 45/387 → 54/575 and 26/690 → 34/707 respectively. Wall contacts were 0→0, 0→1 and 1→4; reported-turn denominators were 3,471→8,781, 6,365→9,299 and 12,523→13,373. These counters do not override official score or establish precise survival duration.
+
+Each opponent has only one unpaired ten-round game per arm; arena starts are not paired by the AIS RNG seed. These observations neither establish a causal Retcon regression nor prove benefit against advanced opponents, which still won most rounds. Matched-profile-use counters were not collected, so the screen does not establish when the new profile affected commands. The rejected candidate remains a source patch and immutable measured source/JAR hash, not active production code. Issue 53 remains open. The next experiment requires a separate prospective plan.

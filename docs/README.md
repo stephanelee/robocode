@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Rejected learned duel danger: advanced gains, Retcon relative guard failed](improvements/learned-duel-danger.md)
+
 - [Stronger native melee: AIS/Retcon/Adaptive Prime/Diamond Port negative baseline](improvements/strong-melee-baseline.md)
 
 - [Frozen default four-bot sample melee:60-round descriptive baseline](improvements/melee-default-baseline.md)
