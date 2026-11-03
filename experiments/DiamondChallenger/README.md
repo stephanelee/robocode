@@ -27,3 +27,6 @@ v0.3 inferred-wave defense pilot:20 rounds rejected,0wins/1.524562% share; no fr
 
 
 v0.4 relevant-wave termination correction: deterministic late-wall scoring defect reproduced, but fresh20-round progress pilot rejected (1win/8.301405%share); no fresh60. [Source proof/protocol/outcome](../../docs/improvements/diamond-wave-horizon-v4.md). No production transfer or paired-causal claim.
+
+
+Default-OFF bounded diagnostic (CHALLENGER_DIAGNOSTIC_PATH) preserves tested fixed-input policy commands/state. One5-round capture completed with0drops/skips; [schema/findings](../../docs/improvements/challenger-diagnostic-v5.md). Logging overhead remains possible, and passage geometry is not actual hit truth. No strategy or model tuning in this capture.

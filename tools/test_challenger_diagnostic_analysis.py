@@ -63,6 +63,20 @@ class GeometryTests(unittest.TestCase):
         result=analyze(rows)
         self.assertEqual({"contained:bulletCollision":1},result["passageActualRayOutcomes"])
 
+    def test_next_state_join_masks_missing_disabled_and_collision_and_wraps_heading(self):
+        rows=[]
+        for turn in [1,3,5,7]:
+            rows.extend([dict(type='planner',round=1,turn=turn,predictedNext=[10,20,360,8],chosen=1),
+                         dict(type='command',round=1,turn=turn,energy=100,chosen=1)])
+        rows.extend([dict(type='tick',round=1,turn=2,own=[10,20,0,8],energy=100),
+                     dict(type='tick',round=1,turn=6,own=[10,20,0,8],energy=0),
+                     dict(type='tick',round=1,turn=8,own=[11,20,0,8],energy=100),
+                     dict(type='discontinuity',round=1,turn=8,reason='wall')])
+        result=analyze(rows)['chosenMovementNextState']
+        self.assertEqual((1,0,0,0),(result['joined'],result['maxPosition'],result['maxHeading'],result['maxSpeed']))
+        self.assertEqual((1,1,1),tuple(result['masks'][k] for k in ('missingNextTick','disabled','discontinuity')))
+        self.assertEqual(1,result['choiceAgreement'])
+
 
 if __name__ == "__main__":
     unittest.main()

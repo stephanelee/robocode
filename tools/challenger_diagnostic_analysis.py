@@ -50,8 +50,42 @@ def distribution(values):
             "p90": values[max(0, math.ceil(.9*len(values))-1)]}
 
 
+def movement_next_state(records):
+    """Observed chosen one-step transitions only; no claim about unchosen or long forecasts."""
+    ticks,commands={},{}
+    duplicate=set();discontinuities=set();planners=[]
+    for row in records:
+        key=(row.get('round'),row.get('turn'));kind=row.get('type')
+        if kind in ('tick','command'):
+            target=ticks if kind=='tick' else commands
+            if key in target:duplicate.add((kind,key))
+            target[key]=row
+        elif kind=='discontinuity':discontinuities.add(key)
+        elif kind=='planner':planners.append(row)
+    masks=dict(missingCommand=0,missingNextTick=0,duplicateKey=0,disabled=0,discontinuity=0,invalidState=0)
+    position=[];heading=[];speed=[];agreement=0
+    for row in planners:
+        key=(row['round'],row['turn']);next_key=(row['round'],row['turn']+1)
+        if key not in commands:masks['missingCommand']+=1;continue
+        if next_key not in ticks:masks['missingNextTick']+=1;continue
+        if ('command',key) in duplicate or ('tick',next_key) in duplicate:masks['duplicateKey']+=1;continue
+        command,actual=commands[key],ticks[next_key]
+        if not finite_number(command.get('energy')) or not finite_number(actual.get('energy')):masks['invalidState']+=1;continue
+        if command['energy']<=0 or actual['energy']<=0:masks['disabled']+=1;continue
+        if key in discontinuities or next_key in discontinuities:masks['discontinuity']+=1;continue
+        p,a=row.get('predictedNext'),actual.get('own')
+        if not isinstance(p,list) or not isinstance(a,list) or len(p)!=4 or len(a)!=4 or not all(finite_number(v) for v in p+a):masks['invalidState']+=1;continue
+        position.append(math.hypot(p[0]-a[0],p[1]-a[1]));heading.append(abs(angle_delta(p[2],a[2])));speed.append(abs(p[3]-a[3]))
+        agreement+=command.get('chosen')==row.get('chosen')
+    return dict(plannerRecords=len(planners),joined=len(position),masks=masks,choiceAgreement=agreement,
+                positionResidual=distribution(position),headingResidual=distribution(heading),speedResidual=distribution(speed),
+                maxPosition=max(position,default=None),maxHeading=max(heading,default=None),maxSpeed=max(speed,default=None),
+                tolerance=1e-6,transitionsAboveTolerance=sum(p>1e-6 or h>1e-6 or s>1e-6 for p,h,s in zip(position,heading,speed)))
+
+
 def analyze(records):
     """Join confirmed shot IDs within rounds; never manufacture hit labels from virtual rays."""
+    records=list(records)
     shots, passages, virtuals, hits, rounds, removals = {}, [], [], [], [], {}
     event_counts = {}
     for record in records:
@@ -136,6 +170,7 @@ def analyze(records):
                 fixed_errors[name].append(abs(gf-p["rawObservedGF"])*p["escape"])
     return {
         "warning": "Legal passage angular containment and virtual intersections are proxies, not actual hit rate. Truncated/censored cohorts stay missing.",
+        "chosenMovementNextState":movement_next_state(records),
         "eventCounts": event_counts, "confirmedShotsRecorded": len(shots),
         "joinedPassages": joined, "unjoinedPassages": unknown,
         "passageAngularContainment": {k: {"contained":v[0],"count":v[1],"fraction":v[0]/v[1] if v[1] else None} for k,v in containment.items()},
