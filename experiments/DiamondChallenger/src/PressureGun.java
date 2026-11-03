@@ -5,6 +5,10 @@ import java.util.List;
 /** Conditional passage targeting with the former three virtual models as insufficient-data fallback. */
 final class PressureGun {
     record Plan(double direction, double power, boolean fire, int model) {}
+    record AimTrace(int turn,double x,double y,double gun,double energy,double heat,double chosen,double power,
+                    int model,ContextGun.Query query,int support,double distance) {}
+    private DiagnosticTrace diagnostic;
+    void diagnostic(DiagnosticTrace trace){diagnostic=trace;context.diagnostic(trace);}
     private record Pending(int turn, int target, double power, double[] angles, int maxAge,
                            ContextGun.Query query,boolean learned) {}
     private static final class Flight {
@@ -67,14 +71,21 @@ final class PressureGun {
                 }
                 complete &= f.done[model];
             }
-            if (complete) for (int model=0;model<3;model++) { attempts[model]++; if(f.hit[model]) hits[model]++; }
+            if (complete) for (int model=0;model<3;model++) {
+                attempts[model]++; if(f.hit[model]) hits[model]++;
+                if(diagnostic!=null)diagnostic.virtual(scan.turn(),f.turn,model,f.hit[model]);
+            }
             return complete;
         });
     }
 
     void onFired(int turn,double x,double y,double power) {
+        onFired(turn,-1,x,y,power,Double.NaN);
+    }
+    void onFired(int turn,long bulletId,double x,double y,double power,double direction) {
         Pending p=pending; pending=null;
         boolean matched=p!=null && p.turn()==turn && p.target()==target && Math.abs(p.power()-power)<=1e-9;
+        if(diagnostic!=null)diagnostic.shot(turn,bulletId,x,y,power,direction,matched);
         context.confirmed(matched?p.query():null,turn,x,y,power);
         if(!matched)return;
         if(p.learned())confirmedLearnedShots++;
@@ -114,6 +125,10 @@ final class PressureGun {
         // Same estimated radial range as linear; only the conditional angle changes the current-ray gate.
         double tolerance=Math.toDegrees(Math.asin(Math.min(1,17/Math.max(17,range))));
         boolean fire=heat<=1e-9 && Math.abs(CombatMath.relativeAngle(chosen-gun))<=tolerance;
+        if(diagnostic!=null) {
+            double[] support=context.diagnosticSupport(query);
+            diagnostic.aim(new AimTrace(now,x,y,gun,energy,heat,chosen,power,useLearned?3:selected,query,(int)support[0],support[1]));
+        }
         pending=fire?new Pending(now+1,target,power,angles,horizon,query,useLearned):null;
         return new Plan(chosen,power,fire,useLearned?3:selected);
     }
