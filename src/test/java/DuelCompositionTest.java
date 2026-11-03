@@ -2,10 +2,50 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
+import dev.robocode.tankroyale.botapi.BulletState;
+import dev.robocode.tankroyale.botapi.events.BulletFiredEvent;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DuelCompositionTest {
+    @Test void actualAimWiringUsesLegalSnapshotAndOnlyConfirmedShotsReachGun() throws Exception {
+        AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
+        DuelGun gun = mock(DuelGun.class);
+        var config = new BotConfig(BotConfig.Mode.TRAIN, 3, Path.of("unused"), 0, null);
+        TargetingCharacterizationTest.set(bot, "config", config);
+        TargetingCharacterizationTest.set(bot, "duelGun", gun);
+        TargetingCharacterizationTest.set(bot, "metrics", new RoundMetrics());
+        TargetingCharacterizationTest.set(bot, "scanRecorder", LegalScanRecorder.fromEnvironment(Map.of()));
+        var constructor = Class.forName("AISurvivor$Enemy").getDeclaredConstructors()[0];
+        constructor.setAccessible(true);
+        Object enemy = constructor.newInstance(7, 600., 300., 90., 8., 20., 8., 20., 0., 100);
+        TargetingCharacterizationTest.set(bot, "enemies", new HashMap<>(Map.of(7, enemy)));
+        doReturn(1).when(bot).getEnemyCount(); doReturn(100).when(bot).getTurnNumber();
+        doReturn(400.).when(bot).getX(); doReturn(300.).when(bot).getY();
+        doReturn(800).when(bot).getArenaWidth(); doReturn(600).when(bot).getArenaHeight();
+        doReturn(100.).when(bot).getEnergy();
+        doReturn(0.).when(bot).getGunDirection(); doReturn(0.).when(bot).getGunHeat();
+        doNothing().when(bot).setGunTurnRate(anyDouble());
+        doReturn(true).when(bot).setFire(1.2);
+        when(gun.decide(any())).thenReturn(new DuelGun.Plan(30, 1.2, true, true, "current", 0, 0, 0));
+        Method aim = AISurvivor.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
+        verify(bot).setGunTurnRate(20);
+        verify(bot).setFire(1.2);
+        verify(gun, never()).onFired(anyInt(), anyDouble(), anyDouble(), anyDouble());
+        var input = org.mockito.ArgumentCaptor.forClass(DuelGun.Input.class);
+        verify(gun).decide(input.capture());
+        assertEquals(new DuelGun.Scan(7, 100, 600, 300, 90, 8, 20), input.getValue().target());
+        assertTrue(Double.isNaN(input.getValue().fallbackDirection()));
+        BulletState bullet = mock(BulletState.class);
+        when(bullet.getX()).thenReturn(401.); when(bullet.getY()).thenReturn(302.); when(bullet.getPower()).thenReturn(1.2);
+        BulletFiredEvent event = mock(BulletFiredEvent.class);
+        when(event.getBullet()).thenReturn(bullet); when(event.getTurnNumber()).thenReturn(101);
+        bot.onBulletFired(event);
+        verify(gun).onFired(101, 401, 302, 1.2);
+        assertEquals(false, TargetingCharacterizationTest.get(bot, "pendingDuelShot"));
+    }
+
     @Test void radarCrossesBearingAndReacquiresWithoutStallingAtZero() {
         assertEquals(8, DuelRadar.turn(400, 300, 0, 600, 300, 0, 1));
         assertEquals(-8, DuelRadar.turn(400, 300, 0, 600, 300, 1, -1));

@@ -5,8 +5,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Experimental Tank Royale bot: seeded DQN strategy selection, GuessFactor
- * targeting, and minimum-risk/wave-aware movement. See CLAUDE.md for architecture.
+ * Experimental Tank Royale bot: coherent default duel control, legal-scan aiming,
+ * and seeded DQN/GuessFactor fallback. See CLAUDE.md for architecture and mode scope.
  */
 public class AISurvivor extends Bot {
 
