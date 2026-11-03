@@ -30,3 +30,6 @@ v0.4 relevant-wave termination correction: deterministic late-wall scoring defec
 
 
 Default-OFF bounded diagnostic (CHALLENGER_DIAGNOSTIC_PATH) preserves tested fixed-input policy commands/state. One5-round capture completed with0drops/skips; [schema/findings](../../docs/improvements/challenger-diagnostic-v5.md). Logging overhead remains possible, and passage geometry is not actual hit truth. No strategy or model tuning in this capture.
+
+
+v0.5 guarded learned-ray selector: shared four-ray completed cohorts with fixedN8/strict2pp margin, unchanged fallback/model/power/radar/defense. Fresh20-round pilot rejected (1win/8.161933%share); no fresh60. [Prospective family and outcome](../../docs/improvements/diamond-guarded-ray-v6.md). No production transfer or causal improvement claim.

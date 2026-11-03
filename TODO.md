@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Test one fixed guarded learned-ray selector on shared confirmed-shot cohorts. [PR64](https://github.com/stephanelee/robocode/pull/64) / [report](docs/improvements/diamond-guarded-ray-v6.md):20-round progress screen rejected (1win/8.16%share); guard activated but required share failed, no fresh60. All raw/paired evidence retained, no threshold tuning or production change.
+
 - [x] Capture one bounded unchanged-policy shot/defense diagnostic. [PR63](https://github.com/stephanelee/robocode/pull/63) / [report](docs/improvements/challenger-diagnostic-v5.md):5rounds/12891records/0drops/skips, no phase/one-step mismatch; future-target prediction error remains large. No strength gate/repeat or production change; guarded learned-ray selection is a separate proposed mechanism, not implemented here.
 
 - [x] Reproduce/correct irrelevant late-wall veto and measure the standalone candidate. [PR62](https://github.com/stephanelee/robocode/pull/62) / [report](docs/improvements/diamond-wave-horizon-v4.md):20-round pilot rejected (1win/8.30%share), no fresh60. Source mechanism verified, no strength/causal claim; prior61 and production unchanged.
