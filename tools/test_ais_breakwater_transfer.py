@@ -85,12 +85,11 @@ class TransferProtocolTests(unittest.TestCase):
 
     def test_breakwater_real_endpoint_reconciles_and_preserves_missing_win_flags(self):
         # Read the exact retained official opponent endpoint; no synthetic success evidence.
-        import subprocess
-        source = 'benchmarks/breakwater-envelope-v3-exact/breakwater-envelope-v3-ais-g01/'
+        fixture = Path(__file__).parent / 'fixtures/ais-breakwater-transfer/breakwater69-original'
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             for destination, original in [('breakwater.jsonl', 'metrics.jsonl'), ('breakwater-model.json', 'model.json')]:
-                data = subprocess.check_output(['git', 'show', experiment.BREAKWATER + ':' + source + original])
+                data = (fixture / original).read_bytes()
                 (root / destination).write_bytes(data)
             result = experiment.check_breakwater(root, 20, 533021, dict(firstPlaces=20))
             self.assertEqual(result['officialFirstPlaces'], 20)
