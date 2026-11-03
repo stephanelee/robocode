@@ -17,6 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class TraceReplayTest {
     static final List<String> GOLDENS = List.of("retcon-1v1-3r", "melee8-3r", "walls-1v1-3r");
+    /** Exact coverage of each complete golden game: command batches and completed rounds. */
+    static final java.util.Map<String, int[]> COVERAGE = java.util.Map.of(
+            "retcon-1v1-3r", new int[]{3044, 3}, "melee8-3r", new int[]{3007, 3}, "walls-1v1-3r", new int[]{939, 3});
 
     static Path golden(String name) { return Path.of("benchmarks/replay-goldens/" + name + ".jsonl.gz"); }
 
@@ -24,7 +27,8 @@ class TraceReplayTest {
         for (String name : GOLDENS) {
             TraceReplay.Result result = TraceReplay.replay(golden(name), temp.resolve(name + ".dat"));
             assertTrue(result.identical(), name + ": " + result.mismatch());
-            assertTrue(result.batches() > 500, name + " replayed only " + result.batches() + " batches");
+            assertEquals(COVERAGE.get(name)[0], result.batches(), name + " batches");
+            assertEquals(COVERAGE.get(name)[1], result.rounds(), name + " rounds");
         }
     }
 
@@ -40,6 +44,43 @@ class TraceReplayTest {
         TraceReplay.Result result = TraceReplay.replay(altered, temp.resolve("m.dat"));
         assertFalse(result.identical());
         assertTrue(result.mismatch().contains("123.456"), result.mismatch());
+    }
+
+    @Test void signedZeroIsNotEqualToZero(@TempDir Path temp) throws IOException {
+        // Bit-exact contract: a recorded 0.0 argument changed to -0.0 must be reported (numeric equality would hide it).
+        for (String name : List.of("retcon-1v1-3r", "walls-1v1-3r")) {
+            List<String> lines = read(golden(name));
+            int index = -1;
+            for (int i = 0; i < lines.size(); i++)
+                if (lines.get(i).startsWith("{\"k\":\"cmd\"") && lines.get(i).contains(",0.0]")) { index = i; break; }
+            assertTrue(index > 0, name + " has no zero-valued argument to mutate");
+            lines.set(index, lines.get(index).replaceFirst(",0\\.0\\]", ",-0.0]"));
+            TraceReplay.Result result = TraceReplay.replay(write(temp.resolve(name + "-z.jsonl.gz"), lines), temp.resolve("z.dat"));
+            assertFalse(result.identical(), name + " accepted -0.0 for 0.0");
+            assertTrue(result.mismatch().contains("-0.0"), result.mismatch());
+        }
+        assertFalse(TraceReplay.sameCalls(calls(0.0), calls(-0.0)));
+        assertTrue(TraceReplay.sameCalls(calls(1.5), calls(1.5)));
+    }
+
+    @Test void incompleteTracesAreNotSuccessful(@TempDir Path temp) throws IOException {
+        List<String> lines = read(golden("retcon-1v1-3r"));
+        Path headerOnly = write(temp.resolve("header.jsonl.gz"), lines.subList(0, 1));
+        TraceReplay.Result empty = TraceReplay.replay(headerOnly, temp.resolve("h.dat"));
+        assertFalse(empty.identical());
+        assertTrue(empty.mismatch().startsWith("incomplete trace"), empty.mismatch());
+        Path truncated = write(temp.resolve("truncated.jsonl.gz"), lines.subList(0, 6000));
+        TraceReplay.Result partial = TraceReplay.replay(truncated, temp.resolve("t.dat"));
+        assertFalse(partial.identical(), "a truncated game must not count as a successful replay");
+        assertTrue(partial.mismatch().startsWith("incomplete trace"), partial.mismatch());
+    }
+
+    private static com.google.gson.JsonArray calls(double value) {
+        com.google.gson.JsonArray call = new com.google.gson.JsonArray();
+        call.add("turnRate"); call.add(value);
+        com.google.gson.JsonArray all = new com.google.gson.JsonArray();
+        all.add(call);
+        return all;
     }
 
     @Test void differentSeedChangesMeleeDecisions(@TempDir Path temp) throws IOException {

@@ -127,9 +127,26 @@ The protocol required investigating a failure with the replay harness. To do tha
 
 **What this means:**
 - **Decisions are identical.** The extraction and #47's additions do not change any decision in these 6,990 recorded states.
-- **The score gap is not a behaviour change.** It is consistent with game-to-game variation: z ≈ −0.85, and the block-delta SD in default mode was 7.13 pp, above the 5.59 pp fixed-mode A/A calibration.
+- **The score gap is consistent with game-to-game variation** (z ≈ −0.85; the default-mode block-delta SD was 7.13 pp, above the 5.59 pp fixed-mode calibration). The fixture proof covers decisions in the visited states only. It does not cover runtime or timing behaviour (for example, the added warm-up and telemetry), nor states the goldens never visited. A behavioural cause of the gap is therefore not ruled out, only unsupported by the decision evidence.
 - **The margin was underpowered.** At that SD, this 8-block rule passes two decision-identical bots only about half the time.
 - **Merging is still a separate decision.** The registered failure stands. Whether to merge #48 on the strength of the direct decision proof is the reviewer's decision. This document does not relabel the result as a pass.
 - **Coverage limit.** A trace proves identity only for the states it visited.
 
 Evidence: [raw evidence](../../benchmarks/replay-harness-parity/README.md).
+
+## Review follow-up (2026-11-03)
+
+The independent PR #48 review confirmed the registered failure and two gaps in the replay guarantees. Both gaps are now fixed, and the conclusions are stated conditionally.
+
+1. **Comparison was not bit-exact.** Gson's `JsonArray.equals` treats `0.0` and `-0.0` as equal. `TraceReplay.sameCalls` now compares numeric arguments with `Double.doubleToLongBits`, and `MasterParityTest` uses the same comparator. A test now changes a recorded `0.0` to `-0.0` in both the Retcon and Walls goldens and requires the mismatch to be reported.
+2. **Incomplete traces counted as success.** Replay now requires at least one complete game:
+   - at least one command batch;
+   - equal numbers of started and ended rounds;
+   - a `GameEndedEvent`.
+
+   Tests show that a header-only trace and a 6,000-line truncation both fail. Each golden's exact coverage is pinned: Retcon 3,044 batches / 3 rounds, melee 3,007 / 3, Walls 939 / 3.
+
+After these fixes, master `e4e4c94`'s unmodified code still reproduces all three complete goldens bit for bit under the stricter comparator.
+
+The registered non-inferiority **failure stands**. This PR is not to be merged on the fixture proof alone. Merging it would need a new, prospectively registered parity check with adequate power, disclosed as a second attempt after this failure.
+

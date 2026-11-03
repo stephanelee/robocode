@@ -22,9 +22,33 @@ import java.util.zip.GZIPInputStream;
 final class TraceReplay {
     private TraceReplay() {}
 
-    /** A replay outcome: number of command batches compared, and the first mismatch (null when identical). */
-    record Result(int batches, String mismatch) {
+    /**
+     * A replay outcome: command batches compared, rounds completed, and the first mismatch or completeness failure
+     * (null only when every batch matched bit for bit and the trace holds at least one complete game).
+     */
+    record Result(int batches, int rounds, String mismatch) {
         boolean identical() { return mismatch == null; }
+    }
+
+    /**
+     * Bit-exact comparison of two intent-call lists: same calls in the same order; numeric arguments equal under
+     * {@link Double#doubleToLongBits} (so -0.0 differs from 0.0); strings and booleans equal.
+     */
+    static boolean sameCalls(JsonArray expected, JsonArray actual) {
+        if (expected.size() != actual.size()) return false;
+        for (int i = 0; i < expected.size(); i++) {
+            JsonArray e = expected.get(i).getAsJsonArray(), a = actual.get(i).getAsJsonArray();
+            if (e.size() != a.size()) return false;
+            for (int j = 0; j < e.size(); j++) {
+                var ep = e.get(j).getAsJsonPrimitive();
+                var ap = a.get(j).getAsJsonPrimitive();
+                if (ep.isNumber() != ap.isNumber() || ep.isBoolean() != ap.isBoolean() || ep.isString() != ap.isString())
+                    return false;
+                if (ep.isNumber() ? Double.doubleToLongBits(ep.getAsDouble()) != Double.doubleToLongBits(ap.getAsDouble())
+                        : !ep.equals(ap)) return false;
+            }
+        }
+        return true;
     }
 
     static Result replay(Path trace, Path modelPath) throws IOException {
@@ -37,7 +61,8 @@ final class TraceReplay {
                     BotConfig.DuelPolicy.valueOf(header.get("duelPolicy").getAsString()));
             ReplayPort port = new ReplayPort();
             SurvivorBrain brain = new SurvivorBrain(port, config, LegalScanRecorder.fromEnvironment(Map.of()));
-            int batches = 0, line = 1;
+            int batches = 0, line = 1, started = 0, ended = 0;
+            boolean gameEnded = false;
             String text;
             while ((text = reader.readLine()) != null) {
                 line++;
@@ -47,22 +72,37 @@ final class TraceReplay {
                         port.load(o);
                         brain.onTick(new TickEvent(port.turn, port.round, null, List.of(), List.of()));
                     }
-                    case "ev" -> dispatch(brain, o);
+                    case "ev" -> {
+                        String type = o.get("type").getAsString();
+                        if (type.equals("RoundStartedEvent")) started++;
+                        if (type.equals("RoundEndedEvent")) ended++;
+                        if (type.equals("GameEndedEvent")) gameEnded = true;
+                        dispatch(brain, o);
+                    }
                     case "begin", "cmd" -> {
                         if (o.get("k").getAsString().equals("begin")) brain.beginRun();
                         else brain.turn();
                         batches++;
                         JsonArray expected = o.getAsJsonArray("calls");
-                        if (!expected.equals(port.calls))
-                            return new Result(batches, "line " + line + " turn " + port.turn + " round " + port.round
-                                    + ": expected " + expected + " but got " + port.calls);
+                        if (!sameCalls(expected, port.calls))
+                            return new Result(batches, ended, "line " + line + " turn " + port.turn + " round "
+                                    + port.round + ": expected " + expected + " but got " + port.calls);
                         port.calls = new JsonArray();
                     }
                     default -> throw new IOException("Unknown record at line " + line + ": " + text);
                 }
             }
-            return new Result(batches, null);
+            String incomplete = completeness(batches, started, ended, gameEnded);
+            return new Result(batches, ended, incomplete);
         }
+    }
+
+    /** A successful replay must cover at least one whole game: every started round ended, then the game ended. */
+    static String completeness(int batches, int started, int ended, boolean gameEnded) {
+        if (batches == 0) return "incomplete trace: no command batches";
+        if (started == 0 || started != ended) return "incomplete trace: " + started + " rounds started, " + ended + " ended";
+        if (!gameEnded) return "incomplete trace: no GameEndedEvent";
+        return null;
     }
 
     private static void dispatch(SurvivorBrain brain, JsonObject o) {
@@ -175,6 +215,7 @@ final class TraceReplay {
             Result result = replay(Path.of(arg), model);
             Files.deleteIfExists(model);
             System.out.println((result.identical() ? "IDENTICAL " : "MISMATCH ") + arg + " batches=" + result.batches()
+                    + " rounds=" + result.rounds()
                     + (result.identical() ? "" : " " + result.mismatch()));
             ok &= result.identical();
         }

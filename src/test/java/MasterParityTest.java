@@ -108,14 +108,21 @@ class MasterParityTest {
             State s = new State();
             MasterAISurvivor bot = master(s, header, model);
             String text;
-            int line = 1;
+            int line = 1, started = 0, ended = 0;
+            boolean gameEnded = false;
             batches = 0;
             while ((text = reader.readLine()) != null) {
                 line++;
                 JsonObject o = JsonParser.parseString(text).getAsJsonObject();
                 switch (o.get("k").getAsString()) {
                     case "tick" -> s.load(o);
-                    case "ev" -> dispatch(bot, o);
+                    case "ev" -> {
+                        String type = o.get("type").getAsString();
+                        if (type.equals("RoundStartedEvent")) started++;
+                        if (type.equals("RoundEndedEvent")) ended++;
+                        if (type.equals("GameEndedEvent")) gameEnded = true;
+                        dispatch(bot, o);
+                    }
                     case "begin" -> {
                         s.running = false;
                         bot.run(); // master's run(): two adjustments, then the loop exits immediately
@@ -133,7 +140,7 @@ class MasterParityTest {
                     default -> throw new IOException("Unknown record " + text);
                 }
             }
-            return null;
+            return TraceReplay.completeness(batches, started, ended, gameEnded);
         }
     }
 
@@ -142,7 +149,7 @@ class MasterParityTest {
         for (int i = skipPrefix; i < s.calls.size(); i++) actual.add(s.calls.get(i));
         s.calls = new JsonArray();
         JsonArray expected = o.getAsJsonArray("calls");
-        return expected.equals(actual) ? null
+        return TraceReplay.sameCalls(expected, actual) ? null
                 : "line " + line + " turn " + s.turn + " round " + s.round + ": expected " + expected + " but got " + actual;
     }
 
@@ -179,7 +186,8 @@ class MasterParityTest {
         for (String golden : PRE_CHANGE_GOLDENS) {
             String mismatch = replay(Path.of(golden), temp.resolve(Path.of(golden).getFileName() + ".dat"));
             assertNull(mismatch, golden + ": " + mismatch);
-            assertTrue(batches > 900, golden + " compared only " + batches + " batches");
+            assertEquals(Path.of(golden).getFileName().toString().startsWith("walls") ? 939
+                    : golden.contains("retcon") ? 3044 : 3007, batches, golden + " batches");
             System.out.println("[MasterParityTest] identical " + golden + " batches=" + batches);
         }
     }
