@@ -51,6 +51,7 @@ final class DuelGun {
             if (scan.turn == f.observed) return false; // A new fire callback can revisit an already scored scan.
             if (scan.turn != f.observed+1 || scan.turn-f.turn > f.maxAge) return true; // Unknown gaps never become misses.
             f.observed=scan.turn;
+            // v1.4 advances tick before testing BulletLine(position,nextPosition): creation tick uses [v,2v].
             double lo=f.speed*(scan.turn-f.turn+1), hi=lo+f.speed;
             double distance=Math.hypot(scan.x-f.x,scan.y-f.y);
             boolean complete=true;
@@ -78,10 +79,11 @@ final class DuelGun {
     Plan decide(Input in) {
         onScan(in.target);
         Scan s=in.target;
-        double current=normalize(in.gunDirection);
+        double current=Double.isFinite(in.gunDirection)?normalize(in.gunDirection):0;
         if (s==null || s.targetId!=targetId || in.turn<s.turn || in.turn-s.turn>2
                 || in.arenaWidth<=36 || in.arenaHeight<=36
-                || !finite(in.ownX,in.ownY,in.gunDirection,in.energy,in.gunHeat,in.arenaWidth,in.arenaHeight)) {
+                || !finite(in.ownX,in.ownY,in.gunDirection,in.energy,in.gunHeat,in.arenaWidth,in.arenaHeight)
+                || !finite(s.x,s.y,s.direction,s.speed,s.energy) || Math.abs(s.speed)>8+1e-9) {
             pending=null; return new Plan(current,0,false,true,"current",0,attempts[0],hits[0]);
         }
         double power=firepower(in.energy,s.energy,Math.hypot(s.x-in.ownX,s.y-in.ownY));
