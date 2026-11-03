@@ -104,4 +104,98 @@ Reported per arm and stage:
 
 ## Results
 
-Not yet measured.
+The text above this heading is the registered plan, unchanged since `8db129f3d405d12ea14fe662e7e7adf5366e3f69`; that commit was also the measured candidate source. The driver stored that commit's Git blob, with its LF line endings, byte-for-byte as `raw/preregistered-plan.md`.
+
+The single registered run was [41556987786](https://github.com/stephanelee/robocode/actions/runs/41556987786): job 125658162180, artifact 13194444591, zip SHA256 `e197207d8ac1bc53630b3adc0a09dffd56e45ea8b29eab1c7bd8a5aff4b3c833`. Every step was green and there were no reruns.
+
+- **Runtime:** actual Ubuntu 26.04.1 LTS. Java 17 JAR parity passed, and matches ran on Temurin 25.0.5+8.
+- **Candidate JAR:** `d047bf99325d2ad73aedd87eac6a4baa1677170afff0c86b948f03ea93390e1d`. The baseline JAR hash was verified before launch, and bundle hashes were checked before every battle.
+- **Completion:** all 700 registered scored rounds completed.
+- **Online models:** all 16 are preserved, and their hashes match `experiment.json`.
+
+**Decision: retain.** Stages A, B and C all passed under the registered Student-t rule. This v2 evidence is the basis for merging the gameplay change. It is a Retcon-specific tactical gain, not yet a fresh confirmation of beating Retcon.
+
+### Stage A: 320 fixed minimum-risk Retcon rounds (pass)
+
+| Metric (160 rounds per arm) | Baseline | Candidate |
+| --- | ---: | ---: |
+| Mean block score share | 17.35% | **52.83%** |
+| Round wins | 8 | **80** |
+| AIS turns survived | 108,578 | 169,221 |
+| AIS damage taken per 1,000 turns | 89.01 | **20.19** |
+| AIS damage dealt per 1,000 turns | 33.68 | 26.88 |
+| AIS shots / hit rate | 5,460 / 9.304% | 9,409 / 7.886% |
+| Wall collisions (per 1,000 turns) | 386 (3.555) | 13 (0.077) |
+| AIS skipped turns | 0 | 0 |
+
+| Seed | Order | Baseline share / wins | Candidate share / wins | Delta |
+| ---: | --- | ---: | ---: | ---: |
+| 20261501 | previous, candidate | 13.08% / 0 | 53.14% / 10 | +40.06 |
+| 20261502 | candidate, previous | 19.00% / 1 | 49.69% / 10 | +30.70 |
+| 20261503 | previous, candidate | 24.97% / 2 | 45.52% / 8 | +20.55 |
+| 20261504 | candidate, previous | 19.51% / 2 | 44.60% / 8 | +25.09 |
+| 20261505 | previous, candidate | 12.83% / 0 | 72.19% / 15 | +59.36 |
+| 20261506 | candidate, previous | 16.86% / 1 | 47.55% / 9 | +30.69 |
+| 20261507 | previous, candidate | 17.04% / 1 | 57.86% / 10 | +40.82 |
+| 20261508 | candidate, previous | 15.52% / 1 | 52.11% / 10 | +36.59 |
+
+The mean delta was **+35.481 pp** with an SE of 4.220 pp. The Student-t lower bound, `mean − 1.894579 × SE`, was **+27.486 pp**.
+
+Checks:
+- mean ≥ +5 pp: pass
+- t lower bound > 0: pass
+- wins ≥ baseline: pass (80 vs 8)
+- zero skipped turns: pass
+- wall rate ≤ baseline + 10 per 1,000 turns: pass (0.077 vs 3.555)
+
+Every block improved, by at least 20.6 pp.
+
+### Mechanism (Retcon offline native export)
+
+| Retcon counter, 160 rounds per arm | Baseline | Candidate |
+| --- | ---: | ---: |
+| Actual hits / shots | 1,304 / 7,026 (**18.56%**) | 667 / 9,156 (**7.28%**) |
+| Linear virtual hits / completed | 1,096 / 6,813 (16.09%) | 547 / 8,962 (6.10%) |
+| Head-on virtual hits / completed | 1,068 / 6,813 (15.68%) | 400 / 8,962 (4.46%) |
+
+H1 is supported: Retcon's actual hit rate fell by about 61%. The gain comes from survival. AISurvivor's own hit rate and damage dealt per turn were again slightly lower.
+
+### Stage B: official samples, 10 fixed rounds per arm (pass)
+
+| Opponent | Baseline share / wins / walls | Candidate share / wins / walls |
+| --- | --- | --- |
+| Target | 99.890% / 10 / 6 | 100.000% / 10 / 6 |
+| SpinBot | 97.839% / 10 / 2 | 97.145% / 10 / 0 |
+| Walls | 96.936% / 10 / 3 | 100.000% / 10 / 1 |
+
+### Stage C: 320 default online-training Retcon rounds (pass)
+
+The mean delta was +0.894 pp (SE 1.206). The Student-t lower bound was −1.391 pp, which clears the −5 pp non-inferiority margin. Wins went from 0 to 4, with zero skipped turns.
+
+| Seed | Baseline share / wins | Candidate share / wins |
+| ---: | ---: | ---: |
+| 20261501 | 16.19% / 0 | 13.71% / 0 |
+| 20261502 | 13.49% / 0 | 19.28% / 1 |
+| 20261503 | 15.11% / 0 | 19.04% / 1 |
+| 20261504 | 13.83% / 0 | 10.55% / 0 |
+| 20261505 | 13.24% / 0 | 12.42% / 0 |
+| 20261506 | 13.00% / 0 | 17.56% / 2 |
+| 20261507 | 11.35% / 0 | 10.57% / 0 |
+| 20261508 | 13.39% / 0 | 13.62% / 0 |
+
+In this mode Retcon's actual hit rate fell from 40.99% to 29.73%.
+
+A plausible explanation for the small default-mode effect is that the DQN selects action 0 only part of the time. Action-frequency telemetry was not captured, so this is untested.
+
+### Comparison with v1, and limitations
+
+- **v1 vs v2:**
+  - v1 measured 14.79%→58.56% on different seeds; v2 measures 17.35%→52.83%. The runs are separate unpaired samples.
+  - The difference between the two candidate means (5.7 pp) is within about 1.2 combined SEs. This run therefore does not show whether the corrected physics helps or hurts relative to v1.
+- **Beating Retcon (not established):** the candidate averages above 50% and wins exactly half the rounds (80 of 160). It exceeded 50% in only 4 of 8 blocks. A majority of rounds and blocks would require a separately registered, fresh, frozen-version confirmation.
+- **Default training mode:** this mode remains about 15% share.
+- **Guards:** the wins and wall guards are uncalibrated under an effect (PR #37 review correction).
+- **Sampling:** starts are unpaired and unseeded, and Retcon adapts within each game.
+- **Retcon statistics:** Retcon's statistics are offline diagnostics only.
+
+PR: [#38](https://github.com/stephanelee/robocode/pull/38). Evidence: [raw evidence](../../benchmarks/duel-surf-v2/README.md).
