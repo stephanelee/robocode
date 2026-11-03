@@ -5,6 +5,7 @@
 - [Coherent default duel: measured whole-product comparison](improvements/coherent-duel-v1.md)
 - [Coherent gun v2: measured shooting and whole-product improvement](improvements/coherent-duel-v2.md)
 - [Final frozen default confirmation: invalid acquisition, not confirmed](improvements/final-default-confirmation.md)
+- [User-authorized fresh default confirmation redo: all gates passed](improvements/final-default-confirmation-redo.md)
 
 - [Retcon native observability and Ubuntu 26.04 diagnostic cohorts](retcon-observability.md)
 
