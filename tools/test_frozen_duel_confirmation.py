@@ -30,6 +30,9 @@ class ConfirmationTests(unittest.TestCase):
         changed = copy.deepcopy(rows); changed[1]['gameId'] = changed[0]['gameId']
         with self.assertRaises(ValueError):
             decision(changed)
+        changed = copy.deepcopy(rows); changed[0]['battle']['rounds'] = 19
+        with self.assertRaises(ValueError):
+            decision(changed)
 
     def test_relative_paths_become_absolute_before_child_process_and_loaded_model_fails(self):
         layout = [dict(gameId='one', batch=1, index=1, seed=1)]
@@ -51,9 +54,6 @@ class ConfirmationTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'no model loads'):
                     confirmation.run(args)
             self.assertTrue(args.cache.is_absolute())
-        changed = copy.deepcopy(rows); changed[0]['battle']['rounds'] = 19
-        with self.assertRaises(ValueError):
-            decision(changed)
 
 
 if __name__ == '__main__':
