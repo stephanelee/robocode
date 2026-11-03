@@ -4,7 +4,7 @@ The user requested a separate bot to fight Diamond Port before applying successf
 
 ## Objective and isolation
 
-Build a coherent experimental 1v1 challenger and demonstrate repeatable wins against the pinned Python Diamond Port1.8.28. The AIS baseline lost0/60 official first places and averaged3.886%share; preserve that negative evidence. A modest score gain is useful progress, not a claim that the challenger beats Diamond.
+Build a coherent experimental 1v1 challenger and demonstrate repeatable wins against the pinned Python Diamond Port1.8.28. The AIS baseline recorded0/60 official first places and averaged3.886%share; preserve that negative evidence. A modest score gain is useful progress, not a claim that the challenger beats Diamond.
 
 Give the challenger its own descriptor/name, runnable artifact, experimental source or reproducible source patch, checkpoint and metrics paths. Build it in an isolated directory. It may reuse reviewed components, but the experimental strategy and its source/JAR hashes must be explicit. Merely changing AIS's display name is not a strategy improvement. Do not replace or modify production AIS source/JAR when publishing challenger work, and do not share live or benchmark checkpoints between the bots.
 
