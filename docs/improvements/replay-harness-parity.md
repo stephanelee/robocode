@@ -66,4 +66,70 @@ tools/block_experiment.py --policy train --primary-rule noninferiority --bound t
 
 ## Results
 
-Not yet measured.
+The text above this heading is the registered plan. It is unchanged since `22dd537e52bf4234f991abb37bb452eb62d9e1bf`, which is also the measured candidate, and the driver stored that blob byte for byte.
+
+**The run:**
+- **Single registered run:** [41642071703](https://github.com/stephanelee/robocode/actions/runs/41642071703) (job 125937824276, artifact 13234135776, zip SHA256 `e3f0114d6396a34c0703f5a6e9f47ed8d1a11e52b8bebaa9a3c4b01f0c8d9f30`), with every step green and no reruns.
+- **Environment:** Ubuntu 26.04.1. Java 17 JAR parity passed; Temurin 25.0.5+8 for matches.
+- **Candidate JAR:** `28e6322721cea1e4430dccc9b34031ead60513372f0e94bbeaeec1d629e129e9`.
+
+**Registered decision: fail (non-inferiority not shown).** Stage A missed the margin; Stage B passed. Under this protocol, #48 is not merged on this evidence alone.
+
+| Retcon, default product, 160 rounds per arm | Master | #48 |
+| --- | ---: | ---: |
+| Mean block score share | 87.177% | 85.030% |
+| Wins | 149 | 146 |
+| Skipped turns | 0 | 0 |
+| Walls per 1,000 turns | 0.101 | 0.028 |
+| AIS hits / shots | 614 / 9,416 | 579 / 9,554 |
+| Retcon actual hit rate on AIS | 1.97% | 2.28% |
+
+Per-block (master → #48):
+
+| Seed | Master | #48 | Change |
+| --- | ---: | ---: | ---: |
+| 20261801 | 87.01 | 79.77 | −7.24 |
+| 20261802 | 86.65 | 87.71 | +1.06 |
+| 20261803 | 87.36 | 84.75 | −2.61 |
+| 20261804 | 87.03 | 95.16 | +8.12 |
+| 20261805 | 90.42 | 84.82 | −5.60 |
+| 20261806 | 83.91 | 75.07 | −8.84 |
+| 20261807 | 81.59 | 89.35 | +7.75 |
+| 20261808 | 93.44 | 83.61 | −9.83 |
+
+- **Mean delta:** −2.147 pp, SE 2.520 pp.
+- **Student-t lower bound:** −6.921 pp, which **fails** the ≥ −5 pp margin.
+- **Other Stage A guards:**
+  - skipped turns not more than master: pass;
+  - wall rate: pass.
+
+**Stage B (pass):**
+
+| Sample | Master | #48 |
+| --- | ---: | ---: |
+| Target | 100.000% | 100.000% |
+| SpinBot | 94.412% | 98.874% |
+| Walls | 100.000% | 100.000% |
+
+All three had zero skipped turns.
+
+### Investigation required by the protocol (after the run)
+
+The protocol required investigating a failure with the replay harness. To do that I added `MasterParityTest`. It drives an **unmodified copy of master `e4e4c94`'s `AISurvivor`** (`src/test/java/MasterAISurvivor.java`; only the class name and constructor differ). Mockito stubs every final Bot API getter from the recorded state and captures every intent setter. The copy is replayed through all three golden traces recorded by the extracted brain.
+
+**Result: master issues bit-identical commands on every batch.**
+
+| Golden trace | Command batches |
+| --- | ---: |
+| Retcon 1v1 | 3,044 |
+| Walls 1v1 | 939 |
+| 8-bot melee, including seeded DQN Boltzmann selection | 3,007 |
+
+**What this means:**
+- **Decisions are identical.** The extraction and #47's additions do not change any decision in these 6,990 recorded states.
+- **The score gap is not a behaviour change.** It is consistent with game-to-game variation: z ≈ −0.85, and the block-delta SD in default mode was 7.13 pp, above the 5.59 pp fixed-mode A/A calibration.
+- **The margin was underpowered.** At that SD, this 8-block rule passes two decision-identical bots only about half the time.
+- **Merging is still a separate decision.** The registered failure stands. Whether to merge #48 on the strength of the direct decision proof is the reviewer's decision. This document does not relabel the result as a pass.
+- **Coverage limit.** A trace proves identity only for the states it visited.
+
+Evidence: [raw evidence](../../benchmarks/replay-harness-parity/README.md).

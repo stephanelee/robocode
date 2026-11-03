@@ -62,6 +62,8 @@ See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github
 - [x] Audit foundations and add turn-latency telemetry plus a pre-game warm-up. [Audit](docs/foundations-audit.md) / [check](docs/improvements/warmup-reliability.md): retain-neutral; round-1 melee skips are a game-start effect that also hits a do-nothing bot.
 - [ ] Attribute the #44 1v1 round-4 skip using `maxTurnMicros` / `slowTurns` telemetry in the next confirmation run.
 - [x] Add a command-replay harness (`SurvivorBrain`/`BotPort` seam, `GameTrace`, `TraceReplay`, three live golden traces). [Report](docs/replay-harness.md).
+- [x] Prove the extraction decision-identical to master on all golden traces (`MasterParityTest`); the registered battle margin failed by noise. [Report](docs/improvements/replay-harness-parity.md).
+- [ ] Calibrate default-mode (train) Retcon noise before using battle-margin parity rules again; prefer `MasterParityTest`-style decision proofs for refactors.
 - [ ] Restructure the brain into observation, movement, gun and radar modules behind the replay goldens ([audit](docs/foundations-audit.md)).
 - [ ] Investigate the weak default-training-mode effect (about 15–18% share). First record action frequencies; whether the DQN rarely picks action 0 is an untested hypothesis. Any change is a separate registered experiment.
 - [x] Test head-on/linear aim-corridor danger in minimum-risk movement. [Report](docs/improvements/aim-corridor.md): rejected (−0.58 pp score share, 5.5× wall rate, Retcon hit rate rose); online stage skipped, gameplay/JAR reverted.

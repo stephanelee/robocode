@@ -44,8 +44,8 @@ To check any trace by hand: `java -cp AISurvivor/AISurvivor.jar TraceReplay path
   - The brain is deterministic given its inputs (the seeded RNG included).
   - The extraction kept every behaviour that existing tests pin: all 288 exact-bit `aimGF` command/state goldens from the targeting refactor, and all existing composition, learning and geometry tests pass unchanged except for the mechanical port to `SurvivorBrain` + `BotPort`.
   - The three live games replay with every command identical.
+- **Established afterwards (`MasterParityTest`):** an unmodified copy of master `e4e4c94`'s `AISurvivor`, driven through all three goldens with Mockito-stubbed final Bot API getters, issues bit-identical commands on all 6,990 batches. The pre-extraction code and the extracted brain therefore decide identically in every recorded state.
 - **Not established:**
-  - The pre-extraction monolith could not emit traces, so its parity with the extracted brain rests on the mechanical move and those tests, not on a trace comparison.
   - A trace pins decisions only for the states it visited.
   - No strength claim is made.
 - **Rule for future restructuring:** each step must keep `TraceReplayTest` green, or explain and separately register every intended decision change.
