@@ -11,7 +11,7 @@ This audit covers master `e4e4c94` after PRs #38–#46. It separates facts, each
   - In the development probe above, the melee game also recorded one skipped turn.
   - A profiled rerun located it at **round 1, turn 1**. Decision-loop compute peaked at 40 ms on turn 2 and 21 ms on turn 76 of round 1, and almost all later turns took a few milliseconds.
   - The benchmark turn timeout is 100 ms (`tools/BenchmarkBattle.java`). Before this PR, per-turn latency was not recorded at all.
-  - **Update after the registered check** ([warm-up reliability](improvements/warmup-reliability.md)): the cold-start-of-our-code hypothesis is **not supported**. In CI every melee game skipped exactly one round-1 turn in both arms, while AISurvivor's own decision latency never exceeded 12.3 ms. In an exploratory local test, a do-nothing probe bot also skipped round 1, turn 1. The round-1 melee skip is a multi-bot game-start effect. The #44 1v1 skip at round 4 is a separate, still unexplained event, now attributable through the new latency telemetry.
+  - **Update after the registered check** ([warm-up reliability](improvements/warmup-reliability.md)): the cold-start-of-our-code hypothesis is **not supported**. In CI every melee game skipped exactly one round-1 turn in both arms, while AISurvivor's own decision latency never exceeded 12.3 ms. In an exploratory local test, a do-nothing probe bot also skipped round 1, turn 1. The working hypothesis is a multi-bot game-start effect; it is not yet established. The #44 1v1 skip at round 4 is a separate, still unexplained event, now attributable through the new latency telemetry.
 
 ## Architecture findings (facts)
 
