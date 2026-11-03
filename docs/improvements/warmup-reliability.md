@@ -40,6 +40,13 @@ tools/reliability_experiment.py --games 15 --rounds 2 --seed-base 20261601
 - There is no early stopping, no favourable rerun and no game replacement.
 - An infrastructure failure marks the run invalid. The partial evidence is preserved, and any retry is disclosed.
 
+## Development observations before registration (disclosed; not evidence)
+
+- **Cloud container:** Ubuntu 24.04, OpenJDK 17/25, 4 vCPU, eight bot JVMs in each melee. I ran 8 short melee games per arm on development seeds 9900–9907. The baseline skipped a turn in **3/8** games, always in round 1. The candidate skipped in **0/8**. The candidate's round-2 latency maxima in that build were inflated by a timer bug, now fixed: the timer was not reset between rounds, and one reading was 4.65 s.
+- **User's Mac (`minimind`):** macOS, Homebrew OpenJDK 17.0.21 for the build and OpenJDK 27.0.1 for battles. The run used the commands of this protocol with seed base 20261701, so it was not a registered run. It completed 15 Retcon games and 8 melee games per arm, with **0** skipped turns in either arm. It then stopped at melee game 9, because the embedded server did not become ready within 5 s. That is an infrastructure failure; the partial output is kept on that machine. Fast hardware does not reproduce the skip at all, so this environment cannot measure the effect.
+
+These observations motivated the registration. They did not change its rules.
+
 ## Primary measures and decision (unrounded, all games pooled)
 
 Per arm, I record:
