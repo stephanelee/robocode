@@ -45,18 +45,18 @@ class TargetingCharacterizationTest {
     }
 
     static void set(Object object, String name, Object value) throws Exception {
-        Field field = object instanceof AISurvivor ? AISurvivor.class.getDeclaredField(name)
+        Field field = object instanceof SurvivorBrain ? SurvivorBrain.class.getDeclaredField(name)
                 : object.getClass().getDeclaredField(name);
         field.setAccessible(true);
         field.set(object, value);
     }
     static Object get(Object object, String name) throws Exception {
-        Field field = (object instanceof AISurvivor ? AISurvivor.class : object.getClass()).getDeclaredField(name);
+        Field field = (object instanceof SurvivorBrain ? SurvivorBrain.class : object.getClass()).getDeclaredField(name);
         field.setAccessible(true);
         return field.get(object);
     }
     static Object wave() throws Exception {
-        Constructor<?> constructor = Class.forName("AISurvivor$TargetingWave").getDeclaredConstructor();
+        Constructor<?> constructor = Class.forName("SurvivorBrain$TargetingWave").getDeclaredConstructor();
         constructor.setAccessible(true);
         return constructor.newInstance();
     }
@@ -66,22 +66,21 @@ class TargetingCharacterizationTest {
         return record(s, null);
     }
     static JsonObject record(Scenario s, LegalScanRecorder recorder) throws Exception {
-        AISurvivor bot = mock(AISurvivor.class, CALLS_REAL_METHODS);
-        doReturn(s.sx).when(bot).getX(); doReturn(s.sy).when(bot).getY();
-        doReturn(s.energy).when(bot).getEnergy(); doReturn(s.heat).when(bot).getGunHeat();
-        doReturn(s.gun).when(bot).getGunDirection(); doReturn(1000).when(bot).getTurnNumber();
-        doReturn(800).when(bot).getArenaWidth(); doReturn(600).when(bot).getArenaHeight();
-        doReturn(1).when(bot).getEnemyCount();
-        doAnswer(call -> 20.0 - 3.0 * (double) call.getArgument(0)).when(bot).calcBulletSpeed(anyDouble());
+        SurvivorBrain bot = mock(SurvivorBrain.class, CALLS_REAL_METHODS); BotPort port = mock(BotPort.class); TargetingCharacterizationTest.set(bot, "port", port);
+        doReturn(s.sx).when(port).x(); doReturn(s.sy).when(port).y();
+        doReturn(s.energy).when(port).energy(); doReturn(s.heat).when(port).gunHeat();
+        doReturn(s.gun).when(port).gunDirection(); doReturn(1000).when(port).turnNumber();
+        doReturn(800).when(port).arenaWidth(); doReturn(600).when(port).arenaHeight();
+        doReturn(1).when(port).enemyCount();
         JsonArray guns = new JsonArray(), fires = new JsonArray();
-        doAnswer(call -> { guns.add(bits(call.getArgument(0))); return null; }).when(bot).setGunTurnRate(anyDouble());
-        doAnswer(call -> { fires.add(bits(call.getArgument(0))); return s.accepted; }).when(bot).setFire(anyDouble());
+        doAnswer(call -> { guns.add(bits(call.getArgument(0))); return null; }).when(port).commandGunTurnRate(anyDouble());
+        doAnswer(call -> { fires.add(bits(call.getArgument(0))); return s.accepted; }).when(port).commandFire(anyDouble());
         var config = new BotConfig(BotConfig.Mode.EVAL, 539, Path.of("unused-characterization-model"), 0, null);
         set(bot, "config", config);
         DQNAgent agent = new DQNAgent(14, 6, config), control = new DQNAgent(14, 6, config);
         for (double[][] category : agent.classGF) for (double[] bins : category) bins[s.bin] = 4;
         set(bot, "agent", agent);
-        Class<?> enemyClass = Class.forName("AISurvivor$Enemy");
+        Class<?> enemyClass = Class.forName("SurvivorBrain$Enemy");
         Constructor<?> constructor = enemyClass.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         Object enemy = constructor.newInstance(7, s.tx, s.ty, s.heading, s.speed, 100.0, s.lateral, 100.0, s.turnRate, 1000 - s.age);
@@ -97,13 +96,13 @@ class TargetingCharacterizationTest {
         int statsHash = Arrays.deepHashCode(stats), classHash = Arrays.deepHashCode(agent.classGF);
         if (recorder != null) {
             set(bot, "scanRecorder", recorder);
-            doReturn(1).when(bot).getRoundNumber();
-            doReturn(0.0).when(bot).getDirection(); doReturn(0.0).when(bot).getSpeed();
-            doReturn(0.0).when(bot).getRadarDirection();
-            Method capture = AISurvivor.class.getDeclaredMethod("recordLegalFrame");
+            doReturn(1).when(port).roundNumber();
+            doReturn(0.0).when(port).direction(); doReturn(0.0).when(port).speed();
+            doReturn(0.0).when(port).radarDirection();
+            Method capture = SurvivorBrain.class.getDeclaredMethod("recordLegalFrame");
             capture.setAccessible(true); capture.invoke(bot);
         }
-        Method aim = AISurvivor.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
+        Method aim = SurvivorBrain.class.getDeclaredMethod("aimGF"); aim.setAccessible(true); aim.invoke(bot);
         assertEquals(statsHash, Arrays.deepHashCode(stats)); assertEquals(classHash, Arrays.deepHashCode(agent.classGF));
         assertEquals(control.rng.nextLong(), agent.rng.nextLong(), "aiming must not consume bot RNG");
         Object pending = get(bot, "pendingTargetingWave");

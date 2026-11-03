@@ -17,7 +17,10 @@ The dependency is `dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0`. U
 
 | Class | Responsibility |
 | --- | --- |
-| `AISurvivor` | Bot lifecycle, observations, radar, six movement strategies, targeting and combat events |
+| `AISurvivor` | Thin Tank Royale adapter: forwards events/turns to `SurvivorBrain`, implements `BotPort`, optional replay trace and pre-game `Warmup` |
+| `SurvivorBrain`, `BotPort` | All decision logic (observations, radar, six movement strategies, targeting, combat events) behind the minimal game port; see `docs/replay-harness.md` |
+| `GameTrace`, `TraceReplay` | Exact command trace (`AISURVIVOR_TRACE_PATH`) and bit-identical replay; golden traces in `benchmarks/replay-goldens/` must replay identically |
+| `Warmup` | Gameplay-neutral pre-connect JIT/class-load warm-up of the decision code |
 | `DuelSurf`, `AimCorridor` | 1v1 shot-reactive movement for action 0: forward, backward or stop along an orbit line, chosen by simulating clearance from reconstructed head-on and linear aim points of inferred waves |
 | `DuelGun`, `DuelRadar` | Default TRAIN duel composition: legal scan/confirmed-shot aiming and power, plus fully independent fresh-scan radar lock/search |
 | `DQNAgent`, `MLP` | Seeded strategy selection, replay, target network, neural network updates |
@@ -30,7 +33,7 @@ The dependency is `dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0`. U
 
 ## Lifecycle and learning
 
-`AISurvivor extends Bot`. `run()` observes features, credits prior rewards, executes one selected action, sets radar/gun commands and calls `go()`. Event handlers collect combat rewards and telemetry between turns. `onRoundStarted` clears transient combat tracking and resets episode state; `RoundLifecycle` closes each round exactly once, including pending rewards and the terminal outcome. Death/win handlers record the outcome; the round-ended handler closes the terminal transition after final-turn rewards have arrived.
+`AISurvivor extends Bot` and delegates to `SurvivorBrain`: `run()` calls `brain.turn()` then `go()`. Each turn observes features, credits prior rewards, executes one selected action, sets radar/gun commands and calls `go()`. Event handlers collect combat rewards and telemetry between turns. `onRoundStarted` clears transient combat tracking and resets episode state; `RoundLifecycle` closes each round exactly once, including pending rewards and the terminal outcome. Death/win handlers record the outcome; the round-ended handler closes the terminal transition after final-turn rewards have arrived.
 
 The DQN uses 14 continuous features, one 32-unit ReLU hidden layer, and six action values. Features include energy, distance, relative energy, enemy count, wall proximity, gun heat, inferred approaching-wave count, radial target speed, time since inferred fire, bot speed, target bearing components, target speed and turn rate. Actions are minimum risk (0), clockwise orbit (1), counterclockwise orbit (2), flee (3), wave surf (4), and hunt (5). In a 1v1 with a scanned opponent, action 0 runs the `DuelSurf` controller instead of minimum risk (retained in `docs/improvements/duel-surf-v2.md`; its simulation follows the pinned engine's speed rule and move-then-turn order). The other actions and melee are unchanged. Replay records the action actually executed; actions are not blended.
 
@@ -58,7 +61,7 @@ Surf danger learns only from one plausible hit wave matched by shooter, bullet p
 
 TRAIN defaults to `AISURVIVOR_DUEL_POLICY=controller`: the same pruned duel-availability gate selects action0 before observation credit or action sampling. `learned` restores legacy selection. EVAL, FIXED and melee are unaffected. Replay records the returned/executed action and a transient next-state action constraint for correct Q0 bootstrapping in forced duels; its six-action checkpoint format is unchanged. Metrics report action counts, eligible turns and forced turns. This is a policy intervention, not evidence of a learning gain.
 
-`AISURVIVOR_MODE` is `train` (default), `eval` or `fixed`. Other settings are `AISURVIVOR_SEED` (default 0), `AISURVIVOR_ACTION` (0..5), `AISURVIVOR_MODEL_PATH` (default `AISurvivor-qtable.dat`) and optional `AISURVIVOR_METRICS_PATH`. Relative paths use the bot working directory. Model and metrics paths must differ.
+`AISURVIVOR_MODE` is `train` (default), `eval` or `fixed`. Other settings are `AISURVIVOR_SEED` (default 0), `AISURVIVOR_ACTION` (0..5), `AISURVIVOR_MODEL_PATH` (default `AISurvivor-qtable.dat`) and optional `AISURVIVOR_METRICS_PATH`. Relative paths use the bot working directory. Model and metrics paths must differ. Optional `AISURVIVOR_TRACE_PATH` writes an exact replay trace (see `docs/replay-harness.md`).
 
 Despite its legacy filename, the model is not a Q-table or Java object stream. `ModelStore` stores numeric weights, target weights, dimensions, counters, temperature and class GF statistics in an explicit versioned format. It validates sizes and finite values before using or replacing a checkpoint. Legacy/corrupt files are left intact on failed load and backed up before the next training replacement. Replay and RNG stream position are not saved; resuming a checkpoint does not exactly resume a prior process.
 
