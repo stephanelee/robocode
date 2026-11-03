@@ -41,6 +41,7 @@ public class AISurvivor extends Bot {
     // ─── Misc constants ─────────────────────────────────────────────────────
     private static final double SURVIVAL_BONUS = 0.1;
     private static final int    STALE_TURNS    = 40;
+    private static final int    OWN_HISTORY    = 64;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Inner classes
@@ -100,6 +101,8 @@ public class AISurvivor extends Bot {
     private TargetingWave pendingTargetingWave;
     private final List<EnemyWave>            enemyWaves     = new ArrayList<>();
     private final Map<Integer, double[]>     surfStats      = new HashMap<>();
+    private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
+    private int duelSign = 1;
 
     private int    radarTargetId = -1;
     private int    radarSign     = 1;
@@ -133,6 +136,7 @@ public class AISurvivor extends Bot {
         setAdjustRadarForGunTurn(true);
 
         while (isRunning()) {
+            recordOwnState();
             pruneStaleEnemies();
             advanceTargetingWaves();
             advanceEnemyWaves();
@@ -165,6 +169,8 @@ public class AISurvivor extends Bot {
         pendingFireScans.clear();
         pendingTargetingWave = null;
         enemyWaves.clear();
+        ownHistory.clear();
+        duelSign      = 1;
         dodgeSign     = 1;
         radarTargetId = -1;
         radarSign     = 1;
@@ -441,6 +447,10 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
 
     private void executeMovement(int action) {
+        if (action == A_MINRISK && getEnemyCount() == 1 && enemies.size() == 1) {
+            duelMovement(enemies.values().iterator().next());
+            return;
+        }
         double[] force = actionForce(action);
         double heading = normDir(Math.toDegrees(Math.atan2(force[1], force[0])));
         steerTo(wallSmooth(getX(), getY(), heading, 1), force[2]);
@@ -456,6 +466,22 @@ public class AISurvivor extends Bot {
             case A_HUNT       -> huntForce();
             default           -> minRiskForce(1.0);
         };
+    }
+
+    // ─── 1v1 shot-reactive movement ──────────────────────────────────────────
+
+    private void duelMovement(Enemy enemy) {
+        List<DuelSurf.Threat> threats = new ArrayList<>();
+        for (EnemyWave wave : enemyWaves) {
+            if (Double.isNaN(wave.aimDistance) || wave.remaining(getX(), getY(), getTurnNumber()) < -18) continue;
+            threats.add(new DuelSurf.Threat(wave.originX, wave.originY, wave.bulletSpeed, wave.fireTurn,
+                    wave.headOnAim, wave.linearAim));
+        }
+        DuelSurf.Command command = DuelSurf.choose(getX(), getY(), getDirection(), getSpeed(), getTurnNumber(),
+                enemy.x, enemy.y, threats, duelSign, getArenaWidth(), getArenaHeight());
+        if (command.travelSign() != 0) duelSign = command.travelSign();
+        setTurnRate(clamp(normalizeAngle(command.bodyHeading() - getDirection()), -maxBodyTurn(), maxBodyTurn()));
+        setTargetSpeed(command.targetSpeed());
     }
 
     // ─── Minimum-risk movement ───────────────────────────────────────────────
@@ -580,9 +606,15 @@ public class AISurvivor extends Bot {
                     current.lastScanTurn, prev.energy, current.energy);
             if (power > 0) {
                 current.lastFireTurn = prev.lastScanTurn;
-                enemyWaves.add(new EnemyWave(prev.x, prev.y, calcBulletSpeed(power),
+                double bulletSpeed = calcBulletSpeed(power);
+                EnemyWave wave = new EnemyWave(prev.x, prev.y, bulletSpeed,
                         CombatMath.bearing(scan.ourX() - prev.x, scan.ourY() - prev.y),
-                        prev.lastScanTurn, current.id));
+                        prev.lastScanTurn, current.id);
+                AimCorridor.OwnState own = ownHistory.get(prev.lastScanTurn);
+                if (own != null) wave.setAims(AimCorridor.headOn(prev.x, prev.y, own),
+                        AimCorridor.linear(prev.x, prev.y, own, bulletSpeed, getArenaWidth(), getArenaHeight()),
+                        Math.hypot(own.x() - prev.x, own.y() - prev.y));
+                enemyWaves.add(wave);
                 surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
             }
         }
@@ -744,6 +776,12 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
     //  Utilities
     // ═════════════════════════════════════════════════════════════════════════
+
+    private void recordOwnState() {
+        int now = getTurnNumber();
+        ownHistory.put(now, new AimCorridor.OwnState(now, getX(), getY(), getDirection(), getSpeed()));
+        ownHistory.keySet().removeIf(turn -> turn <= now - OWN_HISTORY);
+    }
 
     private void pruneStaleEnemies() {
         int now = getTurnNumber();
