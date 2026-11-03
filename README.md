@@ -57,6 +57,8 @@ The [subsequent gun-v2 comparison](docs/improvements/coherent-duel-v2.md) also p
 
 The [first final frozen-default attempt](docs/improvements/final-default-confirmation.md) was invalidated by one skipped AIS turn after140 of200 planned physical rounds. It remains unconfirmed and its cause unknown. The user then authorized a [separate fresh redo](docs/improvements/final-default-confirmation-redo.md): all200 rounds validated, with86.7% mean share,187/200 official first places,82.3% binding game-level lower bound and zero skips. All unchanged gates passed; no old data was pooled or gameplay changed. This confirms the frozen default bot against pinned Retcon under this regime, not all tournaments. No further automatic benchmark is scheduled.
 
+The requested [four-bot sample melee baseline](docs/improvements/melee-default-baseline.md) completed60 defaultTRAIN rounds against Target/SpinBot/Walls: rank1 in all three games,60/60 official first places,66.4% mean share and zero skips. It also recorded184 wall/169 bot collisions; this is descriptive sample-roster evidence, not broad melee strength or a gameplay change.
+
 The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
 ## Current design

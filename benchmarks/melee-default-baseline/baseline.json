@@ -1,0 +1,383 @@
+{
+  "status": "complete",
+  "botSource": "e4e4c94a45c770a494f6a60f6b98456e215bee42",
+  "botJarSHA256": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+  "registrationCommit": "266261ca6de4b7392f01d2b58b12e3013a0e76cb",
+  "executionSource": "08739890838b614efc6bc1e6e0213e4bbe99470b",
+  "planSHA256": "c33623e8d39575b86e43397c00042c20db7356df2f814d6826b766e183841a35",
+  "layoutSHA256": "08d7ca6f52fccd2dd3c946e49ffd631861dde8aaf7e67ee10ff00819f6af62f8",
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "botAssetHashes": {
+    "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+    "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+    "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+    "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+  },
+  "setup": {
+    "arenaWidth": 1000,
+    "arenaHeight": 1000,
+    "participants": 4,
+    "turnTimeoutMicros": 100000,
+    "roundsPerGame": 20
+  },
+  "games": [
+    {
+      "gameId": "melee946-g01",
+      "seed": 20262501,
+      "battle": {
+        "scenario": "Melee",
+        "policy": "train",
+        "rounds": 20,
+        "id": 4,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 1,
+        "totalScore": 8740,
+        "survival": 3000,
+        "bulletDamage": 4255,
+        "firstPlaces": 20,
+        "metrics": {
+          "turns": 13771,
+          "shotsFired": 858,
+          "bulletHits": 563,
+          "damageDealt": 4483.446607,
+          "damageTaken": 198.0,
+          "wallCollisions": 81,
+          "botCollisions": 84,
+          "skippedTurns": 0,
+          "hitRate": 0.6561771561771562,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 4,
+            "name": "AISurvivor",
+            "version": "1.2.1",
+            "rank": 1,
+            "totalScore": 8740,
+            "survival": 3000,
+            "bulletDamage": 4255,
+            "firstPlaces": 20
+          },
+          {
+            "id": 1,
+            "name": "Walls",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 2242,
+            "survival": 1600,
+            "bulletDamage": 620,
+            "firstPlaces": 0
+          },
+          {
+            "id": 2,
+            "name": "Spin Bot",
+            "version": "1.0",
+            "rank": 3,
+            "totalScore": 1549,
+            "survival": 850,
+            "bulletDamage": 661,
+            "firstPlaces": 0
+          },
+          {
+            "id": 3,
+            "name": "Target",
+            "version": "1.0",
+            "rank": 4,
+            "totalScore": 556,
+            "survival": 550,
+            "bulletDamage": 0,
+            "firstPlaces": 0
+          }
+        ],
+        "retconStats": {
+          "status": "not-applicable"
+        },
+        "modelSHA256": "8b2b1fe3c39dc07619fc4842b3af3e2c165aec27773c7e47f73a154b3141d4ef"
+      },
+      "scoreShare": 0.6678383128295254,
+      "selection": {
+        "actionCounts": [
+          5437,
+          1586,
+          1706,
+          1669,
+          1671,
+          1696
+        ],
+        "duelEligibleTurns": 3944,
+        "forcedDuelTurns": 3944
+      },
+      "endpoint": {
+        "sha256": "8b2b1fe3c39dc07619fc4842b3af3e2c165aec27773c7e47f73a154b3141d4ef",
+        "bytes": 27804,
+        "totalRounds": 20
+      },
+      "launchEnvironment": {
+        "AISURVIVOR_MODE": "train",
+        "AISURVIVOR_SEED": "20262501",
+        "AISURVIVOR_MODEL_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g01/model.dat",
+        "AISURVIVOR_METRICS_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g01/Melee-train/metrics.jsonl",
+        "duelOverride": "unset"
+      }
+    },
+    {
+      "gameId": "melee946-g02",
+      "seed": 20262502,
+      "battle": {
+        "scenario": "Melee",
+        "policy": "train",
+        "rounds": 20,
+        "id": 3,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 1,
+        "totalScore": 8795,
+        "survival": 3000,
+        "bulletDamage": 4303,
+        "firstPlaces": 20,
+        "metrics": {
+          "turns": 14216,
+          "shotsFired": 900,
+          "bulletHits": 573,
+          "damageDealt": 4526.484992,
+          "damageTaken": 320.0,
+          "wallCollisions": 75,
+          "botCollisions": 54,
+          "skippedTurns": 0,
+          "hitRate": 0.6366666666666667,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 3,
+            "name": "AISurvivor",
+            "version": "1.2.1",
+            "rank": 1,
+            "totalScore": 8795,
+            "survival": 3000,
+            "bulletDamage": 4303,
+            "firstPlaces": 20
+          },
+          {
+            "id": 2,
+            "name": "Walls",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 1879,
+            "survival": 1400,
+            "bulletDamage": 465,
+            "firstPlaces": 0
+          },
+          {
+            "id": 1,
+            "name": "Spin Bot",
+            "version": "1.0",
+            "rank": 3,
+            "totalScore": 1831,
+            "survival": 900,
+            "bulletDamage": 892,
+            "firstPlaces": 0
+          },
+          {
+            "id": 4,
+            "name": "Target",
+            "version": "1.0",
+            "rank": 4,
+            "totalScore": 704,
+            "survival": 700,
+            "bulletDamage": 0,
+            "firstPlaces": 0
+          }
+        ],
+        "retconStats": {
+          "status": "not-applicable"
+        },
+        "modelSHA256": "82daae3f288dd412f2bb934b8c457ab2d20c04e8ac1a14c50110c109b2c195db"
+      },
+      "scoreShare": 0.6658339011280188,
+      "selection": {
+        "actionCounts": [
+          5314,
+          1702,
+          1646,
+          1784,
+          1879,
+          1886
+        ],
+        "duelEligibleTurns": 3562,
+        "forcedDuelTurns": 3562
+      },
+      "endpoint": {
+        "sha256": "82daae3f288dd412f2bb934b8c457ab2d20c04e8ac1a14c50110c109b2c195db",
+        "bytes": 27804,
+        "totalRounds": 20
+      },
+      "launchEnvironment": {
+        "AISURVIVOR_MODE": "train",
+        "AISURVIVOR_SEED": "20262502",
+        "AISURVIVOR_MODEL_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g02/model.dat",
+        "AISURVIVOR_METRICS_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g02/Melee-train/metrics.jsonl",
+        "duelOverride": "unset"
+      }
+    },
+    {
+      "gameId": "melee946-g03",
+      "seed": 20262503,
+      "battle": {
+        "scenario": "Melee",
+        "policy": "train",
+        "rounds": 20,
+        "id": 1,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 1,
+        "totalScore": 8638,
+        "survival": 3000,
+        "bulletDamage": 4235,
+        "firstPlaces": 20,
+        "metrics": {
+          "turns": 14404,
+          "shotsFired": 909,
+          "bulletHits": 570,
+          "damageDealt": 4480.221966,
+          "damageTaken": 430.0,
+          "wallCollisions": 28,
+          "botCollisions": 31,
+          "skippedTurns": 0,
+          "hitRate": 0.6270627062706271,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 1,
+            "name": "AISurvivor",
+            "version": "1.2.1",
+            "rank": 1,
+            "totalScore": 8638,
+            "survival": 3000,
+            "bulletDamage": 4235,
+            "firstPlaces": 20
+          },
+          {
+            "id": 4,
+            "name": "Spin Bot",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 2088,
+            "survival": 1200,
+            "bulletDamage": 850,
+            "firstPlaces": 0
+          },
+          {
+            "id": 2,
+            "name": "Walls",
+            "version": "1.0",
+            "rank": 3,
+            "totalScore": 1906,
+            "survival": 1300,
+            "bulletDamage": 588,
+            "firstPlaces": 0
+          },
+          {
+            "id": 3,
+            "name": "Target",
+            "version": "1.0",
+            "rank": 4,
+            "totalScore": 505,
+            "survival": 500,
+            "bulletDamage": 0,
+            "firstPlaces": 0
+          }
+        ],
+        "retconStats": {
+          "status": "not-applicable"
+        },
+        "modelSHA256": "dddd44f85be56368180130791106bfa5c0e52b2c6271d8bbb02cd07751ac73ac"
+      },
+      "scoreShare": 0.657532161071782,
+      "selection": {
+        "actionCounts": [
+          5441,
+          1731,
+          1764,
+          1715,
+          1917,
+          1834
+        ],
+        "duelEligibleTurns": 3734,
+        "forcedDuelTurns": 3734
+      },
+      "endpoint": {
+        "sha256": "dddd44f85be56368180130791106bfa5c0e52b2c6271d8bbb02cd07751ac73ac",
+        "bytes": 27804,
+        "totalRounds": 20
+      },
+      "launchEnvironment": {
+        "AISURVIVOR_MODE": "train",
+        "AISURVIVOR_SEED": "20262503",
+        "AISURVIVOR_MODEL_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g03/model.dat",
+        "AISURVIVOR_METRICS_PATH": "/home/runner/work/robocode/robocode/build/melee-default-baseline/melee946-g03/Melee-train/metrics.jsonl",
+        "duelOverride": "unset"
+      }
+    }
+  ],
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "sampleAssetSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "summary": {
+    "disposition": "descriptive-baseline",
+    "rounds": 60,
+    "officialGameRanks": [
+      1,
+      1,
+      1
+    ],
+    "meanGameRank": 1,
+    "equalGameMeanShare": 0.6637347916764421,
+    "officialFirstPlaces": 60,
+    "metrics": {
+      "turns": 42391,
+      "shotsFired": 2667,
+      "bulletHits": 1706,
+      "damageDealt": 13490.153565,
+      "damageTaken": 948.0,
+      "wallCollisions": 184,
+      "botCollisions": 169,
+      "skippedTurns": 0
+    },
+    "hitRate": 0.6396700412448444,
+    "actionCounts": [
+      16192,
+      5019,
+      5116,
+      5168,
+      5467,
+      5416
+    ],
+    "duelEligibleTurns": 11240,
+    "forcedDuelTurns": 11240
+  }
+}
