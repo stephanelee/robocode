@@ -58,3 +58,22 @@ The Retcon t bound relies on sparse game-level assumptions; no IID-round inferen
 ## Review, evidence and promotion
 
 Publish exact source/JAR and immutable registration before games; independent reviewer clearance of the exact implementation/driver/workflow authorizes execution. Implementers never self-merge. Record all raw rows, official outcomes, logs, private endpoint models, executed tooling, runtime/source/opponent/asset hashes, failed attempts and decision output. Update docs/improvements.md, this report and issue53 after the experiment. A reject restores production gameplay/JAR and preserves the candidate patch/artifact/evidence. A retain still needs independent result audit and all protected-master required checks before merge. No force push, evidence rewrite or AI/Codex author trailers.
+
+## Result: rejected at the complete90-round screen
+
+The [single registered run41726813473](https://github.com/stephanelee/robocode/actions/runs/41726813473) completed all90physical rounds/100AIS telemetry rows, with10private finite cold checkpoints, two Breakwater endpoints and two complete Retcon native exports. Source/JAR/runtime/identity/selection/activation checks passed. Every AIS arm and both Breakwater games recorded zero skipped turns. No confirmation or sample games ran.
+
+| Opponent | Accepted AIS share / official wins | Movement candidate share / official wins | Share difference |
+| --- | ---: | ---: | ---: |
+| Breakwater0.3 |24.337957% /0of10 |26.277372% /0of10 |+1.939415pp |
+| Retcon0.2 |90.602656% /10of10 |92.073833% /9of10 |+1.471177pp |
+| Diamond Port |4.855562% /0of10 |8.927286% /0of10 |+4.071723pp |
+| Adaptive Prime |15.580569% /0of10 |63.143631% /7of10 |+47.563063pp |
+
+In the separate head-to-head self game, the candidate won9of10 official first places and scored85.736555% against accepted AIS (1of10/14.263445%). Retcon/advanced/self/wall/skip screen guards passed, but all three registered Breakwater gates failed: gain below5pp, share below50%, and no wins. **The complete candidate is rejected; positive secondary observations do not waive the primary.** There is no fresh confirmation, reliable Adaptive superiority claim or promotion of this movement bundle. All comparisons used one independent game per arm/opponent, with uncontrolled starting positions and within-game adaptation.
+
+Against Breakwater, accepted AIS fired827shots/40hits (4.84%) and the candidate837/42 (5.02%); damage dealt192.8→215.8, damage taken0→6.1. The candidate still lost every round despite low incoming damage. This supports investigating firing economy as a new hypothesis, not a proven cause of each death or a retrospective change to acceptance. Against Adaptive, candidate damage taken fell705.0→331.8 and dealt rose262.8→445.8. Against Diamond, damage taken fell813.0→551.342458 but it still won no rounds. The whole movement policy is measured; pure path choice, timing bridge and learned memory effects are not isolated.
+
+Raw outcome callbacks are incomplete in some games: Retcon candidate raw won6 versus official9, accepted raw9 versus official10; self candidate raw6 versus official9, accepted raw0 versus official1. Official first places were the predeclared primary; original callback flags remain unchanged and no exact callback cause was recorded. Candidate wall contacts were2against Retcon,4Diamond and2Adaptive, zeroBreakwater/self; every wall-rate guard passed and bot contacts were zero. Reported turn sums are not exact lifetime measurements.
+
+[All original payloads, models, hashes, executed tools and offline reproduction](../../benchmarks/ais-breakwater-transfer-v1/README.md) preserve artifact13275875597 and originalZIPdigest4c2b9db52e9a5a75526400bf78a348b772be7dc8361374b79404e7565de96d0f. The independent reviewer acquired its own original ZIP and reproduced the rejection, all90rounds,10models, source/runtime pins and activation. Production gameplay/JAR is restored; the frozen candidate patch/JAR remain retained. A later movement-plus-selective-fire candidate requires a new source, fresh population and registration under unchanged acceptance gates; this screen cannot validate that new program.

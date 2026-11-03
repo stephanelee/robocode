@@ -98,15 +98,6 @@ class TraceReplayTest {
         assertEquals("{\"k\":\"begin\",\"calls\":[[\"adjustGunForBodyTurn\",true],[\"adjustRadarForGunTurn\",true]]}", begin);
     }
 
-    @Test void movementPolicyIsExplicitAndHistoricalGoldensRemainUnchanged(@TempDir Path temp) throws IOException {
-        var lines=read(golden("retcon-1v1-3r"));
-        lines.set(0,lines.get(0).replaceFirst("}$",",\"movementPolicy\":\"breakwater-v1\"}"));
-        var changed=TraceReplay.replay(write(temp.resolve("new-policy.gz"),lines),temp.resolve("new.dat"));
-        assertFalse(changed.identical(),"A new policy must not masquerade as the historical command stream");
-        lines.set(0,lines.get(0).replace("breakwater-v1","unknown-policy"));
-        assertThrows(IOException.class,()->TraceReplay.replay(write(temp.resolve("unknown.gz"),lines),temp.resolve("unknown.dat")));
-    }
-
     private static List<String> read(Path path) throws IOException {
         try (var reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(path)),
                 StandardCharsets.UTF_8))) {

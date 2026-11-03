@@ -106,13 +106,6 @@ final class SurvivorBrain {
     private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
     private int duelSign = 1;
     private final DuelGun duelGun = new DuelGun();
-    private final BreakwaterSurf breakwater;
-    private final boolean breakwaterEnabled;
-    private int initialEnemyCount=-1;
-    private record MovementWave(EnemyWave source,BreakwaterSurf.Threat threat) {}
-    private record MovementHit(int owner,double power,int turn,double x,double y,double direction) {}
-    private final List<MovementWave> movementWaves = new ArrayList<>();
-    private final List<MovementHit> movementHits = new ArrayList<>();
     private boolean pendingDuelShot;
 
     private int    radarTargetId = -1;
@@ -133,14 +126,8 @@ final class SurvivorBrain {
     // ═════════════════════════════════════════════════════════════════════════
 
     SurvivorBrain(BotPort port, BotConfig config, LegalScanRecorder scanRecorder) {
-        this(port,config,scanRecorder,true);
-    }
-    /** Replay uses the policy recorded in the trace; live construction always enables the candidate. */
-    SurvivorBrain(BotPort port, BotConfig config, LegalScanRecorder scanRecorder, boolean breakwaterEnabled) {
-        this.breakwaterEnabled=breakwaterEnabled;
         this.port = port;
         this.config = config;
-        breakwater = new BreakwaterSurf(config.seed());
         this.scanRecorder = scanRecorder;
         loadAgent();
     }
@@ -158,7 +145,6 @@ final class SurvivorBrain {
     /** One decision turn; the adapter calls {@code go()} afterwards. */
     void turn() {
         {
-            latchInitialEnemyCount();
             recordOwnState();
             pruneStaleEnemies();
             advanceTargetingWaves();
@@ -195,7 +181,6 @@ final class SurvivorBrain {
         pendingFireScans.clear();
         pendingTargetingWave = null;
         enemyWaves.clear();
-        movementWaves.clear();movementHits.clear();breakwater.startRound();initialEnemyCount=-1;
         ownHistory.clear();
         tickReceivedNanos = 0;  // never measure across the pause between rounds
         duelSign      = 1;
@@ -246,7 +231,6 @@ final class SurvivorBrain {
 
     /** The tick is the first event of a turn; latency runs from here to the go() that answers it. */
     public void onTick(TickEvent e) {
-        latchInitialEnemyCount();
         tickReceivedNanos = System.nanoTime();
     }
 
@@ -279,8 +263,6 @@ final class SurvivorBrain {
         BulletState bullet = e.getBullet();
         if (duelComponents()) fireTracker.recordBulletHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
         else fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
-        if (breakwaterEligible() && getEnemyCount()==1 && movementHits.size()<64) movementHits.add(new MovementHit(bullet.getOwnerId(),bullet.getPower(),
-                e.getTurnNumber(),bullet.getX(),bullet.getY(),bullet.getDirection()));
         recordSurfHit(bullet, e.getTurnNumber());
         metrics.damageTaken += e.getDamage();
         addReward(-e.getDamage() * (0.6 + 0.1 * getEnemyCount()));
@@ -552,16 +534,6 @@ final class SurvivorBrain {
     // ─── 1v1 shot-reactive movement ──────────────────────────────────────────
 
     private void duelMovement(Enemy enemy) {
-        if (breakwaterEligible()) {
-            var threats=movementWaves.stream().filter(w->w.source().shooterId==enemy.id)
-                    .map(MovementWave::threat).toList();
-            var command=breakwater.choose(new BreakwaterSurf.Own(getTurnNumber(),getX(),getY(),getDirection(),
-                    getSpeed(),getArenaWidth(),getArenaHeight()),enemy.x,enemy.y,threats);
-            setTurnRate(command.turnRate());setTargetSpeed(command.targetSpeed());
-            if(command.travelSign()!=0)duelSign=command.travelSign();
-            metrics.breakwaterMovementTurns++;
-            return;
-        }
         List<DuelSurf.Threat> threats = new ArrayList<>();
         for (EnemyWave wave : enemyWaves) {
             if (Double.isNaN(wave.aimDistance) || wave.remaining(getX(), getY(), getTurnNumber()) < -18) continue;
@@ -706,27 +678,10 @@ final class SurvivorBrain {
                         AimCorridor.linear(prev.x, prev.y, own, bulletSpeed, getArenaWidth(), getArenaHeight()),
                         Math.hypot(own.x() - prev.x, own.y() - prev.y));
                 enemyWaves.add(wave);
-                if (breakwaterEligible() && getEnemyCount()==1 && current.lastScanTurn==prev.lastScanTurn+1) {
-                    var threat=BreakwaterWaveBridge.from(wave,own);
-                    if(threat!=null)movementWaves.add(new MovementWave(wave,threat));
-                }
                 surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
             }
         }
         pendingFireScans.clear();
-        // Independent queue: legacy recordSurfHit may already have removed its own EnemyWave.
-        // Infer all same-turn waves first, then match actual rays before pruning the new ledger.
-        for(var hit:movementHits) {
-            MovementWave unique=null;int count=0;
-            for(var wave:movementWaves)if(BreakwaterWaveBridge.matches(wave.source(),hit.owner(),hit.power(),
-                    hit.turn(),hit.x(),hit.y(),hit.direction())){unique=wave;count++;}
-            if(count==1){breakwater.matched(unique.threat(),hit.direction());movementWaves.remove(unique);}
-        }
-        movementHits.clear();
-        movementWaves.removeIf(w->getTurnNumber()-w.threat().creationTurn()>110 ||
-                w.threat().bulletSpeed()*(getTurnNumber()-w.threat().creationTurn()+1)>
-                        Math.hypot(getX()-w.threat().originX(),getY()-w.threat().originY())+36);
-        while(movementWaves.size()>64)movementWaves.remove(0);
         fireTracker.prune(getTurnNumber());
         // Keep a collision margin so a hit event can still match the wave.
         enemyWaves.removeIf(w -> w.remaining(getX(), getY(), getTurnNumber())
@@ -913,10 +868,6 @@ final class SurvivorBrain {
     private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
 
     /** The new composition is a default TRAIN duel policy; legacy, FIXED/EVAL and melee retain their paths. */
-    private void latchInitialEnemyCount() {
-        if(initialEnemyCount<0){int count=getEnemyCount();if(count>0)initialEnemyCount=count;}
-    }
-    private boolean breakwaterEligible() { return breakwaterEnabled && config.forceDuel() && initialEnemyCount==1; }
     private boolean duelComponents() { return config.forceDuel() && getEnemyCount() == 1; }
 
     private double wallSmooth(double x, double y, double heading, int rotDir) {
