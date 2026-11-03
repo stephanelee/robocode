@@ -9,7 +9,7 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.3.0";
+    static final String NAME="DiamondChallenger", VERSION="0.4.0";
     private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
     private final SplittableRandom random=new SplittableRandom(seed);
     private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
