@@ -21,11 +21,11 @@ import retcon_stats
 import strong_melee_opponents as native
 
 REGISTRATION = 'PENDING'
-SOURCE = 'PENDING'
+SOURCE = '1cd8db2ea6ccfb56914472bcc51757c0e91d2cff'
 PLAN = 'docs/improvements/ais-breakwater-transfer-v1.md'
 PROTOCOL = 'tools/fixtures/ais-breakwater-transfer/protocol.json'
 BASE = '9b1624da2d9b09ec9cc4f580b51bc82edd2c1485'
-JARS = dict(previous='b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800', candidate='PENDING')
+JARS = dict(previous='b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800', candidate='4aceb212ab23e994bcbd95ab1a71920c4422708d386a0b4b032b8eac1b0b79a3')
 BREAKWATER = 'b9f61e536c0ff5860f6aabc0f6d3f4a11685a3d9'
 BREAKWATER_JAR = 'e6c98feef83e083149df782d643496fb6b6fe3fab33c95356ea2634981c6baf0'
 OPS = ('Breakwater', 'Retcon', 'diamond-port', 'adaptive-prime')

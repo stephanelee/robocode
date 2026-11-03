@@ -10,7 +10,7 @@ The new policy has a separate legal wave ledger so legacy surfing's wave removal
 
 Keep AIS's current GF/virtual gun, power, firing gates, radar, energy bookkeeping and DQN unchanged. Do not copy Breakwater's shielding or the v0.3 envelope gun. That gun fired only3shots against Diamond, and its17zero-shot wins against AIS do not establish its causal contribution. Breakwater0.2 had the same movement but a different gun and a different one-game AIS outcome. Thus this transfer is a source-grounded hypothesis about the complete movement intervention, not a proven explanation of the20/20 transfer sweep or a claim that energy conservation is isolated.
 
-The baseline is accepted AIS source9b1624da2d9b09ec9cc4f580b51bc82edd2c1485/JARb41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800. The candidate source/JAR will be frozen in the machine protocol after implementation/tests, before independent premeasurement clearance or play. Breakwater opponent is frozen0.3 JAR e6c98feef83e083149df782d643496fb6b6fe3fab33c95356ea2634981c6baf0 from the exact source above, not its older variants.
+The baseline is accepted AIS source9b1624da2d9b09ec9cc4f580b51bc82edd2c1485/JARb41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800. The candidate is source1cd8db2ea6ccfb56914472bcc51757c0e91d2cff/JAR4aceb212ab23e994bcbd95ab1a71920c4422708d386a0b4b032b8eac1b0b79a3, frozen after a Java17 build with103tests,0failures and1existing skip. The machine protocol records these exact identities before play. Breakwater opponent is frozen0.3 JAR e6c98feef83e083149df782d643496fb6b6fe3fab33c95356ea2634981c6baf0 from the exact source above, not its older variants.
 
 ## Fixed population and execution
 
