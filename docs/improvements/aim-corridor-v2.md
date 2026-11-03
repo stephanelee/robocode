@@ -124,6 +124,8 @@ The runtime was actual Ubuntu 26.04.1 LTS. The Java 17 build passed the JAR pari
 
 **Decision: reject.** Stage A failed, so Stage C was not run, as registered. Stage B passed. Gameplay source, tests and the tracked JAR are restored exactly to `116c47c` (SHA256 `1b99fa0ac303e5e5f89ed91bb3803841ded54910628f335fe1aeaeba65e34c9a`).
 
+That restoration identifies the historical measurement baseline. Final integration after PR #35 preserves current master's closed-round recorder and accepted JAR `5ebfa64adf38ab227766b97f7f68e82aefb20251ff8d5f30575bf6b69e67c883`; no rejected movement change remains. The collector update changes only `LegalScanRecorder.class` among the 800 normalized JAR file entries relative to the historical baseline.
+
 ### Stage A: 120 fixed minimum-risk Retcon rounds
 
 | Metric (60 rounds per arm) | Baseline | Candidate |

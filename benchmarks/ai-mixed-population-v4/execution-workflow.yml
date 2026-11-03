@@ -1,0 +1,97 @@
+name: Mixed-population fixed-scorer screen
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  fit:
+    name: One train-only containment fit
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    outputs:
+      model_sha: ${{ steps.freeze.outputs.model_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test frozen ranker implementation
+        run: |
+          python -m unittest discover -s tools -p 'test_containment_forecast_v3.py' -v
+          python -m unittest discover -s tools -p 'test_mixed_population_registration.py' -v
+      - name: Unpack exact previous legal corpus
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, os, json, subprocess
+          from pathlib import Path
+          data = gzip.decompress(Path('benchmarks/ai-motion-v1/events.jsonl.gz').read_bytes())
+          assert hashlib.sha256(data).hexdigest() == 'd2cb8e055659485d89648eec6cd3aebe8cbfce8dfb4dd19f83e7ba3efa1d11e2'
+          Path(os.environ['RUNNER_TEMP'], 'legal-events.jsonl').write_bytes(data)
+          manifest = subprocess.check_output(['git', 'show', '044e4e28265dc175213469a8b87a941c82f1cf1c:tools/fixtures/mixed-population-v4/manifest.json'])
+          Path(os.environ['RUNNER_TEMP'], 'mixed-manifest.json').write_bytes(manifest)
+          old_model = json.loads(Path('benchmarks/ai-own-wave-v3/model.json').read_text())
+          for key, filename in [('toolSha256','containment_forecast_v3.py'),('dependencySha256','motion_forecast.py'),('contextToolSha256','own_wave_context_diagnostic.py'),('datasetToolSha256','legal_scan_dataset.py')]:
+              assert hashlib.sha256(Path('tools', filename).read_bytes()).hexdigest() == old_model[key]
+          assert subprocess.check_output(['git', 'show', '044e4e28265dc175213469a8b87a941c82f1cf1c:docs/ai-mixed-population-v4.md']) == Path('docs/ai-mixed-population-v4.md').read_bytes()
+          PY
+      - name: Fit once using registered mixed training games only
+        run: python tools/containment_forecast_v3.py --manifest "$RUNNER_TEMP/mixed-manifest.json" --events "$RUNNER_TEMP/legal-events.jsonl" --output build/mixed-population-fit
+      - name: Publish frozen model hash before screen job
+        id: freeze
+        run: |
+          MODEL_SHA=$(sha256sum build/mixed-population-fit/model.json | cut -d ' ' -f 1)
+          echo "model_sha=$MODEL_SHA" >> "$GITHUB_OUTPUT"
+          echo "FROZEN_CONTAINMENT_MODEL_SHA256=$MODEL_SHA"
+          cat build/mixed-population-fit/report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mixed-v4-frozen-model
+          path: build/mixed-population-fit/
+          if-no-files-found: error
+  screen:
+    name: Single development-only containment screen
+    needs: fit
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: mixed-v4-frozen-model
+          path: build/mixed-population-fit
+      - name: Unpack same hash-pinned corpus
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, os, json, subprocess
+          from pathlib import Path
+          data = gzip.decompress(Path('benchmarks/ai-motion-v1/events.jsonl.gz').read_bytes())
+          assert hashlib.sha256(data).hexdigest() == 'd2cb8e055659485d89648eec6cd3aebe8cbfce8dfb4dd19f83e7ba3efa1d11e2'
+          Path(os.environ['RUNNER_TEMP'], 'legal-events.jsonl').write_bytes(data)
+          manifest = subprocess.check_output(['git', 'show', '044e4e28265dc175213469a8b87a941c82f1cf1c:tools/fixtures/mixed-population-v4/manifest.json'])
+          Path(os.environ['RUNNER_TEMP'], 'mixed-manifest.json').write_bytes(manifest)
+          old_model = json.loads(Path('benchmarks/ai-own-wave-v3/model.json').read_text())
+          for key, filename in [('toolSha256','containment_forecast_v3.py'),('dependencySha256','motion_forecast.py'),('contextToolSha256','own_wave_context_diagnostic.py'),('datasetToolSha256','legal_scan_dataset.py')]:
+              assert hashlib.sha256(Path('tools', filename).read_bytes()).hexdigest() == old_model[key]
+          assert subprocess.check_output(['git', 'show', '044e4e28265dc175213469a8b87a941c82f1cf1c:docs/ai-mixed-population-v4.md']) == Path('docs/ai-mixed-population-v4.md').read_bytes()
+          PY
+      - name: Screen once using only development games and published model
+        env:
+          MODEL_SHA: ${{ needs.fit.outputs.model_sha }}
+        run: |
+          python tools/containment_forecast_v3.py --stage screen --manifest "$RUNNER_TEMP/mixed-manifest.json" --events "$RUNNER_TEMP/legal-events.jsonl" --model build/mixed-population-fit/model.json --model-sha256 "$MODEL_SHA" --output build/mixed-population-screen
+          cat build/mixed-population-screen/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mixed-v4-development-screen
+          path: build/mixed-population-screen/
+          if-no-files-found: warn

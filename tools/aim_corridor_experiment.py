@@ -58,6 +58,8 @@ def final_decision(primary, samples, veto):
                   onlineVetoRetain=veto is not None and veto['decision']['status'] == 'retain')
     return dict(status='retain' if all(checks.values()) else 'reject', checks=checks,
                 onlineVetoRun=veto is not None,
+                tacticalStrengthGatePassed=primary['decision'].get('tacticalStrengthGatePassed',
+                                                                  primary['decision']['status'] == 'retain'),
                 limitation='Opponent-specific Retcon result plus three sample regressions; not general strength')
 
 
@@ -86,6 +88,8 @@ def main():
     parser.add_argument('--plan-path', default=PLAN_PATH, help='Registered plan path inside the repository')
     parser.add_argument('--seeds', default=SEEDS, help='Three comma-separated Retcon block seeds')
     parser.add_argument('--sample-seed', type=int, default=SAMPLE_SEED)
+    parser.add_argument('--primary-category', choices=('tactical', 'correctness'), default='tactical',
+                        help='Stage A gate registered in the plan (default reproduces v1/v2)')
     args = parser.parse_args()
     args.output = args.output.resolve()
     args.previous_bot_dir = args.previous_bot_dir.resolve()
@@ -104,8 +108,8 @@ def main():
         destination.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
     save()
     try:
-        primary = run_compare(args, 'fixed-minrisk', 'tactical', args.output / 'primary')
-        report['primary'] = dict(decision=primary['decision'], mechanism=retcon_mechanism(primary))
+        primary = run_compare(args, 'fixed-minrisk', args.primary_category, args.output / 'primary')
+        report['primary'] = dict(category=args.primary_category, decision=primary['decision'], mechanism=retcon_mechanism(primary))
         save()
         cache = benchmark.ROOT / '.benchmark-cache'
         runner = benchmark.download(cache, 'robocode-tankroyale-runner-1.4.0.jar', benchmark.ASSETS['robocode-tankroyale-runner-1.4.0.jar'])
