@@ -1,0 +1,32 @@
+melee	One registered native-opponent melee baseline	﻿2026-11-03T13:49:41.9986500Z ##[group]Run python tools/strong_melee_baseline.py --bot-dir "$RUNNER_TEMP/frozen-strong-melee" --java "$JAVA_HOME/bin/java" --output build/strong-melee-baseline
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:41.9987401Z [36;1mpython tools/strong_melee_baseline.py --bot-dir "$RUNNER_TEMP/frozen-strong-melee" --java "$JAVA_HOME/bin/java" --output build/strong-melee-baseline[0m
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0018716Z shell: /usr/bin/bash -e {0}
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0019274Z env:
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0019733Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0020484Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0021490Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0022055Z   GRADLE_USER_HOME: /home/runner/.gradle
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0022492Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0022880Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0023478Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0024144Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0024534Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0024969Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0025400Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0025889Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0026435Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0026972Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0027514Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0028152Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:42.0028663Z ##[endgroup]
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2661144Z Traceback (most recent call last):
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2669691Z   File "/home/runner/work/robocode/robocode/tools/strong_melee_baseline.py", line 102, in <module>
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2670282Z     main(parser.parse_args())
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2670535Z     ~~~~^^^^^^^^^^^^^^^^^^^^^
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2670997Z   File "/home/runner/work/robocode/robocode/tools/strong_melee_baseline.py", line 84, in main
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2671612Z     source,python,provenance=native.prepare(args.cache,args.python);report['pythonOpponents']=provenance;save()
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2672085Z                              ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2672552Z   File "/home/runner/work/robocode/robocode/tools/strong_melee_opponents.py", line 34, in prepare
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2685796Z ##[error]    raise ValueError('Unexpected opponent source/config files')
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2686946Z ValueError: Unexpected opponent source/config files
+melee	One registered native-opponent melee baseline	2026-11-03T13:49:43.2888670Z ##[error]Process completed with exit code 1.
