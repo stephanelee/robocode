@@ -89,4 +89,75 @@ The total is 900 scored rounds. There is no early stopping, no favourable rerun 
 
 ## Results
 
-Not yet measured.
+The text above this heading is the registered plan, unchanged since `c4b2cae035e34605b8e7bd48dc62956b70a1d388`, which is also the measured candidate. The driver stored that blob byte for byte.
+
+**The run:**
+- **Single registered run:** [41645248808](https://github.com/stephanelee/robocode/actions/runs/41645248808) (job 125948759531, artifact 13237120936, zip SHA256 `db49537c4b5ceacb69eccde26b17a45507c91863c01c9fbcaee50b930221b603`), every step green, no reruns.
+- **Environment:** Ubuntu 26.04.1. Java 17 JAR parity passed; Temurin 25.0.5+8 for matches.
+- **Candidate JAR:** `351a006829dfeb0a43850f0d54de7a1442296d19518d68ee8b17d8f9e32c16a1`.
+
+**Registered decision: reject.** Stage A (melee superiority) and Stage B (Retcon non-inferiority) failed; Stage C passed. Per the plan, no PR is opened. The branch, protocol and evidence are kept. Master is unchanged.
+
+### Stage A: melee, 100 rounds per arm (fail)
+
+| Melee, 8 bots | Master | Candidate |
+| --- | ---: | ---: |
+| Mean block score share | 27.994% | 28.514% |
+| First places | 86 | 87 |
+| Skipped turns | 7 | 6 |
+| Wall collisions | 1,536 | 65 |
+| Walls per 1,000 turns | 13.45 | 0.56 |
+| Damage taken | 4,679 | 4,426 |
+| Hits / shots | 3,255 / 6,047 | 3,386 / 6,222 |
+
+| Seed | Master | Candidate | Change (pp) |
+| --- | ---: | ---: | ---: |
+| 20261901 | 25.10 | 26.18 | +1.08 |
+| 20261902 | 31.88 | 26.90 | −4.98 |
+| 20261903 | 31.62 | 27.10 | −4.52 |
+| 20261904 | 25.82 | 31.04 | +5.22 |
+| 20261905 | 27.97 | 30.83 | +2.86 |
+| 20261906 | 22.05 | 32.15 | +10.11 |
+| 20261907 | 28.14 | 24.65 | −3.50 |
+| 20261908 | 29.50 | 29.16 | −0.34 |
+| 20261909 | 28.95 | 29.76 | +0.81 |
+| 20261910 | 28.91 | 27.36 | −1.55 |
+
+- **Mean delta:** +0.520 pp, SE 1.478 pp. **Fails** the ≥ +2 pp rule.
+- **Student-t lower bound:** −2.190 pp. **Fails** the > 0 rule.
+- **Guards:** first places, skipped turns and wall rate all pass.
+
+### Stage B: Retcon, 320 rounds per arm (fail)
+
+| Retcon, default product | Master | Candidate |
+| --- | ---: | ---: |
+| Mean block score share | 87.840% | 85.476% |
+| Wins | 301 | 297 |
+| Skipped turns | 0 | 0 |
+| Walls per 1,000 turns | 0.095 | 0.061 |
+| AIS hits / shots | 1,290 / 18,522 | 1,151 / 18,856 |
+| Retcon actual hit rate on AIS | 2.10% | 2.36% |
+
+- **Mean delta:** −2.364 pp, SE 1.755 pp (16 blocks).
+- **Student-t lower bound:** −5.441 pp. **Fails** the ≥ −5 pp margin.
+- **Guards:** skipped turns and wall rate pass.
+
+In 1v1 the melee gate never applies (it needs more than one enemy). The two-way wall search runs only in legacy movement, which 1v1 uses just for the turns before the opponent is first scanned. After that, `DuelSurf` moves the bot. So the 1v1 change is confined to those opening turns, though they can shift every later state of the round. A gap this size was also seen in [replay-harness parity](replay-harness-parity.md) (−2.15 pp for decision-identical code), so game variation is a plausible explanation. That is an interpretation, not a registered finding; the registered failure stands and is not rerun.
+
+### Stage C: samples (pass)
+
+| Sample | Master | Candidate |
+| --- | ---: | ---: |
+| Target | 100.000% | 100.000% |
+| SpinBot | 99.875% | 98.048% |
+| Walls | 100.000% | 100.000% |
+
+All 10 rounds completed for each, with zero candidate skipped turns.
+
+### What was learned (not a gameplay claim)
+
+- **The wall defect is fixed in melee.** Wall collisions fell 96% (1,536 → 65). This did not translate into a measurable score gain at this budget.
+- **Exploratory only:** the two blocks with the most baseline wall hits (428 and 478) gave the candidate +1.08 and +10.11 pp, but other blocks with few baseline wall hits went either way. The melee block SD (4.7 pp) is larger than the effect sought, so a +2 pp gain would need far more than 10 blocks to establish.
+- Any future melee candidate needs its own registered plan, with a melee A/A calibration first.
+
+Evidence: [raw evidence](../../benchmarks/coherent-melee/README.md).
