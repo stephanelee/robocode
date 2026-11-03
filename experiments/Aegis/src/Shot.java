@@ -13,6 +13,8 @@ final class Shot {
     double psx, psy;
     final double range;
     boolean resolved, shielded, dodge;
+    /** Side (+1/-1 along the line normal) one candidate angle behind our motion at aim time; 0 if unknown. */
+    double behind;
     int shieldTurn = -1, shieldBulletId = -1;
     String outcome = "pending";
 
