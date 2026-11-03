@@ -52,6 +52,7 @@ final class GameTrace {
         header.addProperty("seed", config.seed());
         header.addProperty("fixedAction", config.fixedAction());
         header.addProperty("duelPolicy", config.duelPolicy().name());
+        header.addProperty("movementPolicy", "breakwater-v2-selective-fire");
         trace.write(header);
         return trace;
     }

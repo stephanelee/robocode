@@ -6,7 +6,8 @@ import java.util.Locale;
 final class RoundMetrics {
     int shotsFired, bulletHits, wallCollisions, botCollisions, skippedTurns;
     final int[] actionCounts = new int[6];
-    int forcedDuelTurns, duelEligibleTurns;
+    int forcedDuelTurns, duelEligibleTurns, breakwaterMovementTurns;
+    int breakwaterFireEligibleTurns, breakwaterFirePassedTurns, breakwaterFireBlockedTurns, breakwaterFireFinisherTurns;
     double damageDealt, damageTaken, reward;
     /** Per-turn decision latency, tick receipt to go(), in microseconds. */
     long maxTurnMicros;
@@ -22,7 +23,8 @@ final class RoundMetrics {
         shotsFired = bulletHits = wallCollisions = botCollisions = skippedTurns = 0;
         damageDealt = damageTaken = reward = 0;
         java.util.Arrays.fill(actionCounts, 0);
-        forcedDuelTurns = duelEligibleTurns = 0;
+        forcedDuelTurns = duelEligibleTurns = breakwaterMovementTurns = 0;
+        breakwaterFireEligibleTurns = breakwaterFirePassedTurns = breakwaterFireBlockedTurns = breakwaterFireFinisherTurns = 0;
         maxTurnMicros = 0;
         slowTurns = 0;
     }
@@ -46,13 +48,13 @@ final class RoundMetrics {
                 + "\"hitRate\":%.6f,\"damageDealt\":%.6f,\"damageTaken\":%.6f,\"wallCollisions\":%d,"
                 + "\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"reward\":%.6f,"
                 + "\"duelPolicy\":\"%s\",\"actionCounts\":%s,\"duelEligibleTurns\":%d,\"forcedDuelTurns\":%d,"
-                + "\"maxTurnMicros\":%d,\"slowTurns\":%d}",
+                + "\"breakwaterMovementTurns\":%d,\"breakwaterFireEligibleTurns\":%d,\"breakwaterFirePassedTurns\":%d,\"breakwaterFireBlockedTurns\":%d,\"breakwaterFireFinisherTurns\":%d,\"maxTurnMicros\":%d,\"slowTurns\":%d}",
                 round, turns, config.mode().name().toLowerCase(Locale.ROOT), config.seed(),
                 config.mode() == BotConfig.Mode.FIXED ? Integer.toString(config.fixedAction()) : "null",
                 totalRounds, checkpointLoaded, shotsFired, bulletHits,
                 shotsFired == 0 ? 0 : (double) bulletHits / shotsFired, damageDealt, damageTaken,
                 wallCollisions, botCollisions, skippedTurns, won, died, reward,
                 config.duelPolicy().name().toLowerCase(Locale.ROOT), java.util.Arrays.toString(actionCounts),
-                duelEligibleTurns, forcedDuelTurns, maxTurnMicros, slowTurns);
+                duelEligibleTurns, forcedDuelTurns, breakwaterMovementTurns, breakwaterFireEligibleTurns, breakwaterFirePassedTurns, breakwaterFireBlockedTurns, breakwaterFireFinisherTurns, maxTurnMicros, slowTurns);
     }
 }
