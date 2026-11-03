@@ -21,7 +21,7 @@ import retcon
 import retcon_stats
 import strong_melee_opponents as native
 
-REGISTRATION = 'PENDING'
+REGISTRATION = '6c433bed3d953927170e0d0f503e85d04b475da9'
 SOURCE = '1409f16497de7a82c11ae55d8f38d69e10dfeeb6'
 PLAN = 'docs/improvements/ais-breakwater-selective-transfer-v2.md'
 PROTOCOL = 'tools/fixtures/ais-breakwater-selective-transfer/protocol.json'
