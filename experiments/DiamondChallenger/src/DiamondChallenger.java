@@ -16,7 +16,7 @@ public class DiamondChallenger extends Bot {
     private final Path metrics=Path.of(System.getenv().getOrDefault("CHALLENGER_METRICS_PATH","DiamondChallenger-metrics.jsonl")).toAbsolutePath();
     private final PressureGun gun=new PressureGun();
     private int flank=1,nextPhase,roundsCompleted,shots,hits,walls,contacts,skips,rangeTurns,closeTurns,phaseDecisions;
-    private double dealt,taken,rangeSum;
+    private double dealt,taken,rangeSum,energySpent;
     private boolean won,died;
 
     public static void main(String[] args) { new DiamondChallenger().start(); }
@@ -58,14 +58,14 @@ public class DiamondChallenger extends Bot {
 
     @Override public void onRoundStarted(RoundStartedEvent event) {
         gun.startRound();nextPhase=0;shots=hits=walls=contacts=skips=rangeTurns=closeTurns=phaseDecisions=0;
-        dealt=taken=rangeSum=0;won=died=false;
+        dealt=taken=rangeSum=energySpent=0;won=died=false;
     }
     @Override public void onScannedBot(ScannedBotEvent event) {
         gun.onScan(new DuelGun.Scan(event.getScannedBotId(),event.getTurnNumber(),event.getX(),event.getY(),
                 event.getDirection(),event.getSpeed(),event.getEnergy()));
     }
     @Override public void onBulletFired(BulletFiredEvent event) {
-        shots++;var bullet=event.getBullet();
+        shots++;var bullet=event.getBullet();energySpent+=bullet.getPower();
         gun.onFired(event.getTurnNumber(),bullet.getX(),bullet.getY(),bullet.getPower());
     }
     @Override public void onBulletHit(BulletHitBotEvent event) { hits++;dealt+=event.getDamage(); }
@@ -84,8 +84,8 @@ public class DiamondChallenger extends Bot {
                 "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"seed\":%d,\"roundsCompleted\":%d,\"checkpointLoaded\":false,\"gunAttempts\":%s,\"gunHits\":%s}%n",
                 NAME,VERSION,seed,roundsCompleted,Arrays.toString(gun.attempts()),Arrays.toString(gun.hits()));
         String row=String.format(Locale.ROOT,
-                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"mode\":\"train\",\"seed\":%d,\"round\":%d,\"roundsCompleted\":%d,\"turns\":%d,\"checkpointLoaded\":false,\"shotsFired\":%d,\"bulletHits\":%d,\"damageDealt\":%.9f,\"damageTaken\":%.9f,\"wallCollisions\":%d,\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"rangeObservedTurns\":%d,\"rangeSum\":%.9f,\"closeTurns\":%d,\"phaseDecisions\":%d}%n",
-                NAME,VERSION,seed,event.getRoundNumber(),roundsCompleted,event.getTurnNumber(),shots,hits,dealt,taken,walls,contacts,skips,
+                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"mode\":\"train\",\"seed\":%d,\"round\":%d,\"roundsCompleted\":%d,\"turns\":%d,\"checkpointLoaded\":false,\"shotsFired\":%d,\"bulletHits\":%d,\"damageDealt\":%.9f,\"damageTaken\":%.9f,\"energySpent\":%.9f,\"wallCollisions\":%d,\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"rangeObservedTurns\":%d,\"rangeSum\":%.9f,\"closeTurns\":%d,\"phaseDecisions\":%d}%n",
+                NAME,VERSION,seed,event.getRoundNumber(),roundsCompleted,event.getTurnNumber(),shots,hits,dealt,taken,energySpent,walls,contacts,skips,
                 won,died,rangeTurns,rangeSum,closeTurns,phaseDecisions);
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
