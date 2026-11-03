@@ -68,3 +68,39 @@ Metrics reported regardless of outcome: shares, first places, survival/bullet-da
 Amendment before any registered game (independent review of `dfff8336`): corrected the timing-risk statement above from development evidence, noted seed determinism, moved tracking to #71, and fixed a driver validation bound that could have invalidated a low-energy round (fire commands that the engine refuses below 0.1 energy). Bot source and JAR are unchanged (`7fd5b8b2`, `50a6b48f…`). The driver and workflow are frozen by SHA-256 in the workflow.
 
 <!-- Outcome section is appended below this line after execution. -->
+
+## Outcome (appended after the single registered execution)
+
+**Registered decision: REJECT at the 20-round progress pilot. Confirmation not run.** One labelled execution, [run 41721083718](https://github.com/stephanelee/robocode/actions/runs/41721083718), on `ubuntu-26.04` at execution source `28cd933`. The frozen-source and plan checks, Java 17 build, 11 JUnit tests and JAR parity all passed before JDK 25 games. There were no reruns, retries or extra games.
+
+| Gate | Required | Measured | Pass |
+| --- | --- | --- | --- |
+| Score share | > 20% | **0.234%** | no |
+| Official first places | ≥ 1 | **0 / 20** | no |
+| Own skipped turns | 0 | **0** | yes |
+| Valid, complete evidence | — | 20 rows; identities, terminal flags and opponent/JAR hashes verified | yes |
+
+Mechanism measurements (descriptive, not strength):
+
+| Measure | Value |
+| --- | --- |
+| Turns (20 rounds) | 21,832 (mean 1,092 per round) |
+| Inferred enemy shots | 1,560 |
+| Shield fire commands / confirmed own bullets | 1,400 / 1,399 (139.9 energy) |
+| Bullets blocked | 1,119 (**71.7%** of inferred shots, 80.0% of shields) |
+| Hits taken / damage taken | 363 / 1,892.8 |
+| Our bullet hits / damage dealt | 19 / 7.6 |
+| Outcome classes | blocked 1,119; hit 358; missed 36; shield fired but enemy missed 13; pending at round end 34 |
+| Mean label error per round | 2.13–6.77 px |
+| Max decision time / turns > 20 ms | 33.6 ms / 1 |
+| Wall / bot collisions | 0 / 0 |
+| Inactivity-damage turns | 204 |
+
+Interpretation, limited to what was measured:
+- The mechanism worked as designed: shot inference, opponent aim predictability and interception all operated. Nearly three quarters of Diamond's bullets were destroyed.
+- The block rate was below the development 74–80% range. It is also well below the roughly 90% that the registered energy arithmetic said was needed.
+- Every leak refunds the opponent three times the bullet power. Once its energy falls below 63 it fires cubically weaker bullets, and our fixed 0.1 interceptor then costs as much as its shot. Aegis has no offence (7.6 damage dealt), so every round ended in its death.
+- Timing did not decide this pilot (0 skips, 33.6 ms peak). This was a strength failure.
+- No causal attribution beyond these counts is claimed. Nothing here is a Diamond-beating claim, and nothing transfers to AIS.
+
+Evidence: the canonical driver output lines copied from the job log are in [benchmarks/aegis-shield-v1/registered/](../../benchmarks/aegis-shield-v1/registered/README.md). The full raw artifact `aegis-shield-v1-28cd9333…` (artifact 13273276099, 182 files, zip sha256 `fd8052073a95e2353544f42ad2c26ef1ae9ebf5cb41a34504f61fd29406e784c`, retained until 2026-12-03) holds `experiment.json`, all 20 metrics rows, the official battle result and the runner log. The implementing session's network policy blocked the artifact storage host, so the reviewer or merger must import it into the repository before it expires. The report is [docs/aegis-shield.md](../aegis-shield.md).
