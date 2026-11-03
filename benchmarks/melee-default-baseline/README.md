@@ -1,0 +1,9 @@
+# Frozen default four-bot sample melee baseline
+
+[PR49](https://github.com/stephanelee/robocode/pull/49), [sole run41643133213](https://github.com/stephanelee/robocode/actions/runs/41643133213), artifact13232269909. [Immutable protocol/full result/limitations](../../docs/improvements/melee-default-baseline.md).
+
+**Complete descriptive baseline; retain evidence, no strength gate/promotion.**60 rounds against official Target/SpinBot/Walls: rank1 in all three games,60/60 official first places,66.373479% equal-game score share. Hit rate63.967004%; damage dealt13490.153565/taken948;184 wall and169 bot collisions; zero AIS skips. Three cold model endpoints have finite state/header20. Default behavior includes11240 eligible/forced-duel selections after eliminations; this is not exclusively legacy melee behavior or evidence of general tournament strength.
+
+`baseline.json` is the original canonical report. `registered-plan.md` / `registered-games.json` preserve immutable266261 bytes. `raw/` contains all60 JSONL records, three official arrays/logs, original model endpoints, AIS launch assets and each opponent's copied descriptor. Official SpinBot display name is `Spin Bot`. `bundle-jar-hashes.json` records the three actual frozen9679 copies; `sample-file-hashes.json` records all21 isolated opponent/source/shared-lib file hashes without duplicate bundles. Full runnable/sample copies remain in the original artifact.
+
+`source/` contains the executed wrapper/tests/workflow. `execution-provenance.json` links independently revieweda592/workflowfed837 to the workflow-only087 execution. `files.sha256.json` verifies39 evidence/provenance files; Git attributes preserve bytes. No production, warm-up/replay PR47/48, or live7654 change was included. Tests reproduce the descriptive summary and validate raw identities/models without new games. Initial unrelated routine probe acquisition failure is disclosed in the report; it did not trigger a scored rerun.

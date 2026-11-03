@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Measure the requested frozen default four-bot sample melee baseline. [PR49](https://github.com/stephanelee/robocode/pull/49) / [results](docs/improvements/melee-default-baseline.md):60 rounds,rank1 each,60/60 first places,66.37% share,zero skips;184 wall/169 bot collisions retained. Descriptive only; no optimization or source change.
+
 - [x] Complete the user-authorized fresh frozen-default confirmation redo with unchanged criteria. [PR46](https://github.com/stephanelee/robocode/pull/46) / [results](docs/improvements/final-default-confirmation-redo.md):200 valid rounds,86.74% mean share,187/200 first places,82.27% binding t lower bound,zero skips; all gates pass. Original44 failure remains separate/cause unknown. Finite confirmation goal met for pinned Retcon; no further automatic games.
 
 - [x] Attempt the final frozen default200-round confirmation once. [PR44](https://github.com/stephanelee/robocode/pull/44) / [outcome](docs/improvements/final-default-confirmation.md): invalid after140 physical rounds (120 strictly validated), one skipped AIS turn,60 unplayed; reliability not confirmed. No retry or automatic optimization continuation; accepted v2 unchanged.

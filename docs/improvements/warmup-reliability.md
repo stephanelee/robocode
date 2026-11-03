@@ -91,13 +91,13 @@ The text above this heading is the registered plan, unchanged since `f3db2d4ee9c
 **What the run shows (facts).**
 - Every melee game, in both arms, skipped **exactly one turn, always in round 1**.
 - No Retcon game skipped.
-- The candidate's decision latency, from the tick to `go()`, never exceeded 12.3 ms against the 100 ms timeout.
+- The candidate's recorded decision-loop maximum, from the tick to `go()`, was 12.3 ms. That is a per-round maximum. It does not cover the exact skipped-turn interval, intent-arrival timing, scheduling, GC or other work outside the measured span. No reliability benefit of the warm-up was observed, and the cause of the skips remains unestablished.
 - Mean score shares were descriptive only: Retcon 91.9% (baseline) and 96.2% (candidate); melee 30.3% and 29.6%.
 
 **Root-cause diagnostic (exploratory, after the run, not registered).**
 - *Setup.* I wrote a probe bot whose run loop does nothing but call `go()` and logs its own `SkippedTurnEvent`s. I added it as an eighth opponent in three local 2-round melees (Ubuntu 24.04, development seeds 7000–7002). Its source, descriptor, log and the three games' official results and AISurvivor telemetry are in [`benchmarks/warmup-reliability/exploratory-probe/`](../../benchmarks/warmup-reliability/exploratory-probe/).
 - *Result.* The probe logged one skip at **round 1, turn 1**. Its log does not identify which of the three games that was. AISurvivor skipped once, in round 1 of the first game.
-- *Interpretation (hypothesis).* The round-1 melee skip may occur at the start of a multi-bot game regardless of a bot's own work. Contention while the runner starts and source-compiles eight bot JVMs is one plausible cause. This is a single small local observation with round-level records only, not per-turn attribution. It is **not** sufficient grounds to exclude skips from future confirmation protocols. The CI fact that AISurvivor's own decision latency never exceeded 12.3 ms does show its decision code was not slow, which explains why warming that code up could not help.
+- *Interpretation (hypothesis).* The round-1 melee skip may occur at the start of a multi-bot game regardless of a bot's own work. Contention while the runner starts and source-compiles eight bot JVMs is one plausible cause. This is a single small local observation with round-level records only, not per-turn attribution. It is **not** sufficient grounds to exclude skips from future confirmation protocols.
 - *Not explained.* The single skip that invalidated [#44](final-default-confirmation.md) occurred in a **1v1 Retcon** game at round 4, so it is a different event and remains unexplained. Future runs now record `maxTurnMicros` and `slowTurns`, so such an event can be attributed or ruled out.
 
 **Suggestion for future confirmation protocols (needs its own evidence).** If the start-up hypothesis is confirmed with per-turn attribution, a protocol could pair each skip with the bot's own decision latency, or begin scoring after a warm-up round. Until then, every skip counts.

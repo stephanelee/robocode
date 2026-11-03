@@ -1,8 +1,33 @@
 # AISurvivor
 
-A Java bot for [Robocode Tank Royale](https://robocode.dev/). This project uses Tank Royale's WebSocket bot API, rather than the original Robocode Java engine.
+AISurvivor is an autonomous Java combat bot for [Robocode Tank Royale](https://robocode.dev/), built to survive incoming fire, adapt its aim and win battles. It combines programmed combat tactics with a small neural network and online statistical learning. It supports both 1v1 duels and multi-opponent melee through Tank Royale's WebSocket bot API.
 
 Project notes: [documentation index](docs/README.md), [benchmark methodology](docs/benchmarks.md), [measured improvement log](docs/improvements.md), and [the source-grounded Retcon strategy plan](docs/retcon-strategy.md).
+
+## How it fights
+
+- **Movement:** the default training policy uses a dedicated duel controller when one enemy remains, reacting to estimated incoming shots and predicting safe movement within the arena. With several opponents, it selects among six strategies, including minimum-risk movement, orbiting, retreat and wave surfing.
+- **Radar and targeting:** independent radar control tracks a duel opponent. An adaptive gun selector compares head-on, linear and circular predictions with a GuessFactor-adjusted forecast, which learns where an opponent tends to move relative to a shot.
+- **Energy management:** firing decisions account for gun alignment, bullet travel, available energy and the damage needed to finish an opponent, including enemies disabled at zero energy.
+
+AIS uses only its legal scans, own state and confirmed combat events. Incoming enemy bullets are inferred from observations such as energy changes; their positions are not directly visible to the bot.
+
+## Where the AI comes in
+
+A small **Deep Q-Network** maps 14 inputs to values for six movement actions. During training, it learns from combat rewards using replay memory and a target network. The default duel hierarchy selects its controller directly; the network continues training, but does not choose a different movement strategy on those turns. Neural action selection remains part of the multi-opponent and legacy learned policies.
+
+Simpler online learning also adapts targeting and movement danger. The virtual gun selector scores predictions against subsequent legal scans; these geometric scores are estimates, not confirmed bullet hits. GuessFactor profiles learn from virtual wave passages, while surfing danger updates from hits matched to inferred enemy waves. Checkpoints retain the neural weights and class targeting statistics between launches. Learning runs locally without an LLM or external AI service.
+
+**Measured wins validate the complete bot, not the neural network alone.** The strongest demonstrated gains came from coordinating movement, radar, aiming and energy handling; an isolated neural-learning benefit has not been established.
+
+## Measured performance
+
+| Test | Result | Scope |
+| --- | --- | --- |
+| [Fresh Retcon confirmation](docs/improvements/final-default-confirmation-redo.md) | 187/200 official first places; 86.7% mean score share; zero skipped turns | Ten fresh default-TRAIN games against pinned Retcon 0.2.0; all registered confirmation criteria passed |
+| [Four-bot sample melee](docs/improvements/melee-default-baseline.md) | 60/60 official first places; rank 1 in all three games; 66.4% mean score share; zero skipped turns | AISurvivor versus Target, SpinBot and Walls; a sample-roster baseline |
+
+These results apply to the documented opponent versions, settings and training regime. They do not establish broad tournament or advanced melee strength. Reports preserve the raw evidence, source and model hashes, and failures, including the separate invalid first Retcon confirmation attempt.
 
 ## Build and test
 
@@ -57,6 +82,8 @@ The [subsequent gun-v2 comparison](docs/improvements/coherent-duel-v2.md) also p
 
 The [first final frozen-default attempt](docs/improvements/final-default-confirmation.md) was invalidated by one skipped AIS turn after140 of200 planned physical rounds. It remains unconfirmed and its cause unknown. The user then authorized a [separate fresh redo](docs/improvements/final-default-confirmation-redo.md): all200 rounds validated, with86.7% mean share,187/200 official first places,82.3% binding game-level lower bound and zero skips. All unchanged gates passed; no old data was pooled or gameplay changed. This confirms the frozen default bot against pinned Retcon under this regime, not all tournaments. No further automatic benchmark is scheduled.
 
+The requested [four-bot sample melee baseline](docs/improvements/melee-default-baseline.md) completed60 defaultTRAIN rounds against Target/SpinBot/Walls: rank1 in all three games,60/60 official first places,66.4% mean share and zero skips. It also recorded184 wall/169 bot collisions; this is descriptive sample-roster evidence, not broad melee strength or a gameplay change.
+
 The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
 ## Current design
@@ -65,7 +92,7 @@ The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.
-- The default TRAIN duel composition uses the accepted shot-reactive `DuelSurf` controller, independent radar and a coordinated `DuelGun` fed only legal scans/confirmed shots. The [v2 candidate](docs/coherent-duel-v2.md) restores the existing GF/circular forecast as a real adaptive gun option. [Composition and scope](docs/coherent-duel.md). Legacy policy, EVAL/FIXED and melee retain their existing targeting.
+- The default TRAIN duel composition uses the accepted shot-reactive `DuelSurf` controller, independent radar and a coordinated `DuelGun` fed only legal scans/confirmed shots. The [v2 composition](docs/coherent-duel-v2.md) supplies the existing GF/circular forecast as a real adaptive gun option. [Composition and scope](docs/coherent-duel.md). With several enemies, targeting follows the older melee path; default TRAIN can switch to duel components as opponents are eliminated. Legacy learned policy and EVAL/FIXED retain their existing targeting.
 - Consecutive enemy scans infer bullet waves after correcting known damage and hit-energy bonuses. Scan gaps are skipped because fire timing is uncertain. Enemy bullets are not exposed by the bot API; unobserved third-party damage in melee can still make inferred waves inaccurate.
 - Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
 - A versioned numeric checkpoint persists the DQN and class targeting statistics across launches.

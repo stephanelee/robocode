@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Frozen default four-bot sample melee:60-round descriptive baseline](improvements/melee-default-baseline.md)
+
 - [Coherent default duel candidate: composition and scope](coherent-duel.md)
 - [Coherent duel v2: real GF candidate and strict finishing](coherent-duel-v2.md)
 - [Coherent default duel: measured whole-product comparison](improvements/coherent-duel-v1.md)
