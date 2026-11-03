@@ -72,4 +72,43 @@ Scores are descriptive only. The change does not alter decisions, so no score ga
 
 ## Results
 
-Not yet measured.
+The text above this heading is the registered plan, unchanged since `f3db2d4ee9c170d719909e8cb7dd83513130266a`, which is also the measured candidate. The driver stored that commit's Git blob byte for byte.
+
+**The run.** There was a single registered run, [41638002007](https://github.com/stephanelee/robocode/actions/runs/41638002007): job 125923991152, artifact 13233215708, zip SHA256 `96ce41f7b6774358cce00bf93fb57a0ef027f8441dacc8a0da9621ed56bdc06a`.
+- Every step was green and nothing was rerun.
+- It ran on actual Ubuntu 26.04.1 LTS. Java 17 JAR parity passed, and the matches ran on Temurin 25.0.5+8.
+- The candidate JAR was `21c5c3d2cb4007e3e0603556af313df7f5717732e384f039b005e9e72b2daecd`. The baseline JAR hash was verified before launch.
+- All 60 games (240 rounds) completed with validated telemetry.
+
+**Decision: retain-neutral.** The candidate never skipped more than the baseline, but it did not skip less either. No reliability effect is claimed. The warm-up and the latency telemetry stay, as registered.
+
+| Scenario (15 games × 2 rounds per arm) | Baseline: games with skips / skipped turns | Candidate: games with skips / skipped turns | Candidate worst turn latency | Candidate turns ≥ 20 ms |
+| --- | ---: | ---: | ---: | ---: |
+| Retcon 1v1 | 0 / 0 | 0 / 0 | 9.2 ms | 0 |
+| Seven-bot sample melee | **15 / 15** | **15 / 15** | 12.3 ms | 0 |
+| All | 15 / 15 | 15 / 15 | 12.3 ms | 0 |
+
+**What the run shows (facts).**
+- Every melee game, in both arms, skipped **exactly one turn, always in round 1**.
+- No Retcon game skipped.
+- The candidate's decision latency, from the tick to `go()`, never exceeded 12.3 ms against the 100 ms timeout.
+- Mean score shares were descriptive only: Retcon 91.9% (baseline) and 96.2% (candidate); melee 30.3% and 29.6%.
+
+**Root-cause diagnostic (exploratory, after the run, not registered).**
+- *Setup.* I wrote a probe bot whose run loop does nothing but call `go()` and logs its own `SkippedTurnEvent`s. I added it as an eighth opponent in three local 2-round melees (Ubuntu 24.04, development seeds 7000–7002).
+- *Result.* The probe itself logged a skip at **round 1, turn 1**, and AISurvivor skipped in one of the three games.
+- *Interpretation.* The round-1 melee skip happens at the start of a multi-bot game regardless of a bot's own work. Its likely cause is contention while the runner starts and source-compiles eight bot JVMs, but that remains a hypothesis. It is not caused by AISurvivor's decision code. That is why warming up the decision code could not remove it.
+- *Not explained.* The single skip that invalidated [#44](final-default-confirmation.md) occurred in a **1v1 Retcon** game at round 4, so it is a different event and remains unexplained. Future runs now record `maxTurnMicros` and `slowTurns`, so such an event can be attributed or ruled out.
+
+**Recommendation for future confirmation protocols.** Treat round-1 skips in melee as an environmental start-up effect. Either measure the bot's own decision latency instead, or start scoring after a warm-up round. Skips at any later turn should still be counted.
+
+**Local observations, disclosed before registration (not evidence):**
+- *Cloud container.* The baseline skipped in 3/8 melee games and the candidate in 0/8. That apparent effect did not reproduce under registered conditions.
+- *`minimind`.* Apple **M4**, macOS 27.2, Homebrew OpenJDK 17.0.21 to build and 27.0.1 for the battles. The commit was `6c84f0e`, with a JAR (`21c5c3d2…`) byte-identical to the committed one. The run stopped with an infrastructure error at melee game 9. Over 15 Retcon and 8 melee games per arm, neither arm skipped. The candidate's worst decision latency was 2.5 ms (Retcon) and 3.5 ms (melee), with 0 slow turns. Hardware details were supplied by the user after registration.
+
+**Limitations.**
+- The arms are unpaired.
+- Runner load is not controlled.
+- The probe diagnostic is small and was run outside CI.
+
+Evidence: [raw evidence](../../benchmarks/warmup-reliability/README.md).
