@@ -129,12 +129,12 @@ For each arm:
 
 ## Results
 
-Everything above this heading is byte-identical to the registered plan at `f250c95d093efa245468a4a9fae34c38679e2587`, which is also the measured candidate source; `compare.py` stored the plan blob. The single registered run was [run 41546243537](https://github.com/stephanelee/robocode/actions/runs/41546243537) (job 125622420352, artifact 13188028349, zip SHA256 `f2fcb015b2f965ecf2570e07e2fedbfb9eed3e768bc0c4b641f9d96c0fcdf8eb`). Every step was green and nothing was rerun.
+The text above this heading matches the registered plan at `f250c95d093efa245468a4a9fae34c38679e2587`, which is also the measured candidate source. This report changed line endings from LF to CRLF; the [archived original plan](../../benchmarks/wall-search/raw/primary/preregistered-plan.md) retains the exact immutable Git-blob bytes stored by `compare.py`. The single registered run was [run 41546243537](https://github.com/stephanelee/robocode/actions/runs/41546243537) (job 125622420352, artifact 13188028349, zip SHA256 `f2fcb015b2f965ecf2570e07e2fedbfb9eed3e768bc0c4b641f9d96c0fcdf8eb`). Every step was green and nothing was rerun.
 
 - **Runtime:** actual Ubuntu 26.04.1 LTS; Java 17 JAR parity passed; matches ran on Temurin 25.0.5+8.
 - **Candidate JAR:** `9981c06b716db4ce6eb5dbdeef63fbbd0b29add8df76cfd2985dcfee9bc66f6f`. The baseline JAR hash was verified before launch.
 
-**Decision: reject.** Stage A failed the correctness gate, so the tactical gate also fails and the reviewer's category question is moot. Stage C was not run, as registered. Stage B passed. Gameplay source, tests and the tracked JAR are restored exactly to `241156f` (SHA256 `5ebfa64adf38ab227766b97f7f68e82aefb20251ff8d5f30575bf6b69e67c883`).
+**Decision: reject under both classifications.** Stage A failed both the proposed correctness thresholds and the established tactical gate. The correctness-category assignment was not prospectively approved and is not retroactively accepted here; this rejected experiment does not authorize that category for wall-search changes. Stage C was not run, as registered. Stage B passed. Gameplay source, tests and the tracked JAR are restored exactly to `241156f` (SHA256 `5ebfa64adf38ab227766b97f7f68e82aefb20251ff8d5f30575bf6b69e67c883`).
 
 ### Stage A: 120 fixed minimum-risk Retcon rounds
 
