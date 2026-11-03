@@ -42,6 +42,7 @@ public class AISurvivor extends Bot {
     private static final double SURVIVAL_BONUS = 0.1;
     private static final int    STALE_TURNS    = 40;
     private static final int    OWN_HISTORY    = 64;
+    private static final int    WARMUP_ITERATIONS = 3000;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Inner classes
@@ -116,6 +117,7 @@ public class AISurvivor extends Bot {
     private final RoundMetrics metrics = new RoundMetrics();
     private final LegalScanRecorder scanRecorder = LegalScanRecorder.fromEnvironment(System.getenv());
     private boolean checkpointLoaded;
+    private long tickReceivedNanos;
 
     // ═════════════════════════════════════════════════════════════════════════
     //  Entry point
@@ -126,6 +128,11 @@ public class AISurvivor extends Bot {
     public AISurvivor() {
         super(BotInfo.fromFile("AISurvivor.json"));
         loadAgent();
+        // JIT/class-load the decision code before connecting; pure and gameplay-neutral (see Warmup).
+        long started = System.nanoTime();
+        double checksum = Warmup.run(WARMUP_ITERATIONS);
+        System.out.printf(Locale.ROOT, "[AISurvivor] warmup %d iterations in %d ms (checksum %.3f)%n",
+                WARMUP_ITERATIONS, (System.nanoTime() - started) / 1_000_000, checksum);
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -159,6 +166,7 @@ public class AISurvivor extends Bot {
             aimGF();
             if (scanRecorder.enabled()) scanRecorder.submitted(new LegalScanRecorder.Intent(getTurnNumber(),
                     getTargetSpeed(), getTurnRate(), getGunTurnRate(), getRadarTurnRate(), null, action));
+            if (tickReceivedNanos != 0) metrics.recordTurnLatency((System.nanoTime() - tickReceivedNanos) / 1000);
             go();
         }
     }
@@ -176,6 +184,7 @@ public class AISurvivor extends Bot {
         pendingTargetingWave = null;
         enemyWaves.clear();
         ownHistory.clear();
+        tickReceivedNanos = 0;  // never measure across the pause between rounds
         duelSign      = 1;
         duelGun.startRound();
         pendingDuelShot = false;
@@ -223,6 +232,12 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
     //  Combat events
     // ═════════════════════════════════════════════════════════════════════════
+
+    /** The tick is the first event of a turn; latency runs from here to the go() that answers it. */
+    @Override
+    public void onTick(TickEvent e) {
+        tickReceivedNanos = System.nanoTime();
+    }
 
     @Override
     public void onScannedBot(ScannedBotEvent e) {
