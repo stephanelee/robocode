@@ -18,15 +18,25 @@ final class WaveSurfMove {
 
     static Decision choose(double x,double y,double heading,double speed,int now,double enemyX,double enemyY,
                            List<Threat> threats,int lastSign,double width,double height) {
+        return choose(x,y,heading,speed,now,enemyX,enemyY,threats,lastSign,width,height,null);
+    }
+    static Decision choose(double x,double y,double heading,double speed,int now,double enemyX,double enemyY,
+                           List<Threat> threats,int lastSign,double width,double height,DiagnosticTrace diagnostic) {
         List<Selected> selected=select(x,y,now,threats);
         if(selected.isEmpty()) {
             var c=DuelSurf.choose(x,y,heading,speed,now,enemyX,enemyY,List.of(),lastSign,width,height);
             return new Decision(c,false,false,c.travelSign());
         }
         int first=lastSign<0?-1:1;
+        double[] scores=diagnostic==null?null:new double[]{Double.NaN,Double.NaN,Double.NaN};
+        Object[] timings=diagnostic==null?null:new Object[3];
         DuelSurf.Command best=null; double risk=Double.POSITIVE_INFINITY;
         for(int option:new int[]{first,-first,0}) {
-            double candidate=score(new State(x,y,heading,speed),now,enemyX,enemyY,selected,option,width,height);
+            double[] timing=diagnostic==null?null:new double[2*selected.size()+2];
+            if(timing!=null)java.util.Arrays.fill(timing,-1);
+            double candidate=score(new State(x,y,heading,speed),now,enemyX,enemyY,selected,option,width,height,timing);
+            if(scores!=null)scores[option+1]=candidate;
+            if(timings!=null)timings[option+1]=timing;
             if(best==null || candidate<risk-EPS) {
                 best=command(new State(x,y,heading,speed),enemyX,enemyY,option);
                 risk=candidate;
@@ -34,6 +44,19 @@ final class WaveSurfMove {
         }
         if(!Double.isFinite(risk)) {
             best=DuelSurf.choose(x,y,heading,speed,now,enemyX,enemyY,List.of(),lastSign,width,height);
+        }
+        if(diagnostic!=null) {
+            Object[] summaries=new Object[selected.size()];
+            for(int i=0;i<selected.size();i++) {
+                var s=selected.get(i);var t=s.threat();
+                summaries[i]=new Object[]{t.creationTurn(),t.originX(),t.originY(),t.bulletSpeed(),s.time(),
+                        t.referenceBearing(),t.latSign(),s.profile(),t.matchedBins47()==null?0:java.util.Arrays.stream(t.matchedBins47()).sum()};
+            }
+            var next=step(new State(x,y,heading,speed),best);
+            diagnostic.emit("planner",now,"scoresCCW_STOP_CW",scores,"unsafeCCW",!Double.isFinite(scores[0]),
+                    "unsafeSTOP",!Double.isFinite(scores[1]),"unsafeCW",!Double.isFinite(scores[2]),"chosen",best.travelSign(),
+                    "waves",summaries,"rolloutTimesCCW_STOP_CW",timings,
+                    "predictedNext",new double[]{next.x(),next.y(),next.heading(),next.speed()});
         }
         return new Decision(best,true,selected.stream().anyMatch(Selected::profile),best.travelSign());
     }
@@ -72,7 +95,7 @@ final class WaveSurfMove {
     }
 
     private static double score(State initial,int now,double ex,double ey,List<Selected> waves,
-                                int option,double width,double height) {
+                                int option,double width,double height,double[] timing) {
         State state=initial;
         double[] lower=new double[waves.size()],upper=new double[waves.size()];
         boolean[] contact=new boolean[waves.size()],done=new boolean[waves.size()];
@@ -84,7 +107,11 @@ final class WaveSurfMove {
             if(next.x()<BODY || next.y()<BODY || next.x()>width-BODY || next.y()>height-BODY
                     || (DuelSurf.wallDistance(next.x(),next.y(),width,height)<30
                     && DuelSurf.wallDistance(next.x(),next.y(),width,height)
-                    <DuelSurf.wallDistance(state.x(),state.y(),width,height)-1e-9)) return Double.POSITIVE_INFINITY;
+                    <DuelSurf.wallDistance(state.x(),state.y(),width,height)-1e-9)) {
+                if(timing!=null){timing[timing.length-2]=k;timing[timing.length-1]=k;}
+                return Double.POSITIVE_INFINITY;
+            }
+            if(timing!=null)timing[timing.length-1]=k;
             state=next;
             for(int i=0;i<waves.size();i++) {
                 if(done[i]) continue;
@@ -99,8 +126,9 @@ final class WaveSurfMove {
                     double span=Math.toDegrees(half)/escape;
                     lower[i]=Math.min(lower[i],center-span);upper[i]=Math.max(upper[i],center+span);
                     contact[i]=true;
+                    if(timing!=null&&timing[2*i]<0)timing[2*i]=k;
                 }
-                if(lo>distance+BODY) {done[i]=true;remaining--;}
+                if(lo>distance+BODY) {done[i]=true;remaining--;if(timing!=null)timing[2*i+1]=k;}
             }
             // Future decisions replan. Walls after every selected wave is gone and the existing 20-turn
             // wall horizon has elapsed must not retroactively invalidate an otherwise safe avoidance path.

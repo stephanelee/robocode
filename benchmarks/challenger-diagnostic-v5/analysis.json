@@ -1,0 +1,253 @@
+{
+  "warning": "Legal passage angular containment and virtual intersections are proxies, not actual hit rate. Truncated/censored cohorts stay missing.",
+  "chosenMovementNextState": {
+    "plannerRecords": 3629,
+    "joined": 3624,
+    "masks": {
+      "missingCommand": 0,
+      "missingNextTick": 0,
+      "duplicateKey": 0,
+      "disabled": 5,
+      "discontinuity": 0,
+      "invalidState": 0
+    },
+    "choiceAgreement": 3624,
+    "positionResidual": {
+      "count": 3624,
+      "mean": 0.0,
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "headingResidual": {
+      "count": 3624,
+      "mean": 0.0,
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "speedResidual": {
+      "count": 3624,
+      "mean": 0.0,
+      "median": 0.0,
+      "p90": 0.0
+    },
+    "maxPosition": 0.0,
+    "maxHeading": 0.0,
+    "maxSpeed": 0.0,
+    "tolerance": 1e-06,
+    "transitionsAboveTolerance": 0
+  },
+  "eventCounts": {
+    "command": 3885,
+    "tick": 3890,
+    "wave": 250,
+    "planner": 3629,
+    "shot": 237,
+    "passage": 231,
+    "virtual": 690,
+    "enemyHit": 52,
+    "round": 5,
+    "hit": 13,
+    "removal": 9
+  },
+  "confirmedShotsRecorded": 237,
+  "joinedPassages": 231,
+  "unjoinedPassages": 0,
+  "passageAngularContainment": {
+    "predicted": {
+      "contained": 13,
+      "count": 231,
+      "fraction": 0.05627705627705628
+    },
+    "actualRay": {
+      "contained": 14,
+      "count": 231,
+      "fraction": 0.06060606060606061
+    }
+  },
+  "learnedPassageContainment": {
+    "passages": 184,
+    "contained": 12
+  },
+  "predictedAngularErrorDegrees": {
+    "count": 231,
+    "mean": 13.38600956503845,
+    "median": 12.430037318903487,
+    "p90": 23.483878006744504
+  },
+  "actualRayAngularErrorDegrees": {
+    "count": 231,
+    "mean": 13.299051427216833,
+    "median": 12.463499757058457,
+    "p90": 22.67607534972558
+  },
+  "absoluteRawGFError": {
+    "count": 231,
+    "mean": 0.5068143877747951,
+    "median": 0.47423809290979524,
+    "p90": 0.9005991396833736
+  },
+  "confirmedOriginReferenceShiftDegrees": {
+    "count": 231,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+  },
+  "rawPassageGFOutsideUnitInterval": {
+    "count": 0,
+    "observed": 231
+  },
+  "angularErrorBySelectedModel": {
+    "1": {
+      "count": 40,
+      "mean": 14.356996295494946,
+      "median": 12.644708585118096,
+      "p90": 23.982316026153114
+    },
+    "3": {
+      "count": 184,
+      "mean": 13.304791169690517,
+      "median": 12.415114715731278,
+      "p90": 23.483878006744504
+    },
+    "0": {
+      "count": 7,
+      "mean": 9.972397497289835,
+      "median": 11.350203417885695,
+      "p90": 19.215176141497636
+    }
+  },
+  "confirmedShotSupport": {
+    "count": 237,
+    "mean": 114.51054852320675,
+    "median": 115.0,
+    "p90": 207.0
+  },
+  "confirmedShotKthDistance": {
+    "count": 220,
+    "mean": 0.4695268226382505,
+    "median": 0.28039135863707426,
+    "p90": 1.0545651055149246
+  },
+  "decisionToCreationGunPhaseDegrees": {
+    "count": 237,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+  },
+  "actualRayToRequestedAimDegrees": {
+    "count": 237,
+    "mean": 0.8841018252072643,
+    "median": 0.8231281861708624,
+    "p90": 1.847700778001638
+  },
+  "actualHitEvents": 13,
+  "distinctMatchedActualHitShots": 13,
+  "unmatchedActualHitShots": 0,
+  "completeActualHitCoverageRounds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "selectedLegacyVirtualVsActual": {
+    "count": 46,
+    "unknownActualOutcome": 0,
+    "virtualHitActualHit": 0,
+    "virtualHitNoActualHit": 1,
+    "virtualMissActualHit": 0
+  },
+  "roundSummaries": [
+    {
+      "type": "round",
+      "round": 1,
+      "turn": 584,
+      "shots": 34,
+      "hits": 0,
+      "energySpent": 20.400000000000006,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 2,
+      "turn": 1291,
+      "shots": 79,
+      "hits": 7,
+      "energySpent": 52.20000000000005,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 3,
+      "turn": 533,
+      "shots": 32,
+      "hits": 5,
+      "energySpent": 28.000000000000025,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 4,
+      "turn": 679,
+      "shots": 41,
+      "hits": 0,
+      "energySpent": 24.600000000000016,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 5,
+      "turn": 803,
+      "shots": 51,
+      "hits": 1,
+      "energySpent": 30.60000000000003,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    }
+  ],
+  "recordedPowerSpent": 155.79999999999998,
+  "recordedActualDamage": 39.199999999999996,
+  "passageActualRayOutcomes": {
+    "outside:noHit": 209,
+    "contained:actualHit": 12,
+    "outside:bulletCollision": 8,
+    "contained:noHit": 1,
+    "contained:bulletCollision": 1
+  },
+  "bodyAngularHalfWidthDegrees": {
+    "count": 231,
+    "mean": 2.3056622648066476,
+    "median": 2.173196634718196,
+    "p90": 2.6319115825688346
+  },
+  "exploratorySameLearnedShotAngularError": {
+    "learned": {
+      "count": 184,
+      "mean": 13.304791169690517,
+      "median": 12.415114715731308,
+      "p90": 23.483878006744476
+    },
+    "linear": {
+      "count": 184,
+      "mean": 12.79125783056477,
+      "median": 11.812764737426619,
+      "p90": 25.205704717495337
+    },
+    "headOn": {
+      "count": 184,
+      "mean": 10.676738263953112,
+      "median": 9.335318083087941,
+      "p90": 21.576095697115534
+    }
+  },
+  "counterfactualWarning": "Fixed linear/head-on comparison uses the SAME observed future scan, not fresh competitive evidence; no alternative command or opponent reaction was executed."
+}

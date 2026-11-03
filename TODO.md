@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Capture one bounded unchanged-policy shot/defense diagnostic. [PR63](https://github.com/stephanelee/robocode/pull/63) / [report](docs/improvements/challenger-diagnostic-v5.md):5rounds/12891records/0drops/skips, no phase/one-step mismatch; future-target prediction error remains large. No strength gate/repeat or production change; guarded learned-ray selection is a separate proposed mechanism, not implemented here.
+
 - [x] Reproduce/correct irrelevant late-wall veto and measure the standalone candidate. [PR62](https://github.com/stephanelee/robocode/pull/62) / [report](docs/improvements/diamond-wave-horizon-v4.md):20-round pilot rejected (1win/8.30%share), no fresh60. Source mechanism verified, no strength/causal claim; prior61 and production unchanged.
 
 - [x] Measure separate legal-wave defense with fixed context gun. [PR61](https://github.com/stephanelee/robocode/pull/61) / [report](docs/improvements/diamond-surf-v3.md):20-round pilot rejected (0wins/1.52% share);265 waves/200 matched hits/planner active, no fresh60. Production unchanged; Diamond remains unbeaten.

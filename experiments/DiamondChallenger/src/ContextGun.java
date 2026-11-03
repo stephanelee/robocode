@@ -31,6 +31,8 @@ final class ContextGun {
     private DuelGun.Scan latest;
     private int target=-1,lastShot=-1,acceptedRound,acceptedTotal,generation;
     private long sequence;
+    private DiagnosticTrace diagnostic;
+    void diagnostic(DiagnosticTrace trace){diagnostic=trace;}
 
     void startRound() { waves.clear();latest=null;lastShot=-1;acceptedRound=0;generation++; }
     int size() { return samples.size(); }
@@ -60,6 +62,7 @@ final class ContextGun {
             samples.add(new Sample(w.query.features(),gf,w.query.aimTurn(),w.turn,scan.turn(),
                     w.query.createdSequence(),sequence,++acceptedTotal,w.query.generation(),w.x,w.y,
                     w.query.referenceX(),w.query.referenceY(),scan.x(),scan.y(),w.query.sign(),w.query.escape()));acceptedRound++;
+            if(diagnostic!=null)diagnostic.passage(samples.get(samples.size()-1));
             return true;
         });
     }
@@ -123,6 +126,16 @@ final class ContextGun {
             }
         }
         return query.reference()+query.sign()*bestGF*query.escape();
+    }
+    /** Observation-only duplicate distance summary; never used by predict or eligibility. */
+    double[] diagnosticSupport(Query query) {
+        if(query==null)return new double[]{0,Double.NaN};
+        var distances=new ArrayList<Double>();
+        for(Sample sample:samples)if(sample.observedSequence()<=query.createdSequence()) {
+            double d=0;for(int j=0;j<7;j++)d+=WEIGHTS[j]*Math.pow(query.features()[j]-sample.features()[j],2);
+            distances.add(d);
+        }
+        distances.sort(Double::compare);return new double[]{distances.size(),distances.size()<K?Double.NaN:distances.get(K-1)};
     }
     String snapshot() {
         StringBuilder json=new StringBuilder("[");

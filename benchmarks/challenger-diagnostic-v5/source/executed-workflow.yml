@@ -1,0 +1,63 @@
+name: Isolated DiamondChallenger five-round policy diagnostic
+on:
+  pull_request:
+    types: [synchronize]
+permissions:
+  contents: read
+jobs:
+  pressure:
+    if: github.head_ref == 'experiment/diamond-diagnostic-v5'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Freeze the separate challenger and prove production unchanged
+        shell: bash
+        run: |
+          test -z "$(git diff --name-only 80e039bbc69dbc206e3e3d3290e948abd088c046 HEAD -- experiments/DiamondChallenger src/main/java src/test/java AISurvivor build.gradle settings.gradle)"
+          test -z "$(git diff --name-only 9b1624da2d9b09ec9cc4f580b51bc82edd2c1485 HEAD -- src/main/java src/test/java AISurvivor build.gradle settings.gradle)"
+          echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  AISurvivor/AISurvivor.jar' | sha256sum -c -
+          echo '21b55cdffbc11afb7566d6c91419201311fd3bd45d6c80c41b9fe0d1cb705818  experiments/DiamondChallenger/DiamondChallenger.jar' | sha256sum -c -
+          ./gradlew -p experiments/DiamondChallenger --no-daemon clean build
+          python tools/verify_jar.py experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
+          cp experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
+          echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  AISurvivor/AISurvivor.jar' | sha256sum -c -
+          python -m unittest discover -s tools -p 'test_challenger_diagnostic*.py'
+          python -m unittest discover -s tools -p 'test_strong*.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: One five-round diagnostic; no strength gate or repeats
+        run: >-
+          python tools/challenger_diagnostic_experiment.py
+          --bot-dir experiments/DiamondChallenger/build/bot/DiamondChallenger
+          --java "$JAVA_HOME/bin/java" --output build/diamond-diagnostic-v5
+      - name: Preserve every original outcome, private endpoint and runtime pin
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diamond-diagnostic-v5-${{ github.event.pull_request.head.sha }}
+          path: |
+            build/diamond-diagnostic-v5/
+            tools/challenger_diagnostic_experiment.py
+            tools/test_challenger_diagnostic_experiment.py
+            tools/challenger_diagnostic_analysis.py
+            tools/test_challenger_diagnostic_analysis.py
+            tools/strong_melee_opponents.py
+            tools/opponents/strong-melee.lock.json
+            experiments/DiamondChallenger/
+            .github/workflows/diamond-diagnostic-v5.yml
+          retention-days: 30
+          if-no-files-found: warn

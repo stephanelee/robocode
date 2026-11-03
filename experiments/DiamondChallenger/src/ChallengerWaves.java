@@ -20,6 +20,8 @@ final class ChallengerWaves {
     private final double[][] danger=new double[4][47];
     private DuelGun.Scan previous;
     private int target=-1,inferred,matched,unmatched,rejected,totalInferred,totalMatched;
+    private DiagnosticTrace diagnostic;
+    void diagnostic(DiagnosticTrace trace){diagnostic=trace;}
 
     void startRound() {
         energy.clear();history.clear();scans.clear();hits.clear();active.clear();collisionTurns.clear();previous=null;
@@ -66,6 +68,9 @@ final class ChallengerWaves {
             int context=(range<450?0:2)+(Math.abs(lateral)<4?0:1);
             active.add(new Wave(after.targetId(),after.turn(),before.x(),before.y(),20-3*power,
                     bearing,lateral<0?-1:1,Math.abs(lateral),context));inferred++;totalInferred++;
+            if(diagnostic!=null)diagnostic.emit("wave",after.turn(),"owner",after.targetId(),"creationTurn",after.turn(),
+                    "originX",before.x(),"originY",before.y(),"power",power,"referenceBearing",bearing,
+                    "sign",lateral<0?-1:1,"context",context,"aimOwn",new double[]{own.x(),own.y(),own.direction(),own.speed()});
         }
         scans.clear();
         for(Hit hit:hits) {
@@ -75,6 +80,9 @@ final class ChallengerWaves {
                 double error=Math.abs(Math.hypot(hit.x()-wave.x(),hit.y()-wave.y())-radius(wave,hit.turn()));
                 if(error<=wave.speed()+18 && error<bestError) { best=wave;bestError=error; }
             }
+            if(diagnostic!=null)diagnostic.emit("enemyHit",hit.turn(),"owner",hit.owner(),"power",hit.power(),
+                    "x",hit.x(),"y",hit.y(),"direction",hit.direction(),"matched",best!=null,
+                    "creationTurn",best==null?null:best.creation(),"radialResidual",best==null?null:bestError);
             if(best==null) {unmatched++;continue;}
             double escape=Math.toDegrees(Math.asin(8/best.speed()));
             double gf=Math.max(-1,Math.min(1,CombatMath.relativeAngle(hit.direction()-best.reference())*best.sign()/escape));
