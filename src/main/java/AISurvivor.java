@@ -103,6 +103,8 @@ public class AISurvivor extends Bot {
     private final Map<Integer, double[]>     surfStats      = new HashMap<>();
     private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
     private int duelSign = 1;
+    private final DuelGun duelGun = new DuelGun();
+    private boolean pendingDuelShot;
 
     private int    radarTargetId = -1;
     private int    radarSign     = 1;
@@ -175,6 +177,8 @@ public class AISurvivor extends Bot {
         enemyWaves.clear();
         ownHistory.clear();
         duelSign      = 1;
+        duelGun.startRound();
+        pendingDuelShot = false;
         dodgeSign     = 1;
         radarTargetId = -1;
         radarSign     = 1;
@@ -238,6 +242,8 @@ public class AISurvivor extends Bot {
                 latVel, prevEn, turnRate, e.getTurnNumber());
         if (prev != null) info.carryForward(prev);
         enemies.put(info.id, info);
+        if (duelComponents()) duelGun.onScan(new DuelGun.Scan(info.id, info.lastScanTurn,
+                info.x, info.y, info.direction, info.speed, info.energy));
         gfStats.computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
 
         // Process after the turn's damage/bonus events, independent of event priority.
@@ -247,7 +253,8 @@ public class AISurvivor extends Bot {
     @Override
     public void onHitByBullet(HitByBulletEvent e) {
         BulletState bullet = e.getBullet();
-        fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
+        if (duelComponents()) fireTracker.recordBulletHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
+        else fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
         recordSurfHit(bullet, e.getTurnNumber());
         metrics.damageTaken += e.getDamage();
         addReward(-e.getDamage() * (0.6 + 0.1 * getEnemyCount()));
@@ -256,7 +263,8 @@ public class AISurvivor extends Bot {
 
     @Override
     public void onBulletHit(BulletHitBotEvent e) {
-        fireTracker.recordDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
+        if (duelComponents()) fireTracker.recordBulletDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
+        else fireTracker.recordDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
         metrics.bulletHits++;
         metrics.damageDealt += e.getDamage();
         addReward(e.getDamage() * 0.6);
@@ -391,6 +399,16 @@ public class AISurvivor extends Bot {
     private void aimGF() {
         Enemy t = bestTarget();
         if (t == null) return;
+        if (duelComponents()) {
+            pendingTargetingWave = null; // The duel gun owns its own legal virtual-shot evidence.
+            pendingDuelShot = false;
+            DuelGun.Plan plan = duelGun.decide(new DuelGun.Input(getTurnNumber(), getX(), getY(),
+                    getGunDirection(), getEnergy(), getGunHeat(), getArenaWidth(), getArenaHeight(),
+                    new DuelGun.Scan(t.id, t.lastScanTurn, t.x, t.y, t.direction, t.speed, t.energy), Double.NaN));
+            setGunTurnRate(clamp(normalizeAngle(plan.direction() - getGunDirection()), -20, 20));
+            if (plan.shouldFire()) pendingDuelShot = setFire(plan.power());
+            return;
+        }
 
         double dist = distanceTo(t.x, t.y);
         double fp   = firePower(dist);
@@ -430,6 +448,11 @@ public class AISurvivor extends Bot {
     @Override
     public void onBulletFired(BulletFiredEvent e) {
         metrics.shotsFired++;
+        if (pendingDuelShot) {
+            BulletState shot = e.getBullet();
+            duelGun.onFired(e.getTurnNumber(), shot.getX(), shot.getY(), shot.getPower());
+            pendingDuelShot = false;
+        }
         if (scanRecorder.enabled()) {
             BulletState shot = e.getBullet();
             scanRecorder.confirmed(new LegalScanRecorder.Shot(e.getTurnNumber(), shot.getBulletId(),
@@ -666,6 +689,16 @@ public class AISurvivor extends Bot {
     // ═════════════════════════════════════════════════════════════════════════
 
     private void updateRadar() {
+        setAdjustRadarForBodyTurn(duelComponents());
+        if (duelComponents()) {
+            Enemy target = bestTarget();
+            if (target == null) { setRadarTurnRate(45 * radarSign); return; }
+            double turn = DuelRadar.turn(getX(), getY(), getRadarDirection(), target.x, target.y,
+                    getTurnNumber() - target.lastScanTurn, radarSign);
+            if (turn != 0) radarSign = turn < 0 ? -1 : 1;
+            setRadarTurnRate(turn);
+            return;
+        }
         if (getEnemyCount() > 1) {
             Enemy target = bestTarget();
             if (target != null) {
@@ -799,6 +832,9 @@ public class AISurvivor extends Bot {
     }
 
     private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
+
+    /** The new composition is a default TRAIN duel policy; legacy, FIXED/EVAL and melee retain their paths. */
+    private boolean duelComponents() { return config.forceDuel() && getEnemyCount() == 1; }
 
     private double wallSmooth(double x, double y, double heading, int rotDir) {
         double h = heading;

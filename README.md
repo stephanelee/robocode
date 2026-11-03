@@ -61,7 +61,7 @@ The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.
-- GuessFactor targeting combines per-enemy and per-class statistics with motion prediction.
+- The default TRAIN duel composition uses the accepted shot-reactive `DuelSurf` controller, independent radar and a coordinated `DuelGun` fed only legal scans/confirmed shots. [Composition, scope and prospective validation](docs/coherent-duel.md). Legacy policy, EVAL/FIXED and melee retain GuessFactor targeting with per-enemy/per-class motion statistics.
 - Consecutive enemy scans infer bullet waves after correcting known damage and hit-energy bonuses. Scan gaps are skipped because fire timing is uncertain. Enemy bullets are not exposed by the bot API; unobserved third-party damage in melee can still make inferred waves inaccurate.
 - Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
 - A versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
@@ -75,7 +75,7 @@ Set these environment variables before launching the bot. Paths are relative to 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | AISURVIVOR_MODE | train | train, eval, or fixed |
-| AISURVIVOR_DUEL_POLICY | controller | TRAIN only: controller selects action0 in an available duel; learned restores legacy DQN selection |
+| AISURVIVOR_DUEL_POLICY | controller | TRAIN only: coherent duel controller; learned restores legacy DQN selection, gun, radar and timing |
 | AISURVIVOR_SEED | 0 | Signed 64-bit seed for network initialization, exploration, and replay sampling |
 | AISURVIVOR_MODEL_PATH | AISurvivor-qtable.dat | Checkpoint to load/save |
 | AISURVIVOR_ACTION | 0 | Fixed strategy ID: 0 minimum risk, 1 clockwise orbit, 2 counterclockwise orbit, 3 flee, 4 wave surf, 5 hunt |

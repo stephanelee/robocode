@@ -19,6 +19,7 @@ The dependency is `dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0`. U
 | --- | --- |
 | `AISurvivor` | Bot lifecycle, observations, radar, six movement strategies, targeting and combat events |
 | `DuelSurf`, `AimCorridor` | 1v1 shot-reactive movement for action 0: forward, backward or stop along an orbit line, chosen by simulating clearance from reconstructed head-on and linear aim points of inferred waves |
+| `DuelGun`, `DuelRadar` | Default TRAIN duel composition: legal scan/confirmed-shot aiming and power, plus fully independent fresh-scan radar lock/search |
 | `DQNAgent`, `MLP` | Seeded strategy selection, replay, target network, neural network updates |
 | `BotConfig` | Validated environment configuration for train/eval/fixed modes and paths |
 | `ModelStore` | Versioned numeric checkpoint validation, rejected-file backup and atomic replacement |
@@ -40,6 +41,8 @@ Evaluation selects the greedy action and freezes network learning, temperature, 
 Rewards are +0.1 per turn, +0.6 times damage dealt, +30 for a lethal hit, +15 for an observed enemy death, -damage taken times `(0.6 + 0.1 * remainingEnemies)`, -3 for a wall collision, -1.5 for a bot collision, +60 for winning, or `-(60 + 12 * remainingEnemies)` for death. Metrics preserve combat rewards independently of whether learning is enabled.
 
 ## Combat geometry and statistics
+
+The candidate's default TRAIN duel composition is documented in [docs/coherent-duel.md](docs/coherent-duel.md). It retains accepted DuelSurf movement while combining explicit selected/executed/credited action0, body/gun-independent radar, next-scan bullet-energy corrections and a legal-observation gun. Legacy `learned`, EVAL, FIXED and melee keep their original gun/radar/timing paths. The following GF details describe those legacy paths; new duel virtual-shot evidence is process-local, separate from GF statistics, and not serialized into the unchanged DQN checkpoint.
 
 Tank Royale uses Cartesian coordinates: east is 0 degrees and north is 90 degrees. Use `x += cos(angle) * distance`, `y += sin(angle) * distance`, and `atan2(dy, dx)`. Clockwise orbit relative to the inward bearing is `bearingToEnemy + 90`. `CombatMath` tests these conventions. Estimate target turn rate by dividing the normalized direction change by elapsed scan turns.
 
