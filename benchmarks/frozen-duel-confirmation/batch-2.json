@@ -1,0 +1,861 @@
+{
+  "status": "complete",
+  "botSource": "7104b65d03298caceb010a5bfd085bda65092d17",
+  "botJarSHA256": "d047bf99325d2ad73aedd87eac6a4baa1677170afff0c86b948f03ea93390e1d",
+  "experimentSource": "185312716afc268f06ee7fb385094629c0c261d2",
+  "registrationCommit": "8af14d7c5268f3be5ab7d63c61737b429bdcc62f",
+  "planSHA256": "110c52f6a6b1b1ed7a1b03074df66de03516600515028fcde8fed2812dbefabd",
+  "layoutSHA256": "726bf1d95e1a5042eea227c0c8a4ebaa2f6c74f456cbc08b28ea78ed76b75a65",
+  "batch": 2,
+  "games": [
+    {
+      "gameId": "fc710-b2-g01",
+      "batch": 2,
+      "index": 1,
+      "seed": 20261611,
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 20,
+        "id": 1,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 1,
+        "totalScore": 1598,
+        "survival": 650,
+        "bulletDamage": 710,
+        "firstPlaces": 13,
+        "metrics": {
+          "turns": 19298,
+          "shotsFired": 1159,
+          "bulletHits": 114,
+          "damageDealt": 746.464685,
+          "damageTaken": 307.070423,
+          "wallCollisions": 0,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.09836065573770492,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 1,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 1,
+            "totalScore": 1598,
+            "survival": 650,
+            "bulletDamage": 710,
+            "firstPlaces": 13
+          },
+          {
+            "id": 2,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 779,
+            "survival": 350,
+            "bulletDamage": 305,
+            "firstPlaces": 7
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 20,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-2-218491402705.json",
+              "sha256": "ca96f423ed7b3209410f3b621d33e0fcbbdc76e883ff53550f4e2262e032f810"
+            }
+          ],
+          "actualGun": {
+            "shots": 1069,
+            "hits": 59,
+            "hitRate": 0.05519176800748363
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 49,
+              "shots": 1047,
+              "hitRate": 0.04680038204393505
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 47,
+              "shots": 1047,
+              "hitRate": 0.044890162368672396
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 2,
+            "roundsRecorded": 20,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 19285,
+            "computeP50Micros": 10,
+            "computeP99Micros": 80,
+            "computeMaxMicros": 14822,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:12791,10:4471,20:908,30:447,40:232,50:114,60:83,70:77,80:51,90:36,100:21,110:13,120:4,130:4,140:1,150:4,160:3,170:3,190:1,200:1,230:1,250:1,290:1,310:1,350:1,440:1,460:1,520:1,550:1,620:1,640:1,750:1,830:1,870:1,950:1,1010:1,1420:1,1660:1,1850:1,14820:1",
+            "timing": {
+              "firesChecked": 1069,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 1069,
+              "originMatches": 1069,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 1069,
+              "stillHitsChecked": 0,
+              "stillHitMatches": 0,
+              "hitsOnMovingTargets": 59,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 1170,
+              "unanchoredShots": 0,
+              "hitsTaken": 104,
+              "hitsOnWave": 104,
+              "wavePowerCorrected": 0,
+              "waveHitsExact": 104,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 19265,
+              "moveMatches": 19265,
+              "moveWallHitsChecked": 10,
+              "moveNotChecked": 19,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 1069,
+              "bulletHits": 59,
+              "virtualGuns": "LinearAimModel:49/1047 HeadOnAimModel:47/1047"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    },
+    {
+      "gameId": "fc710-b2-g02",
+      "batch": 2,
+      "index": 2,
+      "seed": 20261612,
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 20,
+        "id": 1,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 1,
+        "totalScore": 1120,
+        "survival": 500,
+        "bulletDamage": 456,
+        "firstPlaces": 10,
+        "metrics": {
+          "turns": 18871,
+          "shotsFired": 1150,
+          "bulletHits": 74,
+          "damageDealt": 458.065891,
+          "damageTaken": 367.339359,
+          "wallCollisions": 3,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.06434782608695652,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 1,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 1,
+            "totalScore": 1120,
+            "survival": 500,
+            "bulletDamage": 456,
+            "firstPlaces": 10
+          },
+          {
+            "id": 2,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 1010,
+            "survival": 500,
+            "bulletDamage": 349,
+            "firstPlaces": 10
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 20,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-2-235447341281.json",
+              "sha256": "985c02fb1853160737ab3ea5d667f9480ad18d176209a41a6b9b8faad843f020"
+            }
+          ],
+          "actualGun": {
+            "shots": 1067,
+            "hits": 60,
+            "hitRate": 0.056232427366447985
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 43,
+              "shots": 1034,
+              "hitRate": 0.041586073500967116
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 31,
+              "shots": 1034,
+              "hitRate": 0.029980657640232108
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 2,
+            "roundsRecorded": 20,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 18861,
+            "computeP50Micros": 10,
+            "computeP99Micros": 80,
+            "computeMaxMicros": 12425,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:12308,10:4467,20:960,30:445,40:264,50:139,60:89,70:40,80:38,90:36,100:18,110:10,120:9,130:7,140:1,150:1,160:1,180:2,190:2,210:1,220:1,260:1,280:1,290:1,350:1,390:1,440:1,540:1,560:1,640:1,700:1,750:1,770:1,790:1,940:1,1010:1,1100:1,1390:1,1490:1,2210:1,2710:1,2970:1,12420:1",
+            "timing": {
+              "firesChecked": 1067,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 1067,
+              "originMatches": 1067,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 1067,
+              "stillHitsChecked": 0,
+              "stillHitMatches": 0,
+              "hitsOnMovingTargets": 60,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 1204,
+              "unanchoredShots": 0,
+              "hitsTaken": 68,
+              "hitsOnWave": 64,
+              "wavePowerCorrected": 0,
+              "waveHitsExact": 64,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 18841,
+              "moveMatches": 18841,
+              "moveWallHitsChecked": 4,
+              "moveNotChecked": 19,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 1067,
+              "bulletHits": 60,
+              "virtualGuns": "LinearAimModel:43/1034 HeadOnAimModel:31/1034"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    },
+    {
+      "gameId": "fc710-b2-g03",
+      "batch": 2,
+      "index": 3,
+      "seed": 20261613,
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 20,
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 1,
+        "totalScore": 1596,
+        "survival": 650,
+        "bulletDamage": 721,
+        "firstPlaces": 13,
+        "metrics": {
+          "turns": 20767,
+          "shotsFired": 1255,
+          "bulletHits": 112,
+          "damageDealt": 734.625891,
+          "damageTaken": 229.939326,
+          "wallCollisions": 4,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.08924302788844622,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 2,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 1,
+            "totalScore": 1596,
+            "survival": 650,
+            "bulletDamage": 721,
+            "firstPlaces": 13
+          },
+          {
+            "id": 1,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 677,
+            "survival": 350,
+            "bulletDamage": 226,
+            "firstPlaces": 7
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 20,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-1-251997484883.json",
+              "sha256": "2f754974d8d02415e37c015316bc9624e512e9615c5bd4d57133d11c77513726"
+            }
+          ],
+          "actualGun": {
+            "shots": 1113,
+            "hits": 49,
+            "hitRate": 0.0440251572327044
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 41,
+              "shots": 1087,
+              "hitRate": 0.03771849126034959
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 27,
+              "shots": 1087,
+              "hitRate": 0.02483900643974241
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 1,
+            "roundsRecorded": 20,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 20754,
+            "computeP50Micros": 10,
+            "computeP99Micros": 70,
+            "computeMaxMicros": 8845,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:14604,10:4263,20:837,30:384,40:275,50:113,60:84,70:42,80:30,90:34,100:21,110:14,120:12,130:8,140:6,150:4,160:2,200:1,210:3,230:1,300:1,310:1,340:1,370:2,410:1,500:1,530:1,560:1,620:1,1700:1,1900:1,2230:1,2490:1,2930:1,8840:1",
+            "timing": {
+              "firesChecked": 1113,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 1113,
+              "originMatches": 1113,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 1113,
+              "stillHitsChecked": 0,
+              "stillHitMatches": 0,
+              "hitsOnMovingTargets": 49,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 1273,
+              "unanchoredShots": 0,
+              "hitsTaken": 105,
+              "hitsOnWave": 104,
+              "wavePowerCorrected": 1,
+              "waveHitsExact": 104,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 20734,
+              "moveMatches": 20734,
+              "moveWallHitsChecked": 12,
+              "moveNotChecked": 19,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 1113,
+              "bulletHits": 49,
+              "virtualGuns": "LinearAimModel:41/1087 HeadOnAimModel:27/1087"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    },
+    {
+      "gameId": "fc710-b2-g04",
+      "batch": 2,
+      "index": 4,
+      "seed": 20261614,
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 20,
+        "id": 1,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 2,
+        "totalScore": 964,
+        "survival": 350,
+        "bulletDamage": 502,
+        "firstPlaces": 7,
+        "metrics": {
+          "turns": 19578,
+          "shotsFired": 1087,
+          "bulletHits": 80,
+          "damageDealt": 500.591493,
+          "damageTaken": 564.763753,
+          "wallCollisions": 3,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.07359705611775529,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 2,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 1406,
+            "survival": 650,
+            "bulletDamage": 529,
+            "firstPlaces": 13
+          },
+          {
+            "id": 1,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 2,
+            "totalScore": 964,
+            "survival": 350,
+            "bulletDamage": 502,
+            "firstPlaces": 7
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 20,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-2-268855943566.json",
+              "sha256": "a0adc2fae6baaa0d2f9a28bdaf7004069349eef3afd709da973043965e97b6ca"
+            }
+          ],
+          "actualGun": {
+            "shots": 1027,
+            "hits": 105,
+            "hitRate": 0.10223953261927946
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 86,
+              "shots": 1003,
+              "hitRate": 0.08574277168494517
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 62,
+              "shots": 1003,
+              "hitRate": 0.06181455633100698
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 2,
+            "roundsRecorded": 20,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 19570,
+            "computeP50Micros": 10,
+            "computeP99Micros": 80,
+            "computeMaxMicros": 10557,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:13513,10:4006,20:912,30:423,40:224,50:122,60:117,70:75,80:44,90:39,100:28,110:15,120:9,130:7,140:6,150:3,160:1,170:1,190:2,210:1,220:1,240:1,250:1,310:1,320:1,330:1,360:2,370:1,410:1,580:1,670:1,700:1,790:1,880:1,950:1,1330:1,1470:1,1870:1,2000:1,2540:1,10550:1",
+            "timing": {
+              "firesChecked": 1027,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 1027,
+              "originMatches": 1027,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 1027,
+              "stillHitsChecked": 0,
+              "stillHitMatches": 0,
+              "hitsOnMovingTargets": 105,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 1120,
+              "unanchoredShots": 0,
+              "hitsTaken": 77,
+              "hitsOnWave": 76,
+              "wavePowerCorrected": 0,
+              "waveHitsExact": 76,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 19550,
+              "moveMatches": 19550,
+              "moveWallHitsChecked": 5,
+              "moveNotChecked": 19,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 1027,
+              "bulletHits": 105,
+              "virtualGuns": "LinearAimModel:86/1003 HeadOnAimModel:62/1003"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    },
+    {
+      "gameId": "fc710-b2-g05",
+      "batch": 2,
+      "index": 5,
+      "seed": 20261615,
+      "battle": {
+        "scenario": "Retcon",
+        "policy": "fixed-minrisk",
+        "rounds": 20,
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.1.0",
+        "rank": 2,
+        "totalScore": 1010,
+        "survival": 450,
+        "bulletDamage": 434,
+        "firstPlaces": 9,
+        "metrics": {
+          "turns": 19122,
+          "shotsFired": 1099,
+          "bulletHits": 73,
+          "damageDealt": 442.454231,
+          "damageTaken": 483.924253,
+          "wallCollisions": 0,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.06642402183803457,
+          "roundsRecorded": 20,
+          "checkpointLoaded": false
+        },
+        "results": [
+          {
+            "id": 1,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 1220,
+            "survival": 550,
+            "bulletDamage": 471,
+            "firstPlaces": 11
+          },
+          {
+            "id": 2,
+            "name": "AISurvivor",
+            "version": "1.1.0",
+            "rank": 2,
+            "totalScore": 1010,
+            "survival": 450,
+            "bulletDamage": 434,
+            "firstPlaces": 9
+          }
+        ],
+        "retconStats": {
+          "schemaVersion": 1,
+          "status": "complete",
+          "expectedRounds": 20,
+          "bot": "Retcon",
+          "version": "0.2.0",
+          "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+          "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+          "rawArtifacts": [
+            {
+              "path": "Retcon-1-285589708841.json",
+              "sha256": "f8b20f9a93fe614905830d19a3ef730b01c52d2b177394278fd7720d40e23c60"
+            }
+          ],
+          "actualGun": {
+            "shots": 997,
+            "hits": 82,
+            "hitRate": 0.08224674022066199
+          },
+          "virtualGuns": [
+            {
+              "model": "LinearAimModel",
+              "hits": 75,
+              "shots": 969,
+              "hitRate": 0.07739938080495357
+            },
+            {
+              "model": "HeadOnAimModel",
+              "hits": 66,
+              "shots": 969,
+              "hitRate": 0.06811145510835913
+            }
+          ],
+          "data": {
+            "bot": "Retcon",
+            "botId": 1,
+            "roundsRecorded": 20,
+            "turnTimeoutMicros": 100000,
+            "computeBudgetMicros": 16666,
+            "turns": 19112,
+            "computeP50Micros": 10,
+            "computeP99Micros": 80,
+            "computeMaxMicros": 9212,
+            "overBudgetTurns": 0,
+            "skippedTurns": 0,
+            "skippedPerRound": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "skippedTurnList": "",
+            "computeHistogram10us": "0:13798,10:3411,20:782,30:379,40:242,50:146,60:98,70:66,80:51,90:36,100:29,110:18,120:11,130:6,140:7,150:2,160:3,170:1,250:2,290:1,300:2,330:1,380:1,390:1,420:1,440:1,450:1,460:1,490:1,500:1,570:1,580:1,640:1,870:1,880:1,940:1,990:2,1180:1,2690:1,3000:1,9210:1",
+            "timing": {
+              "firesChecked": 997,
+              "firesNotCreated": 0,
+              "createdTurnMatches": 997,
+              "originMatches": 997,
+              "originMatchesAfterFirstMove": 0,
+              "headingMatches": 997,
+              "stillHitsChecked": 17,
+              "stillHitMatches": 17,
+              "hitsOnMovingTargets": 65,
+              "mismatches": ""
+            },
+            "waves": {
+              "firesDetected": 1157,
+              "unanchoredShots": 0,
+              "hitsTaken": 70,
+              "hitsOnWave": 63,
+              "wavePowerCorrected": 2,
+              "waveHitsExact": 63,
+              "waveHitsOffByOneStep": 0,
+              "waveHitsOtherResidual": 0,
+              "waveMismatches": ""
+            },
+            "movement": {
+              "moveTurnsChecked": 19092,
+              "moveMatches": 19092,
+              "moveWallHitsChecked": 0,
+              "moveNotChecked": 19,
+              "moveMismatches": ""
+            },
+            "gun": {
+              "bulletsFired": 997,
+              "bulletHits": 82,
+              "virtualGuns": "LinearAimModel:75/969 HeadOnAimModel:66/969"
+            }
+          }
+        },
+        "modelSHA256": null
+      }
+    }
+  ],
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+  "opponentProvenance": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf"
+}

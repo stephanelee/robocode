@@ -25,3 +25,5 @@ For performance work, start with **Retcon 1v1**: the [Retcon benchmark workflow]
 - [Original sample reference experiment](benchmarks/samples-2026-11-02.md)
 
 Actual experiment JSON/CSV/dashboard artifacts remain under [benchmarks/](../benchmarks/). Human-readable methods and reports live here; compatibility pointers remain at older documentation paths.
+
+- [Frozen fixed-duel confirmation: observed criteria passed; uncertainty remains](improvements/frozen-duel-confirmation.md)
