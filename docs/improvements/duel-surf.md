@@ -198,4 +198,4 @@ The score gain comes from survival. Our own hit rate and damage dealt per turn w
   - The effect here is about eight standard errors above the floor, so neither caveat changes the decision.
 - **Exclusions:** starts are unpaired and unseeded, Retcon adapts within each game, and Retcon counters are offline diagnostics only. The development games disclosed above are excluded from this decision.
 
-PR: (pending). Evidence: [raw evidence](../../benchmarks/duel-surf/README.md).
+PR: [#38](https://github.com/stephanelee/robocode/pull/38). Evidence: [raw evidence](../../benchmarks/duel-surf/README.md).
