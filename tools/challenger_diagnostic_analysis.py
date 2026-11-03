@@ -102,11 +102,21 @@ def analyze(records):
             aim_creation.append(abs(angle_delta(s["direction"], s["aimDirection"])))
     actual_hit_keys = {(h["round"], h.get("shotId")) for h in hits if h.get("shotId") is not None}
     matched_hits = actual_hit_keys & shots.keys()
+    complete_rounds=set()
+    for r in rounds:
+        number=r["round"]
+        recorded_shots=sum(key[0]==number for key in shots)
+        recorded_hits=sum(h["round"]==number for h in hits)
+        if (r.get("failed") is False and r.get("truncated") is False and r.get("droppedRecords")==0
+                and r.get("shots")==recorded_shots and r.get("hits")==recorded_hits):
+            complete_rounds.add(number)
     selected_virtual = []
     for v in virtuals:
         s = shots.get((v["round"], v.get("shotId"))) if v.get("shotId") is not None else None
         if s is not None and v.get("model") == s.get("model"):
-            selected_virtual.append((bool(v["hit"]), (v["round"],v["shotId"]) in actual_hit_keys))
+            key=(v["round"],v["shotId"])
+            actual=True if key in actual_hit_keys else False if v["round"] in complete_rounds else None
+            selected_virtual.append((bool(v["hit"]),actual))
     return {
         "warning": "Legal passage angular containment and virtual intersections are proxies, not actual hit rate. Truncated/censored cohorts stay missing.",
         "eventCounts": event_counts, "confirmedShotsRecorded": len(shots),
@@ -122,8 +132,11 @@ def analyze(records):
         "decisionToCreationGunPhaseDegrees": distribution(phase), "actualRayToRequestedAimDegrees": distribution(aim_creation),
         "actualHitEvents": len(hits), "distinctMatchedActualHitShots": len(matched_hits),
         "unmatchedActualHitShots": len(actual_hit_keys-shots.keys()),
-        "selectedLegacyVirtualVsActual": {"count":len(selected_virtual), "virtualHitActualHit":sum(a and b for a,b in selected_virtual),
-            "virtualHitNoActualHit":sum(a and not b for a,b in selected_virtual), "virtualMissActualHit":sum(not a and b for a,b in selected_virtual)},
+        "completeActualHitCoverageRounds":sorted(complete_rounds),
+        "selectedLegacyVirtualVsActual": {"count":len(selected_virtual), "unknownActualOutcome":sum(b is None for a,b in selected_virtual),
+            "virtualHitActualHit":sum(a and b is True for a,b in selected_virtual),
+            "virtualHitNoActualHit":sum(a and b is False for a,b in selected_virtual),
+            "virtualMissActualHit":sum(not a and b is True for a,b in selected_virtual)},
         "roundSummaries": rounds,
         "recordedPowerSpent": sum(s["power"] for s in shots.values() if finite_number(s.get("power"))),
     }

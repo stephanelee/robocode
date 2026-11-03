@@ -32,7 +32,8 @@ class GeometryTests(unittest.TestCase):
         rows = shots + [dict(type="passage", round=1, shotId=7, x=100, y=0, predictedDirection=0),
                        dict(type="passage", round=2, shotId=None, x=100, y=0),
                        dict(type="virtual", round=2, shotId=7, model=1, hit=True),
-                       dict(type="hit", round=1, shotId=7, damage=2.4)]
+                       dict(type="hit", round=1, shotId=7, damage=2.4),
+                       dict(type="round", round=2, shots=1, hits=0, truncated=False, failed=False, droppedRecords=0)]
         result = analyze(rows)
         self.assertEqual(1, result["joinedPassages"])
         self.assertEqual(1, result["unjoinedPassages"])
@@ -44,6 +45,15 @@ class GeometryTests(unittest.TestCase):
     def test_duplicate_confirmed_shot_identity_is_rejected(self):
         shot = dict(type="shot", round=1, shotId=0)
         with self.assertRaises(ValueError): analyze([shot, shot])
+
+    def test_missing_or_truncated_terminal_coverage_cannot_turn_absent_hit_into_miss(self):
+        rows=[dict(type="shot", round=r, shotId=1, model=0) for r in [1,2,3]]
+        rows += [dict(type="virtual", round=r, shotId=1, model=0, hit=True) for r in [1,2,3]]
+        rows += [dict(type="round", round=2, shots=1, hits=0, truncated=True, failed=False, droppedRecords=1),
+                 dict(type="round", round=3, shots=2, hits=0, truncated=False, failed=False, droppedRecords=0)]
+        result=analyze(rows)
+        self.assertEqual(3,result["selectedLegacyVirtualVsActual"]["unknownActualOutcome"])
+        self.assertEqual(0,result["selectedLegacyVirtualVsActual"]["virtualHitNoActualHit"])
 
 
 if __name__ == "__main__":
