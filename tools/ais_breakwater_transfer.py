@@ -80,6 +80,19 @@ def wall_safe(result):
     return result['totals']['candidate']['wallsPer1000Turns'] <= result['totals']['previous']['wallsPer1000Turns'] + 10
 
 
+def movement_activation(rows, arm):
+    total = 0
+    for row in rows:
+        count = row.get('breakwaterMovementTurns', 0)
+        expected = row['forcedDuelTurns'] if arm == 'candidate' else 0
+        if type(count) is not int or count < 0 or count != expected:
+            raise ValueError('Breakwater movement activation differs from executed forced-duel decisions')
+        total += count
+    if arm == 'candidate' and total == 0:
+        raise ValueError('No candidate Breakwater movement was executed')
+    return total
+
+
 def decision(games, confirmation=False):
     validate_layout(games, ['confirmation', 'samples'] if confirmation else ['screen'])
     results = {kind: opponent_result(games, kind) for kind in OPS + ('self',)}
@@ -249,7 +262,7 @@ def play(args, game, sources, runner, samples, python_source, python, retcon_sou
             raise ValueError('Skipped turn/loaded model invalidates comparison')
         battles[arm] = dict(**identity, rounds=game['rounds'], results=official['results'], metrics=metrics,
             endpoint=coherent.validate_endpoint(Path(bot['model']), game['rounds']), mechanism=policy.mechanism(rows), bot=bot,
-            breakwaterMovementTurns=sum(r.get('breakwaterMovementTurns', 0) for r in rows))
+            breakwaterMovementTurns=movement_activation(rows, arm))
     return dict(**game, battles=battles, retconStats=native_stats,
         pythonSourceHashes=native.verify_staged(directory, [kind]) if kind in OPS[2:] else {},
         breakwater=check_breakwater(directory, game['rounds'], game['opponentSeed'], opponent_row) if kind == 'Breakwater' else None)

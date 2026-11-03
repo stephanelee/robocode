@@ -55,6 +55,14 @@ class TransferProtocolTests(unittest.TestCase):
         rows[-1]['battles']['candidate']['metrics']['wallCollisions'] = 11
         self.assertFalse(experiment.decision(rows)['checks']['wallRate'])
 
+    def test_movement_activation_matches_executed_default_duel_and_rejects_missing(self):
+        self.assertEqual(experiment.movement_activation([dict(forcedDuelTurns=7, breakwaterMovementTurns=7)], 'candidate'), 7)
+        self.assertEqual(experiment.movement_activation([dict(forcedDuelTurns=7)], 'previous'), 0)
+        for row in (dict(forcedDuelTurns=7), dict(forcedDuelTurns=7, breakwaterMovementTurns=6),
+                    dict(forcedDuelTurns=1, breakwaterMovementTurns=True)):
+            with self.assertRaisesRegex(ValueError, 'activation'):
+                experiment.movement_activation([row], 'candidate')
+
     def test_retcon_absolute_win_guard_rejects_even_with_positive_delta(self):
         rows = games(['screen'])
         row = next(g for g in rows if g['kind'] == 'Retcon' and 'candidate' in g['arms'])
