@@ -47,6 +47,7 @@ See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github
 - [x] Publish the opponent-source-grounded [strategy and prospective gate categories](docs/retcon-strategy.md).
 - [x] Capture unchanged Retcon native statistics as offline diagnostics, with actual Ubuntu26.04 provenance. [Report](docs/retcon-observability.md).
 - [x] Test the isolated bullet-energy scan-lag correction with an actual pinned-engine trace and 120 fixed-policy rounds. [Report](docs/improvements/foundation-scan-lag.md): rejected by mean score-share and wall-rate guards; online stage skipped, gameplay/JAR reverted.
+- [x] Measure fixed-policy Retcon noise with a 400-round A/A calibration. [Report](docs/aa-calibration.md): block-delta SD 5.59 pp. Review correction: with a +5 pp observed floor, acceptance at a true +5 pp is about 50% at any budget; 8 blocks with a Student-t bound gives about 89% acceptance at +7.5 pp. The wall/wins guards are noise-dominated (exploratory).
 - [x] Test shot-reactive 1v1 duel movement against Retcon's two guns. [Report](docs/improvements/duel-surf.md): **retained**; fixed-policy share 14.8%→58.6%, Retcon hit rate 18.9%→5.3%, online veto and samples passed.
 - [ ] Register a fresh frozen-version confirmation of beating Retcon (score share > 50%, majority of rounds and blocks).
 - [ ] Consider making the duel controller effective in default training mode, where the DQN rarely chooses action 0 (separate registered change).

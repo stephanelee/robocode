@@ -14,11 +14,25 @@ import retcon_stats
 def validate(records):
     """Derive visibility assertions from observed scans, not callback delivery order."""
     evidence = []
+    fired, fire_costs = {}, {}
+    for row in records:
+        if row["type"] != "fired":
+            continue
+        owner, bullet, turn, power = (row.get(key) for key in ("self", "bullet", "turn", "power"))
+        if (any(type(value) is not int or value < 1 for value in (owner, bullet, turn))
+                or type(power) not in (int, float) or not math.isfinite(power) or not 0 < power <= 3
+                or (owner, bullet) in fired):
+            raise ValueError("Invalid or duplicate observed firing event")
+        fired[owner, bullet] = row
+        fire_costs[owner, turn] = fire_costs.get((owner, turn), 0.0) + power
     hits = sorted((row for row in records if row["type"] == "hit" and row["power"] == 0.5), key=lambda row: row["turn"])
     if len(hits) != 2 or {row["label"] for row in hits} != {"Alpha", "Beta"}:
         raise ValueError("Expected exactly one isolated power-0.5 hit from each probe")
     for hit in hits:
         turn, shooter, victim = hit["turn"], hit["self"], hit["enemy"]
+        shot = fired.get((shooter, hit["bullet"]))
+        if shot is None or shot["turn"] > turn or shot["power"] != hit["power"]:
+            raise ValueError("Matching observed firing event required for each probe hit")
         received = [row for row in records if row["type"] == "hitBy" and row["turn"] == turn
                     and row["self"] == victim and row["enemy"] == shooter and row["bullet"] == hit["bullet"]]
         if len(received) != 1 or hit["damage"] != 2 or received[0]["damage"] != 2:
@@ -31,10 +45,16 @@ def validate(records):
             before, current, after = [scans[t]["energy"] for t in (turn - 1, turn, turn + 1)]
             if not all(math.isfinite(value) for value in (before, current, after)):
                 raise ValueError("Nonfinite scan energy")
-            if not math.isclose(current, before, abs_tol=1e-9) or not math.isclose(after - current, effect, abs_tol=1e-9):
+            current_cost = fire_costs.get((enemy, turn), 0.0)
+            next_cost = fire_costs.get((enemy, turn + 1), 0.0)
+            if (not math.isclose(current, before - current_cost, abs_tol=1e-9)
+                    or not math.isclose(after - current, effect - next_cost, abs_tol=1e-9)):
                 raise ValueError("Recorded scan energies do not establish k+1 bullet visibility")
-            evidence.append(dict(hitTurn=turn, observer=observer, enemy=enemy, effect=effect,
-                                 previousScan=before, sameTurnScan=current, nextTurnScan=after))
+            observed = dict(hitTurn=turn, observer=observer, enemy=enemy, effect=effect,
+                            previousScan=before, sameTurnScan=current, nextTurnScan=after)
+            if current_cost or next_cost:
+                observed.update(sameTurnFiringCost=current_cost, nextTurnFiringCost=next_cost)
+            evidence.append(observed)
     return evidence
 
 
