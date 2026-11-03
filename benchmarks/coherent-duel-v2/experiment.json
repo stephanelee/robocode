@@ -1,0 +1,2368 @@
+{
+  "status": "complete",
+  "candidateSource": "eebb36e35f7ab9df566aa248b862a733d15384e9",
+  "previousSource": "728f5a68c2494881f5658d1a80934ef2c97f98d1",
+  "jarSHA256": {
+    "candidate": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+    "previous": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6"
+  },
+  "registrationCommit": "433f404e98722ef763fd169fd039585134ac8a69",
+  "planSHA256": "760d4da1d8f04ce4f01bfcf0897a969ea25235385d075832e3bb642376dc38d5",
+  "executionSource": "a180fb9373b25069e34e60a8287ef1e8b1b5d554",
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "games": [
+    {
+      "gameId": "coherent-v2-retcon-1-previous",
+      "kind": "Retcon",
+      "block": 1,
+      "rounds": 20,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262101
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 1,
+          "totalScore": 833,
+          "survival": 650,
+          "bulletDamage": 52,
+          "firstPlaces": 13,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 1,
+              "totalScore": 833,
+              "survival": 650,
+              "bulletDamage": 52,
+              "firstPlaces": 13
+            },
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 703,
+              "survival": 350,
+              "bulletDamage": 266,
+              "firstPlaces": 7
+            }
+          ],
+          "metrics": {
+            "turns": 27540,
+            "shotsFired": 1277,
+            "bulletHits": 10,
+            "damageDealt": 52.4,
+            "damageTaken": 266.8,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.007830853563038372,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "82e064d37c5a36d40eca47534d10b05cbcb62da78eaf38c4e18ef778e0699874",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262101,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "08ef6aad401592d9e25615dc05c87ea5b828596caebc50c296ff15f695a732d7",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-1-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-1-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-45606190230.json",
+            "sha256": "0013af3c8066d0093b0599b02b6d77c0e42cc42d03b8df245b68ed27d3f60b66"
+          }
+        ],
+        "actualGun": {
+          "shots": 1881,
+          "hits": 55,
+          "hitRate": 0.029239766081871343
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 28,
+            "shots": 1860,
+            "hitRate": 0.015053763440860216
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 31,
+            "shots": 1860,
+            "hitRate": 0.016666666666666666
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 27527,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 11605,
+          "overBudgetTurns": 0,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:12172,10:12234,20:1851,30:643,40:256,50:125,60:78,70:43,80:31,90:22,100:19,110:6,120:10,130:4,140:3,150:1,160:1,170:2,180:2,190:1,210:2,220:3,240:1,250:1,300:2,320:1,330:1,350:1,470:1,490:1,590:1,680:1,890:1,910:1,930:1,1140:1,2300:1,3180:1,11600:1",
+          "timing": {
+            "firesChecked": 1881,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1881,
+            "originMatches": 1881,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1881,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 55,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1358,
+            "unanchoredShots": 0,
+            "hitsTaken": 9,
+            "hitsOnWave": 4,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 4,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 27507,
+            "moveMatches": 27507,
+            "moveWallHitsChecked": 16,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1881,
+            "bulletHits": 55,
+            "virtualGuns": "LinearAimModel:28/1860 HeadOnAimModel:31/1860"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-retcon-1-candidate",
+      "kind": "Retcon",
+      "block": 1,
+      "rounds": 20,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262101
+      },
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1528,
+          "survival": 1000,
+          "bulletDamage": 279,
+          "firstPlaces": 20,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1528,
+              "survival": 1000,
+              "bulletDamage": 279,
+              "firstPlaces": 20
+            },
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 154,
+              "survival": 0,
+              "bulletDamage": 154,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 23840,
+            "shotsFired": 1215,
+            "bulletHits": 59,
+            "damageDealt": 290.100004,
+            "damageTaken": 153.84,
+            "wallCollisions": 1,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.048559670781893,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "a0b586cf87c3ade4be2b717cf2ba02360c5563655c379bf2da93edae73afa396",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": {
+            "forcedDuelTurns": 23735,
+            "actionCounts": [
+              23749,
+              1,
+              22,
+              11,
+              36,
+              19
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262101,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "642acf1ebcaddafb6959b0396df6ffa0dbc559995b712d42f7d543f56b3ff63b",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-1-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-1-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-75650871408.json",
+            "sha256": "34c31281464a40ce4417e7e6b362bc2a9f595bbf9f2d5adde2c686e9712d1db3"
+          }
+        ],
+        "actualGun": {
+          "shots": 1622,
+          "hits": 34,
+          "hitRate": 0.02096177558569667
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 14,
+            "shots": 1601,
+            "hitRate": 0.008744534665833853
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 23,
+            "shots": 1601,
+            "hitRate": 0.014366021236727046
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 23820,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 7952,
+          "overBudgetTurns": 0,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:8953,10:11419,20:2229,30:664,40:227,50:106,60:71,70:43,80:24,90:19,100:14,110:14,120:2,130:6,140:3,150:3,160:1,170:2,200:4,210:2,220:2,260:1,280:1,380:1,440:1,460:1,480:1,620:1,690:1,760:1,870:1,2530:1,7950:1",
+          "timing": {
+            "firesChecked": 1622,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1622,
+            "originMatches": 1622,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1622,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 34,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1279,
+            "unanchoredShots": 0,
+            "hitsTaken": 45,
+            "hitsOnWave": 43,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 43,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 23800,
+            "moveMatches": 23800,
+            "moveWallHitsChecked": 0,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1622,
+            "bulletHits": 34,
+            "virtualGuns": "LinearAimModel:14/1601 HeadOnAimModel:23/1601"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-retcon-2-candidate",
+      "kind": "Retcon",
+      "block": 2,
+      "rounds": 20,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262102
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1349,
+          "survival": 850,
+          "bulletDamage": 285,
+          "firstPlaces": 17,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1349,
+              "survival": 850,
+              "bulletDamage": 285,
+              "firstPlaces": 17
+            },
+            {
+              "id": 2,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 326,
+              "survival": 150,
+              "bulletDamage": 140,
+              "firstPlaces": 3
+            }
+          ],
+          "metrics": {
+            "turns": 24329,
+            "shotsFired": 1273,
+            "bulletHits": 56,
+            "damageDealt": 294.520005,
+            "damageTaken": 140.85999999999999,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.04399057344854674,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "a8ca49adb0052c313b4c3ef5e1d6360aff456d4b8d20fef57f39b1673c9ad943",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": {
+            "forcedDuelTurns": 24215,
+            "actionCounts": [
+              24243,
+              33,
+              1,
+              9,
+              0,
+              38
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262102,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "ca5017973fa19f2df4295d89dc3a965900fdebfba5597d660d3250ef26f62263",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-2-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-2-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-2-103033697780.json",
+            "sha256": "0b6ea9c4a641b461dca9e005c5c13b82fc7dca33473d0d0cc1ad350458516b9a"
+          }
+        ],
+        "actualGun": {
+          "shots": 1624,
+          "hits": 32,
+          "hitRate": 0.019704433497536946
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 17,
+            "shots": 1602,
+            "hitRate": 0.010611735330836454
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 23,
+            "shots": 1602,
+            "hitRate": 0.01435705368289638
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 2,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 24312,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 18042,
+          "overBudgetTurns": 1,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:9622,10:11289,20:2076,30:666,40:278,50:139,60:82,70:45,80:26,90:21,100:14,110:6,120:2,130:2,140:2,150:2,160:4,170:2,180:2,190:1,210:1,230:1,240:2,250:3,270:1,280:1,300:1,350:1,370:1,420:1,470:1,480:1,530:1,560:1,580:1,620:1,820:1,880:1,1030:1,1110:1,1400:1,1510:1,1520:1,1670:1,1930:1,2170:1,2290:1,18040:1",
+          "timing": {
+            "firesChecked": 1624,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1624,
+            "originMatches": 1624,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1624,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 32,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1340,
+            "unanchoredShots": 0,
+            "hitsTaken": 46,
+            "hitsOnWave": 41,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 41,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 24292,
+            "moveMatches": 24292,
+            "moveWallHitsChecked": 0,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1624,
+            "bulletHits": 32,
+            "virtualGuns": "LinearAimModel:17/1602 HeadOnAimModel:23/1602"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-retcon-2-previous",
+      "kind": "Retcon",
+      "block": 2,
+      "rounds": 20,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262102
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 1,
+          "totalScore": 932,
+          "survival": 750,
+          "bulletDamage": 30,
+          "firstPlaces": 15,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 1,
+              "totalScore": 932,
+              "survival": 750,
+              "bulletDamage": 30,
+              "firstPlaces": 15
+            },
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 543,
+              "survival": 250,
+              "bulletDamage": 234,
+              "firstPlaces": 5
+            }
+          ],
+          "metrics": {
+            "turns": 27297,
+            "shotsFired": 1232,
+            "bulletHits": 8,
+            "damageDealt": 33.06,
+            "damageTaken": 234.72,
+            "wallCollisions": 3,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.006493506493506494,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "a5a5a5d5e47b1d8c55709ab07b30863a0ee597f471f366ad069bcd5e9708353b",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262102,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "57e80d8f4dd1d0a1a786cd41a4a03c0df927b34434b3f8ed01a2ae2a1e1c389f",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-2-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-2-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-130776118410.json",
+            "sha256": "989c6e4fe0211c84132e326005624c6e979f9d82f0b2eb526d04d5a91d421df8"
+          }
+        ],
+        "actualGun": {
+          "shots": 1857,
+          "hits": 56,
+          "hitRate": 0.030156165858912225
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 17,
+            "shots": 1837,
+            "hitRate": 0.009254218835057159
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 37,
+            "shots": 1837,
+            "hitRate": 0.020141535111594992
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 27282,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 29026,
+          "overBudgetTurns": 1,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:11380,10:12038,20:2351,30:804,40:345,50:149,60:71,70:52,80:30,90:16,100:11,110:4,120:4,130:4,140:4,150:1,160:3,170:2,230:1,330:1,440:1,460:1,470:1,540:1,1020:1,1200:1,1320:1,1330:2,3560:1,29020:1",
+          "timing": {
+            "firesChecked": 1857,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1857,
+            "originMatches": 1857,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1857,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 56,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1349,
+            "unanchoredShots": 0,
+            "hitsTaken": 5,
+            "hitsOnWave": 3,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 3,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 27262,
+            "moveMatches": 27262,
+            "moveWallHitsChecked": 8,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1857,
+            "bulletHits": 56,
+            "virtualGuns": "LinearAimModel:17/1837 HeadOnAimModel:37/1837"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-retcon-3-previous",
+      "kind": "Retcon",
+      "block": 3,
+      "rounds": 20,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262103
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 2,
+          "totalScore": 474,
+          "survival": 350,
+          "bulletDamage": 49,
+          "firstPlaces": 7,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 1,
+              "totalScore": 1031,
+              "survival": 650,
+              "bulletDamage": 230,
+              "firstPlaces": 13
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 474,
+              "survival": 350,
+              "bulletDamage": 49,
+              "firstPlaces": 7
+            }
+          ],
+          "metrics": {
+            "turns": 24565,
+            "shotsFired": 1239,
+            "bulletHits": 9,
+            "damageDealt": 49.2,
+            "damageTaken": 230.24,
+            "wallCollisions": 2,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.007263922518159807,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "b8cdfc111d88ce365881f2c12512f815e88a6031102c8e389ad53341c6ef38ed",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262103,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "68b3695a5a2f660fb5313da140350a26436d29aa9ffec4abb3747dee64e6d9f1",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-3-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-3-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-160175805787.json",
+            "sha256": "82674cce7b3ca7450ad12491bde174ca06bebcd3961a9a1c2d94b505db92993c"
+          }
+        ],
+        "actualGun": {
+          "shots": 1724,
+          "hits": 49,
+          "hitRate": 0.02842227378190255
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 22,
+            "shots": 1694,
+            "hitRate": 0.012987012987012988
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 34,
+            "shots": 1694,
+            "hitRate": 0.020070838252656435
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 24558,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 36586,
+          "overBudgetTurns": 1,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:9721,10:11107,20:2352,30:722,40:303,50:113,60:76,70:42,80:30,90:25,100:11,110:8,120:8,130:5,140:5,160:1,170:2,190:1,200:3,210:1,250:1,270:1,330:1,350:1,360:1,390:1,420:1,480:1,650:1,980:1,1000:1,1070:1,1200:1,1230:1,1750:1,2040:1,2110:1,2170:1,2340:1,2930:1,3770:1,36580:1",
+          "timing": {
+            "firesChecked": 1724,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1724,
+            "originMatches": 1724,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1724,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 49,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1318,
+            "unanchoredShots": 0,
+            "hitsTaken": 8,
+            "hitsOnWave": 8,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 8,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 24538,
+            "moveMatches": 24538,
+            "moveWallHitsChecked": 11,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1724,
+            "bulletHits": 49,
+            "virtualGuns": "LinearAimModel:22/1694 HeadOnAimModel:34/1694"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-retcon-3-candidate",
+      "kind": "Retcon",
+      "block": 3,
+      "rounds": 20,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262103
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1543,
+          "survival": 900,
+          "bulletDamage": 395,
+          "firstPlaces": 18,
+          "rounds": 20,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1543,
+              "survival": 900,
+              "bulletDamage": 395,
+              "firstPlaces": 18
+            },
+            {
+              "id": 2,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 250,
+              "survival": 100,
+              "bulletDamage": 126,
+              "firstPlaces": 2
+            }
+          ],
+          "metrics": {
+            "turns": 21907,
+            "shotsFired": 1171,
+            "bulletHits": 76,
+            "damageDealt": 404.08001,
+            "damageTaken": 126.0,
+            "wallCollisions": 3,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.06490179333902647,
+            "roundsRecorded": 20,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "1f4b8c268b25e7636623cb5992b743beca579de1c464cfaf1bba206cfff1a134",
+            "bytes": 27804,
+            "totalRounds": 20
+          },
+          "mechanism": {
+            "forcedDuelTurns": 21801,
+            "actionCounts": [
+              21823,
+              15,
+              18,
+              22,
+              21,
+              6
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262103,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "fa8d93d356daa3e90e530d5a276f3a737121161866f1bfe56937c7d76abba00a",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-3-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-retcon-3-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 20,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-2-188804638265.json",
+            "sha256": "935aa8c5790893925b715bce55ea1374fd1c6fa885c9179e91c3359af537b251"
+          }
+        ],
+        "actualGun": {
+          "shots": 1531,
+          "hits": 30,
+          "hitRate": 0.019595035924232528
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 17,
+            "shots": 1504,
+            "hitRate": 0.011303191489361703
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 27,
+            "shots": 1504,
+            "hitRate": 0.01795212765957447
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 2,
+          "roundsRecorded": 20,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 21889,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 15704,
+          "overBudgetTurns": 0,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:6191,10:12043,20:2323,30:715,40:285,50:120,60:63,70:37,80:28,90:11,100:16,110:11,120:5,130:7,140:4,150:1,160:2,190:2,200:1,210:2,220:3,240:2,260:2,270:1,340:1,350:1,390:1,430:1,490:1,510:1,540:1,600:1,780:1,1010:1,1470:1,1710:1,4670:1,15700:1",
+          "timing": {
+            "firesChecked": 1531,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 1531,
+            "originMatches": 1531,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 1531,
+            "stillHitsChecked": 0,
+            "stillHitMatches": 0,
+            "hitsOnMovingTargets": 30,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 1204,
+            "unanchoredShots": 0,
+            "hitsTaken": 60,
+            "hitsOnWave": 53,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 53,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 21869,
+            "moveMatches": 21869,
+            "moveWallHitsChecked": 14,
+            "moveNotChecked": 19,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 1531,
+            "bulletHits": 30,
+            "virtualGuns": "LinearAimModel:17/1504 HeadOnAimModel:27/1504"
+          }
+        }
+      }
+    },
+    {
+      "gameId": "coherent-v2-self-1",
+      "kind": "self",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate",
+        "previous"
+      ],
+      "seeds": {
+        "candidate": 20262111,
+        "previous": 20262211
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1201,
+          "survival": 500,
+          "bulletDamage": 501,
+          "firstPlaces": 10,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1201,
+              "survival": 500,
+              "bulletDamage": 501,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 5,
+              "survival": 0,
+              "bulletDamage": 5,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 10510,
+            "shotsFired": 544,
+            "bulletHits": 103,
+            "damageDealt": 504.800006,
+            "damageTaken": 5.2,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.18933823529411764,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "67ba4cd491525d44b78e818166f105b73a77f6945a9c4912607d7cd6fab2d72b",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 10462,
+            "actionCounts": [
+              10471,
+              15,
+              0,
+              1,
+              10,
+              12
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262111,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "5cfbdd528a9569f01cc4f2da875e7a349597f7e988f379d89713c86365c9b9db",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-1/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-1/candidate/AISurvivor/metrics.jsonl"
+          }
+        },
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 2,
+          "totalScore": 5,
+          "survival": 0,
+          "bulletDamage": 5,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1201,
+              "survival": 500,
+              "bulletDamage": 501,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 5,
+              "survival": 0,
+              "bulletDamage": 5,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 10510,
+            "shotsFired": 436,
+            "bulletHits": 1,
+            "damageDealt": 5.2,
+            "damageTaken": 502.000006,
+            "wallCollisions": 2,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.0022935779816513763,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "56a6bdc4225cdfa7bdfce2a080f830f6219be3668676f4fd90b62bbaced8584c",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262211,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "414d5d7ff40dbc0a6cf0f8c1941c03f4ef014f29655dac012a97f6855aecf006",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-1/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-1/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-self-2",
+      "kind": "self",
+      "block": 2,
+      "rounds": 10,
+      "arms": [
+        "previous",
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262112,
+        "previous": 20262212
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 2,
+          "totalScore": 10,
+          "survival": 0,
+          "bulletDamage": 10,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1154,
+              "survival": 500,
+              "bulletDamage": 462,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 10,
+              "survival": 0,
+              "bulletDamage": 10,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 10291,
+            "shotsFired": 471,
+            "bulletHits": 2,
+            "damageDealt": 10.4,
+            "damageTaken": 464.800006,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.004246284501061571,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "21142a61c3c89a010b3b4957a47d0308481d5a0a2eec4f1119e44ffe91facc5e",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262212,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "e2b37ff9925d9c372ca805a2094ae564f8fba2261a9e089c42c1a25d2918cb46",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-2/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-2/previous/AISurvivor/metrics.jsonl"
+          }
+        },
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1154,
+          "survival": 500,
+          "bulletDamage": 462,
+          "firstPlaces": 10,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1154,
+              "survival": 500,
+              "bulletDamage": 462,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 10,
+              "survival": 0,
+              "bulletDamage": 10,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 10291,
+            "shotsFired": 530,
+            "bulletHits": 94,
+            "damageDealt": 464.40000499999996,
+            "damageTaken": 10.4,
+            "wallCollisions": 1,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.17735849056603772,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "a441b9dee1734676e1f5372d1315cb992851ba170b71dbc0b60b198c816d69cd",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 10231,
+            "actionCounts": [
+              10236,
+              0,
+              12,
+              24,
+              7,
+              11
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262112,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "24f29945fe77d4cca31ff32cd75994f4a3bb3f09b69f9d6131709a2a484135ab",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-2/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-2/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-self-3",
+      "kind": "self",
+      "block": 3,
+      "rounds": 10,
+      "arms": [
+        "candidate",
+        "previous"
+      ],
+      "seeds": {
+        "candidate": 20262113,
+        "previous": 20262213
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 1225,
+          "survival": 500,
+          "bulletDamage": 524,
+          "firstPlaces": 10,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1225,
+              "survival": 500,
+              "bulletDamage": 524,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 14,
+              "survival": 0,
+              "bulletDamage": 14,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 9065,
+            "shotsFired": 465,
+            "bulletHits": 105,
+            "damageDealt": 524.100006,
+            "damageTaken": 13.600000000000001,
+            "wallCollisions": 1,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.22580645161290322,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "a374ba23ada2070315071d348702cee9c4a8febfb3bfd222fbc8bc8120ddea97",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 9018,
+            "actionCounts": [
+              9031,
+              3,
+              3,
+              0,
+              21,
+              6
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262113,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "c775f2341de712fe4e1d55dfa27039222861fd75c9732c7dca5c7a1f589a5d2c",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-3/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-3/candidate/AISurvivor/metrics.jsonl"
+          }
+        },
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 2,
+          "totalScore": 14,
+          "survival": 0,
+          "bulletDamage": 14,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 1225,
+              "survival": 500,
+              "bulletDamage": 524,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 2,
+              "totalScore": 14,
+              "survival": 0,
+              "bulletDamage": 14,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 9065,
+            "shotsFired": 421,
+            "bulletHits": 3,
+            "damageDealt": 13.600000000000001,
+            "damageTaken": 527.3000069999999,
+            "wallCollisions": 1,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.007125890736342043,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "db5c4e9f1780d80b7aaa27a481143ccd80f81e313b9bc4c7438283a5a4698941",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262213,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "2e8bdbe8526125e4cedba5e508d3b293c6593f09fb3853325899d3a8b1b27065",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-3/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-self-3/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-Target-previous",
+      "kind": "Target",
+      "block": 1,
+      "rounds": 3,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262121
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 1,
+          "totalScore": 540,
+          "survival": 150,
+          "bulletDamage": 300,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 1,
+              "totalScore": 540,
+              "survival": 150,
+              "bulletDamage": 300,
+              "firstPlaces": 3
+            },
+            {
+              "id": 1,
+              "name": "Target",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 1089,
+            "shotsFired": 69,
+            "bulletHits": 43,
+            "damageDealt": 317.2,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.6231884057971014,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "f2de7cce343c7bf769585eeead0d699fe048761b2d7907338652a3181d278490",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "d6c7c36b6316a098eeea52c041104f70406503d1246be5486a88e0274fecbf3f",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Target-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Target-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-Target-candidate",
+      "kind": "Target",
+      "block": 1,
+      "rounds": 3,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262121
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 532,
+          "survival": 150,
+          "bulletDamage": 293,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 532,
+              "survival": 150,
+              "bulletDamage": 293,
+              "firstPlaces": 3
+            },
+            {
+              "id": 2,
+              "name": "Target",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 1215,
+            "shotsFired": 80,
+            "bulletHits": 50,
+            "damageDealt": 299.6,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.625,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "16d92d76458c4d4bf7a7f912fb45e62e2f7d4a3b3112607c6a6aff61fa12fc0b",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": {
+            "forcedDuelTurns": 1200,
+            "actionCounts": [
+              1203,
+              2,
+              6,
+              0,
+              4,
+              0
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "b187a0739fda0ad75404a9e37a1b2b841a81d4898acce8801301b061c9a4abac",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Target-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Target-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-SpinBot-candidate",
+      "kind": "SpinBot",
+      "block": 2,
+      "rounds": 3,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262121
+      },
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 464,
+          "survival": 150,
+          "bulletDamage": 237,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 464,
+              "survival": 150,
+              "bulletDamage": 237,
+              "firstPlaces": 3
+            },
+            {
+              "id": 1,
+              "name": "Spin Bot",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 969,
+            "shotsFired": 63,
+            "bulletHits": 43,
+            "damageDealt": 245.2,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.6825396825396826,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "069d30780a0f1dc06eb80f4d257cf636b3629991b679b14ad78dfbe498ffd3c6",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": {
+            "forcedDuelTurns": 958,
+            "actionCounts": [
+              958,
+              0,
+              7,
+              0,
+              3,
+              0
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "5787c1312dc1ecbdcc6b3f1e0c8dd7f8e0827a33a0cbe282377b53a8e794ba3c",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-SpinBot-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-SpinBot-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-SpinBot-previous",
+      "kind": "SpinBot",
+      "block": 2,
+      "rounds": 3,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262121
+      },
+      "battles": {
+        "previous": {
+          "id": 1,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 1,
+          "totalScore": 500,
+          "survival": 150,
+          "bulletDamage": 267,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 1,
+              "totalScore": 500,
+              "survival": 150,
+              "bulletDamage": 267,
+              "firstPlaces": 3
+            },
+            {
+              "id": 2,
+              "name": "Spin Bot",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 16,
+              "survival": 0,
+              "bulletDamage": 16,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 935,
+            "shotsFired": 60,
+            "bulletHits": 38,
+            "damageDealt": 266.0,
+            "damageTaken": 16.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.6333333333333333,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "e3f9014ceb97c3a94c28a72d537e02ebe17024a9d59468cccdf55be370407196",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "aca5941055639a93495402de6be4261de887c20440364cb03e77afcacdf60fa3",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-SpinBot-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-SpinBot-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-Walls-previous",
+      "kind": "Walls",
+      "block": 3,
+      "rounds": 3,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 20262121
+      },
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.0",
+          "rank": 1,
+          "totalScore": 471,
+          "survival": 150,
+          "bulletDamage": 242,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.0",
+              "rank": 1,
+              "totalScore": 471,
+              "survival": 150,
+              "bulletDamage": 242,
+              "firstPlaces": 3
+            },
+            {
+              "id": 1,
+              "name": "Walls",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 833,
+            "shotsFired": 49,
+            "bulletHits": 35,
+            "damageDealt": 257.6,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.7142857142857143,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "9a2d054984c4373105bc53c6c72f95ae3584f97c791337ea6cf744cdcbcabac0",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": null,
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.0",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0d31171603affa4131eb340f6a18e065f3715dfec0e87572a0053788ed9fc3f4",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6",
+              "AISurvivor.json": "0697be6e4b69f8e33e8279e73e215754a9fabec13e28262f238ff3e98f72f244",
+              "AISurvivor.sh": "50c05c66005de966fc68770d32b3464b788d517bd7b07c1de177afec4c3bc581",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Walls-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Walls-previous/previous/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    },
+    {
+      "gameId": "coherent-v2-Walls-candidate",
+      "kind": "Walls",
+      "block": 3,
+      "rounds": 3,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 20262121
+      },
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 473,
+          "survival": 150,
+          "bulletDamage": 244,
+          "firstPlaces": 3,
+          "rounds": 3,
+          "results": [
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 473,
+              "survival": 150,
+              "bulletDamage": 244,
+              "firstPlaces": 3
+            },
+            {
+              "id": 2,
+              "name": "Walls",
+              "version": "1.0",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 804,
+            "shotsFired": 49,
+            "bulletHits": 38,
+            "damageDealt": 244.400001,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.7755102040816326,
+            "roundsRecorded": 3,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "961b75c9b800f58ce2d67ae452c99ee7a6937a7b6533b4b49a090d285e6a652d",
+            "bytes": 27804,
+            "totalRounds": 3
+          },
+          "mechanism": {
+            "forcedDuelTurns": 790,
+            "actionCounts": [
+              794,
+              0,
+              2,
+              0,
+              7,
+              0
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 20262121,
+            "originalHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "3b34f6a38595bd3490b8e7eb0e39d81019c831c2d845219d7e576aee3ee3af75",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Walls-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/build/coherent-duel-v2/coherent-v2-Walls-candidate/candidate/AISurvivor/metrics.jsonl"
+          }
+        }
+      },
+      "native": null
+    }
+  ],
+  "runtimeJava": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /usr/lib/jvm/temurin-25-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.15/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.5+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.5+8\n    java.version = 25.0.5\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.5+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-25-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+  "opponentProvenance": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "sampleAssetSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "decision": {
+    "status": "retain",
+    "checks": {
+      "shootingMetrics": true,
+      "hitRate": true,
+      "damagePerShot": true,
+      "retconGain": true,
+      "positiveBlocks": true,
+      "worstBlock": true,
+      "wins": true,
+      "wallRate": true,
+      "selfMean": true,
+      "selfWins": true,
+      "selfGames": true,
+      "samples": true,
+      "zeroSkips": true
+    },
+    "retconDeltas": [
+      0.3661246222255251,
+      0.17350872754869717,
+      0.5456187128608302
+    ],
+    "meanRetconDelta": 0.3617506875450175,
+    "retcon": {
+      "previous": {
+        "rounds": 60,
+        "wins": 35,
+        "winRate": 0.5833333333333334,
+        "winRateWilson95": {
+          "lower": 0.45728081022640116,
+          "upper": 0.6993572144165838
+        },
+        "meanScoreShare": 0.49637742707531707,
+        "hitRate": 0.00720384204909285,
+        "wallsPer1000Turns": 0.06297070602755599,
+        "turns": 79402,
+        "shotsFired": 3748,
+        "bulletHits": 27,
+        "damageDealt": 134.66,
+        "damageTaken": 731.76,
+        "wallCollisions": 5,
+        "skippedTurns": 0
+      },
+      "candidate": {
+        "rounds": 60,
+        "wins": 55,
+        "winRate": 0.9166666666666666,
+        "winRateWilson95": {
+          "lower": 0.8193105798166558,
+          "upper": 0.9638795433982692
+        },
+        "meanScoreShare": 0.8581281146203346,
+        "hitRate": 0.052200054659743096,
+        "wallsPer1000Turns": 0.05708088361207832,
+        "turns": 70076,
+        "shotsFired": 3659,
+        "bulletHits": 191,
+        "damageDealt": 988.7000190000001,
+        "damageTaken": 420.7,
+        "wallCollisions": 4,
+        "skippedTurns": 0
+      }
+    },
+    "retconDamagePerShot": {
+      "previous": 0.03592849519743863,
+      "candidate": 0.2702104452036076
+    },
+    "selfShares": [
+      0.9958540630182421,
+      0.9914089347079038,
+      0.9887005649717514
+    ],
+    "selfWins": 30,
+    "sampleDeltas": {
+      "Target": 0.0,
+      "SpinBot": 0.03100775193798455,
+      "Walls": 0.0
+    }
+  }
+}

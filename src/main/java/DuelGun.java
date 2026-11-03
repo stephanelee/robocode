@@ -5,8 +5,18 @@ import java.util.List;
 /** Legal-scan virtual aiming. Scores are geometric proxies, not actual-hit attribution or calibrated probabilities. */
 final class DuelGun {
     record Scan(int targetId, int turn, double x, double y, double direction, double speed, double energy) {}
+    /** A legacy GF-rotated forecast at this exact shot power, expressed about the shooter. */
+    record LegacyAim(double direction, double range, double power) {}
     record Input(int turn, double ownX, double ownY, double gunDirection, double energy, double gunHeat,
-                 double arenaWidth, double arenaHeight, Scan target, double fallbackDirection) {}
+                 double arenaWidth, double arenaHeight, Scan target, LegacyAim legacyAim) {
+        // Preserve the former NaN-only linear-fallback call while AIS integration migrates to LegacyAim.
+        Input(int turn, double ownX, double ownY, double gunDirection, double energy, double gunHeat,
+              double arenaWidth, double arenaHeight, Scan target, double linearFallback) {
+            this(turn,ownX,ownY,gunDirection,energy,gunHeat,arenaWidth,arenaHeight,target,(LegacyAim)null);
+            if (!Double.isNaN(linearFallback)) throw new IllegalArgumentException("A legacy aim requires range and power");
+        }
+        double fallbackDirection() { return legacyAim==null?Double.NaN:legacyAim.direction; }
+    }
     record Plan(double direction, double power, boolean shouldFire, boolean fallback,
                 String model, double confidence, int attempts, int hits) {}
     private static final String[] NAMES = {"current", "headon", "linear", "circular"};
@@ -94,14 +104,18 @@ final class DuelGun {
             double[] point=intercept(in,power,m,rate);
             angles[m]=bearing(point[0]-in.ownX,point[1]-in.ownY);
         }
-        angles[0]=Double.isFinite(in.fallbackDirection)?normalize(in.fallbackDirection):angles[2];
+        LegacyAim legacy=in.legacyAim;
+        boolean hasLegacy=legacy!=null && finite(legacy.direction,legacy.range,legacy.power)
+                && legacy.range>0 && Math.abs(legacy.power-power)<=1e-9;
+        angles[0]=hasLegacy?normalize(legacy.direction):angles[2];
         int selected=0;
         if(attempts[0]>=MIN_SHOTS) {
             double baseline=accuracy(0), best=baseline+.03;
             for(int m=1;m<4;m++) if(attempts[m]>=MIN_SHOTS && accuracy(m)>best) { selected=m; best=accuracy(m); }
         }
         // Coordinated ray/trajectory test at this power, using the CURRENT heading: firing precedes gun rotation.
-        boolean aligned=in.gunHeat<=1e-9 && canHit(in,power,selected==0?2:selected,rate,current);
+        boolean aligned=in.gunHeat<=1e-9 && (selected==0 && hasLegacy
+                ? canHitLegacy(in,power,legacy,current) : canHit(in,power,selected==0?2:selected,rate,current));
         boolean fire=in.gunHeat<=1e-9 && aligned;
         pending=fire?new Pending(in.turn+1,targetId,power,angles,in.arenaWidth,in.arenaHeight):null;
         return new Plan(angles[selected],power,fire,selected==0,NAMES[selected],
@@ -121,14 +135,17 @@ final class DuelGun {
     }
 
     static double firepower(double ownEnergy, double enemyEnergy, double range) {
-        if(!finite(ownEnergy,enemyEnergy,range) || enemyEnergy<=0) return 0;
+        // Tank Royale1.4: energy==0 is alive/disabled; death requires energy<0.
+        if(!finite(ownEnergy,enemyEnergy,range) || enemyEnergy<0) return 0;
         double reserve=ownEnergy<8?.35:2;
         double available=ownEnergy-reserve;
         if(available<.1) return 0;
         double preferred=range<180?2.4:range<400?1.8:1.2;
         if(ownEnergy<12) preferred=Math.min(preferred,.8);
         if(ownEnergy<3) preferred=Math.min(preferred,.3);
-        double finish=enemyEnergy<=4?enemyEnergy/4:(enemyEnergy+2)/6;
+        // Exact damage==energy merely disables. A fixed tiny energy margin survives inverse/damage rounding.
+        double lethalEnergy=enemyEnergy+1e-6;
+        double finish=lethalEnergy<=4?lethalEnergy/4:(lethalEnergy+2)/6;
         return Math.min(available,Math.min(3,Math.max(.1,Math.min(preferred,finish))));
     }
 
@@ -164,6 +181,15 @@ final class DuelGun {
             double[] p=forecast(in.target,in.turn-in.target.turn+t,model,rate,in.arenaWidth,in.arenaHeight);
             if(segmentDistance(p[0],p[1],in.ownX,in.ownY,angle,v*t,v*(t+1))<=18+1e-9) return true;
         }
+        return false;
+    }
+    private static boolean canHitLegacy(Input in,double power,LegacyAim aim,double current) {
+        double radians=Math.toRadians(aim.direction);
+        double x=in.ownX+aim.range*Math.cos(radians),y=in.ownY+aim.range*Math.sin(radians);
+        double v=20-3*power;
+        // The GF offset rotates the forecast footprint too. Its unperturbed circular center is not this aim.
+        for(int t=1;t<=(int)Math.ceil(Math.hypot(in.arenaWidth,in.arenaHeight)/v)+3;t++)
+            if(segmentDistance(x,y,in.ownX,in.ownY,current,v*t,v*(t+1))<=18+1e-9) return true;
         return false;
     }
     static double segmentDistance(double px,double py,double x,double y,double angle,double lo,double hi) {

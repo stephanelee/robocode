@@ -1,0 +1,62 @@
+name: Coherent duel v2 whole-product comparison
+on:
+  pull_request:
+    types: [ready_for_review]
+permissions:
+  contents: read
+jobs:
+  comparison:
+    if: github.head_ref == 'codex/coherent-duel-v2'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify frozen production and independently rebuild
+        shell: bash
+        run: |
+          test -z "$(git diff --name-only eebb36e35f7ab9df566aa248b862a733d15384e9 HEAD -- src/main/java src/test/java AISurvivor)"
+          echo '9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6  AISurvivor/AISurvivor.jar' | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/whole-candidate" "$RUNNER_TEMP/whole-previous"
+          cp AISurvivor/AISurvivor.{jar,json,sh,cmd} "$RUNNER_TEMP/whole-candidate/"
+          for name in AISurvivor.jar AISurvivor.json AISurvivor.sh AISurvivor.cmd; do
+            git show "728f5a68c2494881f5658d1a80934ef2c97f98d1:AISurvivor/$name" > "$RUNNER_TEMP/whole-previous/$name"
+          done
+          echo "9daf9cf0e24f319900fee1c8869d50df4ffb004719b1380a8db40fb4961551f6  $RUNNER_TEMP/whole-previous/AISurvivor.jar" | sha256sum -c -
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/whole-candidate/AISurvivor.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_coherent_duel_v2_experiment.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: One complete registered roster
+        run: >-
+          python tools/coherent_duel_v2_experiment.py
+          --candidate "$RUNNER_TEMP/whole-candidate"
+          --previous "$RUNNER_TEMP/whole-previous"
+          --java "$JAVA_HOME/bin/java"
+          --output build/coherent-duel-v2
+      - name: Preserve complete or failed attempt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coherent-duel-v2-whole-product-${{ github.event.pull_request.head.sha }}
+          path: |
+            build/coherent-duel-v2/
+            tools/coherent_duel_v2_experiment.py
+            tools/test_coherent_duel_v2_experiment.py
+            .github/workflows/coherent-duel-v2.yml
+          retention-days: 30
+          if-no-files-found: warn
