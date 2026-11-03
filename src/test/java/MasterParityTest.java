@@ -31,7 +31,7 @@ class MasterParityTest {
     static final String[] PRE_CHANGE_GOLDENS = {
             "benchmarks/replay-goldens/retcon-1v1-3r.jsonl.gz",
             "benchmarks/replay-goldens/walls-1v1-3r.jsonl.gz",
-            "benchmarks/replay-goldens/melee8-3r.jsonl.gz"};
+            "benchmarks/replay-goldens/superseded/melee8-3r-before-coherent-melee.jsonl.gz"};
 
     static final class State {
         int turn, round, enemies, width, height;
@@ -191,6 +191,7 @@ class MasterParityTest {
         org.junit.jupiter.api.Assumptions.assumeTrue(Files.exists(superseded), "only on branches with the melee change");
         String mismatch = replay(candidate, temp.resolve("c.dat"));
         assertNotNull(mismatch);
+        assertTrue(mismatch.contains(" round 1:"), "the melee change must show in the first round: " + mismatch);
         assertNull(replay(superseded, temp.resolve("s.dat")), "the pre-change melee trace still matches master");
     }
 }

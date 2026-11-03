@@ -154,7 +154,9 @@ final class SurvivorBrain {
 
             double[] features = encodeFeatures();
             boolean duelEligible = getEnemyCount() == 1 && enemies.size() == 1;
-            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false, duelEligible);
+            // Candidate: coherent default melee as well — the default product executes action 0 (minimum risk) in melee.
+            boolean meleeEligible = getEnemyCount() > 1;
+            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false, duelEligible || meleeEligible);
             metrics.actionCounts[action]++;
             if (duelEligible) metrics.duelEligibleTurns++;
             if (duelEligible && config.forceDuel()) metrics.forcedDuelTurns++;
@@ -871,15 +873,16 @@ final class SurvivorBrain {
     private boolean duelComponents() { return config.forceDuel() && getEnemyCount() == 1; }
 
     private double wallSmooth(double x, double y, double heading, int rotDir) {
-        double h = heading;
-        for (int i = 0; i < 36; i++) {
-            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
-            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
-            if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
-                ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
-            h = normDir(h + rotDir * 5.0);
+        for (int step = 0; step <= 36; step++) {
+            for (int sign : step == 0 ? new int[]{1} : new int[]{1, -1}) {
+                double h = heading + sign * step * 5.0;
+                double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+                double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+                if (tx > WALL_MARGIN && tx < getArenaWidth() - WALL_MARGIN &&
+                    ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) return normDir(h);
+            }
         }
-        return h;
+        return normDir(Math.toDegrees(Math.atan2(getArenaHeight() / 2.0 - y, getArenaWidth() / 2.0 - x)));
     }
 
     private static double normDir(double d) { return ((d % 360) + 360) % 360; }

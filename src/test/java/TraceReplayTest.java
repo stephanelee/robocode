@@ -28,6 +28,14 @@ class TraceReplayTest {
         }
     }
 
+    @Test void coherentMeleeChangesMeleeDecisionsOnlyWhereIntended(@TempDir Path temp) throws IOException {
+        // The pre-change melee golden must diverge at its first DQN-selected melee movement; 1v1 goldens stay identical.
+        TraceReplay.Result old = TraceReplay.replay(
+                Path.of("benchmarks/replay-goldens/superseded/melee8-3r-before-coherent-melee.jsonl.gz"), temp.resolve("o.dat"));
+        assertFalse(old.identical());
+        assertTrue(old.mismatch().startsWith("line 15 turn 3 round 1:"), old.mismatch());
+    }
+
     @Test void alteredRecordedCommandIsDetected(@TempDir Path temp) throws IOException {
         List<String> lines = read(golden("retcon-1v1-3r"));
         int index = -1;
