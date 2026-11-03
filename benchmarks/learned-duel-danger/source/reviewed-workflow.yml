@@ -1,0 +1,63 @@
+name: Learned duel danger whole-product comparison
+on:
+  pull_request:
+    types: [synchronize]
+permissions:
+  contents: read
+jobs:
+  comparison:
+    if: github.head_ref == 'improve/adaptive-duel-danger'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Freeze both source bundles and independently build candidate
+        shell: bash
+        run: |
+          test -z "$(git diff --name-only 768f6647dab0265475c5812825c8186c2d01f2c3 HEAD -- src/main/java src/test/java AISurvivor)"
+          mkdir -p "$RUNNER_TEMP/danger-previous" "$RUNNER_TEMP/danger-candidate"
+          for name in AISurvivor.jar AISurvivor.json AISurvivor.sh AISurvivor.cmd; do
+            git show "12348fb656c64fa9eb36f400b28aa96cbb5fd383:AISurvivor/$name" > "$RUNNER_TEMP/danger-previous/$name"
+            git show "768f6647dab0265475c5812825c8186c2d01f2c3:AISurvivor/$name" > "$RUNNER_TEMP/danger-candidate/$name"
+          done
+          echo "21c5c3d2cb4007e3e0603556af313df7f5717732e384f039b005e9e72b2daecd  $RUNNER_TEMP/danger-previous/AISurvivor.jar" | sha256sum -c -
+          echo "b2da09ef774f8c699d4e12e7a69ae77d202914bbe8048317c61bb4fcefe7d5c8  $RUNNER_TEMP/danger-candidate/AISurvivor.jar" | sha256sum -c -
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/danger-candidate/AISurvivor.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_learned_danger_experiment.py'
+          python -m unittest discover -s tools -p 'test_strong*.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: One fixed screen and conditional fresh confirmation
+        run: >-
+          python tools/learned_danger_experiment.py
+          --previous "$RUNNER_TEMP/danger-previous" --candidate "$RUNNER_TEMP/danger-candidate"
+          --java "$JAVA_HOME/bin/java" --output build/learned-duel-danger
+      - name: Preserve every complete or invalid stage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: learned-duel-danger-${{ github.event.pull_request.head.sha }}
+          path: |
+            build/learned-duel-danger/
+            tools/learned_danger_experiment.py
+            tools/test_learned_danger_experiment.py
+            tools/strong_melee_opponents.py
+            tools/opponents/strong-melee.lock.json
+            .github/workflows/learned-duel-danger.yml
+          retention-days: 30
+          if-no-files-found: warn
