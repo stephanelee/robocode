@@ -43,3 +43,23 @@ No outcome-dependent tuning, favorable repeats, replacement games, threshold cha
 Independent exact source/protocol/workflow clearance precedes games. Preserve raw official arrays, every metric row, all actual model endpoints, Retcon native exports, unchanged Python source hashes and runtime packages, original logs and executed tooling, including invalid attempts. Update docs/improvements.md after each screen/confirmation with budgets/results/decisions/reasons and PR/report/raw links. A separate agent audits and merges only after required protected CI; implementers never self-merge.
 
 Local Java17 clean build passed all95 tests, including six new profile fixtures and accepted replay/physics coverage. Pure tests and old replay states are not strength evidence.
+
+## Measured outcome: screen passed, fresh confirmation rejected
+
+[PR #55](https://github.com/stephanelee/robocode/pull/55) / [sole run41658783365](https://github.com/stephanelee/robocode/actions/runs/41658783365), execution `4ad4227a28c9849730146bae5c22956689a80671`, completed every registered stage:60 screen +240 fresh confirmation +30 samples =330 rounds,24 distinct cold finite checkpoints. [Raw evidence, patch and models](../../benchmarks/blended-duel-danger/README.md) preserve the immutable18279a4 registration, every official result/metric row, six native Retcon exports, source/runtime provenance and executed tooling. No game was replaced or repeated.
+
+The screen advanced under all unchanged rules. Share differences were Diamond +1.085697pp, Adaptive +5.909850pp (equal-opponent mean +3.497774pp), Retcon +1.293031pp; Retcon candidate share94.652406% and10/10 first places passed absolute guards. Both arms had zero skips.
+
+Fresh confirmation alone decided retention:
+
+| Opponent | Baseline mean share | Candidate mean share | Mean difference | Per-block differences | Baseline / candidate first places |
+| --- | ---: | ---: | ---: | --- | ---: |
+| Diamond Port | 4.234608% | 4.522532% | +0.287924pp | +1.107940, −0.532093pp | 0 / 0 of40 |
+| Adaptive Prime | 17.639776% | 16.750978% | −0.888798pp | −1.957210, +0.179615pp | 1 / 1 of40 |
+| Retcon | 84.717824% | 89.336197% | +4.618373pp | +6.339517, +2.897230pp | 36 / 38 of40 |
+
+**Reject at confirmation; accepted9b1624/B41B production restored.** The sole failed check was `advancedGains`: neither advanced opponent reached the required +5pp mean, and each had one negative block. Retcon relative and absolute guards passed: candidate game shares91.431730% /87.240664%,38/40 first places. Skip/wall guards and all sample comparisons also passed. Every one of330 metric rows records zero AIS skips. Samples: Target100→100%, SpinBot96.125908→100%, Walls100→100%, with5/5 candidate first places each. The30 sample rounds ran as registered even though the fresh advanced gains failed.
+
+Confirmation hits/shots were Diamond47/856→58/851, Adaptive189/1721→175/1708 and Retcon157/2395→155/2344. Damage dealt/taken was274/3220.05→295.2/3328.317668,1091.600001/2711→1015.000001/2700 and883.080009/314.8→934.240011/279.48. Wall contacts were5→1,6→3 and0→6; reported-turn denominators15,987→17,354,27,723→27,820 and44,534→45,116. These counters do not establish a causal movement effect or precise survival duration.
+
+Do not pool the favorable screen with confirmation, or either stage with rejected PR54. Only two unpaired fresh games per arm/opponent support the confirmation comparison; this is not an IID-round superiority estimate. Matched-profile-use counters remain absent, so activation frequency is unknown. The blend did not establish beating either advanced opponent. No cap/support tuning or gate relaxation follows this result. During the already-running experiment, the user redirected work to a separate DiamondChallenger bot; no further AIS candidate or automatic gameplay promotion was authorized. Its separate protocol will leave production AIS unchanged until a separately reviewed transfer experiment.

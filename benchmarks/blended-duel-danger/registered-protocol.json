@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "candidateId": "blend-v1",
+  "baseline": {
+    "source": "9b1624da2d9b09ec9cc4f580b51bc82edd2c1485",
+    "jarSHA256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800"
+  },
+  "candidate": {
+    "source": "5b4bfdff52927148e5092a333769d4c3630530a5",
+    "jarSHA256": "aaf2c92d0df5ad203f27bd1da554dd73acfdf929349746150b405c6b404ad5a9"
+  },
+  "screen": {
+    "blocks": 1,
+    "rounds": 10,
+    "opponents": [
+      "diamond-port",
+      "adaptive-prime",
+      "Retcon"
+    ],
+    "seeds": [
+      20263001,
+      20263002,
+      20263003
+    ]
+  },
+  "confirmation": {
+    "blocks": 2,
+    "rounds": 20,
+    "opponents": [
+      "diamond-port",
+      "adaptive-prime",
+      "Retcon"
+    ],
+    "seeds": [
+      20263011,
+      20263012,
+      20263013,
+      20263014,
+      20263015,
+      20263016
+    ]
+  },
+  "samples": {
+    "rounds": 5,
+    "opponents": [
+      "Target",
+      "SpinBot",
+      "Walls"
+    ],
+    "seed": 20263021
+  },
+  "mode": "train",
+  "duelPolicy": "controller",
+  "turnTimeoutMicros": 100000,
+  "arena": [
+    800,
+    600
+  ],
+  "maximumRounds": 330,
+  "maximumModelEndpoints": 24
+}

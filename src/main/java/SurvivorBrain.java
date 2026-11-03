@@ -538,8 +538,7 @@ final class SurvivorBrain {
         for (EnemyWave wave : enemyWaves) {
             if (Double.isNaN(wave.aimDistance) || wave.remaining(getX(), getY(), getTurnNumber()) < -18) continue;
             threats.add(new DuelSurf.Threat(wave.originX, wave.originY, wave.bulletSpeed, wave.fireTurn,
-                    wave.headOnAim, wave.linearAim, wave.bearingToUs,
-                    config.forceDuel() ? surfStats.get(wave.shooterId) : null));
+                    wave.headOnAim, wave.linearAim));
         }
         DuelSurf.Command command = DuelSurf.choose(getX(), getY(), getDirection(), getSpeed(), getTurnNumber(),
                 enemy.x, enemy.y, threats, duelSign, getArenaWidth(), getArenaHeight());
