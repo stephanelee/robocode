@@ -5,3 +5,18 @@ Against Diamond, v3 spent 289.09 energy firing 208 bullets and dealt 75.15 damag
 Prospective comparison: run the exact v3 (809b880) and v4 against pinned Diamond Port 1.8.28 for five rounds apiece, then v4 vs Retcon and current AISurvivor for five each. Each game starts cold. Report all four even if Diamond wins again. Require strictly greater official Diamond score share and lower firing energy per shot than control, plus >35% share and at least one round win against each opponent. All games must be valid, with shots and zero own skips. Only on passing, run three fresh 20-round games per opponent; each must separately average >50% share, win >30/60 rounds and exceed 50% share in at least two games, all valid without own skips. No reruns or tuning. One screen game per matchup does not establish repeatability. Use the v3 runner, exact runtime fingerprints updated solely for candidate assets, and separately registered IDs, ports and seeds. Record outcomes and raw recordings including failures.
 
 [Issue #82](https://github.com/stephanelee/robocode/issues/82) · [game manifest](../../benchmarks/meridian-economy/games.json). The existing run-meridian-aim label is shared: the exact head-branch check routes it to the economy workflow on codex/meridian-economy only. The launcher admits the manifest's 13 isolated ports (31840–31852). Opening the PR starts zero games.
+
+## Outcome: reject the power cap
+
+**The unchanged v3 control won round 2 against Diamond Port**, dealing 71.47 bullet damage and taking 21.27 in that round. Diamond won the five-round game 480–226 on official points. The v4 candidate lost every Diamond round. It spent less per shot but did less damage, and its hit rate was slightly lower. All four games were valid with zero Meridian skipped turns. No confirmation games were warranted or run.
+
+| Meridian / opponent | Round wins | Score share | Hits / shots | Energy per shot | Bullet damage dealt / taken |
+|---|---:|---:|---:|---:|---:|
+| V3 / Diamond Port | 1/5 | 32.01% | 24/286 | 1.242 | 153.10 / 206.09 |
+| V4 / Diamond Port | 0/5 | 6.48% | 33/413 | 0.397 | 51.97 / 377.70 |
+| V4 / Retcon | 5/5 | 97.77% | 45/375 | 0.424 | 84.85 / 8.64 |
+| V4 / AISurvivor TRAIN | 5/5 | 93.39% | 102/373 | 0.426 | 176.37 / 36.40 |
+
+V3 used 355.08 firing energy to v4’s 164.07 against Diamond. The v4 firing cost fell 68%, but Diamond hit v4 78 times versus 49 hits on the control. Different starts, different opponent responses and one game per arm preclude a causal estimate for incoming damage. The control's round win establishes that v3 can win a round; neither this run nor its earlier 0/5 establishes a repeatable matchup win. Retain v3 as the experimental control. No production change.
+
+[PR #83](https://github.com/stephanelee/robocode/pull/83) · [pre-execution independent review](https://github.com/stephanelee/robocode/pull/83#pullrequestreview-5761129973) · [registered run](https://github.com/stephanelee/robocode/actions/runs/41742323605) · [raw events, all endpoints and decisions](../../benchmarks/meridian-economy/raw/) · [offline reproduction](../../benchmarks/meridian-economy/README.md). Execution commit ab5a33b8eee08b39319530dfc56e21664f58dfb2, JAR SHA256 a97cf6c7ff309bf9d179815e9a81d4ae2afda271c062b660146ac4c2fbc5125f. The [exact execution profile](../../benchmarks/meridian-economy/raw/profile.json) (SHA256 9902f2cdcd997c670a8aa49471f4ff522b005331a96afa92f5337c03011eece8) records source, opponent pins, Java 17 build and Java 25 runtime on Ubuntu 26.04 image 20261026.180.1. All 788 JAR entries matched the hosted rebuild.
