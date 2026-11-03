@@ -1,0 +1,19 @@
+{
+  "originalHashes": {
+    "AISurvivor.jar": "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6",
+    "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+    "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+    "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+  },
+  "originalText": {
+    "AISurvivor.json": "{\n  \"name\": \"AISurvivor\",\n  \"version\": \"1.2.1\",\n  \"authors\": [\n    \"stephanelee\"\n  ],\n  \"description\": \"Experimental hybrid duel controller with legal motion targeting and DQN fallback for melee.\",\n  \"platform\": \"JVM\",\n  \"programmingLang\": \"Java 17\",\n  \"gameTypes\": [\"melee\", \"1v1\"]\n}\n",
+    "AISurvivor.sh": "#!/bin/sh\ncd \"$(dirname \"$0\")\"\njava -jar AISurvivor.jar\n",
+    "AISurvivor.cmd": "@echo off\ncd /d \"%~dp0\"\njava -jar AISurvivor.jar\n"
+  },
+  "variables": {
+    "AISURVIVOR_MODE": "train",
+    "AISURVIVOR_SEED": "20262401",
+    "AISURVIVOR_MODEL_PATH": "/home/runner/work/robocode/robocode/build/final-default-redo/batch-1/dc946r2-b1-g01/candidate/AISurvivor/model.dat",
+    "AISURVIVOR_METRICS_PATH": "/home/runner/work/robocode/robocode/build/final-default-redo/batch-1/dc946r2-b1-g01/candidate/AISurvivor/metrics.jsonl"
+  }
+}

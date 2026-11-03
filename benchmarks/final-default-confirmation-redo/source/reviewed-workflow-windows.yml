@@ -1,0 +1,87 @@
+name: User-authorized final default confirmation redo
+on:
+  pull_request:
+    types: [synchronize]
+permissions:
+  contents: read
+jobs:
+  batch:
+    if: github.head_ref == 'codex/final-default-confirmation-redo'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Frozen source and fresh build parity
+        shell: bash
+        run: |
+          test -z "$(git diff --name-only 94640028a1b5bf072713bc19ea1b608d14f9d26d HEAD -- src/main/java src/test/java AISurvivor tools/coherent_duel_v2_experiment.py tools/benchmark.py tools/compare.py tools/default_duel_policy_screen.py tools/retcon.py tools/retcon_stats.py tools/BenchmarkBattle.java)"
+          mkdir -p "$RUNNER_TEMP/frozen-default"
+          for name in AISurvivor.jar AISurvivor.json AISurvivor.sh AISurvivor.cmd; do
+            git show "94640028a1b5bf072713bc19ea1b608d14f9d26d:AISurvivor/$name" > "$RUNNER_TEMP/frozen-default/$name"
+          done
+          echo "9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6  $RUNNER_TEMP/frozen-default/AISurvivor.jar" | sha256sum -c -
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/frozen-default/AISurvivor.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p 'test_final_default_confirmation_redo.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: One registered five-game batch
+        run: >-
+          python tools/final_default_confirmation_redo.py
+          --batch ${{ matrix.batch }} --bot-dir "$RUNNER_TEMP/frozen-default"
+          --java "$JAVA_HOME/bin/java" --output build/final-default-redo/batch-${{ matrix.batch }}
+      - name: Preserve complete or invalid batch
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-default-redo-batch-${{ matrix.batch }}
+          path: |
+            build/final-default-redo/batch-${{ matrix.batch }}/
+            tools/final_default_confirmation_redo.py
+            tools/test_final_default_confirmation_redo.py
+            .github/workflows/final-default-confirmation-redo.yml
+          retention-days: 30
+          if-no-files-found: warn
+  aggregate:
+    needs: batch
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: final-default-redo-batch-*
+          path: build/parts
+      - name: Aggregate both complete batches exactly once
+        run: python tools/final_default_confirmation_redo.py --input build/parts --output build/final-default-redo-result
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-default-redo-result
+          path: build/final-default-redo-result/
+          retention-days: 30
+          if-no-files-found: warn

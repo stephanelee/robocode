@@ -25,3 +25,35 @@ A pass completes this finite fresh confirmation; either outcome ends the automat
 ## Publication and evidence
 
 Independent exact-source/workflow preclear precedes launch. Preserve the immutable Git plan/layout, executed source/workflow, both original batch reports, all actual per-round metrics, official/native results, models and partial failures, plus original runtime/launcher/source pins. Do not duplicate runnable JARs. Update `docs/improvements.md` with measured results, confirmed/not-confirmed disposition, PR link and evidence before independently reviewed merge and required routine CI. The previous attempt and its NOTCONFIRMED result remain unchanged alongside this separate record.
+
+## Actual outcome: confirmed under every registered gate
+
+[PR #46](https://github.com/stephanelee/robocode/pull/46), [sole fresh redo run41584002511](https://github.com/stephanelee/robocode/actions/runs/41584002511), execution `d52218012dc095f41883746d113786107bb1d1f6`. Both batches and the aggregate completed successfully: **200 valid rounds, ten official/native game records, ten independent finite20-round checkpoints, no loaded model and zero AIS skipped turns**. All six binding conditions passed. The canonical disposition is **confirmed** for this frozen default-TRAIN bot against the pinned Retcon/runtime/regime. Source946/JAR9679 and setup/timeouts remained unchanged; no replacement, additional retry, profiling or outcome-dependent adjustment occurred.
+
+| Registered measure | Actual value | Decision |
+| --- | --- | --- |
+| Equal-game mean share >50% | **86.744975%** | Pass |
+| Official first places >100/200 | **187/200** | Pass |
+| Games above50% >5/10 | **10/10** | Pass |
+| Both five-game batch means >50% | **91.781954% /81.707997%** | Pass |
+| Binding one-sided95% game-mean t lower bound >50% | **82.266939%** | Pass |
+| Complete cold/default evidence and zero skips | **200 valid; ten models; zero skips** | Pass |
+
+| Fresh game | Official share | First places /20 |
+| --- | --- | --- |
+| dc946r2-b1-g01 | 90.826180% | 20 |
+| dc946r2-b1-g02 | 88.492063% | 19 |
+| dc946r2-b1-g03 | 92.668464% | 20 |
+| dc946r2-b1-g04 | 90.056965% | 19 |
+| dc946r2-b1-g05 | 96.866097% | 20 |
+| dc946r2-b2-g01 | 88.803513% | 19 |
+| dc946r2-b2-g02 | 82.101977% | 18 |
+| dc946r2-b2-g03 | 68.500000% | 15 |
+| dc946r2-b2-g04 | 83.967828% | 19 |
+| dc946r2-b2-g05 | 85.166667% | 18 |
+
+Batch first-place counts are98/100 and89/100. Game-share sample SD is7.724998 percentage points. The round-level Wilson interval89.198092–96.162365% is descriptive only: online adaptation makes rounds dependent, so it is not200 independent trials. The binding Student-t gate uses ten game macroblocks with approximate model/independence assumptions. These results do not establish arbitrary-opponent/tournament superiority, an isolated learning benefit, or zero future skip risk.
+
+The original [PR44 invalid attempt](final-default-confirmation.md) remains intact and is **not** pooled into these200 rounds. Its one skipped-turn cause remains unknown; this clean redo does not explain or erase [issue #45](https://github.com/stephanelee/robocode/issues/45). The user authorized exactly this new population after the prior stopping decision. The finite confirmation goal is now met under its registered rules, and no further automatic optimization, games or retry is scheduled.
+
+[All original reports/raw200/models/source/clearance-to-execution provenance](../../benchmarks/final-default-confirmation-redo/README.md). The source/workflow preclear covered `abc7ac94837204b1cb417b752710c2017c0607d4` plus Windows-CRLF workflow SHA256 `b9510b90eada3f110288db4293a688e864bd26666c7f1c42ea4538cfa75b47cd`; executiond522 added only that workflow, normalized by Git to LF (SHA256 `12077252fc789687527555a946fa9d2517825866662be7a6d3fe83a8fd05ebd3`). Both files are preserved and normalized contents are identical. The temporary workflow was removed before any later push.
