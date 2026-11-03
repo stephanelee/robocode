@@ -15,3 +15,20 @@ For the query context, compare absolute lateral speed, signed radial speed, forw
 Every game requires the exact runtime profile, two expected participants and versions, complete official rounds and all contiguous ticks, both private lifecycle markers per round and a complete cold AIS endpoint where applicable. Zero enemy shots invalidates the incoming damage metric. Zero own shots fails the screen. A single arm/opponent game cannot estimate between-game variability.
 
 The zero-game [hosted preflight](https://github.com/stephanelee/robocode/actions/runs/41737978269) reproduced every asset, executable, module, wheel, interpreter version and OS field, but reported Ubuntu image revision 20261026.180.1 instead of 20261101.186.1. Before execution, register both complete byte-exact profiles. The [additional preflight fingerprint](../../benchmarks/meridian-aim/profile-20261026.json) differs in that single field. Both arms must run in the same job under the same profile. Any third fingerprint aborts before launching a game. The runner publishes its actual profile before battle.
+
+## Registered outcome
+
+**Reject v3 at the three-opponent screen.** V3 swept Retcon and current production AISurvivor in these five-round games. The targeting measurements against Diamond Port favored v3, but its 10.93% official share and zero round wins missed both absolute gates. All four games and 20 rounds were valid, with zero own skips. The nine conditional games (180 rounds) remained unspent. [PR #81](https://github.com/stephanelee/robocode/pull/81) · [pre-execution review](https://github.com/stephanelee/robocode/pull/81#pullrequestreview-5760878046) · [registered run](https://github.com/stephanelee/robocode/actions/runs/41738304697) · [all raw recordings, endpoints and decision](../../benchmarks/meridian-aim/raw/).
+
+| Arm and opponent | Official points M / opponent | M share | M wins | M hits / creations | M bullet damage dealt / taken | M damage dealt per 100 creations | M shot energy | Enemy creations | M wall / bot / skips |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| V2 control vs experimental Python Diamond Port | 51 / 553 | 8.44% | 0/5 | 7 / 216 (3.24%) | 50.88 / 215.22 | 23.56 | 321.24 | 339 | 0 / 0 / 0 |
+| V3 vs Diamond Port | 75 / 611 | 10.93% | 0/5 | 13 / 208 (6.25%) | 75.15 / 265.80 | 36.13 | 289.09 | 312 | 0 / 0 / 0 |
+| V3 vs Retcon | 513 / 10 | 98.09% | 5/5 | 27 / 235 (11.49%) | 183.91 / 10.24 | 78.26 | 359.72 | 271 | 0 / 0 / 0 |
+| V3 vs AISurvivor TRAIN | 629 / 40 | 94.02% | 5/5 | 38 / 236 (16.10%) | 280.57 / 39.60 | 118.88 | 344.89 | 225 | 1 / 0 / 0 |
+
+Against Diamond the learned gun supplied 182 fire requests, the fallback supplied 26, and 206 outgoing launches yielded crossing labels. The corresponding learned/fallback/label counts were 220/15/229 against Retcon and 224/12/228 against AISurvivor. These counters show the learned model was used. The aggregate hit count combines both aim modes. Incoming damage per 100 enemy shots was 63.49 for the control vs Diamond and 85.19 for v3 vs Diamond, 3.78 vs Retcon and 17.60 vs AISurvivor.
+
+V3's Diamond game yielded 53.4% more outgoing damage per 100 confirmed shots than the fresh control and used less firing energy. Diamond still inflicted 265.80 uncapped bullet damage for Meridian's 75.15. Within-game round score shares were 0.0–19.8% for the control vs Diamond, 5.2–19.9% for v3 vs Diamond, 93.2–100.0% vs Retcon and 89.3–100.0% vs AISurvivor. Starts varied and later rounds shared observations. One game per cell gives no estimate of between-game uncertainty. The two sweeps are observed screen wins, and consistent superiority remains unconfirmed.
+
+The execution used Ubuntu 26.04 revision 20261026.180.1, full profile SHA256 b51e3d6adc8fc5ebb4328e605beabca9f3add3cf88130279081270097988da5f. The JAR matched all 788 entries on a clean Java 17 rebuild. [Offline reproduction](../../benchmarks/meridian-aim/README.md).
