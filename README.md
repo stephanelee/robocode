@@ -75,12 +75,13 @@ Set these environment variables before launching the bot. Paths are relative to 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | AISURVIVOR_MODE | train | train, eval, or fixed |
+| AISURVIVOR_DUEL_POLICY | controller | TRAIN only: controller selects action0 in an available duel; learned restores legacy DQN selection |
 | AISURVIVOR_SEED | 0 | Signed 64-bit seed for network initialization, exploration, and replay sampling |
 | AISURVIVOR_MODEL_PATH | AISurvivor-qtable.dat | Checkpoint to load/save |
 | AISURVIVOR_ACTION | 0 | Fixed strategy ID: 0 minimum risk, 1 clockwise orbit, 2 counterclockwise orbit, 3 flee, 4 wave surf, 5 hunt |
 | AISURVIVOR_METRICS_PATH | unset | Optional JSONL output, one record per completed round |
 
-Training uses Boltzmann exploration and updates model weights and targeting statistics. Evaluation chooses the highest-valued action, freezes learning and exploration temperature, and never writes the checkpoint. A missing checkpoint in evaluation creates a fresh seeded policy; check the telemetry's checkpointLoaded flag to distinguish trained from cold evaluation. Fixed mode always executes AISURVIVOR_ACTION and neither reads nor writes a checkpoint. Evaluation and fixed modes also freeze local GuessFactor and surfing statistics. Bot RNG seeding does not seed the game server or guarantee identical whole-battle outcomes.
+Training updates model weights and targeting statistics. With the default duel policy, one live opponent and one cached legal scan select and credit action0 directly; otherwise TRAIN uses Boltzmann exploration. `AISURVIVOR_DUEL_POLICY=learned` restores the previous selection policy. This is a hierarchical policy change, not a learning-benefit claim. Evaluation chooses the highest-valued action, freezes learning and exploration temperature, and never writes the checkpoint. A missing checkpoint in evaluation creates a fresh seeded policy; check the telemetry's checkpointLoaded flag to distinguish trained from cold evaluation. Fixed mode always executes AISURVIVOR_ACTION and neither reads nor writes a checkpoint. Evaluation and fixed modes also freeze local GuessFactor and surfing statistics. Bot RNG seeding does not seed the game server or guarantee identical whole-battle outcomes.
 
 At round completion, the final transition includes pending combat rewards plus +60 for winning or the existing death penalty of -(60 + 12 × remaining enemies). Duplicate completion notifications do not create duplicate transitions. Per-turn survival remains +0.1.
 

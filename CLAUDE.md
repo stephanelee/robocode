@@ -53,6 +53,8 @@ Surf danger learns only from one plausible hit wave matched by shooter, bullet p
 
 ## Configuration and persistence
 
+TRAIN defaults to `AISURVIVOR_DUEL_POLICY=controller`: the same pruned duel-availability gate selects action0 before observation credit or action sampling. `learned` restores legacy selection. EVAL, FIXED and melee are unaffected. Replay records the returned/executed action and a transient next-state action constraint for correct Q0 bootstrapping in forced duels; its six-action checkpoint format is unchanged. Metrics report action counts, eligible turns and forced turns. This is a policy intervention, not evidence of a learning gain.
+
 `AISURVIVOR_MODE` is `train` (default), `eval` or `fixed`. Other settings are `AISURVIVOR_SEED` (default 0), `AISURVIVOR_ACTION` (0..5), `AISURVIVOR_MODEL_PATH` (default `AISurvivor-qtable.dat`) and optional `AISURVIVOR_METRICS_PATH`. Relative paths use the bot working directory. Model and metrics paths must differ.
 
 Despite its legacy filename, the model is not a Q-table or Java object stream. `ModelStore` stores numeric weights, target weights, dimensions, counters, temperature and class GF statistics in an explicit versioned format. It validates sizes and finite values before using or replacing a checkpoint. Legacy/corrupt files are left intact on failed load and backed up before the next training replacement. Replay and RNG stream position are not saved; resuming a checkpoint does not exactly resume a prior process.

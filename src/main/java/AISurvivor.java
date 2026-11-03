@@ -144,7 +144,11 @@ public class AISurvivor extends Bot {
             if (scanRecorder.enabled()) recordLegalFrame();
 
             double[] features = encodeFeatures();
-            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false);
+            boolean duelEligible = getEnemyCount() == 1 && enemies.size() == 1;
+            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false, duelEligible);
+            metrics.actionCounts[action]++;
+            if (duelEligible) metrics.duelEligibleTurns++;
+            if (duelEligible && config.forceDuel()) metrics.forcedDuelTurns++;
             metrics.reward += SURVIVAL_BONUS;
             round.pendingReward = 0.0;
 

@@ -47,8 +47,15 @@ final class DQNAgent {
     }
 
     int observe(double[] features, double reward, boolean done) {
+        return observe(features, reward, done, false);
+    }
+
+    int observe(double[] features, double reward, boolean done, boolean duelEligible) {
+        // Decide the hierarchy before crediting the prior transition; never sample then execute another action.
+        boolean forced = config.forceDuel() && duelEligible;
+        int action = forced ? 0 : -1;
         if (config.training() && lastFeatures != null) {
-            store(lastFeatures, lastAction, reward, features, done);
+            store(lastFeatures, lastAction, reward, features, done, forced);
             if (replay.size() >= MIN_REPLAY) replayLearn();
         }
 
@@ -58,7 +65,7 @@ final class DQNAgent {
         }
 
         lastQValues = policy.forward(features);
-        int action = config.mode() == BotConfig.Mode.FIXED ? config.fixedAction()
+        if (!forced) action = config.mode() == BotConfig.Mode.FIXED ? config.fixedAction()
                 : config.training() ? boltzmann(lastQValues) : greedy(lastQValues);
         lastFeatures = features.clone();
         lastAction = action;
@@ -68,7 +75,7 @@ final class DQNAgent {
     void finishEpisode(double reward) {
         if (lastFeatures == null) return;
         if (config.training()) {
-            store(lastFeatures, lastAction, reward, lastFeatures, true);
+            store(lastFeatures, lastAction, reward, lastFeatures, true, false);
             if (replay.size() >= MIN_REPLAY)
                 for (int i = 0; i < BATCH * 3; i++) replayLearnOne();
             totalRounds++;
@@ -84,14 +91,16 @@ final class DQNAgent {
         return best;
     }
 
-    private void store(double[] f, int a, double r, double[] nf, boolean done) {
+    private void store(double[] f, int a, double r, double[] nf, boolean done, boolean nextForced) {
         int fLen = f.length;
-        double[] entry = new double[fLen * 2 + 3];
+        double[] entry = new double[fLen * 2 + 4];
         System.arraycopy(f, 0, entry, 0, fLen);
         entry[fLen] = a;
         entry[fLen + 1] = r;
         System.arraycopy(nf, 0, entry, fLen + 2, fLen);
         entry[fLen * 2 + 2] = done ? 1.0 : 0.0;
+        // Replay is transient and never serialized. Preserve the constrained next-state TD action set.
+        entry[fLen * 2 + 3] = nextForced ? 1.0 : 0.0;
 
         if (replay.size() < REPLAY_CAP) {
             replay.add(entry);
@@ -122,7 +131,8 @@ final class DQNAgent {
         } else {
             double[] nq = target.forward(nf);
             double mx = nq[0];
-            for (int i = 1; i < nq.length; i++) if (nq[i] > mx) mx = nq[i];
+            if (entry[fLen * 2 + 3] == 0)
+                for (int i = 1; i < nq.length; i++) if (nq[i] > mx) mx = nq[i];
             tgt = r + GAMMA * mx;
         }
         policy.trainSingle(f, a, tgt, LR);
