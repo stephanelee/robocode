@@ -9,12 +9,15 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.2.0";
+    static final String NAME="DiamondChallenger", VERSION="0.3.0";
     private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
     private final SplittableRandom random=new SplittableRandom(seed);
     private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
     private final Path metrics=Path.of(System.getenv().getOrDefault("CHALLENGER_METRICS_PATH","DiamondChallenger-metrics.jsonl")).toAbsolutePath();
     private final PressureGun gun=new PressureGun();
+    private final ChallengerWaves waves=new ChallengerWaves();
+    private int surfSign=1,plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions,incomingHits;
+    private double arenaWidth=800,arenaHeight=600;
     private int flank=1,nextPhase,roundsCompleted,shots,hits,walls,contacts,skips,rangeTurns,closeTurns,phaseDecisions;
     private double dealt,taken,rangeSum,energySpent;
     private boolean won,died;
@@ -35,8 +38,15 @@ public class DiamondChallenger extends Bot {
                 nextPhase=getTurnNumber()+PressureMove.phaseDuration(random); phaseDecisions++;
             }
             var target=gun.latest();
-            var movement=PressureMove.choose(getX(),getY(),getDirection(),getSpeed(),getTurnNumber(),target,
-                    gun.turnRate(),flank,getArenaWidth(),getArenaHeight());
+            waves.flush(getTurnNumber(),arenaWidth,arenaHeight);
+            var decision=WaveSurfMove.choose(getX(),getY(),getDirection(),getSpeed(),getTurnNumber(),
+                    target==null?arenaWidth/2:target.x(),target==null?arenaHeight/2:target.y(),
+                    waves.threats(),surfSign,arenaWidth,arenaHeight);
+            var movement=decision.command();
+            if(decision.plannerUsed())plannerDecisions++;
+            if(decision.profileUsed())profileDecisions++;
+            if(decision.option()>0){cwDecisions++;surfSign=1;}
+            else if(decision.option()<0){ccwDecisions++;surfSign=-1;}else stopDecisions++;
             setTurnRate(Math.max(-DuelSurf.maxTurn(getSpeed()),Math.min(DuelSurf.maxTurn(getSpeed()),
                     CombatMath.relativeAngle(movement.bodyHeading()-getDirection()))));
             setTargetSpeed(movement.targetSpeed());
@@ -57,21 +67,37 @@ public class DiamondChallenger extends Bot {
     }
 
     @Override public void onRoundStarted(RoundStartedEvent event) {
-        gun.startRound();nextPhase=0;shots=hits=walls=contacts=skips=rangeTurns=closeTurns=phaseDecisions=0;
+        gun.startRound();waves.startRound();surfSign=1;
+        plannerDecisions=profileDecisions=cwDecisions=stopDecisions=ccwDecisions=incomingHits=0;
+        nextPhase=0;shots=hits=walls=contacts=skips=rangeTurns=closeTurns=phaseDecisions=0;
         dealt=taken=rangeSum=energySpent=0;won=died=false;
     }
+    @Override public void onGameStarted(GameStartedEvent event) {
+        arenaWidth=event.getGameSetup().getArenaWidth();arenaHeight=event.getGameSetup().getArenaHeight();
+    }
+    @Override public void onTick(TickEvent event) {
+        var own=event.getBotState();
+        waves.own(new ChallengerWaves.Own(event.getTurnNumber(),own.getX(),own.getY(),own.getDirection(),own.getSpeed()));
+    }
     @Override public void onScannedBot(ScannedBotEvent event) {
-        gun.onScan(new DuelGun.Scan(event.getScannedBotId(),event.getTurnNumber(),event.getX(),event.getY(),
-                event.getDirection(),event.getSpeed(),event.getEnergy()));
+        var scan=new DuelGun.Scan(event.getScannedBotId(),event.getTurnNumber(),event.getX(),event.getY(),
+                event.getDirection(),event.getSpeed(),event.getEnergy());
+        gun.onScan(scan);waves.scan(scan);
     }
     @Override public void onBulletFired(BulletFiredEvent event) {
         shots++;var bullet=event.getBullet();energySpent+=bullet.getPower();
         gun.onFired(event.getTurnNumber(),bullet.getX(),bullet.getY(),bullet.getPower());
     }
-    @Override public void onBulletHit(BulletHitBotEvent event) { hits++;dealt+=event.getDamage(); }
-    @Override public void onHitByBullet(HitByBulletEvent event) { taken+=event.getDamage(); }
+    @Override public void onBulletHit(BulletHitBotEvent event) {
+        hits++;dealt+=event.getDamage();waves.damage(event.getVictimId(),event.getTurnNumber(),event.getDamage());
+    }
+    @Override public void onHitByBullet(HitByBulletEvent event) {
+        taken+=event.getDamage();incomingHits++;var b=event.getBullet();
+        waves.bonus(b.getOwnerId(),event.getTurnNumber(),b.getPower());
+        waves.hit(new ChallengerWaves.Hit(event.getTurnNumber(),b.getOwnerId(),b.getPower(),b.getX(),b.getY(),b.getDirection()));
+    }
     @Override public void onHitWall(HitWallEvent event) { walls++; }
-    @Override public void onHitBot(HitBotEvent event) { contacts++; }
+    @Override public void onHitBot(HitBotEvent event) { contacts++;waves.collision(event.getTurnNumber()); }
     @Override public void onSkippedTurn(SkippedTurnEvent event) { skips++; }
     @Override public void onWonRound(WonRoundEvent event) { won=true; }
     @Override public void onDeath(DeathEvent event) { died=true; }
@@ -79,6 +105,7 @@ public class DiamondChallenger extends Bot {
     @Override public void onRoundEnded(RoundEndedEvent event) {
         if(event.getRoundNumber()<=roundsCompleted)return;
         if(event.getRoundNumber()!=roundsCompleted+1)throw new IllegalStateException("Nonsequential experimental rounds");
+        waves.flush(event.getTurnNumber(),arenaWidth,arenaHeight);
         roundsCompleted++;
         String state=String.format(Locale.ROOT,
                 "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"seed\":%d,\"roundsCompleted\":%d,\"checkpointLoaded\":false,\"gunAttempts\":%s,\"gunHits\":%s,\"contextAccepted\":%d,\"contextMemorySize\":%d,\"contextMemory\":%s}%n",
@@ -89,6 +116,15 @@ public class DiamondChallenger extends Bot {
                 NAME,VERSION,seed,event.getRoundNumber(),roundsCompleted,event.getTurnNumber(),shots,hits,dealt,taken,energySpent,walls,contacts,skips,
                 won,died,rangeTurns,rangeSum,closeTurns,phaseDecisions,gun.learnedAimDecisions(),gun.fallbackAimDecisions(),
                 gun.context().acceptedRound(),gun.confirmedLearnedShots(),gun.context().size());
+        state=state.stripTrailing();
+        state=state.substring(0,state.length()-1)+String.format(Locale.ROOT,
+                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s}%n",
+                waves.totalInferred(),waves.totalMatched(),Arrays.deepToString(waves.danger()));
+        row=row.stripTrailing();
+        row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
+                ",\"inferredWaves\":%d,\"matchedHits\":%d,\"unmatchedHits\":%d,\"rejectedScanPairs\":%d,\"incomingHits\":%d,\"plannerDecisions\":%d,\"profileDecisions\":%d,\"cwDecisions\":%d,\"stopDecisions\":%d,\"ccwDecisions\":%d}%n",
+                waves.inferred(),waves.matched(),waves.unmatched(),waves.rejected(),incomingHits,
+                plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions);
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
             Path temporary=Files.createTempFile(model.getParent(),"challenger-",".tmp");

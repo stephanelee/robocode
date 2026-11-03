@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Measure separate legal-wave defense with fixed context gun. [PR61](https://github.com/stephanelee/robocode/pull/61) / [report](docs/improvements/diamond-surf-v3.md):20-round pilot rejected (0wins/1.52% share);265 waves/200 matched hits/planner active, no fresh60. Production unchanged; Diamond remains unbeaten.
+
 - [x] Test the fixed bounded online context gun in the separate challenger. [PR60](https://github.com/stephanelee/robocode/pull/60) / [report](docs/improvements/diamond-context-v2.md):20-round pilot rejected (0wins/10.80% share), despite185 learned shots/227 admitted passages; no fresh60. All raw/memory retained, production AIS unchanged. Beating Diamond remains open; new hypotheses require fresh registration.
 
 - [x] Build and measure the separate first Diamond pressure challenger. [PR59](https://github.com/stephanelee/robocode/pull/59) / [report](docs/improvements/diamond-pressure-v1.md):20-round pilot rejected (0wins/2.59% share), no fresh60; ownsource/JAR/state/raw retained, production AIS unchanged. Beating Diamond remains open; no automatic rescue of this cohort.
