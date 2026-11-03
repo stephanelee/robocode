@@ -25,7 +25,7 @@ def prepare(cache,python):
         target=source/retcon.checked_relative(entry['path'])
         if target.is_symlink() or not target.resolve().is_relative_to(source):raise ValueError('Unsafe opponent cache')
         data=target.read_bytes() if target.exists() else b''
-        if len(data)!=entry['size'] or hashlib.sha256(data).hexdigest()!=entry['sha256']:
+        if not target.is_file() or len(data)!=entry['size'] or hashlib.sha256(data).hexdigest()!=entry['sha256']:
             data=retcon.read_url(f"https://raw.githubusercontent.com/{lock['repository']}/{lock['commit']}/{entry['path']}",entry['size'])
             if len(data)!=entry['size'] or hashlib.sha256(data).hexdigest()!=entry['sha256']:raise ValueError('Pinned source mismatch: '+entry['path'])
             target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
