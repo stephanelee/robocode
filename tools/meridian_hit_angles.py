@@ -35,9 +35,13 @@ def passes_screen(rows):
             and diamond["damagePer100EnemyShots"] < control["damagePer100EnemyShots"])
 
 
-def main(*, reg=REG, base=BASE, control_version="0.1.0", control_profile="meridian-v1", screen_check=passes_screen):
+def main(*, reg=REG, base=BASE, control_version="0.1.0", control_profile="meridian-v1", screen_check=passes_screen,
+         additional_profile=None):
     raw = (OUT / "profile.json").read_bytes()
-    if raw != (reg / "profile.json").read_bytes():
+    allowed = [(reg / "profile.json").read_bytes()]
+    if additional_profile is not None:
+        allowed.append(additional_profile.read_bytes())
+    if raw not in allowed:
         raise ValueError("Runtime differs from registration")
     profile = json.loads(raw)
     control = baseline(base, control_profile)

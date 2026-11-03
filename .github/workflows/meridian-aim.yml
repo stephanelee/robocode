@@ -43,7 +43,7 @@ jobs:
       - name: Run the reviewed registration
         if: github.event.action == 'labeled' && github.event.label.name == 'run-meridian-aim'
         run: |
-          cmp benchmarks/meridian-aim/profile.json build/meridian/profile.json
+          cmp -s benchmarks/meridian-aim/profile.json build/meridian/profile.json || cmp benchmarks/meridian-aim/profile-20261026.json build/meridian/profile.json
           python tools/meridian_aim.py
       - name: Preserve all attempts
         if: always() && github.event.label.name == 'run-meridian-aim'

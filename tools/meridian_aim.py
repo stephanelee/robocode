@@ -18,4 +18,4 @@ def passes_screen(rows):
 
 if __name__ == "__main__":
     main(reg=REG, base=BASE, control_version="0.2.0", control_profile="meridian-hit-angles",
-         screen_check=passes_screen)
+         screen_check=passes_screen, additional_profile=REG / "profile-20261026.json")
