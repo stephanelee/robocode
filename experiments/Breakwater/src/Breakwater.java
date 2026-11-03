@@ -4,6 +4,7 @@ import dev.robocode.tankroyale.botapi.BulletState;
 import dev.robocode.tankroyale.botapi.events.*;
 import java.nio.file.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public final class Breakwater extends Bot {
@@ -16,7 +17,7 @@ public final class Breakwater extends Bot {
     private final Map<Integer, BreakwaterPolicy.Mode> launched = new HashMap<>();
     private record Request(int creation, BreakwaterPolicy.Decision decision, BreakwaterPolicy.Target scan) {}
     private Request request;
-    private int lastTick, lastSkip;
+    private int lastTick, lastSkip, maxInactivityTurns;
     private double width, height, cooling;
 
     @Override public synchronized void onGameStarted(GameStartedEvent event) {
@@ -24,6 +25,7 @@ public final class Breakwater extends Bot {
         width = setup.getArenaWidth();
         height = setup.getArenaHeight();
         cooling = setup.getGunCoolingRate();
+        maxInactivityTurns = setup.getMaxInactivityTurns();
     }
 
     public Breakwater() { super(BotInfo.fromFile("Breakwater.json")); }
@@ -63,7 +65,7 @@ public final class Breakwater extends Bot {
     @Override public synchronized void onRoundStarted(RoundStartedEvent e) {
         if (!ledger.begin(e.getRoundNumber())) return;
         policy.startRound();
-        waves = new BreakwaterWaves();
+        waves = new BreakwaterWaves(maxInactivityTurns);
         launched.clear();
         request = null;
         lastTick = lastSkip = -1;
@@ -90,6 +92,7 @@ public final class Breakwater extends Bot {
                 policy.observe(target);
             }
         }
+        var interceptedIds = new HashSet<Integer>();
         for (var event : events) {
             if (event instanceof HitByBulletEvent hit) {
                 ledger.row.damageTaken += hit.getDamage();
@@ -106,8 +109,10 @@ public final class Breakwater extends Bot {
                     ledger.row.attackDamage += hit.getDamage();
                 }
             } else if (event instanceof BulletHitBulletEvent collision) {
-                if (launched.get(collision.getBullet().getBulletId()) == BreakwaterPolicy.Mode.SHIELD)
-                    ledger.row.shieldIntercepts++;
+                var bullet = collision.getBullet();
+                if (bullet.getOwnerId() != collision.getHitBullet().getOwnerId() &&
+                        launched.get(bullet.getBulletId()) == BreakwaterPolicy.Mode.SHIELD &&
+                        interceptedIds.add(bullet.getBulletId())) ledger.row.shieldIntercepts++;
                 learn(collision.getTurnNumber(), collision.getHitBullet());
             } else if (event instanceof HitWallEvent) ledger.row.wallCollisions++;
             else if (event instanceof HitBotEvent) ledger.row.botCollisions++;

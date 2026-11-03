@@ -107,7 +107,7 @@ def validate(directory, game_id, seed):
             raise ValueError('Unclassified shot')
         if (row['bulletHits'] != row['attackHits'] + row['shieldHits']
                 or row['shieldHits'] > row['shieldShots']
-                or (row['shieldIntercepts'] and not row['shieldShots'])
+                or row['shieldIntercepts'] > row['shieldShots']
                 or row['attackHits'] > row['attackShots']):
             raise ValueError('Impossible shot outcomes')
         if not math.isclose(row['damageDealt'], row['shieldDamage'] + row['attackDamage'], abs_tol=1e-6):

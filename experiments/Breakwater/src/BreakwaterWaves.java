@@ -7,7 +7,12 @@ final class BreakwaterWaves {
     final List<BreakwaterPolicy.Wave> active = new ArrayList<>();
     BreakwaterPolicy.Target latest;
     int owner = -1;
+    private final int maxInactivityTurns;
     private int earliestShot;
+
+    BreakwaterWaves(int maxInactivityTurns) {
+        this.maxInactivityTurns = maxInactivityTurns;
+    }
     private int ownTurn;
     private double ownX, ownY;
 
@@ -31,6 +36,9 @@ final class BreakwaterWaves {
         owner = id;
         if (before == null) return false;
         double power = energy.inferPower(id, before.turn(), scan.turn(), before.energy(), scan.energy());
+        // After inactivity can begin, a minimum-power drop is indistinguishable from decay.
+        if (scan.turn() >= maxInactivityTurns && power <= .1 + 1e-6) return false;
+        if (scan.turn() < Math.ceil(3 / cooling - 1e-9)) return false;
         if (power == 0 || ownTurn != scan.turn() - 1 || scan.turn() < earliestShot || contact ||
                 nearWall(before, width, height) || nearWall(scan, width, height)) return false;
         active.add(new BreakwaterPolicy.Wave(scan.turn(), before.x(), before.y(), power,

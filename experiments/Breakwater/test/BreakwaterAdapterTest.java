@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 final class BreakwaterAdapterTest {
     @Test void consecutiveScansCorrectDamageAndBonusesThenRejectHotDuplicates() {
-        var w = new BreakwaterWaves();
+        var w = new BreakwaterWaves(450);
         var enemy = new BreakwaterPolicy.Target(29, 180, 200, 90, 0, 100);
         assertFalse(w.scan(2, enemy, false, 800, 600, .1));
         w.own(29, 600, 200);
@@ -22,7 +22,7 @@ final class BreakwaterAdapterTest {
         assertTrue(w.active.isEmpty());
     }
     @Test void ambiguousShotsCannotProduceAnIncomingRay() {
-        var w = new BreakwaterWaves();
+        var w = new BreakwaterWaves(450);
         w.scan(2, new BreakwaterPolicy.Target(30, 100, 100, 90, 0, 100), false, 800, 600, .1);
         w.own(31, 300, 200);
         assertFalse(w.scan(2, new BreakwaterPolicy.Target(32, 100, 100, 90, 0, 98), false, 800, 600, .1));
@@ -30,6 +30,14 @@ final class BreakwaterAdapterTest {
         assertFalse(w.scan(2, new BreakwaterPolicy.Target(33, 100, 100, 90, 0, 96), true, 800, 600, .1));
         w.own(33, 300, 200);
         assertFalse(w.scan(2, new BreakwaterPolicy.Target(34, 20, 100, 90, 0, 94), false, 800, 600, .1));
+    }
+    @Test void inactivityDecayIsAmbiguousAndDoesNotConsumeGunHeat() {
+        var w = new BreakwaterWaves(450);
+        w.scan(2, new BreakwaterPolicy.Target(450, 100, 100, 0, 0, 95), false, 800, 600, .1);
+        w.own(450, 600, 200);
+        assertFalse(w.scan(2, new BreakwaterPolicy.Target(451, 100, 100, 0, 0, 94.9), false, 800, 600, .1));
+        w.own(451, 600, 200);
+        assertTrue(w.scan(2, new BreakwaterPolicy.Target(452, 100, 100, 0, 0, 93), false, 800, 600, .1));
     }
     @Test void releasedJarReplayRejectsLateCallbacks(@TempDir Path dir) throws Exception {
         var jar = Path.of("build/bot/Breakwater/Breakwater.jar").toAbsolutePath();
