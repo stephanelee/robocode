@@ -44,3 +44,5 @@ Why it lost (mechanism, not a causal proof):
 - Combine interception with dodging for the adjacent candidate.
 
 Any of these would need a new prospective registration and fresh games. Nothing here transfers to AIS.
+
+**Follow-up screen (unregistered):** the dodging direction was screened first and rejected without spending registered games. When Aegis dodged every shot, Diamond's aim spread to candidates ±1–4 away from centre within four rounds: centre-candidate aims fell from ≈97% to 25 of 326. Every round was lost, with 11 hits taken each. Real-shot labels therefore drive its aim, so dodging destroys the predictability interception relies on. See [the screen record](../benchmarks/aegis-shield-v1/development/dodge-screen/README.md).
