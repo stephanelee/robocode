@@ -1,6 +1,6 @@
 # Advanced opponent improvement task
 
-[GitHub issue53](https://github.com/stephanelee/robocode/issues/53) tracks this work. The user's priority is **win 1v1 first, then improve melee**. Measured intermediate gains are progress, not completion of the winning objective.
+[GitHub issue53](https://github.com/stephanelee/robocode/issues/53) tracks this work. The latest user direction is **build a separate bot against Diamond Port first, then transfer successful ideas into AISurvivor**. The overall priority remains 1v1 before melee. Measured intermediate gains are progress, not completion of the winning objective.
 
 ## Starting evidence
 
@@ -17,7 +17,9 @@ All those cohorts had zero AIS skipped turns. Their opponents, source/runtime pi
 
 The default duel controller learns hit-danger bins but originally ignored them when selecting movement: it optimized clearance from head-on and linear aim only. Diamond Port and Adaptive Prime use richer learned guns. This is a concrete source mismatch and a plausible weakness; it is not yet proof of the losses' cause.
 
-The [first candidate](improvements/learned-duel-danger.md) uses those existing legally matched-hit profiles in the physics-aware controller. With insufficient history it preserves the analytic fallback. The gun, radar, energy policy and non-default modes stay unchanged. Code and focused tests are implemented; acceptance requires the prospectively registered screen and fresh confirmation, including absolute Retcon-win and sample regression guards.
+The [first candidate](improvements/learned-duel-danger.md) was **rejected**: its60-round screen improved Diamond/Adaptive score shares by4.20/3.45points, but lowered Retcon share by16.01points, beyond the registered limit. Accepted production was restored and [PR54](https://github.com/stephanelee/robocode/pull/54) retains the patch and evidence. The fixed bounded-blend follow-up [PR55](https://github.com/stephanelee/robocode/pull/55) had already launched before the latest direction. Finish its frozen registered budget and preserve every outcome; any production promotion is on hold while the new approach is established. No additional AIS candidate is launched automatically.
+
+The active next task is [DiamondChallenger](diamond-challenger.md): a distinct experimental identity, artifact and private state, with a strategy focused on beating pinned Diamond Port. Production AIS stays unchanged. A challenger improvement does not need to preserve Retcon strength; a later transfer into AIS must independently pass Retcon, Adaptive and sample regression checks. The challenger and AIS are not the same measured bot.
 
 Root integrates code and freezes the protocol. The benchmark agent owns the existing native-opponent harness and actual collection. A separate reviewer independently clears the exact premeasurement source/protocol, audits every outcome and merges only accepted changes after protected CI. Work is delegated in parallel without duplicating experiments or changing a running candidate.
 
