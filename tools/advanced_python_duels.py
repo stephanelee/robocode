@@ -17,6 +17,8 @@ import strong_melee_opponents as opponents
 SOURCE='fca6d2ff1101fcf4dd07908cce8df9d18b32dc63'
 JAR='9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6'
 REGISTRATION='b4fdd57a2c905e180cb16eb21ddce0fe093053d4'
+CONTINUATION='c573055dd78784d8464a62027cc7f17321ec0b6c'
+CONTINUATION_PLAN='docs/improvements/advanced-python-duels-continuation.md'
 PLAN='docs/improvements/advanced-python-duels.md'
 LAYOUT='tools/fixtures/advanced-python-duels/games.json'
 LOCK='tools/opponents/strong-melee.lock.json'
@@ -68,6 +70,7 @@ def main(args):
     args.output.mkdir(parents=True)
     plan=subprocess.check_output(['git','show',REGISTRATION+':'+PLAN],cwd=benchmark.ROOT)
     registered=subprocess.check_output(['git','show',REGISTRATION+':'+LAYOUT],cwd=benchmark.ROOT)
+    continued=subprocess.check_output(['git','show',CONTINUATION+':'+CONTINUATION_PLAN],cwd=benchmark.ROOT)
     games=json.loads(registered)['games']
     if games!=layout():raise ValueError('Immutable duel population differs')
     games=[g for g in games if g['opponent']==args.opponent]
@@ -76,11 +79,17 @@ def main(args):
             'tools/benchmark.py','tools/BenchmarkBattle.java','tools/coherent_duel_v2_experiment.py','tools/melee_default_baseline.py'],cwd=benchmark.ROOT).strip():
         raise ValueError('Frozen production assets or reused battle helpers changed')
     if benchmark.digest(args.bot_dir/'AISurvivor.jar')!=JAR:raise ValueError('Frozen production JAR differs')
+    if subprocess.check_output(['git','diff','--name-only',CONTINUATION,'HEAD','--',
+            'tools/strong_melee_opponents.py',LOCK],cwd=benchmark.ROOT).strip():
+        raise ValueError('Reviewed corrected source loader or lock changed')
     (args.output/'registered-plan.md').write_bytes(plan);(args.output/'registered-games.json').write_bytes(registered)
+    (args.output/'registered-continuation.md').write_bytes(continued)
     report=dict(status='running',botSource=SOURCE,gameplaySource='94640028a1b5bf072713bc19ea1b608d14f9d26d',
         botJarSHA256=JAR,opponent=args.opponent,registrationCommit=REGISTRATION,
         planSHA256=hashlib.sha256(plan).hexdigest(),layoutSHA256=hashlib.sha256(registered).hexdigest(),
         lockSHA256=benchmark.digest(benchmark.ROOT/LOCK),
+        continuationCommit=CONTINUATION,continuationSHA256=hashlib.sha256(continued).hexdigest(),
+        loaderSHA256=benchmark.digest(benchmark.ROOT/'tools/strong_melee_opponents.py'),
         executionSource=subprocess.check_output(['git','rev-parse','HEAD'],cwd=benchmark.ROOT,text=True).strip(),
         runtimeOS=retcon_stats.os_provenance(),setup=dict(arenaWidth=800,arenaHeight=600,participants=2,
             turnTimeoutMicros=100000,roundsPerGame=20),
