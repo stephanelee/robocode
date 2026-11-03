@@ -34,3 +34,36 @@ All gates must pass for a **retain** decision, followed by independent source/ra
 ## Durable evidence
 
 Preserve all198 AIS records,15 official arrays/logs, six native Retcon exports/capture hashes,18 independent cold checkpoint endpoints, exact source/JAR/runtime/launcher pins, immutable plan and layout, executed runner/workflow source, canonical unrounded decisions and every partial failure. Retcon private exports remain offline diagnostics and never enter the live controller.
+
+## Measured result: all registered gates passed
+
+[PR #43](https://github.com/stephanelee/robocode/pull/43), [single actual run41571217551](https://github.com/stephanelee/robocode/actions/runs/41571217551), execution `a180fb9373b25069e34e60a8287ef1e8b1b5d554`. All168 physical rounds/198 AIS records,15 official games, six native Retcon captures and18 independent cold endpoints validated. **Retain**: every registered performance, shooting, self-match, sample and safety gate passed. There were zero AIS skipped turns, no model loads, replacement games, performance reruns or outcome-dependent changes. [Original registration, source and raw evidence](../../benchmarks/coherent-duel-v2/README.md). Production/JAR remain exactly the frozeneebb/9679 candidate above.
+
+| Retcon20-round block | Accepted v1 share / wins | Candidate v2 share / wins | Difference |
+| --- | --- | --- | --- |
+| 1 | 54.231771% /13 | 90.844233% /20 | +36.612462pp |
+| 2 | 63.186441% /15 | 80.537313% /17 | +17.350873pp |
+| 3 | 31.495017% /7 | 86.056888% /18 | +54.561871pp |
+| Equal-game mean / total wins | 49.637743% /35 of60 | 85.812811% /55 of60 | +36.175069pp |
+
+| Aggregate Retcon metric | Accepted v1 | Candidate v2 |
+| --- | --- | --- |
+| Confirmed shots / hits | 3748 /27 | 3659 /191 |
+| Hit rate | 0.720384% | 5.220005% |
+| Damage dealt / confirmed shot | 0.035928495 | 0.270210445 |
+| Total damage dealt | 134.66 | 988.700019 |
+| Damage taken | 731.76 | 420.7 |
+| Recorded turns | 79402 | 70076 |
+| Walls /1000 turns (collisions) | 0.062971 (5) | 0.057081 (4) |
+
+Self-match v2 shares were99.585406%,99.140893%,98.870056% (mean99.198785%), with30/30 round wins. V2 scored100% against each sample; v1 scored100%/96.899225%/100% against Target/SpinBot/Walls. Both versions won all nine sample rounds.
+
+This establishes a measured gain for the **combined** real GF/circular-candidate and finishing revision in this roster. It does not identify how much came from either change, virtual-gun selection, passage learning or interactions with the unchanged controller. Shot hit rate remains only5.22%; neither calibrated model confidence nor broad tournament strength is established. There is no offline learned predictor or private opponent input in live decisions.
+
+The three candidate Retcon checkpoints contain class-GF passage masses1183/1252/1144, versus0/0/0 in v1. This confirms that the restored passage-learning path accumulated and persisted real legal observations; it is not evidence isolating the effect of that learning on wins.
+
+All three v2 Retcon game shares exceeded50%. Descriptive one-sided95% Student-t(df2) lower bounds are77.117523% for its absolute equal-game mean and+4.802405pp for the three block differences; only three games per version were collected, and alternated starts are unpaired. The round-level Wilson interval81.931058–96.387954% is descriptive because within-game learning/adaptation makes rounds dependent. These uncertainty summaries do not replace the prospectively registered gates or establish80% design power/generalization.
+
+### Activation provenance
+
+The original ready-event activation `46b003ce542d0c345a90564c323fce732b52a283` was marked ready at2026-11-03T03:14:16Z, but no performance workflow/run appeared in the complete branch/workflow APIs. No performance games started. The cause is unknown; an indexing race was suspected, not demonstrated. Independent review cleared a **trigger-only** change from `ready_for_review` to `synchronize`, after another complete branch-run query confirmed zero performance attempts. That single push produced the sole measured run above. Its source, gates, seeds, steps and budget were unchanged. The [unstarted workflow, prelaunch API snapshot and provenance](../../benchmarks/coherent-duel-v2/activation/provenance.json) are preserved separately from performance data. The temporary workflow was removed before the final evidence push.

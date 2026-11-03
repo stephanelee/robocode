@@ -3,6 +3,7 @@
 - [Coherent default duel candidate: composition and scope](coherent-duel.md)
 - [Coherent duel v2: real GF candidate and strict finishing](coherent-duel-v2.md)
 - [Coherent default duel: measured whole-product comparison](improvements/coherent-duel-v1.md)
+- [Coherent gun v2: measured shooting and whole-product improvement](improvements/coherent-duel-v2.md)
 
 - [Retcon native observability and Ubuntu 26.04 diagnostic cohorts](retcon-observability.md)
 

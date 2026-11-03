@@ -53,6 +53,8 @@ python tools/benchmark.py --suite retcon --java /path/to/jdk25/bin/java --rounds
 
 Use the [methods](docs/benchmarks.md), [Retcon baseline](docs/benchmarks/retcon-2026-11-02.md), and [measured improvement log](docs/improvements.md) to interpret the evidence. The [coherent default duel comparison](docs/improvements/coherent-duel-v1.md) passed its registered gates: Retcon share14.2→58.4%,39/60 wins, and30/30 self-match wins. Shooting accuracy fell; this supports the bundled bot, not an isolated gun/learning improvement or broad superiority claim.
 
+The [subsequent gun-v2 comparison](docs/improvements/coherent-duel-v2.md) also passed every gate: Retcon share49.6→85.8%,55/60 wins, improved shooting metrics and30/30 wins against frozen v1. These are separate fresh three-game Retcon cohorts, not a pooled confirmation or a broad tournament result.
+
 The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
 ## Current design
