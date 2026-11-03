@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   duel:
-    if: github.head_ref == 'codex/meridian-duel' && (github.event.action == 'opened' || github.event.label.name == 'run-meridian-v1' || github.event.label.name == 'profile-meridian-v1')
+    if: github.run_attempt == 1 && github.head_ref == 'codex/meridian-duel' && (github.event.action == 'opened' || github.event.label.name == 'run-meridian-v1' || github.event.label.name == 'profile-meridian-v1')
     runs-on: ubuntu-26.04
     timeout-minutes: 190
     steps:
