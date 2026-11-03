@@ -1,0 +1,74 @@
+name: Frozen fixed-duel confirmation
+on:
+  pull_request:
+    paths: [.github/workflows/frozen-duel-confirmation.yml]
+permissions:
+  contents: read
+jobs:
+  batches:
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: [1, 2]
+    runs-on: ubuntu-26.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify frozen source and Java17 JAR parity
+        run: |
+          git diff --exit-code 7104b65d03298caceb010a5bfd085bda65092d17 HEAD -- src/main/java src/test/java AISurvivor/AISurvivor.jar
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/checked.jar"
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/checked.jar" AISurvivor/AISurvivor.jar
+          echo 'd047bf99325d2ad73aedd87eac6a4baa1677170afff0c86b948f03ea93390e1d  AISurvivor/AISurvivor.jar' | sha256sum --check
+          python -m unittest discover -s tools -p test_frozen_duel_confirmation.py -v
+          mkdir "$RUNNER_TEMP/frozen"
+          git archive 7104b65d03298caceb010a5bfd085bda65092d17 AISurvivor | tar -x -C "$RUNNER_TEMP/frozen"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Execute only registered five-game batch once
+        run: |
+          python tools/frozen_duel_confirmation.py --plan-commit 8af14d7c5268f3be5ab7d63c61737b429bdcc62f --batch ${{ matrix.batch }} --bot-dir "$RUNNER_TEMP/frozen/AISurvivor" --java "$JAVA_HOME/bin/java" --output build/confirmation-b${{ matrix.batch }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frozen-confirmation-b${{ matrix.batch }}
+          path: build/confirmation-b${{ matrix.batch }}/
+          if-no-files-found: warn
+  aggregate:
+    needs: batches
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frozen-confirmation-b*
+          path: build/batches
+      - name: Aggregate all ten games once
+        run: python tools/frozen_duel_confirmation.py --plan-commit 8af14d7c5268f3be5ab7d63c61737b429bdcc62f --input build/batches --output build/confirmation-result
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frozen-confirmation-result
+          path: build/confirmation-result/
+          if-no-files-found: warn
