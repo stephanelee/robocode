@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Pinned opponent analysis: Diamond Port, Adaptive Prime and Retcon; challenger counterplan](opponents/README.md)
+
 - [Bounded analytic-prior danger blend: screen passed, fresh confirmation rejected](improvements/blended-duel-danger.md)
 
 - [Replay extraction: separate fresh parity confirmation passed](improvements/replay-harness-parity-redo.md)
