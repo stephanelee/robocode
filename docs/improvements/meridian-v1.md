@@ -1,0 +1,5 @@
+# Meridian v1 prospective duel protocol
+
+Registered in [issue 76](https://github.com/stephanelee/robocode/issues/76) before implementation. New standalone bot; never load another bot's weights or metrics. Retcon's virtual gun selection and Diamond Port's wave gun suggest two competing risks: steady orbits are easy to extrapolate, while indiscriminate reversals invite head-on hits. Choose between forward/backward orbit trajectories by testing their clearance from plausible incoming rays; aim by comparing recent straight, turning and stopped enemy motion forecasts against subsequent scans.
+
+One five-round game on each hard target, even on a valid loss. Require both >35% official score share, at least one official first place and zero own skips to advance. Then three fresh twenty-round games per opponent. For each require unweighted mean share >50%, >30/60 first places, at least two shares >50% and zero own skips. No reruns; an invalid attempt blocks promotion. Publish pins, IDs, seeds, private paths, metrics and independent review before the games.
