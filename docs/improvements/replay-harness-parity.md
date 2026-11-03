@@ -129,7 +129,7 @@ The protocol required investigating a failure with the replay harness. To do tha
 - **Decisions are identical.** The extraction and #47's additions do not change any decision in these 6,990 recorded states.
 - **The score gap is consistent with game-to-game variation** (z ≈ −0.85; the default-mode block-delta SD was 7.13 pp, above the 5.59 pp fixed-mode calibration). The fixture proof covers decisions in the visited states only. It does not cover runtime or timing behaviour (for example, the added warm-up and telemetry), nor states the goldens never visited. A behavioural cause of the gap is therefore not ruled out, only unsupported by the decision evidence.
 - **The margin was underpowered.** At that SD, this 8-block rule passes two decision-identical bots only about half the time.
-- **Merging is still a separate decision.** The registered failure stands. Whether to merge #48 on the strength of the direct decision proof is the reviewer's decision. This document does not relabel the result as a pass.
+- **#48 is on hold.** The registered failure stands unchanged. Trace parity does **not** waive the registered gate, and no retrospective change to the margin is made. Before any merge, a separately reviewed, prospectively registered protocol must pass.
 - **Coverage limit.** A trace proves identity only for the states it visited.
 
 Evidence: [raw evidence](../../benchmarks/replay-harness-parity/README.md).
