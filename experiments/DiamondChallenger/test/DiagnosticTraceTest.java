@@ -17,7 +17,7 @@ class DiagnosticTraceTest {
                 on.onScan(scan);off.onScan(scan);
                 if(previous!=null&&previous.fire()) {
                     on.onFired(turn,turn,300,300,previous.power(),gun);
-                    off.onFired(turn,300,300,previous.power());
+                    off.onFired(turn,turn,300,300,previous.power(),gun);
                 }
                 var a=on.decide(turn,300,300,gun,100,0,800,600);
                 var b=off.decide(turn,300,300,gun,100,0,800,600);

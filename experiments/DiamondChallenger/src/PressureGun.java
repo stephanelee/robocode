@@ -10,7 +10,7 @@ final class PressureGun {
     private DiagnosticTrace diagnostic;
     void diagnostic(DiagnosticTrace trace){diagnostic=trace;context.diagnostic(trace);}
     private record Pending(int turn, int target, double power, double[] angles, int maxAge,
-                           ContextGun.Query query,boolean learned,double learnedAngle) {}
+                           ContextGun.Query query,boolean learned,double learnedAngle,ContextGun.ShotReference reference) {}
     private static final class Flight {
         final int turn, target, maxAge;
         final double x, y, speed;
@@ -56,6 +56,7 @@ final class PressureGun {
     int gateEligibleDecisions(){return learnedQualifiedDecisions;}
     int learnedQualifiedDecisions(){return learnedQualifiedDecisions;}
     ContextGun context() { return context; }
+    void removed(long bulletId){context.removed(bulletId);}
     double turnRate() {
         return previous==null || latest==null || latest.turn()-previous.turn()>3 ? 0
                 : CombatMath.relativeAngle(latest.direction()-previous.direction())/(latest.turn()-previous.turn());
@@ -125,7 +126,7 @@ final class PressureGun {
         Pending p=pending; pending=null;
         boolean matched=p!=null && p.turn()==turn && p.target()==target && Math.abs(p.power()-power)<=1e-9;
         if(diagnostic!=null)diagnostic.shot(turn,bulletId,x,y,power,direction,matched);
-        context.confirmed(matched?p.query():null,turn,x,y,power);
+        context.confirmed(matched?p.query():null,turn,x,y,power,bulletId,matched?p.reference():null);
         if(!matched)return;
         if(p.learned())confirmedLearnedShots++;
         if (flights.size()>=48) flights.remove(0); // An unobserved/discarded cohort is not a miss.
@@ -175,7 +176,7 @@ final class PressureGun {
             double[] support=context.diagnosticSupport(query);
             diagnostic.aim(new AimTrace(now,x,y,gun,energy,heat,chosen,power,useLearned?3:selected,query,(int)support[0],support[1]));
         }
-        pending=fire?new Pending(now+1,target,power,angles,horizon,query,useLearned,learned):null;
+        pending=fire?new Pending(now+1,target,power,angles,horizon,query,useLearned,learned,context.reference(now,latest,x,y)):null;
         return new Plan(chosen,power,fire,useLearned?3:selected);
     }
 

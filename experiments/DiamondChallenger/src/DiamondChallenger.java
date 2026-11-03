@@ -9,7 +9,7 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.5.0";
+    static final String NAME="DiamondChallenger", VERSION="0.6.0";
     private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
     private final SplittableRandom random=new SplittableRandom(seed);
     private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
@@ -97,6 +97,7 @@ public class DiamondChallenger extends Bot {
         gun.onFired(event.getTurnNumber(),bullet.getBulletId(),bullet.getX(),bullet.getY(),bullet.getPower(),bullet.getDirection());
     }
     @Override public void onBulletHit(BulletHitBotEvent event) {
+        gun.removed(event.getBullet().getBulletId());
         hits++;dealt+=event.getDamage();waves.damage(event.getVictimId(),event.getTurnNumber(),event.getDamage());
         if(diagnostic.enabled())diagnostic.emit("hit",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),
                 "victimId",event.getVictimId(),"damage",event.getDamage());
@@ -110,7 +111,12 @@ public class DiamondChallenger extends Bot {
         walls++;if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","wall");
     }
     @Override public void onBulletHitBullet(BulletHitBulletEvent event) {
+        gun.removed(event.getBullet().getBulletId());
         if(diagnostic.enabled())diagnostic.emit("removal",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),"reason","bulletCollision");
+    }
+    @Override public void onBulletHitWall(BulletHitWallEvent event) {
+        gun.removed(event.getBullet().getBulletId());
+        if(diagnostic.enabled())diagnostic.emit("removal",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),"reason","wall");
     }
     @Override public void onHitBot(HitBotEvent event) {
         contacts++;waves.collision(event.getTurnNumber());
@@ -139,15 +145,20 @@ public class DiamondChallenger extends Bot {
                 gun.context().acceptedRound(),gun.confirmedLearnedShots(),gun.context().size());
         state=state.stripTrailing();
         state=state.substring(0,state.length()-1)+String.format(Locale.ROOT,
-                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s,\"pairedAttempts\":%s,\"pairedHits\":%s,\"pairedPending\":%d}%n",
+                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s,\"pairedAttempts\":%s,\"pairedHits\":%s,\"pairedPending\":%d,\"contextFeatureCount\":13,\"outgoingEstimateCount\":%d}%n",
                 waves.totalInferred(),waves.totalMatched(),Arrays.deepToString(waves.danger()),
-                Arrays.toString(gun.pairedAttempts()),Arrays.toString(gun.pairedHits()),gun.pairedPending());
+                Arrays.toString(gun.pairedAttempts()),Arrays.toString(gun.pairedHits()),gun.pairedPending(),gun.context().outgoingCount());
         row=row.stripTrailing();
         row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
                 ",\"inferredWaves\":%d,\"matchedHits\":%d,\"unmatchedHits\":%d,\"rejectedScanPairs\":%d,\"incomingHits\":%d,\"plannerDecisions\":%d,\"profileDecisions\":%d,\"cwDecisions\":%d,\"stopDecisions\":%d,\"ccwDecisions\":%d,\"pairedCreated\":%d,\"pairedCompleted\":%d,\"pairedDiscarded\":%d,\"pairedPending\":%d,\"supportedDecisions\":%d,\"gateEligibleDecisions\":%d}%n",
                 waves.inferred(),waves.matched(),waves.unmatched(),waves.rejected(),incomingHits,
                 plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions,
                 gun.pairedCreatedRound(),gun.pairedCompletedRound(),gun.pairedDiscardedRound(),gun.pairedPending(),gun.supportedDecisions(),gun.gateEligibleDecisions());
+        row=row.stripTrailing();
+        row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
+                ",\"waveContextQueries\":%d,\"waveContextOne\":%d,\"waveContextTwo\":%d,\"outgoingCreated\":%d,\"outgoingOmitted\":%d,\"outgoingKnownRemoved\":%d,\"outgoingEstimateCount\":%d}%n",
+                gun.context().waveContextQueriesRound(),gun.context().waveContextOneRound(),gun.context().waveContextTwoRound(),
+                gun.context().outgoingCreatedRound(),gun.context().outgoingOmittedRound(),gun.context().outgoingKnownRemovedRound(),gun.context().outgoingCount());
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
             Path temporary=Files.createTempFile(model.getParent(),"challenger-",".tmp");
