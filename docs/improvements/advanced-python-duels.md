@@ -29,7 +29,7 @@ The independently diagnosed packaging defect is a missing-file check: a nonexist
 
 ## Corrected acquisition: Diamond result
 
-The [prospective continuation](advanced-python-duels-continuation.md), frozen `c573055dd78784d8464a62027cc7f17321ec0b6c`, retains the original unspent budget after the independently reviewed packaging-only correction. [Run41648730946](https://github.com/stephanelee/robocode/actions/runs/41648730946), execution `cdc9683319af11b795d4ce5befb846f96fae47e5`, uses the same reviewed workflow bytes SHA256 `74ec3b0f27464d76da7bd674a99d5c6eca49c8c3904b157b990495bc226c13b8`. No gameplay, model, opponent or runtime pin changed. Diamond acquisition completed all60 rounds; Adaptive's independent job is still running at this publication.
+The [prospective continuation](advanced-python-duels-continuation.md), frozen `c573055dd78784d8464a62027cc7f17321ec0b6c`, retains the original unspent budget after the independently reviewed packaging-only correction. [Run41648730946](https://github.com/stephanelee/robocode/actions/runs/41648730946), execution `cdc9683319af11b795d4ce5befb846f96fae47e5`, uses the same reviewed workflow bytes SHA256 `74ec3b0f27464d76da7bd674a99d5c6eca49c8c3904b157b990495bc226c13b8`. No gameplay, model, opponent or runtime pin changed. Both independent opponent jobs completed the full registered120 rounds; the one-shot workflow was removed before any subsequent push.
 
 | Diamond game | AIS score / Diamond score | AIS score share | AIS first places /20 | Whole-game AIS rank |
 | --- | --- | --- | --- | --- |
@@ -37,6 +37,18 @@ The [prospective continuation](advanced-python-duels-continuation.md), frozen `c
 | duelpy946-diamond-g02 |127 /3141 |3.886169% |0 |2 |
 | duelpy946-diamond-g03 |127 /3249 |3.761848% |0 |2 |
 
-**Descriptive result: AIS loses0/60 wins, equal-game mean share3.885963%, second in all three games.** Retain the complete negative baseline; no candidate was tuned or promoted. Across23228 reported turns it fired1160 shots with72 hits (**6.206897%**), dealt383.6 damage and took5050.5, with9 wall collisions,0 bot collisions and0 skipped turns. There were22943 eligible/forced-duel selections. Three distinct cold, finite20-round checkpoints and all official arrays/raw rounds/source and wheel provenance validate; independent raw review reproduced them.
+**Descriptive result: AIS wins0/60 rounds, equal-game mean share3.885963%, second in all three games.** Retain the complete negative baseline; no candidate was tuned or promoted. Across23228 reported turns it fired1160 shots with72 hits (**6.206897%**), dealt383.6 damage and took5050.5, with9 wall collisions,0 bot collisions and0 skipped turns. There were22943 eligible/forced-duel selections. Three distinct cold, finite20-round checkpoints and all official arrays/raw rounds/source and wheel provenance validate; independent raw review reproduced them.
 
 This demonstrates a substantial weakness against this pinned **Python Diamond Port** in this20-round TRAIN regime, despite AIS's earlier Retcon and easy-sample results. It does not establish equivalence to original Java Diamond or isolate a gun/movement/neural cause. Native opponent turn/skip telemetry was not enabled; do not infer Diamond's zero-skips from AIS's metrics. Historical Retcon/sample evidence is not pooled. Later merged PR47 warm-up changes were not in this measured946/9679 bot; final branch integration must preserve that source distinction.
+
+## Corrected acquisition: Adaptive Prime result
+
+| Adaptive game | AIS score / Adaptive score | AIS score share | AIS first places /20 | Whole-game AIS rank |
+| --- | --- | --- | --- | --- |
+| duelpy946-adaptive-g01 |546 /2550 |17.635659% |1 |2 |
+| duelpy946-adaptive-g02 |541 /2688 |16.754413% |0 |2 |
+| duelpy946-adaptive-g03 |590 /2572 |18.659077% |2 |2 |
+
+**Descriptive result: AIS wins3/60 rounds, equal-game mean share17.683050%, second in all three games.** Across44335 reported turns it fired2631 shots with270 hits (**10.262258%**), dealt1464.900003 damage and took3851.8, with2 wall collisions,0 bot collisions and0 skipped turns. There were43964 eligible/forced-duel selections. All60 raw rounds/official identities and three distinct finite cold20-round checkpoints validate; independent review reproduced the original artifact13237191142. All pinned opponent source files and the exact12 runtime distributions were verified.
+
+**Disposition for both experiments: complete negative descriptive baselines; retain all results and unchanged production.** No gameplay candidate was proposed, accepted or rejected, and no tuning, source substitution, favorable rerun, pooled score or model carryover occurred. Both opponents expose weaknesses in this frozen bot; earlier success against Retcon does not imply strength against these opponents. These three-game observations do not establish a general tournament rank or identify which AI/component must change. Native Python ports' private timing/skip telemetry was not captured. The original zero-game acquisition failure stays visible alongside the corrected full120-round cohort. [Raw evidence and per-file hashes](../../benchmarks/advanced-python-duels/README.md).
