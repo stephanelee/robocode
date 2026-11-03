@@ -21,7 +21,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.13.18'
       - name: Build Meridian on Java 17 and verify parity
         run: |
           mkdir -p build/meridian
