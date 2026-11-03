@@ -37,3 +37,25 @@ No threshold waiver, seed selection, replacement games, reruns, cap/phase/power 
 ## Execution and publication
 
 Independently review exact source/JAR, this immutable Git plan, thin direct official-runner driver, native packaging and workflow before the sole execution. No extra root acknowledgment is required after that exact clearance. Always preserve original logs/official results/metrics, every own-model endpoint, source/JAR/runtime/asset/opponent hashes, identities, executed tooling and failures. Update docs/improvements.md with measured budget, decision, report/raw and PR links; a separate reviewer audits and merges after protected CI. No production AIS promotion or transfer is implied.
+
+## Actual pilot: rejected, no fresh confirmation
+
+[PR #59](https://github.com/stephanelee/robocode/pull/59) / [single run41665190242](https://github.com/stephanelee/robocode/actions/runs/41665190242), execution `909fdbde4f8abbc44dc125357244ac698dd9c0bd`, completed its20-round pilot with valid official results, all20 cold sequential metric rows and one own finite counter20 JSON endpoint. [Preserved raw/source/runtime evidence](../../benchmarks/diamond-pressure-v1/README.md) includes the exact immutable38b069 registration, own JAR/source hashes and unchanged native Diamond pin.
+
+**Reject the pressure strategy at its development screen.** Challenger score83 versus Diamond3118 gives **2.5929397% share**, with **0/20 official first places**. Both required progress checks failed (>20% share and at least one win). The complete-evidence and zero-skip guards passed. The conditional three-game60-round confirmation was not run; no replacement, repeat, tuning, baseline pooling or threshold change followed.
+
+| Challenger measurement | Original pilot result |
+| --- | ---: |
+| Actual hits / shots | 11 /274 (4.014599%) |
+| Damage dealt / taken | 83.2 /1603.3 |
+| Confirmed shot energy spent | 452.5 |
+| Wall / bot contacts / skipped turns | 0 /0 /0 |
+| Reported round turns | 5,064 |
+| Fresh-scan range observations | 4,905 |
+| Mean observed range | 227.276528px |
+| Observations below180px | 1,419 (28.929664% of those observations) |
+| Seeded phase decisions | 166 |
+
+The controller sometimes reached close range, but did not consistently hold the140px design target. Range diagnostics are fresh-scan/run-loop observations, not an independently sampled lifetime distribution. They do not establish why it lost. Diamond's close counterfire, the approach policy and aiming errors remain hypotheses, not isolated causal findings. The gun snapshot contains255 completed virtual attempts per model and hit counts[21,15,22]; these geometric counterfactual labels differ from actual11bullet hits and are not calibrated physical hit rates or proof of learning benefit.
+
+This was one unpaired development game on a pinned experimental Python Diamond Port, not original Java Diamond or a tournament sample. It does not establish a comparative regression against AIS's older, separately collected baseline. Production AIS source/JAR/root build remain exactly accepted9b1624/b41b. The failed experimental source and distinct JAR are retained for reproducibility, clearly marked unproven/rejected rather than promoted. Any next challenger strategy needs new prospective source, protocol and fresh games; no automatic rescue is authorized by this outcome.

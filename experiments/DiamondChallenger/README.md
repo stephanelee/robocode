@@ -1,5 +1,7 @@
 # DiamondChallenger0.1.0
 
+**Rejected first prototype:** the [registered20-round pilot](../../docs/improvements/diamond-pressure-v1.md) produced0/20 wins and2.59294% score share. The fresh60-round confirmation was not run. This historical experiment does not replace production AIS or claim competitive strength.
+
 A separate experimental1v1 bot for the [pinned Diamond counter-hypothesis](../../docs/opponents/diamond-port.md). It does not subclass or rename AISurvivor, load an AIS/DQN model, or change production sources/JARs.
 
 The whole design combines short-range interception pressure (preferred140px), independently seeded20–45-turn flank decisions, pinned1.4 movement/wall simulation, independent radar, three-model online virtual targeting, approach-energy conservation and stronger close-range fire. It attempts to shorten Diamond's long-range surfing window; Diamond's retreat and2.95 close/rammer counterfire can defeat that hypothesis. No winning claim follows from building this prototype.

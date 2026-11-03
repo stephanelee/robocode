@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Separate DiamondChallenger: rejected first pressure pilot](improvements/diamond-pressure-v1.md)
+
 - [Pinned opponent analysis: Diamond Port, Adaptive Prime and Retcon; challenger counterplan](opponents/README.md)
 
 - [Bounded analytic-prior danger blend: screen passed, fresh confirmation rejected](improvements/blended-duel-danger.md)
