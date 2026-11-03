@@ -19,3 +19,26 @@ Model schema includes contextFeatureCount13/outgoingEstimateCount, with each ret
 Same pinned Diamond Port1.8.28, source67b68c22e41c18281a3fce9ef638e3c23a0b47cf/110source/12-wheel lock. Ubuntu26.04, Java17 fresh standalone41test build/parity then Java25/Python3.13. Same100000us embedded random-port/800x600 setup,900second game/990outer timeout; GUI7654 untouched. Every game cold/private/absent own model+metrics; no old model or sample reuse.
 
 ONE20-round pilot `diamond-outgoing-context-v7-pilot`, seed20263701. Advance ONLY if all20 valid, zero challenger skips, share>.20 AND at least1 first place. Only pass triggers fresh20-round games `diamond-outgoing-context-v7-confirm-g01..03`, seeds20263711..13; require all60 valid/zero own skips, equal-game mean share>.50, total first places>30/60 and at least2of3 game shares>.50. Maximum80physical rounds, no replacements/retries/gate relaxation/selection/pooling. Finish all confirmation games unless process/evidence invalid. Student-t interval descriptive only; no independent-round or universal strength claim. Separate specialist needs no Retcon guard, but any AIS transfer requires a future independent protocol. Failure rejects this fixed family without tuning weights/normalization/support or guard. Preserve every loss/skip/failure/private snapshot/source/runtime and update index+PR links. Exact independent source/protocol/workflow preclear before games; independent review/CI before evidence merge.
+
+
+## Outcome: invalid after20 physical rounds; no confirmation
+
+[PR65](https://github.com/stephanelee/robocode/pull/65), sole [run41704517498](https://github.com/stephanelee/robocode/actions/runs/41704517498), executionb334490178f8bca7816b3911b9a4486caf0018c5/artifact13263593516. The official game completed20 rounds and produced20 telemetry rows, but the registered aggregate check failed: **Shared cohort totals differ**. The original canonical `experiment.json` remains `status=invalid`, `games=[]`, with the in-progress ID/failure and **no pilot or strength decision**. There are20physical rounds and0canonically validated game summaries. No retry, replacement, row repair, gate waiver or fresh60 confirmation.
+
+| Preserved observation | Count |
+| --- | ---: |
+| Sum of per-round paired completions |530|
+| Endpoint attempted counts |[531,531,531,531]|
+| Endpoint-minus-round completion discrepancy |1|
+| Per-round paired creations / discards / terminal unknowns |551 /0 /21|
+| Final endpoint pending (a different quantity) |1|
+
+Every individual row's551=530+0+21 aggregate cohort balance holds, and final pending1 matches the last row, but persistent completion N does not reconcile across the snapshots. Context683 admissions and other cumulative wave counters do reconcile. The discrepancy is not waived because the official score is poor. A separately labelled `descriptive-observations.json` summarizes raw files without replacing the invalid canonical report.
+
+Descriptive official outcome: **0/20first places,93vs3163score (2.856265356%share)**. Recorded shooting37/703hits (5.263158%),92.8damage dealt/1658.546610543taken,432.836020191shot energy; recorded wall/bot collisions/skips all0. These are observations of an invalid attempt, not a valid comparative strength estimate or canonical reject decision. Reported15716round turns are not precise survival durations.
+
+The new inputs were exercised:15438valid feature queries,10287with at least1estimate and7347with2.702confirmed estimates were created and1omitted;681unique known-removal callbacks were recorded (not necessarily ledger deletions).7550supported learned predictions,2350selected guarded learned aims/191confirmed learned shots,13108fallback aims. Snapshot feature count13,683admitted samples with512retainedFIFO rows. Availability is not evidence that the new context helps; no support/weight/normalization/guard adjustment follows this result.
+
+Source review identifies a possible lifecycle path: an unguarded gun scan callback after round snapshot and before the next round reset can update persistent comparison counts outside the recorded per-round sum. The retained aggregate artifact has no turn-level callback trace proving when or why this attempt's extra completion occurred. A separate [read-only method-order probe](../../benchmarks/diamond-outgoing-context-v7/lifecycle-probe/README.md), executed and independently repeated against the exact measured JAR, reproduces snapshot0→late scan completion1→next-round counter reset0/persistentN1. This proves the structural vulnerability for that hypothetical order, **not a proven cause of this run**, and not evidence blaming the feature family, CI or runtime. No gameplay/lifecycle patch was applied to rehabilitate this cohort.
+
+[All invalid raw/model/source/runtime/job-log evidence](../../benchmarks/diamond-outgoing-context-v7/README.md) is retained. Endpoint297806bytes/SHA256 `d063be08aea666ed98b49963bd0db58d8c1c3f25b533a934d4f42c6da2e484ea`, cold counter20,512retained13-feature samples/finite4x47danger and shared-count state. Original source/JAR/plan/official metrics/failure remain unchanged. Temporary workflow removed before cleanup publication; production AIS and all earlier cohorts unchanged. No Diamond-beating or feature-benefit claim.

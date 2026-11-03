@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Attempt the fixed estimated-own-wave feature pilot. [PR65](https://github.com/stephanelee/robocode/pull/65) / [report](docs/improvements/diamond-outgoing-context-v7.md):20physical rounds,0validated summaries; endpoint531vs round530cohorts invalidated collection. Descriptive0wins/2.86%share, no decision/retry/fresh60. All failed evidence retained; actual cause unlocalized; a read-only probe reproduces the possible lifecycle risk, and a future fix needs separate prospective review. Production unchanged.
+
 - [x] Test one fixed guarded learned-ray selector on shared confirmed-shot cohorts. [PR64](https://github.com/stephanelee/robocode/pull/64) / [report](docs/improvements/diamond-guarded-ray-v6.md):20-round progress screen rejected (1win/8.16%share); guard activated but required share failed, no fresh60. All raw/paired evidence retained, no threshold tuning or production change.
 
 - [x] Capture one bounded unchanged-policy shot/defense diagnostic. [PR63](https://github.com/stephanelee/robocode/pull/63) / [report](docs/improvements/challenger-diagnostic-v5.md):5rounds/12891records/0drops/skips, no phase/one-step mismatch; future-target prediction error remains large. No strength gate/repeat or production change; guarded learned-ray selection is a separate proposed mechanism, not implemented here.
