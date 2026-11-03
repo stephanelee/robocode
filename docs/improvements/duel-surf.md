@@ -96,4 +96,106 @@ Reported per arm and stage:
 
 ## Results
 
-Not yet measured.
+Everything above this heading is byte-identical to the registered plan at `5f5ff460eaad190a6bc3dec507f6eee732474164`, which was also the measured candidate source; the driver stored the plan blob.
+
+There was a single registered run, [41551240407](https://github.com/stephanelee/robocode/actions/runs/41551240407), with no reruns:
+- **CI:** job 125639064038, every step green.
+- **Artifact:** 13191578758, zip SHA256 `178e09d50e432634505b6114dae1cb8c565999dfa448dabdebec1d364dc8b1de`.
+- **Runtime:** actual Ubuntu 26.04.1 LTS. The Java 17 JAR parity check passed, and matches ran on Temurin 25.0.5+8.
+- **Candidate JAR:** `1a588ead187a7fa90fbf1468cb383f5f75696b6fbfc4fcef9621b05c09d59d02`. The baseline JAR hash was verified before launch, and bundle hashes were verified before every battle.
+- **Rounds:** all 700 registered scored rounds completed (320 primary, 60 sample, 320 online).
+
+**Decision: retain.** Stages A, B and C all passed. This is a Retcon-specific tactical gain under this protocol. The retention is conditional on the reviewer accepting the calibration-based rule. The review correction on PR #37, which came after this registration, is addressed below. Beating Retcon still needs a separately registered fresh confirmation; see the limitations.
+
+### Stage A: 320 fixed minimum-risk Retcon rounds (pass)
+
+| Metric (160 rounds per arm) | Baseline | Candidate |
+| --- | ---: | ---: |
+| Mean block score share | 14.79% | **58.56%** |
+| Round wins | 6 | **87** |
+| AIS turns survived | 109,751 | 175,307 |
+| AIS damage taken per 1,000 turns | 87.03 | **13.43** |
+| AIS damage dealt per 1,000 turns | 28.48 | 24.96 |
+| AIS shots / hit rate | 5,465 / 8.381% | 10,067 / 7.063% |
+| Wall collisions (per 1,000 turns) | 717 (6.533) | 29 (0.165) |
+| AIS skipped turns | 0 | 0 |
+
+Per block (score share and wins):
+
+| Seed | Order | Baseline | Candidate | Delta |
+| ---: | --- | ---: | ---: | ---: |
+| 20261401 | previous, candidate | 17.65% / 1 | 54.32% / 10 | +36.68 |
+| 20261402 | candidate, previous | 17.59% / 2 | 66.03% / 13 | +48.44 |
+| 20261403 | previous, candidate | 13.00% / 1 | 61.99% / 12 | +48.99 |
+| 20261404 | candidate, previous | 15.15% / 1 | 48.73% / 8 | +33.58 |
+| 20261405 | previous, candidate | 11.25% / 0 | 61.73% / 11 | +50.47 |
+| 20261406 | candidate, previous | 16.38% / 1 | 56.39% / 10 | +40.01 |
+| 20261407 | previous, candidate | 14.63% / 0 | 67.93% / 14 | +53.30 |
+| 20261408 | candidate, previous | 12.70% / 0 | 51.39% / 9 | +38.69 |
+
+The mean delta was **+43.769 pp** with SE 2.602 pp.
+- **Registered bound:** the z lower bound is **+39.489 pp**.
+- **Corrected bound:** under the Student-t bound from the PR #37 review correction (t = 1.8946, df 7), the lower bound is **+38.84 pp**, so the result is unchanged.
+
+Checks:
+
+| Check | Result |
+| --- | --- |
+| Mean ≥ +5 pp | pass |
+| Lower bound > 0 | pass |
+| Wins ≥ baseline | pass (87 vs 6) |
+| Zero skipped turns | pass |
+| Wall rate ≤ baseline + 10 per 1,000 turns | pass (0.165 vs 6.533) |
+
+Every block improved by at least 33.6 pp. The candidate's share exceeded 50% in 7 of 8 blocks.
+
+### Mechanism, from Retcon's offline native export
+
+| Retcon counter, 160 rounds per arm | Baseline | Candidate |
+| --- | ---: | ---: |
+| Actual hits / shots | 1,337 / 7,082 (**18.88%**) | 521 / 9,829 (**5.30%**) |
+| Linear virtual hits / completed | 1,139 / 6,857 (16.61%) | 425 / 9,629 (4.41%) |
+| Head-on virtual hits / completed | 1,047 / 6,857 (15.27%) | 375 / 9,629 (3.89%) |
+
+**H1 is supported.** Both of Retcon's modelled guns, and its actual gun, lost about three quarters of their hit rate. AISurvivor survived 60% more turns, and its damage taken per turn fell 85%.
+
+The score gain comes from survival. Our own hit rate and damage dealt per turn were slightly *lower*, so targeting is a separate opportunity.
+
+### Stage B: official samples, 10 fixed rounds per arm (pass)
+
+| Opponent | Baseline share / wins / walls | Candidate share / wins / walls |
+| --- | --- | --- |
+| Target | 99.890% / 10 / 0 | 100.000% / 10 / 0 |
+| SpinBot | 99.004% / 10 / 5 | 99.024% / 10 / 4 |
+| Walls | 98.150% / 10 / 6 | 99.354% / 10 / 4 |
+
+### Stage C: 320 default online-training Retcon rounds (pass)
+
+| Seed | Baseline share / wins | Candidate share / wins |
+| ---: | ---: | ---: |
+| 20261401 | 13.79% / 0 | 20.65% / 1 |
+| 20261402 | 16.86% / 0 | 20.92% / 1 |
+| 20261403 | 11.12% / 0 | 15.57% / 0 |
+| 20261404 | 15.09% / 0 | 13.72% / 0 |
+| 20261405 | 16.45% / 0 | 18.48% / 1 |
+| 20261406 | 15.75% / 0 | 21.61% / 1 |
+| 20261407 | 18.39% / 0 | 20.48% / 1 |
+| 20261408 | 8.68% / 0 | 12.74% / 0 |
+
+- **Score:** the mean delta was +3.507 pp. The registered z lower bound was +2.011 pp, against a non-inferiority margin of −5 pp. The t lower bound was +1.784 pp.
+- **Other measures:** wins went from 0 to 5, with zero skipped turns.
+- **Retcon hit rate:** Retcon's actual hit rate fell from 40.18% to 32.19% in this mode.
+- **Why the gain is small here:** default training mode lets the DQN choose among six actions, so the duel controller runs only when the DQN picks action 0. Its default-mode benefit is therefore small. This stage is a safety veto, not evidence of a learning benefit.
+
+### Interpretation and limitations
+
+- **Fact:** under the registered fixed duel policy, AISurvivor now outscores pinned Retcon 0.2.0 on average (58.56% share), wins a majority of rounds (87 of 160) and wins 7 of 8 blocks.
+- **Hypothesis:** whether AISurvivor robustly beats Retcon in fresh games is a separate question. Per the [strategy](../retcon-strategy.md), that needs a frozen-version confirmation on fresh games, with its own prospectively registered budget and pass rules. Development games and this run cannot serve as that confirmation.
+- **Default mode:** default training mode remains much weaker (about 18% share), because the DQN rarely relies on action 0. Making the duel controller dominant in default play would be a separate, registered change.
+- **Rule caveats** (disclosed in the PR #37 review correction):
+  - The registered z bound is a large-sample approximation.
+  - The wins and wall guards are uncalibrated under an effect.
+  - The effect here is about eight standard errors above the floor, so neither caveat changes the decision.
+- **Exclusions:** starts are unpaired and unseeded, Retcon adapts within each game, and Retcon counters are offline diagnostics only. The development games disclosed above are excluded from this decision.
+
+PR: (pending). Evidence: [raw evidence](../../benchmarks/duel-surf/README.md).

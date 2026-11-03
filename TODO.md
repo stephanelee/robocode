@@ -47,6 +47,9 @@ See [docs/improvements.md](docs/improvements.md) and [tracker #8](https://github
 - [x] Publish the opponent-source-grounded [strategy and prospective gate categories](docs/retcon-strategy.md).
 - [x] Capture unchanged Retcon native statistics as offline diagnostics, with actual Ubuntu26.04 provenance. [Report](docs/retcon-observability.md).
 - [x] Test the isolated bullet-energy scan-lag correction with an actual pinned-engine trace and 120 fixed-policy rounds. [Report](docs/improvements/foundation-scan-lag.md): rejected by mean score-share and wall-rate guards; online stage skipped, gameplay/JAR reverted.
+- [x] Test shot-reactive 1v1 duel movement against Retcon's two guns. [Report](docs/improvements/duel-surf.md): **retained**; fixed-policy share 14.8%→58.6%, Retcon hit rate 18.9%→5.3%, online veto and samples passed.
+- [ ] Register a fresh frozen-version confirmation of beating Retcon (score share > 50%, majority of rounds and blocks).
+- [ ] Consider making the duel controller effective in default training mode, where the DQN rarely chooses action 0 (separate registered change).
 - [x] Test head-on/linear aim-corridor danger in minimum-risk movement. [Report](docs/improvements/aim-corridor.md): rejected (−0.58 pp score share, 5.5× wall rate, Retcon hit rate rose); online stage skipped, gameplay/JAR reverted.
 - [ ] Resolve [bullet scan visibility issue #18](https://github.com/stephanelee/robocode/issues/18) under a new approved design; the actual engine contract is proven, but the tested repair was not retained.
 - [x] Extract a minimal pure targeting-geometry boundary while preserving accepted command/state behavior. [PR #25](https://github.com/stephanelee/robocode/pull/25) / [report](docs/targeting-refactor.md): 288 exact replay cases and five compatibility rounds pass; no strength claim.
