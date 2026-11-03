@@ -400,13 +400,27 @@ public class AISurvivor extends Bot {
         Enemy t = bestTarget();
         if (t == null) return;
         if (duelComponents()) {
-            pendingTargetingWave = null; // The duel gun owns its own legal virtual-shot evidence.
+            pendingTargetingWave = null;
             pendingDuelShot = false;
+            double power = DuelGun.firepower(getEnergy(), t.energy, distanceTo(t.x, t.y));
+            DuelLegacyContext legacy = duelLegacyAim(t, power);
+            TargetingGeometry.Aim legacyAim = legacy.aim();
             DuelGun.Plan plan = duelGun.decide(new DuelGun.Input(getTurnNumber(), getX(), getY(),
                     getGunDirection(), getEnergy(), getGunHeat(), getArenaWidth(), getArenaHeight(),
-                    new DuelGun.Scan(t.id, t.lastScanTurn, t.x, t.y, t.direction, t.speed, t.energy), Double.NaN));
+                    new DuelGun.Scan(t.id, t.lastScanTurn, t.x, t.y, t.direction, t.speed, t.energy),
+                    new DuelGun.LegacyAim(legacyAim.aimAngle(),
+                            Math.hypot(legacyAim.x() - getX(), legacyAim.y() - getY()), power)));
             setGunTurnRate(clamp(normalizeAngle(plan.direction() - getGunDirection()), -20, 20));
             if (plan.shouldFire()) pendingDuelShot = setFire(plan.power());
+            if (pendingDuelShot && legacy.bins() != null) {
+                TargetingWave wave = new TargetingWave();
+                wave.targetId = t.id; wave.segment = legacy.segment(); wave.bins = legacy.bins();
+                wave.lateralDir = legacyAim.lateralDirection();
+                // Keep the unperturbed circular point as the residual-GF reference.
+                // onBulletFired supplies the actual origin, power and creation turn.
+                wave.aimX = legacyAim.x(); wave.aimY = legacyAim.y();
+                pendingTargetingWave = wave;
+            }
             return;
         }
 
@@ -443,6 +457,26 @@ public class AISurvivor extends Bot {
                 pendingTargetingWave = tw;
             }
         }
+    }
+
+    private record DuelLegacyContext(TargetingGeometry.Aim aim, int segment, double[] bins) {}
+
+    /** Reuse the legacy GF profile/geometry at the duel gun's exact proposed power. */
+    private DuelLegacyContext duelLegacyAim(Enemy target, double power) {
+        double distance = distanceTo(target.x, target.y);
+        int seg = segment(distance, Math.abs(target.lateralVelocity));
+        double[][] stats = gfStats.get(target.id);
+        int cls = classifyEnemy(target);
+        double weight = Math.min(1.0, target.scanCount / 30.0);
+        int best = CombatMath.bestBin(stats != null ? stats[seg] : new double[GF_BINS],
+                agent.classGF[cls][seg], weight);
+        double gf = best / (double) (GF_BINS - 1) * 2.0 - 1.0;
+        double bulletSpeed = calcBulletSpeed(power > 0 ? power : 1.0);
+        TargetingGeometry.Aim aim = TargetingGeometry.calculate(new TargetingGeometry.Snapshot(
+                getX(), getY(), getArenaWidth(), getArenaHeight(), getTurnNumber(), getGunDirection(),
+                target.x, target.y, target.direction, target.speed, target.turnRate, target.lastScanTurn,
+                distance, bulletSpeed, gf, target.lateralVelocity));
+        return new DuelLegacyContext(aim, seg, stats == null ? null : stats[seg]);
     }
 
     @Override
