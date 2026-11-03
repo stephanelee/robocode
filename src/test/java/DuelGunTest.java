@@ -29,7 +29,8 @@ class DuelGunTest {
         assertTrue(DuelGun.firepower(11,100,450)<=.8);
         assertEquals(.1,DuelGun.firepower(.6,.2,100),1e-9);
         assertEquals(0,DuelGun.firepower(.3,100,100));
-        assertEquals(0,DuelGun.firepower(100,0,100));
+        assertEquals(.1,DuelGun.firepower(100,0,100));
+        assertEquals(0,DuelGun.firepower(100,-.01,100));
         for(double own:new double[]{.5,1,2,7,10,100}) {
             double power=DuelGun.firepower(own,100,100);
             assertTrue(power>=.1 && power<=3 && own-power>=(own<8?.35:2)-1e-9);
@@ -49,9 +50,9 @@ class DuelGunTest {
 
     @Test void actualCreationTurnCollisionLookaheadAndScanBeforeFiredAreSupported() {
         var gun=new DuelGun();var s=scan(0,445,300,0,0,2);
-        var plan=aligned(gun,0,s); assertEquals(.5,plan.power(),1e-9);assertTrue(plan.shouldFire());
+        var plan=aligned(gun,0,s); assertTrue(plan.power()>.5);assertTrue(plan.shouldFire());
         gun.onScan(scan(1,445,300,0,0,2));
-        gun.onFired(1,400,300,.5);
+        gun.onFired(1,400,300,plan.power());
         assertEquals(1,gun.attempts("current"));assertEquals(1,gun.hits("current"));
         assertEquals(1,gun.hits("headon"));
         assertEquals(8,DuelGun.segmentDistance(445,300,400,300,0,18.5,37),1e-9);
@@ -91,5 +92,62 @@ class DuelGunTest {
         assertEquals(.5,plan.confidence(),1e-9);
         gun.onScan(new DuelGun.Scan(3,2,650,250,0,8,100));
         assertEquals(0,gun.attempts("circular"));
+    }
+
+    @Test void actualLegacyGeometryUsesItsGFRotatedFootprintInsteadOfLinearTrajectory() {
+        var gun=new DuelGun();var s=scan(0,700,300,90,8,100);
+        double power=DuelGun.firepower(100,s.energy(),300);
+        var aim=TargetingGeometry.calculate(new TargetingGeometry.Snapshot(
+                400,300,800,600,0,0,700,300,90,8,0,0,300,20-3*power,-.6,8));
+        var legacy=new DuelGun.LegacyAim(aim.aimAngle(),Math.hypot(aim.x()-400,aim.y()-300),power);
+        var plan=gun.decide(new DuelGun.Input(0,400,300,aim.aimAngle(),100,0,800,600,s,legacy));
+        assertEquals(aim.aimAngle(),plan.direction(),1e-9);assertTrue(plan.shouldFire());
+        var linear=new DuelGun().decide(input(0,s,aim.aimAngle(),100,0));
+        assertFalse(linear.shouldFire()); // The newly supplied GF forecast differs from the old linear alias.
+        var linearAim=new DuelGun().decide(input(0,s,0,100,0));
+        assertFalse(gun.decide(new DuelGun.Input(0,400,300,linearAim.direction(),100,0,800,600,s,legacy)).shouldFire());
+        var rawCenter=new DuelGun.LegacyAim(aim.baseAngle(),legacy.range(),power);
+        assertFalse(gun.decide(new DuelGun.Input(0,400,300,aim.aimAngle(),100,0,800,600,s,rawCenter)).shouldFire());
+    }
+
+    @Test void invalidOrDifferentPowerLegacyHintFallsBackAndVirtualCurrentFreezesHintAngle() {
+        var s=scan(0,700,300,0,0,100);var gun=new DuelGun();
+        var linear=gun.decide(input(0,s,0,100,0));
+        for(var hint:new DuelGun.LegacyAim[]{new DuelGun.LegacyAim(90,300,linear.power()+.1),
+                new DuelGun.LegacyAim(90,Double.NaN,linear.power()),new DuelGun.LegacyAim(90,0,linear.power())}) {
+            var fallback=gun.decide(new DuelGun.Input(0,400,300,0,100,0,800,600,s,hint));
+            assertEquals(linear.direction(),fallback.direction());assertEquals(linear.shouldFire(),fallback.shouldFire());
+        }
+        var legacy=new DuelGun.LegacyAim(15,300,linear.power());
+        var plan=gun.decide(new DuelGun.Input(0,400,300,15,100,0,800,600,s,legacy));
+        assertTrue(plan.shouldFire());gun.onFired(1,400,300,plan.power());
+        for(int t=1;t<40;t++)gun.onScan(scan(t,700,300,0,0,100));
+        assertEquals(1,gun.attempts("current"));assertEquals(0,gun.hits("current"));
+        assertEquals(1,gun.hits("linear")); // Actual hit callbacks are neither supplied nor used as labels.
+    }
+
+    @Test void legacyFootprintChecksCurrentHeadingRangeAndCreationLookahead() {
+        var gun=new DuelGun();var s=scan(0,700,300,0,0,100);
+        double p=DuelGun.firepower(100,100,300);
+        var far=new DuelGun.LegacyAim(0,300,p);
+        assertFalse(gun.decide(new DuelGun.Input(0,400,300,9,100,0,800,600,s,far)).shouldFire());
+        var near=new DuelGun.LegacyAim(0,45,p);
+        assertTrue(gun.decide(new DuelGun.Input(0,400,300,9,100,0,800,600,s,near)).shouldFire());
+        assertFalse(gun.decide(new DuelGun.Input(0,400,300,180,100,0,800,600,s,near)).shouldFire());
+        assertTrue(gun.decide(new DuelGun.Input(0,400,300,360,100,0,800,600,s,near)).shouldFire());
+    }
+
+    @Test void zeroEnergyIsAliveAndFinishingPowerCrossesTheStrictDeathBoundary() {
+        for(double energy:new double[]{0,1e-12,.4,2,3.9999999,4,4.0000001}) {
+            double p=DuelGun.firepower(100,energy,100);
+            double damage=4*p+2*Math.max(p-1,0);
+            assertTrue(damage>energy,"Energy "+energy+" must become negative, not merely zero");
+            assertTrue(p>=.1 && p<=3);
+        }
+        assertEquals(0,DuelGun.firepower(100,-1e-12,100));
+        assertEquals(0,DuelGun.firepower(.44,0,100));
+        assertEquals(.1,DuelGun.firepower(.45,0,100),1e-12);
+        assertTrue(.45-DuelGun.firepower(.45,0,100)>=.35-1e-12);
+        assertTrue(new DuelGun().decide(input(0,scan(0,445,300,0,0,0),0,100,0)).shouldFire());
     }
 }
