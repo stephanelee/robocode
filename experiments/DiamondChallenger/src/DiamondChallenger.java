@@ -9,7 +9,7 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.1.0";
+    static final String NAME="DiamondChallenger", VERSION="0.2.0";
     private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
     private final SplittableRandom random=new SplittableRandom(seed);
     private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
@@ -81,12 +81,14 @@ public class DiamondChallenger extends Bot {
         if(event.getRoundNumber()!=roundsCompleted+1)throw new IllegalStateException("Nonsequential experimental rounds");
         roundsCompleted++;
         String state=String.format(Locale.ROOT,
-                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"seed\":%d,\"roundsCompleted\":%d,\"checkpointLoaded\":false,\"gunAttempts\":%s,\"gunHits\":%s}%n",
-                NAME,VERSION,seed,roundsCompleted,Arrays.toString(gun.attempts()),Arrays.toString(gun.hits()));
+                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"seed\":%d,\"roundsCompleted\":%d,\"checkpointLoaded\":false,\"gunAttempts\":%s,\"gunHits\":%s,\"contextAccepted\":%d,\"contextMemorySize\":%d,\"contextMemory\":%s}%n",
+                NAME,VERSION,seed,roundsCompleted,Arrays.toString(gun.attempts()),Arrays.toString(gun.hits()),
+                gun.context().acceptedTotal(),gun.context().size(),gun.context().snapshot());
         String row=String.format(Locale.ROOT,
-                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"mode\":\"train\",\"seed\":%d,\"round\":%d,\"roundsCompleted\":%d,\"turns\":%d,\"checkpointLoaded\":false,\"shotsFired\":%d,\"bulletHits\":%d,\"damageDealt\":%.9f,\"damageTaken\":%.9f,\"energySpent\":%.9f,\"wallCollisions\":%d,\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"rangeObservedTurns\":%d,\"rangeSum\":%.9f,\"closeTurns\":%d,\"phaseDecisions\":%d}%n",
+                "{\"schemaVersion\":1,\"name\":\"%s\",\"version\":\"%s\",\"mode\":\"train\",\"seed\":%d,\"round\":%d,\"roundsCompleted\":%d,\"turns\":%d,\"checkpointLoaded\":false,\"shotsFired\":%d,\"bulletHits\":%d,\"damageDealt\":%.9f,\"damageTaken\":%.9f,\"energySpent\":%.9f,\"wallCollisions\":%d,\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"rangeObservedTurns\":%d,\"rangeSum\":%.9f,\"closeTurns\":%d,\"phaseDecisions\":%d,\"learnedAimDecisions\":%d,\"fallbackAimDecisions\":%d,\"acceptedPassageSamples\":%d,\"confirmedLearnedShots\":%d,\"contextMemorySize\":%d}%n",
                 NAME,VERSION,seed,event.getRoundNumber(),roundsCompleted,event.getTurnNumber(),shots,hits,dealt,taken,energySpent,walls,contacts,skips,
-                won,died,rangeTurns,rangeSum,closeTurns,phaseDecisions);
+                won,died,rangeTurns,rangeSum,closeTurns,phaseDecisions,gun.learnedAimDecisions(),gun.fallbackAimDecisions(),
+                gun.context().acceptedRound(),gun.confirmedLearnedShots(),gun.context().size());
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
             Path temporary=Files.createTempFile(model.getParent(),"challenger-",".tmp");

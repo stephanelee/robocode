@@ -1,8 +1,10 @@
-# DiamondChallenger0.1.0
+# DiamondChallenger0.2.0
 
 **Rejected first prototype:** the [registered20-round pilot](../../docs/improvements/diamond-pressure-v1.md) produced0/20 wins and2.59294% score share. The fresh60-round confirmation was not run. This historical experiment does not replace production AIS or claim competitive strength.
 
 A separate experimental1v1 bot for the [pinned Diamond counter-hypothesis](../../docs/opponents/diamond-port.md). It does not subclass or rename AISurvivor, load an AIS/DQN model, or change production sources/JARs.
+
+Version0.2 changes only targeting capacity: a512-example FIFO conditional guess-factor model uses seven fresh legal context features and confirmed-own-shot wave-center passage proxies. It requires32 available past examples and16 sufficiently close neighbors; a47-point triangular density estimate has neighbor mass16 plus linear prior mass2. Missing/unsupported contexts retain the original three-model selector. Movement, power and radar are unchanged. Model snapshots now include the bounded sample memory and auditable reference/actual-origin/passage geometry; telemetry separates learned/fallback aiming, confirmed learned shots and accepted samples. These are activation diagnostics, not proof of strength or actual-collision labels. The v0.1 rejection remains immutable.
 
 The whole design combines short-range interception pressure (preferred140px), independently seeded20–45-turn flank decisions, pinned1.4 movement/wall simulation, independent radar, three-model online virtual targeting, approach-energy conservation and stronger close-range fire. It attempts to shorten Diamond's long-range surfing window; Diamond's retreat and2.95 close/rammer counterfire can defeat that hypothesis. No winning claim follows from building this prototype.
 
