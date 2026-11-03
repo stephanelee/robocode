@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "expectedRounds": 20,
+  "bot": "Retcon",
+  "version": "0.2.0",
+  "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+  "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+  "rawArtifacts": [
+    {
+      "path": "Retcon-2-771652508195.json",
+      "sha256": "4ac3dbbdf244ef24e1d3a57a0df87410a8aed322f2e3daf300cb2bc8a83b467e"
+    }
+  ],
+  "actualGun": {
+    "shots": 471,
+    "hits": 177,
+    "hitRate": 0.37579617834394907
+  },
+  "virtualGuns": [
+    {
+      "model": "LinearAimModel",
+      "hits": 148,
+      "shots": 438,
+      "hitRate": 0.3378995433789954
+    },
+    {
+      "model": "HeadOnAimModel",
+      "hits": 128,
+      "shots": 438,
+      "hitRate": 0.2922374429223744
+    }
+  ],
+  "data": {
+    "bot": "Retcon",
+    "botId": 2,
+    "roundsRecorded": 20,
+    "turnTimeoutMicros": 100000,
+    "computeBudgetMicros": 16666,
+    "turns": 7474,
+    "computeP50Micros": 20,
+    "computeP99Micros": 80,
+    "computeMaxMicros": 11259,
+    "overBudgetTurns": 0,
+    "skippedTurns": 0,
+    "skippedPerRound": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skippedTurnList": "",
+    "computeHistogram10us": "0:1113,10:4377,20:1127,30:403,40:177,50:102,60:65,70:41,80:14,90:9,100:10,110:4,120:2,130:3,140:1,150:1,160:3,170:1,180:3,200:1,240:1,280:1,390:1,400:1,430:1,460:1,580:1,650:1,800:1,850:1,1010:1,1080:1,1760:1,2950:1,3110:1,6760:1,11250:1",
+    "timing": {
+      "firesChecked": 471,
+      "firesNotCreated": 0,
+      "createdTurnMatches": 471,
+      "originMatches": 471,
+      "originMatchesAfterFirstMove": 0,
+      "headingMatches": 471,
+      "stillHitsChecked": 27,
+      "stillHitMatches": 27,
+      "hitsOnMovingTargets": 150,
+      "mismatches": ""
+    },
+    "waves": {
+      "firesDetected": 366,
+      "unanchoredShots": 0,
+      "hitsTaken": 35,
+      "hitsOnWave": 35,
+      "wavePowerCorrected": 0,
+      "waveHitsExact": 35,
+      "waveHitsOffByOneStep": 0,
+      "waveHitsOtherResidual": 0,
+      "waveMismatches": ""
+    },
+    "movement": {
+      "moveTurnsChecked": 7450,
+      "moveMatches": 7450,
+      "moveWallHitsChecked": 39,
+      "moveNotChecked": 23,
+      "moveMismatches": ""
+    },
+    "gun": {
+      "bulletsFired": 471,
+      "bulletHits": 177,
+      "virtualGuns": "LinearAimModel:148/438 HeadOnAimModel:128/438"
+    }
+  }
+}
