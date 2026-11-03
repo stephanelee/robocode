@@ -1,0 +1,49 @@
+name: Default TRAIN duel policy screen
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ready_for_review]
+permissions:
+  contents: read
+jobs:
+  screen:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'codex/default-duel-policy'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build source, validate credit and verify tracked JAR
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/committed.jar"
+          rm AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/committed.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p test_default_duel_policy_screen.py -v
+          mkdir -p build/default-policy-baseline
+          git archive 7104b65d03298caceb010a5bfd085bda65092d17 AISurvivor | tar -x -C build/default-policy-baseline
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run only the registered48 default TRAIN rounds
+        env:
+          CANDIDATE_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python tools/default_duel_policy_screen.py --previous-bot-dir build/default-policy-baseline/AISurvivor --candidate-source "$CANDIDATE_SOURCE" --java "$JAVA_HOME/bin/java" --output build/default-duel-policy
+      - name: Preserve every model, record and partial failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: default-duel-policy-screen
+          path: build/default-duel-policy/
+          if-no-files-found: warn
