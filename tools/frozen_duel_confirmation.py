@@ -49,10 +49,13 @@ def registration(commit):
 
 
 def run(args):
+    args.output, args.bot_dir, args.cache = args.output.resolve(), args.bot_dir.resolve(), args.cache.resolve()
     if args.output.exists():
         raise ValueError('Output must be new; never replace an attempt')
     args.output.mkdir(parents=True)
     games, layout, plan = registration(args.plan_commit)
+    (args.output / 'registered-plan.md').write_bytes(plan)
+    (args.output / 'registered-games.json').write_bytes(layout)
     report = dict(status='running', botSource=SOURCE, botJarSHA256=JAR,
         experimentSource=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
         registrationCommit=args.plan_commit, planSHA256=hashlib.sha256(plan).hexdigest(),
@@ -78,8 +81,8 @@ def run(args):
                 opponent_env={'RUMBLE_JAVA_CACHE': str(api_cache)}, retcon_source=source)
             output = args.output / game['gameId']; output.mkdir()
             battle = benchmark.battle(options, output, runner, output, 'Retcon', ['Retcon'], 'fixed-minrisk', 20, output / 'absent-model.dat')
-            if battle['metrics']['skippedTurns'] or battle['modelSHA256'] is not None:
-                raise ValueError('Confirmation requires zero AIS skips and no model writes')
+            if battle['metrics']['skippedTurns'] or battle['metrics']['checkpointLoaded'] or battle['modelSHA256'] is not None:
+                raise ValueError('Confirmation requires zero AIS skips and no model loads/writes')
             report['games'].append(dict(**game, battle=battle)); del report['inProgressGame']; save()
         report['status'] = 'complete'
     except BaseException as error:
@@ -89,6 +92,7 @@ def run(args):
 
 
 def aggregate(args):
+    args.input, args.output = args.input.resolve(), args.output.resolve()
     if args.output.exists():
         raise ValueError('Output must be new')
     games, layout, plan = registration(args.plan_commit)
