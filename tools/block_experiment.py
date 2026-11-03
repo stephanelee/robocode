@@ -66,6 +66,18 @@ def primary_decision(blocks, blocks_required, bound='z'):
     return dict(status='pass' if all(checks.values()) else 'fail', checks=checks, **s)
 
 
+def noninferiority_decision(blocks, blocks_required, bound='t'):
+    """Parity rule for behaviour-preserving changes: the one-sided 95% lower bound of the mean block delta must be at
+    least -5 pp, with no more skipped turns than the baseline and no material wall-rate increase."""
+    s = block_stats(blocks, bound)
+    prev, cand = s['arms']['previous'], s['arms']['candidate']
+    checks = dict(complete=len(blocks) == blocks_required,
+                  nonInferior=s['lowerBound95'] >= -0.05 - 1e-12,
+                  skippedNotMore=cand['skippedTurns'] <= prev['skippedTurns'],
+                  wallRate=cand['wallsPer1000Turns'] <= prev['wallsPer1000Turns'] + 10 + 1e-12)
+    return dict(status='pass' if all(checks.values()) else 'fail', checks=checks, **s)
+
+
 def online_decision(blocks, blocks_required, bound='z'):
     s = block_stats(blocks, bound)
     checks = dict(complete=len(blocks) == blocks_required,
@@ -81,9 +93,10 @@ def samples_pass(samples):
         row['candidate']['metrics']['skippedTurns'] == 0 for row in samples)
 
 
-def final_decision(primary, samples, online):
-    checks = dict(primary=primary['status'] == 'pass', samples=samples_pass(samples),
-                  online=online is not None and online['status'] == 'pass')
+def final_decision(primary, samples, online, online_required=True):
+    checks = dict(primary=primary['status'] == 'pass', samples=samples_pass(samples))
+    if online_required:
+        checks['online'] = online is not None and online['status'] == 'pass'
     return dict(status='retain' if all(checks.values()) else 'reject', checks=checks, onlineRun=online is not None)
 
 
@@ -119,6 +132,11 @@ def main():
     parser.add_argument('--sample-seed', type=int, required=True)
     parser.add_argument('--java', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--primary-rule', choices=('superiority', 'noninferiority'), default='superiority')
+    parser.add_argument('--policy', choices=('fixed-minrisk', 'train'), default='fixed-minrisk',
+                        help="Policy for the primary and sample stages; 'train' is the shipped default product")
+    parser.add_argument('--skip-online', action='store_true',
+                        help='Omit the online-training stage (redundant when the primary policy is already train)')
     parser.add_argument('--bound', choices=('z', 't'), default='z',
                         help="One-sided 95%% bound: 'z' reproduces v1, 't' is the PR #37 Student-t correction")
     args = parser.parse_args()
@@ -135,7 +153,8 @@ def main():
     report = dict(schemaVersion=1, status='running', plan=str(args.plan), planCommit=args.plan_commit,
                   previousSource=args.previous_source, candidateSource=args.candidate_source, bundleSHA256=hashes,
                   blocksPerArm=args.blocks, roundsPerBlock=args.rounds, seedBase=args.seed_base,
-                  sampleSeed=args.sample_seed, bound=args.bound, runtimeOS=retcon_stats.os_provenance(),
+                  sampleSeed=args.sample_seed, bound=args.bound, primaryRule=args.primary_rule, policy=args.policy,
+                  skipOnline=args.skip_online, runtimeOS=retcon_stats.os_provenance(),
                   primaryBlocks=[], samples=[], onlineBlocks=[])
     destination = output / 'experiment.json'
 
@@ -177,8 +196,9 @@ def main():
                 print(f"{name} block {index + 1}: previous={block['previous']['scoreShare']:.2%} "
                       f"candidate={block['candidate']['scoreShare']:.2%}", flush=True)
 
-        retcon_stage('primary', 'fixed-minrisk', 'primaryBlocks')
-        report['primary'] = primary_decision(report['primaryBlocks'], args.blocks, args.bound)
+        retcon_stage('primary', args.policy, 'primaryBlocks')
+        rule = noninferiority_decision if args.primary_rule == 'noninferiority' else primary_decision
+        report['primary'] = rule(report['primaryBlocks'], args.blocks, args.bound)
         report['primaryMechanism'] = retcon_mechanism(report['primaryBlocks'])
         save()
         archive = benchmark.download(cache, 'sample-bots-Java-1.4.0.zip', benchmark.ASSETS['sample-bots-Java-1.4.0.zip'])
@@ -194,16 +214,17 @@ def main():
                 config = argparse.Namespace(java=args.java, bot_dir=snapshots[arm], seed=args.sample_seed,
                     opponent_env={}, retcon_source=None, timeout=300, training_rounds=20, require_metrics=True)
                 row[arm] = benchmark.battle(config, arm_output, runner, samples, opponent, [opponent],
-                                            'fixed-minrisk', SAMPLE_ROUNDS, arm_output / 'absent-model.dat')
+                                            args.policy, SAMPLE_ROUNDS, arm_output / 'model.dat')
                 row[arm]['scoreShare'] = compare.score_share(row[arm])
                 save()
         online = None
-        if report['primary']['status'] == 'pass':
+        if report['primary']['status'] == 'pass' and not args.skip_online:
             retcon_stage('online', 'train', 'onlineBlocks')
             online = report['online'] = online_decision(report['onlineBlocks'], args.blocks, args.bound)
             report['onlineMechanism'] = retcon_mechanism(report['onlineBlocks'])
         compare.verify_snapshots(snapshots, hashes)
-        report.update(status='complete', decision=final_decision(report['primary'], report['samples'], online))
+        report.update(status='complete', decision=final_decision(report['primary'], report['samples'], online,
+                                                                 online_required=not args.skip_online))
         save()
         print(json.dumps(report['decision'], indent=2))
     except BaseException as error:
