@@ -9,7 +9,7 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.4.0";
+    static final String NAME="DiamondChallenger", VERSION="0.5.0";
     private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
     private final SplittableRandom random=new SplittableRandom(seed);
     private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
@@ -139,13 +139,15 @@ public class DiamondChallenger extends Bot {
                 gun.context().acceptedRound(),gun.confirmedLearnedShots(),gun.context().size());
         state=state.stripTrailing();
         state=state.substring(0,state.length()-1)+String.format(Locale.ROOT,
-                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s}%n",
-                waves.totalInferred(),waves.totalMatched(),Arrays.deepToString(waves.danger()));
+                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s,\"pairedAttempts\":%s,\"pairedHits\":%s,\"pairedPending\":%d}%n",
+                waves.totalInferred(),waves.totalMatched(),Arrays.deepToString(waves.danger()),
+                Arrays.toString(gun.pairedAttempts()),Arrays.toString(gun.pairedHits()),gun.pairedPending());
         row=row.stripTrailing();
         row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
-                ",\"inferredWaves\":%d,\"matchedHits\":%d,\"unmatchedHits\":%d,\"rejectedScanPairs\":%d,\"incomingHits\":%d,\"plannerDecisions\":%d,\"profileDecisions\":%d,\"cwDecisions\":%d,\"stopDecisions\":%d,\"ccwDecisions\":%d}%n",
+                ",\"inferredWaves\":%d,\"matchedHits\":%d,\"unmatchedHits\":%d,\"rejectedScanPairs\":%d,\"incomingHits\":%d,\"plannerDecisions\":%d,\"profileDecisions\":%d,\"cwDecisions\":%d,\"stopDecisions\":%d,\"ccwDecisions\":%d,\"pairedCreated\":%d,\"pairedCompleted\":%d,\"pairedDiscarded\":%d,\"pairedPending\":%d,\"supportedDecisions\":%d,\"gateEligibleDecisions\":%d}%n",
                 waves.inferred(),waves.matched(),waves.unmatched(),waves.rejected(),incomingHits,
-                plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions);
+                plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions,
+                gun.pairedCreatedRound(),gun.pairedCompletedRound(),gun.pairedDiscardedRound(),gun.pairedPending(),gun.supportedDecisions(),gun.gateEligibleDecisions());
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
             Path temporary=Files.createTempFile(model.getParent(),"challenger-",".tmp");

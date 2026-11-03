@@ -27,6 +27,7 @@ class DiagnosticTraceTest {
                         WaveSurfMove.choose(400,300,0,8,turn,500,300,List.of(threat),1,800,600,log));
             }
             assertArrayEquals(off.attempts(),on.attempts());assertArrayEquals(off.hits(),on.hits());
+            assertArrayEquals(off.pairedAttempts(),on.pairedAttempts());assertArrayEquals(off.pairedHits(),on.pairedHits());
             assertEquals(off.context().snapshot(),on.context().snapshot());
             log.finishRound(180,0,0,0);
         }
