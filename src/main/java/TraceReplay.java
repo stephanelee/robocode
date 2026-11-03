@@ -60,10 +60,7 @@ final class TraceReplay {
                     header.get("seed").getAsLong(), modelPath, header.get("fixedAction").getAsInt(), null,
                     BotConfig.DuelPolicy.valueOf(header.get("duelPolicy").getAsString()));
             ReplayPort port = new ReplayPort();
-            String movement=header.has("movementPolicy")?header.get("movementPolicy").getAsString():"accepted-duelsurf";
-            if(!movement.equals("accepted-duelsurf")&&!movement.equals("breakwater-v1")&&!movement.equals("breakwater-v2-selective-fire"))
-                throw new IOException("Unsupported movement policy: "+movement);
-            SurvivorBrain brain = new SurvivorBrain(port, config, LegalScanRecorder.fromEnvironment(Map.of()),!movement.equals("accepted-duelsurf"),movement.equals("breakwater-v2-selective-fire"));
+            SurvivorBrain brain = new SurvivorBrain(port, config, LegalScanRecorder.fromEnvironment(Map.of()));
             int batches = 0, line = 1, started = 0, ended = 0;
             boolean gameEnded = false;
             String text;

@@ -75,3 +75,36 @@ The Retcon t bound relies on sparse game-level assumptions; no IID-round inferen
 ## Review, evidence and promotion
 
 Publish exact source/JAR and immutable registration before games; independent reviewer clearance of the exact implementation/driver/workflow authorizes execution. Implementers never self-merge. Record all raw rows, official outcomes, logs, private endpoint models, executed tooling, runtime/source/opponent/asset hashes, failed attempts and decision output. Update docs/improvements.md, this report and issue53 after the experiment. A reject restores production gameplay/JAR and preserves the candidate patch/artifact/evidence. A retain still needs independent result audit and all protected-master required checks before merge. No force push, evidence rewrite or AI/Codex author trailers.
+
+
+## Measured outcome: reject at the 90-round screen
+
+The sole [run41730684973](https://github.com/stephanelee/robocode/actions/runs/41730684973), execution9c76456ec85216e38b0b0ef57f22709e34764f70, completed all9screen games/90physical rounds. Both AIS arms produced100raw rows and10distinct cold finite counter10 checkpoints; two private Breakwater endpoints and two complete Retcon exports are preserved. All AIS and Breakwater recorded skips were zero. The frozen decision is **reject-at-screen**, with **zero of540conditional confirmation rounds played**. The original canonical report and all gates remain unchanged.
+
+| Opponent | Accepted share / official wins | Candidate share / official wins | Share gain |
+| --- | --- | --- | --- |
+| Breakwater0.3 |27.007299% /0of10 |35.714286% /3of10 |+8.706986pp |
+| Retcon |77.376426% /9of10 |67.830882% /9of10 |-9.545544pp |
+| Diamond Port |4.942966% /0of10 |0% /0of10 |-4.942966pp |
+| Adaptive Prime |25.383707% /1of10 |15.574302% /2of10 |-9.809405pp |
+| Direct head-to-head |25% /0of10 |75% /10of10 |Same-game candidate share75% |
+
+Exactly five checks failed: Breakwater winning share and wins, Retcon relative noninferiority, advanced-opponent individual noninferiority, and advanced mean noninferiority. Breakwater's gain alone passed; its35.7%share/3wins did not meet the registered winning requirements. Retcon's absolute share/win guard passed but its-9.55pp relative guard failed. Diamond narrowly remained within its-5pp individual floor, but Adaptive did not; the equal-opponent mean gain was negative. Self, wall-rate and zero-skip checks passed. These positive checks cannot waive the failures.
+
+The guard was active and severely restrictive:
+
+| Candidate game | Old-fire eligible | Passed / blocked | Confirmed shots / hits |
+| --- | --- | --- | --- |
+| Breakwater |9526 |5 /9521 |5 /0 |
+| Retcon |7723 |15 /7708 |15 /9 |
+| Diamond |8607 |0 /8607 |0 /0 |
+| Adaptive |6788 |1 /6787 |1 /0 |
+| Self |10739 |0 /10739 |0 /0 |
+
+No zero-energy finisher proposals were recorded. Every row's counters reconcile; proposal passes are not generally confirmed shots, although totals coincide here. Candidate damage dealt/taken was0/19.95 against Breakwater,89.200001/157.8 against Retcon,0/1008.741826 against Diamond,0/860.8 against Adaptive and0/200.4 in self. These are raw callback telemetry, not a complete official damage ledger. Source and observed counts establish starvation in this cohort, not why every round ended or that any untested relaxation would help.
+
+Official first places remain primary as registered. Raw AIS won flags differ from official counts: Breakwater candidate2vs3; Retcon accepted7vs9 and candidate7vs9; self candidate6vs10. The Breakwater opponent against accepted AIS records7raw won flags versus10official first places; its independent endpoint/round official increments reconcile. Raw records are preserved without correction. No unrecorded callback order is inferred from these aggregates.
+
+All956original file payloads are retained losslessly as550SHA-addressed unique payloads, including every endpoint, staged JAR/source/script/cache and native export. [Archive and offline reproduction](../../benchmarks/ais-breakwater-selective-transfer-v2/README.md). Original service ZIP SHA256f953c44b769d89f0721916c5ac87a83e650afaa4a2af389fcc4ceea579e7a0e0 matches artifact13276183049. The exact executed workflow/tooling and candidate binary-capable patch remain available after workflow retirement.
+
+Production source/tests/bundle are restored byte-for-byte to accepted9b1624/JARb41b; no failed gameplay is promoted. V1's separate90-round rejection and all original bytes remain unchanged. No game pooling, favorable replacement, threshold waiver, new tuning or further candidate is authorized by this result. One unpaired10-round game per arm/opponent and one self game are development screening only, not universal rankings or an isolated causal test of movement, selectivity or learning. No fresh confirmation occurred.

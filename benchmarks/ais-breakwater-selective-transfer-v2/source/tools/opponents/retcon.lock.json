@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "name": "Retcon",
+  "version": "0.2.0",
+  "repository": "robocode-dev/rumble-bots",
+  "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+  "sourcePath": "bots/java/Retcon",
+  "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+  "license": "MIT",
+  "authors": [
+    "Flemming N. Larsen"
+  ],
+  "botApi": {
+    "version": "1.3.1",
+    "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+    "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+  },
+  "files": [
+    {
+      "path": "Retcon.cmd",
+      "gitBlobSHA": "fc31c87fa1abb83badf3e3d6b743b36516245339",
+      "size": 1274
+    },
+    {
+      "path": "Retcon.json",
+      "gitBlobSHA": "421a367a87e902540fcb77ca6bd68489d9ffaa41",
+      "size": 394
+    },
+    {
+      "path": "Retcon.sh",
+      "gitBlobSHA": "d191d1e05325eeb54fb8ad8000ff2ee10e0c1ba6",
+      "size": 1249
+    },
+    {
+      "path": "src/fnl/bots/framework/adapter/tankroyale/TankRoyaleAngles.java",
+      "gitBlobSHA": "82bcd78ba973f86b5b1444f68fc3abe1b1b20735",
+      "size": 612
+    },
+    {
+      "path": "src/fnl/bots/framework/adapter/tankroyale/TankRoyaleBot.java",
+      "gitBlobSHA": "058ef74ba1c90245f7a24fdd10403610b8a9e925",
+      "size": 10615
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/Actuator.java",
+      "gitBlobSHA": "70664570d6941bd89c1b9e1816bf7a29b1c271fb",
+      "size": 220
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/Arbiter.java",
+      "gitBlobSHA": "abafeef055713dca6a7955567b4c137d80d2dc0c",
+      "size": 2678
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/BodyCommand.java",
+      "gitBlobSHA": "fef7bbfd84171b676a38c923c077679b43fd6f49",
+      "size": 333
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/FireCommand.java",
+      "gitBlobSHA": "e94b4b58922117003ca94875387867d8a0c35ba2",
+      "size": 242
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/GunCommand.java",
+      "gitBlobSHA": "8a6c390ce025f905855f191df71209889b01e90a",
+      "size": 269
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/Intent.java",
+      "gitBlobSHA": "bf2e3103acb0e6040ed070e67ec9086cb14cbbd0",
+      "size": 668
+    },
+    {
+      "path": "src/fnl/bots/framework/arbitration/RadarCommand.java",
+      "gitBlobSHA": "6af373657987d333e31a8de61d996f8d4077c8d5",
+      "size": 272
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/Blackboard.java",
+      "gitBlobSHA": "b3a4cc046df0a08231e9bc3385e663fef04f22f7",
+      "size": 2044
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemiesView.java",
+      "gitBlobSHA": "e17ccb31e5f6144056faf41364d031946571b95a",
+      "size": 588
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyState.java",
+      "gitBlobSHA": "3e9cfa28a0e0e10476dce405e9ea0e5832b3fe9a",
+      "size": 1426
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyTable.java",
+      "gitBlobSHA": "1b58e878d6a278f048027ff620715f5914d78dfd",
+      "size": 1908
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyView.java",
+      "gitBlobSHA": "abf997c5efb4c2b9e65d16d15a0f728c6021a335",
+      "size": 702
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyWave.java",
+      "gitBlobSHA": "dc6a5a2278a207988784f909157c34179f4cf1ae",
+      "size": 2000
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyWaveView.java",
+      "gitBlobSHA": "32b9b4cd36e3765d16dc29ee8443f4b635a4915f",
+      "size": 1159
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyWaves.java",
+      "gitBlobSHA": "882b1174ffdaefc9c90f296b32f10e2a7222a1ca",
+      "size": 2144
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/EnemyWavesView.java",
+      "gitBlobSHA": "35143ba349e1757440c7437578dd2ead0f259360",
+      "size": 711
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/GunStats.java",
+      "gitBlobSHA": "411b6c373be52c0a9634fcf8bbe03624d89a39db",
+      "size": 765
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/GunStatsView.java",
+      "gitBlobSHA": "35768a1d5e55d0fc6a5cc3b56cf6647f35edad17",
+      "size": 643
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/ModeKind.java",
+      "gitBlobSHA": "f8209cf592fd2129e9987812f7adda658d981b02",
+      "size": 178
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/ModeState.java",
+      "gitBlobSHA": "c6fcb0054ab03054e07c197c795864919e120f87",
+      "size": 508
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/ModeView.java",
+      "gitBlobSHA": "2a41a53bc8dee3abd38fd758c200eceb6c1ded5a",
+      "size": 208
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/SelfState.java",
+      "gitBlobSHA": "ca73d1a5ad36882bc2788f3878d324dc740f1bed",
+      "size": 1078
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/SelfView.java",
+      "gitBlobSHA": "ceb4f424cba7d7399c502d6ea9b7994c5c5ff967",
+      "size": 371
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/Slot.java",
+      "gitBlobSHA": "f207d78e20bb5a76049272a48c7f2cb108c6f1d8",
+      "size": 1356
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/TargetState.java",
+      "gitBlobSHA": "31ba581414cb05c9568ab92366eb2bbba350622f",
+      "size": 297
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/TargetView.java",
+      "gitBlobSHA": "d86db0c0328bdfc38ca51416e07688076e1ad539",
+      "size": 304
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/TurnState.java",
+      "gitBlobSHA": "c18040e161beb604645be1d6acba7133ef5480b5",
+      "size": 720
+    },
+    {
+      "path": "src/fnl/bots/framework/blackboard/TurnView.java",
+      "gitBlobSHA": "3486c6e70f9d701e67c2094750bfe9ed32d405e3",
+      "size": 759
+    },
+    {
+      "path": "src/fnl/bots/framework/geom/Angles.java",
+      "gitBlobSHA": "3b3584be738bf8ef9266ce33d76801c071fe6407",
+      "size": 1399
+    },
+    {
+      "path": "src/fnl/bots/framework/geom/Geom.java",
+      "gitBlobSHA": "7622b2fbf8f073ff65903ae2c277c302de40fd8f",
+      "size": 1337
+    },
+    {
+      "path": "src/fnl/bots/framework/geom/Vec2.java",
+      "gitBlobSHA": "40726ca5f582a0b00a34445ebcfa0cf16f2d0a9a",
+      "size": 686
+    },
+    {
+      "path": "src/fnl/bots/framework/motion/Drive.java",
+      "gitBlobSHA": "3b81ecf4fc67ad38d2cb7eedeed0728002f7a9ef",
+      "size": 1556
+    },
+    {
+      "path": "src/fnl/bots/framework/motion/MovementPredictor.java",
+      "gitBlobSHA": "87fe272baccc86d2b98e7f180c47a1e136046e6b",
+      "size": 2130
+    },
+    {
+      "path": "src/fnl/bots/framework/motion/PredictedState.java",
+      "gitBlobSHA": "ded02a0f82a1ded4069a227429e5fe001d13d0e5",
+      "size": 979
+    },
+    {
+      "path": "src/fnl/bots/framework/motion/WallSmoothing.java",
+      "gitBlobSHA": "2e2b704ff30f4d0b607008e89f416f833cc35d18",
+      "size": 1966
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/BotProgram.java",
+      "gitBlobSHA": "3682752c1996ce7e500e6904f8d4da4d4fa7be01",
+      "size": 576
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/Phase.java",
+      "gitBlobSHA": "096a6328ec029e7a868693332d93c86e83a956dd",
+      "size": 444
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/Pipeline.java",
+      "gitBlobSHA": "e1d2c373c675d6c036499e658d5b87d24ca2b022",
+      "size": 3343
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/SenseStage.java",
+      "gitBlobSHA": "5d1a163f8fbf2f53270d5c3675f4cd83f7aced55",
+      "size": 411
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/Stage.java",
+      "gitBlobSHA": "0f9f784a1a848a70e6654de594e0863e207c13d8",
+      "size": 426
+    },
+    {
+      "path": "src/fnl/bots/framework/pipeline/Warmup.java",
+      "gitBlobSHA": "3f1d832169c6a177de97b6514d8187d4420792d0",
+      "size": 2586
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/AimModel.java",
+      "gitBlobSHA": "304fe50c9591d453a01b0d10e3b6fd6661b8f34b",
+      "size": 526
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/AimSelector.java",
+      "gitBlobSHA": "5a28116c480d8ed867b44b2113302e47f29a5416",
+      "size": 304
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/Collector.java",
+      "gitBlobSHA": "d9870388a7c59a91589bc795033d42691ebfb8ba",
+      "size": 1105
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/FirePower.java",
+      "gitBlobSHA": "0d1b2f60a9ab5f39d6cf83d14e1872409eb3cf7d",
+      "size": 347
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/Gun.java",
+      "gitBlobSHA": "69743bd601fc96cd3cb4b67ed8b61acc8ebe645b",
+      "size": 2824
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/Mode.java",
+      "gitBlobSHA": "79d24f00a43b12abe7c6354751360ef9b4644f63",
+      "size": 270
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/Movement.java",
+      "gitBlobSHA": "3c399e524eb10399fdad75c35eb031ee05492fe1",
+      "size": 309
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/Radar.java",
+      "gitBlobSHA": "668cc8c1205af71e54ad8842750690964b5e9da3",
+      "size": 299
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/StrategySet.java",
+      "gitBlobSHA": "312a3f504293dfdd64c4d82bc1737ce026917e5d",
+      "size": 620
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/TargetSelector.java",
+      "gitBlobSHA": "739d81391d87905827ccf60ffe61bed7def739d9",
+      "size": 358
+    },
+    {
+      "path": "src/fnl/bots/framework/roles/TeamComms.java",
+      "gitBlobSHA": "341c6d530de300f56111f88f4c9d8b5f81c66892",
+      "size": 344
+    },
+    {
+      "path": "src/fnl/bots/framework/rules/Rules.java",
+      "gitBlobSHA": "14b9e575d0b83ac27af8e1f17bacf4f7b52e898d",
+      "size": 14667
+    },
+    {
+      "path": "src/fnl/bots/framework/sense/BulletRecord.java",
+      "gitBlobSHA": "6ef9ed245e3c0c49b249099e105fd4e492133ff2",
+      "size": 602
+    },
+    {
+      "path": "src/fnl/bots/framework/sense/GameInfo.java",
+      "gitBlobSHA": "14ddda0ab93e8f0551ea08b1a61983bb2e1fd9f5",
+      "size": 775
+    },
+    {
+      "path": "src/fnl/bots/framework/sense/ScanRecord.java",
+      "gitBlobSHA": "4b3f564b9a024575b342e7d31f926c462972700f",
+      "size": 310
+    },
+    {
+      "path": "src/fnl/bots/framework/sense/TurnInput.java",
+      "gitBlobSHA": "3e58d76354d85aa5af0b6a770632e930611b8434",
+      "size": 4127
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/CollectStage.java",
+      "gitBlobSHA": "f25028ebf0861c33e1df77a66f49f5cb5b0e15f3",
+      "size": 911
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/EnemyFireSense.java",
+      "gitBlobSHA": "db994b35a56435da446aaf6fcbd13c136f76629d",
+      "size": 10928
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/EnemySense.java",
+      "gitBlobSHA": "712fe55927cf6c4942733845cacd6045240f609d",
+      "size": 2122
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/GunStage.java",
+      "gitBlobSHA": "a361034cc77d4b2d4fec7d3627b5c74602b6048f",
+      "size": 1195
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/ModeStage.java",
+      "gitBlobSHA": "234e2b084089de4868adb8a88b1b84d9dffcac3e",
+      "size": 885
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/MovementStage.java",
+      "gitBlobSHA": "606730408f5a8fcf9c6d37b7e3ce72707da8c17f",
+      "size": 797
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/RadarStage.java",
+      "gitBlobSHA": "d00d56c5103044bfe79218d30361dc07fd0f5715",
+      "size": 789
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/SelfSense.java",
+      "gitBlobSHA": "28c1b67364a94085b72fa6d3fef0f1f730af878b",
+      "size": 2630
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/StandardPipeline.java",
+      "gitBlobSHA": "6758ff1c81a9569059dae96cbcfe07eab58582cc",
+      "size": 2127
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/Strategies.java",
+      "gitBlobSHA": "7e6981ebd45d35f74343e0d6cdb10c9a7670915d",
+      "size": 1485
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/TargetStage.java",
+      "gitBlobSHA": "edfb74565c46ad8323d99aeab2a933c590f74ce9",
+      "size": 782
+    },
+    {
+      "path": "src/fnl/bots/framework/stages/TeamStage.java",
+      "gitBlobSHA": "6707c5bc4ef426827cb2d6728c2749c6705f06f8",
+      "size": 905
+    },
+    {
+      "path": "src/fnl/bots/framework/stats/MovementProbe.java",
+      "gitBlobSHA": "7467e135363dbf1be5ac42c4c608055d8d91196e",
+      "size": 4146
+    },
+    {
+      "path": "src/fnl/bots/framework/stats/StatsWriter.java",
+      "gitBlobSHA": "be9246b2c16bc610b331b5451a01562a7199b3b9",
+      "size": 6409
+    },
+    {
+      "path": "src/fnl/bots/framework/stats/TimingProbe.java",
+      "gitBlobSHA": "76dfa813c1c468d9234226163293808d177c67f5",
+      "size": 6892
+    },
+    {
+      "path": "src/fnl/bots/framework/stats/TurnStats.java",
+      "gitBlobSHA": "1ce407331e239477bc93f33f15c3915af7c070e6",
+      "size": 4331
+    },
+    {
+      "path": "src/fnl/bots/framework/stats/WaveProbe.java",
+      "gitBlobSHA": "b03df2c762cf1e01ee41681e28baafaccd69bced",
+      "size": 2125
+    },
+    {
+      "path": "src/fnl/bots/framework/targeting/VirtualBullets.java",
+      "gitBlobSHA": "b62c5f6bba950879036014af624490df093a9467",
+      "size": 4835
+    },
+    {
+      "path": "src/fnl/bots/framework/team/TeamInbox.java",
+      "gitBlobSHA": "80582121d36b3133b83361a2f8406bc017b7a2ce",
+      "size": 534
+    },
+    {
+      "path": "src/fnl/bots/framework/team/TeamOutbox.java",
+      "gitBlobSHA": "e7380856c10b3ac8b170edabfad025be54b8bc12",
+      "size": 893
+    },
+    {
+      "path": "src/fnl/bots/retcon/Retcon.java",
+      "gitBlobSHA": "6beb136046889d76596b7050e1159204b265ff0e",
+      "size": 3006
+    },
+    {
+      "path": "src/fnl/bots/retcon/firepower/BasicFirePower.java",
+      "gitBlobSHA": "0179d167efcce3515dc1721625ef1760d4db6653",
+      "size": 1560
+    },
+    {
+      "path": "src/fnl/bots/retcon/gun/BestHitRateSelector.java",
+      "gitBlobSHA": "5792cce3794cb72461f9da9b83b6d0579a044b98",
+      "size": 940
+    },
+    {
+      "path": "src/fnl/bots/retcon/gun/HeadOnAimModel.java",
+      "gitBlobSHA": "c74c89aeb0175985bed0456abbd455c037ef156a",
+      "size": 638
+    },
+    {
+      "path": "src/fnl/bots/retcon/gun/LinearAimModel.java",
+      "gitBlobSHA": "ab39ac33768208da54852c28fb6c6ec011c38235",
+      "size": 1723
+    },
+    {
+      "path": "src/fnl/bots/retcon/mode/AliveCountMode.java",
+      "gitBlobSHA": "e2baa0a654f956f5adb4fa3e7fd34e130fff2f4e",
+      "size": 823
+    },
+    {
+      "path": "src/fnl/bots/retcon/movement/OrbitMovement.java",
+      "gitBlobSHA": "e0af277b411df5ec0650241e715a85ec6864fe1e",
+      "size": 5356
+    },
+    {
+      "path": "src/fnl/bots/retcon/movement/WaveSurfMovement.java",
+      "gitBlobSHA": "253b45409d8756f226b5aa417e1fa6b235b89f68",
+      "size": 6722
+    },
+    {
+      "path": "src/fnl/bots/retcon/radar/PerfectLockRadar.java",
+      "gitBlobSHA": "b90b4f845f8b0d05785f7f7fbbee6e368aa266de",
+      "size": 1762
+    },
+    {
+      "path": "src/fnl/bots/retcon/radar/SpinRadar.java",
+      "gitBlobSHA": "afe5bd96f315f87bdb30be9925a925320a22973c",
+      "size": 611
+    },
+    {
+      "path": "src/fnl/bots/retcon/target/ClosestTargetSelector.java",
+      "gitBlobSHA": "0214f96e3c2d77138f3c5e288f81fc18b8af1b76",
+      "size": 1262
+    },
+    {
+      "path": "src/fnl/bots/retcon/team/NoOpTeamComms.java",
+      "gitBlobSHA": "4ad0870d7e888694abad806970980c7bf69e436e",
+      "size": 597
+    }
+  ]
+}
