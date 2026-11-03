@@ -184,6 +184,7 @@ public class AISurvivor extends Bot {
         pendingTargetingWave = null;
         enemyWaves.clear();
         ownHistory.clear();
+        tickReceivedNanos = 0;  // never measure across the pause between rounds
         duelSign      = 1;
         duelGun.startRound();
         pendingDuelShot = false;
