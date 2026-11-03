@@ -10,7 +10,8 @@ This audit covers master `e4e4c94` after PRs #38–#46. It separates facts, each
   - The first default confirmation ([#44](improvements/final-default-confirmation.md)) was invalidated by **one** skipped turn, and its cause was never established.
   - In the development probe above, the melee game also recorded one skipped turn.
   - A profiled rerun located it at **round 1, turn 1**. Decision-loop compute peaked at 40 ms on turn 2 and 21 ms on turn 76 of round 1, and almost all later turns took a few milliseconds.
-  - The benchmark turn timeout is 100 ms (`tools/BenchmarkBattle.java`). The decision algorithms are cheap once warm, so the cold-JVM start of the game (class loading and JIT of the decision code and event handlers) is the leading hypothesis. Before this PR, per-turn latency was not recorded at all.
+  - The benchmark turn timeout is 100 ms (`tools/BenchmarkBattle.java`). Before this PR, per-turn latency was not recorded at all.
+  - **Update after the registered check** ([warm-up reliability](improvements/warmup-reliability.md)): the cold-start-of-our-code hypothesis is **not supported**. In CI every melee game skipped exactly one round-1 turn in both arms, while AISurvivor's own decision latency never exceeded 12.3 ms. In an exploratory local test, a do-nothing probe bot also skipped round 1, turn 1. The round-1 melee skip is a multi-bot game-start effect. The #44 1v1 skip at round 4 is a separate, still unexplained event, now attributable through the new latency telemetry.
 
 ## Architecture findings (facts)
 
@@ -38,7 +39,7 @@ This audit covers master `e4e4c94` after PRs #38–#46. It separates facts, each
 - **Pre-game warm-up.** `Warmup.run` exercises the per-turn decision code 3,000 times in the bot constructor, before it connects. On the local machine this took about 285 ms.
   - It touches only pure functions and throwaway instances with their own fixed seed.
   - A test shows an agent created after warm-up makes identical decisions to one created without it.
-  - The warm-up's effect on skipped turns is measured under a registered protocol; see [warm-up reliability](improvements/warmup-reliability.md).
+  - Registered result: **retain-neutral**. It neither reduced nor increased skips (15/15 skipping melee games in both arms; 0/15 for Retcon), so no reliability effect is claimed.
 
 ## Recommended order for the larger rewrite
 
