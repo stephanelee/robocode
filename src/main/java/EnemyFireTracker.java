@@ -13,6 +13,16 @@ final class EnemyFireTracker {
         record(botId, turn, 3 * power);
     }
 
+    // Pinned 1.4.0 engine scans before applying bullet impacts. These corrections
+    // become visible at k+1; firing costs and wall/ram events are not shifted.
+    void recordBulletDamage(int botId, int eventTurn, double damage) {
+        recordDamage(botId, eventTurn + 1, damage);
+    }
+
+    void recordBulletHitBonus(int botId, int eventTurn, double power) {
+        recordHitBonus(botId, eventTurn + 1, power);
+    }
+
     private void record(int botId, int turn, double amount) {
         corrections.computeIfAbsent(botId, ignored -> new HashMap<>())
                 .merge(turn, amount, Double::sum);

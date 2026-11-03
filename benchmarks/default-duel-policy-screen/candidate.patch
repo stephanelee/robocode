@@ -1,0 +1,254 @@
+diff --git a/src/main/java/AISurvivor.java b/src/main/java/AISurvivor.java
+index 6a44fdb..685d769 100644
+--- a/src/main/java/AISurvivor.java
++++ b/src/main/java/AISurvivor.java
+@@ -144,7 +144,11 @@ public class AISurvivor extends Bot {
+             if (scanRecorder.enabled()) recordLegalFrame();
+ 
+             double[] features = encodeFeatures();
+-            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false);
++            boolean duelEligible = getEnemyCount() == 1 && enemies.size() == 1;
++            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false, duelEligible);
++            metrics.actionCounts[action]++;
++            if (duelEligible) metrics.duelEligibleTurns++;
++            if (duelEligible && config.forceDuel()) metrics.forcedDuelTurns++;
+             metrics.reward += SURVIVAL_BONUS;
+             round.pendingReward = 0.0;
+ 
+diff --git a/src/main/java/BotConfig.java b/src/main/java/BotConfig.java
+index b7149b3..47366ea 100644
+--- a/src/main/java/BotConfig.java
++++ b/src/main/java/BotConfig.java
+@@ -2,10 +2,16 @@ import java.nio.file.Path;
+ import java.util.Map;
+ 
+ /** Runtime settings shared by interactive launches and automated benchmarks. */
+-record BotConfig(Mode mode, long seed, Path modelPath, int fixedAction, Path metricsPath) {
++record BotConfig(Mode mode, long seed, Path modelPath, int fixedAction, Path metricsPath, DuelPolicy duelPolicy) {
+     enum Mode { TRAIN, EVAL, FIXED }
++    enum DuelPolicy { CONTROLLER, LEARNED }
++
++    BotConfig(Mode mode, long seed, Path modelPath, int fixedAction, Path metricsPath) {
++        this(mode, seed, modelPath, fixedAction, metricsPath, DuelPolicy.CONTROLLER);
++    }
+ 
+     boolean training() { return mode == Mode.TRAIN; }
++    boolean forceDuel() { return training() && duelPolicy == DuelPolicy.CONTROLLER; }
+ 
+     static BotConfig fromEnvironment(Map<String, String> env) {
+         Mode mode;
+@@ -22,6 +28,9 @@ record BotConfig(Mode mode, long seed, Path modelPath, int fixedAction, Path met
+         Path metricsPath = metrics == null ? null : Path.of(metrics);
+         if (metricsPath != null && model.toAbsolutePath().normalize().equals(metricsPath.toAbsolutePath().normalize()))
+             throw new IllegalArgumentException("Model and metrics paths must differ");
+-        return new BotConfig(mode, seed, model, action, metricsPath);
++        DuelPolicy duel;
++        try { duel = DuelPolicy.valueOf(env.getOrDefault("AISURVIVOR_DUEL_POLICY", "controller").toUpperCase(java.util.Locale.ROOT)); }
++        catch (IllegalArgumentException ex) { throw new IllegalArgumentException("AISURVIVOR_DUEL_POLICY must be controller or learned", ex); }
++        return new BotConfig(mode, seed, model, action, metricsPath, duel);
+     }
+ }
+diff --git a/src/main/java/DQNAgent.java b/src/main/java/DQNAgent.java
+index b829bfc..6b99d66 100644
+--- a/src/main/java/DQNAgent.java
++++ b/src/main/java/DQNAgent.java
+@@ -47,8 +47,15 @@ final class DQNAgent {
+     }
+ 
+     int observe(double[] features, double reward, boolean done) {
++        return observe(features, reward, done, false);
++    }
++
++    int observe(double[] features, double reward, boolean done, boolean duelEligible) {
++        // Decide the hierarchy before crediting the prior transition; never sample then execute another action.
++        boolean forced = config.forceDuel() && duelEligible;
++        int action = forced ? 0 : -1;
+         if (config.training() && lastFeatures != null) {
+-            store(lastFeatures, lastAction, reward, features, done);
++            store(lastFeatures, lastAction, reward, features, done, forced);
+             if (replay.size() >= MIN_REPLAY) replayLearn();
+         }
+ 
+@@ -58,7 +65,7 @@ final class DQNAgent {
+         }
+ 
+         lastQValues = policy.forward(features);
+-        int action = config.mode() == BotConfig.Mode.FIXED ? config.fixedAction()
++        if (!forced) action = config.mode() == BotConfig.Mode.FIXED ? config.fixedAction()
+                 : config.training() ? boltzmann(lastQValues) : greedy(lastQValues);
+         lastFeatures = features.clone();
+         lastAction = action;
+@@ -68,7 +75,7 @@ final class DQNAgent {
+     void finishEpisode(double reward) {
+         if (lastFeatures == null) return;
+         if (config.training()) {
+-            store(lastFeatures, lastAction, reward, lastFeatures, true);
++            store(lastFeatures, lastAction, reward, lastFeatures, true, false);
+             if (replay.size() >= MIN_REPLAY)
+                 for (int i = 0; i < BATCH * 3; i++) replayLearnOne();
+             totalRounds++;
+@@ -84,14 +91,16 @@ final class DQNAgent {
+         return best;
+     }
+ 
+-    private void store(double[] f, int a, double r, double[] nf, boolean done) {
++    private void store(double[] f, int a, double r, double[] nf, boolean done, boolean nextForced) {
+         int fLen = f.length;
+-        double[] entry = new double[fLen * 2 + 3];
++        double[] entry = new double[fLen * 2 + 4];
+         System.arraycopy(f, 0, entry, 0, fLen);
+         entry[fLen] = a;
+         entry[fLen + 1] = r;
+         System.arraycopy(nf, 0, entry, fLen + 2, fLen);
+         entry[fLen * 2 + 2] = done ? 1.0 : 0.0;
++        // Replay is transient and never serialized. Preserve the constrained next-state TD action set.
++        entry[fLen * 2 + 3] = nextForced ? 1.0 : 0.0;
+ 
+         if (replay.size() < REPLAY_CAP) {
+             replay.add(entry);
+@@ -122,7 +131,8 @@ final class DQNAgent {
+         } else {
+             double[] nq = target.forward(nf);
+             double mx = nq[0];
+-            for (int i = 1; i < nq.length; i++) if (nq[i] > mx) mx = nq[i];
++            if (entry[fLen * 2 + 3] == 0)
++                for (int i = 1; i < nq.length; i++) if (nq[i] > mx) mx = nq[i];
+             tgt = r + GAMMA * mx;
+         }
+         policy.trainSingle(f, a, tgt, LR);
+diff --git a/src/main/java/RoundMetrics.java b/src/main/java/RoundMetrics.java
+index 153c2ac..cf6c987 100644
+--- a/src/main/java/RoundMetrics.java
++++ b/src/main/java/RoundMetrics.java
+@@ -5,11 +5,15 @@ import java.util.Locale;
+ /** One JSON object per completed round; enabled only with an explicit output path. */
+ final class RoundMetrics {
+     int shotsFired, bulletHits, wallCollisions, botCollisions, skippedTurns;
++    final int[] actionCounts = new int[6];
++    int forcedDuelTurns, duelEligibleTurns;
+     double damageDealt, damageTaken, reward;
+ 
+     void reset() {
+         shotsFired = bulletHits = wallCollisions = botCollisions = skippedTurns = 0;
+         damageDealt = damageTaken = reward = 0;
++        java.util.Arrays.fill(actionCounts, 0);
++        forcedDuelTurns = duelEligibleTurns = 0;
+     }
+ 
+     void write(BotConfig config, int round, int turns, int totalRounds,
+@@ -29,11 +33,14 @@ final class RoundMetrics {
+                 "{\"schemaVersion\":1,\"round\":%d,\"turns\":%d,\"mode\":\"%s\",\"seed\":%d,\"action\":%s,"
+                 + "\"totalRounds\":%d,\"checkpointLoaded\":%s,\"shotsFired\":%d,\"bulletHits\":%d,"
+                 + "\"hitRate\":%.6f,\"damageDealt\":%.6f,\"damageTaken\":%.6f,\"wallCollisions\":%d,"
+-                + "\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"reward\":%.6f}",
++                + "\"botCollisions\":%d,\"skippedTurns\":%d,\"won\":%s,\"died\":%s,\"reward\":%.6f,"
++                + "\"duelPolicy\":\"%s\",\"actionCounts\":%s,\"duelEligibleTurns\":%d,\"forcedDuelTurns\":%d}",
+                 round, turns, config.mode().name().toLowerCase(Locale.ROOT), config.seed(),
+                 config.mode() == BotConfig.Mode.FIXED ? Integer.toString(config.fixedAction()) : "null",
+                 totalRounds, checkpointLoaded, shotsFired, bulletHits,
+                 shotsFired == 0 ? 0 : (double) bulletHits / shotsFired, damageDealt, damageTaken,
+-                wallCollisions, botCollisions, skippedTurns, won, died, reward);
++                wallCollisions, botCollisions, skippedTurns, won, died, reward,
++                config.duelPolicy().name().toLowerCase(Locale.ROOT), java.util.Arrays.toString(actionCounts),
++                duelEligibleTurns, forcedDuelTurns);
+     }
+ }
+diff --git a/src/test/java/DefaultDuelPolicyTest.java b/src/test/java/DefaultDuelPolicyTest.java
+new file mode 100644
+index 0000000..036f53b
+--- /dev/null
++++ b/src/test/java/DefaultDuelPolicyTest.java
+@@ -0,0 +1,93 @@
++import com.google.gson.JsonParser;
++import java.lang.reflect.Method;
++import java.nio.file.Path;
++import java.util.Map;
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++import static org.mockito.ArgumentMatchers.*;
++import static org.mockito.Mockito.*;
++
++class DefaultDuelPolicyTest {
++    private BotConfig config(BotConfig.Mode mode, BotConfig.DuelPolicy policy) {
++        return new BotConfig(mode, 20261701, Path.of("unused-duel-policy-test"), 3, null, policy);
++    }
++
++    @Test void forcedActionIsSelectedAndCreditedWithoutExplorationDraw() {
++        var a = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.CONTROLLER));
++        var control = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.CONTROLLER));
++        a.policy.b2[5] = 1000; // A learned/greedy decision would prefer another action.
++        a.startEpisode();
++        assertEquals(0, a.observe(new double[14], 0, false, true));
++        assertEquals(0, a.lastAction);
++        assertEquals(control.rng.nextLong(), a.rng.nextLong(), "forced choice must not sample exploration");
++        assertEquals(0, a.observe(new double[14], 7, false, true));
++        assertEquals(0, a.replay.get(0)[14]);
++        assertEquals(7, a.replay.get(0)[15]);
++        assertEquals(1, a.replay.get(0)[31]);
++        a.finishEpisode(60); a.finishEpisode(-999);
++        assertEquals(2, a.replay.size());
++        assertEquals(0, a.replay.get(1)[14]);
++        assertEquals(60, a.replay.get(1)[15]);
++        assertEquals(1, a.replay.get(1)[30]);
++        assertEquals(1, a.totalRounds);
++    }
++
++    @Test void nextStateConstraintUsesQ0ButMeleeTransitionKeepsSixActionBootstrap() throws Exception {
++        var a = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.CONTROLLER));
++        a.startEpisode();
++        int previous = a.observe(new double[14], 0, false, false);
++        a.observe(new double[14], 7, false, true);
++        a.target = mock(MLP.class);
++        when(a.target.forward(any())).thenReturn(new double[]{2, 3, 4, 5, 6, 100});
++        a.policy = spy(a.policy);
++        doNothing().when(a.policy).trainSingle(any(), anyInt(), anyDouble(), anyDouble());
++        Method learn = DQNAgent.class.getDeclaredMethod("replayLearnOne"); learn.setAccessible(true);
++        learn.invoke(a);
++        verify(a.policy).trainSingle(any(), eq(previous), eq(7 + .95 * 2), anyDouble());
++        clearInvocations(a.policy);
++        a.observe(new double[14], 4, false, false);
++        a.replay.remove(0); // The sole remaining sample leaves the forced duel state for unrestricted play.
++        learn.invoke(a);
++        verify(a.policy).trainSingle(any(), eq(0), eq(4 + .95 * 100), anyDouble());
++    }
++
++    @Test void inactivePathKeepsLegacyActionsRngAndLearning() {
++        var a = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.CONTROLLER));
++        var legacy = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.LEARNED));
++        a.startEpisode(); legacy.startEpisode();
++        double[] f = new double[14];
++        for (int i = 0; i < 75; i++) {
++            f[i % 14] = i / 75.0;
++            assertEquals(legacy.observe(f, i % 3, false, false), a.observe(f, i % 3, false, false));
++        }
++        assertArrayEquals(legacy.policy.forward(f), a.policy.forward(f));
++        assertEquals(legacy.rng.nextLong(), a.rng.nextLong());
++    }
++
++    @Test void evalFixedAndExplicitLearnedFallbackRemainUnforced() {
++        for (var mode : new BotConfig.Mode[]{BotConfig.Mode.EVAL, BotConfig.Mode.FIXED}) {
++            var a = new DQNAgent(14, 6, config(mode, BotConfig.DuelPolicy.CONTROLLER));
++            a.policy.b2[5] = 1000;
++            assertEquals(mode == BotConfig.Mode.FIXED ? 3 : 5, a.observe(new double[14], 0, false, true));
++        }
++        var a = new DQNAgent(14, 6, config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.LEARNED));
++        a.policy.b2[5] = 1000;
++        assertEquals(5, a.observe(new double[14], 0, false, true));
++    }
++
++    @Test void environmentAndActionTelemetryAreExplicitAndResetPerRound() {
++        assertTrue(BotConfig.fromEnvironment(Map.of()).forceDuel());
++        assertFalse(BotConfig.fromEnvironment(Map.of("AISURVIVOR_DUEL_POLICY", "learned")).forceDuel());
++        assertThrows(IllegalArgumentException.class, () -> BotConfig.fromEnvironment(Map.of("AISURVIVOR_DUEL_POLICY", "invalid")));
++        var metrics = new RoundMetrics();
++        metrics.actionCounts[0] = 3; metrics.duelEligibleTurns = metrics.forcedDuelTurns = 3;
++        var data = JsonParser.parseString(metrics.json(config(BotConfig.Mode.TRAIN, BotConfig.DuelPolicy.CONTROLLER),
++                1, 5, 1, false, false, true)).getAsJsonObject();
++        assertEquals("train", data.get("mode").getAsString());
++        assertEquals("controller", data.get("duelPolicy").getAsString());
++        assertEquals(3, data.getAsJsonArray("actionCounts").get(0).getAsInt());
++        assertEquals(3, data.get("forcedDuelTurns").getAsInt());
++        metrics.reset();
++        assertEquals(0, metrics.actionCounts[0]); assertEquals(0, metrics.forcedDuelTurns);
++    }
++}

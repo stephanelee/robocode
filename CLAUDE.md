@@ -19,6 +19,7 @@ The dependency is `dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0`. U
 | --- | --- |
 | `AISurvivor` | Bot lifecycle, observations, radar, six movement strategies, targeting and combat events |
 | `DuelSurf`, `AimCorridor` | 1v1 shot-reactive movement for action 0: forward, backward or stop along an orbit line, chosen by simulating clearance from reconstructed head-on and linear aim points of inferred waves |
+| `DuelGun`, `DuelRadar` | Default TRAIN duel composition: legal scan/confirmed-shot aiming and power, plus fully independent fresh-scan radar lock/search |
 | `DQNAgent`, `MLP` | Seeded strategy selection, replay, target network, neural network updates |
 | `BotConfig` | Validated environment configuration for train/eval/fixed modes and paths |
 | `ModelStore` | Versioned numeric checkpoint validation, rejected-file backup and atomic replacement |
@@ -41,6 +42,8 @@ Rewards are +0.1 per turn, +0.6 times damage dealt, +30 for a lethal hit, +15 fo
 
 ## Combat geometry and statistics
 
+The candidate's default TRAIN duel composition is documented in [docs/coherent-duel.md](docs/coherent-duel.md). It retains accepted DuelSurf movement while combining explicit selected/executed/credited action0, body/gun-independent radar, next-scan bullet-energy corrections and a legal-observation gun. Legacy `learned`, EVAL, FIXED and melee keep their original gun/radar/timing paths. The following GF details describe those legacy paths; new duel virtual-shot evidence is process-local, separate from GF statistics, and not serialized into the unchanged DQN checkpoint.
+
 Tank Royale uses Cartesian coordinates: east is 0 degrees and north is 90 degrees. Use `x += cos(angle) * distance`, `y += sin(angle) * distance`, and `atan2(dy, dx)`. Clockwise orbit relative to the inward bearing is `bearingToEnemy + 90`. `CombatMath` tests these conventions. Estimate target turn rate by dividing the normalized direction change by elapsed scan turns.
 
 GuessFactor targeting has 47 bins and nine distance/lateral-speed segments. Empty or centre-tied profiles select the centre. Motion prediction integrates a constant turn rate continuously into the linear case, includes scan age, and iterates bullet intercept time. A targeting wave is added only after `BulletFiredEvent` confirms a shot. Score it using a fresh target scan within one bullet-turn plus collision radius of its expected arrival; discard observations that are already too late.
@@ -52,6 +55,8 @@ GuessFactor targeting has 47 bins and nine distance/lateral-speed segments. Empt
 Surf danger learns only from one plausible hit wave matched by shooter, bullet power and arrival radius. Passing waves do not train danger. Per-enemy targeting/surf statistics are local to the process and decay by 0.92 per round in training; only class targeting statistics are persisted with the model.
 
 ## Configuration and persistence
+
+TRAIN defaults to `AISURVIVOR_DUEL_POLICY=controller`: the same pruned duel-availability gate selects action0 before observation credit or action sampling. `learned` restores legacy selection. EVAL, FIXED and melee are unaffected. Replay records the returned/executed action and a transient next-state action constraint for correct Q0 bootstrapping in forced duels; its six-action checkpoint format is unchanged. Metrics report action counts, eligible turns and forced turns. This is a policy intervention, not evidence of a learning gain.
 
 `AISURVIVOR_MODE` is `train` (default), `eval` or `fixed`. Other settings are `AISURVIVOR_SEED` (default 0), `AISURVIVOR_ACTION` (0..5), `AISURVIVOR_MODEL_PATH` (default `AISurvivor-qtable.dat`) and optional `AISURVIVOR_METRICS_PATH`. Relative paths use the bot working directory. Model and metrics paths must differ.
 

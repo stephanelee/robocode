@@ -51,7 +51,7 @@ The launchers `AISurvivor.cmd` and `AISurvivor.sh` set the working directory for
 python tools/benchmark.py --suite retcon --java /path/to/jdk25/bin/java --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --output build/retcon-evaluation
 ```
 
-Use the [methods](docs/benchmarks.md), [Retcon baseline](docs/benchmarks/retcon-2026-11-02.md), and [three completed controlled experiments](docs/improvements.md) to interpret the evidence. These are in-roster adaptation trials; none of the three candidates met its full retain rule.
+Use the [methods](docs/benchmarks.md), [Retcon baseline](docs/benchmarks/retcon-2026-11-02.md), and [measured improvement log](docs/improvements.md) to interpret the evidence. The [coherent default duel comparison](docs/improvements/coherent-duel-v1.md) passed its registered gates: Retcon share14.2→58.4%,39/60 wins, and30/30 self-match wins. Shooting accuracy fell; this supports the bundled bot, not an isolated gun/learning improvement or broad superiority claim.
 
 The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
@@ -61,7 +61,7 @@ The bot entry point and combat strategies are in `src/main/java/AISurvivor.java`
 
 - A small DQN (14 inputs, 32 hidden units, 6 action values) uses replay and a target network.
 - Movement executes one selected strategy: minimum risk, clockwise/counterclockwise orbit, flee, wave surfing, or hunt. Replay credits the strategy actually executed.
-- GuessFactor targeting combines per-enemy and per-class statistics with motion prediction.
+- The default TRAIN duel composition uses the accepted shot-reactive `DuelSurf` controller, independent radar and a coordinated `DuelGun` fed only legal scans/confirmed shots. [Composition, scope and prospective validation](docs/coherent-duel.md). Legacy policy, EVAL/FIXED and melee retain GuessFactor targeting with per-enemy/per-class motion statistics.
 - Consecutive enemy scans infer bullet waves after correcting known damage and hit-energy bonuses. Scan gaps are skipped because fire timing is uncertain. Enemy bullets are not exposed by the bot API; unobserved third-party damage in melee can still make inferred waves inaccurate.
 - Surf danger learns only from a hit matching one inferred wave's shooter, power, and arrival radius. Targeting waves are added only after a `BulletFiredEvent` confirms the shot and are scored against fresh target scans.
 - A versioned numeric checkpoint persists the DQN and class targeting statistics across launches.
@@ -75,12 +75,13 @@ Set these environment variables before launching the bot. Paths are relative to 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | AISURVIVOR_MODE | train | train, eval, or fixed |
+| AISURVIVOR_DUEL_POLICY | controller | TRAIN only: coherent duel controller; learned restores legacy DQN selection, gun, radar and timing |
 | AISURVIVOR_SEED | 0 | Signed 64-bit seed for network initialization, exploration, and replay sampling |
 | AISURVIVOR_MODEL_PATH | AISurvivor-qtable.dat | Checkpoint to load/save |
 | AISURVIVOR_ACTION | 0 | Fixed strategy ID: 0 minimum risk, 1 clockwise orbit, 2 counterclockwise orbit, 3 flee, 4 wave surf, 5 hunt |
 | AISURVIVOR_METRICS_PATH | unset | Optional JSONL output, one record per completed round |
 
-Training uses Boltzmann exploration and updates model weights and targeting statistics. Evaluation chooses the highest-valued action, freezes learning and exploration temperature, and never writes the checkpoint. A missing checkpoint in evaluation creates a fresh seeded policy; check the telemetry's checkpointLoaded flag to distinguish trained from cold evaluation. Fixed mode always executes AISURVIVOR_ACTION and neither reads nor writes a checkpoint. Evaluation and fixed modes also freeze local GuessFactor and surfing statistics. Bot RNG seeding does not seed the game server or guarantee identical whole-battle outcomes.
+Training updates model weights and targeting statistics. With the default duel policy, one live opponent and one cached legal scan select and credit action0 directly; otherwise TRAIN uses Boltzmann exploration. `AISURVIVOR_DUEL_POLICY=learned` restores the previous selection policy. This is a hierarchical policy change, not a learning-benefit claim. Evaluation chooses the highest-valued action, freezes learning and exploration temperature, and never writes the checkpoint. A missing checkpoint in evaluation creates a fresh seeded policy; check the telemetry's checkpointLoaded flag to distinguish trained from cold evaluation. Fixed mode always executes AISURVIVOR_ACTION and neither reads nor writes a checkpoint. Evaluation and fixed modes also freeze local GuessFactor and surfing statistics. Bot RNG seeding does not seed the game server or guarantee identical whole-battle outcomes.
 
 At round completion, the final transition includes pending combat rewards plus +60 for winning or the existing death penalty of -(60 + 12 × remaining enemies). Duplicate completion notifications do not create duplicate transitions. Per-turn survival remains +0.1.
 

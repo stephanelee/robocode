@@ -77,6 +77,7 @@ class TargetingCharacterizationTest {
         doAnswer(call -> { guns.add(bits(call.getArgument(0))); return null; }).when(bot).setGunTurnRate(anyDouble());
         doAnswer(call -> { fires.add(bits(call.getArgument(0))); return s.accepted; }).when(bot).setFire(anyDouble());
         var config = new BotConfig(BotConfig.Mode.EVAL, 539, Path.of("unused-characterization-model"), 0, null);
+        set(bot, "config", config);
         DQNAgent agent = new DQNAgent(14, 6, config), control = new DQNAgent(14, 6, config);
         for (double[][] category : agent.classGF) for (double[] bins : category) bins[s.bin] = 4;
         set(bot, "agent", agent);
