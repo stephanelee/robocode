@@ -32,6 +32,7 @@ jobs:
           cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/ais-candidate.jar"
           ./gradlew --no-daemon clean build
           python tools/verify_jar.py "$RUNNER_TEMP/ais-candidate.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/ais-candidate.jar" AISurvivor/AISurvivor.jar
           python -m unittest discover -s tools -p test_ais_breakwater_transfer.py -v
       - name: Stage the unchanged accepted baseline
         run: |
