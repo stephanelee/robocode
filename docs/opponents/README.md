@@ -8,7 +8,7 @@ This study covers the **exact opponents used in our retained games**, not simila
 | --- | --- | --- | --- |
 | Diamond Port1.8.28 | `fduch-stranger/robocode-bot@67b68c22e41c18281a3fce9ef638e3c23a0b47cf` | 0/60 first places;3.886% mean share | [Diamond: guns, surfing, adaptation, physics and counters](diamond-port.md) |
 | Adaptive Prime1.0 | Same Python repository/pin, including shared bot_core | 3/60 first places;17.683% mean share | [Adaptive: effective configuration and shared-system behavior](adaptive-prime.md) |
-| Retcon0.2.0 | `robocode-dev/rumble-bots@28981c7a469ac064194b41001cd7183ec5ecf189` | Fresh confirmation187/200 first places;86.745% mean share | [Detailed mechanics, resets and counter-tradeoffs](https://github.com/stephanelee/robocode/pull/57); [historical strategy study](../retcon-strategy.md) |
+| Retcon0.2.0 | `robocode-dev/rumble-bots@28981c7a469ac064194b41001cd7183ec5ecf189` | Fresh confirmation187/200 first places;86.745% mean share | [Detailed mechanics, resets and counter-tradeoffs](retcon.md); [historical strategy study](../retcon-strategy.md) |
 
 The Python [source/runtime lock](../../tools/opponents/strong-melee.lock.json) and [Retcon lock](../../tools/opponents/retcon.lock.json) fix file identities, dependencies and licenses. AIS results concern their documented source/runtime/arena/training regimes, not a universal ranking. Diamond Port is an experimental Python adaptation; its original Java namesake's championship rating is not inherited. Upstream local validation claims are identified as author reports in the individual analyses.
 
