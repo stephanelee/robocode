@@ -1,0 +1,16 @@
+# Breakwater 0.2 mobile counterfire
+
+## Why change the policy
+
+Breakwater spent 351 of 368 Diamond shots and 679 of 687 AISurvivor shots on shielding. Just 13 and 27 shield bullets, respectively, intercepted an opponent bullet. It lost both 20-round games. Diamond took only 6.0 event damage; AISurvivor took 40.4. These observations justify testing a different use of the chassis and gun. They do not identify one cause for each loss. [Diamond evidence](../../benchmarks/breakwater-v1/README.md) · [AISurvivor evidence](../../benchmarks/breakwater-vs-ais/)
+
+Hypothesis: continuously moving laterally and choosing among reachable paths at the arrival times of inferred enemy shots may avoid damage without consuming the gun. An independent offensive gun can then fire during evasion, learn from resolved virtual rays and exploit constrained target motion. Diamond's learned guns condition on velocity, relative heading, acceleration and walls, so a fixed orbit can become predictable. Its surfer considers multiple motion options, making a single constant-motion gun uncertain. The candidate will use seeded choices among comparably safe paths and compare offensive forecasts on common legal observations. Launch inference, incoming ray matches and virtual ray passages are estimates. Only official battles decide progress. [Pinned source analysis](../opponents/diamond-port.md)
+
+## Prospective comparison
+
+Use unchanged Breakwater 0.1 results as historical references, with no pooling or paired causal claim. Keep production AISurvivor and the DiamondChallenger branch untouched. Stage a separate 0.2.0 JAR and isolated per-game endpoints; allow within-game learning only. Freeze source, constants, JAR, workflows, driver, native opponent and runtime hashes before play. Java 17 source builds and JAR parity precede JDK 25 battles on ubuntu-26.04 with the pinned Tank Royale 1.4.0 runner. Use the repo's locked Python 3.13 environment for Diamond 1.8.28. Headless hosted games use fresh isolated servers. Independent review of the exact frozen head precedes activation.
+
+1. One fresh 20-round Diamond pilot, Breakwater seed 532001. Advance only on valid complete evidence, zero own skips, official share strictly above 20% and at least one official first place.
+2. Only a pilot pass opens three fresh 20-round Diamond games, seeds 532011–532013. Accept only if all three are valid with zero own skips, equal-game mean share strictly above 50%, more than 30/60 official first places and at least two games strictly above 50% share. A completed pilot miss rejects this version even if secondary results improve.
+3. One descriptive 20-round transfer game against production AISurvivor 1.2.1 default train, seeds 532021 (Breakwater) and 532022 (AISurvivor), after a valid Diamond decision including rejection. Report both official totals and first places, skips, shots and damage. No transfer promotion criterion. AIS local terminal flags have incomplete coverage in the historical matchup; official wins govern.
+4. An invalid acquisition stops the sequence. Preserve all started games, failures, original rows, logs and endpoints. No favorable rerun, tuning or reuse of any spent cohort. The full authorized budget is 40 rounds on a valid pilot miss or 100 on a valid pilot pass.
