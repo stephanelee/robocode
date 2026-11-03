@@ -112,3 +112,51 @@ These were computed after the run from the same raw files. They are disclosed fo
 - The exploratory subsets overlap and are not independent.
 
 Evidence: [raw calibration data](../benchmarks/aa-calibration/README.md).
+
+## Review correction (2026-11-03)
+
+This section was added after independent review of PR #37. The registered plan and the results above are preserved as historical evidence; this correction supersedes their *interpretation* of power and of the proposed rule. The raw measurements are unchanged, and no matches were repeated.
+
+All numbers below come from [`tools/decision_rule_analysis.py`](../tools/decision_rule_analysis.py) (seed 20261103, 40,000 draws per cell), saved as [`decision-rule-analysis.json`](../benchmarks/aa-calibration/review/decision-rule-analysis.json). The model treats block deltas as independent normal draws with the measured SD of 5.586 pp.
+
+**1. Significance-only power and full-rule acceptance are different quantities.** "8 blocks gives 80% power at +5 pp" describes only a one-sided test of *mean delta = 0*. The proposed rule *also* required the observed mean to be at least +5 pp. At a true +5 pp effect, that floor alone passes about 50% of the time for any block count, and every added guard can only lower acceptance.
+
+**2. The `mean − 1.6449 × SE` bound is a large-sample z approximation.** With an SE estimated from 8 blocks, it rejects a true zero effect about 7.1% of the time, not 5%. A Student-t bound, `mean − t(0.95, n−1) × SE`, is calibrated: about 4.9%.
+
+| Blocks per arm | True effect | Significance only, z | Significance only, t | Registered rule (z bound + 5 pp floor) | t bound + 5 pp floor | t bound + floor, pilot-SD uncertainty |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 8 | 0 | 7.1% | 4.9% | 0.5% | 0.5% | 1.1% |
+| 8 | +5 pp | 80.7% | 73.8% | 49.7% | 49.0% | 46.3% |
+| 8 | +7.5 pp | 98.0% | 96.1% | 89.6% | 89.2% | 85.3% |
+| 8 | +10 pp | 99.9% | 99.8% | 99.5% | 99.4% | 97.1% |
+| 12 | +5 pp | 92.0% | 89.4% | 49.8% | 49.8% | 49.6% |
+| 16 | +5 pp | 96.9% | 96.0% | 49.8% | 49.8% | 49.5% |
+
+How to read the table:
+- The pilot-uncertainty column redraws σ from `5.586² × 9 / χ²₉` in each trial, because the SD came from only 10 pilot differences.
+- With the floor in place, z versus t makes almost no difference to false passes: 0.5% for both at zero effect. The floor dominates.
+
+**3. Corrected statement and proposal.**
+- *Corrected statement.* 8 blocks per arm does **not** give 80% acceptance at a true +5 pp under the floor rule. It gives about 49%. The +5 pp observed-effect floor makes 80% acceptance impossible at exactly +5 pp.
+- *Rule for future registrations.* Use the Student-t one-sided 95% bound together with the +5 pp observed floor.
+- *Budget claim.* State acceptance against an alternative above the floor. Under the model, 8 blocks gives about 89% acceptance at a true +7.5 pp, or about 85% when allowing for pilot-SD uncertainty. The minimum budget for 80% at +7.5 pp is 6 blocks, so 8 blocks keeps a margin.
+- *What this does not change.* Historical accept/reject decisions are not reinterpreted. Any new rule must be registered prospectively.
+
+**4. Guards not covered by the normal model.** These are bootstrapped from the real A/A blocks under the null only (40,000 resamples), so they are exploratory:
+
+| Blocks per arm | Wins guard (candidate wins ≥ baseline wins) fails | Wall guard (≤ baseline + 10 per 1,000 turns) fails | Either fails |
+| ---: | ---: | ---: | ---: |
+| 8 | 46.8% | 10.9% | 55.0% |
+| 12 | 48.2% | 8.5% | 55.0% |
+| 16 | 48.8% | 6.6% | 54.4% |
+
+- **Wins guard.** It removes about half of no-effect outcomes. How it behaves under a real effect is **not calibrated**.
+- **Wall guard.** It is also uncalibrated under an effect.
+- **Skipped-turn guard.** It is not modelled; there were zero skips in all 400 A/A rounds.
+- **Full rule.** The full-rule acceptance probabilities above therefore cover the score checks only. With these guards included, acceptance is lower by an unknown amount.
+
+**5. Effect on the in-flight [duel-surf registration](improvements/duel-surf.md).** That experiment had already registered the z bound with the +5 pp floor, 8 blocks, the wins guard and the absolute wall guard, before this review. Its rule is not changed. Its result will be reported with these operating characteristics:
+- about 0.5% false acceptance on the score checks at zero effect;
+- about 50% acceptance at a true +5 pp and about 90% at a true +7.5 pp, before the uncalibrated guards;
+- a wins guard that alone fails about 47% of null comparisons.
+

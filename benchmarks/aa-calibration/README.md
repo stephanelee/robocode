@@ -38,3 +38,15 @@ python tools/aa_calibration.py --bot-dir AISurvivor \
   --plan-commit 79359f27dc6fd011d472030bdd916c565d564c26 --blocks 10 --rounds 20 --seed-base 20261301 \
   --java /path/to/jdk25/bin/java --output build/aa-calibration-repeat
 ```
+
+## Review correction
+
+`review/decision-rule-analysis.json` holds the post-review offline analysis of the complete proposed rule: significance-only versus full-rule acceptance, z versus Student-t bounds, pilot-SD uncertainty, and null bootstrap rates for the wins and wall guards. It was produced from `raw/calibration.json` without playing any matches:
+
+```sh
+python tools/decision_rule_analysis.py --calibration benchmarks/aa-calibration/raw/calibration.json \
+  --output benchmarks/aa-calibration/review/decision-rule-analysis.json
+```
+
+The run takes about 4 minutes and is deterministic (seed 20261103). The registered plan and `raw/calibration.json` are unchanged.
+
