@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -30,6 +31,7 @@ jobs:
           test "$(sha256sum AISurvivor/AISurvivor.jar | cut -d' ' -f1)" = 9679fc5ee27b68877f0b6d89a2104ffff115d6251ec44d3036fdd1f1d64988a6
           mkdir -p "$RUNNER_TEMP/frozen-ais"
           cp AISurvivor/* "$RUNNER_TEMP/frozen-ais/"
+          rm AISurvivor/AISurvivor.jar
           ./gradlew --no-daemon clean build
           python tools/verify_jar.py "$RUNNER_TEMP/frozen-ais/AISurvivor.jar" AISurvivor/AISurvivor.jar
       - uses: actions/setup-java@v4
@@ -39,6 +41,11 @@ jobs:
       - name: Exactly three registered 20-round games
         run: |
           python tools/advanced_python_duels.py --opponent '${{ matrix.opponent }}' --java "$JAVA_HOME/bin/java" --python "$(command -v python)" --bot-dir "$RUNNER_TEMP/frozen-ais" --cache "$RUNNER_TEMP/pinned-python-opponents" --output "build/advanced-python-duels/${{ matrix.opponent }}"
+      - name: Preserve exact executed source and lock
+        if: always()
+        run: |
+          mkdir -p 'build/advanced-python-duels/${{ matrix.opponent }}/execution'
+          cp tools/advanced_python_duels.py tools/strong_melee_opponents.py tools/opponents/strong-melee.lock.json .github/workflows/advanced-python-duels.yml 'build/advanced-python-duels/${{ matrix.opponent }}/execution/'
       - name: Preserve every outcome and partial failure
         if: always()
         uses: actions/upload-artifact@v4
