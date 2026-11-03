@@ -31,6 +31,8 @@ jobs:
           ./gradlew --no-daemon clean build
       - name: Verify checked-in JAR matches source
         run: python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar
+      - name: Test final experimental output barrier (no games)
+        run: python -m unittest discover -s tools -p test_challenger_completion.py -v
       - name: Test isolated Challenger lifecycle and verify its JAR
         run: |
           ./gradlew -p experiments/DiamondChallenger --no-daemon clean build
