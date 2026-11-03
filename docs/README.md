@@ -1,5 +1,7 @@
 # Project documentation
 
+- [Replay extraction: separate fresh parity confirmation passed](improvements/replay-harness-parity-redo.md)
+
 - [Rejected learned duel danger: advanced gains, Retcon relative guard failed](improvements/learned-duel-danger.md)
 
 - [Stronger native melee: AIS/Retcon/Adaptive Prime/Diamond Port negative baseline](improvements/strong-melee-baseline.md)

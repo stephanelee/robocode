@@ -150,3 +150,7 @@ After these fixes, master `e4e4c94`'s unmodified code still reproduces all three
 
 The registered non-inferiority **failure stands**. This PR is not to be merged on the fixture proof alone. Merging it would need a new, prospectively registered parity check with adequate power, disclosed as a second attempt after this failure.
 
+## Separately authorized fresh confirmation
+
+The user subsequently authorized a new, prospectively registered second attempt against accepted PR47. Its [1,260-round protocol and results](replay-harness-parity-redo.md) pass all unchanged noninferiority guards: mean difference −0.00090508 pp, t lower bound −2.30542198 pp above the −5 pp margin, zero skips and all sample guards. [Fresh raw evidence and66models](../../benchmarks/replay-harness-parity-redo/README.md) are separate; this original failure is not rewritten or pooled. The first archive contains no model checkpoints, a historical provenance limitation. The fresh result supports bounded parity, not a strength gain; merge still requires independent architectural review and final protected CI.
+

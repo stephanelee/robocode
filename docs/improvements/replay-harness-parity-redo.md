@@ -30,3 +30,18 @@ Only if every guard passes is this second parity check accepted. No strength gai
 ## Publication and review
 
 Independently review the exact registration, workflow, source/JAR freezes and power evidence before the sole execution. Preserve both failed and successful logs, original reports/official arrays, raw metrics, native Retcon exports, all private numeric endpoints, source/runtime/opponent/asset hashes, and the executed workflow. Record the original failure alongside this separately authorized attempt. Update `docs/improvements.md` after the experiment with the decision, budget, metrics and PR/report/raw links. Independent review and protected-branch checks precede any merge of PR48; implementers do not self-merge.
+
+## Fresh result: every registered noninferiority guard passed
+
+[Run 41649569184](https://github.com/stephanelee/robocode/actions/runs/41649569184), execution `6a5f467ad8d82485923b7cf55e733b1b8cbbfbf5`, completed its sole attempt: all 1,260 rounds, 66 official games/cold finite checkpoints and 60 native Retcon exports. Source/JAR remained the frozen arms above. [Original raw evidence and models](../../benchmarks/replay-harness-parity-redo/README.md) retain exact outcome, runtime, hashes, tooling and immutable `2edd072` registration.
+
+| Retcon measure | Baseline | Extraction |
+| --- | ---: | ---: |
+| Equal-game mean share | 87.220223% | 87.219318% |
+| Official first places / 600 | 561 | 559 |
+| AIS skipped turns | 0 | 0 |
+| Walls / 1,000 reported turns | 0.084985 | 0.108867 |
+
+Mean candidate-minus-baseline difference was **−0.00090508 pp**, standard error **1.35629467 pp**, and the binding one-sided Student-t lower bound **−2.30542198 pp**, passing the unchanged −5 pp margin. All 30 blocks, skip and wall guards pass. Samples also pass: Target share99.943662→100%, SpinBot97.134328→100%, Walls100→98.675914%, with zero candidate skips. No additional online stage was needed because all measured policies were already default TRAIN.
+
+This separately authorized second attempt establishes the registered bounded noninferiority result, not an improvement, equality at every state, or unrestricted timing equivalence. Whole-game variation and the Student-t model's assumptions remain relevant; AIS seeds do not pair arena starts. The original 380-round failed gate and all its raw bytes remain unchanged and are not pooled. Its archive lacks checkpoint bytes; the fresh archive retains all66. Trace fixtures cover only their visited states. Independent architectural review and protected final-head CI are still required before merge; the score result alone is not permission to restructure further.
