@@ -1,5 +1,7 @@
 # Robocode TODO
 
+- [x] Attempt the final frozen default200-round confirmation once. [PR44](https://github.com/stephanelee/robocode/pull/44) / [outcome](docs/improvements/final-default-confirmation.md): invalid after140 physical rounds (120 strictly validated), one skipped AIS turn,60 unplayed; reliability not confirmed. No retry or automatic optimization continuation; accepted v2 unchanged.
+
 - [x] Build and benchmark the coherent GF/circular gun and strict energy-finishing revision. [PR43](https://github.com/stephanelee/robocode/pull/43) / [results](docs/improvements/coherent-duel-v2.md): all168-round gates pass, Retcon55/60 wins and self-match30/30; hit rate0.72→5.22%. The bundled result does not isolate a learning effect or establish broad superiority.
 
 - [x] Build and benchmark one coherent default duel composition. [PR42](https://github.com/stephanelee/robocode/pull/42) / [results](docs/improvements/coherent-duel-v1.md): all registered168-round whole-product gates pass; Retcon39/60 wins and self-match30/30. Gun accuracy fell and broad superiority is not established.

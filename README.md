@@ -55,6 +55,8 @@ Use the [methods](docs/benchmarks.md), [Retcon baseline](docs/benchmarks/retcon-
 
 The [subsequent gun-v2 comparison](docs/improvements/coherent-duel-v2.md) also passed every gate: Retcon share49.6→85.8%,55/60 wins, improved shooting metrics and30/30 wins against frozen v1. These are separate fresh three-game Retcon cohorts, not a pooled confirmation or a broad tournament result.
 
+The [final frozen-default confirmation](docs/improvements/final-default-confirmation.md) was invalidated by one skipped AIS turn after140 of200 planned physical rounds. Reliability was not confirmed; no replacement/rerun occurred, and the accepted v2 bot remains unchanged.
+
 The older [Battle benchmark](https://github.com/stephanelee/robocode/actions/workflows/benchmark.yml) and the CLI's default sample roster remain **regression/integration checks**, with `full=true` producing the legacy sample reference comparison and standalone dashboard. They are not the primary strength benchmark. Existing commands remain supported; use `--suite retcon` explicitly for the stronger 1v1 direction.
 
 ## Current design

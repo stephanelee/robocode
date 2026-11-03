@@ -1,0 +1,9 @@
+# Final default confirmation: invalid, not confirmed
+
+[PR44](https://github.com/stephanelee/robocode/pull/44), [sole run41575285157](https://github.com/stephanelee/robocode/actions/runs/41575285157). [Immutable protocol and full outcome](../../docs/improvements/final-default-confirmation.md).
+
+**No reliability confirmation.** One AIS skipped turn in `dc946-b2-g02` round4 invalidated acquisition. Batch1 finished100 rounds; batch2 finished40 physical rounds, of which its first20 validated. Total140 physical/raw rounds,120 strictly validated,60 unplayed. The aggregate job was skipped; no complete200-round decision or ten-game confidence bound was computed. No replacement game or retry occurred. The accepted946/JAR9679 bot is unchanged.
+
+Both original batch artifacts are preserved:13203875654 (batch1) and13202488722 (batch2). `batch-1.json` / `batch-2.json` are the original reports. `attempt-summary.json` explicitly records the invalid/incomplete outcome, every played game and its status; it is an audit summary, not an executed confirmation aggregate. `registered-plan.md` / `registered-games.json` preserve the immutablec484 bytes. `raw/` retains all seven official arrays/logs,140 metrics records, native exports and seven original finite20-round `model.dat` endpoints, including the invalid game. `source/` contains the exact executed adapter/tests/workflow; existing unchanged acquisition code is pinned by accepted946.
+
+`files.sha256.json` verifies72 evidence/provenance files. `bundle-jar-hashes.json` records all seven actual JAR9679 copies; duplicate runnable/opponent bundles remain in the original artifacts. Git attributes preserve binary/text evidence bytes. Tests verify preservation and the invalid stopping condition without starting games or evaluating a favorable subset. All seven games' descriptive official results appear in the report; none overrides the zero-skip/full-budget rules.
