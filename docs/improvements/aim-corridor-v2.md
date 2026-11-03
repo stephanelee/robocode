@@ -135,15 +135,17 @@ The runtime was actual Ubuntu 26.04.1 LTS. The Java 17 build passed the JAR pari
 | AIS damage dealt per 1,000 turns | 37.08 | 32.90 |
 | AIS damage taken per 1,000 turns | 98.06 | 105.75 |
 | Wall collisions (per 1,000 turns) | 355 (9.206) | 104 (2.783) |
-| AIS skipped turns | 0 | 0 |
+| AIS skipped turns | 1 | 0 |
 
 The block deltas were −1.493700, −5.965504 and −7.651210 pp (seeds 20261211/12/13), for a mean of −5.036805 pp. Checks:
 - mean gain ≥ +5 pp: **fail**
 - ≥ 2 improved blocks: **fail** (0)
 - no block loses > 5 pp: **fail**
 - wins not more than 3 lower: **fail** (4→0)
-- zero skips: pass
+- zero candidate skips: pass
 - wall rate ≤ 1.2×: pass (0.30×)
+
+The baseline recorded one skipped turn in seed 20261211, round 1; the candidate recorded none. The preregistered guard applies to the candidate, so its pass and the overall rejection are unchanged. This baseline scheduling event is an additional limitation of the unpaired comparison.
 
 Baseline wall collisions were concentrated in one block (323 in seed 20261213, against 22 and 10 in the others). This is consistent with the one-way `wallSmooth` pinning defect diagnosed in development.
 
@@ -156,11 +158,11 @@ Baseline wall collisions were concentrated in one block (323 in seed 20261213, a
 | Head-on virtual hits / completed | 385 / 2,383 (16.16%) | 374 / 2,334 (16.02%) |
 
 **What the run showed:**
-- The two-way wall search did what it was designed to do: wall collisions fell 70% and pinning blocks disappeared.
-- H1 is again not supported. With walls fixed, the corridor term still does not lower Retcon's hit rate: actual and linear rates rose slightly, and head-on was unchanged.
+- The bundled candidate recorded fewer wall collisions: 355→104, about 70% lower. This unpaired comparison does not establish the isolated wall search's effect.
+- H1 is not supported by this run's diagnostics: Retcon's actual and linear hit rates rose slightly against the bundle, while head-on was nearly unchanged. The two changes' individual effects cannot be separated here.
 - Score share fell in every block.
 
-**Interpretation, untested:** the corridor penalty makes movement less effective against Retcon even when wall pinning is removed. The [v1 report](aim-corridor.md) and this result together argue against further corridor-weight tuning without a new mechanism. The wall-search repair on its own has not been registered or measured; development hints are not evidence.
+**Interpretation, limited:** the bundle did not improve score or Retcon hit-rate diagnostics. This run cannot separate corridor effects, wall-search effects and unpaired starting-state variation. The [v1 report](aim-corridor.md) and this result do not establish a benefit from further corridor-weight tuning. The wall-search repair on its own was not registered or measured in this experiment; development hints are not evidence.
 
 ### Stage B: official samples, 10 fixed rounds per arm (pass)
 
