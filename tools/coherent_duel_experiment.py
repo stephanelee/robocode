@@ -47,6 +47,8 @@ def clean_environment(environment):
 
 
 def prepare_bot(source, destination, arm, seed, java):
+    if destination.name != 'AISurvivor':
+        raise ValueError('Official script/config discovery requires the AISurvivor directory basename')
     destination.mkdir(parents=True)
     originals = {}
     for name in ASSETS:
@@ -91,7 +93,7 @@ def play(args, game, sources, runner, samples, retcon_source, api):
     directory = args.output / game['gameId']; directory.mkdir()
     entries, bots = [], {}
     for arm in game['arms']:
-        path = directory / ('Candidate' if arm == 'candidate' else 'Accepted')
+        path = directory / arm / 'AISurvivor'
         bots[arm] = prepare_bot(sources[arm], path, arm, game['seeds'][arm], args.java)
         entries.append(str(path))
     env = clean_environment(os.environ)

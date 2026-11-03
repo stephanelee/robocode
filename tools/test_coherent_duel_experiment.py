@@ -51,13 +51,14 @@ class CoherentExperimentTests(unittest.TestCase):
             for name in e.ASSETS:(source/name).write_text('{}' if name.endswith('.json') else 'fixture')
             (source/'AISurvivor.json').write_text(json.dumps(dict(name='AISurvivor',version='1.2')))
             with patch.dict(e.JARS,dict(candidate=e.benchmark.digest(source/'AISurvivor.jar'),previous=e.benchmark.digest(source/'AISurvivor.jar'))):
-                a=e.prepare_bot(source,root/'a','candidate',101,'/jdk/bin/java')
-                b=e.prepare_bot(source,root/'b','previous',202,'/jdk/bin/java')
+                a=e.prepare_bot(source,root/'a/AISurvivor','candidate',101,'/jdk/bin/java')
+                b=e.prepare_bot(source,root/'b/AISurvivor','previous',202,'/jdk/bin/java')
+                with self.assertRaises(ValueError):e.prepare_bot(source,root/'Candidate','candidate',101,'/jdk/bin/java')
             self.assertNotEqual(a['name'],b['name'])
             self.assertNotEqual(a['model'],b['model']);self.assertNotEqual(a['metrics'],b['metrics'])
-            self.assertIn('AISURVIVOR_SEED=101',(root/'a/AISurvivor.sh').read_text())
-            self.assertIn('AISURVIVOR_SEED=202',(root/'b/AISurvivor.sh').read_text())
-            self.assertIn('unset AISURVIVOR_DUEL_POLICY',(root/'a/AISurvivor.sh').read_text())
+            self.assertIn('AISURVIVOR_SEED=101',(root/'a/AISurvivor/AISurvivor.sh').read_text())
+            self.assertIn('AISURVIVOR_SEED=202',(root/'b/AISurvivor/AISurvivor.sh').read_text())
+            self.assertIn('unset AISURVIVOR_DUEL_POLICY',(root/'a/AISurvivor/AISurvivor.sh').read_text())
             self.assertEqual(e.clean_environment(dict(AISURVIVOR_MODEL_PATH='bad',AISURVIVOR_MODE='fixed',RETCON_STATS_DIR='bad',PATH='ok')),dict(PATH='ok'))
 
     @unittest.skipIf(os.name=='nt','Actual POSIX launchers execute on the Ubuntu match host')
@@ -72,8 +73,8 @@ class CoherentExperimentTests(unittest.TestCase):
             inherited=dict(os.environ,AISURVIVOR_MODE='eval',AISURVIVOR_SEED='0',AISURVIVOR_MODEL_PATH='shared',AISURVIVOR_METRICS_PATH='shared',AISURVIVOR_DUEL_POLICY='learned')
             with patch.dict(e.JARS,{a:e.benchmark.digest(source/'AISurvivor.jar') for a in ('candidate','previous')}):
                 for arm,seed in (('candidate',101),('previous',202)):
-                    bot=e.prepare_bot(source,root/arm,arm,seed,str(java))
-                    actual=subprocess.check_output(['/bin/sh',str(root/arm/'AISurvivor.sh')],env=inherited,text=True).splitlines()
+                    bot=e.prepare_bot(source,root/arm/'AISurvivor',arm,seed,str(java))
+                    actual=subprocess.check_output(['/bin/sh',str(root/arm/'AISurvivor/AISurvivor.sh')],env=inherited,text=True).splitlines()
                     self.assertEqual(actual,['train',str(seed),bot['model'],bot['metrics'],'unset'])
 
 
