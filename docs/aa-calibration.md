@@ -52,4 +52,63 @@ Each 180-round experiment took about 2–3 minutes of runner time, so a much lar
 
 ## Results
 
-Not yet measured.
+Everything above this heading is byte-identical to the registered plan at `79359f27dc6fd011d472030bdd916c565d564c26`. The script stored the plan blob.
+
+There was one run: [41548798991](https://github.com/stephanelee/robocode/actions/runs/41548798991), job 125630877789, artifact 13189987653, zip SHA256 `f592a70f57204b4e0839f7e17f4590af3781e05e58bf48648d4ec21cc8ea9bd5`.
+- It ran on Ubuntu 26.04.1 LTS. The Java 17 JAR parity check passed, and matches ran on Temurin 25.0.5+8.
+- All 400 rounds completed, with zero skipped turns.
+- The bundle hashes matched before every battle.
+
+### Preregistered statistics
+
+| Statistic | Value |
+| --- | ---: |
+| Mean share, arm a / arm b | 17.696% / 19.410% |
+| Pooled mean / SD of the 20 block shares | 18.553% / 4.020 pp |
+| Mean paired delta (a − b) | −1.714 pp (SE 1.767) |
+| **Block delta SD** | **5.586 pp** |
+| Delta range | −12.339 to +8.543 pp |
+| **Blocks per arm for 80% power at +5 pp (one-sided 5%)** | **8** (160 rounds per arm) |
+| Current tactical score checks: simulated pass rate at true 0 / +5 / +10 pp | 5.9% / 49.3% / 93.5% |
+| Retcon actual hit rate on AIS, a / b | 18.63% / 18.59% |
+| Round wins, a / b | 12 / 18 |
+
+Per block, as `a`/`b` share and wins:
+
+| Seed | Order | a | b | a − b |
+| ---: | --- | ---: | ---: | ---: |
+| 20261301 | a, b | 19.651% / 2 | 19.405% / 1 | +0.245 |
+| 20261302 | b, a | 13.943% / 0 | 26.282% / 4 | −12.339 |
+| 20261303 | a, b | 12.380% / 0 | 14.525% / 1 | −2.145 |
+| 20261304 | b, a | 17.478% / 1 | 19.283% / 2 | −1.805 |
+| 20261305 | a, b | 19.009% / 2 | 10.466% / 0 | +8.543 |
+| 20261306 | b, a | 16.760% / 1 | 19.591% / 2 | −2.831 |
+| 20261307 | a, b | 20.610% / 1 | 22.422% / 2 | −1.812 |
+| 20261308 | b, a | 21.793% / 3 | 21.200% / 2 | +0.593 |
+| 20261309 | a, b | 22.797% / 2 | 20.601% / 2 | +2.196 |
+| 20261310 | b, a | 12.540% / 0 | 20.327% / 2 | −7.786 |
+
+**Proposed budget (rule fixed in the plan above):** 8 blocks per arm, already even, within the 30-block cap. This replaces the 3-block design for the next registered tactical experiment, if the reviewer agrees.
+
+**Proposed decision rule:** mean block delta ≥ +5 pp, **and** the one-sided 95% lower bound (mean − 1.6449 × SE) > 0.
+
+### Additional observations (exploratory; not preregistered)
+
+These were computed after the run from the same raw files. They are disclosed for review and should be treated as hypotheses about the existing guards, not as registered results.
+
+- **Wall collisions are extremely noisy between identical bots.** Arm a recorded 235 collisions (1.788 per 1,000 turns) and arm b recorded 1,216 (8.910 per 1,000 turns), a 5.0× ratio. Single blocks ranged from 0 to 360, driven by rare multi-hit pinning episodes.
+- **I applied the existing 3-block rules to every 3-block subset of these A/A blocks**, in both directions: 240 dependent comparisons, none of which changes behaviour.
+  - The 1.2× wall-rate guard failed in **48.3%** of them.
+  - The ±3 wins guard failed in **13.8%**.
+  - The full **correctness** non-regression gate passed only **10.8%**, so it rejects a true no-op about 89% of the time.
+  - The full tactical gate passed 0.4%.
+- **Implication.** Rejections under these guards, including the [wall-search](https://github.com/stephanelee/robocode/pull/35) correctness rejection, are weak evidence against a candidate. They are not evidence of harm. The earlier decisions stand under their registered rules; this calibration does not reverse them.
+- **Suggestion for review.** Replace ratio-based wall and wins guards with noise-calibrated or damage-based guards before the next correctness-category experiment.
+
+### Limitations
+
+- Fixed minimum-risk policy only. Online-training noise and candidate-specific variance are not measured.
+- Rounds within a block share an adaptive Retcon, and the normal/independent model is approximate.
+- The exploratory subsets overlap and are not independent.
+
+Evidence: [raw calibration data](../benchmarks/aa-calibration/README.md).
