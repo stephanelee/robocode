@@ -9,15 +9,18 @@ import java.util.SplittableRandom;
 
 /** Isolated pressure experiment. It neither subclasses AIS nor loads any AIS/DQN checkpoint. */
 public class DiamondChallenger extends Bot {
-    static final String NAME="DiamondChallenger", VERSION="0.5.0";
-    private final long seed=Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0"));
-    private final SplittableRandom random=new SplittableRandom(seed);
-    private final Path model=Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")).toAbsolutePath();
-    private final Path metrics=Path.of(System.getenv().getOrDefault("CHALLENGER_METRICS_PATH","DiamondChallenger-metrics.jsonl")).toAbsolutePath();
+    static final String NAME="DiamondChallenger", VERSION="0.6.1";
+    private final long seed;
+    private final SplittableRandom random;
+    private final Path model,metrics;
     private final PressureGun gun=new PressureGun();
     private final ChallengerWaves waves=new ChallengerWaves();
-    private final DiagnosticTrace diagnostic=new DiagnosticTrace(System.getenv("CHALLENGER_DIAGNOSTIC_PATH")==null?null:
-            Path.of(System.getenv("CHALLENGER_DIAGNOSTIC_PATH")),model,metrics);
+    private final DiagnosticTrace diagnostic;
+    private final Object roundState=new Object();
+    private final ThreadLocal<Integer> runEpoch=new ThreadLocal<>();
+    private int epoch,activeRound;
+    private boolean roundClosed=true,roundClosing;
+    private RoundEndedEvent pendingRoundEnd;
     private int surfSign=1,plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions,incomingHits;
     private double arenaWidth=800,arenaHeight=600;
     private int flank=1,nextPhase,roundsCompleted,shots,hits,walls,contacts,skips,rangeTurns,closeTurns,phaseDecisions;
@@ -26,16 +29,33 @@ public class DiamondChallenger extends Bot {
 
     public static void main(String[] args) { new DiamondChallenger().start(); }
     public DiamondChallenger() {
-        super(BotInfo.fromFile("DiamondChallenger.json"));
-        if(model.equals(metrics) || Files.exists(model) || Files.exists(metrics))
+        this(BotInfo.fromFile("DiamondChallenger.json"),Long.parseLong(System.getenv().getOrDefault("CHALLENGER_SEED","0")),
+                Path.of(System.getenv().getOrDefault("CHALLENGER_MODEL_PATH","DiamondChallenger-model.json")),
+                Path.of(System.getenv().getOrDefault("CHALLENGER_METRICS_PATH","DiamondChallenger-metrics.jsonl")),
+                System.getenv("CHALLENGER_DIAGNOSTIC_PATH")==null?null:Path.of(System.getenv("CHALLENGER_DIAGNOSTIC_PATH")));
+    }
+    DiamondChallenger(BotInfo info,long seed,Path model,Path metrics,Path diagnosticPath) {
+        super(info);this.seed=seed;random=new SplittableRandom(seed);
+        this.model=model.toAbsolutePath();this.metrics=metrics.toAbsolutePath();
+        diagnostic=new DiagnosticTrace(diagnosticPath,this.model,this.metrics);
+        if(this.model.equals(this.metrics) || Files.exists(this.model) || Files.exists(this.metrics))
             throw new IllegalStateException("A fresh experiment requires separate, absent model/metrics paths");
         System.out.println("[DiamondChallenger] cold seed="+seed);
         if(diagnostic.enabled()){gun.diagnostic(diagnostic);waves.diagnostic(diagnostic);}
     }
 
     @Override public void run() {
-        setAdjustGunForBodyTurn(true); setAdjustRadarForGunTurn(true); setAdjustRadarForBodyTurn(true);
-        while(isRunning()) {
+        synchronized(roundState) {
+            if(roundClosed||roundClosing)return;
+            runEpoch.set(epoch);
+            setAdjustGunForBodyTurn(true);setAdjustRadarForGunTurn(true);setAdjustRadarForBodyTurn(true);
+        }
+        // Never hold the lifecycle monitor while waiting for another tick or dispatching its events.
+        while(isRunning()&&performTurn())go();
+    }
+    boolean performTurn() {
+        synchronized(roundState) {
+            if(roundClosing||!acceptsCallback())return false;
             if(getTurnNumber()>=nextPhase) {
                 flank=random.nextBoolean()?1:-1;
                 nextPhase=getTurnNumber()+PressureMove.phaseDuration(random); phaseDecisions++;
@@ -68,64 +88,146 @@ public class DiamondChallenger extends Bot {
             var aim=gun.decide(getTurnNumber(),getX(),getY(),getGunDirection(),getEnergy(),getGunHeat(),getArenaWidth(),getArenaHeight());
             setGunTurnRate(Math.max(-20,Math.min(20,CombatMath.relativeAngle(aim.direction()-getGunDirection()))));
             if(aim.fire()) setFire(aim.power());
-            go();
+            return true;
         }
     }
+    private boolean acceptsCallback() {
+        Integer owner=runEpoch.get();
+        return !roundClosed&&(owner==null||owner==epoch);
+    }
+
 
     @Override public void onRoundStarted(RoundStartedEvent event) {
-        gun.startRound();waves.startRound();surfSign=1;
-        diagnostic.startRound(event.getRoundNumber());
-        plannerDecisions=profileDecisions=cwDecisions=stopDecisions=ccwDecisions=incomingHits=0;
-        nextPhase=0;shots=hits=walls=contacts=skips=rangeTurns=closeTurns=phaseDecisions=0;
-        dealt=taken=rangeSum=energySpent=0;won=died=false;
+        synchronized(roundState) {
+            if(event.getRoundNumber()==activeRound&&!roundClosed)return;
+            sealPendingRound();
+            if(event.getRoundNumber()!=roundsCompleted+1)throw new IllegalStateException("Nonsequential experimental round start");
+            activeRound=event.getRoundNumber();epoch++;roundClosed=false;roundClosing=false;
+
+            gun.startRound();waves.startRound();surfSign=1;
+            diagnostic.startRound(event.getRoundNumber());
+            plannerDecisions=profileDecisions=cwDecisions=stopDecisions=ccwDecisions=incomingHits=0;
+            nextPhase=0;shots=hits=walls=contacts=skips=rangeTurns=closeTurns=phaseDecisions=0;
+            dealt=taken=rangeSum=energySpent=0;won=died=false;
+        }
     }
     @Override public void onGameStarted(GameStartedEvent event) {
         arenaWidth=event.getGameSetup().getArenaWidth();arenaHeight=event.getGameSetup().getArenaHeight();
     }
     @Override public void onTick(TickEvent event) {
-        var own=event.getBotState();
-        waves.own(new ChallengerWaves.Own(event.getTurnNumber(),own.getX(),own.getY(),own.getDirection(),own.getSpeed()));
-        if(diagnostic.enabled())diagnostic.emit("tick",event.getTurnNumber(),"own",new double[]{own.getX(),own.getY(),own.getDirection(),own.getSpeed()},"energy",own.getEnergy());
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            var own=event.getBotState();
+            waves.own(new ChallengerWaves.Own(event.getTurnNumber(),own.getX(),own.getY(),own.getDirection(),own.getSpeed()));
+            if(diagnostic.enabled())diagnostic.emit("tick",event.getTurnNumber(),"own",new double[]{own.getX(),own.getY(),own.getDirection(),own.getSpeed()},"energy",own.getEnergy());
+        }
     }
     @Override public void onScannedBot(ScannedBotEvent event) {
-        var scan=new DuelGun.Scan(event.getScannedBotId(),event.getTurnNumber(),event.getX(),event.getY(),
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            var scan=new DuelGun.Scan(event.getScannedBotId(),event.getTurnNumber(),event.getX(),event.getY(),
                 event.getDirection(),event.getSpeed(),event.getEnergy());
-        gun.onScan(scan);waves.scan(scan);
+            gun.onScan(scan);waves.scan(scan);
+        }
     }
     @Override public void onBulletFired(BulletFiredEvent event) {
-        shots++;var bullet=event.getBullet();energySpent+=bullet.getPower();
-        gun.onFired(event.getTurnNumber(),bullet.getBulletId(),bullet.getX(),bullet.getY(),bullet.getPower(),bullet.getDirection());
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            shots++;var bullet=event.getBullet();energySpent+=bullet.getPower();
+            gun.onFired(event.getTurnNumber(),bullet.getBulletId(),bullet.getX(),bullet.getY(),bullet.getPower(),bullet.getDirection());
+        }
     }
     @Override public void onBulletHit(BulletHitBotEvent event) {
-        hits++;dealt+=event.getDamage();waves.damage(event.getVictimId(),event.getTurnNumber(),event.getDamage());
-        if(diagnostic.enabled())diagnostic.emit("hit",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            gun.removed(event.getBullet().getBulletId());
+            hits++;dealt+=event.getDamage();waves.damage(event.getVictimId(),event.getTurnNumber(),event.getDamage());
+            if(diagnostic.enabled())diagnostic.emit("hit",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),
                 "victimId",event.getVictimId(),"damage",event.getDamage());
+        }
     }
     @Override public void onHitByBullet(HitByBulletEvent event) {
-        taken+=event.getDamage();incomingHits++;var b=event.getBullet();
-        waves.bonus(b.getOwnerId(),event.getTurnNumber(),b.getPower());
-        waves.hit(new ChallengerWaves.Hit(event.getTurnNumber(),b.getOwnerId(),b.getPower(),b.getX(),b.getY(),b.getDirection()));
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            taken+=event.getDamage();incomingHits++;var b=event.getBullet();
+            waves.bonus(b.getOwnerId(),event.getTurnNumber(),b.getPower());
+            waves.hit(new ChallengerWaves.Hit(event.getTurnNumber(),b.getOwnerId(),b.getPower(),b.getX(),b.getY(),b.getDirection()));
+        }
     }
     @Override public void onHitWall(HitWallEvent event) {
-        walls++;if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","wall");
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            walls++;if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","wall");
+        }
     }
     @Override public void onBulletHitBullet(BulletHitBulletEvent event) {
-        if(diagnostic.enabled())diagnostic.emit("removal",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),"reason","bulletCollision");
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            gun.removed(event.getBullet().getBulletId());
+            if(diagnostic.enabled())diagnostic.emit("removal",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),"reason","bulletCollision");
+        }
+    }
+    @Override public void onBulletHitWall(BulletHitWallEvent event) {
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            gun.removed(event.getBullet().getBulletId());
+            if(diagnostic.enabled())diagnostic.emit("removal",event.getTurnNumber(),"shotId",event.getBullet().getBulletId(),"reason","wall");
+        }
     }
     @Override public void onHitBot(HitBotEvent event) {
-        contacts++;waves.collision(event.getTurnNumber());
-        if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","bot");
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            contacts++;waves.collision(event.getTurnNumber());
+            if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","bot");
+        }
     }
     @Override public void onSkippedTurn(SkippedTurnEvent event) {
-        skips++;if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","skip");
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+
+            skips++;if(diagnostic.enabled())diagnostic.emit("discontinuity",event.getTurnNumber(),"reason","skip");
+        }
     }
-    @Override public void onWonRound(WonRoundEvent event) { won=true; }
-    @Override public void onDeath(DeathEvent event) { died=true; }
+    @Override public void onWonRound(WonRoundEvent event) {
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+            won=true;
+        }
+    }
+    @Override public void onDeath(DeathEvent event) {
+        synchronized(roundState) {
+            if(!acceptsCallback())return;
+            died=true;
+        }
+    }
 
     @Override public void onRoundEnded(RoundEndedEvent event) {
-        if(event.getRoundNumber()<=roundsCompleted)return;
-        if(event.getRoundNumber()!=roundsCompleted+1)throw new IllegalStateException("Nonsequential experimental rounds");
-        waves.flush(event.getTurnNumber(),arenaWidth,arenaHeight);
+        synchronized(roundState) {
+            if(roundClosed||event.getRoundNumber()<=roundsCompleted)return;
+            if(pendingRoundEnd!=null)return;
+            if(event.getRoundNumber()!=activeRound||event.getRoundNumber()!=roundsCompleted+1)
+                throw new IllegalStateException("Nonsequential experimental round end");
+            // API 1.4 drains final queued hit/win/death/scan events AFTER this callback returns.
+            pendingRoundEnd=event;roundClosing=true;
+        }
+    }
+    @Override public void onGameEnded(GameEndedEvent event) {
+        synchronized(roundState) { sealPendingRound(); }
+    }
+    private void sealPendingRound() {
+        if(pendingRoundEnd==null)return;
+        RoundEndedEvent event=pendingRoundEnd;pendingRoundEnd=null;
+        gun.closeRound();waves.closeRound(event.getTurnNumber(),arenaWidth,arenaHeight);
+        roundClosed=true;roundClosing=false;
         diagnostic.finishRound(event.getTurnNumber(),shots,hits,energySpent);
         roundsCompleted++;
         String state=String.format(Locale.ROOT,
@@ -139,15 +241,20 @@ public class DiamondChallenger extends Bot {
                 gun.context().acceptedRound(),gun.confirmedLearnedShots(),gun.context().size());
         state=state.stripTrailing();
         state=state.substring(0,state.length()-1)+String.format(Locale.ROOT,
-                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s,\"pairedAttempts\":%s,\"pairedHits\":%s,\"pairedPending\":%d}%n",
+                ",\"inferredWavesTotal\":%d,\"matchedHitsTotal\":%d,\"dangerBins\":%s,\"pairedAttempts\":%s,\"pairedHits\":%s,\"pairedPending\":%d,\"contextFeatureCount\":13,\"outgoingEstimateCount\":%d}%n",
                 waves.totalInferred(),waves.totalMatched(),Arrays.deepToString(waves.danger()),
-                Arrays.toString(gun.pairedAttempts()),Arrays.toString(gun.pairedHits()),gun.pairedPending());
+                Arrays.toString(gun.pairedAttempts()),Arrays.toString(gun.pairedHits()),gun.pairedPending(),gun.context().outgoingCount());
         row=row.stripTrailing();
         row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
                 ",\"inferredWaves\":%d,\"matchedHits\":%d,\"unmatchedHits\":%d,\"rejectedScanPairs\":%d,\"incomingHits\":%d,\"plannerDecisions\":%d,\"profileDecisions\":%d,\"cwDecisions\":%d,\"stopDecisions\":%d,\"ccwDecisions\":%d,\"pairedCreated\":%d,\"pairedCompleted\":%d,\"pairedDiscarded\":%d,\"pairedPending\":%d,\"supportedDecisions\":%d,\"gateEligibleDecisions\":%d}%n",
                 waves.inferred(),waves.matched(),waves.unmatched(),waves.rejected(),incomingHits,
                 plannerDecisions,profileDecisions,cwDecisions,stopDecisions,ccwDecisions,
                 gun.pairedCreatedRound(),gun.pairedCompletedRound(),gun.pairedDiscardedRound(),gun.pairedPending(),gun.supportedDecisions(),gun.gateEligibleDecisions());
+        row=row.stripTrailing();
+        row=row.substring(0,row.length()-1)+String.format(Locale.ROOT,
+                ",\"waveContextQueries\":%d,\"waveContextOne\":%d,\"waveContextTwo\":%d,\"outgoingCreated\":%d,\"outgoingOmitted\":%d,\"outgoingKnownRemoved\":%d,\"outgoingEstimateCount\":%d}%n",
+                gun.context().waveContextQueriesRound(),gun.context().waveContextOneRound(),gun.context().waveContextTwoRound(),
+                gun.context().outgoingCreatedRound(),gun.context().outgoingOmittedRound(),gun.context().outgoingKnownRemovedRound(),gun.context().outgoingCount());
         try {
             Files.createDirectories(model.getParent());Files.createDirectories(metrics.getParent());
             Path temporary=Files.createTempFile(model.getParent(),"challenger-",".tmp");
@@ -155,4 +262,5 @@ public class DiamondChallenger extends Bot {
             Files.writeString(metrics,row,StandardOpenOption.CREATE,StandardOpenOption.APPEND);
         } catch(IOException error) { throw new UncheckedIOException(error); }
     }
+
 }

@@ -31,12 +31,18 @@ jobs:
           ./gradlew --no-daemon clean build
       - name: Verify checked-in JAR matches source
         run: python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar
+      - name: Test isolated Challenger lifecycle and verify its JAR
+        run: |
+          ./gradlew -p experiments/DiamondChallenger --no-daemon clean build
+          python tools/verify_jar.py experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
-          path: build/reports/tests/
+          path: |
+            build/reports/tests/
+            experiments/DiamondChallenger/build/reports/tests/
           if-no-files-found: ignore
       - name: Upload runnable bot
         uses: actions/upload-artifact@v4
