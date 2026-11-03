@@ -26,7 +26,12 @@ jobs:
         shell: bash
         run: |
           test -z "$(git diff --name-only 7fd5b8b2064dd66de0aa9f9076064e5cc70cd00e HEAD -- experiments/Aegis)"
-          test -z "$(git diff --name-only dfff83366be12ab2e302d02a1465f421a5a21b27 HEAD -- docs/improvements/aegis-shield-v1.md)"
+          test -z "$(git diff --name-only 46b36f642c3e6e0e42c74106e7d101723c47608b HEAD -- docs/improvements/aegis-shield-v1.md)"
+          echo '28e7a49c40e723b4e2b74bd875db808bbd1d07c2a2c2876c55ca0c6055143779  tools/aegis_experiment.py' | sha256sum -c -
+          echo '47db10db7e949e620a3768f9dc552d47336903b6a45bda6e2b85043d253ec8bb  tools/test_aegis_experiment.py' | sha256sum -c -
+          echo 'ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3  tools/opponents/strong-melee.lock.json' | sha256sum -c -
+          echo '3646c0433318b80db3f62a4a1c2dee34418f64fb8775370f20f25b92b77988c1  tools/BenchmarkBattle.java' | sha256sum -c -
+          echo 'a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524  tools/strong_melee_opponents.py' | sha256sum -c -
           test -z "$(git diff --name-only 9b1624da2d9b09ec9cc4f580b51bc82edd2c1485 HEAD -- src/main/java src/test/java AISurvivor build.gradle settings.gradle)"
           echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  AISurvivor/AISurvivor.jar' | sha256sum -c -
           echo '50a6b48fc1c20c1153c02702de3c69d345f12bf02125e3eb67585e7bf0505e24  experiments/Aegis/Aegis.jar' | sha256sum -c -

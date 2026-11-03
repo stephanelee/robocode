@@ -40,12 +40,14 @@ class AegisExperimentTests(unittest.TestCase):
         e.check_rows(rows, 20, 20263801)
         self.assertEqual(500, e.summarize(rows)['bulletsBlocked'])
         for bad in (dict(name='AISurvivor'), dict(checkpointLoaded=True), dict(shotOutcomes=dict(blocked=24, hit=2, missed=6)),
-                    dict(skippedTurns=1), dict(won=True), dict(bulletsBlocked=31, shotOutcomes=dict(blocked=31, hit=2, missed=0)), dict(shieldsFired=32), dict(meanLabelError=float('nan'))):
+                    dict(skippedTurns=1), dict(won=True), dict(bulletsBlocked=31, shotOutcomes=dict(blocked=31, hit=2, missed=0)), dict(shieldsFired=24), dict(meanLabelError=float('nan'))):
             broken = [row(i) for i in range(1, 21)]; broken[3] = row(4, **bad)
             with self.assertRaises(ValueError, msg=str(bad)):
                 e.check_rows(broken, 20, 20263801)
         with self.assertRaises(ValueError):
             e.check_rows(rows[:-1], 20, 20263801)
+        # refused fire commands in a low-energy endgame must not invalidate the round
+        e.check_rows([row(i, shieldsFired=60) for i in range(1, 21)], 20, 20263801)
 
 
 if __name__ == '__main__':

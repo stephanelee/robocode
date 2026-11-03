@@ -14,7 +14,7 @@ import compare
 import retcon_stats
 import strong_melee_opponents as native
 
-REGISTRATION = 'dfff83366be12ab2e302d02a1465f421a5a21b27'
+REGISTRATION = '46b36f642c3e6e0e42c74106e7d101723c47608b'
 PLAN = 'docs/improvements/aegis-shield-v1.md'
 SOURCE = '7fd5b8b2064dd66de0aa9f9076064e5cc70cd00e'
 JAR = '50a6b48fc1c20c1153c02702de3c69d345f12bf02125e3eb67585e7bf0505e24'
@@ -55,8 +55,9 @@ def check_rows(rows, rounds, seed):
             raise ValueError('Invalid shot outcomes')
         if sum(outcomes.values()) != row['enemyShotsDetected'] or outcomes.get('blocked', 0) != row['bulletsBlocked']:
             raise ValueError('Shot outcomes do not reconcile')
-        # shieldsFired counts fire commands; one issued on the round's final turn may never become a confirmed bullet
-        if row['bulletsBlocked'] > row['shieldsFired'] or row['shieldsFired'] > row['shotsFired'] + 1 or row['bulletHits'] > row['shotsFired']:
+        # shieldsFired counts fire commands, which the engine refuses at or below 0.1 energy or on the final turn,
+        # so it has no upper bound against confirmed bullets; only blocks need a command.
+        if row['bulletsBlocked'] > row['shieldsFired'] or row['bulletHits'] > row['shotsFired']:
             raise ValueError('Inconsistent shield counters')
         if not isinstance(row.get('skippedTurnNumbers'), list) or len(row['skippedTurnNumbers']) != min(row['skippedTurns'], 200):
             raise ValueError('Skipped turn list differs from count')
@@ -153,6 +154,7 @@ def main(args):
     if benchmark.digest(benchmark.ROOT / 'AISurvivor/AISurvivor.jar') != AIS_JAR or benchmark.digest(benchmark.ROOT / 'experiments/Aegis/Aegis.jar') != JAR:
         raise ValueError('Tracked JAR changed')
     report = dict(status='running', registration=REGISTRATION, planSHA256=hashlib.sha256(plan).hexdigest(), source=SOURCE, jarSHA256=JAR,
+                  driverSHA256=benchmark.digest(Path(__file__).resolve()),
                   productionAISJarSHA256=AIS_JAR, executionSource=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=benchmark.ROOT, text=True).strip(),
                   runtimeOS=retcon_stats.os_provenance(), games=[])
     target = args.output / 'experiment.json'
