@@ -4,7 +4,7 @@ from pathlib import Path
 import benchmark
 ROOT=benchmark.ROOT
 REG=ROOT/'benchmarks/keel-prism-v1'
-OUT=ROOT/'build/keel-prism-utf8'
+OUT=ROOT/'build/keel-prism-remaining'
 JAVA=Path(r'C:\Program Files\Microsoft\jdk-17.0.18.8-hotspot')
 RUNNER=ROOT/'build/completion-test-cache/robocode-tankroyale-runner-1.4.0.jar'
 def save(p,x):p.write_text(json.dumps(x,indent=2,allow_nan=False)+'\n',encoding='utf-8')
@@ -43,9 +43,10 @@ def analyze(path,game):
     totals['Keel']['privateSkips']=sum(' skip ' in x for x in markers);totals['Prism']['privateSkips']=finals[0]['counters'].get('turns.skipped',0)
     results=end['results'];assert {(x['name'],x['version']) for x in results}=={('Keel','0.1.0'),('Prism','0.1.0')}
     for x in results:totals[x['name']].update(score=x['totalScore'],firstPlaces=x['firstPlaces'],bulletDamage=x['bulletDamage'])
-    return dict(recordingSHA256=digest(recording),results=results,bots=totals,rounds=rounds,prismRoundSnapshots=sum(x['event']=='round' for x in tel))
+    return dict(recordingSHA256=digest(recording),results=results,bots=totals,perRound=rounds,prismRoundSnapshots=sum(x['event']=='round' for x in tel))
 def main():
     plan=json.loads((REG/'plan.json').read_bytes())
+    assert [g['id'] for g in plan['games']]==[f'kp-utf8-{i:02}' for i in range(2,7)] and all(g['rounds']==10 and g['seed']==2026270200+i and g['first']==('Keel' if i%2 else 'Prism') for i,g in enumerate(plan['games'],2))
     assert digest(RUNNER)==plan['runnerSHA256']
     for n,h in plan['jars'].items():assert digest(ROOT/f'experiments/{n}/{n}.jar')==h
     env={k:v for k,v in os.environ.items() if not k.startswith(('AISURVIVOR_','KEEL_','PRISM_','ROBOCODE_'))};env['JAVA_TOOL_OPTIONS']='-Dfile.encoding=UTF-8';env.pop('_JAVA_OPTIONS',None);env['JAVA_HOME']=str(JAVA);env['PATH']=str(JAVA/'bin')+os.pathsep+env['PATH']
@@ -54,7 +55,7 @@ def main():
       save(REG/'runtime.json',profile);print(json.dumps(profile,indent=2));return
     frozen=json.loads((REG/'runtime.json').read_bytes());assert all(profile[k]==frozen[k] for k in ('jvmOptions','javaVersion','javaFiles','assets','os','python','runnerSHA256','planSHA256'))
     OUT.mkdir(parents=True,exist_ok=False);save(OUT/'runtime.json',profile)
-    ref='refs/tags/keel-prism-utf8-v1-77b8a5c3114641c1-8c045f80d37a3076'
+    ref='refs/tags/keel-prism-remaining50-v1-77b8a5c3114641c1-8c045f80d37a3076'
     subprocess.run(['gh','api','-X','POST','repos/stephanelee/robocode/git/refs','-f','ref='+ref,'-f','sha='+profile['sourceCommit']],check=True,capture_output=True,text=True)
     save(OUT/'receipt.json',dict(ref=ref,head=profile['sourceCommit'],profileSHA256=digest(REG/'runtime.json')))
     report=dict(plan=plan,execution=profile['sourceCommit'],games=[],decision='descriptive only')
