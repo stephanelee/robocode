@@ -28,6 +28,6 @@ PY
 
 The [workflow](../../.github/workflows/meridian-prior.yml) rebuilds on Java 17 and checks JAR parity, then uses Java 25 to launch matches. Both arms use the same Ubuntu 26.04 host. The runner extracts the v3 control from 809b880cdcee98d7946d05e6bcd30f623f604348 and checks its runnable files against the v3 manifest. Physical replications have uncontrolled start positions.
 
-Recreate the bank with `PYTHONDONTWRITEBYTECODE=1 python3 tools/meridian_prior_bank.py` and check that Git reports no changes to `experiments/Meridian/src/main/resources/crossing-prior.csv`.
+Recreate the bank with `PYTHONDONTWRITEBYTECODE=1 python3 tools/meridian_prior_bank.py` on the original generation host. On other hosts use `PYTHONDONTWRITEBYTECODE=1 python3 tools/meridian_prior_bank.py --verify` to compare all reconstructed values while retaining the frozen resource bytes.
 
 The `parity/queries.txt` rows encode bearing (degrees), orientation, range, power, the four unscaled context features, and the Python reference aim (degrees). Compile `parity/PriorParity.java` against the committed Meridian JAR and run it with that query file. All 282 reference predictions must agree within 1e-8 degrees.

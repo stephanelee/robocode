@@ -9,3 +9,19 @@ Run five separate cold five-round games: unchanged v3 vs Diamond, then v6 vs Dia
 The compiled Java gun matches all 282 predictions of the previously evaluated Python four-feature memory to 2.85e-14 degrees. [Query values and Java check](../../benchmarks/meridian-prior/parity/) retain the comparison. This checks the deployed calculation against the selected replay arm. Its effectiveness remains subject to fresh games.
 
 The no-game preflight 41745597074 and initial execution attempt 41745654800 both stop before Java build or games because Linux and macOS math libraries differ at approximately the last decimal digit when reconstructing training coordinates. Correct the reproduction check to compare each finite value with absolute tolerance 1e-12, while retaining the original committed bank byte for byte for the build and runtime fingerprint. No candidate source, JAR, bank bytes, gameplay settings, match schedule or decision threshold changes. Re-register one execution after this acquisition-only correction. All 25 physical rounds remain unspent. The generator's default mode emits reconstructed values, and `--verify` checks them without overwriting the frozen resource.
+
+## Result
+
+Reject the frozen gun. Both v3 and v6 lost all five Diamond rounds. V6 scored 80 points to Diamond's 545. Outgoing damage per 100 shots fell from the control's 42.04 to 29.93, and score share fell from 14.53% to 12.80%. The relative comparisons and both absolute Diamond gates failed. All five games and 25 rounds were valid with zero own skips. All three transfer guards passed. The conditional 180 rounds were unspent.
+
+| Meridian / opponent | Round wins | Score share | Hits / confirmed shots | Damage dealt / taken |
+|---|---:|---:|---:|---:|
+| v3 / Diamond Port | 0/5 | 14.53% | 19/244 | 102.59 / 255.53 |
+| v6 / Diamond Port | 0/5 | 12.80% | 15/266 | 79.61 / 207.53 |
+| v6 / Retcon | 4/5 | 71.43% | 7/335 | 49.07 / 56.40 |
+| v6 / AISurvivor TRAIN | 3/5 | 66.49% | 29/319 | 172.39 / 62.49 |
+| v6 / Walls | 5/5 | 100.00% | 30/205 | 225.80 / 0.00 |
+
+The prior supplied every v6 fire request (266, 335, 319 and 205 respectively), and those counts matched official creations. Its advantage on the earlier 282-shot replay did not carry into the live Diamond game. The replay scored geometric proximity on old v3 trajectories. Here the engine produced fresh starts, fire times, enemy responses and actual hits. One game per matchup cannot separate those effects or estimate between-game variability.
+
+[PR #87](https://github.com/stephanelee/robocode/pull/87) · [pre-execution independent review](https://github.com/stephanelee/robocode/pull/87#pullrequestreview-5761382899) · [physical run](https://github.com/stephanelee/robocode/actions/runs/41745927477) · [raw recordings, scores and endpoints](../../benchmarks/meridian-prior/raw/) · [offline reproduction](../../benchmarks/meridian-prior/README.md) · [zero-round acquisition failures](../../benchmarks/meridian-prior/preflight/). Executed f411f98ab3efd04a694e35ecca7f2b7e3991edc4. The JAR's SHA256 was 8107fe57c775567129d81fa83668a2acde259e736029ed7a9e2fff4ee0a43b70 and all 791 entries passed Java 17 parity. The [runtime fingerprint](../../benchmarks/meridian-prior/raw/profile.json) (SHA256 ca1568987e63af75ba8036d2edd08a6afb9c974329a3df68aadb8d0e40d9c130) records the source hashes, locked opponents, Ubuntu 26.04 image 20261026.180.1 and Java 25 battle runtime.
