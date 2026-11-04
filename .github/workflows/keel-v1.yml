@@ -4,6 +4,9 @@ on:
     types: [labeled]
 permissions:
   contents: write  # only used to push registered evidence to a new evidence/keel-v1-<run> branch
+concurrency:
+  group: keel-v1-registered
+  cancel-in-progress: false
 jobs:
   keel:
     if: github.run_attempt == 1 && github.head_ref == 'claude/keel-v1' && (github.event.label.name == 'profile-keel-v1' || github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
@@ -13,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false  # no token in .git/config while third-party opponents run
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

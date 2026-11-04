@@ -93,6 +93,10 @@ Otherwise the result is **not confirmed**. No threshold, source, seed or opponen
 
 Per game: share, round wins, per-round shares and winners, our and Diamond's shots, hits, hit rates, shot energy, damage dealt and taken, bullet–bullet collisions, wall and bot contacts, private skipped turns, turns per round, recording hash, command, staged hashes and runtime profile.
 
+**Confirmation gate.** The workflow's confirmation job reads `benchmarks/keel-v1/raw/decision-screen.json`. That file is committed by hand from the screen's evidence branch (`evidence/keel-v1-run-keel-v1-screen-<run>`). Before the confirmation label is applied, an independent reviewer must check it byte for byte against that branch and against the `DECISION-GZ-B64` line in the job log.
+
+**Known frozen-bot limitation (from pre-execution review).** A ram (bot-to-bot collision) changes energy before scans in the same engine turn. Keel applies its −0.6 correction to the following scan, so a collision can create a small phantom 0.6-power wave. This is retained unchanged as part of the frozen candidate. Its effect should be considered when interpreting results; collision counts are reported.
+
 Limitations:
 
 - One CI runtime, and Diamond's own turn timing is not observable to us.
