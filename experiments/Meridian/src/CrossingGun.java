@@ -1,3 +1,5 @@
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +28,37 @@ final class CrossingGun {
         double direction(double offset) { return bearing + sign * escape() * offset; }
     }
     private record Example(Context context, double offset) {}
-    private final Example[] examples = new Example[CAPACITY];
+    private final Example[] examples;
+    private final boolean frozen;
+
+    CrossingGun() {
+        examples = new Example[CAPACITY];
+        frozen = false;
+    }
+
+    private CrossingGun(Example[] prior) {
+        examples = prior;
+        count = prior.length;
+        frozen = true;
+    }
+
+    static CrossingGun loadPrior() {
+        var resource = CrossingGun.class.getResourceAsStream("/crossing-prior.csv");
+        if (resource == null) throw new IllegalStateException("Missing crossing prior");
+        List<Example> rows = new ArrayList<>();
+        try (var reader = new BufferedReader(new InputStreamReader(resource, StandardCharsets.US_ASCII))) {
+            for (String line; (line = reader.readLine()) != null;) {
+                double[] v = Arrays.stream(line.split(",")).mapToDouble(Double::parseDouble).toArray();
+                if (v.length != 5 || !Arrays.stream(v).allMatch(Double::isFinite) || Math.abs(v[4]) > LIMIT)
+                    throw new IllegalStateException("Invalid prior example");
+                rows.add(new Example(new Context(v[0], v[1], v[2], v[3]), v[4]));
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+        if (rows.size() != 206) throw new IllegalStateException("Incomplete crossing prior");
+        return new CrossingGun(rows.toArray(Example[]::new));
+    }
     private int next, count;
     private final double[] scores = new double[BINS];
     private final List<Launch> inFlight = new ArrayList<>();
@@ -54,7 +86,7 @@ final class CrossingGun {
         inFlight.clear();
     }
 
-    void requested(Launch launch) { requested = launch; }
+    void requested(Launch launch) { if (!frozen) requested = launch; }
 
     void fired(int turn, double x, double y, double power) {
         if (requested != null && requested.turn == turn && Math.abs(requested.power - power) < 1e-6
@@ -102,7 +134,7 @@ final class CrossingGun {
                 if (distance < footprint) scores[bin] += weight * (1 - distance / footprint);
             }
         }
-        if (support < 4) return Double.NaN;
+        if (!frozen && support < 4) return Double.NaN;
         int best = BINS / 2;
         for (int i = 0; i < BINS; i++) {
             if (scores[i] > scores[best]) best = i;

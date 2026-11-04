@@ -16,7 +16,7 @@ public class MeridianBattle {
     public static void main(String[] args) throws Exception {
         int port=Integer.parseInt(args[0]), rounds=Integer.parseInt(args[1]);
         Path output=Path.of(args[2]), markers=output.resolve("markers.txt");
-        if(!((31410<=port && port<=31421) || (31740<=port && port<=31752) || (31820<=port && port<=31832) || (31840<=port && port<=31852) || (31860<=port && port<=31872)))throw new IllegalArgumentException("Unregistered port");
+        if(!((31410<=port && port<=31421) || (31740<=port && port<=31752) || (31820<=port && port<=31832) || (31840<=port && port<=31852) || (31860<=port && port<=31872) || (31900<=port && port<=31913)))throw new IllegalArgumentException("Unregistered port");
         var setup=BattleSetup.oneVsOne(s->{s.setNumberOfRounds(rounds);s.setTurnTimeoutMicros(100000);});
         try(var runner=BattleRunner.create(b->b.embeddedServer(port).enableRecording(output).suppressServerOutput().botConnectTimeout(Duration.ofSeconds(80)));
             var battle=runner.startBattleAsync(setup,List.of(BotEntry.of(args[3]),BotEntry.of(args[4])))){

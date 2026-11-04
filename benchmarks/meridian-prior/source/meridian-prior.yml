@@ -1,0 +1,56 @@
+name: Meridian frozen prior comparison
+on:
+  pull_request:
+    types: [opened, labeled]
+permissions:
+  contents: read
+jobs:
+  duel:
+    if: github.run_attempt == 1 && github.head_ref == 'codex/meridian-prior' && (github.event.action == 'opened' || github.event.label.name == 'run-meridian-aim' || github.event.label.name == 'profile-meridian-prior')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 190
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Build Meridian on Java 17 and verify parity
+        run: |
+          mkdir -p build/meridian
+          java -version 2>build/meridian/build-java.txt
+          sha256sum "$JAVA_HOME/bin/javac" "$JAVA_HOME/lib/modules" | sed 's@  .*/@  @' > build/meridian/build-java.sha256
+          python tools/meridian_prior_bank.py --verify
+          git diff --exit-code -- experiments/Meridian/src/main/resources/crossing-prior.csv
+          ./gradlew --no-daemon -p experiments/Meridian clean build
+          python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Validate and identify exact battle runtime (no games)
+        run: python tools/meridian_profile.py
+      - name: Publish runtime identity before any game
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-profile-${{ github.run_id }}
+          path: build/meridian/
+      - name: Run the reviewed registration
+        if: github.event.action == 'labeled' && github.event.label.name == 'run-meridian-aim'
+        run: |
+          cmp -s benchmarks/meridian-prior/profile.json build/meridian/profile.json || cmp benchmarks/meridian-prior/profile-20261026.json build/meridian/profile.json
+          python tools/meridian_prior.py
+      - name: Preserve all attempts
+        if: always() && github.event.label.name == 'run-meridian-aim'
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-games-${{ github.run_id }}
+          path: build/meridian/
+          retention-days: 30
