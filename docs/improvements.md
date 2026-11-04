@@ -8,6 +8,10 @@ Earlier cycles compare narrow candidates with the previously accepted version. C
 
 The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a272373` as the new baseline. [Coordination issue106](https://github.com/stephanelee/robocode/issues/106), [immutable source/JAR/production hashes](../benchmarks/keel-improvement/baseline.json), [ownership and evidence](improvements/keel-experimental-baseline.md). **Zero new games are registered by this baseline record.** Fresh bounded protocols and independent review are required for isolated derivatives; production AISurvivor remains unchanged.
 
+| Experiment | Budget and decision | Evidence |
+|---|---|---|
+| KeelHelm stopped-heading forecast / [issue107](https://github.com/stephanelee/robocode/issues/107) | **Prospectively registered;0games.**120roundscreen vs fresh Keel controls, conditional300freshconfirmation; no candidate source or improvement claim yet. Independent protocol review pending. | [Protocol](improvements/keel-helm-v1.md), [registry/status](../benchmarks/keel-helm-v1/README.md) |
+
 ## Meridian standalone duel
 
 | Experiment | Measured budget and decision | Evidence |
