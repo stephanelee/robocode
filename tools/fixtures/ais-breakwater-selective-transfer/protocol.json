@@ -1,0 +1,638 @@
+{
+  "schemaVersion": 1,
+  "candidate": {
+    "source": "1409f16497de7a82c11ae55d8f38d69e10dfeeb6",
+    "jarSHA256": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7"
+  },
+  "baseline": {
+    "source": "9b1624da2d9b09ec9cc4f580b51bc82edd2c1485",
+    "jarSHA256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800"
+  },
+  "breakwater": {
+    "source": "b9f61e536c0ff5860f6aabc0f6d3f4a11685a3d9",
+    "jarSHA256": "e6c98feef83e083149df782d643496fb6b6fe3fab33c95356ea2634981c6baf0"
+  },
+  "runtime": {
+    "javaVersion": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "pythonVersion": "3.13.17 (main, Oct 22 2026, 02:41:26) [GCC 15.2.0]",
+    "hashes": {
+      "bin/java": "1bf1aaef01e4f8d7c85d913c60fb2ee4624cbe54d4053254c59657b7ea913b25",
+      "lib/modules": "f5463cffa81c51b3c13f57e2c23eacceab2b12e842069acf2facd5485f63bc85",
+      "lib/server/libjvm.so": "30b96b2f2b69f313f4c85d9b437511a1d97e64c29a3d13b0abd6b07c7f50335b",
+      "release": "8545053a54a73969a65db2c8157f40f89bcdcf7526ae90a7ce9b3061c01bc34a",
+      "python": "59e4caac3251f4240f9e49169d7ab0ea46a37a826e58ff8953e3ac5a9c9cd74f",
+      "libpython": "aad71acf751767ee702555e2e4c159c34dc68122f938e429f864e2d7f800a0bc"
+    }
+  },
+  "maximumRounds": 630,
+  "maximumAISEndpoints": 46,
+  "mode": "train",
+  "duelPolicy": "controller-default",
+  "turnTimeoutMicros": 100000,
+  "arena": [
+    800,
+    600
+  ],
+  "games": {
+    "screen": [
+      {
+        "gameId": "ais-bw-v2-screen-Breakwater-b1-previous",
+        "stage": "screen",
+        "kind": "Breakwater",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202641000
+        },
+        "opponentSeed": 202641001
+      },
+      {
+        "gameId": "ais-bw-v2-screen-Breakwater-b1-candidate",
+        "stage": "screen",
+        "kind": "Breakwater",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202641002
+        },
+        "opponentSeed": 202641003
+      },
+      {
+        "gameId": "ais-bw-v2-screen-Retcon-b1-candidate",
+        "stage": "screen",
+        "kind": "Retcon",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202641004
+        },
+        "opponentSeed": 202641005
+      },
+      {
+        "gameId": "ais-bw-v2-screen-Retcon-b1-previous",
+        "stage": "screen",
+        "kind": "Retcon",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202641006
+        },
+        "opponentSeed": 202641007
+      },
+      {
+        "gameId": "ais-bw-v2-screen-diamond-port-b1-previous",
+        "stage": "screen",
+        "kind": "diamond-port",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202641008
+        },
+        "opponentSeed": 202641009
+      },
+      {
+        "gameId": "ais-bw-v2-screen-diamond-port-b1-candidate",
+        "stage": "screen",
+        "kind": "diamond-port",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202641010
+        },
+        "opponentSeed": 202641011
+      },
+      {
+        "gameId": "ais-bw-v2-screen-adaptive-prime-b1-candidate",
+        "stage": "screen",
+        "kind": "adaptive-prime",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202641012
+        },
+        "opponentSeed": 202641013
+      },
+      {
+        "gameId": "ais-bw-v2-screen-adaptive-prime-b1-previous",
+        "stage": "screen",
+        "kind": "adaptive-prime",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202641014
+        },
+        "opponentSeed": 202641015
+      },
+      {
+        "gameId": "ais-bw-v2-screen-self-b1",
+        "stage": "screen",
+        "kind": "self",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate",
+          "previous"
+        ],
+        "seeds": {
+          "candidate": 202641016,
+          "previous": 202641017
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b1-previous",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642000
+        },
+        "opponentSeed": 202642001
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b1-candidate",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642002
+        },
+        "opponentSeed": 202642003
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b2-candidate",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642004
+        },
+        "opponentSeed": 202642005
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b2-previous",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642006
+        },
+        "opponentSeed": 202642007
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b3-previous",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642008
+        },
+        "opponentSeed": 202642009
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Breakwater-b3-candidate",
+        "stage": "confirmation",
+        "kind": "Breakwater",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642010
+        },
+        "opponentSeed": 202642011
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b1-candidate",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642012
+        },
+        "opponentSeed": 202642013
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b1-previous",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642014
+        },
+        "opponentSeed": 202642015
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b2-previous",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642016
+        },
+        "opponentSeed": 202642017
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b2-candidate",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642018
+        },
+        "opponentSeed": 202642019
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b3-candidate",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642020
+        },
+        "opponentSeed": 202642021
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-Retcon-b3-previous",
+        "stage": "confirmation",
+        "kind": "Retcon",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642022
+        },
+        "opponentSeed": 202642023
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b1-previous",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642024
+        },
+        "opponentSeed": 202642025
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b1-candidate",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642026
+        },
+        "opponentSeed": 202642027
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b2-candidate",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642028
+        },
+        "opponentSeed": 202642029
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b2-previous",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642030
+        },
+        "opponentSeed": 202642031
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b3-previous",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642032
+        },
+        "opponentSeed": 202642033
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-diamond-port-b3-candidate",
+        "stage": "confirmation",
+        "kind": "diamond-port",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642034
+        },
+        "opponentSeed": 202642035
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b1-candidate",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642036
+        },
+        "opponentSeed": 202642037
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b1-previous",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 1,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642038
+        },
+        "opponentSeed": 202642039
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b2-previous",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642040
+        },
+        "opponentSeed": 202642041
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b2-candidate",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 2,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642042
+        },
+        "opponentSeed": 202642043
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b3-candidate",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202642044
+        },
+        "opponentSeed": 202642045
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-adaptive-prime-b3-previous",
+        "stage": "confirmation",
+        "kind": "adaptive-prime",
+        "block": 3,
+        "rounds": 20,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202642046
+        },
+        "opponentSeed": 202642047
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-self-b1",
+        "stage": "confirmation",
+        "kind": "self",
+        "block": 1,
+        "rounds": 10,
+        "arms": [
+          "candidate",
+          "previous"
+        ],
+        "seeds": {
+          "candidate": 202642048,
+          "previous": 202642049
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-self-b2",
+        "stage": "confirmation",
+        "kind": "self",
+        "block": 2,
+        "rounds": 10,
+        "arms": [
+          "previous",
+          "candidate"
+        ],
+        "seeds": {
+          "previous": 202642050,
+          "candidate": 202642051
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-confirmation-self-b3",
+        "stage": "confirmation",
+        "kind": "self",
+        "block": 3,
+        "rounds": 10,
+        "arms": [
+          "candidate",
+          "previous"
+        ],
+        "seeds": {
+          "candidate": 202642052,
+          "previous": 202642053
+        }
+      }
+    ],
+    "samples": [
+      {
+        "gameId": "ais-bw-v2-sample-Target-previous",
+        "stage": "samples",
+        "kind": "Target",
+        "block": 1,
+        "rounds": 5,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202643000
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-sample-Target-candidate",
+        "stage": "samples",
+        "kind": "Target",
+        "block": 1,
+        "rounds": 5,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202643001
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-sample-SpinBot-candidate",
+        "stage": "samples",
+        "kind": "SpinBot",
+        "block": 2,
+        "rounds": 5,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202643002
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-sample-SpinBot-previous",
+        "stage": "samples",
+        "kind": "SpinBot",
+        "block": 2,
+        "rounds": 5,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202643003
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-sample-Walls-previous",
+        "stage": "samples",
+        "kind": "Walls",
+        "block": 3,
+        "rounds": 5,
+        "arms": [
+          "previous"
+        ],
+        "seeds": {
+          "previous": 202643004
+        }
+      },
+      {
+        "gameId": "ais-bw-v2-sample-Walls-candidate",
+        "stage": "samples",
+        "kind": "Walls",
+        "block": 3,
+        "rounds": 5,
+        "arms": [
+          "candidate"
+        ],
+        "seeds": {
+          "candidate": 202643005
+        }
+      }
+    ]
+  },
+  "priorExperiment": {
+    "status": "reject-at-screen",
+    "physicalRounds": 90,
+    "source": "1cd8db2ea6ccfb56914472bcc51757c0e91d2cff",
+    "notPooled": true
+  },
+  "additionalMaximumRounds": 630,
+  "combinedV1V2MaximumRounds": 720
+}

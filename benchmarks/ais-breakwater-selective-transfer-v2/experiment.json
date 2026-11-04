@@ -1,0 +1,2290 @@
+{
+  "status": "complete",
+  "registration": "6c433bed3d953927170e0d0f503e85d04b475da9",
+  "sources": {
+    "previous": "9b1624da2d9b09ec9cc4f580b51bc82edd2c1485",
+    "candidate": "1409f16497de7a82c11ae55d8f38d69e10dfeeb6"
+  },
+  "jarSHA256": {
+    "previous": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+    "candidate": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7"
+  },
+  "planSHA256": "b020eb0beba70f5dad49c9d4e7dd5f1907ee3ddb7f9120fe6602d1b61cdff8a7",
+  "protocolSHA256": "ef1559e98544cc666433de6c5ea78812aebd9e1d9608c571cad6cad9a9e2f51c",
+  "executionSource": "9c76456ec85216e38b0b0ef57f22709e34764f70",
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "games": [
+    {
+      "gameId": "ais-bw-v2-screen-Breakwater-b1-previous",
+      "stage": "screen",
+      "kind": "Breakwater",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 202641000
+      },
+      "opponentSeed": 202641001,
+      "battles": {
+        "previous": {
+          "id": 1,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 222,
+          "survival": 0,
+          "bulletDamage": 222,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "Breakwater",
+              "version": "0.3.0",
+              "rank": 1,
+              "totalScore": 600,
+              "survival": 500,
+              "bulletDamage": 0,
+              "firstPlaces": 10
+            },
+            {
+              "id": 1,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 222,
+              "survival": 0,
+              "bulletDamage": 222,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 15246,
+            "shotsFired": 808,
+            "bulletHits": 45,
+            "damageDealt": 222.4,
+            "damageTaken": 0.0,
+            "wallCollisions": 2,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.055693069306930694,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "dd664a8bc85e102652a745e158f59760f6efb062d23de4f60d45969ce6f36980",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 15194,
+            "actionCounts": [
+              15212,
+              5,
+              3,
+              0,
+              9,
+              7
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.1",
+            "seed": 202641000,
+            "originalHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "c2012cd3bb944bf514befcbc920fc27b06cb5cea7c454d0ab4388dc4049ff89c",
+              "AISurvivor.sh": "74c039d998b0e760f6c7d2799b8d3960cda719cdb70e469be39dbea614a45851",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Breakwater-b1-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Breakwater-b1-previous/previous/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 0,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 0,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 0,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {},
+      "breakwater": {
+        "modelSHA256": "e992834b11153bd7123387ef72faf8745d09f95699d7ddf05984f0d6e9284970",
+        "metrics": {
+          "turns": 15246,
+          "shotsFired": 0,
+          "bulletHits": 0,
+          "damageDealt": 0.0,
+          "damageTaken": 222.39999999999998,
+          "wallCollisions": 0,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": null,
+          "roundsRecorded": 10,
+          "checkpointLoaded": false
+        },
+        "rawWon": 7,
+        "officialFirstPlaces": 10
+      }
+    },
+    {
+      "gameId": "ais-bw-v2-screen-Breakwater-b1-candidate",
+      "stage": "screen",
+      "kind": "Breakwater",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 202641002
+      },
+      "opponentSeed": 202641003,
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 180,
+          "survival": 150,
+          "bulletDamage": 0,
+          "firstPlaces": 3,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "Breakwater",
+              "version": "0.3.0",
+              "rank": 1,
+              "totalScore": 324,
+              "survival": 250,
+              "bulletDamage": 22,
+              "firstPlaces": 5
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 180,
+              "survival": 150,
+              "bulletDamage": 0,
+              "firstPlaces": 3
+            }
+          ],
+          "metrics": {
+            "turns": 15510,
+            "shotsFired": 5,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 19.95,
+            "wallCollisions": 2,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.0,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "8aa7b9a7dcb3c12035dcd02dc9d75d65e640a4a758fba29d6ce3cb226071b6b3",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 15453,
+            "actionCounts": [
+              15462,
+              8,
+              7,
+              9,
+              7,
+              11
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 202641002,
+            "originalHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "bbc4fbfe68517a14238cd7575f41c2dea0da0dda8a06e8a8109cf70babffdc8d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Breakwater-b1-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Breakwater-b1-candidate/candidate/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 15453,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 9526,
+            "breakwaterFirePassedTurns": 5,
+            "breakwaterFireBlockedTurns": 9521,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {},
+      "breakwater": {
+        "modelSHA256": "0c49ccfcb7ccd1d0c3cff23111aa733c4649641cab7b1e8bbcd2e695679bf1b4",
+        "metrics": {
+          "turns": 15510,
+          "shotsFired": 15,
+          "bulletHits": 4,
+          "damageDealt": 23.60000000000117,
+          "damageTaken": 0.0,
+          "wallCollisions": 0,
+          "botCollisions": 0,
+          "skippedTurns": 0,
+          "hitRate": 0.26666666666666666,
+          "roundsRecorded": 10,
+          "checkpointLoaded": false
+        },
+        "rawWon": 5,
+        "officialFirstPlaces": 5
+      }
+    },
+    {
+      "gameId": "ais-bw-v2-screen-Retcon-b1-candidate",
+      "stage": "screen",
+      "kind": "Retcon",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 202641004
+      },
+      "opponentSeed": 202641005,
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 738,
+          "survival": 450,
+          "bulletDamage": 89,
+          "firstPlaces": 9,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 738,
+              "survival": 450,
+              "bulletDamage": 89,
+              "firstPlaces": 9
+            },
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 350,
+              "survival": 50,
+              "bulletDamage": 157,
+              "firstPlaces": 1
+            }
+          ],
+          "metrics": {
+            "turns": 10014,
+            "shotsFired": 15,
+            "bulletHits": 9,
+            "damageDealt": 89.200001,
+            "damageTaken": 157.8,
+            "wallCollisions": 1,
+            "botCollisions": 90,
+            "skippedTurns": 0,
+            "hitRate": 0.6,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "401abc4f165491537767e288cca08e0c541a67004d712e99f702c192ad3a023c",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 9965,
+            "actionCounts": [
+              9969,
+              9,
+              5,
+              0,
+              23,
+              6
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 202641004,
+            "originalHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "51f63bcdb2e69eefe0574c7a718ec46edbdc88baeda3d6afede8f468f8263546",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Retcon-b1-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Retcon-b1-candidate/candidate/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 9965,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 7723,
+            "breakwaterFirePassedTurns": 15,
+            "breakwaterFireBlockedTurns": 7708,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 10,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-105766518104.json",
+            "sha256": "bbeb471a5f663ec444b6a8ef7141f8b3bfaef2b21f0f3f38330328e454356636"
+          }
+        ],
+        "actualGun": {
+          "shots": 642,
+          "hits": 18,
+          "hitRate": 0.028037383177570093
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 16,
+            "shots": 633,
+            "hitRate": 0.02527646129541864
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 19,
+            "shots": 633,
+            "hitRate": 0.030015797788309637
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 10,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 10005,
+          "computeP50Micros": 10,
+          "computeP99Micros": 80,
+          "computeMaxMicros": 18496,
+          "overBudgetTurns": 1,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:7202,10:1637,20:486,30:248,40:148,50:104,60:66,70:44,80:21,90:17,100:8,110:4,120:2,140:1,150:1,160:1,180:2,190:1,210:1,240:1,280:1,350:2,460:1,560:1,920:1,1190:1,1250:1,1550:1,18490:1",
+          "timing": {
+            "firesChecked": 642,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 642,
+            "originMatches": 642,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 642,
+            "stillHitsChecked": 6,
+            "stillHitMatches": 6,
+            "hitsOnMovingTargets": 12,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 84,
+            "unanchoredShots": 0,
+            "hitsTaken": 8,
+            "hitsOnWave": 8,
+            "wavePowerCorrected": 0,
+            "waveHitsExact": 8,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 9905,
+            "moveMatches": 9905,
+            "moveWallHitsChecked": 5,
+            "moveNotChecked": 99,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 642,
+            "bulletHits": 18,
+            "virtualGuns": "LinearAimModel:16/633 HeadOnAimModel:19/633"
+          }
+        }
+      },
+      "pythonSourceHashes": {},
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-Retcon-b1-previous",
+      "stage": "screen",
+      "kind": "Retcon",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 202641006
+      },
+      "opponentSeed": 202641007,
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 814,
+          "survival": 450,
+          "bulletDamage": 240,
+          "firstPlaces": 9,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 814,
+              "survival": 450,
+              "bulletDamage": 240,
+              "firstPlaces": 9
+            },
+            {
+              "id": 1,
+              "name": "Retcon",
+              "version": "0.2.0",
+              "rank": 2,
+              "totalScore": 238,
+              "survival": 50,
+              "bulletDamage": 157,
+              "firstPlaces": 1
+            }
+          ],
+          "metrics": {
+            "turns": 11429,
+            "shotsFired": 662,
+            "bulletHits": 39,
+            "damageDealt": 242.26000200000001,
+            "damageTaken": 161.66,
+            "wallCollisions": 1,
+            "botCollisions": 1,
+            "skippedTurns": 0,
+            "hitRate": 0.05891238670694864,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "5622bae908b3c24da36ed77b4602ddad723ee530de3420dc2900a12e99c25c8a",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 11372,
+            "actionCounts": [
+              11389,
+              1,
+              10,
+              8,
+              20,
+              0
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.1",
+            "seed": 202641006,
+            "originalHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "c2012cd3bb944bf514befcbc920fc27b06cb5cea7c454d0ab4388dc4049ff89c",
+              "AISurvivor.sh": "70434b25a6bf0fb3398fc2d80b351919e00ca0393fd4ba42b3f2296221491502",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Retcon-b1-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-Retcon-b1-previous/previous/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 0,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 0,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 0,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": {
+        "schemaVersion": 1,
+        "status": "complete",
+        "expectedRounds": 10,
+        "bot": "Retcon",
+        "version": "0.2.0",
+        "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "rawArtifacts": [
+          {
+            "path": "Retcon-1-120002143026.json",
+            "sha256": "fd40e8e9a9b3792a66ad746e29cb7791df85cde1f17a1031885b3732d0f3a69e"
+          }
+        ],
+        "actualGun": {
+          "shots": 671,
+          "hits": 22,
+          "hitRate": 0.03278688524590164
+        },
+        "virtualGuns": [
+          {
+            "model": "LinearAimModel",
+            "hits": 14,
+            "shots": 663,
+            "hitRate": 0.021116138763197588
+          },
+          {
+            "model": "HeadOnAimModel",
+            "hits": 20,
+            "shots": 663,
+            "hitRate": 0.030165912518853696
+          }
+        ],
+        "data": {
+          "bot": "Retcon",
+          "botId": 1,
+          "roundsRecorded": 10,
+          "turnTimeoutMicros": 100000,
+          "computeBudgetMicros": 16666,
+          "turns": 11420,
+          "computeP50Micros": 20,
+          "computeP99Micros": 60,
+          "computeMaxMicros": 12659,
+          "overBudgetTurns": 0,
+          "skippedTurns": 0,
+          "skippedPerRound": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "skippedTurnList": "",
+          "computeHistogram10us": "0:5420,10:4763,20:685,30:264,40:110,50:71,60:36,70:13,80:6,90:3,100:5,110:5,120:3,130:2,140:2,150:1,160:1,170:2,180:1,190:1,220:1,230:1,250:1,260:2,280:1,300:1,320:1,330:1,340:1,350:1,390:1,550:1,790:1,860:1,1040:1,1180:1,1360:1,1430:1,1460:1,2240:1,2380:2,2600:1,5340:1,12650:1",
+          "timing": {
+            "firesChecked": 671,
+            "firesNotCreated": 0,
+            "createdTurnMatches": 671,
+            "originMatches": 671,
+            "originMatchesAfterFirstMove": 0,
+            "headingMatches": 671,
+            "stillHitsChecked": 11,
+            "stillHitMatches": 11,
+            "hitsOnMovingTargets": 11,
+            "mismatches": ""
+          },
+          "waves": {
+            "firesDetected": 668,
+            "unanchoredShots": 0,
+            "hitsTaken": 33,
+            "hitsOnWave": 33,
+            "wavePowerCorrected": 2,
+            "waveHitsExact": 33,
+            "waveHitsOffByOneStep": 0,
+            "waveHitsOtherResidual": 0,
+            "waveMismatches": ""
+          },
+          "movement": {
+            "moveTurnsChecked": 11409,
+            "moveMatches": 11409,
+            "moveWallHitsChecked": 0,
+            "moveNotChecked": 10,
+            "moveMismatches": ""
+          },
+          "gun": {
+            "bulletsFired": 671,
+            "bulletHits": 22,
+            "virtualGuns": "LinearAimModel:14/663 HeadOnAimModel:20/663"
+          }
+        }
+      },
+      "pythonSourceHashes": {},
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-diamond-port-b1-previous",
+      "stage": "screen",
+      "kind": "diamond-port",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 202641008
+      },
+      "opponentSeed": 202641009,
+      "battles": {
+        "previous": {
+          "id": 2,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 78,
+          "survival": 0,
+          "bulletDamage": 78,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "Diamond Port",
+              "version": "1.8.28",
+              "rank": 1,
+              "totalScore": 1500,
+              "survival": 500,
+              "bulletDamage": 750,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 78,
+              "survival": 0,
+              "bulletDamage": 78,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 4597,
+            "shotsFired": 268,
+            "bulletHits": 15,
+            "damageDealt": 77.6,
+            "damageTaken": 762.8,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.055970149253731345,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "0f89e82923f95d6d75c66bd16e956076509ebcba04ac5c244794226525517225",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 4546,
+            "actionCounts": [
+              4549,
+              1,
+              9,
+              15,
+              8,
+              5
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.1",
+            "seed": 202641008,
+            "originalHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "c2012cd3bb944bf514befcbc920fc27b06cb5cea7c454d0ab4388dc4049ff89c",
+              "AISurvivor.sh": "aa8c7028136771fdc949132b518dac3124bfb4772472cc609d87e26eee77b7c9",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-diamond-port-b1-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-diamond-port-b1-previous/previous/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 0,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 0,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 0,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {
+        "opponents/bot_core/__init__.py": "de2fee519c40f9649827e03661e0e8bfd99f0de7d0f9fe7523b7ffd41048faf0",
+        "opponents/bot_core/async_writer.py": "16e83d54880a4919c9cecbe1b77ef5c46bf3d9df8c67471f153e638d4ac7feea",
+        "opponents/bot_core/debug.py": "38c0a5b0a719a79606640873fb8653f961ad7ed13ee89681a5efcac3b874dc16",
+        "opponents/bot_core/energy/__init__.py": "67f930cc4a2282f1ce589cc3f1828ff540509079ccf634cdea43c016cb928827",
+        "opponents/bot_core/energy/corrections.py": "583af1c35722be766d6aa424dfa709901364af3d228518e3b45e594501361cdd",
+        "opponents/bot_core/energy/drops.py": "6ac726231c7e25f1f3164e3844d61684ac96e45b85681e3255666ef4361266ce",
+        "opponents/bot_core/energy/fire_detection.py": "6bd8af2bdcaff6609bd352952afd2227e348e145d839369a0289f5b5fbbdb5f7",
+        "opponents/bot_core/energy/fire_gate.py": "8b9f074d2a15c1cd973b1cbbc4dcd48d22b6f0b32adf63d6d758cf86d753d1bd",
+        "opponents/bot_core/energy/fire_power.py": "49820930cc37b32637a8cdf9a05975cf0c2a8505639c1fadc623e74e7e399a9a",
+        "opponents/bot_core/energy/gun_heat.py": "e969d111c515d195510c6ab80d4a50d87148662c78493915b3744ff22c030de7",
+        "opponents/bot_core/geometry/__init__.py": "8fa3c9e867014d4acdd535522962ee51173664ff787f22b066d06ebeb357ba42",
+        "opponents/bot_core/geometry/angles.py": "c78961c990029fe5401b8c7ed36cbf4ef873e989ac03455cf35373bb8afb1be8",
+        "opponents/bot_core/geometry/numeric.py": "520b07e360087b1f8214c37b8f69cd3c587d348ff4dfb45eac71c33de3843114",
+        "opponents/bot_core/geometry/position.py": "3e9c5ef826982943e3654909de417d3fbc399e31c711bc50f6e63e6c49062102",
+        "opponents/bot_core/geometry/waves.py": "9523913368e4abea6964416d453e636fb1ae24308cb91f5a73b189aa3d1d474e",
+        "opponents/bot_core/gun/__init__.py": "39eea45aff2d2240a17c2e94cf35a85e59b56bc78d23d2c6e207866d8d45bdfd",
+        "opponents/bot_core/gun/aim.py": "c64084c6069dd65b07682ebd9c3a167966b180082f84f72fa5f6776f995645f5",
+        "opponents/bot_core/gun/aim_tracking.py": "c652c4d89a02a35ca4ffc567998a91508ddd0b700776c093dde2d9582862042a",
+        "opponents/bot_core/gun/config.py": "092f6ac95d9e54f10bdbbc0f53c507ad8e9782c9863c641545b6ea0d1f59cda3",
+        "opponents/bot_core/gun/context.py": "8490a8d20246b302ab40057a19f973867c6210bd642895f3571340560e6b8a6e",
+        "opponents/bot_core/gun/diagnostics.py": "89c818f718d39cf1b69f17b78a9cca3be3ea4a9d400db3989026a59cc7c6ccbe",
+        "opponents/bot_core/gun/factory.py": "c34f4ecdd77618747d0d08caea869d4205ecc23d5cba8995b1a6feb7dbe0f9fc",
+        "opponents/bot_core/gun/features.py": "e48b81dde6d54c3f52ffffbfde4091eb748e4a7c4ad4a3630a8d5c5bc4643865",
+        "opponents/bot_core/gun/guess_factors.py": "46b0c27d507277429dae889f5d3a93140c5095d1b4498494a97d95ad109feeb1",
+        "opponents/bot_core/gun/guns/README.md": "22f1a950d9203a855120897f0733065e807a4fb62e24f7e8efb10cd5806f9a8d",
+        "opponents/bot_core/gun/guns/__init__.py": "7f5e513577507b8e6f5cfb777f86e77ae98300ff8bdd0da387ee9bb9b253e815",
+        "opponents/bot_core/gun/guns/base.py": "06690f5d00dc3e04c4a8d2bcab0519edeab0cc96c731f69ef1248f928c134e70",
+        "opponents/bot_core/gun/guns/displacement/README.md": "ef0a4d31810889d23bc91698e2815c3a3ea4f528c547b91b87ea77e86c82f909",
+        "opponents/bot_core/gun/guns/displacement/__init__.py": "f4b04499d622168c3285659df2f650c94f709d2049745b3de5361ab262bd0838",
+        "opponents/bot_core/gun/guns/displacement/config.py": "2bc3824199cb2a229335ea3caf083cab422860c19887cfaf7c5448d60d03913c",
+        "opponents/bot_core/gun/guns/displacement/gun.py": "87a351b6ee98d6e69abaa075bd26b313ca7550591208019c1aa7ea0d7a8c3ab2",
+        "opponents/bot_core/gun/guns/dynamic_cluster/README.md": "8b04c34617452c9146631857397a9fb882a8baafc136d53408a68d6c4bedd03b",
+        "opponents/bot_core/gun/guns/dynamic_cluster/__init__.py": "dfb8b9e6640ac5cfd381e6a526ef73054eebd8f2635c53abc36b973843aeb161",
+        "opponents/bot_core/gun/guns/dynamic_cluster/config.py": "7395991bd52b5461c1b994019c42ac914965f1ac678b2f3c3405e3030d631c26",
+        "opponents/bot_core/gun/guns/dynamic_cluster/gun.py": "7f0bf8195335cce5a2ed4ec29d9dec078918bbab20c1f886ba05d9606f3a29c8",
+        "opponents/bot_core/gun/guns/dynamic_cluster/memory.py": "2677a3bce3a442a5b87d1dcab40e9c375c37eb8b6e8f891a4a5e014a9e9ff3e6",
+        "opponents/bot_core/gun/guns/head_on/README.md": "4c9ba70aa0237c5bf6c5b3ec4b74d29ab91c93604e86b6533f165014b6984a23",
+        "opponents/bot_core/gun/guns/head_on/__init__.py": "fc44fdf9ace2adc098f54aacc12a82699638ddf7138e022c31d13d1173176e23",
+        "opponents/bot_core/gun/guns/head_on/gun.py": "b13c5beb0884f7c09f9dcfd7766cf2776f3a72631bddfcc55abbc28ec0fc055b",
+        "opponents/bot_core/gun/guns/linear/README.md": "4171959abb4610ff96ea7fe1d89cda57056d2b3c42ee648f2560851d88ceb0d1",
+        "opponents/bot_core/gun/guns/linear/__init__.py": "362f12bc1cbc93039d8f814e938f96f2d82277d280d4032b6a2c6547d2a64c99",
+        "opponents/bot_core/gun/guns/linear/gun.py": "6e3aad45c821acadb580771d0cfaba80d8ae19faf7be74b537be569c01cfdfc6",
+        "opponents/bot_core/gun/guns/traditional_gf/README.md": "1e419037b44f296ac746b5b5621c9cc22e35b51613a6d66276f46d5fff66d09f",
+        "opponents/bot_core/gun/guns/traditional_gf/__init__.py": "074d624acec398d1202ce37fa5c26732c53ae8c5815f53faed9f9fb8095057c4",
+        "opponents/bot_core/gun/guns/traditional_gf/config.py": "c8c9cfb3a8a5a0abcb67059ed4841165cabb32a54b7b0a340f86aa5b09e40637",
+        "opponents/bot_core/gun/guns/traditional_gf/diagnostics.py": "2aacf351a34fe6e6cff4f8ed0831f97cc11ea3c22331c24d57eab35acbbc33e3",
+        "opponents/bot_core/gun/guns/traditional_gf/gun.py": "2debb8da6fe3e9dbff2704df9210dfb635bfa3355806afaa242ddc0a2874da40",
+        "opponents/bot_core/gun/guns/traditional_gf/profile.py": "91ead2dd62274b9a9ef8618abc9d28de739e76586cf929b37c06925839e87b6e",
+        "opponents/bot_core/gun/kinematics.py": "08ad83ea15dea51690345b2a5a7585e5371f4ee90f2c39929730014785e511e7",
+        "opponents/bot_core/gun/models.py": "764029fbb5d0c1d72e9acacca3d201833b21d35be1ed68e81f37a72ab2ebdecc",
+        "opponents/bot_core/gun/policy.py": "9eb3e5f3b8597fa75bc974546e799b74ffa9933da114e354b642f6c7d130ab09",
+        "opponents/bot_core/gun/prediction.py": "7ad93d0f5c3ddc11be510635b47078ed5b9d38db8cd755e4cdd9c679d66f4ba8",
+        "opponents/bot_core/gun/profile.py": "4df35aa435f3b53074db75d7cdfb58632ad5d02e8dd77cf3b62ea248605e21fd",
+        "opponents/bot_core/gun/registry.py": "0b1c26056e289eb293842cb9b005b2097a42db71521b7c7f5ac31ee4e008dff5",
+        "opponents/bot_core/gun/scoring.py": "02d77d5f85ab86f523f21e5c34ab1109a98ff1dab041c0fe93373ccacfdb1ff4",
+        "opponents/bot_core/gun/system.py": "7f25da1d58953d2d7bd8bad6669cd09a0365298ec194a62c01e20ce425f4354d",
+        "opponents/bot_core/gun/waves.py": "e13b5fe8dd8a23f2c6a3f5e77904e2dd1999dfc89af4f99066f31bf05b161d84",
+        "opponents/bot_core/launcher_env.sh": "4cc36c26762ab7e5c3d1209743a4f1088285caa9f073e7e056baeac06efd20f7",
+        "opponents/bot_core/motion.py": "bba6d38580275d9e7bdb7fdffbc8160f4e42916c6c9e429616bfa051382f6c0d",
+        "opponents/bot_core/movement/__init__.py": "d408dd66ee7a4d562b691cb78d71bdd2ebdcc6ad9d49018aa1ae28b76de5158e",
+        "opponents/bot_core/movement/commands.py": "3709e26cd6cf584c65ed31333a6f3fa3a0a196eb44fb0271a541b13efb6b1e86",
+        "opponents/bot_core/movement/config.py": "281abab6ba1e063db5bb9a2e2d7aa5e0bc177ec66a2dbb6c87d01bf1d8aec493",
+        "opponents/bot_core/movement/danger.py": "b7885692be0038b5590a78de0219c7243d6b8686f5d8ca52bf3b39f361739940",
+        "opponents/bot_core/movement/decisions.py": "23f565a3fcc9cad7d7d8eeae38d56d738c1084a4af6c2b43ded53c911b15534e",
+        "opponents/bot_core/movement/flattener.py": "9388763b00a5ff83c678b55066f1db515a77cccae7d86ee817ef75ae439dbe98",
+        "opponents/bot_core/movement/minimum_risk.py": "67a1a3d0d373d87a88ff1cdc193debe4c1ea55f51cdbd0b7e7bac93ef432c4a4",
+        "opponents/bot_core/movement/navigation.py": "ac6aaa84197d5868e332fbccf560940085cd04fce3af253f8bf2b0e92d76a614",
+        "opponents/bot_core/movement/option_surfing.py": "693777479f4a1a1182d31d88cb0a943093491849d74276d840a99f80c33ac573",
+        "opponents/bot_core/movement/profile.py": "474e3b73d74b585c3ebe89e6313fa0a845c1a78431bba274585df2786d75038d",
+        "opponents/bot_core/movement/surfing.py": "30ce2729677d4de6d40e45c71e2361125f02304f028aa6450d19324bbe425b98",
+        "opponents/bot_core/movement/waves.py": "be53ce9596035944a9fc00041136435a1803d5ed39b7a50f2bcf3f3b3588dde2",
+        "opponents/bot_core/physics/__init__.py": "4512fa14b9e6558d0328740bb8ae4d96b9a69482165f937de36d4cdbc386ee41",
+        "opponents/bot_core/physics/movement.py": "c6649fbe71ed239a8929f8ee5d1ddabe09272758177fe5d8c36a5ff34478ab00",
+        "opponents/bot_core/physics/rules.py": "9b657af103e6bbb197490e51983923ef01786d08fba14fb5ffa8b6a6bbcff3d0",
+        "opponents/bot_core/radar.py": "c4a59bb5b555f87e2e911dcd01517ee09064bdda171325fcccd5fb11e5e5b956",
+        "opponents/bot_core/target_snapshot.py": "c2f74c8470872977eddf1f91519909e9c38dba3441f595742c45aeb32e9eb9fa",
+        "opponents/bot_core/targeting.py": "8fe9dcc69bcfce933e24b9966b2421d3f490870d32dd6a5d68bcc708dced0ef5",
+        "opponents/bot_core/telemetry/__init__.py": "063e66ac773587d3f825d79f0a06e7c8e22ef7a38176bf0134746a0e4ae88239",
+        "opponents/bot_core/telemetry/energy.py": "15d5e9043bde748cce283a37bf1598cba2791cb081749bddf69b5374387b21b7",
+        "opponents/bot_core/telemetry/fire.py": "654497f46d98029e3bc3d2322051a0b3f424ccd9700d790a58a7d8d3429ff4ac",
+        "opponents/bot_core/telemetry/movement.py": "84a4bac93cc4f0b1bcc1be51e29044c086242c15cf2b6922adaaa6079f04c441",
+        "opponents/bot_core/telemetry/recorder.py": "f51bb59485382ddac6a79c7dedd4e966107a089ce74b8affc27edcd569e54c44",
+        "opponents/bot_core/telemetry/schema.py": "d73b09706214d335a54a927b424b049d684a683dcc83eef84bdef79fa670b27a",
+        "opponents/bot_core/telemetry/sink.py": "945c9334ea198b9a7a2dd496791d17480d22b369059a9a15f67904ec99e41e7c",
+        "opponents/bot_core/telemetry/targeting.py": "c3489f0032e66561ae476c8c8cc8f2ea10f69b8bf2cd8ba657d86ae9471124e2",
+        "opponents/bot_core/telemetry/tick.py": "40d485184565816d4100c5831247b00111dc344235466a6b050cf818536fdcfe",
+        "opponents/bot_core/telemetry/timing.py": "ba268a8eb5c9b1bb85fbd0f69449ad521b001a723989fd5c0e2a9c9c0f6dac5f",
+        "opponents/diamond-port/LICENSE": "96b6ffd91f76472783dd4192f57cbc8e54742062e32b558fc44e122b21115ef7",
+        "opponents/diamond-port/README.md": "e04262788813284fb4c9fcbc15996cba08346761817f2f2d75e411f5e480d50f",
+        "opponents/diamond-port/diamond-port.json": "d048e6dcaaa19d2614e91e7d07d26c38afdebe74dfb7c87681f3f07a25e499a7",
+        "opponents/diamond-port/diamond-port.py": "2b78e1f945257ea2d6d1ec454c466717ac35b5744708c2be14936170bbbb4d45",
+        "opponents/diamond-port/diamond-port.sh": "63974df79cdf1fa4f2c0bb1a151da5b24edd5f76661d52d06f98d3e312e810b8",
+        "opponents/diamond-port/diamond_port/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "opponents/diamond-port/diamond_port/dia_utils.py": "3f4e7f35ff3ddf6f15bc3b8652fd0151077a62f3ba09619caea6c951a390970e",
+        "opponents/diamond-port/diamond_port/enemy.py": "a6800d4466b0e7e56f30718bbc9722b247e776307cb3d060ff1b455e37af19ec",
+        "opponents/diamond-port/diamond_port/gun.py": "0048ad52d3bd9736b29ff09896e99d9d46c9c7b47393a2415074f64a4d335cfe",
+        "opponents/diamond-port/diamond_port/kd_tree.py": "15d56e90352eb036a75021eaf0e2c5baea1794a5972a160b2f6e4887cc9fe64b",
+        "opponents/diamond-port/diamond_port/knn_view.py": "930d346c0900b5c026702cb673b9e0ec2874d696942ff7aae39885efef25d631",
+        "opponents/diamond-port/diamond_port/move.py": "9513019f94e6052f86765a521ee8d938d8095e6d47d6174bce30623a8851c12f",
+        "opponents/diamond-port/diamond_port/movement_predictor.py": "355bbd10bf196d397a8dd17c0ab5001399488c4437679a79235dd5b640a35dfc",
+        "opponents/diamond-port/diamond_port/perceptual_dna.py": "547cedc214d0988820be462eab609d1776b727f0d424030fba3c569fba1eef52",
+        "opponents/diamond-port/diamond_port/radar.py": "e8da6948acff11517764dee290f2989fb6582caba1977ecf1eda6b99b64a023d",
+        "opponents/diamond-port/diamond_port/wave.py": "45b415e38b8507bcfa7a721c59f6b4eab41e3f8ffa2f372de5b0d424c869b5ff",
+        "opponents/LICENSE.shared-Apache-2.0": "90758bbc605c02ef407a50a79a454143f9ee1e9cde89f815f582df9d1b502610"
+      },
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-diamond-port-b1-candidate",
+      "stage": "screen",
+      "kind": "diamond-port",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 202641010
+      },
+      "opponentSeed": 202641011,
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 1,
+              "name": "Diamond Port",
+              "version": "1.8.28",
+              "rank": 1,
+              "totalScore": 1800,
+              "survival": 500,
+              "bulletDamage": 1000,
+              "firstPlaces": 10
+            },
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 0,
+              "survival": 0,
+              "bulletDamage": 0,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 25130,
+            "shotsFired": 0,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 1008.7418260000001,
+            "wallCollisions": 3,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": null,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "ff6e10fd983400635f722551ed9f6ed3cd4108df1e12abf893f47d4f122e476b",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 25078,
+            "actionCounts": [
+              25093,
+              5,
+              3,
+              5,
+              8,
+              6
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 202641010,
+            "originalHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "c7422234a72e1c4e45ce39c15ef7bbb2061e9962525441990bd12a4586eca7cc",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-diamond-port-b1-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-diamond-port-b1-candidate/candidate/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 25078,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 8607,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 8607,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {
+        "opponents/bot_core/__init__.py": "de2fee519c40f9649827e03661e0e8bfd99f0de7d0f9fe7523b7ffd41048faf0",
+        "opponents/bot_core/async_writer.py": "16e83d54880a4919c9cecbe1b77ef5c46bf3d9df8c67471f153e638d4ac7feea",
+        "opponents/bot_core/debug.py": "38c0a5b0a719a79606640873fb8653f961ad7ed13ee89681a5efcac3b874dc16",
+        "opponents/bot_core/energy/__init__.py": "67f930cc4a2282f1ce589cc3f1828ff540509079ccf634cdea43c016cb928827",
+        "opponents/bot_core/energy/corrections.py": "583af1c35722be766d6aa424dfa709901364af3d228518e3b45e594501361cdd",
+        "opponents/bot_core/energy/drops.py": "6ac726231c7e25f1f3164e3844d61684ac96e45b85681e3255666ef4361266ce",
+        "opponents/bot_core/energy/fire_detection.py": "6bd8af2bdcaff6609bd352952afd2227e348e145d839369a0289f5b5fbbdb5f7",
+        "opponents/bot_core/energy/fire_gate.py": "8b9f074d2a15c1cd973b1cbbc4dcd48d22b6f0b32adf63d6d758cf86d753d1bd",
+        "opponents/bot_core/energy/fire_power.py": "49820930cc37b32637a8cdf9a05975cf0c2a8505639c1fadc623e74e7e399a9a",
+        "opponents/bot_core/energy/gun_heat.py": "e969d111c515d195510c6ab80d4a50d87148662c78493915b3744ff22c030de7",
+        "opponents/bot_core/geometry/__init__.py": "8fa3c9e867014d4acdd535522962ee51173664ff787f22b066d06ebeb357ba42",
+        "opponents/bot_core/geometry/angles.py": "c78961c990029fe5401b8c7ed36cbf4ef873e989ac03455cf35373bb8afb1be8",
+        "opponents/bot_core/geometry/numeric.py": "520b07e360087b1f8214c37b8f69cd3c587d348ff4dfb45eac71c33de3843114",
+        "opponents/bot_core/geometry/position.py": "3e9c5ef826982943e3654909de417d3fbc399e31c711bc50f6e63e6c49062102",
+        "opponents/bot_core/geometry/waves.py": "9523913368e4abea6964416d453e636fb1ae24308cb91f5a73b189aa3d1d474e",
+        "opponents/bot_core/gun/__init__.py": "39eea45aff2d2240a17c2e94cf35a85e59b56bc78d23d2c6e207866d8d45bdfd",
+        "opponents/bot_core/gun/aim.py": "c64084c6069dd65b07682ebd9c3a167966b180082f84f72fa5f6776f995645f5",
+        "opponents/bot_core/gun/aim_tracking.py": "c652c4d89a02a35ca4ffc567998a91508ddd0b700776c093dde2d9582862042a",
+        "opponents/bot_core/gun/config.py": "092f6ac95d9e54f10bdbbc0f53c507ad8e9782c9863c641545b6ea0d1f59cda3",
+        "opponents/bot_core/gun/context.py": "8490a8d20246b302ab40057a19f973867c6210bd642895f3571340560e6b8a6e",
+        "opponents/bot_core/gun/diagnostics.py": "89c818f718d39cf1b69f17b78a9cca3be3ea4a9d400db3989026a59cc7c6ccbe",
+        "opponents/bot_core/gun/factory.py": "c34f4ecdd77618747d0d08caea869d4205ecc23d5cba8995b1a6feb7dbe0f9fc",
+        "opponents/bot_core/gun/features.py": "e48b81dde6d54c3f52ffffbfde4091eb748e4a7c4ad4a3630a8d5c5bc4643865",
+        "opponents/bot_core/gun/guess_factors.py": "46b0c27d507277429dae889f5d3a93140c5095d1b4498494a97d95ad109feeb1",
+        "opponents/bot_core/gun/guns/README.md": "22f1a950d9203a855120897f0733065e807a4fb62e24f7e8efb10cd5806f9a8d",
+        "opponents/bot_core/gun/guns/__init__.py": "7f5e513577507b8e6f5cfb777f86e77ae98300ff8bdd0da387ee9bb9b253e815",
+        "opponents/bot_core/gun/guns/base.py": "06690f5d00dc3e04c4a8d2bcab0519edeab0cc96c731f69ef1248f928c134e70",
+        "opponents/bot_core/gun/guns/displacement/README.md": "ef0a4d31810889d23bc91698e2815c3a3ea4f528c547b91b87ea77e86c82f909",
+        "opponents/bot_core/gun/guns/displacement/__init__.py": "f4b04499d622168c3285659df2f650c94f709d2049745b3de5361ab262bd0838",
+        "opponents/bot_core/gun/guns/displacement/config.py": "2bc3824199cb2a229335ea3caf083cab422860c19887cfaf7c5448d60d03913c",
+        "opponents/bot_core/gun/guns/displacement/gun.py": "87a351b6ee98d6e69abaa075bd26b313ca7550591208019c1aa7ea0d7a8c3ab2",
+        "opponents/bot_core/gun/guns/dynamic_cluster/README.md": "8b04c34617452c9146631857397a9fb882a8baafc136d53408a68d6c4bedd03b",
+        "opponents/bot_core/gun/guns/dynamic_cluster/__init__.py": "dfb8b9e6640ac5cfd381e6a526ef73054eebd8f2635c53abc36b973843aeb161",
+        "opponents/bot_core/gun/guns/dynamic_cluster/config.py": "7395991bd52b5461c1b994019c42ac914965f1ac678b2f3c3405e3030d631c26",
+        "opponents/bot_core/gun/guns/dynamic_cluster/gun.py": "7f0bf8195335cce5a2ed4ec29d9dec078918bbab20c1f886ba05d9606f3a29c8",
+        "opponents/bot_core/gun/guns/dynamic_cluster/memory.py": "2677a3bce3a442a5b87d1dcab40e9c375c37eb8b6e8f891a4a5e014a9e9ff3e6",
+        "opponents/bot_core/gun/guns/head_on/README.md": "4c9ba70aa0237c5bf6c5b3ec4b74d29ab91c93604e86b6533f165014b6984a23",
+        "opponents/bot_core/gun/guns/head_on/__init__.py": "fc44fdf9ace2adc098f54aacc12a82699638ddf7138e022c31d13d1173176e23",
+        "opponents/bot_core/gun/guns/head_on/gun.py": "b13c5beb0884f7c09f9dcfd7766cf2776f3a72631bddfcc55abbc28ec0fc055b",
+        "opponents/bot_core/gun/guns/linear/README.md": "4171959abb4610ff96ea7fe1d89cda57056d2b3c42ee648f2560851d88ceb0d1",
+        "opponents/bot_core/gun/guns/linear/__init__.py": "362f12bc1cbc93039d8f814e938f96f2d82277d280d4032b6a2c6547d2a64c99",
+        "opponents/bot_core/gun/guns/linear/gun.py": "6e3aad45c821acadb580771d0cfaba80d8ae19faf7be74b537be569c01cfdfc6",
+        "opponents/bot_core/gun/guns/traditional_gf/README.md": "1e419037b44f296ac746b5b5621c9cc22e35b51613a6d66276f46d5fff66d09f",
+        "opponents/bot_core/gun/guns/traditional_gf/__init__.py": "074d624acec398d1202ce37fa5c26732c53ae8c5815f53faed9f9fb8095057c4",
+        "opponents/bot_core/gun/guns/traditional_gf/config.py": "c8c9cfb3a8a5a0abcb67059ed4841165cabb32a54b7b0a340f86aa5b09e40637",
+        "opponents/bot_core/gun/guns/traditional_gf/diagnostics.py": "2aacf351a34fe6e6cff4f8ed0831f97cc11ea3c22331c24d57eab35acbbc33e3",
+        "opponents/bot_core/gun/guns/traditional_gf/gun.py": "2debb8da6fe3e9dbff2704df9210dfb635bfa3355806afaa242ddc0a2874da40",
+        "opponents/bot_core/gun/guns/traditional_gf/profile.py": "91ead2dd62274b9a9ef8618abc9d28de739e76586cf929b37c06925839e87b6e",
+        "opponents/bot_core/gun/kinematics.py": "08ad83ea15dea51690345b2a5a7585e5371f4ee90f2c39929730014785e511e7",
+        "opponents/bot_core/gun/models.py": "764029fbb5d0c1d72e9acacca3d201833b21d35be1ed68e81f37a72ab2ebdecc",
+        "opponents/bot_core/gun/policy.py": "9eb3e5f3b8597fa75bc974546e799b74ffa9933da114e354b642f6c7d130ab09",
+        "opponents/bot_core/gun/prediction.py": "7ad93d0f5c3ddc11be510635b47078ed5b9d38db8cd755e4cdd9c679d66f4ba8",
+        "opponents/bot_core/gun/profile.py": "4df35aa435f3b53074db75d7cdfb58632ad5d02e8dd77cf3b62ea248605e21fd",
+        "opponents/bot_core/gun/registry.py": "0b1c26056e289eb293842cb9b005b2097a42db71521b7c7f5ac31ee4e008dff5",
+        "opponents/bot_core/gun/scoring.py": "02d77d5f85ab86f523f21e5c34ab1109a98ff1dab041c0fe93373ccacfdb1ff4",
+        "opponents/bot_core/gun/system.py": "7f25da1d58953d2d7bd8bad6669cd09a0365298ec194a62c01e20ce425f4354d",
+        "opponents/bot_core/gun/waves.py": "e13b5fe8dd8a23f2c6a3f5e77904e2dd1999dfc89af4f99066f31bf05b161d84",
+        "opponents/bot_core/launcher_env.sh": "4cc36c26762ab7e5c3d1209743a4f1088285caa9f073e7e056baeac06efd20f7",
+        "opponents/bot_core/motion.py": "bba6d38580275d9e7bdb7fdffbc8160f4e42916c6c9e429616bfa051382f6c0d",
+        "opponents/bot_core/movement/__init__.py": "d408dd66ee7a4d562b691cb78d71bdd2ebdcc6ad9d49018aa1ae28b76de5158e",
+        "opponents/bot_core/movement/commands.py": "3709e26cd6cf584c65ed31333a6f3fa3a0a196eb44fb0271a541b13efb6b1e86",
+        "opponents/bot_core/movement/config.py": "281abab6ba1e063db5bb9a2e2d7aa5e0bc177ec66a2dbb6c87d01bf1d8aec493",
+        "opponents/bot_core/movement/danger.py": "b7885692be0038b5590a78de0219c7243d6b8686f5d8ca52bf3b39f361739940",
+        "opponents/bot_core/movement/decisions.py": "23f565a3fcc9cad7d7d8eeae38d56d738c1084a4af6c2b43ded53c911b15534e",
+        "opponents/bot_core/movement/flattener.py": "9388763b00a5ff83c678b55066f1db515a77cccae7d86ee817ef75ae439dbe98",
+        "opponents/bot_core/movement/minimum_risk.py": "67a1a3d0d373d87a88ff1cdc193debe4c1ea55f51cdbd0b7e7bac93ef432c4a4",
+        "opponents/bot_core/movement/navigation.py": "ac6aaa84197d5868e332fbccf560940085cd04fce3af253f8bf2b0e92d76a614",
+        "opponents/bot_core/movement/option_surfing.py": "693777479f4a1a1182d31d88cb0a943093491849d74276d840a99f80c33ac573",
+        "opponents/bot_core/movement/profile.py": "474e3b73d74b585c3ebe89e6313fa0a845c1a78431bba274585df2786d75038d",
+        "opponents/bot_core/movement/surfing.py": "30ce2729677d4de6d40e45c71e2361125f02304f028aa6450d19324bbe425b98",
+        "opponents/bot_core/movement/waves.py": "be53ce9596035944a9fc00041136435a1803d5ed39b7a50f2bcf3f3b3588dde2",
+        "opponents/bot_core/physics/__init__.py": "4512fa14b9e6558d0328740bb8ae4d96b9a69482165f937de36d4cdbc386ee41",
+        "opponents/bot_core/physics/movement.py": "c6649fbe71ed239a8929f8ee5d1ddabe09272758177fe5d8c36a5ff34478ab00",
+        "opponents/bot_core/physics/rules.py": "9b657af103e6bbb197490e51983923ef01786d08fba14fb5ffa8b6a6bbcff3d0",
+        "opponents/bot_core/radar.py": "c4a59bb5b555f87e2e911dcd01517ee09064bdda171325fcccd5fb11e5e5b956",
+        "opponents/bot_core/target_snapshot.py": "c2f74c8470872977eddf1f91519909e9c38dba3441f595742c45aeb32e9eb9fa",
+        "opponents/bot_core/targeting.py": "8fe9dcc69bcfce933e24b9966b2421d3f490870d32dd6a5d68bcc708dced0ef5",
+        "opponents/bot_core/telemetry/__init__.py": "063e66ac773587d3f825d79f0a06e7c8e22ef7a38176bf0134746a0e4ae88239",
+        "opponents/bot_core/telemetry/energy.py": "15d5e9043bde748cce283a37bf1598cba2791cb081749bddf69b5374387b21b7",
+        "opponents/bot_core/telemetry/fire.py": "654497f46d98029e3bc3d2322051a0b3f424ccd9700d790a58a7d8d3429ff4ac",
+        "opponents/bot_core/telemetry/movement.py": "84a4bac93cc4f0b1bcc1be51e29044c086242c15cf2b6922adaaa6079f04c441",
+        "opponents/bot_core/telemetry/recorder.py": "f51bb59485382ddac6a79c7dedd4e966107a089ce74b8affc27edcd569e54c44",
+        "opponents/bot_core/telemetry/schema.py": "d73b09706214d335a54a927b424b049d684a683dcc83eef84bdef79fa670b27a",
+        "opponents/bot_core/telemetry/sink.py": "945c9334ea198b9a7a2dd496791d17480d22b369059a9a15f67904ec99e41e7c",
+        "opponents/bot_core/telemetry/targeting.py": "c3489f0032e66561ae476c8c8cc8f2ea10f69b8bf2cd8ba657d86ae9471124e2",
+        "opponents/bot_core/telemetry/tick.py": "40d485184565816d4100c5831247b00111dc344235466a6b050cf818536fdcfe",
+        "opponents/bot_core/telemetry/timing.py": "ba268a8eb5c9b1bb85fbd0f69449ad521b001a723989fd5c0e2a9c9c0f6dac5f",
+        "opponents/diamond-port/LICENSE": "96b6ffd91f76472783dd4192f57cbc8e54742062e32b558fc44e122b21115ef7",
+        "opponents/diamond-port/README.md": "e04262788813284fb4c9fcbc15996cba08346761817f2f2d75e411f5e480d50f",
+        "opponents/diamond-port/diamond-port.json": "d048e6dcaaa19d2614e91e7d07d26c38afdebe74dfb7c87681f3f07a25e499a7",
+        "opponents/diamond-port/diamond-port.py": "2b78e1f945257ea2d6d1ec454c466717ac35b5744708c2be14936170bbbb4d45",
+        "opponents/diamond-port/diamond-port.sh": "63974df79cdf1fa4f2c0bb1a151da5b24edd5f76661d52d06f98d3e312e810b8",
+        "opponents/diamond-port/diamond_port/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "opponents/diamond-port/diamond_port/dia_utils.py": "3f4e7f35ff3ddf6f15bc3b8652fd0151077a62f3ba09619caea6c951a390970e",
+        "opponents/diamond-port/diamond_port/enemy.py": "a6800d4466b0e7e56f30718bbc9722b247e776307cb3d060ff1b455e37af19ec",
+        "opponents/diamond-port/diamond_port/gun.py": "0048ad52d3bd9736b29ff09896e99d9d46c9c7b47393a2415074f64a4d335cfe",
+        "opponents/diamond-port/diamond_port/kd_tree.py": "15d56e90352eb036a75021eaf0e2c5baea1794a5972a160b2f6e4887cc9fe64b",
+        "opponents/diamond-port/diamond_port/knn_view.py": "930d346c0900b5c026702cb673b9e0ec2874d696942ff7aae39885efef25d631",
+        "opponents/diamond-port/diamond_port/move.py": "9513019f94e6052f86765a521ee8d938d8095e6d47d6174bce30623a8851c12f",
+        "opponents/diamond-port/diamond_port/movement_predictor.py": "355bbd10bf196d397a8dd17c0ab5001399488c4437679a79235dd5b640a35dfc",
+        "opponents/diamond-port/diamond_port/perceptual_dna.py": "547cedc214d0988820be462eab609d1776b727f0d424030fba3c569fba1eef52",
+        "opponents/diamond-port/diamond_port/radar.py": "e8da6948acff11517764dee290f2989fb6582caba1977ecf1eda6b99b64a023d",
+        "opponents/diamond-port/diamond_port/wave.py": "45b415e38b8507bcfa7a721c59f6b4eab41e3f8ffa2f372de5b0d424c869b5ff",
+        "opponents/LICENSE.shared-Apache-2.0": "90758bbc605c02ef407a50a79a454143f9ee1e9cde89f815f582df9d1b502610"
+      },
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-adaptive-prime-b1-candidate",
+      "stage": "screen",
+      "kind": "adaptive-prime",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate"
+      ],
+      "seeds": {
+        "candidate": 202641012
+      },
+      "opponentSeed": 202641013,
+      "battles": {
+        "candidate": {
+          "id": 1,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 240,
+          "survival": 200,
+          "bulletDamage": 0,
+          "firstPlaces": 2,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "Adaptive Prime",
+              "version": "1.0",
+              "rank": 1,
+              "totalScore": 1301,
+              "survival": 300,
+              "bulletDamage": 841,
+              "firstPlaces": 8
+            },
+            {
+              "id": 1,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 240,
+              "survival": 200,
+              "bulletDamage": 0,
+              "firstPlaces": 2
+            }
+          ],
+          "metrics": {
+            "turns": 17549,
+            "shotsFired": 1,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 860.8,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.0,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "26385cd90acabd8435062a8f1685b86abdca28aa9da436be543fa71f73882b06",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 17458,
+            "actionCounts": [
+              17471,
+              20,
+              8,
+              16,
+              11,
+              16
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 202641012,
+            "originalHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "2e649daf4216dd59718b0b4a1397086e5855e002e62f141601953aebe0ac1241",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-adaptive-prime-b1-candidate/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-adaptive-prime-b1-candidate/candidate/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 17458,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 6788,
+            "breakwaterFirePassedTurns": 1,
+            "breakwaterFireBlockedTurns": 6787,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {
+        "opponents/adaptive-prime/README.md": "52054b7bd59628e211fcc09f955b8d59b5c6d9a527bb3c859df2ccfc4ed7ca5e",
+        "opponents/adaptive-prime/adaptive-prime.json": "c9bdc7ec76b047b68ecd7e55d9dd3c32df8a8a96c7071c19845ebbb524ed5a05",
+        "opponents/adaptive-prime/adaptive-prime.py": "570fc731b5fcded4154a799a271d9096b9870f993214c4626f1a2e72ba7ca402",
+        "opponents/adaptive-prime/adaptive-prime.sh": "7eae218a8d6fcf3411ce5895ae756289b18b57ca098993298b0b54b7fa350b5e",
+        "opponents/adaptive-prime/adaptive_config.py": "0fdb86ea3c32283faa5d7dcdb5c4513544b10e119e4795adac20edd49f56de91",
+        "opponents/bot_core/__init__.py": "de2fee519c40f9649827e03661e0e8bfd99f0de7d0f9fe7523b7ffd41048faf0",
+        "opponents/bot_core/async_writer.py": "16e83d54880a4919c9cecbe1b77ef5c46bf3d9df8c67471f153e638d4ac7feea",
+        "opponents/bot_core/debug.py": "38c0a5b0a719a79606640873fb8653f961ad7ed13ee89681a5efcac3b874dc16",
+        "opponents/bot_core/energy/__init__.py": "67f930cc4a2282f1ce589cc3f1828ff540509079ccf634cdea43c016cb928827",
+        "opponents/bot_core/energy/corrections.py": "583af1c35722be766d6aa424dfa709901364af3d228518e3b45e594501361cdd",
+        "opponents/bot_core/energy/drops.py": "6ac726231c7e25f1f3164e3844d61684ac96e45b85681e3255666ef4361266ce",
+        "opponents/bot_core/energy/fire_detection.py": "6bd8af2bdcaff6609bd352952afd2227e348e145d839369a0289f5b5fbbdb5f7",
+        "opponents/bot_core/energy/fire_gate.py": "8b9f074d2a15c1cd973b1cbbc4dcd48d22b6f0b32adf63d6d758cf86d753d1bd",
+        "opponents/bot_core/energy/fire_power.py": "49820930cc37b32637a8cdf9a05975cf0c2a8505639c1fadc623e74e7e399a9a",
+        "opponents/bot_core/energy/gun_heat.py": "e969d111c515d195510c6ab80d4a50d87148662c78493915b3744ff22c030de7",
+        "opponents/bot_core/geometry/__init__.py": "8fa3c9e867014d4acdd535522962ee51173664ff787f22b066d06ebeb357ba42",
+        "opponents/bot_core/geometry/angles.py": "c78961c990029fe5401b8c7ed36cbf4ef873e989ac03455cf35373bb8afb1be8",
+        "opponents/bot_core/geometry/numeric.py": "520b07e360087b1f8214c37b8f69cd3c587d348ff4dfb45eac71c33de3843114",
+        "opponents/bot_core/geometry/position.py": "3e9c5ef826982943e3654909de417d3fbc399e31c711bc50f6e63e6c49062102",
+        "opponents/bot_core/geometry/waves.py": "9523913368e4abea6964416d453e636fb1ae24308cb91f5a73b189aa3d1d474e",
+        "opponents/bot_core/gun/__init__.py": "39eea45aff2d2240a17c2e94cf35a85e59b56bc78d23d2c6e207866d8d45bdfd",
+        "opponents/bot_core/gun/aim.py": "c64084c6069dd65b07682ebd9c3a167966b180082f84f72fa5f6776f995645f5",
+        "opponents/bot_core/gun/aim_tracking.py": "c652c4d89a02a35ca4ffc567998a91508ddd0b700776c093dde2d9582862042a",
+        "opponents/bot_core/gun/config.py": "092f6ac95d9e54f10bdbbc0f53c507ad8e9782c9863c641545b6ea0d1f59cda3",
+        "opponents/bot_core/gun/context.py": "8490a8d20246b302ab40057a19f973867c6210bd642895f3571340560e6b8a6e",
+        "opponents/bot_core/gun/diagnostics.py": "89c818f718d39cf1b69f17b78a9cca3be3ea4a9d400db3989026a59cc7c6ccbe",
+        "opponents/bot_core/gun/factory.py": "c34f4ecdd77618747d0d08caea869d4205ecc23d5cba8995b1a6feb7dbe0f9fc",
+        "opponents/bot_core/gun/features.py": "e48b81dde6d54c3f52ffffbfde4091eb748e4a7c4ad4a3630a8d5c5bc4643865",
+        "opponents/bot_core/gun/guess_factors.py": "46b0c27d507277429dae889f5d3a93140c5095d1b4498494a97d95ad109feeb1",
+        "opponents/bot_core/gun/guns/README.md": "22f1a950d9203a855120897f0733065e807a4fb62e24f7e8efb10cd5806f9a8d",
+        "opponents/bot_core/gun/guns/__init__.py": "7f5e513577507b8e6f5cfb777f86e77ae98300ff8bdd0da387ee9bb9b253e815",
+        "opponents/bot_core/gun/guns/base.py": "06690f5d00dc3e04c4a8d2bcab0519edeab0cc96c731f69ef1248f928c134e70",
+        "opponents/bot_core/gun/guns/displacement/README.md": "ef0a4d31810889d23bc91698e2815c3a3ea4f528c547b91b87ea77e86c82f909",
+        "opponents/bot_core/gun/guns/displacement/__init__.py": "f4b04499d622168c3285659df2f650c94f709d2049745b3de5361ab262bd0838",
+        "opponents/bot_core/gun/guns/displacement/config.py": "2bc3824199cb2a229335ea3caf083cab422860c19887cfaf7c5448d60d03913c",
+        "opponents/bot_core/gun/guns/displacement/gun.py": "87a351b6ee98d6e69abaa075bd26b313ca7550591208019c1aa7ea0d7a8c3ab2",
+        "opponents/bot_core/gun/guns/dynamic_cluster/README.md": "8b04c34617452c9146631857397a9fb882a8baafc136d53408a68d6c4bedd03b",
+        "opponents/bot_core/gun/guns/dynamic_cluster/__init__.py": "dfb8b9e6640ac5cfd381e6a526ef73054eebd8f2635c53abc36b973843aeb161",
+        "opponents/bot_core/gun/guns/dynamic_cluster/config.py": "7395991bd52b5461c1b994019c42ac914965f1ac678b2f3c3405e3030d631c26",
+        "opponents/bot_core/gun/guns/dynamic_cluster/gun.py": "7f0bf8195335cce5a2ed4ec29d9dec078918bbab20c1f886ba05d9606f3a29c8",
+        "opponents/bot_core/gun/guns/dynamic_cluster/memory.py": "2677a3bce3a442a5b87d1dcab40e9c375c37eb8b6e8f891a4a5e014a9e9ff3e6",
+        "opponents/bot_core/gun/guns/head_on/README.md": "4c9ba70aa0237c5bf6c5b3ec4b74d29ab91c93604e86b6533f165014b6984a23",
+        "opponents/bot_core/gun/guns/head_on/__init__.py": "fc44fdf9ace2adc098f54aacc12a82699638ddf7138e022c31d13d1173176e23",
+        "opponents/bot_core/gun/guns/head_on/gun.py": "b13c5beb0884f7c09f9dcfd7766cf2776f3a72631bddfcc55abbc28ec0fc055b",
+        "opponents/bot_core/gun/guns/linear/README.md": "4171959abb4610ff96ea7fe1d89cda57056d2b3c42ee648f2560851d88ceb0d1",
+        "opponents/bot_core/gun/guns/linear/__init__.py": "362f12bc1cbc93039d8f814e938f96f2d82277d280d4032b6a2c6547d2a64c99",
+        "opponents/bot_core/gun/guns/linear/gun.py": "6e3aad45c821acadb580771d0cfaba80d8ae19faf7be74b537be569c01cfdfc6",
+        "opponents/bot_core/gun/guns/traditional_gf/README.md": "1e419037b44f296ac746b5b5621c9cc22e35b51613a6d66276f46d5fff66d09f",
+        "opponents/bot_core/gun/guns/traditional_gf/__init__.py": "074d624acec398d1202ce37fa5c26732c53ae8c5815f53faed9f9fb8095057c4",
+        "opponents/bot_core/gun/guns/traditional_gf/config.py": "c8c9cfb3a8a5a0abcb67059ed4841165cabb32a54b7b0a340f86aa5b09e40637",
+        "opponents/bot_core/gun/guns/traditional_gf/diagnostics.py": "2aacf351a34fe6e6cff4f8ed0831f97cc11ea3c22331c24d57eab35acbbc33e3",
+        "opponents/bot_core/gun/guns/traditional_gf/gun.py": "2debb8da6fe3e9dbff2704df9210dfb635bfa3355806afaa242ddc0a2874da40",
+        "opponents/bot_core/gun/guns/traditional_gf/profile.py": "91ead2dd62274b9a9ef8618abc9d28de739e76586cf929b37c06925839e87b6e",
+        "opponents/bot_core/gun/kinematics.py": "08ad83ea15dea51690345b2a5a7585e5371f4ee90f2c39929730014785e511e7",
+        "opponents/bot_core/gun/models.py": "764029fbb5d0c1d72e9acacca3d201833b21d35be1ed68e81f37a72ab2ebdecc",
+        "opponents/bot_core/gun/policy.py": "9eb3e5f3b8597fa75bc974546e799b74ffa9933da114e354b642f6c7d130ab09",
+        "opponents/bot_core/gun/prediction.py": "7ad93d0f5c3ddc11be510635b47078ed5b9d38db8cd755e4cdd9c679d66f4ba8",
+        "opponents/bot_core/gun/profile.py": "4df35aa435f3b53074db75d7cdfb58632ad5d02e8dd77cf3b62ea248605e21fd",
+        "opponents/bot_core/gun/registry.py": "0b1c26056e289eb293842cb9b005b2097a42db71521b7c7f5ac31ee4e008dff5",
+        "opponents/bot_core/gun/scoring.py": "02d77d5f85ab86f523f21e5c34ab1109a98ff1dab041c0fe93373ccacfdb1ff4",
+        "opponents/bot_core/gun/system.py": "7f25da1d58953d2d7bd8bad6669cd09a0365298ec194a62c01e20ce425f4354d",
+        "opponents/bot_core/gun/waves.py": "e13b5fe8dd8a23f2c6a3f5e77904e2dd1999dfc89af4f99066f31bf05b161d84",
+        "opponents/bot_core/launcher_env.sh": "4cc36c26762ab7e5c3d1209743a4f1088285caa9f073e7e056baeac06efd20f7",
+        "opponents/bot_core/motion.py": "bba6d38580275d9e7bdb7fdffbc8160f4e42916c6c9e429616bfa051382f6c0d",
+        "opponents/bot_core/movement/__init__.py": "d408dd66ee7a4d562b691cb78d71bdd2ebdcc6ad9d49018aa1ae28b76de5158e",
+        "opponents/bot_core/movement/commands.py": "3709e26cd6cf584c65ed31333a6f3fa3a0a196eb44fb0271a541b13efb6b1e86",
+        "opponents/bot_core/movement/config.py": "281abab6ba1e063db5bb9a2e2d7aa5e0bc177ec66a2dbb6c87d01bf1d8aec493",
+        "opponents/bot_core/movement/danger.py": "b7885692be0038b5590a78de0219c7243d6b8686f5d8ca52bf3b39f361739940",
+        "opponents/bot_core/movement/decisions.py": "23f565a3fcc9cad7d7d8eeae38d56d738c1084a4af6c2b43ded53c911b15534e",
+        "opponents/bot_core/movement/flattener.py": "9388763b00a5ff83c678b55066f1db515a77cccae7d86ee817ef75ae439dbe98",
+        "opponents/bot_core/movement/minimum_risk.py": "67a1a3d0d373d87a88ff1cdc193debe4c1ea55f51cdbd0b7e7bac93ef432c4a4",
+        "opponents/bot_core/movement/navigation.py": "ac6aaa84197d5868e332fbccf560940085cd04fce3af253f8bf2b0e92d76a614",
+        "opponents/bot_core/movement/option_surfing.py": "693777479f4a1a1182d31d88cb0a943093491849d74276d840a99f80c33ac573",
+        "opponents/bot_core/movement/profile.py": "474e3b73d74b585c3ebe89e6313fa0a845c1a78431bba274585df2786d75038d",
+        "opponents/bot_core/movement/surfing.py": "30ce2729677d4de6d40e45c71e2361125f02304f028aa6450d19324bbe425b98",
+        "opponents/bot_core/movement/waves.py": "be53ce9596035944a9fc00041136435a1803d5ed39b7a50f2bcf3f3b3588dde2",
+        "opponents/bot_core/physics/__init__.py": "4512fa14b9e6558d0328740bb8ae4d96b9a69482165f937de36d4cdbc386ee41",
+        "opponents/bot_core/physics/movement.py": "c6649fbe71ed239a8929f8ee5d1ddabe09272758177fe5d8c36a5ff34478ab00",
+        "opponents/bot_core/physics/rules.py": "9b657af103e6bbb197490e51983923ef01786d08fba14fb5ffa8b6a6bbcff3d0",
+        "opponents/bot_core/radar.py": "c4a59bb5b555f87e2e911dcd01517ee09064bdda171325fcccd5fb11e5e5b956",
+        "opponents/bot_core/target_snapshot.py": "c2f74c8470872977eddf1f91519909e9c38dba3441f595742c45aeb32e9eb9fa",
+        "opponents/bot_core/targeting.py": "8fe9dcc69bcfce933e24b9966b2421d3f490870d32dd6a5d68bcc708dced0ef5",
+        "opponents/bot_core/telemetry/__init__.py": "063e66ac773587d3f825d79f0a06e7c8e22ef7a38176bf0134746a0e4ae88239",
+        "opponents/bot_core/telemetry/energy.py": "15d5e9043bde748cce283a37bf1598cba2791cb081749bddf69b5374387b21b7",
+        "opponents/bot_core/telemetry/fire.py": "654497f46d98029e3bc3d2322051a0b3f424ccd9700d790a58a7d8d3429ff4ac",
+        "opponents/bot_core/telemetry/movement.py": "84a4bac93cc4f0b1bcc1be51e29044c086242c15cf2b6922adaaa6079f04c441",
+        "opponents/bot_core/telemetry/recorder.py": "f51bb59485382ddac6a79c7dedd4e966107a089ce74b8affc27edcd569e54c44",
+        "opponents/bot_core/telemetry/schema.py": "d73b09706214d335a54a927b424b049d684a683dcc83eef84bdef79fa670b27a",
+        "opponents/bot_core/telemetry/sink.py": "945c9334ea198b9a7a2dd496791d17480d22b369059a9a15f67904ec99e41e7c",
+        "opponents/bot_core/telemetry/targeting.py": "c3489f0032e66561ae476c8c8cc8f2ea10f69b8bf2cd8ba657d86ae9471124e2",
+        "opponents/bot_core/telemetry/tick.py": "40d485184565816d4100c5831247b00111dc344235466a6b050cf818536fdcfe",
+        "opponents/bot_core/telemetry/timing.py": "ba268a8eb5c9b1bb85fbd0f69449ad521b001a723989fd5c0e2a9c9c0f6dac5f",
+        "opponents/LICENSE.shared-Apache-2.0": "90758bbc605c02ef407a50a79a454143f9ee1e9cde89f815f582df9d1b502610"
+      },
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-adaptive-prime-b1-previous",
+      "stage": "screen",
+      "kind": "adaptive-prime",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "previous"
+      ],
+      "seeds": {
+        "previous": 202641014
+      },
+      "opponentSeed": 202641015,
+      "battles": {
+        "previous": {
+          "id": 1,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 430,
+          "survival": 50,
+          "bulletDamage": 360,
+          "firstPlaces": 1,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "Adaptive Prime",
+              "version": "1.0",
+              "rank": 1,
+              "totalScore": 1264,
+              "survival": 450,
+              "bulletDamage": 606,
+              "firstPlaces": 9
+            },
+            {
+              "id": 1,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 430,
+              "survival": 50,
+              "bulletDamage": 360,
+              "firstPlaces": 1
+            }
+          ],
+          "metrics": {
+            "turns": 8131,
+            "shotsFired": 509,
+            "bulletHits": 65,
+            "damageDealt": 361.800001,
+            "damageTaken": 617.4,
+            "wallCollisions": 1,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.12770137524557956,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "31bdb3db22b36a5079de10b8614ff542c4dcaabb1ffc0a65c11e77845d5f3caf",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 8087,
+            "actionCounts": [
+              8099,
+              11,
+              2,
+              9,
+              0,
+              1
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.1",
+            "seed": 202641014,
+            "originalHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "c2012cd3bb944bf514befcbc920fc27b06cb5cea7c454d0ab4388dc4049ff89c",
+              "AISurvivor.sh": "c0e940df56951abb6490e5721fc9e628d3facfe6d5615ccc5db308a1cf2197c0",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-adaptive-prime-b1-previous/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-adaptive-prime-b1-previous/previous/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 0,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 0,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 0,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {
+        "opponents/adaptive-prime/README.md": "52054b7bd59628e211fcc09f955b8d59b5c6d9a527bb3c859df2ccfc4ed7ca5e",
+        "opponents/adaptive-prime/adaptive-prime.json": "c9bdc7ec76b047b68ecd7e55d9dd3c32df8a8a96c7071c19845ebbb524ed5a05",
+        "opponents/adaptive-prime/adaptive-prime.py": "570fc731b5fcded4154a799a271d9096b9870f993214c4626f1a2e72ba7ca402",
+        "opponents/adaptive-prime/adaptive-prime.sh": "7eae218a8d6fcf3411ce5895ae756289b18b57ca098993298b0b54b7fa350b5e",
+        "opponents/adaptive-prime/adaptive_config.py": "0fdb86ea3c32283faa5d7dcdb5c4513544b10e119e4795adac20edd49f56de91",
+        "opponents/bot_core/__init__.py": "de2fee519c40f9649827e03661e0e8bfd99f0de7d0f9fe7523b7ffd41048faf0",
+        "opponents/bot_core/async_writer.py": "16e83d54880a4919c9cecbe1b77ef5c46bf3d9df8c67471f153e638d4ac7feea",
+        "opponents/bot_core/debug.py": "38c0a5b0a719a79606640873fb8653f961ad7ed13ee89681a5efcac3b874dc16",
+        "opponents/bot_core/energy/__init__.py": "67f930cc4a2282f1ce589cc3f1828ff540509079ccf634cdea43c016cb928827",
+        "opponents/bot_core/energy/corrections.py": "583af1c35722be766d6aa424dfa709901364af3d228518e3b45e594501361cdd",
+        "opponents/bot_core/energy/drops.py": "6ac726231c7e25f1f3164e3844d61684ac96e45b85681e3255666ef4361266ce",
+        "opponents/bot_core/energy/fire_detection.py": "6bd8af2bdcaff6609bd352952afd2227e348e145d839369a0289f5b5fbbdb5f7",
+        "opponents/bot_core/energy/fire_gate.py": "8b9f074d2a15c1cd973b1cbbc4dcd48d22b6f0b32adf63d6d758cf86d753d1bd",
+        "opponents/bot_core/energy/fire_power.py": "49820930cc37b32637a8cdf9a05975cf0c2a8505639c1fadc623e74e7e399a9a",
+        "opponents/bot_core/energy/gun_heat.py": "e969d111c515d195510c6ab80d4a50d87148662c78493915b3744ff22c030de7",
+        "opponents/bot_core/geometry/__init__.py": "8fa3c9e867014d4acdd535522962ee51173664ff787f22b066d06ebeb357ba42",
+        "opponents/bot_core/geometry/angles.py": "c78961c990029fe5401b8c7ed36cbf4ef873e989ac03455cf35373bb8afb1be8",
+        "opponents/bot_core/geometry/numeric.py": "520b07e360087b1f8214c37b8f69cd3c587d348ff4dfb45eac71c33de3843114",
+        "opponents/bot_core/geometry/position.py": "3e9c5ef826982943e3654909de417d3fbc399e31c711bc50f6e63e6c49062102",
+        "opponents/bot_core/geometry/waves.py": "9523913368e4abea6964416d453e636fb1ae24308cb91f5a73b189aa3d1d474e",
+        "opponents/bot_core/gun/__init__.py": "39eea45aff2d2240a17c2e94cf35a85e59b56bc78d23d2c6e207866d8d45bdfd",
+        "opponents/bot_core/gun/aim.py": "c64084c6069dd65b07682ebd9c3a167966b180082f84f72fa5f6776f995645f5",
+        "opponents/bot_core/gun/aim_tracking.py": "c652c4d89a02a35ca4ffc567998a91508ddd0b700776c093dde2d9582862042a",
+        "opponents/bot_core/gun/config.py": "092f6ac95d9e54f10bdbbc0f53c507ad8e9782c9863c641545b6ea0d1f59cda3",
+        "opponents/bot_core/gun/context.py": "8490a8d20246b302ab40057a19f973867c6210bd642895f3571340560e6b8a6e",
+        "opponents/bot_core/gun/diagnostics.py": "89c818f718d39cf1b69f17b78a9cca3be3ea4a9d400db3989026a59cc7c6ccbe",
+        "opponents/bot_core/gun/factory.py": "c34f4ecdd77618747d0d08caea869d4205ecc23d5cba8995b1a6feb7dbe0f9fc",
+        "opponents/bot_core/gun/features.py": "e48b81dde6d54c3f52ffffbfde4091eb748e4a7c4ad4a3630a8d5c5bc4643865",
+        "opponents/bot_core/gun/guess_factors.py": "46b0c27d507277429dae889f5d3a93140c5095d1b4498494a97d95ad109feeb1",
+        "opponents/bot_core/gun/guns/README.md": "22f1a950d9203a855120897f0733065e807a4fb62e24f7e8efb10cd5806f9a8d",
+        "opponents/bot_core/gun/guns/__init__.py": "7f5e513577507b8e6f5cfb777f86e77ae98300ff8bdd0da387ee9bb9b253e815",
+        "opponents/bot_core/gun/guns/base.py": "06690f5d00dc3e04c4a8d2bcab0519edeab0cc96c731f69ef1248f928c134e70",
+        "opponents/bot_core/gun/guns/displacement/README.md": "ef0a4d31810889d23bc91698e2815c3a3ea4f528c547b91b87ea77e86c82f909",
+        "opponents/bot_core/gun/guns/displacement/__init__.py": "f4b04499d622168c3285659df2f650c94f709d2049745b3de5361ab262bd0838",
+        "opponents/bot_core/gun/guns/displacement/config.py": "2bc3824199cb2a229335ea3caf083cab422860c19887cfaf7c5448d60d03913c",
+        "opponents/bot_core/gun/guns/displacement/gun.py": "87a351b6ee98d6e69abaa075bd26b313ca7550591208019c1aa7ea0d7a8c3ab2",
+        "opponents/bot_core/gun/guns/dynamic_cluster/README.md": "8b04c34617452c9146631857397a9fb882a8baafc136d53408a68d6c4bedd03b",
+        "opponents/bot_core/gun/guns/dynamic_cluster/__init__.py": "dfb8b9e6640ac5cfd381e6a526ef73054eebd8f2635c53abc36b973843aeb161",
+        "opponents/bot_core/gun/guns/dynamic_cluster/config.py": "7395991bd52b5461c1b994019c42ac914965f1ac678b2f3c3405e3030d631c26",
+        "opponents/bot_core/gun/guns/dynamic_cluster/gun.py": "7f0bf8195335cce5a2ed4ec29d9dec078918bbab20c1f886ba05d9606f3a29c8",
+        "opponents/bot_core/gun/guns/dynamic_cluster/memory.py": "2677a3bce3a442a5b87d1dcab40e9c375c37eb8b6e8f891a4a5e014a9e9ff3e6",
+        "opponents/bot_core/gun/guns/head_on/README.md": "4c9ba70aa0237c5bf6c5b3ec4b74d29ab91c93604e86b6533f165014b6984a23",
+        "opponents/bot_core/gun/guns/head_on/__init__.py": "fc44fdf9ace2adc098f54aacc12a82699638ddf7138e022c31d13d1173176e23",
+        "opponents/bot_core/gun/guns/head_on/gun.py": "b13c5beb0884f7c09f9dcfd7766cf2776f3a72631bddfcc55abbc28ec0fc055b",
+        "opponents/bot_core/gun/guns/linear/README.md": "4171959abb4610ff96ea7fe1d89cda57056d2b3c42ee648f2560851d88ceb0d1",
+        "opponents/bot_core/gun/guns/linear/__init__.py": "362f12bc1cbc93039d8f814e938f96f2d82277d280d4032b6a2c6547d2a64c99",
+        "opponents/bot_core/gun/guns/linear/gun.py": "6e3aad45c821acadb580771d0cfaba80d8ae19faf7be74b537be569c01cfdfc6",
+        "opponents/bot_core/gun/guns/traditional_gf/README.md": "1e419037b44f296ac746b5b5621c9cc22e35b51613a6d66276f46d5fff66d09f",
+        "opponents/bot_core/gun/guns/traditional_gf/__init__.py": "074d624acec398d1202ce37fa5c26732c53ae8c5815f53faed9f9fb8095057c4",
+        "opponents/bot_core/gun/guns/traditional_gf/config.py": "c8c9cfb3a8a5a0abcb67059ed4841165cabb32a54b7b0a340f86aa5b09e40637",
+        "opponents/bot_core/gun/guns/traditional_gf/diagnostics.py": "2aacf351a34fe6e6cff4f8ed0831f97cc11ea3c22331c24d57eab35acbbc33e3",
+        "opponents/bot_core/gun/guns/traditional_gf/gun.py": "2debb8da6fe3e9dbff2704df9210dfb635bfa3355806afaa242ddc0a2874da40",
+        "opponents/bot_core/gun/guns/traditional_gf/profile.py": "91ead2dd62274b9a9ef8618abc9d28de739e76586cf929b37c06925839e87b6e",
+        "opponents/bot_core/gun/kinematics.py": "08ad83ea15dea51690345b2a5a7585e5371f4ee90f2c39929730014785e511e7",
+        "opponents/bot_core/gun/models.py": "764029fbb5d0c1d72e9acacca3d201833b21d35be1ed68e81f37a72ab2ebdecc",
+        "opponents/bot_core/gun/policy.py": "9eb3e5f3b8597fa75bc974546e799b74ffa9933da114e354b642f6c7d130ab09",
+        "opponents/bot_core/gun/prediction.py": "7ad93d0f5c3ddc11be510635b47078ed5b9d38db8cd755e4cdd9c679d66f4ba8",
+        "opponents/bot_core/gun/profile.py": "4df35aa435f3b53074db75d7cdfb58632ad5d02e8dd77cf3b62ea248605e21fd",
+        "opponents/bot_core/gun/registry.py": "0b1c26056e289eb293842cb9b005b2097a42db71521b7c7f5ac31ee4e008dff5",
+        "opponents/bot_core/gun/scoring.py": "02d77d5f85ab86f523f21e5c34ab1109a98ff1dab041c0fe93373ccacfdb1ff4",
+        "opponents/bot_core/gun/system.py": "7f25da1d58953d2d7bd8bad6669cd09a0365298ec194a62c01e20ce425f4354d",
+        "opponents/bot_core/gun/waves.py": "e13b5fe8dd8a23f2c6a3f5e77904e2dd1999dfc89af4f99066f31bf05b161d84",
+        "opponents/bot_core/launcher_env.sh": "4cc36c26762ab7e5c3d1209743a4f1088285caa9f073e7e056baeac06efd20f7",
+        "opponents/bot_core/motion.py": "bba6d38580275d9e7bdb7fdffbc8160f4e42916c6c9e429616bfa051382f6c0d",
+        "opponents/bot_core/movement/__init__.py": "d408dd66ee7a4d562b691cb78d71bdd2ebdcc6ad9d49018aa1ae28b76de5158e",
+        "opponents/bot_core/movement/commands.py": "3709e26cd6cf584c65ed31333a6f3fa3a0a196eb44fb0271a541b13efb6b1e86",
+        "opponents/bot_core/movement/config.py": "281abab6ba1e063db5bb9a2e2d7aa5e0bc177ec66a2dbb6c87d01bf1d8aec493",
+        "opponents/bot_core/movement/danger.py": "b7885692be0038b5590a78de0219c7243d6b8686f5d8ca52bf3b39f361739940",
+        "opponents/bot_core/movement/decisions.py": "23f565a3fcc9cad7d7d8eeae38d56d738c1084a4af6c2b43ded53c911b15534e",
+        "opponents/bot_core/movement/flattener.py": "9388763b00a5ff83c678b55066f1db515a77cccae7d86ee817ef75ae439dbe98",
+        "opponents/bot_core/movement/minimum_risk.py": "67a1a3d0d373d87a88ff1cdc193debe4c1ea55f51cdbd0b7e7bac93ef432c4a4",
+        "opponents/bot_core/movement/navigation.py": "ac6aaa84197d5868e332fbccf560940085cd04fce3af253f8bf2b0e92d76a614",
+        "opponents/bot_core/movement/option_surfing.py": "693777479f4a1a1182d31d88cb0a943093491849d74276d840a99f80c33ac573",
+        "opponents/bot_core/movement/profile.py": "474e3b73d74b585c3ebe89e6313fa0a845c1a78431bba274585df2786d75038d",
+        "opponents/bot_core/movement/surfing.py": "30ce2729677d4de6d40e45c71e2361125f02304f028aa6450d19324bbe425b98",
+        "opponents/bot_core/movement/waves.py": "be53ce9596035944a9fc00041136435a1803d5ed39b7a50f2bcf3f3b3588dde2",
+        "opponents/bot_core/physics/__init__.py": "4512fa14b9e6558d0328740bb8ae4d96b9a69482165f937de36d4cdbc386ee41",
+        "opponents/bot_core/physics/movement.py": "c6649fbe71ed239a8929f8ee5d1ddabe09272758177fe5d8c36a5ff34478ab00",
+        "opponents/bot_core/physics/rules.py": "9b657af103e6bbb197490e51983923ef01786d08fba14fb5ffa8b6a6bbcff3d0",
+        "opponents/bot_core/radar.py": "c4a59bb5b555f87e2e911dcd01517ee09064bdda171325fcccd5fb11e5e5b956",
+        "opponents/bot_core/target_snapshot.py": "c2f74c8470872977eddf1f91519909e9c38dba3441f595742c45aeb32e9eb9fa",
+        "opponents/bot_core/targeting.py": "8fe9dcc69bcfce933e24b9966b2421d3f490870d32dd6a5d68bcc708dced0ef5",
+        "opponents/bot_core/telemetry/__init__.py": "063e66ac773587d3f825d79f0a06e7c8e22ef7a38176bf0134746a0e4ae88239",
+        "opponents/bot_core/telemetry/energy.py": "15d5e9043bde748cce283a37bf1598cba2791cb081749bddf69b5374387b21b7",
+        "opponents/bot_core/telemetry/fire.py": "654497f46d98029e3bc3d2322051a0b3f424ccd9700d790a58a7d8d3429ff4ac",
+        "opponents/bot_core/telemetry/movement.py": "84a4bac93cc4f0b1bcc1be51e29044c086242c15cf2b6922adaaa6079f04c441",
+        "opponents/bot_core/telemetry/recorder.py": "f51bb59485382ddac6a79c7dedd4e966107a089ce74b8affc27edcd569e54c44",
+        "opponents/bot_core/telemetry/schema.py": "d73b09706214d335a54a927b424b049d684a683dcc83eef84bdef79fa670b27a",
+        "opponents/bot_core/telemetry/sink.py": "945c9334ea198b9a7a2dd496791d17480d22b369059a9a15f67904ec99e41e7c",
+        "opponents/bot_core/telemetry/targeting.py": "c3489f0032e66561ae476c8c8cc8f2ea10f69b8bf2cd8ba657d86ae9471124e2",
+        "opponents/bot_core/telemetry/tick.py": "40d485184565816d4100c5831247b00111dc344235466a6b050cf818536fdcfe",
+        "opponents/bot_core/telemetry/timing.py": "ba268a8eb5c9b1bb85fbd0f69449ad521b001a723989fd5c0e2a9c9c0f6dac5f",
+        "opponents/LICENSE.shared-Apache-2.0": "90758bbc605c02ef407a50a79a454143f9ee1e9cde89f815f582df9d1b502610"
+      },
+      "breakwater": null
+    },
+    {
+      "gameId": "ais-bw-v2-screen-self-b1",
+      "stage": "screen",
+      "kind": "self",
+      "block": 1,
+      "rounds": 10,
+      "arms": [
+        "candidate",
+        "previous"
+      ],
+      "seeds": {
+        "candidate": 202641016,
+        "previous": 202641017
+      },
+      "battles": {
+        "candidate": {
+          "id": 2,
+          "name": "AISurvivor-Candidate",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 600,
+          "survival": 500,
+          "bulletDamage": 0,
+          "firstPlaces": 10,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 600,
+              "survival": 500,
+              "bulletDamage": 0,
+              "firstPlaces": 10
+            },
+            {
+              "id": 1,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 200,
+              "survival": 0,
+              "bulletDamage": 200,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 16479,
+            "shotsFired": 0,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 200.4,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": null,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "9175ba6e31dc2d824146bf7f4441398c70aa783c0707980e7749013f571f0fd2",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 16436,
+            "actionCounts": [
+              16445,
+              2,
+              12,
+              7,
+              11,
+              0
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Candidate",
+            "version": "1.2.1",
+            "seed": 202641016,
+            "originalHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "af94f4eeaadbd2a4a9738a9ec3349de9438d044ad2747f3789bdf47015ecbbf7",
+              "AISurvivor.json": "ac2be1f3cd5e23e5f0c0774ac25efbcbd51a3bc4128776c96681bd5cd09210ec",
+              "AISurvivor.sh": "1bc8abef8b2c04b59ea54e6de65e52b879748052c5babfb66e16d461a05e537f",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-self-b1/candidate/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-self-b1/candidate/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 16436,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 10739,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 10739,
+            "breakwaterFireFinisherTurns": 0
+          }
+        },
+        "previous": {
+          "id": 1,
+          "name": "AISurvivor-Accepted",
+          "version": "1.2.1",
+          "rank": 2,
+          "totalScore": 200,
+          "survival": 0,
+          "bulletDamage": 200,
+          "firstPlaces": 0,
+          "rounds": 10,
+          "results": [
+            {
+              "id": 2,
+              "name": "AISurvivor-Candidate",
+              "version": "1.2.1",
+              "rank": 1,
+              "totalScore": 600,
+              "survival": 500,
+              "bulletDamage": 0,
+              "firstPlaces": 10
+            },
+            {
+              "id": 1,
+              "name": "AISurvivor-Accepted",
+              "version": "1.2.1",
+              "rank": 2,
+              "totalScore": 200,
+              "survival": 0,
+              "bulletDamage": 200,
+              "firstPlaces": 0
+            }
+          ],
+          "metrics": {
+            "turns": 16479,
+            "shotsFired": 810,
+            "bulletHits": 41,
+            "damageDealt": 200.4,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "botCollisions": 0,
+            "skippedTurns": 0,
+            "hitRate": 0.050617283950617285,
+            "roundsRecorded": 10,
+            "checkpointLoaded": false
+          },
+          "endpoint": {
+            "sha256": "110484ac48281e5b4f56a9d984bc2e6081d35b764566fa44800e41cebc5da297",
+            "bytes": 27804,
+            "totalRounds": 10
+          },
+          "mechanism": {
+            "forcedDuelTurns": 16423,
+            "actionCounts": [
+              16437,
+              1,
+              0,
+              11,
+              15,
+              5
+            ]
+          },
+          "bot": {
+            "name": "AISurvivor-Accepted",
+            "version": "1.2.1",
+            "seed": 202641017,
+            "originalHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+              "AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "launchedHashes": {
+              "AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+              "AISurvivor.json": "c2012cd3bb944bf514befcbc920fc27b06cb5cea7c454d0ab4388dc4049ff89c",
+              "AISurvivor.sh": "5cfc3b79dbd50f36a444d270e33e4f2197c8f88a7bbba57e569ad70dd23df555",
+              "AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+            },
+            "model": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-self-b1/previous/AISurvivor/model.dat",
+            "metrics": "/home/runner/work/robocode/robocode/transfer-evidence/ais-bw-v2-screen-self-b1/previous/AISurvivor/metrics.jsonl"
+          },
+          "breakwaterMovementTurns": 0,
+          "selectivity": {
+            "breakwaterFireEligibleTurns": 0,
+            "breakwaterFirePassedTurns": 0,
+            "breakwaterFireBlockedTurns": 0,
+            "breakwaterFireFinisherTurns": 0
+          }
+        }
+      },
+      "retconStats": null,
+      "pythonSourceHashes": {},
+      "breakwater": null
+    }
+  ],
+  "runtime": {
+    "javaVersion": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "pythonVersion": "3.13.17 (main, Oct 22 2026, 02:41:26) [GCC 15.2.0]",
+    "hashes": {
+      "bin/java": "1bf1aaef01e4f8d7c85d913c60fb2ee4624cbe54d4053254c59657b7ea913b25",
+      "lib/modules": "f5463cffa81c51b3c13f57e2c23eacceab2b12e842069acf2facd5485f63bc85",
+      "lib/server/libjvm.so": "30b96b2f2b69f313f4c85d9b437511a1d97e64c29a3d13b0abd6b07c7f50335b",
+      "release": "8545053a54a73969a65db2c8157f40f89bcdcf7526ae90a7ce9b3061c01bc34a",
+      "python": "59e4caac3251f4240f9e49169d7ab0ea46a37a826e58ff8953e3ac5a9c9cd74f",
+      "libpython": "aad71acf751767ee702555e2e4c159c34dc68122f938e429f864e2d7f800a0bc"
+    }
+  },
+  "pythonOpponents": {
+    "repository": "fduch-stranger/robocode-bot",
+    "commit": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf",
+    "sourceSHA256": "a9bf0b5d62b510ce3a405db9dcbe11cf2c1bce3f982e2a5d12b9fdc76b8fbc92",
+    "lockSHA256": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+    "opponents": [
+      {
+        "name": "Adaptive Prime",
+        "version": "1.0",
+        "sourcePath": "bots/adaptive-prime",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "descriptor": "adaptive-prime.json",
+        "launcher": "adaptive-prime.sh",
+        "gitTreeSHA": "3ee9457fecb84be772add6108cf8485060a758aa"
+      },
+      {
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "sourcePath": "bots/ports/diamond-port",
+        "license": "Zlib",
+        "licensePath": "bots/ports/diamond-port/LICENSE",
+        "descriptor": "diamond-port.json",
+        "launcher": "diamond-port.sh",
+        "gitTreeSHA": "cb09712712b3b360278518aa604ad355de1f4911"
+      }
+    ],
+    "wheels": [
+      {
+        "name": "ast_serialize",
+        "version": "0.13.1",
+        "filename": "ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/c5/fa/da311559dd3dae9af5825cf21660775a929b970f72e3786af3f2cd667944/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "9f99786e0d62082a5b121b3437f3167562133711df22128de1e9886f57f0b226",
+        "size": 1313260,
+        "requiresPython": ">=3.7",
+        "requiresDist": []
+      },
+      {
+        "name": "librt",
+        "version": "0.16.0",
+        "filename": "librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/a9/59/16c409c56f708eda2db9a0553662845d45e3871c77d70a240dae3f3bdc56/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "17bac7f7a16b328fff77e440287693eb017abde913595b5827ebccbc21ecd8a6",
+        "size": 531689,
+        "requiresPython": ">=3.9",
+        "requiresDist": []
+      },
+      {
+        "name": "mypy",
+        "version": "2.4.1",
+        "filename": "mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/a2/45/089b4724b85f0f408941be5298f817ee89181c1ce031a73d60ebb150c2c7/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "1fb70621535c22fd4b1a0450d37ed1d6c5eb39656a1cebfb189084c12de54ba7",
+        "size": 15467623,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "typing_extensions>=4.6.0; python_version < \"3.15\"",
+          "typing_extensions>=4.14.0; python_version >= \"3.15\"",
+          "mypy_extensions>=1.0.0",
+          "pathspec>=1.0.0",
+          "tomli>=1.1.0; python_version < \"3.11\"",
+          "librt>=0.16.0; platform_python_implementation != \"PyPy\"",
+          "ast-serialize<1.0.0,>=0.12.1",
+          "psutil>=4.0; extra == \"dmypy\"",
+          "setuptools>=50; extra == \"mypyc\"",
+          "lxml; extra == \"reports\"",
+          "pip; extra == \"install-types\"",
+          "orjson; extra == \"faster-cache\""
+        ]
+      },
+      {
+        "name": "mypy_extensions",
+        "version": "1.1.0",
+        "filename": "mypy_extensions-1.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+        "sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+        "size": 4963,
+        "requiresPython": ">=3.8",
+        "requiresDist": []
+      },
+      {
+        "name": "pathspec",
+        "version": "1.1.1",
+        "filename": "pathspec-1.1.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+        "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+        "size": 57328,
+        "requiresPython": ">=3.9",
+        "requiresDist": [
+          "hyperscan >=0.7 ; extra == \"hyperscan\"",
+          "typing-extensions >=4 ; extra == \"optional\"",
+          "google-re2 >=1.1 ; extra == \"re2\""
+        ]
+      },
+      {
+        "name": "pip",
+        "version": "26.3",
+        "filename": "pip-26.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/07/25/ee8c38ae72d66b844ce8eb9711ba905dba21ca1a8a0c960057c41cd23337/pip-26.3-py3-none-any.whl",
+        "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13",
+        "size": 1950951,
+        "requiresPython": ">=3.10",
+        "requiresDist": []
+      },
+      {
+        "name": "pycountry",
+        "version": "26.2.16",
+        "filename": "pycountry-26.2.16-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9c/42/7703bd45b62fecd44cd7d3495423097e2f7d28bc2e99e7c1af68892ab157/pycountry-26.2.16-py3-none-any.whl",
+        "sha256": "115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a",
+        "size": 8044600,
+        "requiresPython": ">=3.10",
+        "requiresDist": []
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3",
+        "filename": "pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/74/27/e5b8f34d02d9995b80abcef563ea1f8b56d20134d8f4e5e81733b1feceb2/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "0f29edc409a6392443abf94b9cf89ce99889a1dd5376d94316ae5145dfedd5d6",
+        "size": 801626,
+        "requiresPython": ">=3.8",
+        "requiresDist": []
+      },
+      {
+        "name": "robocode-tank-royale",
+        "version": "1.3.1",
+        "filename": "robocode_tank_royale-1.3.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9b/7c/8e99d83e5185331a0d3534b948ee2247c5ef9d22abe0b6d57bf99c17166a/robocode_tank_royale-1.3.1-py3-none-any.whl",
+        "sha256": "074f28f1f62ede458801739d8f84651af8c33bb2aee3290e7841fbd9bc327df2",
+        "size": 144463,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "pip>=24",
+          "PyYAML>=6",
+          "setuptools>=77",
+          "pycountry>=24",
+          "websockets>=15",
+          "mypy"
+        ]
+      },
+      {
+        "name": "setuptools",
+        "version": "84.2.1",
+        "filename": "setuptools-84.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl",
+        "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2",
+        "size": 876263,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "pytest!=8.1.*,>=6; extra == \"test\"",
+          "virtualenv>=13.0.0; extra == \"test\"",
+          "wheel>=0.44.0; extra == \"test\"",
+          "pip>=19.1; extra == \"test\"",
+          "packaging>=26.3; extra == \"test\"",
+          "jaraco.envs>=2.2; extra == \"test\"",
+          "pytest-xdist>=3; extra == \"test\"",
+          "jaraco.path>=3.7.2; extra == \"test\"",
+          "build[virtualenv]>=1.0.3; extra == \"test\"",
+          "filelock>=3.4.0; extra == \"test\"",
+          "ini2toml[lite]>=0.14; extra == \"test\"",
+          "tomli-w>=1.0.0; extra == \"test\"",
+          "pytest-timeout; extra == \"test\"",
+          "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+          "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+          "pytest-home>=0.5; extra == \"test\"",
+          "pytest-subprocess; extra == \"test\"",
+          "pyproject-hooks!=1.1; extra == \"test\"",
+          "jaraco.test>=5.5; extra == \"test\"",
+          "sphinx>=3.5; extra == \"doc\"",
+          "jaraco.packaging>=9.3; extra == \"doc\"",
+          "rst.linker>=1.9; extra == \"doc\"",
+          "furo; extra == \"doc\"",
+          "sphinx-lint; extra == \"doc\"",
+          "jaraco.tidelift>=1.4; extra == \"doc\"",
+          "pygments-github-lexers==0.0.5; extra == \"doc\"",
+          "sphinx-favicon; extra == \"doc\"",
+          "sphinx-inline-tabs; extra == \"doc\"",
+          "sphinx-reredirects; extra == \"doc\"",
+          "sphinxcontrib-towncrier; extra == \"doc\"",
+          "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+          "pyproject-hooks!=1.1; extra == \"doc\"",
+          "towncrier<24.7; extra == \"doc\"",
+          "packaging>=26.3; extra == \"core\"",
+          "more_itertools>=8.8; extra == \"core\"",
+          "jaraco.text>=3.7; extra == \"core\"",
+          "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+          "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+          "wheel>=0.43.0; extra == \"core\"",
+          "jaraco.functools>=4; extra == \"core\"",
+          "more_itertools; extra == \"core\"",
+          "pytest-checkdocs>=2.14; extra == \"check\"",
+          "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+          "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+          "pytest-cov; extra == \"cover\"",
+          "pytest-enabler>=3.4; extra == \"enabler\"",
+          "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+          "mypy==1.18.*; extra == \"type\"",
+          "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+          "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+        ]
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0",
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "size": 45571,
+        "requiresPython": ">=3.9",
+        "requiresDist": []
+      },
+      {
+        "name": "websockets",
+        "version": "17.4",
+        "filename": "websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/75/6a95f93661bba2f1a4ec82eb26c6d30e6ba253569ecabb7a675139db6051/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "sha256": "25eb661d8ba7e2b85ebb4e7a1bb9f6a3280910ed10b84330a7abfb5ed32d2764",
+        "size": 226382,
+        "requiresPython": ">=3.11",
+        "requiresDist": []
+      }
+    ],
+    "runtime": {
+      "version": "3.13.17 (main, Oct 22 2026, 02:41:26) [GCC 15.2.0]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.1.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.3"
+        ],
+        [
+          "pycountry",
+          "26.2.16"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "17.4"
+        ]
+      ]
+    },
+    "pipCheck": "No broken requirements found."
+  },
+  "retconProvenance": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "sampleAssetSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "screenDecision": {
+    "status": "reject",
+    "checks": {
+      "breakwaterGain": true,
+      "breakwaterWinningShare": false,
+      "breakwaterWins": false,
+      "retconRelative": false,
+      "retconAbsolute": true,
+      "advancedEachNI": false,
+      "advancedMeanNI": false,
+      "selfShare": true,
+      "selfWins": true,
+      "wallRate": true,
+      "zeroAISSkips": true
+    },
+    "opponents": {
+      "Breakwater": {
+        "deltas": [
+          0.08706986444212722
+        ],
+        "meanGain": 0.08706986444212722,
+        "totals": {
+          "previous": {
+            "rounds": 10,
+            "wins": 0,
+            "winRate": 0.0,
+            "winRateWilson95": {
+              "lower": 0,
+              "upper": 0.2775327998628892
+            },
+            "meanScoreShare": 0.27007299270072993,
+            "hitRate": 0.055693069306930694,
+            "wallsPer1000Turns": 0.13118194936376754,
+            "turns": 15246,
+            "shotsFired": 808,
+            "bulletHits": 45,
+            "damageDealt": 222.4,
+            "damageTaken": 0.0,
+            "wallCollisions": 2,
+            "skippedTurns": 0
+          },
+          "candidate": {
+            "rounds": 10,
+            "wins": 3,
+            "winRate": 0.3,
+            "winRateWilson95": {
+              "lower": 0.10779126740630099,
+              "upper": 0.6032218525388546
+            },
+            "meanScoreShare": 0.35714285714285715,
+            "hitRate": 0.0,
+            "wallsPer1000Turns": 0.1289490651192779,
+            "turns": 15510,
+            "shotsFired": 5,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 19.95,
+            "wallCollisions": 2,
+            "skippedTurns": 0
+          }
+        },
+        "candidateShares": [
+          0.35714285714285715
+        ]
+      },
+      "Retcon": {
+        "deltas": [
+          -0.09545543502572129
+        ],
+        "meanGain": -0.09545543502572129,
+        "totals": {
+          "previous": {
+            "rounds": 10,
+            "wins": 9,
+            "winRate": 0.9,
+            "winRateWilson95": {
+              "lower": 0.5958499732047615,
+              "upper": 0.9821237869049271
+            },
+            "meanScoreShare": 0.7737642585551331,
+            "hitRate": 0.05891238670694864,
+            "wallsPer1000Turns": 0.08749671887304226,
+            "turns": 11429,
+            "shotsFired": 662,
+            "bulletHits": 39,
+            "damageDealt": 242.26000200000001,
+            "damageTaken": 161.66,
+            "wallCollisions": 1,
+            "skippedTurns": 0
+          },
+          "candidate": {
+            "rounds": 10,
+            "wins": 9,
+            "winRate": 0.9,
+            "winRateWilson95": {
+              "lower": 0.5958499732047615,
+              "upper": 0.9821237869049271
+            },
+            "meanScoreShare": 0.6783088235294118,
+            "hitRate": 0.6,
+            "wallsPer1000Turns": 0.09986019572598362,
+            "turns": 10014,
+            "shotsFired": 15,
+            "bulletHits": 9,
+            "damageDealt": 89.200001,
+            "damageTaken": 157.8,
+            "wallCollisions": 1,
+            "skippedTurns": 0
+          }
+        },
+        "candidateShares": [
+          0.6783088235294118
+        ]
+      },
+      "diamond-port": {
+        "deltas": [
+          -0.049429657794676805
+        ],
+        "meanGain": -0.049429657794676805,
+        "totals": {
+          "previous": {
+            "rounds": 10,
+            "wins": 0,
+            "winRate": 0.0,
+            "winRateWilson95": {
+              "lower": 0,
+              "upper": 0.2775327998628892
+            },
+            "meanScoreShare": 0.049429657794676805,
+            "hitRate": 0.055970149253731345,
+            "wallsPer1000Turns": 0.0,
+            "turns": 4597,
+            "shotsFired": 268,
+            "bulletHits": 15,
+            "damageDealt": 77.6,
+            "damageTaken": 762.8,
+            "wallCollisions": 0,
+            "skippedTurns": 0
+          },
+          "candidate": {
+            "rounds": 10,
+            "wins": 0,
+            "winRate": 0.0,
+            "winRateWilson95": {
+              "lower": 0,
+              "upper": 0.2775327998628892
+            },
+            "meanScoreShare": 0.0,
+            "hitRate": null,
+            "wallsPer1000Turns": 0.1193792280143255,
+            "turns": 25130,
+            "shotsFired": 0,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 1008.7418260000001,
+            "wallCollisions": 3,
+            "skippedTurns": 0
+          }
+        },
+        "candidateShares": [
+          0.0
+        ]
+      },
+      "adaptive-prime": {
+        "deltas": [
+          -0.09809404800850735
+        ],
+        "meanGain": -0.09809404800850735,
+        "totals": {
+          "previous": {
+            "rounds": 10,
+            "wins": 1,
+            "winRate": 0.1,
+            "winRateWilson95": {
+              "lower": 0.017876213095072896,
+              "upper": 0.4041500267952385
+            },
+            "meanScoreShare": 0.2538370720188902,
+            "hitRate": 0.12770137524557956,
+            "wallsPer1000Turns": 0.12298610257040954,
+            "turns": 8131,
+            "shotsFired": 509,
+            "bulletHits": 65,
+            "damageDealt": 361.800001,
+            "damageTaken": 617.4,
+            "wallCollisions": 1,
+            "skippedTurns": 0
+          },
+          "candidate": {
+            "rounds": 10,
+            "wins": 2,
+            "winRate": 0.2,
+            "winRateWilson95": {
+              "lower": 0.05668215145437519,
+              "upper": 0.5098375284633583
+            },
+            "meanScoreShare": 0.15574302401038287,
+            "hitRate": 0.0,
+            "wallsPer1000Turns": 0.0,
+            "turns": 17549,
+            "shotsFired": 1,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 860.8,
+            "wallCollisions": 0,
+            "skippedTurns": 0
+          }
+        },
+        "candidateShares": [
+          0.15574302401038287
+        ]
+      },
+      "self": {
+        "deltas": [
+          0.5
+        ],
+        "meanGain": 0.5,
+        "totals": {
+          "previous": {
+            "rounds": 10,
+            "wins": 0,
+            "winRate": 0.0,
+            "winRateWilson95": {
+              "lower": 0,
+              "upper": 0.2775327998628892
+            },
+            "meanScoreShare": 0.25,
+            "hitRate": 0.050617283950617285,
+            "wallsPer1000Turns": 0.0,
+            "turns": 16479,
+            "shotsFired": 810,
+            "bulletHits": 41,
+            "damageDealt": 200.4,
+            "damageTaken": 0.0,
+            "wallCollisions": 0,
+            "skippedTurns": 0
+          },
+          "candidate": {
+            "rounds": 10,
+            "wins": 10,
+            "winRate": 1.0,
+            "winRateWilson95": {
+              "lower": 0.7224672001371107,
+              "upper": 0.9999999999999999
+            },
+            "meanScoreShare": 0.75,
+            "hitRate": null,
+            "wallsPer1000Turns": 0.0,
+            "turns": 16479,
+            "shotsFired": 0,
+            "bulletHits": 0,
+            "damageDealt": 0.0,
+            "damageTaken": 200.4,
+            "wallCollisions": 0,
+            "skippedTurns": 0
+          }
+        },
+        "candidateShares": [
+          0.75
+        ]
+      }
+    }
+  },
+  "decision": {
+    "status": "reject-at-screen",
+    "confirmationRounds": 0
+  }
+}
