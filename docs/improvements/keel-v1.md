@@ -210,3 +210,12 @@ To keep the registered runtime rather than re-profile it, the workflow now pins 
 - **Unobserved factors.** Diamond's own skipped turns are not observable. The reviewer-noted ram correction limitation of the frozen bot remains.
 - **Development history.** The candidate was selected by exploratory local games, and the screen and confirmation are the unbiased tests. Confirmation attempt 1 played zero games. Only run 41831109687 played confirmation games.
 - **Guards.** These were measured only in the screen (Retcon 96.06%, AISurvivor 88.28%, one game each). Transfer to other strong opponents is untested.
+
+
+## Measured implementation clarification and completed acquisition
+
+In the frozen gun, the `real` flag means an SDK-accepted `setFire` request. It is not a `BulletFired` confirmation. The anti-surfer and virtual-gun selector learn from accepted-request wave-passage proxies, not guaranteed actual bullet creations or actual-hit labels. The historical source wording is preserved; no request/confirmation equivalence or component-level causal result is established. Source, JAR, model, registration and numerical rules are unchanged.
+
+The [independent confirmation audit](https://github.com/stephanelee/robocode/pull/98#issuecomment-6633000801) is complete. The supported outcome is scoped to this pinned Diamond Port/runtime/800×600/100 ms setting and energy attrition/survival scoring; it does not establish broad strength. Retcon and AISurvivor guards were each measured in the screen only.
+
+Both registered acquisition stages are consumed. The active launcher is retired; its exact [screen and confirmation snapshots and provenance](../../benchmarks/keel-v1/source/retired-workflows.json) remain archived. Ordinary Java 17 build/tests/JAR-parity CI remains enabled. The original [zero-game failure payload and compressed job log](../../benchmarks/keel-v1/zero-game-attempt-41819088130/) are retained separately; no game or outcome was replaced.

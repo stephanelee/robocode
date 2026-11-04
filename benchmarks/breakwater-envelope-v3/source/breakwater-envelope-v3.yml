@@ -1,0 +1,59 @@
+name: Breakwater envelope registered duels
+on:
+  pull_request:
+    types: [ready_for_review]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  measure:
+    if: github.head_ref == 'experiment/breakwater-envelope-v3' && github.event.pull_request.head.repo.full_name == github.repository && github.run_attempt == 1 && contains(github.event.pull_request.body, format('BREAKWATER-V3-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: One activation for this experiment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          workflow_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.workflow_id')
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/$workflow_id/runs?branch=experiment%2Fbreakwater-envelope-v3&event=pull_request" > "$RUNNER_TEMP/activations.json"
+          jq -e --argjson id "$GITHUB_RUN_ID" '.total_count == 1 and .workflow_runs[0].id == $id' "$RUNNER_TEMP/activations.json"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Build, test and verify both committed JARs
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AIS.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/AIS.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/AIS.jar" AISurvivor/AISurvivor.jar
+          ./gradlew -p experiments/Breakwater --no-daemon clean build
+          python tools/verify_jar.py experiments/Breakwater/{Breakwater.jar,build/bot/Breakwater/Breakwater.jar}
+          cp experiments/Breakwater/{Breakwater.jar,build/bot/Breakwater/Breakwater.jar}
+          python -m unittest discover -s tools -p 'test_breakwater_envelope_experiment.py'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run registered population
+        run: python tools/breakwater_envelope_experiment.py --output build/breakwater-envelope-v3
+      - name: Preserve complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: breakwater-envelope-v3-${{ github.event.pull_request.head.sha }}
+          path: |
+            build/breakwater-envelope-v3/
+            tools/breakwater-v3-freeze.json
+            docs/improvements/breakwater-envelope-v3.md
+          if-no-files-found: warn
+          retention-days: 30
