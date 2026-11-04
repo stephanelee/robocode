@@ -1,0 +1,37 @@
+--- a/bots/ports/diamond-port/diamond_port/gun.py
++++ b/bots/ports/diamond-port/diamond_port/gun.py
+@@ -5,6 +5,10 @@
+ from __future__ import annotations
+ 
+ import math
++import json as _json, os as _os
++_DLOG=open(_os.environ['DIAMOND_DEV_LOG'],'a') if _os.environ.get('DIAMOND_DEV_LOG') else None
++def _dlog(**k):
++    if _DLOG: _DLOG.write(_json.dumps(k)+'\n'); _DLOG.flush()
+ import sys
+ 
+ from diamond_port.dia_utils import (
+@@ -216,6 +220,7 @@
+             if precise_intersection is None:
+                 return
+             guess_factor = w.guess_factor_precise(precise_intersection.angle)
++            _dlog(ev='break',t=current_time,ft=w.fire_time,firing=w.firing_wave,gf=guess_factor,ang=precise_intersection.angle,absb=w.abs_bearing,sx=w.source_location.x,sy=w.source_location.y,tx=w.target_location.x,ty=w.target_location.y,od=w.orbit_direction,n=len(wave_break_states),states=[(st.time,st.location.x,st.location.y) for st in wave_break_states])
+ 
+         wave_break_state = wave_break_states[len(wave_break_states) // 2]
+         disp_vector = w.displacement_vector_of_state(wave_break_state)
+@@ -945,6 +950,7 @@
+             ux = abs(normal_relative_angle(firing_angle - hit_angle)) / tolerance
+             stats.shots_hit += hit_weight * math.pow(1.6, -ux)
+             stats.shots_fired += 1
++            _dlog(ev='vg',gun=gun.get_label(),ft=w.fire_time,fa=normal_relative_angle(firing_angle - w.abs_bearing)*w.orbit_direction,hit=normal_relative_angle(hit_angle - w.abs_bearing)*w.orbit_direction,tol=tolerance,score=hit_weight*math.pow(1.6,-ux),rating=stats.gun_rating())
+             del stats.virtual_bullets[w]
+ 
+     def init_round(self) -> None:
+@@ -1048,6 +1054,7 @@
+             self._evaluate_virtual_guns(gun_data)
+         else:
+             firing_angle = self._current_gun.aim(aim_wave)
++            _dlog(ev='aim',t=robot.time,gun=self._current_gun.get_label(),fa=firing_angle,absb=aim_wave.abs_bearing,ft=aim_wave.fire_time,sx=aim_wave.source_location.x,sy=aim_wave.source_location.y,tx=aim_wave.target_location.x,ty=aim_wave.target_location.y,od=aim_wave.orbit_direction)
+         robot.set_turn_gun_right_radians(normal_relative_angle(firing_angle - robot.gun_heading_radians))
+ 
+     def _aim_and_fire_at_everyone(self) -> None:
