@@ -1,0 +1,102 @@
+name: Registered Diamond STOP24 zero-game diagnostic
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+concurrency:
+  group: diamond-stop-contract24-v1
+  cancel-in-progress: false
+jobs:
+  profile:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/diamond-stop-contract24' && github.run_attempt == 1 &&
+      github.event.label.name == 'profile-diamond-stop24'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Compile and inspect pinned inputs only (zero cases)
+        run: |
+          mkdir -p build
+          python -I -B -S tools/diamond_stop24_host.py --collect 2>&1 | tee build/diamond-stop24-preparation.log
+          python -I -B -S tools/diamond_stop24_host.py --verify
+          python -I -B -S tools/diamond_stop24_host.py --verify
+      - name: Preserve complete or failed preparation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diamond-stop24-profile-${{ github.run_id }}
+          path: |
+            build/diamond-stop24/
+            build/diamond-stop24-preparation.log
+            benchmarks/diamond-stop-contract24/
+            docs/improvements/diamond-stop-contract24.md
+            tools/diamond_stop24/
+            tools/diamond_stop24_host.py
+            tools/diamond_stop24_python_proof.py
+          if-no-files-found: warn
+          retention-days: 90
+  acquire:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/diamond-stop-contract24' && github.run_attempt == 1 &&
+      github.event.label.name == 'run-diamond-stop24' &&
+      contains(github.event.pull_request.body, format('DIAMOND-STOP24-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Fresh compile and exact read-only prepared validation (zero cases)
+        run: |
+          mkdir -p build
+          python -I -B -S tools/diamond_stop24_host.py --collect 2>&1 | tee build/diamond-stop24-preparation.log
+          python -I -B -S tools/diamond_stop24_host.py --verify
+      - name: Verify reviewed freeze, admit clock, consume sole receipt and acquire24 cases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAYLOAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+        run: python -I -B -S tools/diamond_stop24_host.py --acquire
+      - name: Preserve every complete or partial attempt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diamond-stop24-acquisition-${{ github.run_id }}
+          path: |
+            build/diamond-stop24/
+            build/diamond-stop24-preparation.log
+            benchmarks/diamond-stop-contract24/
+            docs/improvements/diamond-stop-contract24.md
+            tools/diamond_stop24/
+            tools/diamond_stop24_host.py
+            tools/diamond_stop24_python_proof.py
+          if-no-files-found: warn
+          retention-days: 90
