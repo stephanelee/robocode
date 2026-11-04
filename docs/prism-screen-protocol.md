@@ -47,3 +47,10 @@ Per game, the harness records: official totals, first places and bullet damage f
 3. Passing every gate: record "passed screen" only. A claim to beat Diamond Port or Retcon needs a *separately registered* fresh confirmation (initially 10 independent cold 20-round games per claimed opponent). That confirmation must show a majority of official round first places and a 95% game-cluster bootstrap lower bound above 50% (10,000 resamples, fixed analysis seed). The harness never starts a confirmation.
 
 After the screen, `docs/improvements.md` gets the budget, the outcome, the decision, and links to the PR and raw evidence.
+
+
+## Workflow registration correction (zero games)
+
+The approved cd51d8d screen could not be manually dispatched: GitHub returned HTTP404 because the new workflow was not present on the default branch. The approval-only record ec85ebd changed only approvedHead/approvedReview; no run, receipt or game was created by that dispatch attempt.
+
+The workflow now additionally accepts the single explicit PR label `run-prism-screen-v1`, restricted to this repository and branch `prism/independent-v1`. It checks out and passes the PR payload head, never the synthetic merge SHA; the review URL comes from the frozen approval record. Manual dispatch retains its check-only default. Both routes retain the exact semantic plan guard, candidate pins, concurrency and atomic never-deleted receipt before games. No push/synchronize event launches the screen. A new independent exact-head clearance and approval-only record are required before applying the label. The original13-game/200-round schedule and all criteria remain unchanged; no confirmation or replacement is authorized.
