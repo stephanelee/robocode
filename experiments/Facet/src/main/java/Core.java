@@ -86,225 +86,7 @@ final class Core {
   Intent decide(Physics.Body own, double energy, int turn, int population, List<BotEvent> events,
       Collection<BulletState> bullets, int myId) {
     long begin = System.nanoTime();
-    Physics.beginWork(2400);
-    if (initialCount == 0) {
-      initialCount = Math.max(1, population);
-      beganMelee = population > 1;
-    }
-    if (lastTurn >= 0 && turn != lastTurn + 1) {
-      log.count("turn.gap");
-      fire.plan = null;
-      fire.pending = null;
-    }
-    lastTurn = turn;
-    ownHistory.add(new Memory.Sample(round, turn, own, energy, Memory.Quality.OBSERVED, 0));
-    ownContext.observe(new Memory.Sample(round, turn, own, energy, Memory.Quality.OBSERVED, 0),
-        new Physics.V(rules.width() / 2, rules.height() / 2));
-    log.event("own.state", round, turn,
-        "x=" + own.p().x() + " y=" + own.p().y() + " heading=" + own.heading() + " speed="
-            + own.speed() + " gun=" + own.gun() + " radar=" + own.radar() + " heat=" + own.heat()
-            + " energy=" + energy + " population=" + population + " version=" + sequence);
-    List<Contact> contacts = new ArrayList<>();
-    List<BotEvent> fresh = events.stream().filter(this::dedup).toList();
-    // Phase 1 lifecycle. Preserve original callback order in chronology.
-    for (BotEvent event : fresh) {
-      log.event(event.getClass().getSimpleName(), round, event.getTurnNumber(),
-          identity(event) + " callbackSequence=" + (++sequence) + " ownStateTurn=" + turn
-              + " own=" + own);
-      if (event instanceof BotDeathEvent e) {
-        enemy(e.getVictimId()).alive = false;
-        for (Waves.Wave w : waves.all())
-          if (w.target == e.getVictimId()) {
-            w.cancelled = true;
-            w.predictions.clear();
-          }
-        if (fire.plan != null && fire.plan.target() == e.getVictimId())
-          fire.plan = null;
-      }
-      if (event instanceof SkippedTurnEvent) {
-        log.count("turn.skipped");
-        fire.plan = null;
-        fire.pending = null;
-      }
-    }
-    // Phase 2 known effects before any scan residual, irrespective of callback order.
-    for (BotEvent event : fresh) {
-      int t = event.getTurnNumber();
-      if (event instanceof BulletHitBotEvent e) {
-        Learner.Enemy victim = enemy(e.getVictimId());
-        victim.ledger.effect(new Energy.Effect(t + 1, e.getDamage(),
-            "damage:" + e.getBullet().getOwnerId() + ":" + e.getBullet().getBulletId() + ":" + t));
-        victim.damageGiven += e.getDamage();
-        log.observe("energyHitBonus", 3 * e.getBullet().getPower());
-        log.count("shot.hit");
-        log.observe("damageGiven", e.getDamage());
-        waves.death(e.getBullet().getBulletId(), t);
-      }
-      if (event instanceof HitByBulletEvent e) {
-        BulletState b = e.getBullet();
-        Learner.Enemy shooter = enemy(b.getOwnerId());
-        shooter.ledger.effect(
-            new Energy.Effect(t + 1, -3 * b.getPower(), "bonus:" + b.getBulletId() + ":" + t));
-        shooter.damageTaken += e.getDamage();
-        contacts.add(new Contact(b, t, false));
-        log.count("incoming.hit");
-        log.observe("damageTaken", e.getDamage());
-      }
-      if (event instanceof BulletHitBulletEvent e) {
-        BulletState b = e.getBullet(), other = e.getHitBullet();
-        if (b.getOwnerId() == myId)
-          waves.death(b.getBulletId(), t);
-        else
-          contacts.add(new Contact(b, t, true));
-        if (other.getOwnerId() == myId)
-          waves.death(other.getBulletId(), t);
-        else
-          contacts.add(new Contact(other, t, true));
-        log.count("bullet.contact");
-      }
-      if (event instanceof BulletHitWallEvent e)
-        waves.death(e.getBullet().getBulletId(), t);
-      if (event instanceof HitWallEvent)
-        log.count("collision.wall");
-      if (event instanceof HitBotEvent)
-        log.count("collision.bot");
-      if (event instanceof BulletFiredEvent e) {
-        BulletState b = e.getBullet();
-        log.observe("energyFireCost", b.getPower());
-        Optional<FireControl.Pending> pending = fire.confirm(b.getBulletId(), t, b.getPower(),
-            new Physics.V(b.getX(), b.getY()), Math.toRadians(b.getDirection()));
-        waves.bullets.put(b.getBulletId(),
-            new Waves.Bullet(b.getBulletId(), new Physics.V(b.getX(), b.getY()),
-                Math.toRadians(b.getDirection()), b.getPower(), t - 1));
-        if (pending.isPresent()) {
-          var p = pending.get();
-          Learner.Enemy target = enemies.get(p.target());
-          if (target != null && shotContext != null) {
-            Waves.Wave frozen = shotContext;
-            for (Waves.Wave old : waves.all())
-              if (old.role == Waves.Role.VIRTUAL && old.target == p.target()
-                  && old.start == p.requestedTurn())
-                old.cancelled = true;
-            Waves.Wave w = new Waves.Wave(frozen.id, myId, p.target(), round, p.requestedTurn(),
-                p.requestedTurn(), Waves.Role.OUTGOING, new Physics.V(b.getX(), b.getY()), 0,
-                p.power(), p.power(), frozen.base, frozen.sign, frozen.positive, frozen.negative,
-                frozen.confidence, frozen.features, frozen.targetOrigin, frozen.melee);
-            w.originQuality = frozen.originQuality;
-            w.missingFeatures = frozen.missingFeatures;
-            w.predictions.putAll(frozen.predictions);
-            w.creationTurn = t;
-            w.firstMotionTurn = t;
-            w.bullet = b.getBulletId();
-            w.actualAngle = Math.toRadians(b.getDirection());
-            w.ratingEligible = true;
-            waves.add(w);
-            shotContext = null;
-          }
-        }
-        log.event("fire.confirmed", round, t,
-            "id=" + b.getBulletId() + " heading=" + b.getDirection() + " position=" + b.getX() + ","
-                + b.getY() + " pending=" + pending.isPresent() + " request="
-                + pending.map(x -> Integer.toString(x.requestedTurn())).orElse("unmatched")
-                + " creation=" + t + " firstMotion=" + t);
-      }
-    }
-    for (BulletState b : bullets) {
-      if (b.getOwnerId() == myId && !waves.deaths.containsKey(b.getBulletId())) {
-        Waves.Bullet old = waves.bullets.put(b.getBulletId(),
-            new Waves.Bullet(b.getBulletId(), new Physics.V(b.getX(), b.getY()),
-                Math.toRadians(b.getDirection()), b.getPower(), turn));
-        if (old != null && old.position().distance(new Physics.V(b.getX(), b.getY())) > 1e-6)
-          log.event("bullet.motion", round, turn, "id=" + b.getBulletId());
-      }
-    }
-    Set<Integer> visibleBullets = new HashSet<>();
-    for (BulletState b : bullets)
-      if (b.getOwnerId() == myId)
-        visibleBullets.add(b.getBulletId());
-    for (Waves.Bullet b : List.copyOf(waves.bullets.values()))
-      if (b.observedTurn() < turn && !visibleBullets.contains(b.id())) {
-        waves.death(b.id(), turn);
-        log.count("bullet.absentReconciled");
-      }
-    while (waves.bullets.size() > 256) {
-      waves.bullets.remove(waves.bullets.keySet().iterator().next());
-      log.count("ownBullet.eviction");
-    }
-    long inferenceStart = System.nanoTime();
-    for (BotEvent event : fresh)
-      if (event instanceof ScannedBotEvent scan) {
-        int t = scan.getTurnNumber();
-        log.event("scan.observed", round, t,
-            "id=" + scan.getScannedBotId() + " x=" + scan.getX() + " y=" + scan.getY()
-                + " directionDeg=" + scan.getDirection() + " speed=" + scan.getSpeed()
-                + " energy=" + scan.getEnergy());
-        Learner.Enemy e = enemy(scan.getScannedBotId());
-        if (!e.alive || e.latest != null && t <= e.latest.turn())
-          continue;
-        Physics.Body observed = new Physics.Body(new Physics.V(scan.getX(), scan.getY()),
-            Math.toRadians(scan.getDirection()), scan.getSpeed(), 0, 0, 0);
-        Memory.Sample previous = e.latest;
-        e.observe(
-            new Memory.Sample(round, t, observed, scan.getEnergy(), Memory.Quality.OBSERVED, 0),
-            own.p());
-        boolean wall = observed.p().x() < 27 || observed.p().y() < 27
-            || observed.p().x() > rules.width() - 27 || observed.p().y() > rules.height() - 27;
-        boolean ram = population > 1 || own.p().distance(observed.p()) < 60;
-        Optional<Energy.Inference> inferred = Optional.empty();
-        if (!log.disabled.contains("inference")) {
-          try {
-            inferred = e.ledger.scan(t, scan.getEnergy(), rules.cooling(), wall || ram);
-            log.success("inference");
-          } catch (RuntimeException ex) {
-            log.failure("inference", ex);
-          }
-        } else
-          log.count("inference.disabled");
-        if (inferred.isPresent() && previous != null) {
-          Energy.Inference in = inferred.get();
-          Physics.Body origin = previous.body();
-          Memory.Sample atOrigin = ownHistory.at(in.earliest()).orElse(null);
-          Physics.Body targetAtOrigin = atOrigin == null ? own : atOrigin.body();
-          Learner.Context context = context(origin.p(), targetAtOrigin, ownContext, in.earliest(),
-              in.high(), rules, population, initialCount, false);
-          int sign = lateralSign(origin.p(), targetAtOrigin, ownContext.sign);
-          Waves.Wave w =
-              new Waves.Wave(waves.nextId++, e.id, myId, round, in.earliest(), in.latest(),
-                  Waves.Role.INCOMING, origin.p(), in.reliable() ? 0 : 8.0 * (t - previous.turn()),
-                  in.low(), in.high(), origin.p().bearing(targetAtOrigin.p()), sign,
-                  Physics.escape(in.high()), Physics.escape(in.high()), in.confidence(),
-                  context.features(), targetAtOrigin, beganMelee);
-          w.originQuality = context.quality() * (atOrigin == null ? .5 : 1);
-          w.missingFeatures = context.missingFeatures();
-          waves.add(w);
-          log.count(in.reliable() ? "inference.reliable" : "inference.ambiguous");
-          if (in.reliable()) {
-            e.powers.add(new Memory.Observation(new double[] {own.p().distance(origin.p()) / 1000,
-                                                    scan.getEnergy() / 100, energy / 100},
-                Memory.Label.POWER, in.high(), 0, w.id, round, t, 1, ++sequence, beganMelee));
-          }
-        }
-      }
-    for (Contact contact : contacts)
-      incomingContact(contact.bullet(), contact.turn(), contact.contact());
-    waves.shadows(turn, rules);
-    if (waves.realOverflow > 0)
-      log.count("waves.realOverflow.conservativeStop");
-    log.time("inference", System.nanoTime() - inferenceStart);
-    long storageStart = System.nanoTime();
-    if (!log.disabled.contains("learning")) {
-      try {
-        resolve(own, turn);
-        log.success("learning");
-      } catch (RuntimeException ex) {
-        log.failure("learning", ex);
-      }
-    } else
-      log.count("learning.disabled");
-    log.time("storage", System.nanoTime() - storageStart);
-    fire.reconcile(turn);
-    if (fire.pending == null)
-      shotContext = null;
+    observe(own, energy, turn, population, events, bullets, myId, false);
     Learner.Enemy target =
         enemies.values()
             .stream()
@@ -313,8 +95,24 @@ final class Core {
                     .thenComparingDouble(e -> own.p().distance(e.latest.body().p()))
                     .thenComparingInt(e -> e.id))
             .orElse(null);
+    if (target != null && own.heat() == 0
+        && Energy.power(
+               own.p().distance(target.latest.body().p()), energy, target.latest.energy(), false)
+            > 0
+        && turn - target.latest.turn() <= 2) {
+      target.opportunities.add(turn);
+      while (target.opportunities.size() > 512) target.opportunities.pollFirst();
+    }
+    // Fresh observations replace obsolete forecast geometry; missing scans create no new schedule.
+    for (var list : waves.waves.values())
+      list.removeIf(w
+          -> w.role == Waves.Role.FORECAST
+              && (turn > w.end + 2
+                  || enemies.containsKey(w.owner) && enemies.get(w.owner).latest != null
+                      && enemies.get(w.owner).latest.turn() > w.creationTurn));
     // At most one cold forecast per enemy, replaced by any actual inference.
-    if (target != null && population == 1 && target.ledger.heatHigh <= rules.cooling()
+    if (target != null && population == 1 && target.latest.turn() == turn
+        && target.latest.energy() > .1 && target.ledger.heatLow <= rules.cooling()
         && waves.all()
                 .stream()
                 .filter(w -> w.role == Waves.Role.INCOMING || w.role == Waves.Role.FORECAST)
@@ -324,16 +122,22 @@ final class Core {
             w -> w.owner == target.id && w.role == Waves.Role.FORECAST)) {
       double p = predictPower(
           target, own.p().distance(target.latest.body().p()), energy, target.latest.energy());
-      Learner.Context c = context(target.latest.body().p(), own, ownContext, turn, p, rules,
-          population, initialCount, false);
-      waves.add(new Waves.Wave(waves.nextId++, target.id, myId, round, turn + 1, turn + 2,
-          Waves.Role.FORECAST, target.latest.body().p(), 8, p, p,
-          target.latest.body().p().bearing(own.p()),
-          lateralSign(target.latest.body().p(), own, ownContext.sign), Physics.escape(p),
-          Physics.escape(p), .25, c.features(), own, beganMelee));
+      if (p > 0) {
+        int early = turn + coolSteps(target.ledger.heatLow, rules.cooling()),
+            late = turn + coolSteps(target.ledger.heatHigh, rules.cooling());
+        Learner.Context c = context(target.latest.body().p(), own, ownContext, turn, p, rules,
+            population, initialCount, false, originOrbit(target, turn));
+        Waves.Wave forecast = new Waves.Wave(waves.nextId++, target.id, myId, round, early, late,
+            Waves.Role.FORECAST, target.latest.body().p(), 8, p, p,
+            target.latest.body().p().bearing(own.p()), originOrbit(target, turn), Physics.escape(p),
+            Physics.escape(p), .25, c.features(), own, beganMelee);
+        forecast.creationTurn = turn;
+        waves.add(forecast);
+      }
     }
-    // Shadows require first-bullet-motion engine verification before runtime activation.
+    // Certified own-bullet shadows were reconciled before movement scoring.
     long start = System.nanoTime();
+    planner.safetyTurn = turn;
     Physics.Control movement;
     try {
       planner.stepLimit = Math.max(0, Math.min(2400, 2400 - Physics.workUsed() - 350));
@@ -452,6 +256,9 @@ final class Core {
     }
     log.observe("energy", energy);
     log.observe("shadowFallbacks", waves.shadowFallbacks);
+    log.observe("shadowSegmentWork", waves.shadowWork);
+    log.observe("shadowAllocationUnits", waves.shadowAllocations);
+    log.observe("shadowIntervals", waves.shadowIntervals);
     log.observe("realWaveOverflow", waves.realOverflow);
     log.observe("predictorSteps", Physics.workUsed());
     log.observe("waves", waves.all().size());
@@ -460,12 +267,268 @@ final class Core {
     Physics.endWork();
     return new Intent(movement, gunTurn, radarTurn, submit);
   }
+  void observe(Physics.Body own, double energy, int turn, int population, List<BotEvent> events,
+      Collection<BulletState> bullets, int myId, boolean terminal) {
+    Physics.beginWork(2400);
+    if (initialCount == 0) {
+      initialCount = Math.max(1, population);
+      beganMelee = population > 1;
+    }
+    if (lastTurn >= 0 && turn != lastTurn && turn != lastTurn + 1) {
+      log.count("turn.gap");
+      fire.plan = null;
+      fire.pending = null;
+    }
+    lastTurn = turn;
+    ownHistory.add(new Memory.Sample(round, turn, own, energy, Memory.Quality.OBSERVED, 0));
+    ownContext.observe(new Memory.Sample(round, turn, own, energy, Memory.Quality.OBSERVED, 0),
+        new Physics.V(rules.width() / 2, rules.height() / 2));
+    log.event("own.state", round, turn,
+        "x=" + own.p().x() + " y=" + own.p().y() + " heading=" + own.heading() + " speed="
+            + own.speed() + " gun=" + own.gun() + " radar=" + own.radar() + " heat=" + own.heat()
+            + " energy=" + energy + " population=" + population + " version=" + sequence);
+    for (var e : enemies.values()) recordOrbit(e, own, turn);
+    List<Contact> contacts = new ArrayList<>();
+    List<BotEvent> fresh = events.stream().filter(this::dedup).toList();
+    // Phase 1 lifecycle. Preserve original callback order in chronology.
+    for (BotEvent event : fresh) {
+      log.event(event.getClass().getSimpleName(), round, event.getTurnNumber(),
+          identity(event) + " callbackSequence=" + (++sequence) + " ownStateTurn=" + turn
+              + " own=" + own);
+      if (event instanceof BotDeathEvent e) {
+        enemy(e.getVictimId()).alive = false;
+        for (Waves.Wave w : waves.all())
+          if (w.target == e.getVictimId()) {
+            w.cancelled = true;
+            w.predictions.clear();
+          }
+        if (fire.plan != null && fire.plan.target() == e.getVictimId())
+          fire.plan = null;
+      }
+      if (event instanceof SkippedTurnEvent) {
+        log.count("turn.skipped");
+        fire.plan = null;
+        fire.pending = null;
+      }
+    }
+    // Phase 2 known effects before any scan residual, irrespective of callback order.
+    for (BotEvent event : fresh) {
+      int t = event.getTurnNumber();
+      if (event instanceof BulletHitBotEvent e) {
+        Learner.Enemy victim = enemy(e.getVictimId());
+        victim.ledger.effect(new Energy.Effect(t + 1, e.getDamage(),
+            "damage:" + e.getBullet().getOwnerId() + ":" + e.getBullet().getBulletId() + ":" + t));
+        victim.damageGiven += e.getDamage();
+        log.observe("energyHitBonus", 3 * e.getBullet().getPower());
+        log.count("shot.hit");
+        log.observe("damageGiven", e.getDamage());
+        waves.death(e.getBullet().getBulletId(), t);
+      }
+      if (event instanceof HitByBulletEvent e) {
+        BulletState b = e.getBullet();
+        Learner.Enemy shooter = enemy(b.getOwnerId());
+        shooter.ledger.effect(
+            new Energy.Effect(t + 1, -3 * b.getPower(), "bonus:" + b.getBulletId() + ":" + t));
+        shooter.damageTaken += e.getDamage();
+        contacts.add(new Contact(b, t, false));
+        log.count("incoming.hit");
+        log.observe("damageTaken", e.getDamage());
+      }
+      if (event instanceof BulletHitBulletEvent e) {
+        BulletState b = e.getBullet(), other = e.getHitBullet();
+        if (b.getOwnerId() == myId)
+          waves.death(b.getBulletId(), t);
+        else
+          contacts.add(new Contact(b, t, true));
+        if (other.getOwnerId() == myId)
+          waves.death(other.getBulletId(), t);
+        else
+          contacts.add(new Contact(other, t, true));
+        log.count("bullet.contact");
+      }
+      if (event instanceof BulletHitWallEvent e)
+        waves.death(e.getBullet().getBulletId(), t);
+      if (event instanceof HitWallEvent)
+        log.count("collision.wall");
+      if (event instanceof HitBotEvent)
+        log.count("collision.bot");
+      if (event instanceof BulletFiredEvent e) {
+        BulletState b = e.getBullet();
+        log.observe("energyFireCost", b.getPower());
+        Optional<FireControl.Pending> pending = fire.confirm(b.getBulletId(), t, b.getPower(),
+            new Physics.V(b.getX(), b.getY()), Math.toRadians(b.getDirection()));
+        waves.bullets.put(b.getBulletId(),
+            new Waves.Bullet(b.getBulletId(), new Physics.V(b.getX(), b.getY()),
+                Math.toRadians(b.getDirection()), b.getPower(), t - 1));
+        if (pending.isPresent()) {
+          var p = pending.get();
+          Learner.Enemy target = enemies.get(p.target());
+          if (target != null && shotContext != null) {
+            Waves.Wave frozen = shotContext;
+            for (Waves.Wave old : waves.all())
+              if (old.role == Waves.Role.VIRTUAL && old.target == p.target()
+                  && old.start == p.requestedTurn())
+                old.cancelled = true;
+            Waves.Wave w = new Waves.Wave(frozen.id, myId, p.target(), round, p.requestedTurn(),
+                p.requestedTurn(), Waves.Role.OUTGOING, new Physics.V(b.getX(), b.getY()), 0,
+                p.power(), p.power(), frozen.base, frozen.sign, frozen.positive, frozen.negative,
+                frozen.confidence, frozen.features, frozen.targetOrigin, frozen.melee);
+            w.originQuality = frozen.originQuality;
+            w.missingFeatures = frozen.missingFeatures;
+            w.predictions.putAll(frozen.predictions);
+            w.creationTurn = t;
+            w.firstMotionTurn = t;
+            w.bullet = b.getBulletId();
+            w.actualAngle = Math.toRadians(b.getDirection());
+            w.ratingEligible = true;
+            waves.add(w);
+            shotContext = null;
+          }
+        }
+        log.event("fire.confirmed", round, t,
+            "id=" + b.getBulletId() + " heading=" + b.getDirection() + " position=" + b.getX() + ","
+                + b.getY() + " pending=" + pending.isPresent() + " request="
+                + pending.map(x -> Integer.toString(x.requestedTurn())).orElse("unmatched")
+                + " creation=" + t + " firstMotion=" + t);
+      }
+    }
+    for (BulletState b : bullets) {
+      if (b.getOwnerId() == myId && waves.bullets.containsKey(b.getBulletId())
+          && !waves.deaths.containsKey(b.getBulletId())) {
+        Waves.Bullet old = waves.bullets.put(b.getBulletId(),
+            new Waves.Bullet(b.getBulletId(), new Physics.V(b.getX(), b.getY()),
+                Math.toRadians(b.getDirection()), b.getPower(), turn));
+        if (old != null && old.position().distance(new Physics.V(b.getX(), b.getY())) > 1e-6)
+          log.event("bullet.motion", round, turn, "id=" + b.getBulletId());
+      }
+    }
+    Set<Integer> visibleBullets = new HashSet<>();
+    for (BulletState b : bullets)
+      if (b.getOwnerId() == myId)
+        visibleBullets.add(b.getBulletId());
+    for (Waves.Bullet b : List.copyOf(waves.bullets.values()))
+      if (b.observedTurn() < turn && !visibleBullets.contains(b.id())) {
+        waves.death(b.id(), b.observedTurn() + 1);
+        log.count("bullet.absentReconciled");
+      }
+    while (waves.bullets.size() > Waves.Service.MAX_OWN_BULLETS) {
+      waves.bullets.remove(waves.bullets.keySet().iterator().next());
+      log.count("ownBullet.eviction");
+    }
+    long inferenceStart = System.nanoTime();
+    for (BotEvent event : fresh)
+      if (event instanceof ScannedBotEvent scan) {
+        int t = scan.getTurnNumber();
+        log.event("scan.observed", round, t,
+            "id=" + scan.getScannedBotId() + " x=" + scan.getX() + " y=" + scan.getY()
+                + " directionDeg=" + scan.getDirection() + " speed=" + scan.getSpeed()
+                + " energy=" + scan.getEnergy());
+        Learner.Enemy e = enemy(scan.getScannedBotId());
+        if (!e.alive || e.latest != null && t <= e.latest.turn())
+          continue;
+        Physics.Body observed = new Physics.Body(new Physics.V(scan.getX(), scan.getY()),
+            Math.toRadians(scan.getDirection()), scan.getSpeed(), 0, 0, 0);
+        Memory.Sample previous = e.latest;
+        e.observe(
+            new Memory.Sample(round, t, observed, scan.getEnergy(), Memory.Quality.OBSERVED, 0),
+            own.p());
+        var ownAtScan = ownHistory.samples.get(t);
+        if (ownAtScan != null)
+          recordOrbit(e, ownAtScan.body(), t);
+        boolean wall = observed.p().x() < 27 || observed.p().y() < 27
+            || observed.p().x() > rules.width() - 27 || observed.p().y() > rules.height() - 27;
+        boolean ram = population > 1 || own.p().distance(observed.p()) < 60;
+        Optional<Energy.Inference> inferred = Optional.empty();
+        if (!log.disabled.contains("inference")) {
+          try {
+            inferred = e.ledger.scan(t, scan.getEnergy(), rules.cooling(), wall || ram);
+            log.success("inference");
+          } catch (RuntimeException ex) {
+            log.failure("inference", ex);
+          }
+        } else
+          log.count("inference.disabled");
+        if (inferred.isPresent() && previous != null) {
+          Energy.Inference in = inferred.get();
+          Physics.Body origin = previous.body();
+          Memory.Sample atOrigin = ownHistory.samples.get(in.earliest());
+          var prefix = ownHistory.samples.floorEntry(in.earliest());
+          Physics.Body targetAtOrigin = atOrigin != null ? atOrigin.body()
+              : prefix != null
+              ? prefix.getValue().body()
+              : new Physics.Body(
+                    new Physics.V(rules.width() / 2, rules.height() / 2), 0, 0, 0, 0, 0);
+          Learner.Context context = context(origin.p(), targetAtOrigin, ownContext, in.earliest(),
+              in.high(), rules, population, initialCount, false, originOrbit(e, in.earliest()));
+          int sign = originOrbit(e, in.earliest());
+          Waves.Wave w =
+              new Waves.Wave(waves.nextId++, e.id, myId, round, in.earliest(), in.latest(),
+                  Waves.Role.INCOMING, origin.p(), in.reliable() ? 0 : 8.0 * (t - previous.turn()),
+                  in.low(), in.high(), origin.p().bearing(targetAtOrigin.p()), sign,
+                  Physics.escape(in.high()), Physics.escape(in.high()), in.confidence(),
+                  context.features(), targetAtOrigin, beganMelee);
+          w.originQuality = context.quality() * (atOrigin == null ? .5 : 1);
+          w.missingFeatures = context.missingFeatures();
+          waves.add(w);
+          log.count(in.reliable() ? "inference.reliable" : "inference.ambiguous");
+          if (in.reliable()) {
+            e.powers.add(new Memory.Observation(new double[] {own.p().distance(origin.p()) / 1000,
+                                                    scan.getEnergy() / 100, energy / 100},
+                Memory.Label.POWER, in.high(), 0, w.id, round, t, 1, ++sequence, beganMelee));
+          }
+        }
+      }
+    for (Contact contact : contacts)
+      incomingContact(contact.bullet(), contact.turn(), contact.contact());
+    waves.shadows(turn, rules);
+    for (Waves.Wave w : waves.all())
+      if (w.role == Waves.Role.INCOMING && w.shadows.isEmpty())
+        log.event("shadow.zero", round, turn,
+            "wave=" + w.id + " reduction=0 reason="
+                + (w.start != w.end || w.originError != 0 || w.powerLo != w.powerHi
+                        ? "continuous-uncertainty-uncertified"
+                        : "no-certified-supported-interval-or-quota"));
+    if (waves.realOverflow > 0)
+      log.count("waves.realOverflow.conservativeStop");
+    log.time("inference", System.nanoTime() - inferenceStart);
+    long storageStart = System.nanoTime();
+    if (!terminal && !log.disabled.contains("learning")) {
+      try {
+        resolve(own, turn);
+        log.success("learning");
+      } catch (RuntimeException ex) {
+        log.failure("learning", ex);
+      }
+    } else
+      log.count("learning.disabled");
+    log.time("storage", System.nanoTime() - storageStart);
+    fire.reconcile(turn);
+    if (fire.pending == null)
+      shotContext = null;
+    if (terminal) {
+      fire.plan = null;
+      if (fire.pending != null)
+        fire.cancelled++;
+      fire.pending = null;
+      shotContext = null;
+      for (Waves.Wave w : waves.all())
+        if (!w.labeled) {
+          w.cancelled = true;
+          w.predictions.clear();
+        }
+    }
+  }
   Learner.Context context(Physics.V source, Physics.Body target, Learner.Enemy enemy, int turn,
       double power, Physics.Rules rules, int population, int initial, boolean physical) {
+    return context(source, target, enemy, turn, power, rules, population, initial, physical,
+        Learner.orbitSign(enemy, source, turn));
+  }
+  Learner.Context context(Physics.V source, Physics.Body target, Learner.Enemy enemy, int turn,
+      double power, Physics.Rules rules, int population, int initial, boolean physical, int orbit) {
     if (!log.disabled.contains("context")) {
       try {
         var value = Learner.context(
-            source, target, enemy, turn, power, rules, population, initial, physical);
+            source, target, enemy, turn, power, rules, population, initial, physical, orbit);
         if ((value.missingFeatures() & ((1 << 7) | (1 << 8))) != 0)
           log.count("context.quotaFallback");
         log.success("context");
@@ -480,7 +543,28 @@ final class Core {
     f[1] = Math.min(source.distance(target.p()) / Physics.bulletSpeed(power), 100) / 100;
     return new Learner.Context(f, Physics.escape(power), Physics.escape(power), .5, 0xffff);
   }
+  void recordOrbit(Learner.Enemy e, Physics.Body own, int turn) {
+    if (e.latest == null || e.latest.turn() > turn)
+      return;
+    e.ownOrbit = lateralSign(e.latest.body().p(), own, e.ownOrbit);
+    e.ownOrbits.put(turn, e.ownOrbit);
+    while (e.ownOrbits.size() > 512) e.ownOrbits.pollFirstEntry();
+  }
+  static int originOrbit(Learner.Enemy e, int turn) {
+    var prior = e.ownOrbits.floorEntry(turn);
+    return prior == null ? 1 : prior.getValue();
+  }
+  static int coolSteps(double heat, double cooling) {
+    int n = 0;
+    while (heat > 0 && n < 4096) {
+      heat = Math.max(0, heat - cooling);
+      n++;
+    }
+    return n;
+  }
   double predictPower(Learner.Enemy enemy, double range, double own, double energy) {
+    if (!Double.isFinite(energy) || energy <= .1)
+      return 0;
     if (!log.disabled.contains("inference")) {
       try {
         return Learner.predictPower(enemy, range, own, energy);
@@ -489,7 +573,7 @@ final class Core {
       }
     } else
       log.count("power.disabled");
-    return Physics.clamp(Math.min(2, energy), .1, 3);
+    return Physics.clamp(Math.min(2, Math.nextDown(energy)), .1, 3);
   }
   static int lateralSign(Physics.V source, Physics.Body target, int prior) {
     double v = target.speed() * Math.sin(target.heading() - source.bearing(target.p()));
@@ -502,7 +586,8 @@ final class Core {
     if (age > 0)
       frozen = new Physics.Body(
           Physics.constantPosition(frozen, age, rules), frozen.heading(), frozen.speed(), 0, 0, 0);
-    Learner.Context c = context(own.p(), frozen, target, turn, p, rules, 1, initialCount, physical);
+    Learner.Context c =
+        context(own.p(), frozen, target, turn, p, rules, 1, initialCount, physical, target.sign);
     Waves.Wave result = new Waves.Wave(waves.nextId++, myId, target.id, round, turn, turn, role,
         own.p(), 0, p, p, own.p().bearing(frozen.p()), target.sign, c.positive(), c.negative(),
         age > 0 ? .5 : 1, c.features(), frozen, beganMelee);
@@ -588,6 +673,6 @@ final class Core {
     for (var list : waves.waves.values())
       list.removeIf(w
           -> w.cancelled || w.role == Waves.Role.FORECAST && turn > w.end + 2
-              || w.labeled && turn > w.end + 180 || turn > w.end + 512);
+              || w.labeled && turn > w.end + 180);
   }
 }

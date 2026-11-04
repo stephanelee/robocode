@@ -110,7 +110,8 @@ final class Physics {
     return new V(nx, ny);
   }
   static V constantPosition(Body target, double time, Rules r) {
-    return segmentBound(target.p, target.p.add(vector(target.heading).mul(target.speed * time)), r);
+    V raw = target.p.add(vector(target.heading).mul(target.speed * time));
+    return segmentBound(target.p, segmentBound(target.p, raw, r), r);
   }
   static final class WorkLimit extends RuntimeException {}
   static final class Work {
@@ -141,7 +142,7 @@ final class Physics {
     }
 
     double v = velocity(s.speed, c.speed), t = clamp(c.turn, -maxTurn(v), maxTurn(v));
-    V raw = s.p.add(vector(s.heading).mul(v)), p = segmentBound(s.p, raw, r);
+    V raw = s.p.add(vector(s.heading).mul(v)), p = segmentBound(s.p, segmentBound(s.p, raw, r), r);
     boolean wall = p.distance(raw) > 1e-10;
     return new Step(new Body(p, norm(s.heading + t), wall ? 0 : v,
                         norm(s.gun + clamp(c.gunTurn, -Math.toRadians(20), Math.toRadians(20))),

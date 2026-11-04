@@ -22,6 +22,8 @@ final class Energy {
         turn = t;
         energy = next;
         heatLow = heatHigh = cool(3, t, cooling);
+        if (t > 0 && cool(3, t - 1, cooling) == 0)
+          heatHigh = Math.max(heatHigh, 1.6);
         return Optional.empty();
       }
       int old = turn, dt = t - turn;
@@ -39,6 +41,8 @@ final class Energy {
       effects.values().removeIf(e -> e.visibleTurn <= old);
       turn = t;
       energy = next;
+      if (dt > 1 && cool(heatBeforeLow, dt - 1, cooling) == 0)
+        heatHigh = Math.max(heatHigh, 1.6);
       if (Math.abs(residual) < 1e-7)
         return Optional.empty();
       boolean possibleCool = cool(heatBeforeLow, dt - 1, cooling) == 0;

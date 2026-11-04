@@ -4,7 +4,7 @@ import java.security.*;
 import java.util.*;
 /** Export-only own derived state. Deliberately no loader; battle IDs are local to this game. */
 final class ModelSnapshot {
-  static final int SCHEMA = 1;
+  static final int SCHEMA = 2;
   static final long MAX_BYTES = 128L * 1024 * 1024;
   static byte[] configHash() {
     try (var in = ModelSnapshot.class.getResourceAsStream("/facet.properties")) {
@@ -86,11 +86,25 @@ final class ModelSnapshot {
     out.writeDouble(core.rules.height());
     out.writeDouble(core.rules.cooling());
     out.writeInt(core.round);
+    out.writeLong(core.sequence);
+    out.writeLong(core.waves.nextId);
     out.writeInt(core.enemies.size());
     for (Learner.Enemy e : core.enemies.values()) {
       out.writeInt(e.id);
       out.writeUTF("LOCAL_GAME_ID_NOT_PORTABLE_IDENTITY");
       out.writeInt(e.crossings);
+      out.writeLong(e.shots);
+      out.writeLong(e.hits);
+      out.writeLong(e.contacts);
+      out.writeLong(e.rawHits);
+      out.writeLong(e.rawContacts);
+      out.writeLong(e.observedTogether);
+      out.writeDouble(e.damageTaken);
+      out.writeDouble(e.damageGiven);
+      out.writeBoolean(e.comparisonEligible);
+      out.writeLong(e.startupRating.count);
+      out.writeDouble(e.startupRating.raw);
+      out.writeDouble(e.startupRating.adjusted);
       out.writeUTF(e.selected);
       for (var rating : e.ratings.entrySet()) {
         out.writeUTF(rating.getKey());
@@ -99,7 +113,8 @@ final class ModelSnapshot {
         out.writeDouble(rating.getValue().adjusted);
       }
       List<Memory.Store> stores = List.of(e.longGun, e.recent[0], e.recent[1], e.recent[2],
-          e.displacement, e.simple, e.context, e.recentHit, e.visits, e.powers);
+          e.displacement, e.recentDisplacement[0], e.recentDisplacement[1], e.recentDisplacement[2],
+          e.simple, e.context, e.recentHit, e.visits, e.powers);
       out.writeInt(stores.size());
       for (Memory.Store s : stores) {
         out.writeUTF(s.label.name());

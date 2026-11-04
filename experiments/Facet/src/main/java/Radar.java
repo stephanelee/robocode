@@ -1,11 +1,15 @@
 import java.util.*;
 final class Radar {
-  int direction = 1, mismatch;
+  int direction = 1, mismatch, acquiredAfter = -1;
   double turn(Physics.Body next, Collection<Learner.Enemy> enemies, int now, int participantCount) {
-    List<Learner.Enemy> alive = enemies.stream().filter(e -> e.alive && e.latest != null).toList();
+    List<Learner.Enemy> alive =
+        enemies.stream()
+            .filter(e -> e.alive && e.latest != null && e.latest.turn() > acquiredAfter)
+            .toList();
     if (alive.size() != participantCount) {
       if (++mismatch >= 24) {
         mismatch = 0;
+        acquiredAfter = now;
         return direction * Math.PI / 4;
       }
     } else
@@ -38,5 +42,6 @@ final class Radar {
   void reset() {
     direction = 1;
     mismatch = 0;
+    acquiredAfter = -1;
   }
 }

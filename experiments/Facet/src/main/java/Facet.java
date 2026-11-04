@@ -8,6 +8,8 @@ public final class Facet extends Bot {
   int roundSeen = -1;
   Diagnostics diagnostics = new Diagnostics();
   int games;
+  final Set<Integer> completed = new HashSet<>();
+  boolean gameClosed;
   public Facet() {
     this(resolveServer(System.getProperty("server.url"), System.getenv("SERVER_URL")));
   }
@@ -45,7 +47,7 @@ public final class Facet extends Bot {
           throw new IllegalStateException("missing config");
         p.load(stream);
       }
-      if (!info.getName().equals("Facet") || !p.getProperty("model.schema").equals("1")
+      if (!info.getName().equals("Facet") || !p.getProperty("model.schema").equals("2")
           || Melee.REVIEW_APPROVED)
         throw new IllegalStateException("package identity/gate mismatch");
       System.out.println("Facet 0.1.0 package verified; Java17 API1.4.0 melee=false "
@@ -56,8 +58,16 @@ public final class Facet extends Bot {
   }
   @Override
   public void onGameStarted(GameStartedEvent e) {
-    if (games++ > 0)
+    if (games++ > 0) {
+      diagnostics.close();
       diagnostics = new Diagnostics();
+    }
+    completed.clear();
+    gameClosed = false;
+    diagnostics.gameId = "game-" + games + "-" + java.util.UUID.randomUUID();
+    synchronized (batch) {
+      batch.clear();
+    }
     diagnostics.event("game.cold", 0, 0, "game=" + games);
     core = null;
     roundSeen = -1;
@@ -75,23 +85,50 @@ public final class Facet extends Bot {
       batch.addAll(e.getEvents());
     }
   }
-  @Override
-  public void onRoundEnded(RoundEndedEvent e) {
-    if (core != null) {
+  void finishRound() {
+    if (core != null)
+      finishRound(core.round);
+  }
+  void finishRound(int round) {
+    synchronized (batch) {
+      if (core == null || completed.contains(round) || round != core.round)
+        return;
+      Physics.Body own = new Physics.Body(new Physics.V(getX(), getY()),
+          Math.toRadians(getDirection()), getSpeed(), Math.toRadians(getGunDirection()),
+          Math.toRadians(getRadarDirection()), getGunHeat());
+      finishRound(
+          round, own, getEnergy(), getTurnNumber(), getEnemyCount(), getBulletStates(), getMyId());
+    }
+  }
+  void finishRound(int round, Physics.Body own, double energy, int turn, int population,
+      Collection<BulletState> bullets, int myId) {
+    synchronized (batch) {
+      if (core == null || completed.contains(round))
+        return;
+      core.observe(own, energy, turn, population, List.copyOf(batch), bullets, myId, true);
+      batch.clear();
+      Physics.endWork();
+      completed.add(round);
       ModelSnapshot.roundHash(core);
-      diagnostics.snapshot(getRoundNumber(), core.fire, core.budget, core.waves, core.planner);
+      diagnostics.snapshot(round, core.fire, core.budget, core.waves, core.planner);
     }
   }
   @Override
+  public void onRoundEnded(RoundEndedEvent e) {
+    finishRound(e.getRoundNumber());
+  }
+  void finishGame(Runnable finalRound) {
+    if (gameClosed)
+      return;
+    finalRound.run();
+    if (core != null)
+      ModelSnapshot.optional(core, games);
+    gameClosed = true;
+    diagnostics.close();
+  }
+  @Override
   public void onGameEnded(GameEndedEvent e) {
-    try {
-      if (core != null) {
-        ModelSnapshot.optional(core, games);
-        diagnostics.snapshot(getRoundNumber(), core.fire, core.budget, core.waves, core.planner);
-      }
-    } finally {
-      diagnostics.close();
-    }
+    finishGame(this::finishRound);
   }
   @Override
   public void run() {

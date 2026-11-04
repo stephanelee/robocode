@@ -35,17 +35,16 @@ archive SHA-256
 Opponent execution must remain black-box. No source/model access is granted to
 Facet or its implementer.
 
-The proposed first screen is exactly **200 rounds**:
+The initial specification proposal of 200 rounds was **not run**. Before any outcomes, the user superseded the roster and budget with the following **300-round benchmark**, explicitly confirmed as 100 rounds per opponent:
 
 | Cohort | Independent cold games | Rounds/game | Total |
 | --- | ---: | ---: | ---: |
-| Diamond Port | 3 | 20 | 60 |
-| Retcon | 3 | 20 | 60 |
-| Adaptive Prime | 3 | 20 | 60 |
-| Target | 2 | 5 | 10 |
-| Walls | 2 | 5 | 10 |
+| AISurvivor, unchanged production JAR | 5 | 20 | 100 |
+| Retcon | 5 | 20 | 100 |
+| Diamond Port | 5 | 20 | 100 |
 
-Use Facet seeds 49667, 49668 and 49669 by game index (first two for samples).
+Use Facet seeds 49667, 49668, 49669, 49670 and 49671 by game index. AISurvivor uses default TRAIN behavior in isolated cold state paths, with the same per-game seed. Existing production settings/checkpoints are not changed or consumed. Retcon and Diamond start in fresh processes. Adaptive Prime and official sample transfer remain unmeasured requirements of a later promotion assessment; this requested roster cannot establish them.
+
 No warm start or cross-game file loading. Online learning persists between
 rounds in one game. Give each game fresh private model/metrics/trace paths and
 record their initial/final hashes. Preserve every attempt, including invalid
@@ -53,7 +52,7 @@ acquisitions, timeouts and crashes. No retuning, automatic retries, favorable
 subsets or replacement games after viewing outcomes.
 
 Use isolated embedded official runners and never interactive port 7654. Pair
-launch order where supported (Facet/opponent, opponent/Facet, Facet/opponent).
+launch order where supported (Facet/opponent, opponent/Facet, Facet/opponent, opponent/Facet, Facet/opponent).
 Launch order is not proof of controlled engine seating or initial positions.
 The current harness does not establish a controllable server seed; record
 starting-position, seat and scheduling limitations before collection. Freeze
@@ -66,7 +65,7 @@ All scheduled games must complete with valid identities and artifacts. Reject
 the profile if any cohort has a numerical failure or unhandled exception, skips
 at least 0.5% of its bot turns, or combined wall/bot collisions at least 1% of
 its bot turns. Mean equal-game score share must exceed 40% against Diamond and
-Retcon and reach at least 50% against Adaptive and each sample. Every gate is
+Retcon. AISurvivor results are descriptive: no preexisting specification threshold for this new cohort is invented. The omitted Adaptive/sample gates remain outstanding for promotion. Every gate is
 binding. Failure rejects promotion; passing establishes only a passed screen.
 
 Report individual whole-game scores/shares, official first places, round-index
@@ -85,5 +84,5 @@ Engine-contract diagnostics are a different activity: independently authored
 probes, prospective bounded protocol, legal own event traces and no competitive
 interpretation. Preserve their failed startup and asynchronous-stop overrun.
 See the validation report/evidence bundle for actual counts. No Facet performance
-battles have run. Update improvements.md after each diagnostic/experiment and
+battles have run. Current requested budget is 300 rounds, with no automatic replacement or confirmation. Update improvements.md after each diagnostic/experiment and
 link its PR, report and raw evidence before declaring it complete.

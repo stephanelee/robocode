@@ -62,7 +62,7 @@ final class ReviewRegressionTest {
     epsilonHeat.heatLow = epsilonHeat.heatHigh = 1e-14;
     check(epsilonHeat.scan(41, 98, .1, false).isEmpty(), "strict zero heat before cooling");
     Energy.Ledger cold = new Energy.Ledger();
-    cold.scan(40, 100, .1, false);
+    for (int t = 0; t <= 40; t++) cold.scan(t, 100, .1, false);
     var infer = cold.scan(41, 98, .1, false).orElseThrow();
     check(
         infer.earliest() == 40 && infer.latest() == 40 && infer.reliable(), "exact decision clock");
@@ -97,20 +97,7 @@ final class ReviewRegressionTest {
     var dn = Learner.prepareDensity(enemy, negative, R);
     for (double angle : new double[] {.1, .2, .4})
       eq(dp.at(angle), dn.at(-angle), 1e-9, "mirrored native CV prior");
-    // Disabled shadow service gives no safety credit, including wrong tick/partial annuli/broad
-    // phase.
-    var service = new Waves.Service();
-    service.add(positive);
-    service.bullets.put(4, new Waves.Bullet(4, new Physics.V(350, 310), 0, 2, 0));
-    positive.shadows.add(new Waves.Shadow(4, 4, Geometry.around(0, .3)));
-    service.shadows(0, R);
-    check(positive.shadows.isEmpty() && service.shadowFallbacks == 1,
-        "explicit disabled shadow counter");
-    eq(positive.unshadowed(Geometry.around(0, .2), 20, Map.of()), 1, 0,
-        "disabled service never reduces risk");
-    positive.shadows.add(new Waves.Shadow(4, 4, Geometry.around(0, .2)));
-    eq(positive.unshadowed(Geometry.around(0, .2), 10, Map.of(4, 4)), 1, 0,
-        "same tick death no credit");
+    AdditionalRegressionTest.run();
     // A reliable center crossing is retained until full clear, then emitted once.
     Core visits = new Core(R, new Diagnostics(), 1);
     visits.roundReset(1);
@@ -151,6 +138,7 @@ final class ReviewRegressionTest {
     // Same-batch contact must see scans first, even if contact callback came first.
     Core batch = new Core(R, new Diagnostics(), 5);
     batch.roundReset(1);
+    for (int t = 0; t < 40; t++) batch.enemy(1).ledger.scan(t, 100, .1, false);
     batch.decide(
         own, 100, 40, 1, List.of(new ScannedBotEvent(40, 0, 1, 100, 480, 300, 0, 0)), List.of(), 0);
     var hostile = new dev.robocode.tankroyale.botapi.BulletState(77, 1, 2, 466, 300, 180, null);

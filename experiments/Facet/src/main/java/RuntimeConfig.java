@@ -3,7 +3,7 @@ import java.util.*;
 final class RuntimeConfig {
   static final long SEED = 49667;
   static final Map<String, String> PINNED =
-      Map.ofEntries(Map.entry("config.schema", "1"), Map.entry("model.schema", "1"),
+      Map.ofEntries(Map.entry("config.schema", "1"), Map.entry("model.schema", "2"),
           Map.entry("feature.schema", "1"), Map.entry("profile", "independent-v1"),
           Map.entry("api", "1.4.0"), Map.entry("motion.contract", "official-1.4.0-fixture-replay"),
           Map.entry("melee.enabled", "false"), Map.entry("cross.game.load", "false"),

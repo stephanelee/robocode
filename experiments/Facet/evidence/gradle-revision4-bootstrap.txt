@@ -1,0 +1,38 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+
+> Task :semanticTest
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS gated melee and radar
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=579458 maxns=1258791 totalns=17228792
+PASS bounded full-store stress
+PASS groups=18 assertions=10034 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+
+BUILD SUCCESSFUL in 3s
+7 actionable tasks: 7 executed

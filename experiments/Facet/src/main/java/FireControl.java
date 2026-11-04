@@ -30,6 +30,9 @@ final class FireControl {
         && target.latest.body().p().distance(plan.targetPosition)
         <= 16.01 * Math.max(1, target.latest.turn() - plan.observationTurn)
         && own.p().distance(plan.origin) <= 16.01 && own.heat() == 0 && energy > plan.power
+        && plan.power <= Energy.power(own.p().distance(target.latest.body().p()), energy,
+                             target.latest.energy(), false)
+            + 1e-12
         && Math.abs(Physics.wrap(own.gun() - plan.angle)) <= plan.tolerance;
   }
   void submitted(boolean result, Physics.Body own, int turn, long sequence) {

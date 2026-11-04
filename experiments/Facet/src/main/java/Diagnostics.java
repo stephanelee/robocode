@@ -3,6 +3,8 @@ import java.nio.file.*;
 import java.util.*;
 /** Observation-only, bounded files, no model import and no network. */
 final class Diagnostics implements AutoCloseable {
+  String gameId = "fixture-" + java.util.UUID.randomUUID();
+  final Set<Integer> completed = new HashSet<>();
   final Map<String, double[]> observations = new TreeMap<>();
   final Map<String, Long> counters = new TreeMap<>();
   final Map<String, long[]> timing = new TreeMap<>();
@@ -75,8 +77,9 @@ final class Diagnostics implements AutoCloseable {
       return;
     }
     try {
-      trace.write("{\"kind\":\"" + escape(kind) + "\",\"round\":" + round + ",\"turn\":" + turn
-          + ",\"value\":\"" + escape(value) + "\"}\n");
+      trace.write("{\"schema\":2,\"gameId\":\"" + escape(gameId) + "\",\"kind\":\"" + escape(kind)
+          + "\",\"round\":" + round + ",\"turn\":" + turn + ",\"value\":\"" + escape(value)
+          + "\"}\n");
       traceLines++;
     } catch (IOException e) {
       count("trace.ioFailure");
@@ -99,16 +102,18 @@ final class Diagnostics implements AutoCloseable {
   }
   void snapshot(
       int round, FireControl fire, Memory.Budget budget, Waves.Service waves, Planner planner) {
-    if (metrics == null || metricLines >= MAX_METRICS)
+    if (!completed.add(round) || metrics == null || metricLines >= MAX_METRICS)
       return;
     long gcCount = 0, gcMillis = 0;
     for (var gc : java.lang.management.ManagementFactory.getGarbageCollectorMXBeans()) {
       gcCount += Math.max(0, gc.getCollectionCount());
       gcMillis += Math.max(0, gc.getCollectionTime());
     }
-    String json = "{\"schema\":1,\"round\":" + round + ",\"shotsRequested\":" + fire.requested
-        + ",\"shotsAccepted\":" + fire.accepted + ",\"shotsConfirmed\":" + fire.confirmed
-        + ",\"shotsCancelled\":" + fire.cancelled
+    String json = "{\"schema\":2,\"gameId\":\"" + escape(gameId)
+        + ("\",\"scope\":\"game-cumulative; neighborBytes gauge; GC "
+           + "process-cumulative\",\"round\":")
+        + round + ",\"shotsRequested\":" + fire.requested + ",\"shotsAccepted\":" + fire.accepted
+        + ",\"shotsConfirmed\":" + fire.confirmed + ",\"shotsCancelled\":" + fire.cancelled
         + ",\"unmatchedConfirmations\":" + fire.unmatched + ",\"neighborBytes\":" + budget.bytes
         + ",\"neighborEvictions\":" + budget.evictions + ",\"waveEvictions\":" + waves.evictions
         + ",\"surfTruncations\":" + planner.truncations + ",\"geometryFallbacks\":"

@@ -9,6 +9,19 @@ specification. See [input separation](facet-source-separation.md),
 [semantic matrix](../experiments/Facet/semantic-matrix.md) and
 [prospective protocol](facet-protocol.md).
 
+## Revision 4: integrated correction artifact
+
+[Draft PR 103](https://github.com/stephanelee/robocode/pull/103) contains the reviewable milestone. Gradle Java 17 `build verifyJarParity` passed: **18 groups / 10,034 assertions**, all 866 recorded transitions, package build and 832 matching JAR entries. [Raw Gradle evidence](../experiments/Facet/evidence/gradle-revision4-build.txt). The independent second review required eight further semantic corrections; [its findings](../experiments/Facet/evidence/independent-review-revision2.md) and the [correction mapping](../experiments/Facet/revision2-corrections.md) are retained. The latest artifact has not yet received independent premeasurement approval.
+
+Current JAR SHA-256: `73be04d7386a60474743a78fcebf3fd0c143e37120b410b18aa668bd5ed50c16`.
+Current source/fixture/config/build-input SHA-256: `d50a1c8c3a7af6822c81cab79efbe2c5e67314451f9921fedaea3b1f4ae7c73c`.
+Configuration SHA-256: `01b33da9bfd40de080214d111578277207dabf45e4a8a1ac9b3f61de4332dc69` (model schema 2).
+[Canonical manifest](../experiments/Facet/evidence/artifact-manifest.json) defines the hash algorithm. Earlier filtered-workspace hashes identify their own artifacts; formatting changes debug line tables.
+
+Terminal batch reconciliation, controlled two-wave action change and bounded confirmed-bullet shadow calculations now have passing fixtures. The shadow service grants zero credit to continuous incoming uncertainty. Actual live API terminal dispatch, skipped-turn reconciliation, rejected fire and bot-bot/multi-contact acquisition remain gaps. Melee modules and displacement recency views are implemented but activation remains gated. No competitive strength follows from these fixtures.
+
+User-authorized subsequent benchmark: **five cold 20-round games per AISurvivor, Retcon and Diamond Port, 300 rounds total**. This replaces the unexecuted proposed 200-round roster; it is recorded before observing any Facet result. Runtime pins and independent review must be frozen before collection. No battles have run, and no automatic confirmation or tuning is authorized.
+
 ## Revision 2: Java 17 build and fixture milestone
 
 The self-contained Maven/Gradle build passed with Gradle 8.14.3 and Homebrew
@@ -64,7 +77,7 @@ API output; normalized fixtures encode them explicitly as strings.
 A separate mathematical shadow oracle compared 720,917 angular/edge samples
 over 11 independently constructed cases with the actual official server
 intersection/broad-phase predicates and found zero false credit. This is bounded
-oracle evidence, not a passing result for Facet's disabled shadow service.
+oracle evidence, not a full proof of Facet's now-active bounded shadow service.
 See [oracle results](../experiments/Facet/evidence/independent-shadow-oracle/output.json)
 and [provenance/limits](../experiments/Facet/evidence/independent-shadow-oracle/README.md).
 
@@ -80,13 +93,10 @@ existing parity requirement was preserved. No JDK 25 Retcon launch occurred.
 
 Independent review rejected the initial implementation for premeasurement.
 [Review findings](../experiments/Facet/evidence/review-revision2.md) are retained;
-passing the correction tests is not an independent approval. Remaining gates
-include terminal event reconciliation, a validated runtime shadow solver, a
-controlled native two-wave action-change fixture, additional live adapter
-contracts, independent review and required CI. Melee activation is gated until
+passing the correction tests is not an independent approval. At revision 2 the remaining gates included terminal reconciliation, shadow service and controlled two-wave action change. Revision 4 adds these fixtures; live adapter contracts, independent review and required CI remain open. Melee activation is gated until
 duel semantics and review pass and needs its own prospective screen.
 
-Facet competitive games/rounds: **0 / 0**. The proposed 200-round screen has not
+Facet competitive games/rounds: **0 / 0**. The superseded proposed 200-round screen and newly requested 300-round benchmark have not
 run; there are no score shares, wins or improvement claims. No parameter search,
 offline training dataset, warm start, confirmation rerun or reserved experiment
 was consumed. Decision: **reject premeasurement/promotion at this milestone;

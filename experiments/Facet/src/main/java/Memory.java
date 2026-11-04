@@ -39,8 +39,12 @@ final class Memory {
     double displacement(int t, int horizon) {
       if (samples.isEmpty())
         return 0;
-      Sample now = samples.lastEntry().getValue(),
-             old = at(t - horizon).orElse(samples.firstEntry().getValue());
+      var entry = samples.floorEntry(t);
+      if (entry == null)
+        return 0;
+      Sample now = entry.getValue(), old = samples.get(t - horizon);
+      if (old == null)
+        old = samples.firstEntry().getValue();
       return now.body.p().distance(old.body.p());
     }
     void clear() {

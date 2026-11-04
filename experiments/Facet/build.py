@@ -2,7 +2,7 @@
 """Offline Java17 build/test/fat-JAR packaging. No fetches or engine launches."""
 import hashlib, json, os, pathlib, platform, shutil, subprocess, sys, zipfile
 ROOT = pathlib.Path(__file__).resolve().parent
-API = pathlib.Path(os.environ.get("FACET_BUILD_API_JAR", ROOT.parent.parent / "official/robocode-tankroyale-bot-api-1.4.0.jar"))
+API = pathlib.Path(os.environ.get("FACET_BUILD_API_JAR", ROOT / "lib/robocode-tankroyale-bot-api-1.4.0.jar"))
 EXPECTED_API = "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752"
 os.environ.setdefault("TMPDIR", str(ROOT/"build/tmp"))
 pathlib.Path(os.environ["TMPDIR"]).mkdir(parents=True, exist_ok=True)
@@ -74,6 +74,17 @@ def main():
     trace = [json.loads(line) for line in (evidence/"FACET_fixture-trace.jsonl").read_text().splitlines()]
     assert len(metrics)==1 and metrics[0]["shotsConfirmed"]==1 and metrics[0]["counters"]["shot.hit"]==1
     assert len(trace)<100000 and any(e["kind"]=="command.prepared" for e in trace)
+    lifecycle_env = dict(clean_env)
+    for key, name in [("FACET_TRACE_PATH", "FACET_lifecycle-trace.jsonl"), ("FACET_METRICS_PATH", "FACET_lifecycle-metrics.jsonl")]:
+        path = evidence/name
+        path.unlink(missing_ok=True)
+        lifecycle_env[key] = str(path)
+    lifecycle = run([java, "-Xmx256m", "-cp", cp, "LifecycleTelemetryFixture"], lifecycle_env)
+    (evidence/"lifecycle-fixture.txt").write_text(lifecycle)
+    rows = [json.loads(line) for line in (evidence/"FACET_lifecycle-metrics.jsonl").read_text().splitlines()]
+    assert len(rows)==4 and len({(row["gameId"],row["round"]) for row in rows})==4
+    assert [row["shotsConfirmed"] for row in rows]==[1,0,1,0]
+    assert all(row["schema"]==2 and row["counters"].get("metrics.ioFailure",0)==0 for row in rows)
     jar = ROOT/"Facet.jar"
     pack(jar, payload())
     second = ROOT/"build/Facet-rebuild.jar"
@@ -88,7 +99,7 @@ def main():
     source_digest = hashlib.sha256(("\n".join(source_lines)+"\n").encode()).hexdigest()
     (evidence/"source-files.sha256").write_text("\n".join(source_lines)+"\n")
     (evidence/"manifest.sha256").write_text(f"{sha(jar)}  Facet.jar\n{sha(API)}  official API 1.4.0\n{source_digest}  source-files.sha256 content\n")
-    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; lock sockets unavailable in isolated boundary; root cached Maven rebuild required", independentReview=False, meleeEnabled=False, engineMotionFireAcceptance="recorded fixtures only; live adapter review pending", memoryLimitMiB=256, deterministicPackaging=True)
+    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="findings 1-22 supplied; approval pending", premeasurementApproved=False, meleeEnabled=False, engineMotionFireAcceptance="recorded fixtures only; live adapter review pending", memoryLimitMiB=256, deterministicPackaging=True)
     (evidence/"build.json").write_text(json.dumps(metadata,indent=2)+"\n")
     print("OFFLINE BUILD VERIFIED source="+source_digest+" jar="+sha(jar))
 if __name__ == "__main__":

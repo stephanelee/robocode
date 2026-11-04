@@ -118,13 +118,66 @@ final class Waves {
       bullets.remove(id);
       for (Wave w : all()) w.shadows.removeIf(s -> s.bullet == id && s.turn >= t);
     }
-    long shadowFallbacks, realOverflow;
+    static final int MAX_OWN_BULLETS = 256, MAX_SHADOW_WORK = 4096, MAX_SHADOW_INTERVALS = 2048,
+                     SHADOW_HORIZON = 160, MAX_SHADOW_ALLOCATION_UNITS = 524288;
+    long shadowFallbacks, realOverflow, shadowWork, shadowAllocations;
+    int shadowIntervals;
     void shadows(int now, Physics.Rules rules) {
-      for (Wave w : all())
-        if (w.role == Role.INCOMING) {
-          w.shadows.clear();
+      shadowWork = shadowAllocations = 0;
+      shadowIntervals = 0;
+      for (Wave w : all()) {
+        // Historical intervals survive only while supported by lifecycle evidence. Future
+        // intervals are rebuilt from the current legal own-bullet snapshot every turn.
+        w.shadows.removeIf(
+            s -> s.turn >= now || deaths.getOrDefault(s.bullet, Integer.MAX_VALUE) <= s.turn);
+        shadowIntervals += w.shadows.stream().mapToInt(s -> s.arcs.size()).sum();
+        if (w.role != Role.INCOMING || w.cancelled)
+          continue;
+        if (w.start != w.end || w.originError != 0 || w.powerLo != w.powerHi) {
           shadowFallbacks++;
+          continue;
         }
+        for (Bullet b : bullets.values()) {
+          if (shadowWork >= MAX_SHADOW_WORK || shadowIntervals >= MAX_SHADOW_INTERVALS) {
+            shadowFallbacks++;
+            break;
+          }
+          double speed = Physics.bulletSpeed(b.power);
+          for (int t = now; t <= now + SHADOW_HORIZON; t++) {
+            if (t <= w.start || t <= b.observedTurn && t != now)
+              continue;
+            if (deaths.getOrDefault(b.id, Integer.MAX_VALUE) <= t)
+              break;
+            if (shadowWork >= MAX_SHADOW_WORK || shadowIntervals >= MAX_SHADOW_INTERVALS
+                || shadowAllocations + 128 > MAX_SHADOW_ALLOCATION_UNITS) {
+              shadowFallbacks++;
+              break;
+            }
+            shadowWork++;
+            shadowAllocations += 128; // conservative object-allocation charge, not JVM bytes
+            Physics.V velocity = Physics.vector(b.heading).mul(speed);
+            Physics.V end = b.position.add(velocity.mul(t - b.observedTurn)),
+                      from = end.sub(velocity);
+            if (from.x() <= 0 || from.y() <= 0 || from.x() >= rules.width()
+                || from.y() >= rules.height())
+              break;
+            // Unknown wall/contact phase: no credit on a segment ending outside the arena.
+            if (end.x() <= 0 || end.y() <= 0 || end.x() >= rules.width()
+                || end.y() >= rules.height())
+              break;
+            List<Geometry.Arc> arcs =
+                shadowSegment(w.origin, from, end, w.inner(t - 1), w.outer(t));
+            if (!arcs.isEmpty() && shadowIntervals + arcs.size() <= MAX_SHADOW_INTERVALS) {
+              w.shadows.add(new Shadow(b.id, t, arcs));
+              shadowIntervals += arcs.size();
+            }
+          }
+        }
+      }
+      Set<Integer> retainedIds = new HashSet<>(bullets.keySet());
+      for (Wave w : all())
+        for (Shadow s : w.shadows) retainedIds.add(s.bullet);
+      deaths.keySet().retainAll(retainedIds); // at most256 tracked +2048 interval identities
     }
     Optional<Wave> associate(int owner, double power, Physics.V contact, int turn) {
       return all()
@@ -148,5 +201,69 @@ final class Waves {
       bullets.clear();
       deaths.clear();
     }
+  }
+  /**
+   * Native swept-line predicate: radial intersection plus endpoint broad phase.
+   * Each retained segment is wholly in the annulus; every mapped ray therefore
+   * intersects both swept lines. Intersect with the exact endpoint-distance arc.
+   * Degenerate/tangent numerical cases deliberately receive zero measure credit.
+   */
+  static List<Geometry.Arc> shadowSegment(
+      Physics.V origin, Physics.V from, Physics.V end, double inner, double outer) {
+    if (outer <= inner || inner < 0)
+      return List.of();
+    Physics.V a = from.sub(origin), d = end.sub(from);
+    double aa = d.x() * d.x() + d.y() * d.y();
+    if (aa < 1e-12)
+      return List.of();
+    double[] cuts = new double[6];
+    int n = 2;
+    cuts[0] = 0;
+    cuts[1] = 1;
+    for (double radius : new double[] {inner, outer}) {
+      double bb = 2 * (a.x() * d.x() + a.y() * d.y()),
+             cc = a.x() * a.x() + a.y() * a.y() - radius * radius, disc = bb * bb - 4 * aa * cc;
+      if (Math.abs(disc) <= 1e-9)
+        return List.of();
+      if (disc < 0)
+        continue;
+      double root = Math.sqrt(disc);
+      for (double u : new double[] {(-bb - root) / (2 * aa), (-bb + root) / (2 * aa)})
+        if (u > 0 && u < 1)
+          cuts[n++] = u;
+    }
+    Arrays.sort(cuts, 0, n);
+    double distance = origin.distance(end);
+    if (distance < 1e-9 || outer < 1e-9)
+      return List.of();
+    double cosine = (outer * outer + distance * distance - 39.4 * 39.4) / (2 * outer * distance);
+    if (cosine >= 1)
+      return List.of();
+    List<Geometry.Arc> broad =
+        Geometry.around(origin.bearing(end), cosine <= -1 ? Math.PI : Math.acos(cosine));
+    List<Geometry.Arc> out = new ArrayList<>();
+    for (int i = 1; i < n; i++) {
+      double lo = cuts[i - 1] + 1e-7, hi = cuts[i] - 1e-7;
+      if (hi <= lo)
+        continue;
+      double radius = a.add(d.mul((lo + hi) / 2)).distance(new Physics.V(0, 0));
+      if (radius <= inner + 1e-9 || radius >= outer - 1e-9)
+        continue;
+      Physics.V left = from.add(d.mul(lo)), right = from.add(d.mul(hi));
+      if (Geometry.segmentDistance(origin, left, right) < 1e-8)
+        continue;
+      if (Geometry.segmentDistance(origin, left, right) < inner + 1e-9
+          || Math.max(origin.distance(left), origin.distance(right)) > outer - 1e-9)
+        continue;
+      double angle = origin.bearing(left), delta = Physics.wrap(origin.bearing(right) - angle);
+      List<Geometry.Arc> mapped = Geometry.around(angle + delta / 2, Math.abs(delta) / 2);
+      for (Geometry.Arc x : mapped)
+        for (Geometry.Arc y : broad) {
+          double l = Math.max(x.lo(), y.lo()) + 1e-12, h = Math.min(x.hi(), y.hi()) - 1e-12;
+          if (h > l)
+            out.add(new Geometry.Arc(l, h));
+        }
+    }
+    return Geometry.merge(out);
   }
 }

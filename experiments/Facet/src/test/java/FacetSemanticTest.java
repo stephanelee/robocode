@@ -448,6 +448,7 @@ public final class FacetSemanticTest {
     w.ratingEligible = true;
     w.predictions.put("analytic", new Waves.Prediction("analytic", 4, 0, 0, 2, 0));
     w.predictions.put("long", new Waves.Prediction("long", 4, 0, .2, 2, 0));
+    w.predictions.put("recent", new Waves.Prediction("recent", 4, 0, .3, 2, 0));
     Learner.trainGun(e, w, sample(8, body(500, 300, 0, 0)), 1);
     ok(e.longGun.size() == 1 && e.ratings.get("analytic").count == 1, "predictions before labels");
     eq(e.ratings.get("analytic").raw, 1, 1e-9, "perfect prediction");
@@ -576,7 +577,7 @@ public final class FacetSemanticTest {
           "deterministic export of own derived model");
       java.io.DataInputStream in =
           new java.io.DataInputStream(new java.io.ByteArrayInputStream(first.toByteArray()));
-      ok(in.readUTF().equals("FACET-OWN-GAME-EXPORT") && in.readInt() == 1,
+      ok(in.readUTF().equals("FACET-OWN-GAME-EXPORT") && in.readInt() == 2,
           "export schema identity");
       ok(first.size() < ModelSnapshot.MAX_BYTES, "export bounded");
     } catch (java.io.IOException e) {
@@ -631,6 +632,7 @@ public final class FacetSemanticTest {
     ok(b.evictions > 0 && b.bytes <= Memory.Budget.LIMIT, "global eviction enforcement");
   }
   public static void main(String[] args) {
+    group("revision2 semantic blockers", Revision2RegressionTest::run);
     group("actual motion and shot clocks", FacetSemanticTest::recordedMotion);
     group("review regressions", ReviewRegressionTest::run);
     group("native angles and GF", FacetSemanticTest::angles);

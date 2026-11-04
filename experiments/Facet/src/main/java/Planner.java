@@ -2,6 +2,7 @@ import java.util.*;
 final class Planner {
   static final int STEP_LIMIT = 2400, TICK_LIMIT = 160;
   double arenaWidth = 800, arenaHeight = 600, arenaCooling = .1;
+  int safetyTurn = -1;
   int steps, previous = -1, stepLimit = STEP_LIMIT;
   final Map<Long, Geometry.Density> densityCache = new HashMap<>();
   long truncations, missingGeometry, emergencies;
@@ -27,6 +28,8 @@ final class Planner {
   }
   Choice choose(Physics.Body self, int turn, List<Waves.Wave> threats,
       Map<Integer, Learner.Enemy> enemies, Physics.Rules r, Map<Integer, Integer> deaths) {
+    safetyTurn = turn;
+    activeEnemies = enemies.values();
     arenaWidth = r.width();
     arenaHeight = r.height();
     arenaCooling = r.cooling();
@@ -54,7 +57,7 @@ final class Planner {
               .map(e -> e.latest.body().p())
               .orElse(new Physics.V(r.width() / 2, r.height() / 2));
       Physics.Control c = orbit(self, source, previous, r, false);
-      if (r.safe(Physics.step(self, c, r).body().p()))
+      if (firstSafe(self, c, turn, r))
         return new Choice(c, previous, 0, true, false, List.of());
       return emergency(self, r);
     }
@@ -104,7 +107,7 @@ final class Planner {
     if (best == null) {
       for (int action : new int[] {previous, -previous}) {
         Physics.Control analytic = orbit(self, ordered.get(0).origin, action, r, false);
-        if (r.safe(Physics.step(self, analytic, r).body().p()))
+        if (firstSafe(self, analytic, turn, r))
           return new Choice(
               analytic, action, Physics.damage(ordered.get(0).powerHi), true, true, List.of());
       }
@@ -151,7 +154,7 @@ final class Planner {
       steps++;
       Physics.Control c = orbit(s, wave.origin, action, r, true);
       Physics.Step next = Physics.step(s, c, r);
-      if (t == 1 && !r.safe(next.body().p()))
+      if (t == 1 && (!r.safe(next.body().p()) || collisionRisk(next.body().p(), turn + 1, r) > 0))
         safe = false;
       score += next.damage();
       if (next.wall())
@@ -159,7 +162,8 @@ final class Planner {
       for (Learner.Enemy other : activeEnemies) {
         if (other.latest == null || !other.alive || turn + t - other.latest.turn() > 8)
           continue;
-        double gap = next.body().p().distance(other.latest.body().p());
+        double gap = next.body().p().distance(
+            Physics.constantPosition(other.latest.body(), turn + t - other.latest.turn(), r));
         if (gap < 36) {
           score += .6;
           if (t == 1)
@@ -209,17 +213,55 @@ final class Planner {
         * w.unshadowed(arcs, contact, deaths) / Math.max(1, contact - now);
     return Double.isFinite(score) ? score : Physics.damage(w.powerHi);
   }
+  boolean firstSafe(Physics.Body self, Physics.Control c, int turn, Physics.Rules r) {
+    var next = Physics.step(self, c, r);
+    return r.safe(next.body().p()) && collisionRisk(next.body().p(), turn + 1, r) == 0;
+  }
+  double collisionRisk(Physics.V point, int nextTurn, Physics.Rules r) {
+    double risk = 0;
+    for (var e : activeEnemies) {
+      if (!e.alive || e.latest == null)
+        continue;
+      int dt = nextTurn - e.latest.turn();
+      if (dt < 1)
+        continue;
+      // First translation is on the observed heading. Unknown speed control spans
+      // the legal velocity image, including the discontinuous instantaneous STOP.
+      var b = e.latest.body();
+      double lo = Double.POSITIVE_INFINITY, hi = Double.NEGATIVE_INFINITY;
+      for (double target : new double[] {-8, -.000001, 0, .000001, 8}) {
+        double v = Physics.velocity(b.speed(), target);
+        lo = Math.min(lo, v);
+        hi = Math.max(hi, v);
+      }
+      var a = b.p().add(Physics.vector(b.heading()).mul(lo));
+      var z = b.p().add(Physics.vector(b.heading()).mul(hi));
+      double gap = Geometry.segmentDistance(point, a, z) - 8 * Math.max(0, dt - 1);
+      if (gap < 36)
+        risk += .6;
+    }
+    return risk;
+  }
   Choice emergency(Physics.Body self, Physics.Rules r) {
     emergencies++;
     Choice best = null;
+    boolean bestSafe = false;
+    int now = safetyTurn >= 0 ? safetyTurn
+                              : activeEnemies.stream()
+                                    .filter(e -> e.latest != null)
+                                    .mapToInt(e -> e.latest.turn())
+                                    .max()
+                                    .orElse(0);
     for (double speed : new double[] {0, -8, 8})
       for (double turn : new double[] {0, -Math.PI / 2, Math.PI / 2}) {
         Physics.Control c = new Physics.Control(speed, turn, 0, 0);
         Physics.Step s = Physics.step(self, c, r);
-        double cost = s.damage() + (r.safe(s.body().p()) ? 0 : 100)
-            + s.body().p().distance(new Physics.V(r.width() / 2, r.height() / 2)) * .00001;
-        if (best == null || cost < best.cost)
+        double botDamage = collisionRisk(s.body().p(), now + 1, r), cost = s.damage() + botDamage;
+        boolean safe = r.safe(s.body().p()) && botDamage == 0;
+        if (best == null || safe && !bestSafe || safe == bestSafe && cost < best.cost) {
           best = new Choice(c, previous, cost, true, true, List.of(s.body()));
+          bestSafe = safe;
+        }
       }
     return best;
   }

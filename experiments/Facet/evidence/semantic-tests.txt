@@ -1,5 +1,7 @@
+PASS revision2 semantic blockers
 actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
 PASS actual motion and shot clocks
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
 PASS review regressions
 PASS native angles and GF
 PASS native predictor invariants
@@ -16,6 +18,6 @@ PASS two-wave planner
 PASS gated melee and radar
 PASS package boundary and risk bounds
 PASS determinism, online learning and export
-offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=678042 maxns=1237083 totalns=20251291
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=552584 maxns=1123209 totalns=17484958
 PASS bounded full-store stress
-PASS groups=17 assertions=7119 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+PASS groups=18 assertions=10034 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0

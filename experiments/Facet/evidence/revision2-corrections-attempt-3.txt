@@ -1,0 +1,29 @@
+openjdk version "17.0.21.0.3" 2026-10-24
+OpenJDK Runtime Environment Homebrew (build 17.0.21.0.3+0)
+OpenJDK 64-Bit Server VM Homebrew (build 17.0.21.0.3+0, mixed mode, sharing)
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+Exception in thread "main" java.lang.AssertionError: exact decision clock
+	at FacetSemanticTest.ok(FacetSemanticTest.java:6)
+	at ReviewRegressionTest.check(ReviewRegressionTest.java:4)
+	at ReviewRegressionTest.run(ReviewRegressionTest.java:26)
+	at FacetSemanticTest.group(FacetSemanticTest.java:14)
+	at FacetSemanticTest.main(FacetSemanticTest.java:143)
+Traceback (most recent call last):
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 106, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 61, in main
+    tests = run([java, "-Xmx256m", "-cp", cp, "FacetSemanticTest"], clean_env)
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 15, in run
+    raise RuntimeError(f"command failed ({p.returncode}): {args}\n{p.stdout}")
+RuntimeError: command failed (1): [PosixPath('/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java'), '-Xmx256m', '-cp', '/private/tmp/facet-clean-room/experiments/Facet/build/classes/main:/private/tmp/facet-clean-room/experiments/Facet/build/classes/test:/private/tmp/facet-clean-room/experiments/Facet/src/main/resources:/private/tmp/facet-clean-room/experiments/Facet/src/test/resources:/private/tmp/facet-clean-room/official/robocode-tankroyale-bot-api-1.4.0.jar', 'FacetSemanticTest']
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+Exception in thread "main" java.lang.AssertionError: exact decision clock
+	at FacetSemanticTest.ok(FacetSemanticTest.java:6)
+	at ReviewRegressionTest.check(ReviewRegressionTest.java:4)
+	at ReviewRegressionTest.run(ReviewRegressionTest.java:26)
+	at FacetSemanticTest.group(FacetSemanticTest.java:14)
+	at FacetSemanticTest.main(FacetSemanticTest.java:143)
+
