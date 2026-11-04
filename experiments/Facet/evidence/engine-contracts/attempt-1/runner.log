@@ -1,0 +1,24 @@
+Nov. 04, 2026 6:16:02 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+INFO: Starting battle: rounds=1, bots=2
+Nov. 04, 2026 6:16:02 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+SEVERE: Failed to start battle
+dev.robocode.tankroyale.runner.BattleException: Embedded server process exited unexpectedly with code 1
+	at dev.robocode.tankroyale.runner.internal.ServerManager.waitForServerReady(ServerManager.kt:177)
+	at dev.robocode.tankroyale.runner.internal.ServerManager.startEmbeddedServer(ServerManager.kt:131)
+	at dev.robocode.tankroyale.runner.internal.ServerManager.ensureStarted(ServerManager.kt:77)
+	at dev.robocode.tankroyale.runner.BattleRunner.startBattleAsync(BattleRunner.kt:147)
+	at ContractRunner.main(ContractRunner.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:419)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:192)
+	at jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:132)
+
+Exception in thread "main" dev.robocode.tankroyale.runner.BattleException: Embedded server process exited unexpectedly with code 1
+	at dev.robocode.tankroyale.runner.internal.ServerManager.waitForServerReady(ServerManager.kt:177)
+	at dev.robocode.tankroyale.runner.internal.ServerManager.startEmbeddedServer(ServerManager.kt:131)
+	at dev.robocode.tankroyale.runner.internal.ServerManager.ensureStarted(ServerManager.kt:77)
+	at dev.robocode.tankroyale.runner.BattleRunner.startBattleAsync(BattleRunner.kt:147)
+	at ContractRunner.main(ContractRunner.java:10)

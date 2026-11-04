@@ -1,0 +1,37 @@
+name: Facet Java 17 semantics and artifact
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/Facet/**'
+      - '.github/workflows/facet.yml'
+  push:
+    branches: [master, 'facet/**']
+    paths:
+      - 'experiments/Facet/**'
+      - '.github/workflows/facet.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  facet:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build Facet, run semantics, verify committed artifact
+        run: ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: facet-java17-validation
+          path: |
+            experiments/Facet/build/reports/
+            experiments/Facet/build/test-results/
+            experiments/Facet/build/libs/Facet.jar
