@@ -4,6 +4,10 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## Keel experimental baseline
+
+The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a272373` as the new baseline. [Coordination issue106](https://github.com/stephanelee/robocode/issues/106), [immutable source/JAR/production hashes](../benchmarks/keel-improvement/baseline.json), [ownership and evidence](improvements/keel-experimental-baseline.md). **Zero new games are registered by this baseline record.** Fresh bounded protocols and independent review are required for isolated derivatives; production AISurvivor remains unchanged.
+
 ## Meridian standalone duel
 
 | Experiment | Measured budget and decision | Evidence |

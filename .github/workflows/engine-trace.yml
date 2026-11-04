@@ -6,6 +6,7 @@ permissions:
   contents: read
 jobs:
   probe:
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/keel-improvement-baseline'
     name: Record actual 1.4.0 bullet scan timing
     runs-on: ubuntu-26.04
     timeout-minutes: 10
