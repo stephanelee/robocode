@@ -6,6 +6,12 @@ import java.util.concurrent.*;
 
 /** Observer only: one 1v1 game on an isolated embedded server; each bot runs in its own process. */
 public class KeelPrismBattle {
+    static boolean complete(Path markers, Path prism, int rounds) throws java.io.IOException {
+        if (!Files.isRegularFile(markers) || !Files.isRegularFile(prism)) return false;
+        String m=Files.readString(markers), p=Files.readString(prism);
+        if (!m.endsWith("\n") || !p.endsWith("\n") || !m.lines().anyMatch(s -> s.equals(rounds + " end"))) return false;
+        return p.lines().anyMatch(s -> s.endsWith("}") && s.contains("\"event\":\"game\"") && s.contains("\"rounds\":" + rounds + ","));
+    }
     public static void main(String[] args) throws Exception {
         int rounds = Integer.parseInt(args[0]);
         Path output = Path.of(args[1]), markers = output.resolve("markers.txt"), prism = output.resolve("prism.jsonl");
@@ -20,8 +26,7 @@ public class KeelPrismBattle {
                 for (var row : result.getResults())
                     System.out.printf("%s %s %d %d%n", row.getName(), row.getVersion(), row.getTotalScore(), row.getFirstPlaces());
                 long until = System.nanoTime() + TimeUnit.SECONDS.toNanos(15);
-                while (!Files.isRegularFile(markers) || !Files.readAllLines(markers).contains(rounds + " end")
-                        || !Files.isRegularFile(prism) || Files.readAllLines(prism).stream().noneMatch(s -> s.contains("\"event\":\"game\""))) {
+                while (!complete(markers, prism, rounds)) {
                     if (System.nanoTime() > until) throw new IllegalStateException("Final callback did not flush");
                     Thread.sleep(25);
                 }

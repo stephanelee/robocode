@@ -18,9 +18,9 @@ def analyze(path,game):
           s=e['gameSetup']; assert s['arenaWidth']==800 and s['arenaHeight']==600 and s['turnTimeout']==100000 and s['numberOfRounds']==10
           ids={x['id']:x['name'] for x in e['participants']}; assert set(ids.values())=={'Keel','Prism'}
         elif kind=='TickEventForObserver':
-          r=e['roundNumber'];ticks.setdefault(r,[]).append(e['turnNumber']); cells=per.setdefault(r,{n:dict(shots=0,hits=0,shotEnergy=0.,damage=0.,endEnergy=None) for n in totals})
+          r=e['roundNumber'];ticks.setdefault(r,[]).append(e['turnNumber']); cells=per.setdefault(r,{n:dict(shots=0,hits=0,shotEnergy=0.,damage=0.,lastObservedEnergy=None) for n in totals})
           for b in e['botStates']:
-            n=ids[b['id']];cells[n]['endEnergy']=b['energy'];old=totals[n]['minEnergy'];totals[n]['minEnergy']=b['energy'] if old is None else min(old,b['energy'])
+            n=ids[b['id']];cells[n]['lastObservedEnergy']=b['energy'];old=totals[n]['minEnergy'];totals[n]['minEnergy']=b['energy'] if old is None else min(old,b['energy'])
           for event in e['events']:
             if event['type']=='BulletFiredEvent':
               n=ids[event['bullet']['ownerId']]
@@ -54,6 +54,9 @@ def main():
       save(REG/'runtime.json',profile);print(json.dumps(profile,indent=2));return
     frozen=json.loads((REG/'runtime.json').read_bytes());assert all(profile[k]==frozen[k] for k in ('javaVersion','javaFiles','assets','os','python','runnerSHA256','planSHA256'))
     OUT.mkdir(parents=True,exist_ok=False);save(OUT/'runtime.json',profile)
+    ref='refs/tags/keel-prism-v1-77b8a5c3114641c1-8c045f80d37a3076'
+    subprocess.run(['gh','api','-X','POST','repos/stephanelee/robocode/git/refs','-f','ref='+ref,'-f','sha='+profile['sourceCommit']],check=True,capture_output=True,text=True)
+    save(OUT/'receipt.json',dict(ref=ref,head=profile['sourceCommit'],profileSHA256=digest(REG/'runtime.json')))
     report=dict(plan=plan,execution=profile['sourceCommit'],games=[],decision='descriptive only')
     for game in plan['games']:
       data=OUT/game['id'];data.mkdir();stage=ROOT/'build/keel-prism-staging'/game['id'];stage.mkdir(parents=True,exist_ok=False)
