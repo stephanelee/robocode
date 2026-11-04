@@ -11,6 +11,8 @@ Earlier cycles compare narrow candidates with the previously accepted version. C
 
 ## Completed experiments
 
+[Breakwater duel findings](improvements/breakwater-duel-findings.md) compares three standalone controllers against Diamond Port and production AISurvivor.
+
 | Whole-product experiment | Measured result and decision | Evidence |
 | --- | --- | --- |
 | AIS Breakwater movement + selective-fire transfer V2 / [PR #74](https://github.com/stephanelee/robocode/pull/74) | **Reject after90screen rounds; no540confirmation.** Breakwater35.714%/3of10;Retcon67.831%/9of10 (-9.546pp);Diamond0%/0wins;Adaptive15.574%/2wins;self75%/10wins. Five registered guards fail; all AIS skips0. Guard21passes/43383eligible proposals exposes starvation. | [Frozen protocol/full outcomes](improvements/ais-breakwater-selective-transfer-v2.md), [all956payloads/10AISmodels/2BWmodels/2native/source+patch](../benchmarks/ais-breakwater-selective-transfer-v2/README.md), [sole run](https://github.com/stephanelee/robocode/actions/runs/41730684973). AcceptedB41b source/JAR restored; V1 kept separate, no pooling or promotion. |
