@@ -1,0 +1,94 @@
+name: Prism registered screen
+# Manual or explicitly labeled PR only. Replay protection: before any game the run atomically creates the durable receipt
+# tag refs/tags/prism-screen-v1-<frozen JAR prefix> at the exact execution head. Tag creation fails
+# if it already exists, so any later dispatch or re-run attempt is refused before a match starts.
+# The receipt is never deleted, including after a failed screen. The harness also refuses unless the
+# plan records the review URL and the exact reviewed head, and the execution head differs from that
+# head only by the approval record.
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      review:
+        description: URL of the recorded independent premeasurement review
+        required: true
+      check_only:
+        description: Validate plan, pins and clearance without consuming the receipt or running games
+        type: boolean
+        default: true
+permissions:
+  contents: write   # used only by the receipt step's token; the checkout keeps no credentials
+concurrency:
+  group: prism-screen-v1
+  cancel-in-progress: false
+jobs:
+  screen:
+    if: >-
+      github.run_attempt == 1 &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.label.name == 'run-prism-screen-v1' &&
+        github.head_ref == 'prism/independent-v1' &&
+        github.event.pull_request.head.repo.full_name == github.repository))
+    env:
+      PAYLOAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Java 17 build, tests and source/JAR parity (before any JDK 25 use)
+        run: |
+          ./gradlew -p experiments/Prism --no-daemon clean build
+          python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/bot/Prism/Prism.jar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Record runtime
+        run: |
+          java -version 2>&1 | tee prism-runtime.txt
+          python --version | tee -a prism-runtime.txt
+          uname -a | tee -a prism-runtime.txt
+      - name: Verify plan, pins and exact-head clearance
+        env:
+          REVIEW: ${{ inputs.review }}
+        run: |
+          REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+          python tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA" --check-only
+      - name: Consume the durable screen receipt (refuses if already spent)
+        if: ${{ github.event_name == 'pull_request' || !inputs.check_only }}
+        env:
+          REVIEW: ${{ inputs.review }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+          python tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA" --consume-receipt "$GITHUB_REPOSITORY"
+      - name: Run the frozen screen
+        if: ${{ github.event_name == 'pull_request' || !inputs.check_only }}
+        env:
+          PRISM_OPPONENT_PYTHON: python3.13
+          REVIEW: ${{ inputs.review }}
+        run: |
+          REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+          python tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prism-screen-${{ env.PAYLOAD_SHA }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/prism-screen/
+            build/prism-screen-receipt.json
+            prism-runtime.txt
+          if-no-files-found: warn

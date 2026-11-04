@@ -4,6 +4,12 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## Prism independent clean-room bot
+
+| Experiment | Measured budget and decision | Evidence |
+|---|---|---|
+| Prism 0.1.0 registered screen / [issue #104](https://github.com/stephanelee/robocode/issues/104) / [PR #105](https://github.com/stephanelee/robocode/pull/105) | **Reject; no confirmation.** All13 games/200 official rounds completed. Equal-game shares Diamond28.608206%, Retcon94.327397%, Adaptive69.294953%, Spin Bot/Walls100%; only Diamond >40% gate failed. Official Prism first places8/60,54/60,43/60,10/10,10/10 (ties possible). Zero Prism skips/collisions/failures.199 round snapshots: Diamond game3 round15 absent, final cumulative20 present. No A/B, general-strength or superiority claim; production AIS unchanged. | [Frozen protocol/result](prism-screen-protocol.md), [original raw/provenance/reproduction](../benchmarks/prism-screen-v1/README.md), [sole run41863990617](https://github.com/stephanelee/robocode/actions/runs/41863990617) |
+
 ## Meridian standalone duel
 
 | Experiment | Measured budget and decision | Evidence |

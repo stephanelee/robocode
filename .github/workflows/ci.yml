@@ -45,6 +45,11 @@ jobs:
         run: |
           ./gradlew -p experiments/Meridian --no-daemon clean build
           python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
+      - name: Build Prism, run its engine-trace and semantic tests, and compare the committed JAR
+        run: |
+          ./gradlew -p experiments/Prism --no-daemon clean build
+          python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/bot/Prism/Prism.jar
+          (cd tools && python -m unittest test_prism_screen test_prism_screen_evidence -v)
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -54,6 +59,7 @@ jobs:
             build/reports/tests/
             experiments/DiamondChallenger/build/reports/tests/
             experiments/Keel/build/reports/tests/
+            experiments/Prism/build/reports/tests/
           if-no-files-found: ignore
       - name: Upload runnable bot
         uses: actions/upload-artifact@v4

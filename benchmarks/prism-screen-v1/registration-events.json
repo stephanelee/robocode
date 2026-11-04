@@ -1,0 +1,63 @@
+{
+  "observedAtUTC": "2026-11-04T15:53:17.595606+00:00",
+  "reviewedHead": "cd51d8db3ad443d996bbcf045b76f0f1f637cac9",
+  "approvalCommit": "ec85ebd71a46ec4c9f21563b2556bb31fa433856",
+  "approvalReview": "https://github.com/stephanelee/robocode/pull/105#pullrequestreview-5771267072",
+  "manualDispatch": {
+    "attempts": 1,
+    "command": "gh workflow run prism-screen.yml --repo stephanelee/robocode --ref prism/independent-v1 -f review=<recorded review URL> -f check_only=false",
+    "result": "HTTP404: workflow prism-screen.yml not found on the default branch",
+    "workflowRunCreated": false,
+    "gamesStarted": 0,
+    "receiptConsumed": false
+  },
+  "workflowAPIPublish": {
+    "result": "HTTP403: OAuth App lacks workflow scope",
+    "remoteWorkflowChanged": false
+  },
+  "normalGitPublish": {
+    "workflowCommit": "19e4bda6320b38a400b5b3c1e759fe89f9b213ee",
+    "protocolCommit": "f60577120df9899475259ea07e7a7273803dfff7",
+    "force": false
+  },
+  "status": "completed single registered screen; canonical reject solely diamondAbove40; no confirmation or rerun",
+  "finalIndependentReview": {
+    "head": "e4d51c5c32ab22bfcf93ecb5ce388dcd868c53ae",
+    "url": "https://github.com/stephanelee/robocode/pull/105#issuecomment-6635424606",
+    "offlineTestsPassed": 17
+  },
+  "execution": {
+    "head": "0ac58d50ddaf041d0103a125b745fd4f2709a90c",
+    "runId": 41863990617,
+    "url": "https://github.com/stephanelee/robocode/actions/runs/41863990617",
+    "launch": "one run-prism-screen-v1 label",
+    "runAttempt": 1,
+    "receiptRef": "refs/tags/prism-screen-v1-8c045f80d37a3076",
+    "prelaunchReceiptAbsent": true,
+    "prelaunchScreenRuns": 0,
+    "receiptObservedAtExecutionHead": true
+  },
+  "prelaunchCorrections": [
+    {
+      "commit": "0c6c7893d13b7a61699b06d2db86a64711e6c98c",
+      "correction": "Read native sourcePath from immutable opponent lock; fix Adaptive staging path."
+    },
+    {
+      "commit": "e4d51c5c32ab22bfcf93ecb5ce388dcd868c53ae",
+      "correction": "Prepare pinned native code/venv once per screen process; retain fresh per-game bot staging/processes."
+    }
+  ],
+  "updatedAtUTC": "2026-11-04T16:28:41.417115+00:00",
+  "outcome": {
+    "decision": "reject",
+    "rounds": 200,
+    "games": 13,
+    "artifactId": 13343025344,
+    "artifactSHA256": "26489fff821c0237536c0442f6c674e845dfe2756ac208e37cceb7203ed46a8f",
+    "telemetryRoundSnapshots": 199,
+    "missingRoundSnapshot": {
+      "game": "diamond-3",
+      "round": 15
+    }
+  }
+}
