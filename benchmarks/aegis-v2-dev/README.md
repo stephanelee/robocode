@@ -17,7 +17,10 @@ Changes from 0.1.0, each targeting a measured failure class:
 | `v2c` | 1, 2 (behind side), 3, 4 | **2/10** | 8.82% | 78.5% |
 | `vg1` (6 rounds, rating instrumentation) | same as v2c | 0/6 | 0.32% | see file |
 | `vg2` | + exact zero-label cost on real-shot waves (reverted) | 0/10 | 0.51% | 74.7% |
-| `vg3` | v2c + 5: adaptive aim-class tracker | **2/10** | 9.19% | **79.9%** |
+| `vg3` | v2c + 5: adaptive aim-class tracker (**current WIP patch**) | **2/10** | 9.19% | **79.9%** |
+| `eg1` (8 rounds, energy logging) | vg3 | 2/8 | 12.44% | see file |
+| `vg4` | vg3 + narrow empirical centre weights, three-line coverage (not kept) | 1/10 | 4.48% | 78.5% |
+| `vg5` | vg4 + acceptance by score / centre coverage (not kept) | 1/10 | 4.90% | 76.0% |
 
 5. **Adaptive aim-class tracker (gun-switching work).** The shooter picks TripHammer or Anti-Surfer by a battle-long virtual-bullet rating computed only on real-shot waves. In `vg1/virtual-gun-ratings.txt`, our real-shot break centres lean behind our motion (mean −0.0028 rad). Anti-Surfer won more of the disagreements, overtook TripHammer and was selected; under it, centre-candidate aims fall to 68–89%. A direct exact zero-label cost on real-shot waves (`vg2`) did not remove the bias and hurt geometry, so it was reverted. Off-centre aims are persistent: P(next off-centre) is 6% after 0 of the last 8 resolved shots and 32% after 3+. Without trying to prevent them, the tracker turns the last 8 resolved shot classes (centre / behind / ahead, from the actual bullet lines in legal hit/collision events) into adaptive mixture weights for the solver. In `vg3`, off-centre hits fell from about 8% to 5.4% of shots, and the centre-aiming gun won 351 of 602 rating disagreements.
 
@@ -27,6 +30,14 @@ Remaining failures in `v2c` (before change 5):
 - Unshielded dodge cases ≈ 3%.
 
 Rounds 1–2 were won in both v2a and v2c; later rounds were lost.
+
+**Endgame finding (`eg1/energy-trajectories.txt`, `block-rate-by-enemy-power.txt`).**
+- Against full-power (≥1.5) shots the tracker variant blocks **91.8%**, which is above the ≈88% break-even. Against the shooter's low-energy, cubically powered-down shots it blocks only 80–83%, and those are 62% of all resolved shots (2,623 of 4,200 were below 0.2 power).
+- Rounds the shooter never powers down in are won (round 1 of `eg1`: shooter 100→0 by turn 704).
+- In lost long rounds Aegis typically *enters* the low-power phase far ahead (for example 77 vs 26 or 82 vs 37 energy) and bleeds that lead away over thousands of turns. At 0.1 power each block costs both sides 0.1, while each leak costs Aegis 0.4 and refunds the shooter 0.3.
+- With the corrected model, real lines are 87.7% within 1 px of centre and 12% at exactly one adjacent-candidate spacing.
+- Narrowing the solver's weights to that distribution (`vg4`/`vg5`) removed its robustness margin and was worse, so it was not kept.
+- The power-down applies only beyond 325 px. The most promising next lever is therefore range control that keeps the shooter firing full power, where blocking already exceeds break-even, or a dedicated low-power-phase plan. Neither is implemented or registered.
 
 Long rounds (5,000–7,000 turns) are still lost in the shooter's low-power endgame, where a fixed 0.1 interceptor costs about as much as its bullet. The instrumented opponent's rating logging is a dev-only patch to the private copy (`vg` events) and is never used at runtime or in registered games.
 
