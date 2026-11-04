@@ -41,6 +41,10 @@ jobs:
         run: |
           ./gradlew -p experiments/Keel --no-daemon clean build
           python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+      - name: Build Meridian, test its physics and compare the committed JAR
+        run: |
+          ./gradlew -p experiments/Meridian --no-daemon clean build
+          python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
