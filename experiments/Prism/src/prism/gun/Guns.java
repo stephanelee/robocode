@@ -16,11 +16,12 @@ import java.util.Map;
 
 /**
  * Gun ensemble (specification section 8): analytic startup interception, long-history
- * contextual gun, recent multi-window gun, melee displacement gun, and a virtual selector.
+ * contextual gun, recent multi-window gun, an anti-surfer gun trained only on confirmed bullets,
+ * a melee displacement gun, and a virtual selector.
  * Predictions are frozen on waves before any outcome is consumed.
  */
 public final class Guns {
-    public static final String ANALYTIC = "analytic", LONG = "long", RECENT = "recent", DISPLACEMENT = "displacement", DIRECT = "direct";
+    public static final String ANALYTIC = "analytic", LONG = "long", RECENT = "recent", SURFER = "surfer", DISPLACEMENT = "displacement", DIRECT = "direct";
 
     /** Exponential-mean rating of one gun over the shared resolved cohort. */
     public static final class Rating {
@@ -37,6 +38,13 @@ public final class Guns {
     public static final class Data {
         public final NeighborStore longStore = new NeighborStore("long-v1", NeighborStore.LabelType.PRECISE_GF, Features.LONG_W, Profile.LONG_GUN_CAPACITY);
         public final NeighborStore[] recent = new NeighborStore[Profile.RECENT_GUN_CAPACITIES.length];
+        /**
+         * Anti-surfer views: precise-GF labels from engine-confirmed (physical) waves only. A wave
+         * surfer reacts to the waves of real bullets, so these record the movement it shows when
+         * actually shot at; virtual-wave crossings never enter them.
+         */
+        public final NeighborStore[] surfer = new NeighborStore[Profile.SURFER_GUN_CAPACITIES.length];
+        public int physicalLabels;
         public final NeighborStore displacement = new NeighborStore("disp-v1", NeighborStore.LabelType.DISPLACEMENT, Features.MELEE_W, Profile.LONG_GUN_CAPACITY);
         public final Map<String, Rating> ratings = new LinkedHashMap<>();
         public int crossings;
@@ -45,6 +53,8 @@ public final class Guns {
         Data() {
             for (int i = 0; i < recent.length; i++)
                 recent[i] = new NeighborStore("recent-v1-" + Profile.RECENT_GUN_CAPACITIES[i], NeighborStore.LabelType.PRECISE_GF, Features.RECENT_W, Profile.RECENT_GUN_CAPACITIES[i]);
+            for (int i = 0; i < surfer.length; i++)
+                surfer[i] = new NeighborStore("surfer-v1-" + Profile.SURFER_GUN_CAPACITIES[i], NeighborStore.LabelType.PRECISE_GF, Features.RECENT_W, Profile.SURFER_GUN_CAPACITIES[i]);
         }
     }
 
@@ -141,6 +151,9 @@ public final class Guns {
             views.add(gfKernels(d.longStore, a.context().longGun(), Math.min(160, Math.max(1, N / 12)), a));
         } else if (gun.equals(RECENT)) {
             for (NeighborStore s : d.recent) if (s.size() > 0) views.add(gfKernels(s, a.context().recentGun(), 5, a));
+        } else if (gun.equals(SURFER)) {
+            if (d.physicalLabels < Profile.SURFER_GUN_MIN_LABELS) return null;
+            for (NeighborStore s : d.surfer) if (s.size() > 0) views.add(gfKernels(s, a.context().recentGun(), Profile.SURFER_GUN_NEIGHBORS, a));
         } else return null;
         views.removeIf(List::isEmpty);
         if (views.isEmpty()) return null;
@@ -175,6 +188,7 @@ public final class Guns {
         List<String> g = new ArrayList<>();
         g.add(ANALYTIC);
         if (d.crossings >= Profile.LEARNED_GUN_MIN_CROSSINGS) { g.add(LONG); g.add(RECENT); }
+        if (d.physicalLabels >= Profile.SURFER_GUN_MIN_LABELS) g.add(SURFER);
         return g;
     }
 
@@ -211,6 +225,11 @@ public final class Guns {
             double g = w.preciseGf(w.labelBearing);
             ok = d.longStore.add(w.context.longGun(), new double[] {g}, q, round, turn, w.id);
             for (NeighborStore s : d.recent) s.add(w.context.recentGun(), new double[] {g}, q, round, turn, w.id);
+            if (w.physical && w.role == Wave.Role.OUTGOING) {
+                boolean added = false;
+                for (NeighborStore s : d.surfer) added |= s.add(w.context.recentGun(), new double[] {g}, q, round, turn, w.id);
+                if (added) d.physicalLabels++;
+            }
         }
         w.labelEmitted = true;
         if (ok) d.crossings++;

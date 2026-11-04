@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.robocode.experiments'
+version = '0.2.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories { mavenCentral() }
+
+// Optional out-of-tree build directory (e.g. when the checkout is in a synced folder)
+if (System.getenv('PRISM_BUILD_DIR')) layout.buildDirectory = file(System.getenv('PRISM_BUILD_DIR'))
+
+dependencies {
+    implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sourceSets {
+    main.java.srcDirs = ['src']
+    test.java.srcDirs = ['test']
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+test {
+    useJUnitPlatform()
+    maxHeapSize = '1g'
+    testLogging { events 'failed'; exceptionFormat 'full' }
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+jar {
+    archiveFileName = 'Prism.jar'
+    destinationDirectory = layout.buildDirectory.dir('bot/Prism')
+    manifest { attributes 'Main-Class': 'prism.Prism' }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register('prepareBot', Copy) {
+    dependsOn jar
+    from 'bot'
+    into layout.buildDirectory.dir('bot/Prism')
+}
+assemble.dependsOn tasks.named('prepareBot')
+
+// Engine-contract probe: a separate scripted bot JAR, never part of Prism.jar.
+sourceSets {
+    probe {
+        java.srcDirs = ['probe']
+        java.exclude 'PrismTraceBattle.java'
+        compileClasspath += configurations.runtimeClasspath
+        runtimeClasspath += configurations.runtimeClasspath
+    }
+}
+tasks.register('probeJar', Jar) {
+    archiveFileName = 'PrismProbe.jar'
+    manifest { attributes 'Main-Class': 'prism.probe.Probe' }
+    destinationDirectory = layout.buildDirectory.dir('probe')
+    from sourceSets.probe.output
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

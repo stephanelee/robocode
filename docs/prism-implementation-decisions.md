@@ -75,6 +75,18 @@ Each contract comes from the official v1.4.0 source and is confirmed by the reco
 
 Build: 39/39 JUnit tests and 16/16 harness tests pass under Microsoft OpenJDK 17.0.18. Two clean builds produced byte-identical `Prism.jar` (`8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca`). The first frozen candidate, `684a80d5…`, is superseded (section 5).
 
+## 6 Profile 2: anti-surfer gun (Prism 0.2.0)
+
+This change is registered prospectively in the [v2 protocol](prism-surfer-gun-protocol.md), and the motivation there comes from Prism-side v1 telemetry only. I read only Prism's `results.json`, `prism-telemetry.jsonl` and `decision.json` from `benchmarks/prism-screen-v1`, each fetched as a single blob with `git show`. I did not open opponent runner logs, `source/tools/opponents`, or the original artifact ZIP.
+
+| Topic | Choice | Reason | Verification |
+| --- | --- | --- | --- |
+| New gun `surfer` | Three recent windows (32/128/512), at most 5 neighbours each, recent-gun features, precise-GF labels | Same kernel and decoding as the recent gun, so the only difference is which waves it learns from | `surferGunTrainsOnlyOnConfirmedBulletWaves` |
+| Training data | Only waves promoted to `OUTGOING` by an engine `BulletFired` that is bound to its request wave; once per wave | A wave surfer reacts only to real bullets' waves | Same test (virtual crossings rejected, single training) |
+| Activation | Eligible after 8 confirmed-wave labels; rated on the existing fire-opportunity cohort; selected only by the unchanged selector rule | Guns that don't help are never selected, which limits risk against non-surfers | `surferGunBecomesEligibleAfterEightConfirmedLabelsAndCanBeSelected` |
+| Fallback chain | Unchanged (recent → long → analytic → direct) | If the surfer gun has no evidence, the old chain applies | — |
+| Harness | `--plan` selects the registered plan. A plan-declared `screenId` names its receipt; v1's default name is unchanged | The spent v1 plan is not edited | `PlanSelectionTest` |
+
 ## 5 Review fixes (PR #105, review of head `1fe315a`)
 
 Each defect reproduced against the reviewed JAR. Each fix has a regression test. I mutation-checked every regression: with only the behavioural line reverted, the test fails and reproduces the reviewer's numbers (frozen power 0.9 instead of 1.0; shadow interval `[-3.1404826, 3.1182328]`; 0 revisit samples instead of 13).

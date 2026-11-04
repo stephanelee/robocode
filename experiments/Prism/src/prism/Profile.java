@@ -8,7 +8,7 @@ package prism;
 public final class Profile {
     private Profile() {}
 
-    public static final String VERSION = "prism-initial-profile-1";
+    public static final String VERSION = "prism-profile-2-surfer-gun";
 
     // Section 6: fire inference and power prediction
     public static final int MAX_SHOT_HYPOTHESES = 3;
@@ -28,6 +28,10 @@ public final class Profile {
     // Section 8: gun
     public static final int GUN_OFFSETS = 61;
     public static final int LEARNED_GUN_MIN_CROSSINGS = 16;
+    // Profile 2: anti-surfer gun on confirmed-bullet waves only (registered in docs/prism-surfer-gun-protocol.md)
+    public static final int[] SURFER_GUN_CAPACITIES = {32, 128, 512};
+    public static final int SURFER_GUN_MIN_LABELS = 8;
+    public static final int SURFER_GUN_NEIGHBORS = 5;
     public static final double SELECTOR_ALPHA = 0.05;
     public static final double SELECTOR_MARGIN = 0.02;
     public static final int SELECTOR_MIN_RESOLVED = 8;
@@ -79,6 +83,7 @@ public final class Profile {
     public static String describe() {
         return VERSION + "|" + MAX_SHOT_HYPOTHESES + "," + ENEMY_POWER_CAPACITY + "," + COLD_ENEMY_POWER + "," + FORECAST_CONFIDENCE
                 + "|" + LONG_GUN_CAPACITY + "," + java.util.Arrays.toString(RECENT_GUN_CAPACITIES) + "," + MOVE_HIT_CAPACITY + "," + MOVE_VISIT_CAPACITY
+                + "|" + java.util.Arrays.toString(SURFER_GUN_CAPACITIES) + "," + SURFER_GUN_MIN_LABELS + "," + SURFER_GUN_NEIGHBORS
                 + "|" + GUN_OFFSETS + "," + LEARNED_GUN_MIN_CROSSINGS + "," + SELECTOR_ALPHA + "," + SELECTOR_MARGIN + "," + SELECTOR_MIN_RESOLVED
                 + "|" + DUEL_POWER + "," + CLOSE_POWER + "," + CLOSE_RANGE + "," + ENERGY_RESERVE + "," + PLAN_EXPIRY_TURNS
                 + "|" + DESIRED_RANGE + "," + SURF_GAIN + "," + ORBIT_GAIN + "," + WALL_STICK + "," + MAX_TRAJECTORY_TICKS + "," + MAX_PREDICTOR_STEPS

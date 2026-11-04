@@ -1,8 +1,8 @@
-# KeelHelm v1
+# KeelHelm v1 — confirmation rejected
 
 [Issue107](https://github.com/stephanelee/robocode/issues/107), [PR108](https://github.com/stephanelee/robocode/pull/108), [prospective protocol](../../docs/improvements/keel-helm-v1.md), [fixed game registry](games.json), [unchanged source/JAR/tool freeze](freeze.json).
 
-**Registered screen PASS: all14cold games/120rounds valid,0own skips, no invalid or unplayed IDs.** Independent replay reconciled2,630raw-decision fields and1,341authority/binding checks. Candidate logged integer round maxMs reached13, baseline12; all remain below75. This opens fresh300round confirmation eligibility only. **No confirmation games have run and the improvement is not confirmed.**
+**Registered screen PASS: all14cold games/120rounds valid,0own skips, no invalid or unplayed IDs.** Independent replay reconciled2,630raw-decision fields and1,341authority/binding checks. Candidate logged integer round maxMs reached13, baseline12; all remain below75. That screen opened fresh300round confirmation eligibility. **Fresh confirmation completed: REJECT the improvement.** All18games/300fresh rounds valid; Diamond54.12100553%candidate versus56.43873576%Keel (−2.31773022pp, required>=+2pp). Retcon93.74743222%versus93.08497595%;0skips,maxMs18both. Keep original Keel. Confirmation custody is published in [separate PR113](https://github.com/stephanelee/robocode/pull/113); its independent archive review and merge passed; owner PR108 review is pending; screen120 and confirmation300 remain separate.
 
 | Opponent | Baseline mean share | Candidate mean share | Candidate minus baseline | Official firstPlaces baseline→candidate |
 | --- | ---: | ---: | ---: | ---: |
