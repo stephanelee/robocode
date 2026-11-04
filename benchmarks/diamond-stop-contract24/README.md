@@ -3,14 +3,19 @@
 Status: [PR #100](https://github.com/stephanelee/robocode/pull/100) implements the
 [issue #99](https://github.com/stephanelee/robocode/issues/99) registration.
 Hosted zero-case preparation [41818421304](https://github.com/stephanelee/robocode/actions/runs/41818421304)
-passed independent review. **0/24 numeric cases and 0 games executed; acquisition
-is pending and uncleared.**
+passed independent review. Exact-head review then cleared the sole numeric attempt,
+but acquisition workflow [41843951756](https://github.com/stephanelee/robocode/actions/runs/41843951756)
+failed the immutable runtime-profile gate before activation. **0/24 numeric cases
+and 0 games executed; no STOP prediction result was obtained.** See the
+[detailed result](../../docs/improvements/diamond-stop-contract24-results.md),
+[complete failure evidence](failed-preparation-41843951756/manifest.json) and
+[independent failure audit](failed-preparation-41843951756/independent-acquisition-review.md).
 [Protocol](../../docs/improvements/diamond-stop-contract24.md) fixes24 one-step
 cases, zero games and one acquisition attempt. [cases.json](cases.json) contains
 inputs only, including exact float representations; no outputs were calculated.
 The original predictor, actual SDK controller/clamps and pinned engine pure
 helpers plus source-derived translation/wall composition are now bound in the
-write-once [freeze](freeze.json), pending exact-head review before evaluation. There is no proposed correction,
+write-once [freeze](freeze.json), which remains unchanged after the failure. There is no proposed correction,
 new bot, live budget or strength gate. Keep all mismatches and failures.
 
 The durable acquisition ref is
@@ -37,3 +42,13 @@ collected/verified metadata only; tested SDK/port imports, bridge main and engin
 numeric helpers remain unexecuted. The fresh acquisition must reproduce the
 entire frozen profile before consuming the sole receipt. This checkpoint makes
 no STOP-option, gameplay or strength claim.
+
+The fresh job received image20261026.180.1 instead of exact frozen20261101.186.1;
+181 profile leaves differed. The receipt remains unused. Do not rerun or relabel
+until a favorable image appears. Any changed runtime plan/freeze/payload requires
+a prospective amendment and independent review. Verify the complete original
+failed-run ZIP and all72 original files without evaluating cases:
+
+```sh
+python3 -I -B -S benchmarks/diamond-stop-contract24/failed-preparation-41843951756/verify.py
+```
