@@ -246,5 +246,25 @@ class NativeStagingTest(unittest.TestCase):
             self.assertEqual(1, len(prepared), "the static venv is installed only once, not once per game")
 
 
+
+class PlanSelectionTest(unittest.TestCase):
+    def tearDown(self):
+        ps.select_plan("docs/prism/screen-plan.json")
+
+    def test_v2_plan_has_its_own_receipt_seeds_and_approval_path(self):
+        v1 = ps.load_plan()
+        ps.select_plan("docs/prism/screen-v2-plan.json")
+        v2 = ps.load_plan()
+        self.assertEqual("docs/prism/screen-v2-plan.json", ps.PLAN_REL)
+        self.assertTrue(ps.receipt_ref(v2).startswith("refs/tags/prism-screen-v2-"))
+        self.assertNotEqual(ps.receipt_ref(v1), ps.receipt_ref(v2))
+        self.assertFalse({g["seed"] for g in v1["games"]} & {g["seed"] for g in v2["games"]}, "fresh seeds")
+        self.assertEqual("pending", v2["approvedReview"])
+        self.assertEqual("pending", v2["approvedHead"])
+        self.assertEqual("prism-profile-2-surfer-gun", v2["freeze"]["profile"])
+
+    def test_v1_receipt_name_is_unchanged(self):
+        self.assertTrue(ps.receipt_ref(ps.load_plan()).startswith("refs/tags/prism-screen-v1-"))
+
 if __name__ == "__main__":
     unittest.main()

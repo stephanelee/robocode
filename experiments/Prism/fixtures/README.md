@@ -21,6 +21,10 @@ Two scripted probe bots took part (`probe/prism/probe/Probe.java`, built by `gra
 
 Three earlier recordings in the same session are not preserved here. Each was a superset attempt that failed to reach the corner because of probe-script bugs: a wall-phase counter reset and a diagonal push that pins the bot. The first recording (362/363 ticks, mover SHA-256 `658803fa…`) passed the same tests before it was superseded. It revealed no predictor disagreement. The corner recording then exposed one: the engine applies its wall constraint twice. `Physics` was corrected and the test now covers it.
 
+## `lifecycle-smoke-3/`: API integration smoke of the v2 candidate (not a measurement)
+
+Prism 0.2.0 `3ed4935bf44595a8626a4525c905117a422999f2207d341a5b11a177d641b4fd` played three rounds against the passive probe shooter. Results: 33 requests, 33 confirmations, 30 hits, 0 failures, 0 skipped turns in 575; worst decision 21.3 ms (p99 4.7 ms). The stationary probe never activates the learned guns (all 139 aims analytic), so this smoke checks integration only. It does not exercise the new anti-surfer gun.
+
 ## `lifecycle-smoke-2/`: API integration smoke of the current candidate (not a measurement)
 
 Prism `8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca` (after the PR #105 review fixes) played three rounds against the same passive probe shooter. Results: 34 fire requests, 34 confirmations, each bound to its own frozen request wave (0 `fire.confirmedWithoutWave`), 30 hits, 0 cancelled requests, 0 subsystem failures, 0 skipped turns in 583. Worst decision 19.3 ms (p99 5.2 ms). `scan.ignoredAtOrBeforeDeath` was 3: in each round the kill-turn scan arrived in the same batch as the death, the case the review identified.

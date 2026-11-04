@@ -8,6 +8,7 @@ Earlier cycles compare narrow candidates with the previously accepted version. C
 
 | Experiment | Measured budget and decision | Evidence |
 |---|---|---|
+| Prism 0.2.0 anti-surfer gun (profile 2) / PR pending | **Registered; not run; no decision.** Zero rounds. One change: a recent-window gun trained only on confirmed-bullet waves, chosen only by the existing virtual selector. It is motivated by v1's flat 7.5–8.4% hit rate against Diamond. The 200-round v2 screen (fresh seeds, same gates) awaits independent exact-head review. | [Protocol](prism-surfer-gun-protocol.md), [plan](prism/screen-v2-plan.json), [decision log §6](prism-implementation-decisions.md) |
 | Prism 0.1.0 registered screen / [issue #104](https://github.com/stephanelee/robocode/issues/104) / [PR #105](https://github.com/stephanelee/robocode/pull/105) | **Reject; no confirmation.** All13 games/200 official rounds completed. Equal-game shares Diamond28.608206%, Retcon94.327397%, Adaptive69.294953%, Spin Bot/Walls100%; only Diamond >40% gate failed. Official Prism first places8/60,54/60,43/60,10/10,10/10 (ties possible). Zero Prism skips/collisions/failures.199 round snapshots: Diamond game3 round15 absent, final cumulative20 present. No A/B, general-strength or superiority claim; production AIS unchanged. | [Frozen protocol/result](prism-screen-protocol.md), [original raw/provenance/reproduction](../benchmarks/prism-screen-v1/README.md), [sole run41863990617](https://github.com/stephanelee/robocode/actions/runs/41863990617) |
 
 ## Meridian standalone duel

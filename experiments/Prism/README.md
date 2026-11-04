@@ -4,6 +4,8 @@ Prism is a standalone experimental Java 17 Tank Royale bot. It was implemented i
 
 **Status: registered screen rejected; no confirmation.** The sole200-round screen completed: Diamond28.61% mean score share missed the >40% gate; Retcon94.33%, Adaptive69.29% and samples100% passed their gates. Zero Prism recorded skips/collisions/failures. [Full original evidence and limits](../../benchmarks/prism-screen-v1/README.md) include the missing Diamond game3 round15 telemetry line. This remains a standalone experimental reference, with no production AISurvivor promotion or fresh superiority claim.
 
+**Current candidate: Prism 0.2.0, profile `prism-profile-2-surfer-gun` (`Prism.jar 3ed4935b…`). Not yet measured.** It adds a single anti-surfer gun trained only on confirmed-bullet waves. Its own [registered v2 screen](../../docs/prism-surfer-gun-protocol.md) awaits an independent exact-head review. The v1 results above describe profile 1 only.
+
 ## What it does
 
 | Area | Implementation |
@@ -19,7 +21,7 @@ Prism is a standalone experimental Java 17 Tank Royale bot. It was implemented i
 | Radar | Fresh-scan lock with overshoot, sweeps when scans are missed or stale, stalest-first in melee (`radar.Radar`). |
 | Bounds | 256 waves per enemy, 512-tick histories, FIFO stores (8,192 long / 128, 512, 2,048 recent / 1,024 hits / 2,048 visits) and a 128 MiB global store guard. Failures in one subsystem degrade it to its analytic fallback. |
 
-Parameters are the specification's independent initial profile, `prism-initial-profile-1`, in `Profile.java`. Assumptions and deviations are recorded in the [implementation decision log](../../docs/prism-implementation-decisions.md).
+Parameters are the specification's independent initial profile in `Profile.java`, plus one registered change in profile 2: the `surfer` gun (windows 32/128/512, 5 neighbours, eligible after 8 confirmed-wave labels, chosen only by the unchanged virtual selector). Assumptions and deviations are recorded in the [implementation decision log](../../docs/prism-implementation-decisions.md).
 
 ## Build and test
 
@@ -32,7 +34,7 @@ python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/b
 
 The build writes the runnable bot directory to `build/bot/Prism/`. `Prism.jar` is committed, and CI checks source/JAR parity. Two clean builds produce byte-identical JARs. If the checkout lives in a synced folder that locks files, set `PRISM_BUILD_DIR` to a directory outside it.
 
-There are 39 JUnit tests: `CoreTest`, `LearningTest`, `BehaviourTest` (including the PR #105 review regressions) and `EngineTraceTest`. `EngineTraceTest` replays real Tank Royale 1.4.0 recordings (see [fixtures](fixtures/README.md)).
+There are 41 JUnit tests: `CoreTest`, `LearningTest`, `BehaviourTest` (including the PR #105 review regressions) and `EngineTraceTest`. `EngineTraceTest` replays real Tank Royale 1.4.0 recordings (see [fixtures](fixtures/README.md)).
 
 ## Run
 

@@ -28,6 +28,14 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def select_plan(path):
+    """Selects the registered plan to validate or run. Its repository-relative path is the only
+    approval-record path, and its declared screenId names the durable receipt (default v1)."""
+    global PLAN, PLAN_REL
+    PLAN = (ROOT / path).resolve() if not Path(path).is_absolute() else Path(path)
+    PLAN_REL = PLAN.relative_to(ROOT).as_posix()
+
+
 def load_plan():
     plan = json.loads(PLAN.read_text(encoding="utf-8"))
     games = plan["games"]
@@ -176,7 +184,7 @@ def _run(cmd):
 
 def receipt_ref(plan):
     """Durable receipt for this frozen screen: one tag per frozen candidate, never reused."""
-    return "refs/tags/%s-%s" % (SCREEN_ID, plan["freeze"]["prismJarSHA256"][:16])
+    return "refs/tags/%s-%s" % (plan.get("screenId", SCREEN_ID), plan["freeze"]["prismJarSHA256"][:16])
 
 
 APPROVAL_FIELDS = ("approvedReview", "approvedHead")
@@ -253,10 +261,12 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--review", required=True, help="URL of the recorded independent premeasurement review")
     ap.add_argument("--head", required=True, help="exact execution commit (GITHUB_SHA)")
+    ap.add_argument("--plan", default="docs/prism/screen-plan.json", help="registered plan (repository-relative)")
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--check-only", action="store_true", help="validate plan, pins and clearance; run nothing")
     mode.add_argument("--consume-receipt", metavar="OWNER/REPO", help="atomically consume the durable receipt; run nothing")
     a = ap.parse_args()
+    select_plan(a.plan)
     plan = load_plan()
     freeze = plan["freeze"]
     if sha256(BUNDLE / "Prism.jar") != freeze["prismJarSHA256"]:

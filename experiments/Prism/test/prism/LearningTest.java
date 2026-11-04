@@ -155,6 +155,58 @@ class LearningTest {
     }
 
     @Test
+    void surferGunTrainsOnlyOnConfirmedBulletWaves() {
+        Guns guns = new Guns(Rules.standard());
+        Wave virtual = wave(0, 1, 0.5, 0.5);
+        virtual.labelBearing = 0.2;
+        assertTrue(guns.train(virtual, 1, 30));
+        Guns.Data d = guns.data(2);
+        assertEquals(1, d.longStore.size());
+        for (NeighborStore s : d.surfer) assertEquals(0, s.size(), "virtual crossings never enter the anti-surfer views");
+        assertEquals(0, d.physicalLabels);
+        Wave shot = wave(0, 1, 0.5, 0.5);
+        shot.role = Wave.Role.OUTGOING;
+        shot.physical = true;
+        shot.labelBearing = -0.1;
+        assertTrue(guns.train(shot, 1, 31));
+        for (NeighborStore s : d.surfer) assertEquals(1, s.size());
+        assertEquals(1, d.physicalLabels);
+        assertEquals(NeighborStore.LabelType.PRECISE_GF, d.surfer[0].labelType());
+        assertFalse(guns.train(shot, 1, 32));                     // exactly once
+        assertEquals(1, d.physicalLabels);
+    }
+
+    @Test
+    void surferGunBecomesEligibleAfterEightConfirmedLabelsAndCanBeSelected() {
+        Guns guns = new Guns(Rules.standard());
+        Guns.Data d = guns.data(2);
+        for (int i = 0; i < 7; i++) {
+            Wave shot = wave(0, 1, 0.5, 0.5);
+            shot.role = Wave.Role.OUTGOING; shot.physical = true; shot.labelBearing = 0.3;
+            guns.train(shot, 1, 40 + i);
+        }
+        assertFalse(guns.eligible(d).contains(Guns.SURFER));
+        Wave eighth = wave(0, 1, 0.5, 0.5);
+        eighth.role = Wave.Role.OUTGOING; eighth.physical = true; eighth.labelBearing = 0.3;
+        guns.train(eighth, 1, 47);
+        assertTrue(guns.eligible(d).contains(Guns.SURFER));
+        // its prediction follows the confirmed-bullet labels
+        Guns.Aim a = new Guns.Aim(0, 0, 11, new prism.core.Physics.Motion(400, 0, Math.PI / 2, 8), 10, 0, 2, ctx(0.5), 1, 0.5, 0.5, 0, false);
+        Double p = guns.learned(Guns.SURFER, a, d);
+        assertNotNull(p);
+        assertEquals(0.3, prism.core.Angles.wrap(p - a.reference()), 0.02);
+        // the unchanged selector rule picks it when it rates better on the shared cohort
+        for (int i = 0; i < 8; i++) {
+            Wave w = wave(0, 1, 0.5, 0.5);
+            w.fireOpportunity = true; w.labelBearing = 0; w.labelHalfWidth = 0.02;
+            w.predictions.put(Guns.ANALYTIC, errFor(0.2, 0.02));
+            w.predictions.put(Guns.SURFER, errFor(0.8, 0.02));
+            guns.rate(w);
+        }
+        assertEquals(Guns.SURFER, d.current);
+    }
+
+    @Test
     void dangerQuadratureWilsonAndActivation() {
         Danger d = new Danger();
         Wave w = new Wave(3, Wave.Role.INCOMING, 2, -1, 10, 10, 0, 0, 2, 0, 0, 1, Wave.Escape.THEORETICAL, 0, 0, ctx(0.5), 1, 9);
