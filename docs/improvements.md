@@ -94,8 +94,10 @@ The new foundation experiment adds 120 scored rounds without changing the origin
 
 ## Controlled component benchmarks
 
+
 | Experiment | Measured budget / decision | Evidence |
 | --- | --- | --- |
+| Diamond STOP command composition / [issue #99](https://github.com/stephanelee/robocode/issues/99) | **Prospectively registered; zero cases/games executed.** Fixed24 one-step cards characterize the unchanged port predictor against actual SDK clamps/engine pure helpers plus a source-derived position reference. One attempt, no corrected bot/live budget or strength gate. Exact payload/runtime review remains required. | [Protocol](improvements/diamond-stop-contract24.md), [input-only registry](../benchmarks/diamond-stop-contract24/README.md) |
 | Dual-model swept-corridor v2 / [PR #24](https://github.com/stephanelee/robocode/pull/24) | **Offline diagnostic retained; live selector not promoted.** 816 development +90 withheld states Ã—4 uncertainty profiles Ã—3 delays =10,872 deterministic rows; 13 fixture tests; zero score matches. Fresh/delay0 conditional safety167â†’686/816 and29â†’76/90, but age5+15Â°/delay3 only47â†’103/816 and2â†’4/90; unrestricted heading certifies none. Wall contact remains common. | [Method/results](dual-aim-diagnostic.md), [summary](../benchmarks/dual-aim-v2/summary.json), full raw rows in the PR's `Component diagnostics` workflow artifact `dual-aim-v2-raw`. Conditional geometry is not gameplay strength or independent collision-rate evidence. |
 
 Conformance correction: [v1 exploratory report](dual-aim-v1-invalid.md) is invalidated by a missing second engine corner-constraint pass; its source/raw artifacts are preserved. Repaired v2 reran the unchanged full matrix:167 development rows changed (wall counters plus2 clearances), no safety decision/command/withheld row changed. The fixed withheld set was already inspected and is not fresh generalization evidence. [Full comparison](../benchmarks/dual-aim-v2/conformance-diff.json).
