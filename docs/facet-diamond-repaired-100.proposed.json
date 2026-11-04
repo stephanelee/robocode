@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "purpose": "DECLINED historicalfresh100proposal; no launch/userbudget/premeasurementapproval",
+  "purpose": "User-authorized fresh Diamond100 after runner completion repair; premeasurement review pending",
   "roundsPerGame": 20,
   "gamesPerOpponent": 5,
   "opponents": [
@@ -16,7 +16,7 @@
   "premeasurementApproved": false,
   "independentReviewEvidence": {
     "path": "experiments/Facet/evidence/runner-completion-repair/independent-review.md",
-    "scope": "offline readinessrepair review only, no newbudget/acquisitionapproval"
+    "scope": "offline runner repair reviewed; renewed100-round premeasurement approval pending"
   },
   "facetJarSHA256": "817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792",
   "facetSourceSHA256": "dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d",
@@ -100,7 +100,7 @@
     "experiments/Facet/evidence/screen-evidence-repair/verified-ci.json": "f6cab0dab21cd394029b6ef5c0953fbf452cf0edfb12a24eaa459095d4a465ba",
     ".github/workflows/facet-diamond-repaired-screen.yml": "7c46fd1934323556c403949e60ca57d90cc6ccabcee5c1926c9998ebbfd93d40",
     "tools/FacetCompletionBarrierTest.java": "65be65187f1248d3deb399e0246a29115a5885b73c6fe0c1949e9ae85ed3e802",
-    "docs/facet-diamond-repaired-100-protocol.md": "4803762aebc1f01db1af7baa21856ce25e606b8c6f367fcb02e851b3ff44a3c0",
+    "docs/facet-diamond-repaired-100-protocol.md": "6f7e86a4e41fc903e25fa6b2ef07e943290487c0ca9048881241add705945691",
     "docs/facet-runner-completion-repair.md": "6e3bcd19eda2bd511872d326c2f9dc198546075e02549df6dadc68c06ad910be",
     "experiments/Facet/evidence/runner-completion-repair/independent-review.md": "6b0dede18ad86355d8b12e5d430c7d06fc6085895f3ddd559e12b1ec5ba34970"
   },
@@ -177,7 +177,7 @@
     "jobMinutes": 180
   },
   "promotionPolicy": "Diamond equal-game mean share>40%, skip<.5%, collision<1%, exact completion/engineering gates unchanged; no promotion/merge/confirmation automatically; transfer/melee gaps remain",
-  "candidateCommit": "7c4022b638153f661d486a9e6e2d1c955e5b8213",
+  "candidateCommit": "93863d2aa9501c537b098fe556b4ff961c9f772e",
   "preflightSetupFailure": {
     "runId": 41850497212,
     "measuredGames": 0,
@@ -220,7 +220,7 @@
     }
   ],
   "freshAcquisitionAfterInvalid": true,
-  "userAuthorizedFreshBudget": false,
+  "userAuthorizedFreshBudget": true,
   "metricsSchema": 3,
   "priorInvalidAcquisition": {
     "officialPhysicalRounds": 160,
@@ -232,8 +232,10 @@
   "proposalProtocol": "docs/facet-diamond-repaired-100-protocol.md",
   "userDecision": {
     "date": "2026-11-04",
-    "answer": "Stop with20Diamondrounds",
-    "newRoundsAuthorized": 0
+    "answer": "Test it vs diamond port",
+    "scope": "100 NEW rounds, five cold20 Diamond-only games after runner repair",
+    "newRoundsAuthorized": 100,
+    "evidence": "https://github.com/stephanelee/robocode/issues/101#issuecomment-6638845353"
   },
   "priorInvalidAcquisitions": [
     {
