@@ -1,8 +1,7 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.SplittableRandom;
 
 /** Breakwater's game-local controller. Coordinates and headings follow Tank Royale. */
@@ -10,27 +9,35 @@ final class BreakwaterPolicy {
     record Own(int turn, double x, double y, double heading, double speed, double gun, double heat,
                double energy, double cooling, double width, double height) {}
     record Target(int turn, double x, double y, double heading, double speed, double energy) {}
-    record Wave(int creation, double x, double y, double power, double reference) {
+    record Wave(int creation, double x, double y, double power, double reference, double lateral) {
+        Wave(int creation, double x, double y, double power, double reference) {
+            this(creation, x, y, power, reference, 0);
+        }
         double speed() { return 20 - 3 * power; }
+        double escape() { return Math.toDegrees(Math.asin(8 / speed())); }
     }
-    enum Mode { BAIT, SHIELD, EVADE, ATTACK }
-    record Decision(double turnRate, double targetSpeed, double aim, double power,
-                    Mode mode, int waveTurn, boolean solution) {}
-    private record Pose(double x, double y, double heading, double speed) {}
-    private record Motion(double turn, double speed) {}
-    private record Shot(double aim, boolean now) {}
-    private record Rays(double linear, double stopped, boolean agreement) {}
+    record Decision(double turnRate, double targetSpeed, double aim, double power, int gun, int waves, int orbitSign) {}
+    record Pose(double x, double y, double heading, double speed) {}
+    record Motion(double turn, double speed) {}
+    private record Path(int side, int switchAfter) {
+        int sign(int elapsed) { return elapsed < switchAfter ? side : -side; }
+    }
+    private record Rays(double linear, double stopped, double circular) {
+        double get(int gun) { return switch (gun) { case 0 -> linear; case 1 -> stopped; default -> circular; }; }
+    }
+    private record Pending(int creation, double x, double y, double power, Rays rays) {}
 
-    static final double BODY = 18, SHIELD_SPEED = 19.7;
-    private static final int STEP_TURNS = 4, SEARCH = 90, RECENT_ATTACKS = 32;
+    static final double BODY = 18;
+    private static final int SEARCH = 90, MEMORY = 32;
     private final SplittableRandom random;
     private final ArrayDeque<Double> residuals = new ArrayDeque<>();
     private final ArrayDeque<Integer> results = new ArrayDeque<>();
     private final List<Flight> flights = new ArrayList<>();
-    private final Set<Integer> shielded = new HashSet<>();
-    private int side;
+    private int side, since, primary, secondary;
+    private Path path;
     private Target latest;
-    private double width, height;
+    private double turnRate;
+    private Pending pending;
 
     BreakwaterPolicy(long seed) {
         random = new SplittableRandom(seed);
@@ -39,203 +46,176 @@ final class BreakwaterPolicy {
 
     void startRound() {
         flights.clear();
-        shielded.clear();
+        pending = null;
         latest = null;
+        turnRate = 0;
+        path = null;
         side = random.nextBoolean() ? 1 : -1;
     }
 
     void matched(Wave wave, double heading) {
-        double offset = CombatMath.relativeAngle(heading - wave.reference());
-        if (!Double.isFinite(offset)) return;
-        if (residuals.size() == 8) residuals.removeFirst();
-        residuals.addLast(clamp(offset, -12, 12));
+        if (Math.abs(wave.lateral()) < 1) return;
+        double gf = CombatMath.relativeAngle(heading - wave.reference()) * Math.signum(wave.lateral()) / wave.escape();
+        if (!Double.isFinite(gf)) return;
+        if (residuals.size() == MEMORY) residuals.removeFirst();
+        residuals.addLast(clamp(gf, -1, 1));
     }
 
     double[] corrections() { return residuals.stream().mapToDouble(Double::doubleValue).toArray(); }
 
-    private double correction() {
-        double sum = 0;
-        for (double value : residuals) sum += value;
-        return residuals.isEmpty() ? 0 : sum / residuals.size();
-    }
-
-    void shieldLaunched(int creation) { shielded.add(creation); }
-
     Decision decide(Own own, Target target, List<Wave> waves) {
-        width = own.width();
-        height = own.height();
-        Pose pose = new Pose(own.x(), own.y(), own.heading(), own.speed());
-        boolean fresh = target != null && own.turn() >= target.turn() && own.turn() - target.turn() <= 1;
-        double direct = target == null ? own.gun() : bearing(pose.x(), pose.y(), target.x(), target.y());
-        double range = target == null ? 0 : Math.hypot(target.x() - own.x(), target.y() - own.y());
-        Wave first = null;
-        double nearest = Double.POSITIVE_INFINITY;
-        shielded.removeIf(id -> waves.stream().noneMatch(w -> w.creation() == id));
-        boolean emergency = false;
-        for (Wave w : waves) {
-            double remaining = (Math.hypot(own.x() - w.x(), own.y() - w.y()) - BODY) / w.speed()
-                    - (own.turn() - w.creation() + 2);
-            if (remaining < -2 || w.creation() > own.turn()) continue;
-            if (shielded.contains(w.creation())) {
-                // A fired shield is not a confirmed collision. Escape if that wave still approaches.
-                if (remaining <= 5) emergency = true;
-            } else if (remaining < nearest) {
-                nearest = remaining;
-                first = w;
-            }
+        var pose = new Pose(own.x(), own.y(), own.heading(), own.speed());
+        double ex = target == null ? own.width() / 2 : target.x();
+        double ey = target == null ? own.height() / 2 : target.y();
+        var threats = waves.stream().filter(w -> w.creation() <= own.turn() && eta(own, w) >= -2)
+                .sorted(Comparator.comparingDouble((Wave w) -> eta(own, w)).thenComparingInt(Wave::creation)).limit(2).toList();
+        int first = threats.isEmpty() ? -1 : threats.get(0).creation();
+        int second = threats.size() < 2 ? -1 : threats.get(1).creation();
+        if (path == null || primary != first || secondary != second || own.turn() - since >= 16) {
+            path = choose(own, pose, ex, ey, threats);
+            since = own.turn();
+            primary = first;
+            secondary = second;
         }
-        if (first != null && fresh && range >= 350 && !emergency && own.energy() > .1) {
-            Shot shot = shield(own, pose, direct, first);
-            if (shot != null) {
-                Motion motion = sidestep(pose, direct, own.turn() - first.creation());
-                return decision(motion, shot.aim(), shot.now() ? .1 : 0, Mode.SHIELD, first.creation(), true);
-            }
-        }
+        side = path.sign(own.turn() - since);
+        Motion motion = travel(pose, ex, ey, side, own.width(), own.height());
 
-        boolean evade = !fresh || range < 350 || emergency || first != null;
-        Motion motion = evade ? escape(pose, direct) : steer(pose, direct + 90 * side, 0);
-        if (fresh && first == null && !emergency) {
-            double power = target.energy() <= 4 ? clamp((target.energy() + .001) / 4, .1, 1) : 1;
-            Rays rays = rays(own.turn() + 1, own.x(), own.y(), power, target);
-            if (rays.agreement() || target.energy() <= 4) {
-                int[] scores = attackScores();
-                double aim = scores[1] > scores[0] ? rays.stopped() : rays.linear();
-                double half = Math.toDegrees(Math.asin(Math.min(1, BODY / Math.max(BODY, range))));
-                boolean aligned = Math.abs(CombatMath.relativeAngle(aim - own.gun())) <= half / 2;
-                boolean canFire = own.energy() > power && own.heat() <= 1e-9 && aligned;
-                return decision(motion, aim, canFire ? power : 0, Mode.ATTACK, -1, false);
-            }
-        }
-        return decision(motion, direct, 0, evade ? Mode.EVADE : Mode.BAIT, first == null ? -1 : first.creation(), false);
+        pending = null;
+        if (target == null || own.turn() < target.turn() || own.turn() - target.turn() > 1)
+            return new Decision(motion.turn(), motion.speed(), own.gun(), 0, -1, threats.size(), side);
+        double range = Math.hypot(ex - own.x(), ey - own.y());
+        double power = Math.min(range <= 320 ? 2 : 1.35, own.energy() / 16);
+        power = clamp(Math.min(power, (target.energy() + .001) / 4), .1, 2);
+        int launch = own.turn() + 1;
+        Rays rays = new Rays(forecast(own, target, power, 0), bearing(own.x(), own.y(), ex, ey),
+                forecast(own, target, power, turnRate));
+        int[] counts = attackScores();
+        int gun = 2; // Circular forecast includes straight motion as the zero-turn case.
+        for (int g = 0; g < 2; g++) if (counts[g] > counts[gun]) gun = g;
+        double aim = rays.get(gun);
+        double half = Math.toDegrees(Math.asin(Math.min(1, BODY / Math.max(BODY, range))));
+        boolean fire = own.energy() > power && own.heat() <= 1e-9
+                && Math.abs(CombatMath.relativeAngle(aim - own.gun())) <= .75 * half;
+        if (fire) pending = new Pending(launch, own.x(), own.y(), power, rays);
+        return new Decision(motion.turn(), motion.speed(), aim, fire ? power : 0, gun, threats.size(), side);
     }
 
-    private static Decision decision(Motion m, double aim, double power, Mode mode, int wave, boolean solution) {
-        return new Decision(m.turn(), m.speed(), aim, power, mode, wave, solution);
+    private static double eta(Own own, Wave w) {
+        return (Math.hypot(own.x() - w.x(), own.y() - w.y()) - BODY) / w.speed() - (own.turn() - w.creation() + 2);
     }
 
-    private Motion sidestep(Pose p, double direct, int age) {
-        return steer(p, direct + 90 * side, age < STEP_TURNS ? 4 : 0);
+    private Path choose(Own own, Pose pose, double ex, double ey, List<Wave> waves) {
+        Path[] options = {new Path(side, SEARCH + 1), new Path(-side, SEARCH + 1), new Path(side, 5), new Path(side, 10)};
+        int n = waves.isEmpty() ? 2 : 4;
+        double[] score = new double[n];
+        double best = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < n; i++) {
+            score[i] = risk(own, pose, ex, ey, waves, options[i]);
+            best = Math.min(best, score[i]);
+        }
+        // Seeded reservoir choice among near-equal complete trajectories; hold the chosen policy between replans.
+        int seen = 0, pick = 0;
+        for (int i = 0; i < n; i++)
+            if (score[i] <= best + .08 && random.nextInt(++seen) == 0) pick = i;
+        return options[pick];
     }
 
-    private Shot shield(Own own, Pose initial, double direct, Wave wave) {
-        double heading = wave.reference() + correction();
-        double ux = Math.cos(Math.toRadians(heading)), uy = Math.sin(Math.toRadians(heading));
-        Pose pose = initial;
-        int cooled = (int) Math.ceil(Math.max(0, own.heat() - 1e-9) / own.cooling());
-        for (int delay = 0; delay < SEARCH; delay++) {
-            int command = own.turn() + delay, launch = command + 1;
-            Pose next = step(pose, sidestep(pose, direct, command - wave.creation()));
-            if (!inside(next)) return null;
-            // Fire before movement, using the command-turn gun heading and position.
-            double offset = Math.abs((pose.x() - wave.x()) * uy - (pose.y() - wave.y()) * ux);
-            if (delay >= cooled && offset >= 2) {
-                for (int tick = launch; tick < launch + SEARCH; tick++) {
-                    double lo = wave.speed() * (tick - wave.creation() + 1);
-                    // Stop before the threatening wave can touch even this stationary firing position.
-                    if (lo + wave.speed() >= Math.hypot(pose.x() - wave.x(), pose.y() - wave.y()) - BODY) break;
-                    double ax = wave.x() + lo * ux, ay = wave.y() + lo * uy;
-                    double bx = ax + wave.speed() * ux, by = ay + wave.speed() * uy;
-                    double inner = SHIELD_SPEED * (tick - launch + 1);
-                    if (delay == 0 && intersectsRay(pose, own.gun(), inner, ax, ay, bx, by))
-                        return new Shot(own.gun(), true);
-                    if (delay == 0) continue;
-                    double aim = crossingAim(pose, inner, ax, ay, bx, by);
-                    if (Double.isFinite(aim) && Math.abs(CombatMath.relativeAngle(aim - own.gun())) <= 20 * delay)
-                        return new Shot(aim, false);
+    private double risk(Own own, Pose pose, double enemyX, double enemyY, List<Wave> waves, Path option) {
+        double[] peakDanger = new double[waves.size()];
+        double wallPenalty = 0;
+        for (int step = 1; step <= SEARCH; step++) {
+            Motion motion = travel(pose, enemyX, enemyY, option.sign(step - 1), own.width(), own.height());
+            pose = step(pose, motion);
+            double wallGap = DuelSurf.wallDistance(pose.x(), pose.y(), own.width(), own.height()) - BODY;
+            if (wallGap < 0) return 1000 - step;
+            wallPenalty = Math.max(wallPenalty, Math.max(0, 72 - wallGap) / 72);
+            boolean allPassed = true;
+            for (int i = 0; i < waves.size(); i++) {
+                Wave wave = waves.get(i);
+                double distance = Math.hypot(pose.x() - wave.x(), pose.y() - wave.y());
+                double innerRadius = (own.turn() + step - wave.creation() + 1) * wave.speed();
+                if (innerRadius > distance + BODY) continue;
+                allPassed = false;
+                if (innerRadius + wave.speed() >= distance - BODY) {
+                    peakDanger[i] = Math.max(peakDanger[i], density(wave, pose, distance));
                 }
             }
-            if (wave.speed() * (launch - wave.creation() + 1) >= Math.hypot(pose.x() - wave.x(), pose.y() - wave.y()) - BODY)
-                break;
-            pose = next;
+            if (allPassed && step >= 12) break;
         }
-        return null;
+        double total = .18 * wallPenalty;
+        for (int i = 0; i < peakDanger.length; i++) total += peakDanger[i] / (1 + i);
+        return total;
     }
 
-    /** Find the middle of the radial overlap on a monotone part of the enemy segment. */
-    private static double crossingAim(Pose p, double inner, double ax, double ay, double bx, double by) {
-        double dx = bx - ax, dy = by - ay;
-        double foot = ((p.x() - ax) * dx + (p.y() - ay) * dy) / (dx * dx + dy * dy);
-        double split = clamp(foot, 0, 1);
-        double min = Math.hypot(ax + split * dx - p.x(), ay + split * dy - p.y());
-        double first = Math.hypot(ax - p.x(), ay - p.y()), last = Math.hypot(bx - p.x(), by - p.y());
-        double outer = Math.min(inner + SHIELD_SPEED, Math.max(first, last));
-        double lower = Math.max(inner, min);
-        if (lower >= outer) return Double.NaN;
-        double r = (lower + outer) * .5;
-        double fx = ax + foot * dx - p.x(), fy = ay + foot * dy - p.y();
-        double shift = Math.sqrt(Math.max(0, (r * r - fx * fx - fy * fy) / (dx * dx + dy * dy)));
-        double u = first >= last ? foot - shift : foot + shift;
-        double aim = bearing(p.x(), p.y(), ax + u * dx, ay + u * dy);
-        return intersectsRay(p, aim, inner, ax, ay, bx, by) ? aim : Double.NaN;
-    }
-
-    private static boolean intersectsRay(Pose p, double aim, double inner, double ax, double ay, double bx, double by) {
-        double ux = Math.cos(Math.toRadians(aim)), uy = Math.sin(Math.toRadians(aim));
-        return collide(p.x() + inner * ux, p.y() + inner * uy, p.x() + (inner + SHIELD_SPEED) * ux,
-                p.y() + (inner + SHIELD_SPEED) * uy, ax, ay, bx, by);
-    }
-
-    /** Same-tick BulletLine endpoint prefilter and segment tests from pinned CollisionDetector / model/math. */
-    static boolean collide(double x1, double y1, double x2, double y2,
-                           double x3, double y3, double x4, double y4) {
-        if (Math.hypot(x2 - x4, y2 - y4) > 2 * SHIELD_SPEED) return false;
-        double ax = x2 - x1, ay = y2 - y1, bx = x3 - x4, by = y3 - y4;
-        double cx = x1 - x3, cy = y1 - y3;
-        double den = ay * bx - ax * by, a = by * cx - bx * cy, b = ax * cy - ay * cx;
-        if (den > 0) return a >= 0 && a <= den && b >= 0 && b <= den;
-        if (den < 0) return a <= 0 && a >= den && b <= 0 && b >= den;
-        return x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2) == 0
-                && Math.max(Math.min(x1, x2), Math.min(x3, x4)) <= Math.min(Math.max(x1, x2), Math.max(x3, x4))
-                && Math.max(Math.min(y1, y2), Math.min(y3, y4)) <= Math.min(Math.max(y1, y2), Math.max(y3, y4));
-    }
-
-    private Motion escape(Pose pose, double direct) {
-        for (double angle : new double[]{direct + 90 * side, direct - 90 * side,
-                bearing(pose.x(), pose.y(), width / 2, height / 2)}) {
-            Pose projected = pose;
-            boolean safe = true;
-            for (int i = 0; i < 8; i++) {
-                projected = step(projected, steer(projected, angle, 8));
-                if (!inside(projected)) { safe = false; break; }
-            }
-            if (safe) return steer(pose, angle, 8);
+    /** Density of actual incoming ray angles, mirroring samples about launch-time lateral direction. */
+    private double density(Wave w, Pose p, double distance) {
+        double sign = w.lateral() < 0 ? -1 : 1;
+        double gf = CombatMath.relativeAngle(bearing(w.x(), w.y(), p.x(), p.y()) - w.reference()) * sign / w.escape();
+        double width = .10 + Math.toDegrees(Math.asin(Math.min(1, BODY / Math.max(BODY, distance)))) / w.escape();
+        double linear = Math.toDegrees(Math.asin(Math.min(1, Math.abs(w.lateral()) / w.speed()))) / w.escape();
+        double sum = kernel(gf, width) + 2 * kernel(gf - linear, width);
+        int count = 3;
+        if (Math.abs(w.lateral()) >= 1) {
+            for (double hit : residuals) sum += kernel(gf - hit, width);
+            count += residuals.size();
         }
-        return steer(pose, bearing(pose.x(), pose.y(), width / 2, height / 2), 0);
+        return sum / count;
     }
 
-    private boolean inside(Pose p) {
-        return p.x() > BODY && p.x() < width - BODY && p.y() > BODY && p.y() < height - BODY;
+    private static double kernel(double offset, double width) {
+        double z = offset / width;
+        return 1 / (1 + z * z);
     }
 
-    private static Motion steer(Pose p, double angle, double magnitude) {
-        double diff = CombatMath.relativeAngle(angle - p.heading());
-        boolean reverse = Math.abs(diff) > 90;
-        if (reverse) diff = CombatMath.relativeAngle(diff + 180);
-        return new Motion(clamp(diff, -DuelSurf.maxTurn(p.speed()), DuelSurf.maxTurn(p.speed())), reverse ? -magnitude : magnitude);
-    }
-
-    private static Pose step(Pose p, Motion m) {
-        double v = DuelSurf.nextSpeed(p.speed(), m.speed()), a = Math.toRadians(p.heading());
-        double limit = DuelSurf.maxTurn(v);
-        return new Pose(p.x() + v * Math.cos(a), p.y() + v * Math.sin(a),
-                p.heading() + clamp(m.turn(), -limit, limit), v);
-    }
-
-    private Rays rays(int launch, double x, double y, double power, Target t) {
-        double speed = 20 - 3 * power, px = t.x(), py = t.y();
-        double dx = t.speed() * Math.cos(Math.toRadians(t.heading())), dy = t.speed() * Math.sin(Math.toRadians(t.heading()));
-        for (int tick = t.turn() + 1; tick <= launch + SEARCH; tick++) {
-            double nx = clamp(px + dx, BODY, width - BODY), ny = clamp(py + dy, BODY, height - BODY);
-            if (nx != px + dx || ny != py + dy) { dx = 0; dy = 0; }
-            px = nx; py = ny;
-            if (tick >= launch && speed * (tick - launch + 2) >= Math.hypot(px - x, py - y)) break;
+    private static Motion travel(Pose pose, double enemyX, double enemyY, int side, double width, double height) {
+        double range = Math.hypot(enemyX - pose.x(), enemyY - pose.y());
+        double angle = bearing(pose.x(), pose.y(), enemyX, enemyY) + side * (90 - clamp((range - 430) / 7, -32, 32));
+        // Smooth a 100px travel stick toward center. Back-as-front preserves the same travel vector.
+        double center = bearing(pose.x(), pose.y(), width / 2, height / 2);
+        double towardCenter = Math.signum(CombatMath.relativeAngle(center - angle));
+        for (int i = 0; i < 18; i++) {
+            double radians = Math.toRadians(angle);
+            double probeX = pose.x() + 100 * Math.cos(radians);
+            double probeY = pose.y() + 100 * Math.sin(radians);
+            if (DuelSurf.wallDistance(probeX, probeY, width, height) >= 30) break;
+            angle += 10 * towardCenter;
         }
-        double linear = bearing(x, y, px, py), stopped = bearing(x, y, t.x(), t.y());
-        // Require both candidate rays to pass inside both predicted footprints. A winning model may use either.
-        double gap = Math.abs(CombatMath.relativeAngle(linear - stopped));
-        double far = Math.max(Math.hypot(px - x, py - y), Math.hypot(t.x() - x, t.y() - y));
-        boolean agreement = gap <= Math.toDegrees(Math.asin(Math.min(1, BODY / Math.max(BODY, far))));
-        return new Rays(linear, stopped, agreement);
+        double difference = CombatMath.relativeAngle(angle - pose.heading());
+        boolean reverse = Math.abs(difference) > 90;
+        if (reverse) difference = CombatMath.relativeAngle(difference + 180);
+        double maximumTurn = DuelSurf.maxTurn(pose.speed());
+        double turn = clamp(difference, -maximumTurn, maximumTurn);
+        Motion motion = new Motion(turn, reverse ? -8 : 8);
+        Pose next = step(pose, motion);
+        if (DuelSurf.wallDistance(next.x(), next.y(), width, height) < BODY) return new Motion(turn, 0);
+        return motion;
+    }
+
+    static Pose step(Pose pose, Motion motion) {
+        double speed = DuelSurf.nextSpeed(pose.speed(), motion.speed());
+        double angle = Math.toRadians(pose.heading());
+        double limit = DuelSurf.maxTurn(speed);
+        return new Pose(pose.x() + speed * Math.cos(angle), pose.y() + speed * Math.sin(angle),
+                pose.heading() + clamp(motion.turn(), -limit, limit), speed);
+    }
+
+    private static double forecast(Own own, Target target, double power, double turnRate) {
+        double bulletSpeed = 20 - 3 * power;
+        double x = target.x(), y = target.y();
+        double heading = target.heading(), speed = target.speed();
+        int launch = own.turn() + 1;
+        for (int tick = target.turn() + 1; tick <= launch + SEARCH; tick++) {
+            double nextX = x + speed * Math.cos(Math.toRadians(heading));
+            double nextY = y + speed * Math.sin(Math.toRadians(heading));
+            x = clamp(nextX, BODY, own.width() - BODY);
+            y = clamp(nextY, BODY, own.height() - BODY);
+            if (nextX != x || nextY != y) speed = 0;
+            double limit = DuelSurf.maxTurn(speed);
+            heading += clamp(turnRate, -limit, limit);
+            double outerRadius = bulletSpeed * (tick - launch + 2);
+            if (tick >= launch && outerRadius >= Math.hypot(x - own.x(), y - own.y())) break;
+        }
+        return bearing(own.x(), own.y(), x, y);
     }
 
     private static final class Flight {
@@ -243,37 +223,50 @@ final class BreakwaterPolicy {
         final double x, y, speed;
         final Rays rays;
         int observed, hits;
+
         Flight(int launch, double x, double y, double speed, Rays rays) {
-            this.launch = launch; this.x = x; this.y = y; this.speed = speed; this.rays = rays;
+            this.launch = launch;
+            this.x = x;
+            this.y = y;
+            this.speed = speed;
+            this.rays = rays;
             observed = launch - 1;
         }
     }
 
     void attackLaunched(int creation, double x, double y, double power, Target original) {
-        if (original == null || width <= 2 * BODY || height <= 2 * BODY) return;
-        Flight f = new Flight(creation, x, y, 20 - 3 * power, rays(creation, x, y, power, original));
+        Pending request = pending;
+        pending = null;
+        if (original == null || request == null || creation != request.creation()
+                || Math.abs(power - request.power()) > 1e-6 || Math.hypot(x - request.x(), y - request.y()) > 1e-6) return;
         if (flights.size() == 16) flights.remove(0);
-        flights.add(f);
+        flights.add(new Flight(creation, x, y, 20 - 3 * power, request.rays()));
         if (latest != null && latest.turn() == creation) score(latest);
     }
 
-    void observe(Target t) {
-        if (t == null || latest != null && latest.turn() >= t.turn()) return;
-        latest = t;
-        score(t);
+    void observe(Target target) {
+        if (target == null || latest != null && latest.turn() >= target.turn()) return;
+        turnRate = latest != null && latest.turn() + 1 == target.turn()
+                ? CombatMath.relativeAngle(target.heading() - latest.heading()) : 0;
+        latest = target;
+        score(target);
     }
 
-    private void score(Target t) {
-        flights.removeIf(f -> {
-            if (t.turn() == f.observed) return false;
-            if (t.turn() != f.observed + 1 || t.turn() - f.launch >= SEARCH) return true;
-            f.observed = t.turn();
-            double inner = f.speed * (t.turn() - f.launch + 1);
-            if (DuelGun.segmentDistance(t.x(), t.y(), f.x, f.y, f.rays.linear(), inner, inner + f.speed) <= BODY) f.hits |= 1;
-            if (DuelGun.segmentDistance(t.x(), t.y(), f.x, f.y, f.rays.stopped(), inner, inner + f.speed) <= BODY) f.hits |= 2;
-            if (f.hits != 3 && inner <= Math.hypot(t.x() - f.x, t.y() - f.y) + BODY) return false;
-            if (results.size() == RECENT_ATTACKS) results.removeFirst();
-            results.addLast(f.hits);
+    private void score(Target scan) {
+        flights.removeIf(flight -> {
+            if (scan.turn() == flight.observed) return false;
+            if (scan.turn() != flight.observed + 1 || scan.turn() - flight.launch >= SEARCH) return true;
+            flight.observed = scan.turn();
+            double innerRadius = flight.speed * (scan.turn() - flight.launch + 1);
+            for (int gun = 0; gun < 3; gun++) {
+                double distance = DuelGun.segmentDistance(scan.x(), scan.y(), flight.x, flight.y,
+                        flight.rays.get(gun), innerRadius, innerRadius + flight.speed);
+                if (distance <= BODY) flight.hits |= 1 << gun;
+            }
+            double range = Math.hypot(scan.x() - flight.x, scan.y() - flight.y);
+            if (flight.hits != 7 && innerRadius <= range + BODY) return false;
+            if (results.size() == MEMORY) results.removeFirst();
+            results.addLast(flight.hits);
             return true;
         });
     }
@@ -281,11 +274,16 @@ final class BreakwaterPolicy {
     int[] attackHistory() { return results.stream().mapToInt(Integer::intValue).toArray(); }
 
     int[] attackScores() {
-        int[] counts = {0, 0, results.size()};
-        for (int result : results) { counts[0] += result & 1; counts[1] += (result >> 1) & 1; }
+        int[] counts = {0, 0, 0, results.size()};
+        for (int hits : results) {
+            for (int gun = 0; gun < 3; gun++) counts[gun] += (hits >> gun) & 1;
+        }
         return counts;
     }
 
-    private static double bearing(double x, double y, double tx, double ty) { return CombatMath.bearing(tx - x, ty - y); }
+    private static double bearing(double x, double y, double targetX, double targetY) {
+        return CombatMath.bearing(targetX - x, targetY - y);
+    }
+
     private static double clamp(double value, double low, double high) { return Math.max(low, Math.min(high, value)); }
 }

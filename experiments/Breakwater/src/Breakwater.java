@@ -4,7 +4,6 @@ import dev.robocode.tankroyale.botapi.BulletState;
 import dev.robocode.tankroyale.botapi.events.*;
 import java.nio.file.*;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public final class Breakwater extends Bot {
@@ -14,7 +13,7 @@ public final class Breakwater extends Bot {
             Path.of(System.getenv().getOrDefault("BREAKWATER_METRICS_PATH", "Breakwater-metrics.jsonl")),
             Path.of(System.getenv().getOrDefault("BREAKWATER_MODEL_PATH", "Breakwater-model.json")));
     private BreakwaterWaves waves;
-    private final Map<Integer, BreakwaterPolicy.Mode> launched = new HashMap<>();
+    private final Map<Integer, Integer> launched = new HashMap<>();
     private record Request(int creation, BreakwaterPolicy.Decision decision, BreakwaterPolicy.Target scan) {}
     private Request request;
     private int lastTick, lastSkip, maxInactivityTurns;
@@ -58,7 +57,18 @@ public final class Breakwater extends Bot {
             ledger.row.rangeObservedTurns++;
             ledger.row.rangeSum += Math.hypot(target.x() - getX(), target.y() - getY());
         }
-        if (decision.solution()) ledger.row.shieldSolutions++;
+        var row = ledger.row;
+        row.decisions++;
+        if (decision.waves() > 0) row.waveDecisions++;
+        if (decision.orbitSign() > 0) row.cwDecisions++;
+        else if (decision.orbitSign() < 0) row.ccwDecisions++;
+        if (Math.abs(decision.targetSpeed()) > 1e-9) row.movingTargetTurns++;
+        if (Math.abs(own.speed()) > 1e-9) row.observedMovingTurns++;
+        switch (decision.gun()) {
+            case 0 -> row.linearDecisions++;
+            case 1 -> row.stoppedDecisions++;
+            case 2 -> row.circularDecisions++;
+        }
         if (decision.power() > 0 && setFire(decision.power())) request = new Request(now + 1, decision, target);
     }
 
@@ -92,27 +102,24 @@ public final class Breakwater extends Bot {
                 policy.observe(target);
             }
         }
-        var interceptedIds = new HashSet<Integer>();
         for (var event : events) {
             if (event instanceof HitByBulletEvent hit) {
                 ledger.row.damageTaken += hit.getDamage();
                 learn(hit.getTurnNumber(), hit.getBullet());
             } else if (event instanceof BulletHitBotEvent hit) {
-                var mode = launched.get(hit.getBullet().getBulletId());
+                int gun = launched.getOrDefault(hit.getBullet().getBulletId(), -1);
                 ledger.row.bulletHits++;
                 ledger.row.damageDealt += hit.getDamage();
-                if (mode == BreakwaterPolicy.Mode.SHIELD) {
-                    ledger.row.shieldHits++;
-                    ledger.row.shieldDamage += hit.getDamage();
-                } else if (mode == BreakwaterPolicy.Mode.ATTACK) {
+                if (gun >= 0) {
                     ledger.row.attackHits++;
                     ledger.row.attackDamage += hit.getDamage();
+                    switch (gun) {
+                        case 0 -> ledger.row.linearHits++;
+                        case 1 -> ledger.row.stoppedHits++;
+                        case 2 -> ledger.row.circularHits++;
+                    }
                 }
             } else if (event instanceof BulletHitBulletEvent collision) {
-                var bullet = collision.getBullet();
-                if (bullet.getOwnerId() != collision.getHitBullet().getOwnerId() &&
-                        launched.get(bullet.getBulletId()) == BreakwaterPolicy.Mode.SHIELD &&
-                        interceptedIds.add(bullet.getBulletId())) ledger.row.shieldIntercepts++;
                 learn(collision.getTurnNumber(), collision.getHitBullet());
             } else if (event instanceof HitWallEvent) ledger.row.wallCollisions++;
             else if (event instanceof HitBotEvent) ledger.row.botCollisions++;
@@ -126,7 +133,7 @@ public final class Breakwater extends Bot {
             if (event instanceof BulletHitWallEvent hit) launched.remove(hit.getBullet().getBulletId());
         }
         var own = tick.getBotState();
-        waves.own(now, own.getX(), own.getY());
+        waves.own(now, own.getX(), own.getY(), own.getDirection(), own.getSpeed());
     }
 
     private void fired(int turn, BulletState bullet) {
@@ -138,13 +145,15 @@ public final class Breakwater extends Bot {
             row.unclassifiedShots++;
             return;
         }
-        var d = request.decision();
-        launched.put(bullet.getBulletId(), d.mode());
-        if (d.mode() == BreakwaterPolicy.Mode.SHIELD) {
-            row.shieldShots++;
-            policy.shieldLaunched(d.waveTurn());
-        } else if (d.mode() == BreakwaterPolicy.Mode.ATTACK) {
+        int gun = request.decision().gun();
+        launched.put(bullet.getBulletId(), gun);
+        if (gun >= 0 && gun <= 2) {
             row.attackShots++;
+            switch (gun) {
+                case 0 -> row.linearShots++;
+                case 1 -> row.stoppedShots++;
+                case 2 -> row.circularShots++;
+            }
             policy.attackLaunched(turn, bullet.getX(), bullet.getY(), bullet.getPower(), request.scan());
         } else row.unclassifiedShots++;
         request = null;
@@ -171,6 +180,7 @@ public final class Breakwater extends Bot {
         if (ledger.open(getRoundNumber())) ledger.died = true;
     }
     @Override public synchronized void onRoundEnded(RoundEndedEvent e) {
-        ledger.seal(e.getRoundNumber(), e.getTurnNumber(), policy.corrections(), policy.attackScores(), policy.attackHistory());
+        ledger.seal(e.getRoundNumber(), e.getTurnNumber(), e.getResults().getFirstPlaces(),
+                policy.corrections(), policy.attackScores(), policy.attackHistory());
     }
 }

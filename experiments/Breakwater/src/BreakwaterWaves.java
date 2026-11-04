@@ -14,15 +14,17 @@ final class BreakwaterWaves {
         this.maxInactivityTurns = maxInactivityTurns;
     }
     private int ownTurn;
-    private double ownX, ownY;
+    private double ownX, ownY, ownHeading, ownSpeed;
 
     void damage(int id, int turn, double value) { energy.recordBulletDamage(id, turn, value); }
     void bonus(int id, int turn, double power) { energy.recordBulletHitBonus(id, turn, power); }
 
-    void own(int turn, double x, double y) {
+    void own(int turn, double x, double y, double heading, double speed) {
         ownTurn = turn;
         ownX = x;
         ownY = y;
+        ownHeading = heading;
+        ownSpeed = speed;
         active.removeIf(w -> (turn - w.creation()) * (20 - 3 * w.power()) >
                 Math.hypot(x - w.x(), y - w.y()) + 36);
         energy.prune(turn);
@@ -41,8 +43,9 @@ final class BreakwaterWaves {
         if (scan.turn() < Math.ceil(3 / cooling - 1e-9)) return false;
         if (power == 0 || ownTurn != scan.turn() - 1 || scan.turn() < earliestShot || contact ||
                 nearWall(before, width, height) || nearWall(scan, width, height)) return false;
-        active.add(new BreakwaterPolicy.Wave(scan.turn(), before.x(), before.y(), power,
-                CombatMath.bearing(ownX - before.x(), ownY - before.y())));
+        double reference = CombatMath.bearing(ownX - before.x(), ownY - before.y());
+        double lateral = ownSpeed * Math.sin(Math.toRadians(ownHeading - reference));
+        active.add(new BreakwaterPolicy.Wave(scan.turn(), before.x(), before.y(), power, reference, lateral));
         earliestShot = scan.turn() + 1 + (int)Math.ceil((1 + power / 5) / cooling - 1e-9);
         return true;
     }
