@@ -1,10 +1,34 @@
 import java.util.*;
 final class FireControl {
+  record Policy(int population, int target, double range, double targetEnergy, int observed) {
+    Policy {
+      Physics.finite(range, targetEnergy);
+      if (population < 1 || range < 0)
+        throw new IllegalArgumentException("fire policy");
+    }
+    boolean melee() {
+      return population > 1;
+    }
+  }
   record Plan(double angle, double power, int target, int created, int expires, double tolerance,
       Physics.V origin, int observationTurn, Physics.V targetPosition, long version,
-      Physics.Body targetBody) {}
+      Physics.Body targetBody, Policy policy, String evidence) {
+    Plan withEvidence(String value) {
+      return new Plan(angle, power, target, created, expires, tolerance, origin, observationTurn,
+          targetPosition, version, targetBody, policy, value);
+    }
+    String evidenceRow() {
+      return "plan=" + created + ":" + version + ":" + target + " target=" + target
+          + " power=" + power + " angle=" + angle + " policy=" + policy + " " + evidence;
+    }
+  }
   record Pending(long sequence, int requestedTurn, double power, int target, double heading,
-      Physics.V origin) {}
+      Physics.V origin, Policy policy, String evidence) {
+    Pending(long sequence, int requestedTurn, double power, int target, double heading,
+        Physics.V origin) {
+      this(sequence, requestedTurn, power, target, heading, origin, null, "fixture");
+    }
+  }
   Plan plan;
   Pending pending;
   long requested, accepted, confirmed, cancelled, rejected, unmatched;
@@ -30,8 +54,10 @@ final class FireControl {
         && target.latest.body().p().distance(plan.targetPosition)
         <= 16.01 * Math.max(1, target.latest.turn() - plan.observationTurn)
         && own.p().distance(plan.origin) <= 16.01 && own.heat() == 0 && energy > plan.power
-        && plan.power <= Energy.power(own.p().distance(target.latest.body().p()), energy,
-                             target.latest.energy(), false)
+        && plan.power <= Energy.power(plan.policy.melee()
+                                 ? plan.policy.range()
+                                 : own.p().distance(target.latest.body().p()),
+                             energy, target.latest.energy(), plan.policy.melee())
             + 1e-12
         && Math.abs(Physics.wrap(own.gun() - plan.angle)) <= plan.tolerance;
   }
@@ -39,7 +65,8 @@ final class FireControl {
     requested++;
     if (result) {
       accepted++;
-      pending = new Pending(sequence, turn, plan.power, plan.target, own.gun(), own.p());
+      pending = new Pending(sequence, turn, plan.power, plan.target, own.gun(), own.p(),
+          plan.policy, plan.evidenceRow());
     } else
       rejected++;
     plan = null;
@@ -80,10 +107,19 @@ final class FireControl {
   }
   static Plan prepare(
       double angle, double power, Learner.Enemy target, Physics.Body own, int turn, long version) {
+    return prepare(angle, power, target, own, turn, version,
+        new Policy(1, target.id, own.p().distance(target.latest.body().p()), target.latest.energy(),
+            target.latest.turn()));
+  }
+  static Plan prepare(double angle, double power, Learner.Enemy target, Physics.Body own, int turn,
+      long version, Policy policy) {
+    if (policy.target() != target.id)
+      throw new IllegalArgumentException("policy target");
     double range = own.p().distance(target.latest.body().p()),
            half = Math.asin(Math.min(1, 18 / Math.max(18, range)));
     double tolerance = Physics.clamp(half * .5, Math.toRadians(.05), Math.toRadians(.5));
     return new Plan(Physics.norm(angle), power, target.id, turn, turn + 2, tolerance, own.p(),
-        target.latest.turn(), target.latest.body().p(), version, target.latest.body());
+        target.latest.turn(), target.latest.body().p(), version, target.latest.body(), policy,
+        "unannotated");
   }
 }

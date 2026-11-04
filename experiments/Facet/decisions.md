@@ -1,5 +1,13 @@
 # Current revision2 correction status
 
+## Melee normalization and evidence follow-up, 2026-11-04
+
+`observedTogether` is game-cumulative distinct own observed decision turns with a live target whose latest legal observed scan is at or before that decision and at most eight turns old. Eight is the existing melee risk freshness horizon, not a fitted parameter. Repeated scans and repeated same-turn decisions count at most once. Sparse scans can cover actual intervening own decisions within that horizon; unexecuted gap turns and terminal reconciliation never count. Round-local last-counted bookkeeping resets; the cumulative denominator and learned stores persist until a cold Core. Scans from the future are rejected before inference/history insertion. Model schema2 layout stays unchanged; the denominator's definition changes and is pinned by the new source manifest.
+
+Alignment uses native Cartesian radians: enemyBearing is the bearing from the enemy's latest legal position to the candidate destination; travelHeading is the bearing from own current position to that destination. Thus alignment is1+abs(cos(enemy-to-destination minus own-to-destination)). This documents the existing convention without changing the formula or parameters.
+
+Prospective offline checks and evidence scope: ../../docs/facet-melee-followup-protocol.md. No battles or strength inference. Frozen plan telemetry describes the actual selected plan, with preparation identity(created turn, sequence version, target), policy/projected range/power, selector, melee provenance and typed displacement count/version summaries. Pending confirmation retains this string unchanged. Population rows appear only on population changes (including round cold start), with before/after legal reconciliation summaries. Terminal no-learning has its own counter. All additions remain under the existing trace cap.
+
 Current package passes18 groups/10,034 assertions, including prior17/9916 gates. Export schema2; melee remains gated. [Revision2 result](revision2-corrections.md) contains blocker mapping, evidence/hashes, failed attempts and remaining actual-contract/independent/CI/performance gates. No battles or strength claims. Earlier entries below describe historical revisions and are superseded where this result differs.
 
 # Semantic correction decisions, 2026-11-04

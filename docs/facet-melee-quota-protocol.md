@@ -1,0 +1,5 @@
+# Global melee quota correction — prospective 2026-11-04
+
+Hypothesis: reserving 26/27/27 sample slots across the existing three coherence stages enforces the global 80 without starving final-power validation. Every stage queries its actual power/context. Equal integer per-target allocation and per-target normalization remain. Unused slots are not transferred. More fresh targets than a stage quota is unsupported and returns no shot, as do cycling solutions. Cost: fewer neighbors per stage; at most 80 returned samples/projection evaluations and 960 solve iterations. No strength claim or tuning.
+
+Protocol: reproduce supplied 80-label power change; check stable, multi-target, missing-store, cycling, hot-cache and disabled paths, actual decision deltas and cumulative accounting. Retain all prior gates and 866 transitions. Run Java17 offline build.py, pinned API, full suite, package smoke and parity. Zero battles/Gradle/network/publishing/agents. Parent owns issue/PR integration, independent review and actual own-three-bot diagnostic. Prior acceptance of 240 samples is rejected; historical reports remain.

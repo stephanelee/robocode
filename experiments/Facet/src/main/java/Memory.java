@@ -1,5 +1,15 @@
 import java.util.*;
 final class Memory {
+  // Whole Core-decision instrumentation, independent of combined-gun helper counters.
+  // Distance scans are distinct from returned targeting samples; these counters impose no cap.
+  static final class DisplacementWork {
+    long queries, returned, distances, projections, iterations;
+    void reset() {
+      queries = returned = distances = projections = iterations = 0;
+    }
+  }
+  static final ThreadLocal<DisplacementWork> displacementWork =
+      ThreadLocal.withInitial(DisplacementWork::new);
   enum Quality { OBSERVED, INTERPOLATED, PREDICTED }
   enum Label { PRECISE_GF, THEORETICAL_GF, DISPLACEMENT, POWER }
   record Sample(
@@ -136,6 +146,9 @@ final class Memory {
       budget.enforce();
     }
     List<Neighbor> query(double[] q, double[] w, int k) {
+      DisplacementWork work = label == Label.DISPLACEMENT ? displacementWork.get() : null;
+      if (work != null)
+        work.queries++;
       Physics.finite(q);
       Physics.finite(w);
       if (q.length != dimension || w.length != dimension || k < 0)
@@ -146,6 +159,8 @@ final class Memory {
                                        .thenComparingLong(n -> n.observation.sequence);
       PriorityQueue<Neighbor> heap = new PriorityQueue<>(Math.max(1, k), order.reversed());
       for (Observation o : data) {
+        if (work != null)
+          work.distances++;
         double d = 0;
         for (int i = 0; i < dimension; i++) {
           double z = w[i] * (o.features[i] - q[i]);
@@ -163,6 +178,8 @@ final class Memory {
       }
       List<Neighbor> out = new ArrayList<>(heap);
       out.sort(order);
+      if (work != null)
+        work.returned += out.size();
       return List.copyOf(out);
     }
   }

@@ -1,0 +1,5 @@
+# Facet melee correction protocol — 2026-11-04
+
+Prospective hypothesis: correct the six reported active-path defects without changing independent-v1 strategy parameters. Retain the existing 18 groups/10,034 assertions, replacing only obsolete locked-gate expectations, and add adversarial movement, selected-target policy, survivor selection and scheduling fixtures. Compare decisions against independently computed policy and physics expectations. Fixtures do not establish competitive strength.
+
+Budget: zero battles, tuning, training, network, publishing, Gradle or additional agents. Use Java17 offline build with supplied official API, package smoke and source/JAR payload parity. Retain failed attempts. The supplied revision4 independent source/semantic and four-round adapter report passes the duel prerequisite. Activation remains pending independent melee review and the parent's prospective own-three-bot diagnostic. Parent owns Gradle, freeze and later registered acquisition. Issue/PR updates are deferred by the explicit nonpublishing boundary.

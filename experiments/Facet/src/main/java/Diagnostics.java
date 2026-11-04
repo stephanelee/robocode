@@ -111,7 +111,7 @@ final class Diagnostics implements AutoCloseable {
     }
     String json = "{\"schema\":2,\"gameId\":\"" + escape(gameId)
         + ("\",\"scope\":\"game-cumulative; neighborBytes gauge; GC "
-           + "process-cumulative\",\"round\":")
+            + "process-cumulative\",\"round\":")
         + round + ",\"shotsRequested\":" + fire.requested + ",\"shotsAccepted\":" + fire.accepted
         + ",\"shotsConfirmed\":" + fire.confirmed + ",\"shotsCancelled\":" + fire.cancelled
         + ",\"unmatchedConfirmations\":" + fire.unmatched + ",\"neighborBytes\":" + budget.bytes

@@ -9,6 +9,27 @@ specification. See [input separation](facet-source-separation.md),
 [semantic matrix](../experiments/Facet/semantic-matrix.md) and
 [prospective protocol](facet-protocol.md).
 
+## Final whole-decision quota candidate
+
+Current Java17 Gradle `build verifyJarParity` passes **20groups/10,243assertions**,866recorded transitions and **836-entry parity**. [Raw final build](../experiments/Facet/evidence/gradle-final-build.txt). Whole-Core instrumentation now includes all displacement queries: eligible full-store physical preparation26rows, confirmation0, cycling80/933iterations. Duel comparison cohorts defer during melee and resume with fresh survivor evidence; displacement learning remains. [Exact correction/attempts](../experiments/Facet/melee-total-quota.md). No parameter tuning or additional diagnostic rounds.
+
+Final JAR SHA256:`7729fa0419dc8a6efc08ee7d5812ad28aca76195d51ce44bb53056b6c064788d`.
+Source/input SHA256:`ea6ead0e635a78a9190ca435f476def1eeb33179ca5a4355f87a6f18c362a6d8`.
+Config SHA256:`9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25`. [Canonical manifest](../experiments/Facet/evidence/artifact-manifest.json).
+
+The previous active candidate's4live semantic rounds independently passed observed integration; its exact source/JAR and raw evidence are preserved. They did not directly measure omitted auxiliary queries; source+observed stores bound that acquisition to74returned rows per decision. The current correction supplies the missing full-store proof and has no new live rounds. Independent final review and exact300roundfreeze remain pending; no changed-byte approval is invented. Competitive Facet games/rounds0/0.
+
+## Active melee candidate: Java17 Gradle verification
+
+The current final code candidate implements both duel and melee; it preserves the independent initial profile and all prior semantic corrections. Gradle `build verifyJarParity` passed **19 groups /10,192 assertions**, all866 recorded transitions and **835-entry source/JAR parity**. [Raw build](../experiments/Facet/evidence/gradle-melee-build.txt). Active-path quota/stress, primary-policy, survivor selection, exact turn-normalization, frozen telemetry and failure-disable tests are included. The rejected240-sample power-coherence deviation was corrected to a global80 cap with reserved26/27/27stages; [decision and exact regression](../experiments/Facet/melee-quota.md).
+
+Current JAR SHA256:`78f460de523f8eb15f7998b7f94d75ec150f1ed8e3ef4b6a0a5b4d4957afc1b9`.
+Current source/fixture/config/build-input SHA256:`bf783054171eab2350e2674dbc1b4705554569ad366cbed73351f35c8258e694`.
+Configuration SHA256:`9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25`; configschema2/modelschema2.
+[Canonical manifest](../experiments/Facet/evidence/artifact-manifest.json). Earlier report hashes refer to their own preserved artifacts, not these changed bytes. Independent final review and the [registered4round three-bot diagnostic](facet-melee-diagnostic.md) are pending. No competitive Facet games have run; no previous approval silently transfers.
+
+The active-melee diagnostic completed its entire4round budget (two cold2round games) without retries. Both games recorded55confirmed shots; outgoing hits47and48. Every round exercised population2→1→0 with Facet alive and confirmed shots in both modes. [Raw archive/manifest](../experiments/Facet/evidence/melee-adapter/), [exact registration](../experiments/Facet/evidence/melee-adapter/registration.json). Independent detailed reconciliation PASSED acquired integration:110unique confirmations,95hit receipts, all8fatal probe hits, retained survivor counts/versions, fresh scans, exact current-heading origins, immutable selected metadata and no duplicate/post-finalization commands/failures/skips/gaps. [Validator](../experiments/Facet/evidence/melee-adapter/independent-validator.py), [results](../experiments/Facet/evidence/melee-adapter/independent-validation.json). Selected survivor was analytic as prospectively allowed. These observations establish no competitive strength. The old artifact's auxiliary duel-comparison displacement queries were not directly instrumented; source+observed-store counts bound all acquired melee query rows by74 per decision (combined maximum52). Full-store code still violates80 and is undergoing correction. Preserve the valid diagnostic with this limitation; no replacement rounds. The exact old source/JAR is retained in candidate-source-and-jar.tar.gz.
+
 ## Revision 4: integrated correction artifact
 
 [Draft PR 103](https://github.com/stephanelee/robocode/pull/103) contains the reviewable milestone. Gradle Java 17 `build verifyJarParity` passed: **18 groups / 10,034 assertions**, all 866 recorded transitions, package build and 832 matching JAR entries. [Raw Gradle evidence](../experiments/Facet/evidence/gradle-revision4-build.txt). The independent second review required eight further semantic corrections; [its findings](../experiments/Facet/evidence/independent-review-revision2.md) and the [correction mapping](../experiments/Facet/revision2-corrections.md) are retained. The latest artifact has not yet received independent premeasurement approval.
@@ -81,6 +102,12 @@ oracle evidence, not a full proof of Facet's now-active bounded shadow service.
 See [oracle results](../experiments/Facet/evidence/independent-shadow-oracle/output.json)
 and [provenance/limits](../experiments/Facet/evidence/independent-shadow-oracle/README.md).
 
+## Actual Facet adapter acquisition
+
+The [prospective diagnostic](facet-adapter-diagnostic.md) completed its entire budget: **two cold two-round games, four diagnostic rounds**, in8.29seconds, no retries. Each game recorded22confirmed Facet shots,20hit receipts on the own stationary probe and exactly2Facet metric completion rows. No unmatched confirmation, boundary failure or skip counter appeared. Independent validation passed all required checks; the probe's missing roundStart rows must not be presented as acquired callbacks. Fatal hitBy callbacks arrived after death callbacks in the same turn and remain in the raw logs. `learning.disabled=2` per game records the intentional terminal observation-only path, not a learned-subsystem exception.
+
+[Raw acquisition and sources](../experiments/Facet/evidence/adapter-diagnostic/), [exclusive attempt status](../experiments/Facet/evidence/adapter-diagnostic/attempt-1/status.json), [SHA manifest](../experiments/Facet/evidence/adapter-diagnostic/manifest.json). These games measure API integration with a synthetic probe, establish no competitive strength and are excluded from the300-round budget. The [independent validator](../experiments/Facet/evidence/adapter-diagnostic/independent-validator.py) and [results](../experiments/Facet/evidence/adapter-diagnostic/independent-validation.json) reconcile exact shot/hit/damage/current-heading/terminal evidence. This permits descriptive premeasurement subject to the final reviewed candidate/freeze. Melee review/corrections are continuing before freezing that candidate.
+
 ## Unchanged production checks and open gates
 
 AISurvivor's Java 17 build ran with its JAR output redirected to a temporary
@@ -101,3 +128,5 @@ run; there are no score shares, wins or improvement claims. No parameter search,
 offline training dataset, warm start, confirmation rerun or reserved experiment
 was consumed. Decision: **reject premeasurement/promotion at this milestone;
 continue the semantic implementation**.
+
+Current revision4 PR CI passed on ubuntu-26.04: [Facet Java17 semantics](https://github.com/stephanelee/robocode/actions/runs/41838944483), [production source/parity CI](https://github.com/stephanelee/robocode/actions/runs/41838944466), [Retcon compatibility](https://github.com/stephanelee/robocode/actions/runs/41838944802), [official sample smoke](https://github.com/stephanelee/robocode/actions/runs/41838944476), and [engine energy contracts](https://github.com/stephanelee/robocode/actions/runs/41838944690). Existing pipeline compatibility games do not measure Facet. The raw Facet CI log is retained under evidence.

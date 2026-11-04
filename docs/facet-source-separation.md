@@ -52,3 +52,5 @@ The original user worktree contains substantial unrelated changes. Publication
 uses a separate temporary Git index/repository based on the published master
 tree, with only Facet deliverables added. No user branch, existing index,
 published history or evidence SHA is rewritten.
+
+The implementation continued through eight serial fresh invocations in the same filtered workspace: initial implementation, engine corrections, terminal/shadow corrections, eight reviewed duel corrections, active melee, turn/telemetry follow-up, global combined-gun quota correction, and whole-Core auxiliary-query correction. Each retained the same source boundary; none ran competitive opponents or published changes. Parent integrated formatting/build infrastructure and legal own probes. Independent reviewers reviewed frozen artifacts and constructed separate official-engine/own-event fixtures. No gameplay parameter search or source-derived opponent oracle was used.

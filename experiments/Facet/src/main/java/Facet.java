@@ -48,10 +48,11 @@ public final class Facet extends Bot {
         p.load(stream);
       }
       if (!info.getName().equals("Facet") || !p.getProperty("model.schema").equals("2")
-          || Melee.REVIEW_APPROVED)
+          || !Melee.REVIEW_APPROVED || !p.getProperty("melee.enabled").equals("true")
+          || !info.getGameTypes().containsAll(Set.of("1v1", "melee")))
         throw new IllegalStateException("package identity/gate mismatch");
-      System.out.println("Facet 0.1.0 package verified; Java17 API1.4.0 melee=false "
-                         + "motion=approved-fixture-replay adapterReview=PENDING");
+      System.out.println("Facet 0.1.0 package verified; Java17 API1.4.0 melee=true "
+          + "motion=approved-fixture-replay meleeReview=PENDING");
     } catch (java.io.IOException e) {
       throw new IllegalStateException(e);
     }
@@ -166,6 +167,8 @@ public final class Facet extends Bot {
         setTurnRate(Math.toDegrees(intent.move().turn()));
         if (intent.fire()) {
           boolean accepted = setFire(core.fire.plan.power());
+          diagnostics.event("fire.submitted", getRoundNumber(), getTurnNumber(),
+              "accepted=" + accepted + " " + core.fire.plan.evidenceRow());
           core.fire.submitted(accepted, own, getTurnNumber(), ++core.sequence);
         }
         setGunTurnRate(Math.toDegrees(intent.gunTurn()));

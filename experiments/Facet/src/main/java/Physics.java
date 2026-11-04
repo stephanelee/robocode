@@ -175,6 +175,9 @@ final class Physics {
     return Math.asin(Math.min(1, 8 / bulletSpeed(p)));
   }
   static double intercept(V source, Body target, double power, Rules r) {
+    return source.bearing(interceptPoint(source, target, power, r));
+  }
+  static V interceptPoint(V source, Body target, double power, Rules r) {
     double t = source.distance(target.p) / bulletSpeed(power), old = -1;
     V p = target.p;
     for (int i = 0; i < 12; i++) {
@@ -190,6 +193,6 @@ final class Physics {
       old = t;
       t = n;
     }
-    return source.bearing(p);
+    return p;
   }
 }

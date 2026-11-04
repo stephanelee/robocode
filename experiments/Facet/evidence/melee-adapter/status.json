@@ -1,0 +1,131 @@
+{
+  "status": "complete",
+  "games": [
+    {
+      "seed": 49667,
+      "rounds": 2,
+      "launchOrder": [
+        "Facet",
+        "ContractAlpha",
+        "ContractBeta"
+      ],
+      "status": "complete",
+      "launchArgv": [
+        "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
+        "-cp",
+        "/tmp/facet-build/robocode-tankroyale-runner-1.4.0.jar:/tmp/facet-melee-adapter",
+        "FacetContractBattle",
+        "/tmp/facet-melee-adapter/attempt-1/game-1/battle.json",
+        "/tmp/facet-melee-adapter/attempt-1/game-1/Facet",
+        "/tmp/facet-melee-adapter/attempt-1/game-1/ContractAlpha",
+        "/tmp/facet-melee-adapter/attempt-1/game-1/ContractBeta"
+      ],
+      "privateEnvironment": {
+        "FACET_SEED": "49667",
+        "FACET_METRICS_PATH": "/tmp/facet-melee-adapter/attempt-1/game-1/FACET_metrics.jsonl",
+        "FACET_TRACE_PATH": "/tmp/facet-melee-adapter/attempt-1/game-1/FACET_trace.jsonl",
+        "FACET_STATE_PATH": "/tmp/facet-melee-adapter/attempt-1/game-1/FACET_model.dat",
+        "FACET_PROBE_ROOT": "/tmp/facet-melee-adapter/attempt-1/game-1"
+      },
+      "official": {
+        "numberOfRounds": 2,
+        "results": [
+          {
+            "id": 2,
+            "name": "Facet",
+            "version": "0.1.0",
+            "rank": 1,
+            "totalScore": 717,
+            "survival": 200,
+            "bulletDamage": 397,
+            "firstPlaces": 2
+          },
+          {
+            "id": 3,
+            "name": "ContractBeta",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 101,
+            "survival": 100,
+            "bulletDamage": 1,
+            "firstPlaces": 0
+          },
+          {
+            "id": 1,
+            "name": "ContractAlpha",
+            "version": "1.0",
+            "rank": 3,
+            "totalScore": 4,
+            "survival": 0,
+            "bulletDamage": 4,
+            "firstPlaces": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 49668,
+      "rounds": 2,
+      "launchOrder": [
+        "ContractAlpha",
+        "ContractBeta",
+        "Facet"
+      ],
+      "status": "complete",
+      "launchArgv": [
+        "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
+        "-cp",
+        "/tmp/facet-build/robocode-tankroyale-runner-1.4.0.jar:/tmp/facet-melee-adapter",
+        "FacetContractBattle",
+        "/tmp/facet-melee-adapter/attempt-1/game-2/battle.json",
+        "/tmp/facet-melee-adapter/attempt-1/game-2/ContractAlpha",
+        "/tmp/facet-melee-adapter/attempt-1/game-2/ContractBeta",
+        "/tmp/facet-melee-adapter/attempt-1/game-2/Facet"
+      ],
+      "privateEnvironment": {
+        "FACET_SEED": "49668",
+        "FACET_METRICS_PATH": "/tmp/facet-melee-adapter/attempt-1/game-2/FACET_metrics.jsonl",
+        "FACET_TRACE_PATH": "/tmp/facet-melee-adapter/attempt-1/game-2/FACET_trace.jsonl",
+        "FACET_STATE_PATH": "/tmp/facet-melee-adapter/attempt-1/game-2/FACET_model.dat",
+        "FACET_PROBE_ROOT": "/tmp/facet-melee-adapter/attempt-1/game-2"
+      },
+      "official": {
+        "numberOfRounds": 2,
+        "results": [
+          {
+            "id": 2,
+            "name": "Facet",
+            "version": "0.1.0",
+            "rank": 1,
+            "totalScore": 716,
+            "survival": 200,
+            "bulletDamage": 397,
+            "firstPlaces": 2
+          },
+          {
+            "id": 1,
+            "name": "ContractBeta",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 101,
+            "survival": 100,
+            "bulletDamage": 1,
+            "firstPlaces": 0
+          },
+          {
+            "id": 3,
+            "name": "ContractAlpha",
+            "version": "1.0",
+            "rank": 3,
+            "totalScore": 4,
+            "survival": 0,
+            "bulletDamage": 4,
+            "firstPlaces": 0
+          }
+        ]
+      }
+    }
+  ],
+  "purpose": "bounded actual active melee integration, no competitive interpretation",
+  "elapsedSeconds": 9.036628999980167
+}

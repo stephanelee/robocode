@@ -167,7 +167,7 @@ final class Revision2RegressionTest {
     ok(e.recentDisplacement[0].capacity == 128 && e.recentDisplacement[1].capacity == 512
             && e.recentDisplacement[2].capacity == 2048,
         "typed independent recency capacities");
-    ok(!Melee.REVIEW_APPROVED, "melee remains gated");
+    ok(Melee.REVIEW_APPROVED, "melee active after independent duel prerequisite");
     var closeSource = new Physics.V(344, 300);
     var stationary = b(400, 300, Math.PI / 2, 0);
     var horizonEnemy = new Learner.Enemy(7, new Memory.Budget());

@@ -85,6 +85,19 @@ def main():
     assert len(rows)==4 and len({(row["gameId"],row["round"]) for row in rows})==4
     assert [row["shotsConfirmed"] for row in rows]==[1,0,1,0]
     assert all(row["schema"]==2 and row["counters"].get("metrics.ioFailure",0)==0 for row in rows)
+    follow_env = dict(clean_env)
+    follow_path = evidence/"FACET_followup-trace.jsonl"
+    follow_path.unlink(missing_ok=True)
+    follow_env["FACET_TRACE_PATH"] = str(follow_path)
+    follow = run([java, "-Xmx256m", "-cp", cp, "FollowupTelemetryFixture"], follow_env)
+    (evidence/"followup-telemetry.txt").write_text(follow)
+    follow_rows = [json.loads(line) for line in follow_path.read_text().splitlines()]
+    confirmations = [r for r in follow_rows if r["kind"]=="fire.confirmed"]
+    assert len(confirmations)==2 and all("pending=true" in r["value"] for r in confirmations)
+    assert "gun=combinedmelee" in confirmations[0]["value"] and "population=2" in confirmations[0]["value"]
+    assert "gun=recent" in confirmations[1]["value"] and "label=DISPLACEMENT" in confirmations[1]["value"]
+    assert any(r["kind"]=="population.transition" and "from=2 to=1" in r["value"] for r in follow_rows)
+    assert len(follow_rows)<100000 and not any(r["kind"]=="failure" for r in follow_rows)
     jar = ROOT/"Facet.jar"
     pack(jar, payload())
     second = ROOT/"build/Facet-rebuild.jar"
@@ -99,7 +112,7 @@ def main():
     source_digest = hashlib.sha256(("\n".join(source_lines)+"\n").encode()).hexdigest()
     (evidence/"source-files.sha256").write_text("\n".join(source_lines)+"\n")
     (evidence/"manifest.sha256").write_text(f"{sha(jar)}  Facet.jar\n{sha(API)}  official API 1.4.0\n{source_digest}  source-files.sha256 content\n")
-    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="findings 1-22 supplied; approval pending", premeasurementApproved=False, meleeEnabled=False, engineMotionFireAcceptance="recorded fixtures only; live adapter review pending", memoryLimitMiB=256, deterministicPackaging=True)
+    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="supplied revision4 duel prerequisite passed; active melee independent review pending", premeasurementApproved=False, meleeEnabled=True, engineMotionFireAcceptance="866 supplied actual transitions replayed; prior four-round duel adapter report supplied, no new battles", memoryLimitMiB=256, deterministicPackaging=True)
     (evidence/"build.json").write_text(json.dumps(metadata,indent=2)+"\n")
     print("OFFLINE BUILD VERIFIED source="+source_digest+" jar="+sha(jar))
 if __name__ == "__main__":

@@ -86,3 +86,5 @@ interpretation. Preserve their failed startup and asynchronous-stop overrun.
 See the validation report/evidence bundle for actual counts. No Facet performance
 battles have run. Current requested budget is 300 rounds, with no automatic replacement or confirmation. Update improvements.md after each diagnostic/experiment and
 link its PR, report and raw evidence before declaring it complete.
+
+Acquisition summary reports caught subsystem failure counters separately. A nonzero counter requires independent classification against the unchanged numerical/unhandled-exception gate; it is not silently treated as either a numerical pass or a changed automatic rejection threshold. Histogram latency quantiles are powers-of-two bucket upper bounds. Original dependent round structure, collision/skip denominators and incomplete transfer gates remain explicit.

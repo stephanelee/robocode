@@ -33,6 +33,6 @@ public final class FacetTelemetryFixture {
     d.snapshot(1, core.fire, core.budget, core.waves, core.planner);
     d.close();
     System.out.println("PASS synthetic private telemetry/model fixture requested=1 confirmed=1 "
-                       + "hits=1 duplicateCallbacks=1");
+        + "hits=1 duplicateCallbacks=1");
   }
 }

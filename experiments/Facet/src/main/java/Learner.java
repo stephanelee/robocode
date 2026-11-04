@@ -27,6 +27,15 @@ final class Learner {
     int sign = 1, lastDirection = 1, changeTurn, reverseTurn, crossings;
     double acceleration, damageTaken, damageGiven;
     long shots, hits, contacts, rawHits, rawContacts, observedTogether;
+    int lastTogetherTurn = -1;
+    void observedDecision(int turn) {
+      if (turn > lastTogetherTurn && alive && latest != null
+          && latest.quality() == Memory.Quality.OBSERVED && latest.turn() <= turn
+          && turn - latest.turn() <= 8) {
+        observedTogether++;
+        lastTogetherTurn = turn;
+      }
+    }
     final Memory.Store longGun, displacement, simple, context, recentHit, visits, powers;
     final Memory.Store[] recent = new Memory.Store[3];
     final Memory.Store[] recentDisplacement = new Memory.Store[3];
@@ -75,9 +84,9 @@ final class Learner {
       kinematics.put(s.turn(), new Kinematics(acceleration, changeTurn, reverseTurn, complete));
       while (kinematics.size() > 512) kinematics.pollFirstEntry();
       alive = true;
-      observedTogether++;
     }
     void reset() {
+      lastTogetherTurn = -1;
       latest = null;
       alive = true;
       history.clear();

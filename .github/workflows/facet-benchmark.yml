@@ -7,6 +7,7 @@ permissions:
   contents: read
 jobs:
   registered-duels:
+    if: github.run_attempt == 1
     runs-on: ubuntu-26.04
     timeout-minutes: 180
     steps:
@@ -26,6 +27,8 @@ jobs:
           python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
           ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
           python tools/verify_jar.py "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/build/libs/Facet.jar
+          cp "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/Facet.jar
       - name: Select frozen Retcon source-launch runtime after builds
         uses: actions/setup-java@v4
         with:

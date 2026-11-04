@@ -1,9 +1,9 @@
 import dev.robocode.tankroyale.botapi.*;
 import dev.robocode.tankroyale.botapi.events.*;
-import java.util.*;
 import java.nio.file.*;
-import java.util.regex.*;
 import java.security.*;
+import java.util.*;
+import java.util.regex.*;
 public final class FacetSemanticTest {
   static int assertions, groups;
   static final Physics.Rules RULES = new Physics.Rules(800, 600, .1);
@@ -501,7 +501,9 @@ public final class FacetSemanticTest {
     ok(Double.isFinite(path.cost()), "truncation finite");
   }
   static void meleeRadar() {
-    rejects(Melee::requireApproval, "review gate locked");
+    Melee.requireApproval();
+    ok(Melee.REVIEW_APPROVED,
+        "duel prerequisite allows active melee; independent melee review pending");
     Memory.Budget b = new Memory.Budget();
     Learner.Enemy e = enemy(1, 200, 200, b);
     Melee m = new Melee(5);
@@ -646,10 +648,12 @@ public final class FacetSemanticTest {
     group("fire transaction synthetic", FacetSemanticTest::fire);
     group("learning chronology and integration", FacetSemanticTest::chronology);
     group("two-wave planner", FacetSemanticTest::surfing);
-    group("gated melee and radar", FacetSemanticTest::meleeRadar);
+    group("active melee and radar", FacetSemanticTest::meleeRadar);
     group("package boundary and risk bounds", FacetSemanticTest::packageBoundary);
     group("determinism, online learning and export", FacetSemanticTest::deterministicAndExport);
     group("bounded full-store stress", FacetSemanticTest::stress);
+    group("active melee corrections", MeleeCorrectionTest::run);
+    group("whole Core melee TOTAL80", MeleeTotalQuotaTest::run);
     System.out.println("PASS groups=" + groups + " assertions=" + assertions
         + " motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0");
   }

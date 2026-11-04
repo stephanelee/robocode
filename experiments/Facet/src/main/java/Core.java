@@ -18,6 +18,8 @@ final class Core {
   int round, initialCount, lastTurn = -1;
   long sequence;
   boolean beganMelee;
+  int tracePopulation = -1;
+  int survivorSince = -1;
   Waves.Wave shotContext;
   record Intent(Physics.Control move, double gunTurn, double radarTurn, boolean fire) {}
   Core(Physics.Rules r, Diagnostics log, long seed) {
@@ -28,7 +30,7 @@ final class Core {
     RuntimeConfig.verify();
     log.event("profile", 0, 0,
         "independent-v1 seed=" + seed
-            + " motion=official-fixture-replay melee=false noCrossGameLoad");
+            + " motion=official-fixture-replay melee=true meleeReview=PENDING noCrossGameLoad");
   }
   Learner.Enemy enemy(int id) {
     return enemies.computeIfAbsent(id, k -> new Learner.Enemy(k, budget));
@@ -46,10 +48,13 @@ final class Core {
     seen.clear();
     for (Learner.Enemy e : enemies.values()) e.reset();
     initialCount = 0;
+    tracePopulation = -1;
+    survivorSince = -1;
     lastTurn = -1;
     shotContext = null;
     melee.recent.clear();
     melee.retained = null;
+    melee.resetAim();
     log.roundReset();
   }
   boolean dedup(BotEvent e) {
@@ -85,8 +90,11 @@ final class Core {
   }
   Intent decide(Physics.Body own, double energy, int turn, int population, List<BotEvent> events,
       Collection<BulletState> bullets, int myId) {
+    melee.beginDecision();
+    Memory.displacementWork.get().reset();
     long begin = System.nanoTime();
     observe(own, energy, turn, population, events, bullets, myId, false);
+    for (var e : enemies.values()) e.observedDecision(turn);
     Learner.Enemy target =
         enemies.values()
             .stream()
@@ -136,52 +144,74 @@ final class Core {
       }
     }
     // Certified own-bullet shadows were reconciled before movement scoring.
+    boolean meleeMode = population > 1 && Melee.REVIEW_APPROVED;
     long start = System.nanoTime();
     planner.safetyTurn = turn;
     Physics.Control movement;
     try {
       planner.stepLimit = Math.max(0, Math.min(2400, 2400 - Physics.workUsed() - 350));
       planner.activeEnemies = enemies.values();
-      Planner.Choice choice = log.disabled.contains("movement")
-          ? planner.emergency(own, rules)
-          : planner.choose(own, turn, waves.all(), enemies, rules, waves.deaths);
-      movement = choice.command();
-      if (choice.emergency())
+      if (meleeMode && !log.disabled.contains("movement")) {
+        long beforeFallback = melee.unsafeFallbacks;
+        movement = melee.move(own, energy, turn, enemies.values(), rules, planner);
+        if (melee.unsafeFallbacks != beforeFallback)
+          log.count("movement.emergency");
+      } else {
+        Planner.Choice choice = log.disabled.contains("movement")
+            ? planner.emergency(own, rules)
+            : planner.choose(own, turn, waves.all(), enemies, rules, waves.deaths);
+        movement = choice.command();
+        if (choice.emergency())
+          log.count("movement.emergency");
+      }
+      if (meleeMode && waves.realOverflow > 0) {
+        movement = planner.emergency(own, rules).command();
         log.count("movement.emergency");
+      }
       log.success("movement");
     } catch (RuntimeException ex) {
       log.failure("movement", ex);
       movement = planner.emergency(own, rules).command();
     }
     log.time("movement", System.nanoTime() - start);
-    boolean meleeMode = population > 1 && Melee.REVIEW_APPROVED;
-    if (meleeMode) {
-      Melee.requireApproval();
-      movement = melee.move(own, energy, turn, enemies.values(), rules, planner);
-    }
     if (population > 1 && !meleeMode) {
       log.count("melee.gated");
       fire.plan = null;
     }
-    boolean submit = (population == 1 || meleeMode) && fire.valid(own, energy, target, turn, rules);
+    Learner.Enemy firingTarget = fire.plan == null ? null : enemies.get(fire.plan.target());
+    boolean gunFailed = false;
+    boolean submit = (population == 1 || meleeMode) && fire.plan != null
+        && fire.plan.policy().population() == population
+        && (population != 1
+            || firingTarget != null && firingTarget.latest != null
+                && firingTarget.latest.turn() >= survivorSince)
+        && fire.valid(own, energy, firingTarget, turn, rules);
     if (submit) {
       try {
-        shotContext =
-            makeOutgoing(own, target, turn, fire.plan.power(), Waves.Role.OUTGOING, myId, true);
-        for (String name : List.of("analytic", "long", "recent"))
-          if (name.equals("analytic") || (target.crossings >= 16 && !log.disabled.contains("gun")))
-            shotContext.predictions.put(name,
-                new Waves.Prediction(name, shotContext.id, turn,
-                    Learner.gun(name, target, shotContext, own.gun(), rules), shotContext.powerHi,
-                    target.longGun.version));
+        shotContext = makeOutgoing(
+            own, firingTarget, turn, fire.plan.power(), Waves.Role.OUTGOING, myId, true);
+        // The combined melee gun learns crossings, but has no duel comparison cohort.
+        // Resume the ensemble only in the fresh-scan survivor duel.
+        if (population == 1) {
+          for (String name : List.of("analytic", "long", "recent"))
+            if (name.equals("analytic")
+                || (firingTarget.crossings >= 16 && !log.disabled.contains("gun")))
+              shotContext.predictions.put(name,
+                  new Waves.Prediction(name, shotContext.id, turn,
+                      Learner.gun(name, firingTarget, shotContext, own.gun(), rules),
+                      shotContext.powerHi,
+                      beganMelee ? firingTarget.displacement.version
+                                 : firingTarget.longGun.version));
+        }
       } catch (RuntimeException ex) {
         log.failure("gun", ex);
+        gunFailed = true;
         shotContext = null;
         submit = false;
         fire.plan = null;
       }
     }
-    if (waves.realOverflow > 0)
+    if (!meleeMode && waves.realOverflow > 0)
       movement = Physics.Control.stop();
     Physics.Body nextOwn = Physics.step(own, movement, rules).body();
     start = System.nanoTime();
@@ -191,15 +221,32 @@ final class Core {
         double power = Energy.power(own.p().distance(target.latest.body().p()), energy,
                    target.latest.energy(), meleeMode),
                angle = nextOwn.p().bearing(target.latest.body().p());
-        if (power > 0 && (population == 1 || meleeMode) && turn - target.latest.turn() <= 2) {
-          if (meleeMode) {
-            angle = Melee.aim(nextOwn, new ArrayList<>(enemies.values()), power, turn, rules);
+        if (power > 0 && (population == 1 || meleeMode) && target.latest.turn() <= turn
+            && turn - target.latest.turn() <= 2
+            && (population != 1 || target.latest.turn() >= survivorSince)) {
+          if (meleeMode && !log.disabled.contains("gun")) {
+            Physics.Body aimState = new Physics.Body(nextOwn.p(), nextOwn.heading(),
+                nextOwn.speed(), nextOwn.gun(), nextOwn.radar(), own.heat());
+            Melee.Aim aim = melee.scheduledAim(
+                aimState, new ArrayList<>(enemies.values()), energy, turn, population, rules);
+            if (aim != null) {
+              angle = aim.angle();
+              power = aim.power();
+              Learner.Enemy aimTarget = enemies.get(aim.target());
+              if (!submit)
+                fire.plan = aim.computedTurn() == turn
+                    ? FireControl.prepare(
+                          angle, power, aimTarget, nextOwn, turn, sequence, aim.policy())
+                    : null;
+            } else if (!submit)
+              fire.plan = null;
             if (own.heat() <= 1e-10)
               for (Learner.Enemy living : enemies.values())
                 if (living.alive && living.latest != null && turn - living.latest.turn() <= 8)
                   waves.add(makeOutgoing(
                       nextOwn, living, turn + 1, power, Waves.Role.VIRTUAL, myId, false));
-          } else if (own.heat() / rules.cooling() <= 3 && !log.disabled.contains("gun")) {
+          } else if (population == 1 && own.heat() / rules.cooling() <= 3
+              && !log.disabled.contains("gun")) {
             Waves.Wave virtual = makeOutgoing(nextOwn, target, turn + 1, power, Waves.Role.VIRTUAL,
                 myId, own.heat() <= rules.cooling());
             for (String name : List.of("analytic", "long", "recent"))
@@ -208,27 +255,56 @@ final class Core {
                 virtual.predictions.put(name,
                     new Waves.Prediction(name, virtual.id, turn,
                         Learner.gun(name, target, virtual, own.gun(), rules), power,
-                        target.longGun.version));
-            angle = beganMelee
-                ? Melee.aim(own, List.of(target), power, turn, rules)
-                : virtual.predictions
-                      .getOrDefault(target.selected, virtual.predictions.get("analytic"))
-                      .angle();
+                        beganMelee ? target.displacement.version : target.longGun.version));
+            angle = virtual.predictions
+                        .getOrDefault(target.selected, virtual.predictions.get("analytic"))
+                        .angle();
             if (own.heat() <= 1e-10 && !submit)
               waves.add(virtual);
           } else
             angle = Physics.intercept(nextOwn.p(), target.latest.body(), power, rules);
           // Keep prior plan until request has been submitted by boundary.
-          if (!submit)
+          if (!submit && !meleeMode)
             fire.plan = FireControl.prepare(angle, power, target, nextOwn, turn, sequence);
+          if (!submit && meleeMode && log.disabled.contains("gun"))
+            fire.plan = FireControl.prepare(angle, power, target, nextOwn, turn, sequence,
+                new FireControl.Policy(population, target.id,
+                    nextOwn.p().distance(
+                        Physics.interceptPoint(nextOwn.p(), target.latest.body(), power, rules)),
+                    target.latest.energy(), target.latest.turn()));
+          if (!submit && fire.plan != null) {
+            var actual = enemies.get(fire.plan.target());
+            String selected = meleeMode && !log.disabled.contains("gun") ? "combinedmelee"
+                : own.heat() / rules.cooling() <= 3 && !log.disabled.contains("gun")
+                    && (actual.selected.equals("analytic") || actual.crossings >= 16)
+                ? actual.selected
+                : "analytic";
+            fire.plan = fire.plan.withEvidence("gun=" + selected + " mode="
+                + (meleeMode         ? "melee"
+                        : beganMelee ? "survivor-duel"
+                                     : "duel")
+                + " beganMelee=" + beganMelee + " label="
+                + (selected.equals("combinedmelee")
+                        ? melee.cached != null && melee.cached.displacement() ? "DISPLACEMENT"
+                                                                              : "ANALYTIC"
+                        : selected.equals("analytic") ? "ANALYTIC"
+                        : beganMelee                  ? "DISPLACEMENT"
+                                                      : "PRECISE_GF")
+                + " " + stores(actual));
+            log.event("fire.prepared", round, turn, fire.plan.evidenceRow());
+          }
         } else if (!submit)
           fire.plan = null;
         gunTurn =
             Physics.clamp(Physics.wrap(angle - own.gun()), -Math.toRadians(20), Math.toRadians(20));
       }
-      log.success("gun");
+      if (!gunFailed)
+        log.success("gun");
     } catch (RuntimeException ex) {
-      log.failure("gun", ex);
+      if (!gunFailed)
+        log.failure("gun", ex);
+      else
+        log.count("gun.additionalFailureSameDecision");
       fire.plan = null;
       submit = false;
     }
@@ -261,6 +337,41 @@ final class Core {
     log.observe("shadowIntervals", waves.shadowIntervals);
     log.observe("realWaveOverflow", waves.realOverflow);
     log.observe("predictorSteps", Physics.workUsed());
+    log.observe("meleeProjectionPasses", melee.projectionPasses);
+    log.observe("meleeUnsafeFallbacks", melee.unsafeFallbacks);
+    log.counters.merge("melee.projectionSamples", melee.decisionSamples, Long::sum);
+    log.counters.merge("melee.queryReturnedSamples", melee.decisionReturned, Long::sum);
+    log.counters.merge("melee.neighborQueries", melee.decisionQueries, Long::sum);
+    log.counters.merge("melee.projectionPasses", melee.decisionPasses, Long::sum);
+    log.observe("meleeDecisionSamples", melee.decisionSamples);
+    log.observe("meleeDecisionReturned", melee.decisionReturned);
+    log.observe("meleeDecisionQueries", melee.decisionQueries);
+    log.observe("meleeDecisionPasses", melee.decisionPasses);
+    var displacementWork = Memory.displacementWork.get();
+    if (population > 1) {
+      log.observe("meleeTotalReturned", displacementWork.returned);
+      log.observe("meleeTotalProjections", displacementWork.projections);
+      log.observe("meleeTotalIterations", displacementWork.iterations);
+      log.observe("meleeTotalDistanceEvaluations", displacementWork.distances);
+    }
+    if (meleeMode)
+      log.event("melee.work", round, turn,
+          "dispatches=" + melee.dispatches + " destinations=" + melee.destinations + " candidates="
+              + melee.candidateChecks + " selectedSteps=" + melee.selectedSteps + " quota="
+              + melee.quotaFallbacks + " allUnsafe=" + melee.unsafeEmergency + " wallReject="
+              + melee.wallRejects + " botReject=" + melee.botRejects + " projections="
+              + melee.projectionPasses + " samples=" + melee.projectionWork.samples
+              + " solveIterations=" + melee.projectionWork.iterations + " decisionSamples="
+              + melee.decisionSamples + " decisionReturned=" + melee.decisionReturned
+              + " decisionQueries=" + melee.decisionQueries + " decisionPasses="
+              + melee.decisionPasses + " decisionIterations=" + melee.decisionIterations
+              + " predictor=" + Physics.workUsed() + " totalDisplacementQueries="
+              + displacementWork.queries + " totalDisplacementReturned=" + displacementWork.returned
+              + " totalDisplacementProjections=" + displacementWork.projections
+              + " totalDisplacementIterations=" + displacementWork.iterations
+              + " totalDisplacementDistances=" + displacementWork.distances
+              + " movementDisabled=" + log.disabled.contains("movement")
+              + " gunDisabled=" + log.disabled.contains("gun") + " context=" + melee.moveContext);
     log.observe("waves", waves.all().size());
     Physics.finite(movement.speed(), movement.turn(), gunTurn, radarTurn);
     log.time("decision", System.nanoTime() - begin);
@@ -270,6 +381,12 @@ final class Core {
   void observe(Physics.Body own, double energy, int turn, int population, List<BotEvent> events,
       Collection<BulletState> bullets, int myId, boolean terminal) {
     Physics.beginWork(2400);
+    String beforeStores = tracePopulation != population ? storeRows() : "";
+    if (tracePopulation > 1 && population == 1) {
+      survivorSince = turn;
+      fire.plan = null;
+      melee.resetAim();
+    }
     if (initialCount == 0) {
       initialCount = Math.max(1, population);
       beganMelee = population > 1;
@@ -380,7 +497,7 @@ final class Core {
             w.firstMotionTurn = t;
             w.bullet = b.getBulletId();
             w.actualAngle = Math.toRadians(b.getDirection());
-            w.ratingEligible = true;
+            w.ratingEligible = !w.predictions.isEmpty();
             waves.add(w);
             shotContext = null;
           }
@@ -389,7 +506,8 @@ final class Core {
             "id=" + b.getBulletId() + " heading=" + b.getDirection() + " position=" + b.getX() + ","
                 + b.getY() + " pending=" + pending.isPresent() + " request="
                 + pending.map(x -> Integer.toString(x.requestedTurn())).orElse("unmatched")
-                + " creation=" + t + " firstMotion=" + t);
+                + " creation=" + t + " firstMotion=" + t
+                + " selected=" + pending.map(FireControl.Pending::evidence).orElse("unmatched"));
       }
     }
     for (BulletState b : bullets) {
@@ -424,7 +542,7 @@ final class Core {
                 + " directionDeg=" + scan.getDirection() + " speed=" + scan.getSpeed()
                 + " energy=" + scan.getEnergy());
         Learner.Enemy e = enemy(scan.getScannedBotId());
-        if (!e.alive || e.latest != null && t <= e.latest.turn())
+        if (t > turn || !e.alive || e.latest != null && t <= e.latest.turn())
           continue;
         Physics.Body observed = new Physics.Body(new Physics.V(scan.getX(), scan.getY()),
             Math.toRadians(scan.getDirection()), scan.getSpeed(), 0, 0, 0);
@@ -500,7 +618,13 @@ final class Core {
         log.failure("learning", ex);
       }
     } else
-      log.count("learning.disabled");
+      log.count(terminal ? "learning.terminalNoLearning" : "learning.disabled");
+    if (tracePopulation != population) {
+      log.event("population.transition", round, turn,
+          "from=" + tracePopulation + " to=" + population + " beganMelee=" + beganMelee
+              + " before=" + beforeStores + " after=" + storeRows());
+      tracePopulation = population;
+    }
     log.time("storage", System.nanoTime() - storageStart);
     fire.reconcile(turn);
     if (fire.pending == null)
@@ -517,6 +641,19 @@ final class Core {
           w.predictions.clear();
         }
     }
+  }
+  static String stores(Learner.Enemy e) {
+    StringBuilder s = new StringBuilder("target=" + e.id + " alive=" + e.alive
+        + " scan=" + (e.latest == null ? -1 : e.latest.turn()) + " long=" + e.displacement.size()
+        + ":" + e.displacement.version + " recent=");
+    for (var store : e.recentDisplacement)
+      s.append(store.size()).append(':').append(store.version).append(',');
+    return s.toString();
+  }
+  String storeRows() {
+    StringJoiner s = new StringJoiner(";", "[", "]");
+    for (var e : enemies.values()) s.add(stores(e));
+    return s.toString();
   }
   Learner.Context context(Physics.V source, Physics.Body target, Learner.Enemy enemy, int turn,
       double power, Physics.Rules rules, int population, int initial, boolean physical) {
