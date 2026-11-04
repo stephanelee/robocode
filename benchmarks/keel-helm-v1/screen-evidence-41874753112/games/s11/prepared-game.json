@@ -1,0 +1,71 @@
+{
+  "game": {
+    "id": "s11",
+    "bot": "baseline",
+    "opponent": "walls",
+    "rounds": 5,
+    "seed": 1011,
+    "port": 32221
+  },
+  "name": "Keel",
+  "version": "0.1.0",
+  "opponentName": "Walls",
+  "opponentVersion": "1.0",
+  "command": [
+    "/usr/lib/jvm/temurin-25-jdk-amd64/bin/java",
+    "-cp",
+    "/home/runner/work/robocode/robocode/.benchmark-cache/keel-helm/robocode-tankroyale-runner-1.4.0.jar",
+    "/home/runner/work/robocode/robocode/tools/KeelHelmBattle.java",
+    "32221",
+    "5",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s11",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s11/Keel",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s11/Walls"
+  ],
+  "cwd": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s11",
+  "environment": {
+    "PATH": "/usr/lib/jvm/temurin-25-jdk-amd64/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "JAVA_HOME": "/usr/lib/jvm/temurin-25-jdk-amd64",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s11/empty-home",
+    "KEEL_METRICS": "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s11/markers.txt",
+    "KEEL_SEED": "1011"
+  },
+  "inputFiles": {
+    "build/keel-helm/screen/work/s11/Keel/Keel.json": {
+      "sha256": "7d9848306ac51bb5faf6ff576a2df22c481f73ed647e65be674bdbed35d3cd64",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s11/Keel/Keel.jar": {
+      "sha256": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s11/Keel/Keel.sh": {
+      "sha256": "f0ee8684564a9f43b9ddb98f125a36dbf3e69737d5166ef1e9e7f4abe5f5fa25",
+      "mode": 493
+    },
+    "build/keel-helm/screen/work/s11/Keel/Keel.cmd": {
+      "sha256": "9ce6798e659189395e9c2a1b4f4fad5f3b732c43fb6cd212f79342c7ad0d6f75",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s11/lib/robocode-tankroyale-bot-api-1.4.0.jar": {
+      "sha256": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s11/Walls/Walls.java": {
+      "sha256": "7a56d4ff8489f460c38c57748d0beffc844496a66c4fff419c2d09f083f86ef0",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s11/Walls/Walls.json": {
+      "sha256": "553ac58cf7be86a2f3078baecc08c5f7a390cf4f52a132dca9c88fbf77275336",
+      "mode": 420
+    }
+  },
+  "ownWritableHome": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s11/empty-home",
+  "persistentModelBefore": "N/A: both Keel arms learn only in memory",
+  "candidateExposureOnly": false,
+  "modelFilesBefore": []
+}

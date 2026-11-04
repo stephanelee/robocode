@@ -1,0 +1,440 @@
+{
+  "game": {
+    "id": "s09",
+    "bot": "baseline",
+    "opponent": "retcon",
+    "rounds": 10,
+    "seed": 1009,
+    "port": 32219
+  },
+  "name": "Keel",
+  "version": "0.1.0",
+  "opponentName": "Retcon",
+  "opponentVersion": "0.2.0",
+  "command": [
+    "/usr/lib/jvm/temurin-25-jdk-amd64/bin/java",
+    "-cp",
+    "/home/runner/work/robocode/robocode/.benchmark-cache/keel-helm/robocode-tankroyale-runner-1.4.0.jar",
+    "/home/runner/work/robocode/robocode/tools/KeelHelmBattle.java",
+    "32219",
+    "10",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s09",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09/Keel",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09/Retcon"
+  ],
+  "cwd": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09",
+  "environment": {
+    "PATH": "/usr/lib/jvm/temurin-25-jdk-amd64/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "JAVA_HOME": "/usr/lib/jvm/temurin-25-jdk-amd64",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09/empty-home",
+    "KEEL_METRICS": "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s09/markers.txt",
+    "KEEL_SEED": "1009",
+    "RUMBLE_JAVA_CACHE": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09/retcon-api"
+  },
+  "inputFiles": {
+    "build/keel-helm/screen/work/s09/Keel/Keel.json": {
+      "sha256": "7d9848306ac51bb5faf6ff576a2df22c481f73ed647e65be674bdbed35d3cd64",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Keel/Keel.jar": {
+      "sha256": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Keel/Keel.sh": {
+      "sha256": "f0ee8684564a9f43b9ddb98f125a36dbf3e69737d5166ef1e9e7f4abe5f5fa25",
+      "mode": 493
+    },
+    "build/keel-helm/screen/work/s09/Keel/Keel.cmd": {
+      "sha256": "9ce6798e659189395e9c2a1b4f4fad5f3b732c43fb6cd212f79342c7ad0d6f75",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/Retcon.cmd": {
+      "sha256": "073f4db6e2603d54ed062d076c7ca6045e65dafb07ad70f4bad5127f19f89856",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/Retcon.sh": {
+      "sha256": "b76efa142a45b9fd0f1695dfc82754de13be240fb677486a812b2dc90a44b2eb",
+      "mode": 493
+    },
+    "build/keel-helm/screen/work/s09/Retcon/Retcon.json": {
+      "sha256": "89a290a5580e3aafe4f0655c702497c96661ebf2a11324a61af5214d9b4dd7e3",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/retcon-api/robocode-tankroyale-bot-api-1.3.1.jar": {
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/Retcon.java": {
+      "sha256": "ad7b93daec6a963d2d533ccd4de596080cc3eb9859ae01aba381505f8c5add43",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/GunStage.java": {
+      "sha256": "7ebe87a23ea969aadcb1c02f50fad65f343b0b56f90d731d80e61ff6356720fa",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/RadarStage.java": {
+      "sha256": "dd62f69c89f0a66c5ad59449fb1d34e158affbbf8fb51083cd184be4caf6e260",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/StandardPipeline.java": {
+      "sha256": "74902379df2366e45afa2cc88071f1a524fb39f8c7eb9de06dd41ceefa45ebcb",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/EnemySense.java": {
+      "sha256": "8a277a3e9ef428f6a06c6f3bb28609495780c16e41488871a37c859808750564",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/TeamStage.java": {
+      "sha256": "3a12d1066240dd67c4a2549164ad434108dc034988aad063106fcd7957e4acd8",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/TargetStage.java": {
+      "sha256": "979868929ff81c0b80cd38764b87e00d0da764cd605cdf3c5875fcad916d3d39",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/MovementStage.java": {
+      "sha256": "b60f1a743e2c7a1eb22868eef355261cbc2ebf0e8ca005f730269b5defc27315",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/Strategies.java": {
+      "sha256": "4005058cf6aac5dea617136ca86aa9fa469c2dbbcaed0ca48860717c109b13a1",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/SelfSense.java": {
+      "sha256": "4cb925378ee789c2f398e5b1f9eca1d07a74877f86bc5126c4d9c155bf0e83d5",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/CollectStage.java": {
+      "sha256": "3f0556b5d2697e32eb1c62b0c6700ca841389a9894105ed8dd8aa07eb76a51ac",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/EnemyFireSense.java": {
+      "sha256": "fde067c731086688bc8ac1c58adaeceb1f3a800065fa24fb2aae870fe910cd95",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stages/ModeStage.java": {
+      "sha256": "054d326091c1cbaef091a6cc8d0ae162b1c3472835d4540e97f2d49b7ba75869",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/targeting/VirtualBullets.java": {
+      "sha256": "ac77dfd80d98d45af020419581e338bafd8cdbae2637c0b89548f708c6628c5b",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/geom/Vec2.java": {
+      "sha256": "eb19354f0cde4d5ae27f34e88b5b08434925f95e2783c5d540cda558c58fea4a",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/geom/Geom.java": {
+      "sha256": "8c7235b49bad0d70217e52533550aaf0010e7bc07c2c2141aecc59d759bffff2",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/geom/Angles.java": {
+      "sha256": "0fdb12cb546f4bcdacf9e6cf17c0a056cbae9f1c99ad6bc5ac0a2d87deb1b809",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/StrategySet.java": {
+      "sha256": "f2e8b44a4efcb7dcf854013b4959c672d24bea7faab5fe6f83bda35834fec0aa",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/TeamComms.java": {
+      "sha256": "fad9ea3bfabb1be57e04c3aec96ce571d66544429f47b67b69dafa79903ed04d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/Movement.java": {
+      "sha256": "2c5c97b05b2d13ebf19ce911615aa94c3cd941fb01d1da13a7230d62d5ecd27d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/AimSelector.java": {
+      "sha256": "0a4df3c22b1a2f2dd402f8c4cb077df6bae019709bcb54914db5923ab1b2c68d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/Mode.java": {
+      "sha256": "170cd7d005c9d4f7eea91096d42d7e035946570fc222f49ecf9a9feab7667be7",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/Collector.java": {
+      "sha256": "0a098e19b4ac9aa29487cd5164e407f95d01166306be00e525d7765354e153dc",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/TargetSelector.java": {
+      "sha256": "547084baec7b0993654845d5eb5589158857a6da738eb08f1d5a66fb0f10687e",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/FirePower.java": {
+      "sha256": "8280357dd397c17f56e66a6fce55d5c10e64b6bd2a7babcf254a05e0efb02996",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/Gun.java": {
+      "sha256": "8b78edadb12de506737efd456d0c59942901fadc85f1bcc176090c369b220c49",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/Radar.java": {
+      "sha256": "da6b40e7ec925e01ece649666bb18f686499d6633a9abcf6cbc59a2f562a4503",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/roles/AimModel.java": {
+      "sha256": "5027dfd0b751121a33328d86019833e68306b9009812b7a008330c267dbdbfe5",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/Intent.java": {
+      "sha256": "1c4885090d11ce26ad291a619ffb475df4c6b78c1053c374e36d6190be327539",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/RadarCommand.java": {
+      "sha256": "5a7d291ad69c526cfc95d179769103545887477a2ce8bcb805446a18b115fa1f",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/Arbiter.java": {
+      "sha256": "f39574e2ddc871be6f267156b0439ff5e1f2e71632804f292c9d52d2eaa6f9cf",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/BodyCommand.java": {
+      "sha256": "8e69cc84c2863e79da0bbff440fde905010a1037bf59a88507dd78a9b7d3a079",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/Actuator.java": {
+      "sha256": "cfbeb68519601e790a286c8fd425b670adc52f8e74198d08579295c22478eeec",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/GunCommand.java": {
+      "sha256": "d1481d56d37fa99044d003dd887b0d65f89cc588a4308ec72bcdac1376acc1fb",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/arbitration/FireCommand.java": {
+      "sha256": "7b26ac0cf0963ddbb31f1829f5acd1e107082783ed7506efe07790b59d96c94c",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/team/TeamInbox.java": {
+      "sha256": "e6f717af35408dfd70ac3cc22075ec9951bf0bce410afc8dfce2f98d18540ae1",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/team/TeamOutbox.java": {
+      "sha256": "2787ee6a4aa9e715c4adc50d6b5e9cf53d91568c8eef3c714849323e37566a93",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/rules/Rules.java": {
+      "sha256": "1503ed2b7f4c1dcf114bd5717b14126c6a6e28713470706f619a6ec3f46ae566",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/motion/Drive.java": {
+      "sha256": "92fd67a7a2618120a48ff7e6dd47f32bd346882c60fa09f83c516c1b98dce33d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/motion/WallSmoothing.java": {
+      "sha256": "59c51818d52ee9509dc175cd6b3db29fbc9fa072f7292d79e794e3d23072df9c",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/motion/MovementPredictor.java": {
+      "sha256": "6e0330fad66b46b0299921442c80ffc6cf0ce0bbf53e8cf52d860709c733af72",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/motion/PredictedState.java": {
+      "sha256": "5d1a237f76617ed158a93fe6f27d65dc979f34368a26b444cf555c7e45687896",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/Stage.java": {
+      "sha256": "749b70f10cdb0ece72e78c96faf998d443c57ede4b3667d63cf566928121e72d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/Phase.java": {
+      "sha256": "999d4186efedd8cc28c77c6d16ddcb4635afe9b1ab063df9045a317bd6704c2a",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/SenseStage.java": {
+      "sha256": "f6e742984c0f34734ca2e3715d6405d6a1a230bf5d9c805446da693a9a04fd53",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/BotProgram.java": {
+      "sha256": "de7241ae65804ba838a88b2a580aa2f64fff3075cbdbec7176718800b192721d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/Warmup.java": {
+      "sha256": "38fda0b9ae6936a62e491770348af8d91f42b3456199623799264242f2ff88ff",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/pipeline/Pipeline.java": {
+      "sha256": "5fb543d487f94ebf75ac08d14cd7b3d685b0087f9a51ff1838c32e809162b273",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/sense/TurnInput.java": {
+      "sha256": "8a3ef4dccef6eea23c686e2893c61df8a3644b1e9883f8f7e8b8ca9073d81ee2",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/sense/GameInfo.java": {
+      "sha256": "815bebe89b5692ee27c502ebfc4da3dcd7d4c31c9fa16c377f2c6f739309559a",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/sense/BulletRecord.java": {
+      "sha256": "1a93aa5065459f8da3b99318e7502704aa1d11aebe7bf601524a3c83f1b64a41",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/sense/ScanRecord.java": {
+      "sha256": "d26a18b33db4fd9e7f895c004b921687da773d846bb2584512e0219af8602b19",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stats/TimingProbe.java": {
+      "sha256": "be82b3ebb13fe09f532a9d4e968459ac6ab1c813ae63865ce2176783f23a5a91",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stats/StatsWriter.java": {
+      "sha256": "d9b40fcb48c504f22e60d1fe27b3e1c33cc50930193c355a05fe29c2a9a6e956",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stats/MovementProbe.java": {
+      "sha256": "c2bc6f33564e3a79d1ee19209f6eb0bd22055be1a3df9ac96d73cde02906be55",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stats/TurnStats.java": {
+      "sha256": "862d1ee51c2e584782c3d8bd52a56dc953c9a8bfa4abd6a64d6ca9c1b1592d17",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/stats/WaveProbe.java": {
+      "sha256": "193e5e53c74daf9940936f42d940cc837ab6120a5cc9b3eb7b11c14dd8516691",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyWaveView.java": {
+      "sha256": "0e95017e76b7b090c5c0419eeff4243a998196d4c00a9f3cbc9fd0f40534c9e3",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyWavesView.java": {
+      "sha256": "952800399cc791b68cefcb75ca99f58c87e1fe75bf5dccceaf72d8c801d8b3cf",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/GunStatsView.java": {
+      "sha256": "c8c8b935940e4976f098adbe2af7d61f807ea2e13bbc7f83c7e930ee2ee87dda",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/TurnState.java": {
+      "sha256": "601e13935a72ee893bc21491b73839657442ad3c1603a02052ce05497485d13a",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/Slot.java": {
+      "sha256": "9d18c1f1f19c60417e1de9d24fea98849c4364f2f24a288f9fa4ac582e9eff31",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyTable.java": {
+      "sha256": "1790888ced5de9a82d7758229322e408d1feb1e0b5e6acfc959f1f010cbba0d4",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/ModeKind.java": {
+      "sha256": "3fcfa89914bc820c3b6c219c39249fd381c31c0d1e9c59206d9813e8509b762d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/Blackboard.java": {
+      "sha256": "7865c860e07865cafdca0e6e76b52f614345a81989c3adc8035833b43b71ac8d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/SelfView.java": {
+      "sha256": "0f6ffad08dba932074e5ae672ba12d6aa753fc218a5112e5208e7789e91f936b",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/TargetView.java": {
+      "sha256": "ddcab453f506d3a0f0f955e7b1f0f55e39705ec48fa811e3428a3dabfa62b345",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/TurnView.java": {
+      "sha256": "93768ea500e26cc91efb98f2a3ea85d929417f4f1946a995870aa107be08cae1",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/ModeView.java": {
+      "sha256": "dceddd095c8693a475a1a73c55977fd5c9ed6119e30fab6ff092f744cc91b23c",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/ModeState.java": {
+      "sha256": "6f65e02354579b2a9a62aea749a7e9167c64665090d1e3fe966d68848102f23d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyWaves.java": {
+      "sha256": "c02f9764a88f6a8818b56b9c0fe37776637688ddfb70947e3e1c9f9419d34e46",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyWave.java": {
+      "sha256": "742e74653442b950569a7a4849583dab29f8caf2067035e5481a481d6f69f1d2",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemiesView.java": {
+      "sha256": "a399feeb70a38fb57109744963daa26ea4766b29b6792ea0137f0239f31b7810",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/GunStats.java": {
+      "sha256": "522763628d005f46597f0266bdc80b1e6f141ea17ad54ed60f35253e27a4a613",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyState.java": {
+      "sha256": "072426f22b5156437924964cd192a1f4c9a7955b966ef2de386debae217c40b3",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/TargetState.java": {
+      "sha256": "8163427eceaea3ba8f4deb648c4cdefe64f9ab3560763ef0b5cf30ebf48adcbc",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/EnemyView.java": {
+      "sha256": "4d822cee89289e4302ffd472c065cd1e1c4acdca6fc23fb554b4bae2716b0e81",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/blackboard/SelfState.java": {
+      "sha256": "fccd4293e892ab3ace04f139dade21ceaf73dd97a073909a9a6c9bf526bbb78c",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/adapter/tankroyale/TankRoyaleAngles.java": {
+      "sha256": "647622a53538e5ccfa9f78a40e6be153cfab7c788574ef0e7aa159d14ec46686",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/framework/adapter/tankroyale/TankRoyaleBot.java": {
+      "sha256": "8f273221bcf5c0d4bef177bec0b4e2f33e2e0ebad1e88c1dfa0565299dc455f3",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/mode/AliveCountMode.java": {
+      "sha256": "42793b849f636eaf8e622a81257484fd9fb75c0e8772de269fdd5304f9eee10e",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/radar/PerfectLockRadar.java": {
+      "sha256": "eab9910ee7e62b8ccfe666483e31e3357ab181fa6cee7032fdb5501b8ec4ed00",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/radar/SpinRadar.java": {
+      "sha256": "41e12429a7092c9e1c553dadd5e99dd9bcc0ad5e7eb5cb7e71122e0fa66b9165",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/firepower/BasicFirePower.java": {
+      "sha256": "5f1d438825fb456b293521623f73c49dff2418f8fe9473c743b0ddfc5c67a5eb",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/team/NoOpTeamComms.java": {
+      "sha256": "a06a89a6bc6c209b08963aa688e4cf44deebbebc5dac2ab124ce11bdcab62c32",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/movement/WaveSurfMovement.java": {
+      "sha256": "404dd43e6ec18c3689a25bde701b7a7d68dfb2f1ba56c516878ccba3941897d0",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/movement/OrbitMovement.java": {
+      "sha256": "37ecfebb320f450f4163a31dfb313c4606d9789799f011a833e0db0d29e5e601",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/gun/BestHitRateSelector.java": {
+      "sha256": "2067638507f250a64101fdfd0d08332438f3c596d9fd0899e8959dfc60194a94",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/gun/LinearAimModel.java": {
+      "sha256": "4bc6831df7940e2e03cf1671736e7ef231cfc54cb0bd7e860f057f48f298a9ba",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/gun/HeadOnAimModel.java": {
+      "sha256": "475a195b31decb383849b5ad6ff70f8ea959a8018abe29781b97f1bcf71bb9c6",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s09/Retcon/src/fnl/bots/retcon/target/ClosestTargetSelector.java": {
+      "sha256": "15bdd91d40036cceb7dffead9aeba53fc66eb9b81ef5e375056489a8ad0baafd",
+      "mode": 420
+    }
+  },
+  "ownWritableHome": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s09/empty-home",
+  "persistentModelBefore": "N/A: both Keel arms learn only in memory",
+  "candidateExposureOnly": false,
+  "modelFilesBefore": []
+}
