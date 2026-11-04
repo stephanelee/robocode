@@ -9,12 +9,22 @@ import java.util.Map;
 public final class Breakwater extends Bot {
     private final long seed = Long.parseLong(System.getenv().getOrDefault("BREAKWATER_SEED", "0"));
     private final BreakwaterPolicy policy = new BreakwaterPolicy(seed);
+    private static final int ENVELOPE = 3;
+    private final String gunMode = System.getenv().getOrDefault("BREAKWATER_GUN_MODE", "envelope");
+    private final boolean shadow = gunMode.equals("shadow");
     private final BreakwaterLedger ledger = new BreakwaterLedger(seed,
             Path.of(System.getenv().getOrDefault("BREAKWATER_METRICS_PATH", "Breakwater-metrics.jsonl")),
-            Path.of(System.getenv().getOrDefault("BREAKWATER_MODEL_PATH", "Breakwater-model.json")));
+            Path.of(System.getenv().getOrDefault("BREAKWATER_MODEL_PATH", "Breakwater-model.json")), gunMode,
+            shadow ? Path.of(System.getenv().getOrDefault("BREAKWATER_SHADOW_PATH", "Breakwater-shadow.jsonl")) : null);
+    private final BreakwaterEnvelope envelope = new BreakwaterEnvelope(shadow ? ledger::recordShadow : null);
     private BreakwaterWaves waves;
     private final Map<Integer, Integer> launched = new HashMap<>();
-    private record Request(int creation, BreakwaterPolicy.Decision decision, BreakwaterPolicy.Target scan) {}
+    record GunCommand(double aim, double power, int gun) {}
+    static GunCommand gunCommand(boolean shadow, BreakwaterPolicy.Decision baseline, BreakwaterEnvelope.Plan candidate) {
+        return shadow ? new GunCommand(baseline.aim(), baseline.power(), baseline.gun())
+                      : new GunCommand(candidate.aim(), candidate.power(), ENVELOPE);
+    }
+    private record Request(int creation, int gun, double power, BreakwaterPolicy.Target scan) {}
     private Request request;
     private int lastTick, lastSkip, maxInactivityTurns;
     private double width, height, cooling;
@@ -48,9 +58,11 @@ public final class Breakwater extends Bot {
                 getGunHeat(), getEnergy(), getGunCoolingRate(), getArenaWidth(), getArenaHeight());
         var target = waves.latest;
         var decision = policy.decide(own, target, waves.active);
+        var candidate = envelope.decide(own, target, decision);
+        var gun = gunCommand(shadow, decision, candidate);
         setTurnRate(decision.turnRate());
         setTargetSpeed(decision.targetSpeed());
-        setGunTurnRate(Math.max(-20, Math.min(20, CombatMath.relativeAngle(decision.aim() - getGunDirection()))));
+        setGunTurnRate(Math.max(-20, Math.min(20, CombatMath.relativeAngle(gun.aim() - getGunDirection()))));
         setRadarTurnRate(target == null ? 45 : DuelRadar.turn(getX(), getY(), getRadarDirection(),
                 target.x(), target.y(), now - target.turn(), 1));
         if (target != null && now - target.turn() <= 1) {
@@ -69,12 +81,21 @@ public final class Breakwater extends Bot {
             case 1 -> row.stoppedDecisions++;
             case 2 -> row.circularDecisions++;
         }
-        if (decision.power() > 0 && setFire(decision.power())) request = new Request(now + 1, decision, target);
+        if (decision.gun() >= 0) row.envelopeDecisions++;
+        if (candidate.opportunity()) {
+            row.envelopeOpportunities++;
+            if (candidate.power() <= 0) row.envelopeHolds++;
+        }
+        if (gun.power() > 0 && setFire(gun.power())) {
+            if (gun.gun() == ENVELOPE) row.envelopeFireRequests++;
+            request = new Request(now + 1, gun.gun(), gun.power(), target);
+        }
     }
 
     @Override public synchronized void onRoundStarted(RoundStartedEvent e) {
         if (!ledger.begin(e.getRoundNumber())) return;
         policy.startRound();
+        envelope.startRound(e.getRoundNumber());
         waves = new BreakwaterWaves(maxInactivityTurns);
         launched.clear();
         request = null;
@@ -100,6 +121,10 @@ public final class Breakwater extends Bot {
                 if (waves.scan(scan.getScannedBotId(), target, contact, width, height, cooling))
                     ledger.row.inferredWaves++;
                 policy.observe(target);
+                if (waves.latest == target) { // The shared scan guard accepted this new timestamp.
+                    if (shadow) ledger.recordScan(target);
+                    envelope.observe(target);
+                }
             }
         }
         for (var event : events) {
@@ -117,6 +142,7 @@ public final class Breakwater extends Bot {
                         case 0 -> ledger.row.linearHits++;
                         case 1 -> ledger.row.stoppedHits++;
                         case 2 -> ledger.row.circularHits++;
+                        case ENVELOPE -> ledger.row.envelopeHits++;
                     }
                 }
             } else if (event instanceof BulletHitBulletEvent collision) {
@@ -141,18 +167,19 @@ public final class Breakwater extends Bot {
         row.shotsFired++;
         row.energySpent += bullet.getPower();
         if (request == null || turn != request.creation() ||
-                Math.abs(bullet.getPower() - request.decision().power()) > 1e-6) {
+                Math.abs(bullet.getPower() - request.power()) > 1e-6) {
             row.unclassifiedShots++;
             return;
         }
-        int gun = request.decision().gun();
+        int gun = request.gun();
         launched.put(bullet.getBulletId(), gun);
-        if (gun >= 0 && gun <= 2) {
+        if (gun >= 0 && gun <= ENVELOPE) {
             row.attackShots++;
             switch (gun) {
                 case 0 -> row.linearShots++;
                 case 1 -> row.stoppedShots++;
                 case 2 -> row.circularShots++;
+                case ENVELOPE -> row.envelopeShots++;
             }
             policy.attackLaunched(turn, bullet.getX(), bullet.getY(), bullet.getPower(), request.scan());
         } else row.unclassifiedShots++;
@@ -180,6 +207,7 @@ public final class Breakwater extends Bot {
         if (ledger.open(getRoundNumber())) ledger.died = true;
     }
     @Override public synchronized void onRoundEnded(RoundEndedEvent e) {
+        if (ledger.open(e.getRoundNumber())) envelope.endRound(e.getTurnNumber());
         ledger.seal(e.getRoundNumber(), e.getTurnNumber(), e.getResults().getFirstPlaces(),
                 policy.corrections(), policy.attackScores(), policy.attackHistory());
     }
