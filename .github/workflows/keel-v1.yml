@@ -20,11 +20,11 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '17.0.21+9'
       - uses: gradle/actions/setup-gradle@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.13.17'
       - name: Build Keel on Java 17, run contract tests and verify JAR parity
         run: |
           mkdir -p build/keel
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '25'
+          java-version: '25.0.5+8'
       - name: Acquire and identify the exact battle runtime (no games)
         run: |
           python tools/keel_experiment.py profile
