@@ -189,7 +189,7 @@ public final class AdapterConcurrencyTest {
     }
   }
   static void actualFileRollback() throws Exception {
-    Path dir = Files.createTempDirectory(Path.of(System.getenv("TMPDIR")), "facet-adapter-");
+    Path dir = Files.createTempDirectory("facet-adapter-");
     Path file = dir.resolve("FACET_rows.jsonl");
     Diagnostics.FileSink sink = new Diagnostics.FileSink(file);
     AtomicBoolean once = new AtomicBoolean();

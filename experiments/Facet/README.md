@@ -24,3 +24,7 @@ Shadow limits: 256 confirmed tracked own bullets, 160 future ticks, 4096 swept-s
 A separate bounded FACET_ critical sibling of the metric (or trace) filename records completion/hash/failure after primarytracecap. It reserves10000records; cap/IOfailure is explicit. No permanent-filesystem or cross-game-callback attribution guarantee is invented. Fresh300proposal is disabled pending explicit user budget and independent/CI approval; no automatic rerun.
 
 User decision2026-11-04: **stop with partial results**; the fresh300-round proposal was declined. No further battles will run. The repaired artifact has zero battle measurements. See [result report](../../docs/facet-results.md).
+
+## Java17 CI portability follow-up
+
+The first repaired-candidate CI run41869600041 failed before gameplay because AdapterConcurrencyTest required the macOS TMPDIR environment variable. The single test-only change uses Files.createTempDirectory(prefix), which honors Java’s platform temporary-directory contract. With TMPDIR unset, Java17 Gradle clean build verifyJarParity passes20groups/10243assertions+54adapterassertions and840-entry parity. RunnableJAR remains817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792; current canonical source/input isdc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d. Previous12ed1e... remains the exact reviewed earlier input; gameplay and parameters are unchanged. No new battles. The declined proposed registration remains historical and disabled.
