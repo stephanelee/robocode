@@ -10,7 +10,7 @@ public class KeelPrismBattle {
         if (!Files.isRegularFile(markers) || !Files.isRegularFile(prism)) return false;
         String m=Files.readString(markers), p=Files.readString(prism);
         if (!m.endsWith("\n") || !p.endsWith("\n") || !m.lines().anyMatch(s -> s.equals(rounds + " end"))) return false;
-        return p.lines().anyMatch(s -> s.endsWith("}") && s.contains("\"event\":\"game\"") && s.contains("\"rounds\":" + rounds + ","));
+        return p.lines().anyMatch(s -> s.endsWith("}") && s.contains("\"event\":\"game\"") && (s.contains("\"rounds\":" + rounds + ",") || s.contains("\"rounds\":" + rounds + "}")));
     }
     public static void main(String[] args) throws Exception {
         int rounds = Integer.parseInt(args[0]);
