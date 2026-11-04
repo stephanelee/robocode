@@ -24,7 +24,17 @@ final class SurfPlan {
     }
 
     static int readyAfter(int launch, double power, double cooling) {
-        return launch + 1 + (int) Math.ceil((1 + power / 5) / cooling - 1e-9);
+        return launch + 1 + coolingTurns(1 + power / 5, cooling);
+    }
+
+    static int coolingTurns(double heat, double cooling) {
+        if (!(cooling > 0)) throw new IllegalArgumentException("Positive gun cooling rate required");
+        int turns = 0;
+        while (heat > 0) {
+            heat = Math.max(0, heat - cooling);
+            turns++;
+        }
+        return turns;
     }
 
     Flight.Command command(Flight.Pose pose, int mode) {

@@ -30,7 +30,7 @@ public final class Meridian extends Bot {
     }
     public void onRoundStarted(RoundStartedEvent e){
         crossingGun.newRound();
-        earliestShot = 1 + (int) Math.ceil(3 / getGunCoolingRate() - 1e-9);
+        earliestShot = 1 + SurfPlan.coolingTurns(3, getGunCoolingRate());
         lastPower = 1.95;
         stopTurns = twoFrontTurns = 0;
         round=e.getRoundNumber(); scan=null;waves.clear();trials.clear();corrections.clear();Arrays.fill(stamp,-1);

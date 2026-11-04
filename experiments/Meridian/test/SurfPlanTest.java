@@ -10,6 +10,7 @@ class SurfPlanTest {
         var planner = new SurfPlan(new HitAngles(), enemy, 800, 600);
         int ready = SurfPlan.readyAfter(31, 1.95, .1);
         assertEquals(46, ready);
+        assertEquals(45, SurfPlan.readyAfter(31, 1, .1));
         assertFalse(planner.choose(own, 44, 1, waves, ready, 1.95).warned());
         waves.add(new HitAngles.Wave(31, 150, 300, 0, 23, 1.95));
         var prediction = planner.choose(own, 45, 1, waves, ready, 1.95);
