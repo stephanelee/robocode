@@ -1,0 +1,24 @@
+{
+  "reviewer": "independent_review agent",
+  "method": "Standalone streaming Python audit; no repository reducers or Java diagnostic execution",
+  "matrixExecutions": 0,
+  "newCases": 0,
+  "competitiveRounds": 0,
+  "originalHead": "e57d71c86789af43e02a4d107fae79054b57cfee",
+  "freezeSHA256": "093a4ad1e203b16d73461a751e6d7c761bebc316cc41d6894bf2b47d71cd1403",
+  "python": "3.15.1",
+  "command": [
+    "python3",
+    "benchmarks/meridian-wave-support/analysis/independent_audit.py",
+    "--verify-local-runtime",
+    "--output",
+    "benchmarks/meridian-wave-support/analysis/independent-audit.json"
+  ],
+  "files": {
+    "independent_audit.py": "3e71feabb0c309537ee6a5eeaced30c703cde26354d120c54404e1ed788f4804",
+    "original-audit.json": "251e69a165ed03d0909e8f77b8424b44a0ed700aff23c845ad51f313d2dca4f9",
+    "independent-audit.json": "8c72c70bdff9644290279694ebcd4a6d8ebef3577f4f4b69b616beea9400d87b"
+  },
+  "partsVerification": "Independently streamed every committed part, checked individual size/SHA and original-file size/SHA; all11 reconstructed files match original attempt bytes",
+  "scope": "One registered source family; no new action or geometry cases. Zero sampled motion mismatches do not negate general one-pass corner defect."
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/private/tmp/robocode-wave-support/tools/meridian_wave_support.py", line 187, in <module>
+    main(args.freeze, args.clearance)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-wave-support/tools/meridian_wave_support.py", line 149, in main
+    write(FREEZE, manifest())
+                  ~~~~~~~~^^
+  File "/private/tmp/robocode-wave-support/tools/meridian_wave_support.py", line 133, in manifest
+    sourceFiles=source_inventory(), engine=engine, runtime=runtime(),
+                                                           ~~~~~~~^^
+  File "/private/tmp/robocode-wave-support/tools/meridian_wave_support.py", line 103, in runtime
+    if digest(JAVA) != JAVA_SHA or digest(JAVAC) != JAVAC_SHA or digest(JDK / 'lib/modules') != MODULES_SHA:
+                                                                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-wave-support/tools/meridian_wave_support.py", line 34, in digest
+    with Path(path).open('rb') as stream:
+         ~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/pathlib/__init__.py", line 970, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/homebrew/Cellar/openjdk@17/17.0.21.0.3/lib/modules'
