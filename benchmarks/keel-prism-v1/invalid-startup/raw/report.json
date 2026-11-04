@@ -1,0 +1,62 @@
+{
+  "plan": {
+    "status": "registered descriptive, not run",
+    "base": "d76c508cc0f575b2191fe66a3eb61fd1f64ba498",
+    "runtime": "local Windows XPS; Microsoft OpenJDK17.0.18+8; no cross-environment pooling",
+    "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "jars": {
+      "Keel": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f",
+      "Prism": "8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca"
+    },
+    "games": [
+      {
+        "id": "kp-d76-01",
+        "seed": 2026270101,
+        "rounds": 10,
+        "first": "Keel"
+      },
+      {
+        "id": "kp-d76-02",
+        "seed": 2026270102,
+        "rounds": 10,
+        "first": "Prism"
+      },
+      {
+        "id": "kp-d76-03",
+        "seed": 2026270103,
+        "rounds": 10,
+        "first": "Keel"
+      },
+      {
+        "id": "kp-d76-04",
+        "seed": 2026270104,
+        "rounds": 10,
+        "first": "Prism"
+      },
+      {
+        "id": "kp-d76-05",
+        "seed": 2026270105,
+        "rounds": 10,
+        "first": "Keel"
+      },
+      {
+        "id": "kp-d76-06",
+        "seed": 2026270106,
+        "rounds": 10,
+        "first": "Prism"
+      }
+    ]
+  },
+  "execution": "1368692fac62d880c53dfe96ca515f2c72ff4e8b",
+  "games": [
+    {
+      "id": "kp-d76-01",
+      "seed": 2026270101,
+      "rounds": 10,
+      "first": "Keel",
+      "status": "invalid",
+      "error": "RuntimeError('Command exited 1; see C:\\\\Users\\\\admin2\\\\Downloads\\\\wsl\\\\robocode-ci\\\\build\\\\keel-prism-v1\\\\kp-d76-01\\\\runner.log\\nNov. 04, 2026 11:53:13 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\\nINFO: Starting battle: rounds=10, bots=2\\nNov. 04, 2026 11:53:14 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\\nINFO: Booting bots...\\nNov. 04, 2026 11:54:36 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync\\nSEVERE: Failed to start battle\\ndev.robocode.tankroyale.runner.BattleException: Bot connect timeout (80000ms): connected 1 of 2. Pending: [Keel 0.1.0 (St\u00e9phane Lee)]\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.waitForBots$dev_robocode_tankroyale_robocode_tankroyale_runner(BattleRunner.kt:350)\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.waitForBots$dev_robocode_tankroyale_robocode_tankroyale_runner$default(BattleRunner.kt:291)\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.startBattleAsync(BattleRunner.kt:187)\\n\\tat KeelPrismBattle.main(KeelPrismBattle.java:21)\\n\\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\\n\\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)\\n\\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\\n\\tat java.base/java.lang.reflect.Method.invoke(Method.java:569)\\n\\tat jdk.compiler/com.sun.tools.javac.launcher.Main.execute(Main.java:419)\\n\\tat jdk.compiler/com.sun.tools.javac.launcher.Main.run(Main.java:192)\\n\\tat jdk.compiler/com.sun.tools.javac.launcher.Main.main(Main.java:132)\\n\\nNov. 04, 2026 11:54:36 A.M. dev.robocode.tankroyale.runner.BattleRunner startBattleAsync$lambda$6\\nINFO: Battle finished, cleaning up...\\nException in thread \"main\" dev.robocode.tankroyale.runner.BattleException: Bot connect timeout (80000ms): connected 1 of 2. Pending: [Keel 0.1.0 (St\u00e9phane Lee)]\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.waitForBots$dev_robocode_tankroyale_robocode_tankroyale_runner(BattleRunner.kt:350)\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.waitForBots$dev_robocode_tankroyale_robocode_tankroyale_runner$default(BattleRunner.kt:291)\\n\\tat dev.robocode.tankroyale.runner.BattleRunner.startBattleAsync(BattleRunner.kt:187)\\n\\tat KeelPrismBattle.main(KeelPrismBattle.java:21)')"
+    }
+  ],
+  "decision": "invalid; stopped without replacement"
+}
