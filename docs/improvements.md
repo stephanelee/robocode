@@ -4,11 +4,15 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
-## KeelHelm confirmation publication
+## Keel experimental baseline
 
-| Experiment | Measured budget and decision | Evidence |
+The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a272373` as the new baseline. [Coordination issue106](https://github.com/stephanelee/robocode/issues/106), [immutable source/JAR/production hashes](../benchmarks/keel-improvement/baseline.json), [ownership and evidence](improvements/keel-experimental-baseline.md). **Zero new games are registered by this baseline record.** Fresh bounded protocols and independent review are required for isolated derivatives; production AISurvivor remains unchanged.
+
+| Experiment | Budget and decision | Evidence |
 |---|---|---|
-| KeelHelm stopped-heading confirmation / [issue107](https://github.com/stephanelee/robocode/issues/107) / original [PR108](https://github.com/stephanelee/robocode/pull/108) | **Not confirmed / REJECT.**18valid games/300fresh rounds. Diamond54.121006% candidate vs56.438736% Keel,delta-2.317730pp fails required+2pp; official first places95/120 vs101/120. Retcon93.747432% vs93.084976%,30/30both. Zero own skips,max logged18msboth. XPS storage publication only; original Keel unchanged, no rerun/promotion. | [Detailed report](improvements/keel-helm-v1-confirmation-publication.md), [lossless2194-member/18-recording archive and proof](../benchmarks/keel-helm-v1/confirmation-evidence-41889609469/README.md), [independent audit6644053839](https://github.com/stephanelee/robocode/issues/107#issuecomment-6644053839) |
+| KeelHelm stopped-heading forecast / [PR108](https://github.com/stephanelee/robocode/pull/108), [issue107](https://github.com/stephanelee/robocode/issues/107) | **REJECT improvement; keep original Keel.** Screen120valid rounds passed; fresh confirmation18games/300valid rounds failed Diamond improvement:54.12100553%candidate vs56.43873576%Keel (−2.31773022pp; required>=+2pp),95/120vs101/120wins. Retcon93.74743222%vs93.08497595%,30/30each; all other confirmation gates pass.0skips/maxMs18both.420total physical rounds consumed, no retries/pooling. Post-outcome local ENOSPC is not invalid battle evidence. Custody independently reviewed and merged in [PR113](https://github.com/stephanelee/robocode/pull/113); PR108 final review pending. | [Unchanged protocol](improvements/keel-helm-v1.md), [complete results/limits](improvements/keel-helm-v1-results.md), [original final artifact/run](https://github.com/stephanelee/robocode/actions/runs/41889609469), [independent audit](https://github.com/stephanelee/robocode/issues/107#issuecomment-6644053839), [custody coordination](https://github.com/stephanelee/robocode/issues/107#issuecomment-6644176535) |
+
+Confirmation custody was separately published and independently merged in [PR113](https://github.com/stephanelee/robocode/pull/113): [canonical archive](../benchmarks/keel-helm-v1/confirmation-evidence-41889609469/README.md), [publication report](improvements/keel-helm-v1-confirmation-publication.md). The [full recovered independent audit](../benchmarks/keel-helm-v1/confirmation-audit-recovery-41889609469/README.md) preserves original and fresh complete replays plus local storage failures. PR108 implementation/final documentation review remains pending.
 
 ## Frozen Keel versus Prism
 

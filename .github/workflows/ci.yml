@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '17.0.21+9'
       - uses: gradle/actions/setup-gradle@v4
       - uses: actions/setup-python@v5
         with:
@@ -41,6 +41,11 @@ jobs:
         run: |
           ./gradlew -p experiments/Keel --no-daemon clean build
           python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+      - name: Test isolated KeelHelm semantics, harness and committed JAR (zero games)
+        run: |
+          ./gradlew -p experiments/KeelHelm --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar
+          python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v
       - name: Build Meridian, test its physics and compare the committed JAR
         run: |
           ./gradlew -p experiments/Meridian --no-daemon clean build
@@ -59,6 +64,7 @@ jobs:
             build/reports/tests/
             experiments/DiamondChallenger/build/reports/tests/
             experiments/Keel/build/reports/tests/
+            experiments/KeelHelm/build/reports/tests/
             experiments/Prism/build/reports/tests/
           if-no-files-found: ignore
       - name: Upload runnable bot
