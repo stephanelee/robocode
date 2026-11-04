@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [labeled]
 permissions:
-  contents: read
+  contents: write  # only used to push registered evidence to a new evidence/keel-v1-<run> branch
 jobs:
   keel:
     if: github.run_attempt == 1 && github.head_ref == 'claude/keel-v1' && (github.event.label.name == 'profile-keel-v1' || github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
@@ -32,7 +32,9 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Acquire and identify the exact battle runtime (no games)
-        run: python tools/keel_experiment.py profile
+        run: |
+          python tools/keel_experiment.py profile
+          echo "PROFILE-GZ-B64 $(gzip -9nc build/keel/profile.json | base64 -w0)"
       - name: Publish runtime identity before any game
         uses: actions/upload-artifact@v4
         with:
@@ -46,6 +48,19 @@ jobs:
         run: |
           python -c "import json,sys; d=json.load(open('benchmarks/keel-v1/raw/decision-screen.json')); sys.exit(0 if d['decision']=='progress; confirmation open' else 'confirmation closed by the registered screen')"
           python tools/keel_experiment.py run confirmation
+      - name: Print decisions into the log
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        run: for f in build/keel/decision-*.json; do [ -f "$f" ] && echo "DECISION-GZ-B64 $f $(gzip -9nc "$f" | base64 -w0)"; done; true
+      - name: Push every attempt to a dedicated evidence branch
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        run: |
+          branch="evidence/keel-v1-${{ github.event.label.name }}-${{ github.run_id }}"
+          mkdir -p "$RUNNER_TEMP/evidence" && cp -r build/keel "$RUNNER_TEMP/evidence/keel"
+          cd "$RUNNER_TEMP/evidence"
+          git init -q -b "$branch" && git config user.name "github-actions" && git config user.email "github-actions@users.noreply.github.com"
+          printf 'Registered Keel v1 evidence from run %s at head %s\n' "${{ github.run_id }}" "${{ github.event.pull_request.head.sha }}" > README.txt
+          git add -A && git commit -q -m "Keel v1 registered evidence, run ${{ github.run_id }}"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "HEAD:refs/heads/$branch"
       - name: Preserve every attempt
         if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
         uses: actions/upload-artifact@v4
