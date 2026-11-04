@@ -174,9 +174,19 @@ def receipt_ref(plan):
     return "refs/tags/%s-%s" % (SCREEN_ID, plan["freeze"]["prismJarSHA256"][:16])
 
 
+APPROVAL_FIELDS = ("approvedReview", "approvedHead")
+
+
+def frozen_content(plan):
+    """Every plan field except the explicitly permitted approval record."""
+    return {k: v for k, v in plan.items() if k not in APPROVAL_FIELDS}
+
+
 def verify_clearance(plan, review, head, run=_run):
     """The review must be recorded, and the execution head may differ from the exact reviewed head
-    only by the plan file that records the approval."""
+    only by the approval record: the plan file is the only changed path, and its contents equal
+    the plan at the reviewed head after removing only the approval fields. Games, IDs, seeds,
+    seats, opponent schedule and candidate/profile pins must be identical to what was reviewed."""
     if plan.get("approvedReview") in (None, "", "pending") or plan["approvedReview"] != review:
         raise SystemExit("independent premeasurement review not recorded in the frozen plan")
     reviewed = plan.get("approvedHead")
@@ -189,6 +199,17 @@ def verify_clearance(plan, review, head, run=_run):
     changed = {l for l in out.splitlines() if l.strip()}
     if code != 0 or not changed <= {PLAN_REL}:
         raise SystemExit("execution head changes more than the approval record: %s" % sorted(changed - {PLAN_REL}))
+    code, text = run(["git", "show", "%s:%s" % (reviewed, PLAN_REL)])
+    if code != 0:
+        raise SystemExit("the plan cannot be read at the reviewed head")
+    try:
+        reviewed_plan = json.loads(text)
+    except ValueError:
+        raise SystemExit("the plan at the reviewed head is not valid JSON")
+    if frozen_content(reviewed_plan) != frozen_content(plan):
+        diff = sorted(k for k in set(reviewed_plan) | set(plan)
+                      if k not in APPROVAL_FIELDS and reviewed_plan.get(k) != plan.get(k))
+        raise SystemExit("frozen plan contents differ from the reviewed head beyond the approval record: %s" % diff)
 
 
 def consume_receipt(plan, repo, head, run_id, run=_run, receipt_file=None):

@@ -1,5 +1,6 @@
 """Offline tests of the registered Prism screen plan and decision gates. No games are run."""
 import copy
+import json
 import unittest
 
 import prism_screen as ps
@@ -67,8 +68,10 @@ class PlanTest(unittest.TestCase):
 
 class FakeGit:
     """Fake command runner: a remote that holds refs, and a diff between heads."""
-    def __init__(self, changed=("docs/prism/screen-plan.json",), ancestor=True):
+    def __init__(self, changed=("docs/prism/screen-plan.json",), ancestor=True, reviewed_plan=None):
         self.refs, self.changed, self.ancestor, self.calls = {}, list(changed), ancestor, []
+        # the plan as it existed at the reviewed head (default: the committed, unapproved plan)
+        self.reviewed_plan = ps.load_plan() if reviewed_plan is None else reviewed_plan
 
     def __call__(self, cmd):
         self.calls.append(cmd)
@@ -84,6 +87,10 @@ class FakeGit:
             return (0, self.refs[ref] + "\t" + ref) if ref in self.refs else (0, "")
         if cmd[:3] == ["git", "merge-base", "--is-ancestor"]:
             return (0 if self.ancestor else 1), ""
+        if cmd[:2] == ["git", "show"]:
+            if self.reviewed_plan == "unreadable":
+                return 128, ""
+            return 0, json.dumps(self.reviewed_plan)
         if cmd[:3] == ["git", "diff", "--name-only"]:
             return 0, "\n".join(self.changed)
         raise AssertionError(cmd)
@@ -124,6 +131,47 @@ class ReceiptTest(unittest.TestCase):
                                 FakeGit(changed=["docs/prism/screen-plan.json", "experiments/Prism/src/prism/Brain.java"]))
         with self.assertRaises(SystemExit):
             ps.verify_clearance(approved_plan(), "https://example.test/review", HEAD, FakeGit(ancestor=False))
+
+    def test_approval_only_edit_of_the_plan_is_accepted(self):
+        # reviewed plan: approval pending; execution plan: same content plus the approval record
+        ps.verify_clearance(approved_plan(), "https://example.test/review", HEAD, FakeGit())
+
+    def test_reviewers_repro_changed_seed_and_id_is_rejected(self):
+        plan = approved_plan()
+        plan["games"][0]["seed"] = 999999
+        plan["games"][0]["id"] = "unreviewed-population"
+        with self.assertRaises(SystemExit) as e:
+            ps.verify_clearance(plan, "https://example.test/review", HEAD, FakeGit())
+        self.assertIn("games", str(e.exception))
+
+    def test_changed_seat_opponent_rounds_freeze_or_receipt_is_rejected(self):
+        edits = [
+            lambda p: p["games"][1].update(seat="prism-first" if p["games"][1]["seat"] == "opponent-first" else "opponent-first"),
+            lambda p: p["games"][2].update(opponent="Walls"),
+            lambda p: p["games"][3].update(rounds=19),
+            lambda p: p["games"].reverse(),
+            lambda p: p["freeze"].update(prismJarSHA256="0" * 64),
+            lambda p: p["freeze"].update(profile="other-profile"),
+            lambda p: p.update(receipt="refs/tags/other"),
+            lambda p: p.update(extra="unreviewed field"),
+            lambda p: p.pop("status"),
+        ]
+        for i, edit in enumerate(edits):
+            plan = approved_plan()
+            edit(plan)
+            with self.assertRaises(SystemExit, msg="edit %d accepted" % i):
+                ps.verify_clearance(plan, "https://example.test/review", HEAD, FakeGit())
+
+    def test_unreadable_reviewed_plan_is_refused(self):
+        with self.assertRaises(SystemExit):
+            ps.verify_clearance(approved_plan(), "https://example.test/review", HEAD, FakeGit(reviewed_plan="unreadable"))
+
+    def test_approval_fields_are_the_only_exemption(self):
+        self.assertEqual(("approvedReview", "approvedHead"), ps.APPROVAL_FIELDS)
+        plan = approved_plan()
+        self.assertNotIn("approvedReview", ps.frozen_content(plan))
+        self.assertIn("games", ps.frozen_content(plan))
+        self.assertIn("freeze", ps.frozen_content(plan))
 
     def test_second_dispatch_is_refused_before_any_game(self):
         git = FakeGit()
