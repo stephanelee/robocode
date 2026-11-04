@@ -75,3 +75,20 @@ commit-message barrier, explicitly excludes this experiment branch from automati
 production battle/Retcon/engine-trace jobs, and keeps Java17 CI build/parity checks.
 The normal Meridian CI build materializes the hash-pinned fixture from full Git
 history. These workflow-only changes do not alter the registered candidate.
+
+Before consuming the acquisition receipt, require at least346 minutes of the360-minute
+job cap to remain, using GitHub's actual compare-job start timestamp. The twelve
+1,680-second process caps total336 minutes; the remaining margin is for verification,
+reduction and artifact preservation. Failed admission starts no game and consumes no
+receipt. It does not justify a replacement of an already consumed acquisition.
+
+The first actual zero-game preflight, [41765322623](https://github.com/stephanelee/robocode/actions/runs/41765322623),
+passed all Java17 tests/parity builds but failed when the profiler read Java build
+provenance deleted by the earlier root Gradle clean. It played0 rounds and created
+no acquisition receipt. Preserve its original ZIP and compressed complete job log
+in `benchmarks/meridian-gun-plan/preflight-41765322623/`. Capture provenance after
+the root clean build in the corrected workflow; no runtime identity is waived.
+
+The durable receipt also binds the measured Linux boot ID, resolved workspace,
+run/attempt and runtime/package/tooling manifest hashes. Verify the same host document
+and frozen assets before each game, refusing identity changes or cross-run reuse.

@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import meridian_gun_plan as comparison
 
 REF = "refs/tags/experiment-receipts/meridian-gp60-issue90"
 
@@ -19,8 +20,11 @@ def main():
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     if head != os.environ["PAYLOAD_SHA"]:
         raise ValueError("Checkout is not the cleared payload")
+    host = comparison.validate_host_identity()
     receipt = dict(experiment="meridian-gp60-issue90", payloadSHA=head,
-                   runID=os.environ["GITHUB_RUN_ID"], runAttempt=1, receiptRef=REF)
+                   runID=os.environ["GITHUB_RUN_ID"], runAttempt=1, receiptRef=REF,
+                   hostIdentity=host,
+                   hostDocumentSHA256=comparison.benchmark.digest(comparison.OUT / "gun-plan-host.json"))
     repo = os.environ["GITHUB_REPOSITORY"]
     tag = api(f"repos/{repo}/git/tags", dict(
         tag=REF.removeprefix("refs/tags/"), message=json.dumps(receipt, sort_keys=True),

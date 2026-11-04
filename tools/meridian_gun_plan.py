@@ -77,7 +77,37 @@ def preflight():
     profile = json.loads((OUT / 'profile.json').read_text())
     validate_profile(profile)
     save(OUT / 'gun-plan-package-contents.json', package_contents(profile))
+    host = current_host_identity()
+    host_path = OUT / 'gun-plan-host.json'
+    if host_path.exists():
+        if json.loads(host_path.read_text()) != host:
+            raise ValueError('Preflight host identity changed; preserve this workspace without reuse')
+    else:
+        save(host_path, host)
     return profile
+
+
+def current_host_identity():
+    """Bind this one runner boot/workspace/run to its measured small manifests."""
+    boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+    run, attempt = os.environ.get('GITHUB_RUN_ID'), os.environ.get('GITHUB_RUN_ATTEMPT')
+    if not boot or not run or not attempt:
+        raise ValueError('Missing Linux boot identity or GitHub run identity')
+    return dict(bootID=boot, workspace=str(ROOT.resolve()), runID=run, runAttempt=attempt,
+                runtimeProfileSHA256=benchmark.digest(OUT / 'profile.json'),
+                packageContentsSHA256=benchmark.digest(OUT / 'gun-plan-package-contents.json'),
+                toolingManifestSHA256=benchmark.digest(REG / 'tooling-sha256.json'))
+
+
+def validate_host_identity(receipt=None):
+    path = OUT / 'gun-plan-host.json'
+    host = json.loads(path.read_text())
+    if host != current_host_identity():
+        raise ValueError('Runner boot, workspace, run or frozen manifest identity changed')
+    if receipt is not None and (receipt.get('hostDocumentSHA256') != benchmark.digest(path)
+                                or receipt.get('hostIdentity') != host):
+        raise ValueError('Activation receipt belongs to a different host document')
+    return host
 
 
 def validate_frozen_tools():
@@ -319,16 +349,21 @@ def main(run=False, check_frozen=False):
     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     receipt = json.loads((OUT / 'activation.json').read_text())
     validate_receipt(receipt, os.environ, head)
+    host = validate_host_identity(receipt)
     EXEC.mkdir(parents=True)  # fail closed on any prior root; no resume
     save(EXEC / 'activation.json', receipt)
     save(EXEC / 'profile.json', profile)
     save(EXEC / 'package-contents.json', package_contents(profile))
+    save(EXEC / 'host.json', host)
     bundles = {arm: materialize(arm, profile) for arm in ('baseline', 'candidate')}
     games = json.loads((REG / 'games.json').read_text())
     report = dict(status='pending', games=[], decision='no comparison decision')
     save(EXEC / 'decision.json', report)
     for game in games:
         try:
+            validate_host_identity(receipt)
+            validate_frozen_tools()
+            validate_profile(profile)
             row = dict(**game, status='valid', **play(game, profile, bundles[game['arm']]))
         except Exception as error:
             report['games'].append(dict(**game, status='invalid', error=str(error)))

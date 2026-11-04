@@ -81,6 +81,8 @@ class GunPlanTests(unittest.TestCase):
         head = 'a' * 40
         env = dict(PAYLOAD_SHA=head, GITHUB_RUN_ID='123', GITHUB_RUN_ATTEMPT='1', GITHUB_REPOSITORY='stephanelee/robocode')
         with patch.dict(activation.os.environ, env, clear=True), \
+                patch.object(activation.comparison, 'validate_host_identity', return_value={'bootID': 'fixture-boot'}), \
+                patch.object(activation.comparison.benchmark, 'digest', return_value='c' * 64), \
                 patch.object(activation.subprocess, 'check_output', side_effect=[head + '\n', json.dumps(dict(sha='b'*40)),
                              subprocess.CalledProcessError(1, ['gh', 'api'])]) as command, \
                 patch.object(activation.Path, 'write_text') as write:
@@ -90,6 +92,10 @@ class GunPlanTests(unittest.TestCase):
             self.assertEqual(3, command.call_count)
             payload = json.loads(command.call_args.kwargs['input'])
             self.assertEqual(gp.RECEIPT, payload['ref'])
+            tag = json.loads(command.call_args_list[1].kwargs['input'])
+            bound = json.loads(tag['message'])
+            self.assertEqual('c' * 64, bound['hostDocumentSHA256'])
+            self.assertEqual({'bootID': 'fixture-boot'}, bound['hostIdentity'])
 
     def test_rerun_rejected_before_remote_receipt_mutation(self):
         with patch.dict(activation.os.environ, {'GITHUB_RUN_ATTEMPT': '2'}, clear=True), \
@@ -97,6 +103,37 @@ class GunPlanTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'reruns'):
                 activation.main()
             command.assert_not_called()
+
+    def test_host_document_refuses_different_boot_workspace_run_or_manifest(self):
+        host = dict(bootID='boot-one', workspace='/workspace/one', runID='123', runAttempt='1',
+                    runtimeProfileSHA256='a' * 64, packageContentsSHA256='b' * 64,
+                    toolingManifestSHA256='c' * 64)
+        with tempfile.TemporaryDirectory() as tmp, patch.object(gp, 'OUT', Path(tmp)):
+            path = Path(tmp) / 'gun-plan-host.json'
+            gp.save(path, host)
+            receipt = dict(hostIdentity=host, hostDocumentSHA256=gp.benchmark.digest(path))
+            with patch.object(gp, 'current_host_identity', return_value=host):
+                self.assertEqual(host, gp.validate_host_identity(receipt))
+            for field in host:
+                changed = dict(host, **{field: 'different'})
+                with patch.object(gp, 'current_host_identity', return_value=changed):
+                    with self.assertRaisesRegex(ValueError, 'identity changed'):
+                        gp.validate_host_identity(receipt)
+            # Semantically identical JSON with different bytes cannot reuse the receipt.
+            path.write_text(json.dumps(host))
+            with patch.object(gp, 'current_host_identity', return_value=host):
+                with self.assertRaisesRegex(ValueError, 'different host document'):
+                    gp.validate_host_identity(receipt)
+
+    def test_host_failure_prevents_consuming_durable_remote_receipt(self):
+        head = 'a' * 40
+        env = dict(PAYLOAD_SHA=head, GITHUB_RUN_ID='123', GITHUB_RUN_ATTEMPT='1')
+        with patch.dict(activation.os.environ, env, clear=True), \
+                patch.object(activation.subprocess, 'check_output', return_value=head + '\n') as command, \
+                patch.object(activation.comparison, 'validate_host_identity', side_effect=ValueError('changed boot')):
+            with self.assertRaisesRegex(ValueError, 'changed boot'):
+                activation.main()
+            self.assertEqual(1, command.call_count)  # Git HEAD only; no GitHub API mutation.
 
     def test_existing_legal_recording_reproduces_registered_starvation(self):
         path = gp.ROOT / 'local-evidence/control.battle.gz'
