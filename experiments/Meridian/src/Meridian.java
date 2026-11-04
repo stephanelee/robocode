@@ -78,7 +78,7 @@ public final class Meridian extends Bot {
     }
     private void gun(int t,Flight.Pose own,double range){
         var p=scan.p; double energy=getEnergy();
-        double power=Flight.clip(Math.min(Math.min(range<300?2.8:1.65,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
+        double power=Flight.clip(Math.min(Math.min(range<300?2.8:0.4,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
         double[] aims=new double[3]; int[] arrival=new int[3];
         for(int i=0;i<3;i++){
             var pred=p;
