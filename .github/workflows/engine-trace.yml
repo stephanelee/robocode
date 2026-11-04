@@ -6,6 +6,7 @@ permissions:
   contents: read
 jobs:
   probe:
+    if: github.head_ref != 'codex/meridian-held-plan-execution'
     name: Record actual 1.4.0 bullet scan timing
     runs-on: ubuntu-26.04
     timeout-minutes: 10

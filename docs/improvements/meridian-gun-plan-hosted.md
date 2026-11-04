@@ -68,3 +68,10 @@ During preparation the original shared Git pack became unreadable (reported size
 in `/private/tmp/robocode-gp60-recovery` preserves published history and permits
 publication without repairing or rewriting the shared object store. No competitive
 rounds were played during recovery.
+
+The first publication used `[skip ci]`, so GitHub created no preflight job. This
+spent zero games and consumed no durable receipt. The follow-up removes that
+commit-message barrier, explicitly excludes this experiment branch from automatic
+production battle/Retcon/engine-trace jobs, and keeps Java17 CI build/parity checks.
+The normal Meridian CI build materializes the hash-pinned fixture from full Git
+history. These workflow-only changes do not alter the registered candidate.

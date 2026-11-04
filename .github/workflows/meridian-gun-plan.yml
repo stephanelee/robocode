@@ -58,6 +58,7 @@ jobs:
         run: |
           python tools/meridian_profile.py
           python tools/meridian_gun_plan.py --preflight
+          "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian/launcher-classes benchmarks/meridian-gun-plan/MeridianBattle.java
       - name: Consume sole durable attempt and run reviewed schedule
         if: github.event.label.name == 'run-meridian-gp60'
         env:

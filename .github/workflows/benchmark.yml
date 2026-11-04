@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   battle:
+    if: github.head_ref != 'codex/meridian-held-plan-execution'
     name: Headless battle smoke
     runs-on: ubuntu-26.04
     timeout-minutes: 25
