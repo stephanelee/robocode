@@ -1,5 +1,9 @@
 # Project documentation
 
+- [Diamond style bot specification for a separated implementation](diamond-port-clean-room-specification.md)
+- [Ready to use implementer prompt](diamond-port-implementer-prompt.md)
+- [Prism implementer prompt](prism-implementer-prompt.md)
+
 - [Separate Challenger context gun: active learning, rejected pilot](improvements/diamond-context-v2.md)
 
 - [Separate DiamondChallenger: rejected first pressure pilot](improvements/diamond-pressure-v1.md)
