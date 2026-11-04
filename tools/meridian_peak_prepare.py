@@ -31,6 +31,7 @@ def main():
         old = ROOT / 'build/meridian'
         old.mkdir(parents=True, exist_ok=True)
         (old / 'build-java.txt').write_text(version)
+        (old / 'build-java-home.txt').write_text(str(java.resolve()) + '\n')
         import benchmark
         (old / 'build-java.sha256').write_text(benchmark.digest(java / 'bin/javac') + '  javac\n' + benchmark.digest(java / 'lib/modules') + '  modules\n')
         run(['python', 'tools/verify_jar.py', str(committed), 'AISurvivor/AISurvivor.jar'], 'production-parity.log')

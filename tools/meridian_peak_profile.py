@@ -12,6 +12,7 @@ import zipfile
 import benchmark
 import meridian_profile as original_profile
 from meridian_gun_plan import package_contents
+import meridian_peak_verify as prepared
 from meridian_peak_common import ROOT, REG, OUT, CACHE, save
 
 BASE = '809b880cdcee98d7946d05e6bcd30f623f604348'
@@ -77,6 +78,8 @@ def walls_manifest(archive):
 
 
 def collect():
+    if (PROVENANCE / 'profile.json').exists() or (PROVENANCE / 'prepared-environment.json').exists():
+        raise ValueError('Fresh collection may run only once; use read-only prepared verification')
     PROVENANCE.mkdir(parents=True, exist_ok=True)
     original_profile.main()  # No game; retains exactly the two registered runtime schemas.
     original = json.loads((ROOT / 'build/meridian/profile.json').read_text())
@@ -96,8 +99,37 @@ def collect():
     walls = walls_manifest(archive)
     save(PROVENANCE / 'walls.json', walls)
     data = dict(runtime=runtime, assets=participant_assets(), walls=walls)
+    proof = prepared.creation_proof()
+    actual_runtime, _ = prepared.runtime(proof)
+    if actual_runtime != runtime:
+        raise ValueError('Fresh collection and independent prepared-runtime identity disagree')
+    save(PROVENANCE / 'prepared-environment.json', proof)
     save(PROVENANCE / 'profile.json', data)
     return data
+
+
+def verify_existing(stage):
+    """Verify this exact owned environment without invoking any preparation/download/repair path."""
+    check_host(stage)
+    profile = json.loads((PROVENANCE / 'profile.json').read_text())
+    proof = json.loads((PROVENANCE / 'prepared-environment.json').read_text())
+    if proof.get('schemaVersion') != 1:
+        raise ValueError('Missing fresh-environment ownership proof')
+    actual_runtime, python = prepared.runtime(proof)
+    if actual_runtime != profile['runtime'] or actual_runtime not in allowed_runtime():
+        raise ValueError('Actual prepared runtime changed since fresh collection')
+    packages = prepared.package_contents(python)
+    expected = REG.parent / 'meridian-gun-plan/package-contents.json'
+    if (benchmark.digest(expected) != PACKAGE_SHA or benchmark.digest(PROVENANCE / 'package-contents.json') != PACKAGE_SHA
+            or packages != json.loads(expected.read_text())
+            or packages != json.loads((PROVENANCE / 'package-contents.json').read_text())):
+        raise ValueError('Actual installed package contents changed since fresh collection')
+    walls = walls_manifest(CACHE / 'sample-bots-Java-1.4.0.zip')
+    if walls != profile['walls'] or walls != json.loads((PROVENANCE / 'walls.json').read_text()):
+        raise ValueError('Prepared official Walls artifact/source changed')
+    if participant_assets() != profile['assets']:
+        raise ValueError('Prepared participant source/artifact bytes changed')
+    return profile
 
 
 def validate_payload(profile):
@@ -123,6 +155,7 @@ def host_identity(stage):
     return dict(stage=stage, bootID=boot, workspace=str(ROOT.resolve()), runID=os.environ['GITHUB_RUN_ID'],
                 runAttempt=os.environ['GITHUB_RUN_ATTEMPT'], profileSHA256=benchmark.digest(PROVENANCE / 'profile.json'),
                 packageSHA256=benchmark.digest(PROVENANCE / 'package-contents.json'),
+                preparationSHA256=benchmark.digest(PROVENANCE / 'prepared-environment.json'),
                 freezeSHA256=benchmark.digest(REG / 'freeze.json') if (REG / 'freeze.json').exists() else None,
                 toolingSHA256=hashlib.sha256(json.dumps(closure(), sort_keys=True).encode()).hexdigest())
 
@@ -137,8 +170,8 @@ def check_host(stage, receipt=None):
     return host
 
 
-def preflight(stage, require_frozen=False):
-    profile = collect()
+def preflight(stage, require_frozen=False, *, fresh=False):
+    profile = collect() if fresh else verify_existing(stage)
     if require_frozen:
         validate_payload(profile)
     host = host_identity(stage)
@@ -213,6 +246,7 @@ if __name__ == '__main__':
     parser.add_argument('--freeze', action='store_true')
     parser.add_argument('--walls-manifest', type=Path)
     parser.add_argument('--prepare-walls', action='store_true')
+    parser.add_argument('--collect', action='store_true', help='Create one fresh native environment; later invocations verify only')
     args = parser.parse_args()
     if args.prepare_walls:
         prepare_walls()
@@ -221,4 +255,4 @@ if __name__ == '__main__':
             parser.error('--freeze requires --walls-manifest from the zero-game preflight')
         freeze(args.walls_manifest)
     else:
-        preflight(args.stage, args.check_frozen)
+        preflight(args.stage, args.check_frozen, fresh=args.collect)

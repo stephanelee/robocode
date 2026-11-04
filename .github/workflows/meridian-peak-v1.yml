@@ -39,8 +39,10 @@ jobs:
           java-version: '25.0.5+8'
       - name: Exact runtime and pinned assets preflight (zero games)
         run: |
-          python tools/meridian_peak_profile.py --stage profile
+          python tools/meridian_peak_profile.py --stage profile --collect
           "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
+          python tools/meridian_peak_profile.py --stage profile
+          python tools/meridian_peak_profile.py --stage profile
       - name: Preserve complete or partial evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -53,6 +55,7 @@ jobs:
             experiments/Meridian/build/test-results/
             experiments/MeridianPeak/build/test-results/
             benchmarks/meridian-peak-v1/
+            !benchmarks/meridian-peak-v1/preflight/**
           if-no-files-found: warn
           retention-days: 90
   screen:
@@ -87,7 +90,7 @@ jobs:
           java-version: '25.0.5+8'
       - name: Exact runtime and pinned assets preflight (zero games)
         run: |
-          python tools/meridian_peak_profile.py --stage screen
+          python tools/meridian_peak_profile.py --stage screen --collect
           "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
       - name: Verify frozen stage admit budget and consume sole receipt
         env:
@@ -111,6 +114,7 @@ jobs:
             experiments/Meridian/build/test-results/
             experiments/MeridianPeak/build/test-results/
             benchmarks/meridian-peak-v1/
+            !benchmarks/meridian-peak-v1/preflight/**
           if-no-files-found: warn
           retention-days: 90
   confirmation:
@@ -145,7 +149,7 @@ jobs:
           java-version: '25.0.5+8'
       - name: Exact runtime and pinned assets preflight (zero games)
         run: |
-          python tools/meridian_peak_profile.py --stage confirmation
+          python tools/meridian_peak_profile.py --stage confirmation --collect
           "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
       - name: Verify frozen stage admit budget and consume sole receipt
         env:
@@ -169,5 +173,6 @@ jobs:
             experiments/Meridian/build/test-results/
             experiments/MeridianPeak/build/test-results/
             benchmarks/meridian-peak-v1/
+            !benchmarks/meridian-peak-v1/preflight/**
           if-no-files-found: warn
           retention-days: 90

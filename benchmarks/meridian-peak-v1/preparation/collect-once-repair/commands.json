@@ -1,0 +1,18 @@
+{
+  "newPhysicalGames": 0,
+  "newPhysicalRounds": 0,
+  "command": "python3 -m unittest discover -s tools -p test_meridian_peak*.py -v",
+  "finalResult": "21 tests passed",
+  "fixtureCorrection": "The first new native-verifier test built its synthetic cache under /var while the implementation canonicalized CACHE to /private/var; normalized the fixture path. Original failure log retained.",
+  "scope": "Fresh collection exactly once, then repeated read-only prepared verification; no native.prepare freshness guard edits, no game strategy/budget/gate/receipt reset.",
+  "readOnlyChecks": [
+    "same stage/boot/run/workspace/proof binding",
+    "actual JDK17/JDK25/runner/API/Python bytes",
+    "native source/wheel pins and Retcon cached source/API",
+    "isolated metadata and pip checks (-I -B)",
+    "existing 52b7 installed-package contents and owned non-cache files/all symlink identities",
+    "candidate/Walls frozen assets"
+  ],
+  "regularBytecodeCachePolicy": "Existing .pyc/__pycache__ regular-file exclusion retained; every symlink target is recorded, including directory/dangling links.",
+  "artifactLayout": "Workflow uploads exclude benchmarks/meridian-peak-v1/preflight/** to avoid recursively embedding committed prior evidence ZIPs; original bytes remain in Git."
+}

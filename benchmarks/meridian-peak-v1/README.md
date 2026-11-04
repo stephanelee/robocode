@@ -5,7 +5,7 @@ Protocol: [issue #95](https://github.com/stephanelee/robocode/issues/95) and
 
 Status: source/JAR/tool freeze independently reviewed; no screen or confirmation
 games have run. [Draft PR #96](https://github.com/stephanelee/robocode/pull/96).
-Freeze SHA256: `c28024373ffd79b900952790d01db517c4fc9e1bb0132222b0ca0b4a59e6b145`.
+Freeze SHA256: `07e72b257dea6f9c81217ff1143bb87addb300fa650bf0d7374b216ac24e973c`.
 Local preparation and contract tests establish implementation properties only.
 
 The screen is five cold five-round games, in `games.json` order. A complete valid
@@ -32,3 +32,19 @@ passed at head `ed58717805d7bb4d1aff333cabeb02709ad380c0`, allowed image
 `20261026.180.1`. [Full original ZIP, log, runtime and preparation evidence](preflight/run-41779652044/)
 are preserved. ZIP SHA256: `68282d4bb7a715d314a38d3e28d57a996a5b3387c270f882e5b5063526f49df4`.
 Both acquisition jobs were skipped; no durable acquisition receipt was created.
+
+Screen-label [run41780412075](https://github.com/stephanelee/robocode/actions/runs/41780412075)
+failed before admission/activation/game startup when the harness repeated fresh
+venv construction. **0 physical games/rounds; no comparative result.**
+[Full original ZIP parts, log, preparation and runtime evidence](preflight/failed-screen-preparation-41780412075/)
+are retained. `reassemble.py` restores the exact ZIP20619a387320f7e88549b96404cf7b8a66d49cebd96ffdd170e97a1b44c20fc2.
+The old freeze is preserved under `registration/`; preparation repair requires a
+new tooling freeze, hosted zero-game path check and independent screen clearance.
+
+Collection/verification repair independently reviewed:21/21 ordinary harness tests
+pass; [source review and logs](preparation/collect-once-repair/). Only tooling,
+protocol bookkeeping and preparation provenance changed in the new freeze above.
+All25 participant assets, schedule, runtime family, packages and success criteria
+match the preserved original registration. A fresh zero-game hosted profile must
+exercise collect-once followed by two read-only verifications before any renewed
+exact-head screen clearance. The screen and confirmation receipts remain unused.

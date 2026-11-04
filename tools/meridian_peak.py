@@ -13,7 +13,8 @@ import benchmark
 import retcon
 import strong_melee_opponents as native
 from meridian_peak_common import ROOT, REG, OUT, CACHE, save, metrics, passes_screen, confirmation_decision
-from meridian_peak_profile import BASE, CONTROL_JAR, PACKAGE_SHA, PROVENANCE, preflight, validate_payload, check_host
+from meridian_peak_profile import BASE, CONTROL_JAR, PACKAGE_SHA, PROVENANCE, preflight, validate_payload, check_host, verify_existing
+import meridian_peak_verify as prepared
 
 
 def games(stage, frozen):
@@ -33,7 +34,7 @@ def check_confirmation():
     if audit.get('freezeSHA256') != benchmark.digest(REG / 'freeze.json'):
         raise ValueError('Confirmation candidate/tool/source freeze differs from audited screen')
     files = audit.get('evidenceFilesSHA256', {})
-    if not {'decision.json', 'activation.json', 'profile.json', 'freeze.json', 'package-contents.json', 'host.json'} <= files.keys():
+    if not {'decision.json', 'activation.json', 'profile.json', 'freeze.json', 'package-contents.json', 'host.json', 'prepared-environment.json'} <= files.keys():
         raise ValueError('Audit omits required archived stage provenance')
     if set(files) != {str(p.relative_to(evidence)) for p in evidence.rglob('*') if p.is_file()}:
         raise ValueError('Audited screen file manifest is incomplete or contains extra paths')
@@ -48,6 +49,10 @@ def check_confirmation():
     if (activation.get('stage') != 'screen' or activation.get('receiptRef') != receipt_ref('screen')
             or audit.get('screenReceiptObject') != activation.get('receiptObject') or not activation.get('receiptObject')):
         raise ValueError('Archived screen durable receipt is missing or unaudited')
+    host = json.loads((evidence / 'host.json').read_text())
+    if (host != activation.get('hostIdentity') or benchmark.digest(evidence / 'host.json') != activation.get('hostDocumentSHA256')
+            or benchmark.digest(evidence / 'prepared-environment.json') != host.get('preparationSHA256')):
+        raise ValueError('Archived prepared-environment proof differs from the audited stage host/receipt binding')
     profile = json.loads((evidence / 'profile.json').read_text())
     if benchmark.digest(evidence / 'freeze.json') != audit['freezeSHA256'] or benchmark.digest(evidence / 'package-contents.json') != PACKAGE_SHA:
         raise ValueError('Archived screen source/package freeze differs')
@@ -126,7 +131,9 @@ def play(game, profile, frozen, execution, control):
         env.update(MERIDIAN_PEAK_SEED=str(game['seed']), MERIDIAN_PEAK_METRICS=str(data / 'markers.txt'),
                    MERIDIAN_PEAK_STATE_DIR=str(data / 'state'))
     if game['enemy'] == 'Retcon':
-        source, api, rc = retcon.prepare(CACHE)
+        rc = prepared.verify_retcon()
+        source = CACHE / 'retcon' / rc['commit'] / 'Retcon'
+        api = CACHE / 'retcon-api'
         other = stage / 'Retcon'
         benchmark.isolate_opponent(source, other)
         if retcon.source_hash(other) != rc['sourceSHA256']:
@@ -185,6 +192,7 @@ def run(stage):
     save(execution / 'profile.json', profile)
     shutil.copy2(REG / 'freeze.json', execution / 'freeze.json')
     shutil.copy2(PROVENANCE / 'package-contents.json', execution / 'package-contents.json')
+    shutil.copy2(PROVENANCE / 'prepared-environment.json', execution / 'prepared-environment.json')
     shutil.copy2(PROVENANCE / (stage + '-host.json'), execution / 'host.json')
     report = dict(stage=stage, status='pending', freezeSHA256=benchmark.digest(REG / 'freeze.json'), games=[], decision='pending')
     save(execution / 'decision.json', report)
@@ -195,6 +203,7 @@ def run(stage):
             save(execution / 'decision.json', report)
             try:
                 check_host(stage, receipt)
+                verify_existing(stage)
                 validate_payload(profile)
                 row = dict(**game, status='valid', **play(game, profile, frozen, execution, control))
             except Exception as error:

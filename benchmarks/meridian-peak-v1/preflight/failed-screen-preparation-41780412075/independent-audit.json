@@ -1,0 +1,23 @@
+{
+  "reviewer": "independent_review agent",
+  "decision": "Verified zero-game infrastructure failure; no comparison/strength outcome and no stage receipt consumed",
+  "runID": 41780412075,
+  "headSHA": "b3e50b07b19ab46c938b72fa24c20136425dfa92",
+  "artifactSHA256": "20619a387320f7e88549b96404cf7b8a66d49cebd96ffdd170e97a1b44c20fc2",
+  "artifactBytes": 2710573,
+  "partHashesVerified": true,
+  "extractedFilesByteVerified": 131,
+  "originalRecordings": 0,
+  "screenActivationFiles": 0,
+  "screenAcquisitionRoots": 0,
+  "physicalGames": 0,
+  "physicalRounds": 0,
+  "workflowLogSHA256": "df95dba257ac9fc03ffccfd37b8567c9461d98ba878552d69786d6e071fedf01",
+  "sourceCause": "Admission preflight called collect() a second time, which called original_profile.main() and native.prepare(); the original fresh-venv guard rejected the existing venv. The shell exited before budget admission, activation helper or run invocation.",
+  "independentGitHubReceiptQueries": {
+    "screen": "NOT_FOUND (404)",
+    "confirmation": "NOT_FOUND (404)"
+  },
+  "scope": "Both exact stage refs were queried through the connected stephanelee account; repository/PR reads remain available. This records absence at review time, not permission to reset a later consumed receipt. No games, dispatch or repair executed by this reviewer.",
+  "repairRequirements": "Separate fresh acquisition from repeated strict read-only verification of same-owned host/run/stage prepared assets/runtime/packages. Preserve original freshness guard and this failure. New tooling/protocol freeze and independent exact-payload review are required before another stage start; candidate and game rules remain unchanged."
+}

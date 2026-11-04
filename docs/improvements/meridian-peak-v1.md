@@ -230,3 +230,25 @@ observer reconciliation. This is a prospective evidence-delivery definition,
 not a waiver after seeing a discrepancy; no games have run. In 1v1 the engine
 ends a round when alive count is at most one, limiting later posthumous ticks;
 the source-defined cohort is retained without presuming such events occur.
+
+## Zero-game preparation failure and prospective harness repair
+
+Screen-label run41780412075 at head b3e50b07b19ab46c938b72fa24c20136425dfa92
+failed before activation or any game. Its first profile collection succeeded;
+the admission command then called the fresh-venv constructor a second time and
+correctly refused the existing environment. The sole screen receipt was not
+created. Preserve the original full ZIP20619a387320f7e88549b96404cf7b8a66d49cebd96ffdd170e97a1b44c20fc2
+and log. Measured game budget remains0/25; there is no comparison result.
+
+Repair only the collection/verification boundary: construct a fresh opponent
+environment once per new hosted workspace, then strictly verify that same
+prepared environment, actual runtime/package/source bytes and host identity at
+admission, execution and before each game without reconstructing it. Preserve the
+prepared-environment proof inside each acquisition and bind its hash into the
+host/receipt and any archived-screen confirmation audit. Never reuse an ambient or
+unbound environment. Review and refreeze the changed tooling/protocol before a
+new job at run_attempt1; preserve the old head/freeze/failure. Do not rerun the
+failed GitHub run, reset any receipt, change candidate JAR/source, alter game
+population/budget/criteria, or open confirmation. The fixed screen receipt remains
+once-only; any consumed physical round cannot be replaced. A zero-game hosted
+check of the repaired repeated-verification path must precede screen clearance.

@@ -247,7 +247,7 @@ class PeakIntegrityTests(unittest.TestCase):
             with self.subTest(invalid_at=invalid_at),tempfile.TemporaryDirectory() as tmp:
                 root=Path(tmp);reg=root/'reg';reg.mkdir();(reg/'freeze.json').write_text('{}')
                 provenance=root/'provenance';provenance.mkdir()
-                for name in ('screen-activation.json','package-contents.json','screen-host.json'):(provenance/name).write_text('{}')
+                for name in ('screen-activation.json','package-contents.json','screen-host.json','prepared-environment.json'):(provenance/name).write_text('{}')
                 calls=[]
                 def play(game,*args):
                     calls.append(game['id'])
@@ -256,6 +256,7 @@ class PeakIntegrityTests(unittest.TestCase):
                 with patch.object(peak,'OUT',root/'out'),patch.object(peak,'REG',reg),patch.object(peak,'PROVENANCE',provenance), \
                     patch.object(peak,'preflight',return_value={}),patch.object(peak,'validate_payload',return_value={}), \
                     patch.object(peak,'validate_receipt'),patch.object(peak,'check_host'),patch.object(peak,'control_bundle'), \
+                    patch.object(peak,'verify_existing',return_value={}), \
                     patch.object(peak,'games',return_value=rows),patch.object(peak,'play',side_effect=play), \
                     patch.object(peak.subprocess,'check_output',return_value='a'*40+'\n'):
                     if invalid_at is None:peak.run('screen')
