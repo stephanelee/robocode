@@ -92,3 +92,19 @@ the root clean build in the corrected workflow; no runtime identity is waived.
 The durable receipt also binds the measured Linux boot ID, resolved workspace,
 run/attempt and runtime/package/tooling manifest hashes. Verify the same host document
 and frozen assets before each game, refusing identity changes or cross-run reuse.
+
+The corrected [preflight41765933504](https://github.com/stephanelee/robocode/actions/runs/41765933504)
+passed all builds/parity, the exact allowed Ubuntu image20261026.180.1 profile,
+package fingerprinting and Java25 launcher compilation, with0 games/no receipt.
+Its originalZIP, complete compressed job log and extracted profile/host/build
+provenance are retained under `preflight-41765933504/`. The twelve installed
+distributions' exact measured file manifest is now frozen as
+`benchmarks/meridian-gun-plan/package-contents.json`. This is the existing pinned
+wheel/source environment, not a newly accepted runtime. The acquisition job must
+match these package bytes and one of the two existing runtime profiles anew,
+then bind its own fresh host document; never reuse the preflight host identity.
+
+The sixty-round study has a descriptive completion rule, not a gameplay promotion
+threshold: all12 valid games must complete, and otherwise no comparison decision
+is made. Any claimed competitive improvement or claim to beat Diamond requires a
+separately registered fresh confirmation. No additional game is implicit here.
