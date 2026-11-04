@@ -17,3 +17,5 @@ Registered profile sourceCommit fields identify generation commits (invalid-star
 ## Offline reproduction (zero games)
 
 From repository root: `python -m unittest discover -s tools -p test_keel_prism.py -v`. It verifies archived byte hashes and recomputes every completed raw recording and combined totals. The acquisition entrypoint is spent: both local-output exclusivity and permanent remote receipt prevent replay; never remove/reset them. No further game, optimization, tuning, replacement or confirmation is authorized by this report.
+
+Exact executed harness bytes are archived perphase under executed-tools with provenance.json: original136 uses Git bytes; laterfa14/ab418 Python script Windows CRLF expansion matches runtime.assets exactly. This is newline normalization only, not a logic change. All source files can be reconstructed from the named Git objects and this explicit transformation.
