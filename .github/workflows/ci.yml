@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -39,6 +41,7 @@ jobs:
           python tools/verify_jar.py experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
       - name: Build Meridian, test its physics and compare the committed JAR
         run: |
+          python tools/meridian_gun_plan_fixture.py
           ./gradlew -p experiments/Meridian --no-daemon clean build
           python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
       - name: Upload test reports

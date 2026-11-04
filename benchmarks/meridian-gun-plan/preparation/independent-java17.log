@@ -1,0 +1,75 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :jar
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test
+
+CrossingGunTest > mirrorsResolvedBearingsAndRetainsOnlyCompletedExamplesAcrossRounds() PASSED
+
+CrossingGunTest > learnsOnlyFromConfirmedShotsAndBracketingScans() PASSED
+
+FlightTest > reverseStopAndBrakeDiffer() PASSED
+
+FlightTest > wallStopsAndConstrains() PASSED
+
+FlightTest > translationPrecedesRotation() PASSED
+
+FlightTest > obliqueWallIntercept() PASSED
+
+FlightTest > preRotationRayAndFirstSweep() PASSED
+
+GunPlanTest > targetDisappearanceClearsScanAndAimButNotAcceptedShotContext() PASSED
+
+GunPlanTest > scanLossClearsPlanAndReacquisitionSelectsAgain() PASSED
+
+GunPlanTest > launchUsesActualFiringDecisionNotPlanningOrCallbackScan() PASSED
+
+GunPlanTest > rejectedSetFireKeepsPlanAndDoesNotTeachOrEnterPending() PASSED
+
+GunPlanTest > holdsSignedOffsetAndPowerButTracksLiveBearingAcrossReversalAndWrap() PASSED
+
+GunPlanTest > originalSafetyGuardsRemainBinding() PASSED
+
+GunPlanTest > acceptedRequestSuppressesDuplicatesUntilConfirmationOrExpiredTurn() PASSED
+
+GunPlanTest > affordabilityAndScanLossDoNotDiscardPendingLearningBeforeConfirmation() PASSED
+
+GunPlanTest > hotGunDoesNotCreatePlanAndRoundChangeClearsPending() PASSED
+
+GunPlanTest > runLoopClearsPlanForAbsentOrLongStaleScanAndRoundEndClearsIt() PASSED
+
+GunPlanTest > lateOrDuplicateConfirmationCannotConsumeANewerPendingRequest() PASSED
+
+GunPlanTest > unaffordablePlanIsDroppedIncludingZeroAndEqualPowerEnergy() PASSED
+
+HitAnglesTest > requireUniqueLaunchOnCorrectTick() PASSED
+
+HitAnglesTest > ambiguousHitDoesNotChangeRisk() PASSED
+
+HitAnglesTest > learnedDirectionMirrorsWhenLateralMotionReverses() PASSED
+
+RecordedGunLivenessTest > unchangedV3ReproducesEveryShotAndTheFullStarvationInterval() STANDARD_OUT
+    BASELINE shots=244 false=0 missing=0 stall=2894 flips=1446 maxLat=1.474353609267 error=[7.918178484795,46.159732506279]
+
+RecordedGunLivenessTest > unchangedV3ReproducesEveryShotAndTheFullStarvationInterval() PASSED
+
+RecordedGunLivenessTest > committedPlanSettlesWithinProspectiveGeometryBoundWithoutBattleSimulation() STANDARD_OUT
+    SERVO bound=2 D=1.352524204780 A=1.525504341343 initialError=25.176071978936
+    SERVO turn=145 step=1 error=4.663895675504 request=0
+    SERVO turn=146 step=2 error=-0.862297250866 request=1
+
+RecordedGunLivenessTest > committedPlanSettlesWithinProspectiveGeometryBoundWithoutBattleSimulation() PASSED
+
+> Task :prepareBot
+> Task :assemble
+
+BUILD SUCCESSFUL in 8s
+6 actionable tasks: 5 executed, 1 up-to-date

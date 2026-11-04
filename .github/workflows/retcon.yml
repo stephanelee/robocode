@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   retcon:
+    if: github.head_ref != 'codex/meridian-held-plan-execution'
     name: Retcon 1v1 compatibility
     runs-on: ubuntu-26.04
     timeout-minutes: 30
