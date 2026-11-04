@@ -216,35 +216,34 @@ final class Surfer {
                 if (w1.near(T + 1 + i) > Phys.distance(w1.ox, w1.oy, p.x(), p.y()) + Phys.BOT_RADIUS) { passIndex = i; break; }
             }
             if (passIndex < 0) passIndex = full.size() - 1;
-            double[] first = orbit(me, ex, ey, dir, w, h);
-            // mode 0: orbit k turns then stop dead; mode 1: orbit k turns then reverse; mode 2: half-speed orbit.
-            for (int mode = 0; mode < 3; mode++) {
-                for (int k = mode == 1 ? 2 : 0; k <= (mode == 2 ? 0 : passIndex + 1); k += (k < 8 ? 1 : 2)) {
-                    int stop = Math.min(k, passIndex + 1);
-                    ArrayList<Phys.Pose> path = new ArrayList<>();
-                    Phys.Pose q = me;
-                    for (int i = 0; i < 110; i++) {
-                        if (mode == 2) {
-                            double[] c = orbit(q, ex, ey, dir, w, h);
-                            q = Phys.step(q, c[0], Math.signum(c[1]) * 4, w, h);
-                        } else if (i < stop) q = full.get(i);
-                        else if (mode == 0) q = new Phys.Pose(q.x(), q.y(), q.h(), 0);
-                        else { double[] c = orbit(q, ex, ey, -dir, w, h); q = Phys.step(q, c[0], c[1], w, h); }
-                        path.add(q);
-                        if (w1.near(T + 1 + i) > Phys.distance(w1.ox, w1.oy, q.x(), q.y()) + Phys.BOT_RADIUS) break;
-                    }
-                    if (mode == 1 && stop > passIndex) continue;
-                    double d1 = danger(w1, path, T + 1) * Phys.damage(w1.power);
-                    double d2 = 0;
-                    Phys.Pose end = path.get(path.size() - 1);
-                    int Tend = T + path.size();
-                    if (w2 != null) d2 = 0.85 * secondWave(w2, end, Tend + 1, ex, ey, w, h) * Phys.damage(w2.power);
-                    double dist = Phys.distance(ex, ey, end.x(), end.y());
-                    double pos = Math.max(0, 300 - dist) / 300 * 1.5;
-                    double total = d1 + d2 + pos;
-                    double speed = mode == 2 ? Math.signum(first[1]) * 4 : (mode == 0 && stop == 0) ? 0 : first[1];
-                    if (best == null || total < best.danger()) best = new Plan(dir, mode == 0 && stop <= passIndex ? stop : -1, total, first[0], speed);
+            for (int k = 0; k <= passIndex + 1; k += (k < 8 ? 1 : 2)) {
+                int stop = Math.min(k, passIndex + 1);
+                ArrayList<Phys.Pose> path = new ArrayList<>();
+                Phys.Pose q = me;
+                for (int i = 0; i < 110; i++) {
+                    if (i < stop) q = full.get(i);
+                    else q = new Phys.Pose(q.x(), q.y(), q.h(), 0);
+                    path.add(q);
+                    if (w1.near(T + 1 + i) > Phys.distance(w1.ox, w1.oy, q.x(), q.y()) + Phys.BOT_RADIUS) break;
                 }
+                double d1 = danger(w1, path, T + 1) * Phys.damage(w1.power);
+                double d2 = 0;
+                Phys.Pose end = path.get(path.size() - 1);
+                int Tend = T + path.size();
+                if (w2 != null) d2 = 0.85 * secondWave(w2, end, Tend + 1, ex, ey, w, h) * Phys.damage(w2.power);
+                double dist = Phys.distance(ex, ey, end.x(), end.y());
+                double pos = Math.max(0, 300 - dist) / 300 * 1.5;
+                double total = d1 + d2 + pos;
+                boolean full_ = stop > passIndex;
+                double turn, speed;
+                if (stop == 0) {
+                    double[] c = orbit(me, ex, ey, dir, w, h);
+                    turn = c[0]; speed = 0;
+                } else {
+                    double[] c = orbit(me, ex, ey, dir, w, h);
+                    turn = c[0]; speed = c[1];
+                }
+                if (best == null || total < best.danger()) best = new Plan(dir, full_ ? -1 : stop, total, turn, speed);
             }
         }
         return best;
