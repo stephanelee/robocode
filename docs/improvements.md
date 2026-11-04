@@ -4,6 +4,12 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## Meridian standalone duel
+
+| Experiment | Measured budget and decision | Evidence |
+|---|---|---|
+| Meridian v1 / [PR #77](https://github.com/stephanelee/robocode/pull/77) | **Reject at three-target screen.** Three valid games, 15 rounds; Retcon 53.58%, 3/5; experimental Python Diamond Port 5.47%, 0/5; current AISurvivor 57.66%, 3/5. Zero Meridian skips; no confirmation, no repeated winning claim. | [Report](improvements/meridian-v1.md), [raw recordings and endpoints](../benchmarks/meridian-v1/raw/), [reproduction](../benchmarks/meridian-v1/README.md), [issue #76](https://github.com/stephanelee/robocode/issues/76) |
+
 ## Baselines
 
 - [Original sample baseline](benchmarks/samples-2026-11-02.md): 140 rounds completed. All evaluation policies beat the easy sample roster; trained wall collisions exposed a weakness. This validates integration, not strength.
