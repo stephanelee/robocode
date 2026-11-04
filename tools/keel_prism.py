@@ -4,7 +4,7 @@ from pathlib import Path
 import benchmark
 ROOT=benchmark.ROOT
 REG=ROOT/'benchmarks/keel-prism-v1'
-OUT=ROOT/'build/keel-prism-v1'
+OUT=ROOT/'build/keel-prism-utf8'
 JAVA=Path(r'C:\Program Files\Microsoft\jdk-17.0.18.8-hotspot')
 RUNNER=ROOT/'build/completion-test-cache/robocode-tankroyale-runner-1.4.0.jar'
 def save(p,x):p.write_text(json.dumps(x,indent=2,allow_nan=False)+'\n',encoding='utf-8')
@@ -48,13 +48,13 @@ def main():
     plan=json.loads((REG/'plan.json').read_bytes())
     assert digest(RUNNER)==plan['runnerSHA256']
     for n,h in plan['jars'].items():assert digest(ROOT/f'experiments/{n}/{n}.jar')==h
-    env={k:v for k,v in os.environ.items() if not k.startswith(('AISURVIVOR_','KEEL_','PRISM_','ROBOCODE_'))};env['JAVA_HOME']=str(JAVA);env['PATH']=str(JAVA/'bin')+os.pathsep+env['PATH']
-    profile=dict(javaVersion=subprocess.run([str(JAVA/'bin/java.exe'),'-version'],capture_output=True,text=True).stderr,javaFiles={x:digest(JAVA/x) for x in ('bin/java.exe','lib/modules','release')},assets={str(p.relative_to(ROOT)):digest(p) for p in [Path(__file__).resolve(),REG/'KeelPrismBattle.java']},os=platform.platform(),python=sys.version,runnerSHA256=digest(RUNNER),sourceCommit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),planSHA256=digest(REG/'plan.json'))
+    env={k:v for k,v in os.environ.items() if not k.startswith(('AISURVIVOR_','KEEL_','PRISM_','ROBOCODE_'))};env['JAVA_TOOL_OPTIONS']='-Dfile.encoding=UTF-8';env.pop('_JAVA_OPTIONS',None);env['JAVA_HOME']=str(JAVA);env['PATH']=str(JAVA/'bin')+os.pathsep+env['PATH']
+    profile=dict(jvmOptions=env['JAVA_TOOL_OPTIONS'],javaVersion=subprocess.run([str(JAVA/'bin/java.exe'),'-version'],capture_output=True,text=True).stderr,javaFiles={x:digest(JAVA/x) for x in ('bin/java.exe','lib/modules','release')},assets={str(p.relative_to(ROOT)):digest(p) for p in [Path(__file__).resolve(),REG/'KeelPrismBattle.java']},os=platform.platform(),python=sys.version,runnerSHA256=digest(RUNNER),sourceCommit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),planSHA256=digest(REG/'plan.json'))
     if sys.argv[1]=='profile':
       save(REG/'runtime.json',profile);print(json.dumps(profile,indent=2));return
-    frozen=json.loads((REG/'runtime.json').read_bytes());assert all(profile[k]==frozen[k] for k in ('javaVersion','javaFiles','assets','os','python','runnerSHA256','planSHA256'))
+    frozen=json.loads((REG/'runtime.json').read_bytes());assert all(profile[k]==frozen[k] for k in ('jvmOptions','javaVersion','javaFiles','assets','os','python','runnerSHA256','planSHA256'))
     OUT.mkdir(parents=True,exist_ok=False);save(OUT/'runtime.json',profile)
-    ref='refs/tags/keel-prism-v1-77b8a5c3114641c1-8c045f80d37a3076'
+    ref='refs/tags/keel-prism-utf8-v1-77b8a5c3114641c1-8c045f80d37a3076'
     subprocess.run(['gh','api','-X','POST','repos/stephanelee/robocode/git/refs','-f','ref='+ref,'-f','sha='+profile['sourceCommit']],check=True,capture_output=True,text=True)
     save(OUT/'receipt.json',dict(ref=ref,head=profile['sourceCommit'],profileSHA256=digest(REG/'runtime.json')))
     report=dict(plan=plan,execution=profile['sourceCommit'],games=[],decision='descriptive only')
