@@ -203,5 +203,41 @@ class ReceiptTest(unittest.TestCase):
         self.assertTrue(ps.receipt_ref(plan).startswith("refs/tags/prism-screen-v1-"))
         self.assertIn(plan["freeze"]["prismJarSHA256"][:16], ps.receipt_ref(plan))
 
+class NativeStagingTest(unittest.TestCase):
+    def test_both_python_opponents_use_their_locked_source_paths(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from types import SimpleNamespace
+        import sys
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            cache = root / "cache"
+            source = cache / "strong-python" / "fixture" / "source"
+            opponents = [
+                dict(descriptor="diamond-port.json", sourcePath="bots/ports/diamond-port"),
+                dict(descriptor="adaptive-prime.json", sourcePath="bots/adaptive-prime"),
+            ]
+            for bot in opponents:
+                parent = source / bot["sourcePath"]
+                parent.mkdir(parents=True)
+                (parent / bot["descriptor"]).write_text(bot["sourcePath"])
+            checked = []
+            def verify(stage, names):
+                for key in names:
+                    bot = next(b for b in opponents if Path(b["descriptor"]).stem == key)
+                    self.assertEqual(bot["sourcePath"], (stage / "opponents" / key / bot["descriptor"]).read_text())
+                    checked.append(key)
+            fake = SimpleNamespace(manifest=lambda: dict(commit="fixture", opponents=opponents),
+                                   prepare=lambda *_: None, stage=lambda *_: {}, verify_staged=verify)
+            with patch.dict(sys.modules, {"strong_melee_opponents": fake}), patch.object(ps, "CACHE", cache):
+                for name, key in [("Diamond Port", "diamond-port"), ("Adaptive Prime", "adaptive-prime")]:
+                    stage = root / key
+                    stage.mkdir()
+                    result = ps.stage_opponent(name, stage, {})
+                    self.assertEqual(stage / "opponents" / key, result)
+            self.assertEqual(["diamond-port", "adaptive-prime"], checked)
+
+
 if __name__ == "__main__":
     unittest.main()

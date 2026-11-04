@@ -101,7 +101,8 @@ def stage_opponent(name, stage, env):
         src = base / "source"
         env.update(native.stage(src, stage, base / "venv/bin/python"))
         other = stage / "opponents" / key
-        benchmark.isolate_opponent(src / "bots/ports" / key, other)
+        spec = next(bot for bot in lock["opponents"] if Path(bot["descriptor"]).stem == key)
+        benchmark.isolate_opponent(src / spec["sourcePath"], other)
         native.verify_staged(stage, [key])
         return other
     if name in ("SpinBot", "Walls"):
