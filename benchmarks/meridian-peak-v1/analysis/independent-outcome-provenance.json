@@ -1,0 +1,164 @@
+{
+  "acquisitionArtifactFilesByteVerified": 518,
+  "acquisitionFiles": 400,
+  "artifactManifestEntries": 399,
+  "auditLogSHA256": "4ef75b6acbff08d618bfe62e7b0007fa49ecdcd9cd806609a9ff7afd038ee1d5",
+  "auditSHA256": "71cd234708a434f94a628f54b2c16e4da95794ad2ef0de60c2a47bec417659b1",
+  "auditorSHA256": "6ae0b55bb0b74bf21eba68c72bb2cf0f5213b25051dd5e124cdee42daf52bf5e",
+  "command": "python3 -B benchmarks/meridian-peak-v1/analysis/independent_audit.py --raw build/screen-41783652109/build/meridian-peak/screen/acquisition --artifact-zip /private/tmp/peak-screen-41783652109.zip --artifact-sha256 9479829d95903329fc12e17ab4164943f4940f5be38940636956d69a52940afa --expected-head c5239a624426b88740445f2a94675c9db995ee20 --expected-freeze 07e72b257dea6f9c81217ff1143bb87addb300fa650bf0d7374b216ac24e973c --output benchmarks/meridian-peak-v1/analysis/original-screen-audit.json",
+  "confirmationPermitted": false,
+  "firstAuditExecutionPassed": true,
+  "fullWorkflowLogSHA256": "d36a25d023412709469400d62eb0bb6c09b6242e2b34dac6604cbe1f89234390",
+  "invalidRounds": 0,
+  "limitations": [
+    "Five rounds per matchup is a registered screening sample, not general competitive-strength evidence.",
+    "Process CPU counters include runner/server/opponents and are not private bot-only CPU. Private planner timings are diagnostic and unavailable for original-v3 control.",
+    "Incoming21-bin label positions not independently reconstructed; legal finite mass, counts and frozen source/provenance checked. Outgoing crossing bank and virtual skill replayed independently.",
+    "Every observer-only outgoing hit cohort count is zero in this1v1 sample; therefore generic posthumous cohort handling remains source/contract evidence rather than newly exercised gameplay evidence."
+  ],
+  "liveGitHubReceiptVerified": true,
+  "manifestCompleteExcludingSelf": true,
+  "noRerunPermitted": true,
+  "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "receiptObject": "5c4e19bb19b32ee47ec186a608a1b376f1102693",
+  "registeredDecision": false,
+  "rejectionReasons": [
+    "Candidate Diamond share25.505051% fails strict >35% requirement",
+    "Candidate incoming damage per100enemy shots128.732704 exceeds control98.924016, failing strict improvement guard"
+  ],
+  "reviewer": "independent_review",
+  "roundVariationAndCosts": [
+    {
+      "damagePer100EnemyShots": 98.92401579253149,
+      "enemyHitRate": 0.17687074829931973,
+      "hitRate": 0.08292682926829269,
+      "id": "mp1-01-control-diamond",
+      "observerOnlyOutgoingHits": 0,
+      "processCost": {
+        "definition": "Python RUSAGE_CHILDREN delta for the owned runner/process tree when reaped; includes server/observer/opponents",
+        "elapsedWallSeconds": 38.767621684000005,
+        "waitedChildSystemSecondsDelta": 2.766098,
+        "waitedChildUserSecondsDelta": 47.46288199999999
+      },
+      "roundShareSampleSD": 0.1136248502931527,
+      "roundShares": [
+        0.05925925925925926,
+        0.16875,
+        0.2949640287769784,
+        0.0949367088607595,
+        0.0
+      ]
+    },
+    {
+      "damagePer100EnemyShots": 128.73270422900958,
+      "enemyHitRate": 0.16379310344827586,
+      "hitRate": 0.1065989847715736,
+      "id": "mp1-02-peak-diamond",
+      "observerOnlyOutgoingHits": 0,
+      "privateDecisionDiagnostics": {
+        "decisionTotalNanos": 527267558,
+        "decisions": 3437,
+        "maximumDecisionNanos": 3125241,
+        "maximumWaveRisk": 44.79849027612914
+      },
+      "processCost": {
+        "definition": "Python RUSAGE_CHILDREN delta for the owned runner/process tree when reaped; includes server/observer/opponents",
+        "elapsedWallSeconds": 36.41937404800001,
+        "waitedChildSystemSecondsDelta": 2.4228919999999996,
+        "waitedChildUserSecondsDelta": 46.350159
+      },
+      "roundShareSampleSD": 0.30281480284926654,
+      "roundShares": [
+        0.1751412429378531,
+        0.19078947368421054,
+        0.7969924812030075,
+        0.17801047120418848,
+        0.014388489208633094
+      ]
+    },
+    {
+      "damagePer100EnemyShots": 15.702479338842975,
+      "enemyHitRate": 0.02066115702479339,
+      "hitRate": 0.1059322033898305,
+      "id": "mp1-03-peak-retcon",
+      "observerOnlyOutgoingHits": 0,
+      "privateDecisionDiagnostics": {
+        "decisionTotalNanos": 723223313,
+        "decisions": 4063,
+        "maximumDecisionNanos": 9852099,
+        "maximumWaveRisk": 78.83594838694525
+      },
+      "processCost": {
+        "definition": "Python RUSAGE_CHILDREN delta for the owned runner/process tree when reaped; includes server/observer/opponents",
+        "elapsedWallSeconds": 25.324537375000034,
+        "waitedChildSystemSecondsDelta": 2.8132530000000004,
+        "waitedChildUserSecondsDelta": 45.84337500000001
+      },
+      "roundShareSampleSD": 0.06633473023343266,
+      "roundShares": [
+        1.0,
+        0.8709677419354839,
+        1.0,
+        0.864406779661017,
+        0.9433962264150944
+      ]
+    },
+    {
+      "damagePer100EnemyShots": 27.764705882352942,
+      "enemyHitRate": 0.041176470588235294,
+      "hitRate": 0.23684210526315788,
+      "id": "mp1-04-peak-ais",
+      "observerOnlyOutgoingHits": 0,
+      "privateDecisionDiagnostics": {
+        "decisionTotalNanos": 375122548,
+        "decisions": 3219,
+        "maximumDecisionNanos": 3567267,
+        "maximumWaveRisk": 61.38529639355022
+      },
+      "processCost": {
+        "definition": "Python RUSAGE_CHILDREN delta for the owned runner/process tree when reaped; includes server/observer/opponents",
+        "elapsedWallSeconds": 21.29743266600002,
+        "waitedChildSystemSecondsDelta": 1.8286930000000012,
+        "waitedChildUserSecondsDelta": 24.033793000000003
+      },
+      "roundShareSampleSD": 0.06641803653084756,
+      "roundShares": [
+        0.85,
+        0.959731543624161,
+        0.8957055214723927,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "damagePer100EnemyShots": 0.0,
+      "enemyHitRate": 0.0,
+      "hitRate": 0.5263157894736842,
+      "id": "mp1-05-peak-walls",
+      "observerOnlyOutgoingHits": 0,
+      "privateDecisionDiagnostics": {
+        "decisionTotalNanos": 199494287,
+        "decisions": 1621,
+        "maximumDecisionNanos": 4383890,
+        "maximumWaveRisk": 70.11621843946776
+      },
+      "processCost": {
+        "definition": "Python RUSAGE_CHILDREN delta for the owned runner/process tree when reaped; includes server/observer/opponents",
+        "elapsedWallSeconds": 18.75144183900005,
+        "waitedChildSystemSecondsDelta": 1.6036970000000004,
+        "waitedChildUserSecondsDelta": 23.485037000000005
+      },
+      "roundShareSampleSD": 0.0,
+      "roundShares": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "skippedTurns": 0,
+  "validGames": 5,
+  "validRounds": 25
+}

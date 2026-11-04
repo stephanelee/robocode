@@ -3,8 +3,8 @@
 Protocol: [issue #95](https://github.com/stephanelee/robocode/issues/95) and
 [prospective method](../../docs/improvements/meridian-peak-v1.md).
 
-Status: source/JAR/tool freeze independently reviewed; no screen or confirmation
-games have run. [Draft PR #96](https://github.com/stephanelee/robocode/pull/96).
+Status: **REJECTED after the sole five-game/25-round valid screen, zero skips.**
+No confirmation opened. [Draft PR #96](https://github.com/stephanelee/robocode/pull/96).
 Freeze SHA256: `07e72b257dea6f9c81217ff1143bb87addb300fa650bf0d7374b216ac24e973c`.
 Local preparation and contract tests establish implementation properties only.
 
@@ -56,3 +56,37 @@ passed at `05b3abdd3ce742d72de943e7a8a00d2fe1ba42f2`, allowed image
 are retained. ZIP SHA256: `41ad46e0fe5704449ce4d7bf2b10d861410dcc269b2694bf5a3c7a971399a2da`.
 This validates preparation, not strength. Physical games/rounds remain0; both
 permanent acquisition receipts remain unused pending renewed exact-head clearance.
+
+## Completed screen outcome
+
+[Full result report](../../docs/improvements/meridian-peak-v1-results.md),
+[all400 original acquisition files](screen-evidence/),
+[exact original artifact ZIP parts and reassembly](screen-artifact-41783652109/),
+[independent audit](analysis/original-screen-audit.json),
+[provenance/variation/cost audit](analysis/independent-outcome-provenance.json),
+[games.csv](analysis/games.csv), [all25rounds.csv](analysis/rounds.csv).
+
+Diamond share12.397820% control→25.505051% Peak, wins0/5→1/5. Peak fails
+required>35% and lower incoming uncapped damage/100enemy shots (98.924016→128.732704).
+All transfer guards passed, but do not rescue the rejection. No new confirmation,
+rerun, tuning or replacement is authorized. Permanent screen receipt object
+`5c4e19bb19b32ee47ec186a608a1b376f1102693` remains consumed forever.
+
+To reconstruct the original ZIP and verify the portable raw copy without starting
+any bot or game:
+
+```sh
+python3 benchmarks/meridian-peak-v1/screen-artifact-41783652109/reassemble.py
+python3 benchmarks/meridian-peak-v1/analysis/independent_audit.py \
+  --raw benchmarks/meridian-peak-v1/screen-evidence \
+  --artifact-zip benchmarks/meridian-peak-v1/screen-artifact-41783652109/artifact.zip \
+  --artifact-sha256 9479829d95903329fc12e17ab4164943f4940f5be38940636956d69a52940afa \
+  --expected-head c5239a624426b88740445f2a94675c9db995ee20 \
+  --expected-freeze 07e72b257dea6f9c81217ff1143bb87addb300fa650bf0d7374b216ac24e973c \
+  --output /tmp/meridian-peak-screen-audit.json
+```
+
+The independently verified live receipt is also preserved in
+[github-screen-receipt.json](analysis/github-screen-receipt.json). The portable
+archive cannot rehash unarchived live JDK/venv bytes or prove absence of external
+unrecorded games; retain the original hosted provenance and remote-ref audit.
