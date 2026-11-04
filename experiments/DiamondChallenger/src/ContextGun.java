@@ -37,13 +37,15 @@ final class ContextGun {
     private long outgoingSequence;
     private int waveContextQueriesRound,waveContextOneRound,waveContextTwoRound;
     private int outgoingCreatedRound,outgoingOmittedRound,outgoingKnownRemovedRound;
+    private boolean closed;
     private DuelGun.Scan latest;
     private int target=-1,lastShot=-1,acceptedRound,acceptedTotal,generation;
     private long sequence;
     private DiagnosticTrace diagnostic;
     void diagnostic(DiagnosticTrace trace){diagnostic=trace;}
 
-    void startRound() { waves.clear();outgoing.clear();removedIds.clear();removedOrder.clear();latest=null;lastShot=-1;acceptedRound=0;generation++;
+    synchronized void closeRound(){closed=true;}
+    synchronized void startRound() { closed=false;waves.clear();outgoing.clear();removedIds.clear();removedOrder.clear();latest=null;lastShot=-1;acceptedRound=0;generation++;
         waveContextQueriesRound=waveContextOneRound=waveContextTwoRound=0;
         outgoingCreatedRound=outgoingOmittedRound=outgoingKnownRemovedRound=0; }
     int outgoingCount(){return outgoing.size();}
@@ -58,7 +60,8 @@ final class ContextGun {
     int acceptedTotal() { return acceptedTotal; }
     List<Sample> samples() { return List.copyOf(samples); }
 
-    void onScan(DuelGun.Scan scan) {
+    synchronized void onScan(DuelGun.Scan scan) {
+        if(closed)return;
         if(latest!=null && scan.targetId()==target && scan.turn()<=latest.turn())return;
         if(scan.targetId()!=target) {target=scan.targetId();samples.clear();waves.clear();outgoing.clear();removedIds.clear();removedOrder.clear();acceptedTotal=0;lastShot=-1;}
         latest=scan;sequence++;observe(scan);
@@ -84,18 +87,19 @@ final class ContextGun {
             return true;
         });
     }
-    void confirmed(Query query,int turn,double x,double y,double power) {
+    synchronized void confirmed(Query query,int turn,double x,double y,double power) {
         confirmed(query,turn,x,y,power,-1,null);
     }
     /** Freeze at the shot decision, never derive a reference from a later callback scan. */
-    ShotReference reference(int now,DuelGun.Scan scan,double x,double y) {
+    synchronized ShotReference reference(int now,DuelGun.Scan scan,double x,double y) {
+        if(closed)return null;
         if(scan==null || scan.targetId()!=target || scan.turn()!=now)return null;
         double bearing=Math.toRadians(CombatMath.bearing(scan.x()-x,scan.y()-y));
         double direction=Math.toRadians(scan.direction());
         double lateral=(-Math.sin(bearing)*Math.cos(direction)+Math.cos(bearing)*Math.sin(direction))*scan.speed();
         return new ShotReference(target,now,scan.x(),scan.y(),lateral<0?-1:1,generation);
     }
-    void removed(long bulletId){if(bulletId>=0) {
+    synchronized void removed(long bulletId){if(!closed && bulletId>=0) {
         // Removal may precede the fire callback for a close collision. Remember bounded round-local IDs.
         if(removedIds.add(bulletId)) {
             if(removedOrder.size()==96)removedIds.remove(removedOrder.removeFirst());
@@ -103,7 +107,8 @@ final class ContextGun {
         }
         outgoing.removeIf(w->w.bulletId()==bulletId);
     }}
-    void confirmed(Query query,int turn,double x,double y,double power,long bulletId,ShotReference reference) {
+    synchronized void confirmed(Query query,int turn,double x,double y,double power,long bulletId,ShotReference reference) {
+        if(closed)return;
         lastShot=turn;
         if(bulletId>=0 && !removedIds.contains(bulletId) && reference!=null && reference.target()==target && reference.generation()==generation
                 && reference.decisionTurn()+1==turn && Double.isFinite(x) && Double.isFinite(y)
@@ -121,8 +126,9 @@ final class ContextGun {
         if(latest!=null && latest.turn()==turn)observe(latest);
     }
 
-    Query query(int now,DuelGun.Scan current,DuelGun.Scan previous,double x,double y,double power,
+    synchronized Query query(int now,DuelGun.Scan current,DuelGun.Scan previous,double x,double y,double power,
                 double linearAngle,double linearRange,double width,double height) {
+        if(closed)return null;
         if(current==null || previous==null || current.targetId()!=target || previous.targetId()!=target
                 || current.turn()!=now || previous.turn()!=now-1)return null;
         double range=Math.hypot(current.x()-x,current.y()-y),bearing=CombatMath.bearing(current.x()-x,current.y()-y);

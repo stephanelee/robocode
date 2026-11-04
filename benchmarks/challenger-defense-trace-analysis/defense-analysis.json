@@ -1,0 +1,4597 @@
+{
+  "eventCounts": {
+    "command": 3885,
+    "tick": 3890,
+    "wave": 250,
+    "planner": 3629,
+    "shot": 237,
+    "passage": 231,
+    "virtual": 690,
+    "enemyHit": 52,
+    "round": 5,
+    "hit": 13,
+    "removal": 9
+  },
+  "waveJoin": {
+    "unique": 52
+  },
+  "inferredWithoutObservedHitLabel": 198,
+  "radialResidualPixels": {
+    "n": 52,
+    "min": 0.0,
+    "mean": 2.120696780576299e-13,
+    "median": 2.2737367544323206e-13,
+    "p90": 3.410605131648481e-13,
+    "max": 3.979039320256561e-13
+  },
+  "radialResidualBulletTurns": {
+    "n": 52,
+    "min": 0.0,
+    "mean": 1.424478526308742e-14,
+    "median": 1.6068810985387435e-14,
+    "p90": 2.2044539170396584e-14,
+    "max": 2.812041922442801e-14
+  },
+  "preHitCoverage": {
+    "selected": 52
+  },
+  "preHitDecisionLag": {
+    "n": 52,
+    "min": 1.0,
+    "mean": 1.0,
+    "median": 1.0,
+    "p90": 1.0,
+    "max": 1.0
+  },
+  "matchedWaveProfileAtPreHit": {
+    "False": 15,
+    "True": 37
+  },
+  "matchedWaveSupportAtPreHit": {
+    "n": 52,
+    "min": 0.0,
+    "mean": 5.7482359375,
+    "median": 5.824999999999999,
+    "p90": 10.632649999999998,
+    "max": 12.839625
+  },
+  "actualHitGF": {
+    "n": 52,
+    "min": -0.48275862068965697,
+    "mean": 0.22413236567564565,
+    "median": 0.2913556516440645,
+    "p90": 0.6017152450223812,
+    "max": 0.6895807733602985
+  },
+  "nearestFixedPriorModeGFDistance": {
+    "n": 52,
+    "min": 0.018909607842450882,
+    "mean": 0.29646078334366993,
+    "median": 0.28933679783288563,
+    "p90": 0.4482758620689639,
+    "max": 0.5862068965517235
+  },
+  "plannerSummary": {
+    "decisions": 3629,
+    "choices": {
+      "1": 1522,
+      "-1": 1533,
+      "0": 574
+    },
+    "profileSlots": {
+      "0": 565,
+      "1": 484,
+      "2": 2580
+    },
+    "unsafeOptions": {
+      "0": 3313,
+      "1": 316
+    },
+    "supportMass": {
+      "n": 6835,
+      "min": 0.0,
+      "mean": 6.822082133321141,
+      "median": 6.46,
+      "p90": 12.632649999999998,
+      "max": 13.632649999999998
+    },
+    "chosenRisk": {
+      "n": 3629,
+      "min": 0.0,
+      "mean": 0.18277191010625096,
+      "median": 0.09852807249610099,
+      "p90": 0.4270874755253995,
+      "max": 2.6114282079495115
+    },
+    "chosenMinusFiniteMinimum": {
+      "n": 3629,
+      "min": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "p90": 0.0,
+      "max": 0.0
+    },
+    "bestOtherMinusChosen": {
+      "n": 3629,
+      "min": 0.0,
+      "mean": 0.0898816067026837,
+      "median": 0.05313915855791576,
+      "p90": 0.20266378317215683,
+      "max": 1.7806945043458329
+    },
+    "chosenFirstContactSteps": {
+      "n": 6645,
+      "min": 1.0,
+      "mean": 12.706696764484574,
+      "median": 12.0,
+      "p90": 24.0,
+      "max": 34.0
+    },
+    "chosenDoneSteps": {
+      "n": 6835,
+      "min": 1.0,
+      "mean": 15.607022677395758,
+      "median": 15.0,
+      "p90": 28.0,
+      "max": 37.0
+    },
+    "chosenWallVetoSteps": {
+      "n": 0,
+      "min": null,
+      "mean": null,
+      "median": null,
+      "p90": null,
+      "max": null
+    }
+  },
+  "hits": [
+    {
+      "round": 1,
+      "turn": 103,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 76,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 0,
+      "actualHitGF": 0.13396477209103339,
+      "priorLinearGF": 0.3100403993912947,
+      "nearestPriorModeGFDistance": 0.13396477209103339,
+      "plannerJoin": "unique",
+      "plannerTurn": 102,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        1.1222074468085126,
+        0.4127659574468092,
+        1.1222074468085126
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          76,
+          488.14471212247906,
+          28.865661751550395,
+          14.149999999999991,
+          0.5363739630963745,
+          99.8938913402532,
+          -1,
+          false,
+          0.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.0,
+      "matchedWaveTTC": 0.5363739630963745,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 1,
+      "turn": 260,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 228,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.3481298290842105,
+      "priorLinearGF": 0.11716712852234011,
+      "nearestPriorModeGFDistance": 0.23096270056187035,
+      "plannerJoin": "unique",
+      "plannerTurn": 259,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.43784060281193726,
+        0.32838045210895295,
+        0.43784060281193726
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          228,
+          719.794263869285,
+          209.29684069620293,
+          14.149999999999991,
+          0.6685398680659771,
+          158.05140368598384,
+          1,
+          false,
+          0.0
+        ],
+        [
+          243,
+          735.5193422672287,
+          250.38683034145134,
+          14.149999999999991,
+          16.461487348525104,
+          171.83877484606322,
+          1,
+          false,
+          0.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.0,
+      "matchedWaveTTC": 0.6685398680659771,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 1,
+      "turn": 384,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 348,
+      "radialResidual": 3.410605131648481e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.410321647808115e-14,
+      "context": 2,
+      "actualHitGF": 0.261673505100453,
+      "priorLinearGF": 0.176741895039951,
+      "nearestPriorModeGFDistance": 0.08493161006050201,
+      "plannerJoin": "unique",
+      "plannerTurn": 383,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.47265360714714183,
+        0.38075265585251444,
+        0.44159762844120215
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          348,
+          754.330366327466,
+          338.9913891633333,
+          14.149999999999991,
+          0.0,
+          -174.7511631985403,
+          -1,
+          false,
+          1.0
+        ],
+        [
+          363,
+          751.81920590896,
+          422.9538454956283,
+          14.149999999999991,
+          14.316407728399872,
+          -164.00131220189473,
+          -1,
+          false,
+          1.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 1.0,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 1,
+      "turn": 399,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 363,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 2,
+      "actualHitGF": 0.20386387085302862,
+      "priorLinearGF": 0.45723171474862223,
+      "nearestPriorModeGFDistance": 0.20386387085302862,
+      "plannerJoin": "unique",
+      "plannerTurn": 398,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.3399429925383228,
+        0.5183580737009661,
+        0.3399429925383228
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          363,
+          751.81920590896,
+          422.9538454956283,
+          14.149999999999991,
+          0.0,
+          -164.00131220189473,
+          -1,
+          false,
+          2.0
+        ],
+        [
+          378,
+          742.6355130906401,
+          456.6787484365255,
+          14.149999999999991,
+          13.591900327020971,
+          -168.384003558789,
+          -1,
+          false,
+          0.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 2.0,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 1,
+      "turn": 413,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 378,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 3,
+      "actualHitGF": 0.1708566040106982,
+      "priorLinearGF": 0.9898137939966629,
+      "nearestPriorModeGFDistance": 0.1708566040106982,
+      "plannerJoin": "unique",
+      "plannerTurn": 412,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.4528939804492731,
+        0.388827313514973,
+        0.4528939804492731
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          378,
+          742.6355130906401,
+          456.6787484365255,
+          14.149999999999991,
+          0.3333706581893576,
+          -168.384003558789,
+          -1,
+          false,
+          0.0
+        ],
+        [
+          393,
+          701.6648490161529,
+          495.90265012039936,
+          14.149999999999991,
+          12.85778386781805,
+          -165.12083191948858,
+          1,
+          false,
+          0.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.0,
+      "matchedWaveTTC": 0.3333706581893576,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 1,
+      "turn": 436,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 408,
+      "radialResidual": 3.410605131648481e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.410321647808115e-14,
+      "context": 1,
+      "actualHitGF": 0.21108241895861132,
+      "priorLinearGF": 0.8420060063216993,
+      "nearestPriorModeGFDistance": 0.21108241895861132,
+      "plannerJoin": "unique",
+      "plannerTurn": 435,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.44544972067434285,
+        0.669333498782948,
+        0.44544972067434285
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          408,
+          629.663930791568,
+          532.5592877866534,
+          14.149999999999991,
+          0.466383808806101,
+          -159.7319005335281,
+          -1,
+          false,
+          0.0
+        ],
+        [
+          423,
+          637.0664229175197,
+          521.230128390752,
+          14.149999999999991,
+          15.786353707698389,
+          -165.08151652492543,
+          -1,
+          false,
+          1.0
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.0,
+      "matchedWaveTTC": 0.466383808806101,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 1,
+      "turn": 500,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 468,
+      "radialResidual": 3.410605131648481e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.410321647808115e-14,
+      "context": 3,
+      "actualHitGF": 0.20689655172413898,
+      "priorLinearGF": 0.9985513540380407,
+      "nearestPriorModeGFDistance": 0.20689655172413898,
+      "plannerJoin": "unique",
+      "plannerTurn": 499,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.4850880265922895,
+        0.7115751140175024,
+        0.44206097279687717
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          468,
+          705.2967207318015,
+          352.6742148719579,
+          14.149999999999991,
+          0.0,
+          -176.63068748558345,
+          1,
+          false,
+          1.0
+        ],
+        [
+          483,
+          707.5318163871522,
+          324.8075731566731,
+          14.149999999999991,
+          14.831549884200664,
+          -174.741413705737,
+          1,
+          true,
+          3.0
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 1.0,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 1,
+      "turn": 546,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 513,
+      "radialResidual": 3.979039320256561e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.812041922442801e-14,
+      "context": 2,
+      "actualHitGF": -0.2340402659856203,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.2340402659856203,
+      "plannerJoin": "unique",
+      "plannerTurn": 545,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.37545879628860873,
+        0.49824517006686736,
+        0.3824253990561695
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          513,
+          726.9292535249797,
+          328.7577984590476,
+          14.149999999999991,
+          0.0,
+          176.93271290896246,
+          1,
+          true,
+          3.0
+        ],
+        [
+          528,
+          737.4187421417995,
+          399.97209629328626,
+          14.149999999999991,
+          14.81231136676864,
+          -178.72919493033945,
+          -1,
+          false,
+          2.0
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 3.0,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 1,
+      "turn": 584,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 558,
+      "radialResidual": 3.979039320256561e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.2044539170396584e-14,
+      "context": 3,
+      "actualHitGF": 0.2068965517241387,
+      "priorLinearGF": 0.9934049746894519,
+      "nearestPriorModeGFDistance": 0.2068965517241387,
+      "plannerJoin": "unique",
+      "plannerTurn": 583,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.15384321517090105,
+        0.21452686243269575,
+        0.12618364070281451
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          558,
+          756.6256183705144,
+          294.9730338694882,
+          18.049999999999898,
+          0.5692548351770929,
+          176.08323581528944,
+          1,
+          false,
+          2.0
+        ],
+        [
+          571,
+          752.5560037981209,
+          262.2318574249674,
+          18.049999999999898,
+          13.389109532175027,
+          175.73525614786794,
+          1,
+          true,
+          4.0
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 2.0,
+      "matchedWaveTTC": 0.5692548351770929,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 109,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 76,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 3,
+      "actualHitGF": 0.19899912893749117,
+      "priorLinearGF": 0.9930562220346599,
+      "nearestPriorModeGFDistance": 0.19899912893749117,
+      "plannerJoin": "unique",
+      "plannerTurn": 108,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.4390518600436307,
+        0.45168262899917333,
+        0.4390518600436307
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          76,
+          95.97181778864393,
+          460.9916603608924,
+          14.149999999999991,
+          0.6864273539876287,
+          -24.501227751807775,
+          1,
+          false,
+          2.8499999999999996
+        ],
+        [
+          91,
+          95.86118269341775,
+          461.43005987350165,
+          14.149999999999991,
+          15.702940232941463,
+          -15.178476714179821,
+          1,
+          false,
+          2.8499999999999996
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 2.8499999999999996,
+      "matchedWaveTTC": 0.6864273539876287,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 2,
+      "turn": 388,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 361,
+      "radialResidual": 5.684341886080802e-14,
+      "waveJoin": "unique",
+      "residualBulletTurns": 3.842214799748076e-15,
+      "context": 1,
+      "actualHitGF": 0.2068965517241341,
+      "priorLinearGF": 0.9997656393996367,
+      "nearestPriorModeGFDistance": 0.2068965517241341,
+      "plannerJoin": "unique",
+      "plannerTurn": 387,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.4473999297052413,
+        0.8836148611678515,
+        0.9730948471088998
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          361,
+          368.01731343167637,
+          571.9771552080678,
+          14.794440660770732,
+          0.3766173737256171,
+          -74.90631956373801,
+          1,
+          false,
+          0.95
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.95,
+      "matchedWaveTTC": 0.3766173737256171,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 606,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 583,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 9.464275026754644e-15,
+      "context": 3,
+      "actualHitGF": 0.4091471838098683,
+      "priorLinearGF": 0.7378303702354473,
+      "nearestPriorModeGFDistance": 0.328683186425579,
+      "plannerJoin": "unique",
+      "plannerTurn": 605,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.12495204485271734,
+        0.19531638942140883,
+        0.12495204485271734
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          583,
+          51.50495142524313,
+          404.0539171112044,
+          18.01831160869169,
+          0.7775495293135519,
+          -21.33770844256536,
+          1,
+          true,
+          3.85
+        ],
+        [
+          596,
+          45.687779451866696,
+          377.15493841298513,
+          18.10639385084822,
+          13.758883235205502,
+          -8.268059876084479,
+          1,
+          true,
+          3.8
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 3.85,
+      "matchedWaveTTC": 0.7775495293135519,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 695,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 673,
+      "radialResidual": 5.684341886080802e-14,
+      "waveJoin": "unique",
+      "residualBulletTurns": 3.058104015241842e-15,
+      "context": 3,
+      "actualHitGF": 0.4482758620689634,
+      "priorLinearGF": 0.9999999541260475,
+      "nearestPriorModeGFDistance": 0.4482758620689634,
+      "plannerJoin": "unique",
+      "plannerTurn": 694,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.19005082584152735,
+        0.2458886387587712,
+        0.30453043598891166
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          673,
+          67.65135280742952,
+          425.4339103514373,
+          18.587797726138724,
+          0.6489048024659987,
+          -30.65226636278478,
+          1,
+          true,
+          4.85
+        ],
+        [
+          685,
+          51.32352040367964,
+          367.74008556531527,
+          18.638030158824044,
+          12.468974687888725,
+          -18.506928364900567,
+          -1,
+          true,
+          3.8
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 4.85,
+      "matchedWaveTTC": 0.6489048024659987,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 707,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 685,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2199447769193763e-14,
+      "context": 2,
+      "actualHitGF": -0.4199316021049302,
+      "priorLinearGF": 0.09068948293549871,
+      "nearestPriorModeGFDistance": 0.4199316021049302,
+      "plannerJoin": "unique",
+      "plannerTurn": 706,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.08702115429304455,
+        0.12682091666848924,
+        0.08525802199607423
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          15.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          685,
+          51.32352040367964,
+          367.74008556531527,
+          18.638030158824044,
+          0.26784711232725694,
+          -18.506928364900567,
+          -1,
+          true,
+          3.8
+        ],
+        [
+          697,
+          42.02928561912885,
+          322.62272707862394,
+          18.53449227227555,
+          12.680328829540931,
+          -6.297560219336969,
+          1,
+          true,
+          5.85
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 3.8,
+      "matchedWaveTTC": 0.26784711232725694,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 732,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 709,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 6.1666829082438676e-15,
+      "context": 2,
+      "actualHitGF": 0.4780381525168475,
+      "priorLinearGF": 0.28778052752635697,
+      "nearestPriorModeGFDistance": 0.19025762499049054,
+      "plannerJoin": "unique",
+      "plannerTurn": 731,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.09187440815529428,
+        0.11716492616495036,
+        0.09826932057737275
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          709,
+          38.233893098237026,
+          408.53893623388626,
+          18.435654859054765,
+          0.0,
+          -13.153483292778926,
+          -1,
+          true,
+          4.8
+        ],
+        [
+          722,
+          58.44076011473912,
+          500.0838484847268,
+          18.4951764106319,
+          14.359465832987791,
+          -35.00864292142911,
+          -1,
+          true,
+          5.85
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 4.8,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 2,
+      "turn": 781,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 759,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 5.9965569371188665e-15,
+      "context": 3,
+      "actualHitGF": 0.4127287245043836,
+      "priorLinearGF": 0.9999277951559182,
+      "nearestPriorModeGFDistance": 0.4127287245043836,
+      "plannerJoin": "unique",
+      "plannerTurn": 780,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.2365400832128772,
+        0.21421936810759482,
+        0.1913922863366648
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          11.0,
+          14.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          10.0,
+          13.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          11.0,
+          14.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          759,
+          66.48482890920113,
+          475.9098583829312,
+          18.958685611386613,
+          0.28670256482313256,
+          -16.07381631369758,
+          1,
+          true,
+          5.85
+        ],
+        [
+          771,
+          119.11556275728765,
+          513.8426256884247,
+          18.9889840737371,
+          9.816089544059542,
+          -13.856782624675471,
+          1,
+          false,
+          0.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 5.85,
+      "matchedWaveTTC": 0.28670256482313256,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 791,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 771,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 5.986988944756224e-15,
+      "context": 0,
+      "actualHitGF": -0.23565864570358389,
+      "priorLinearGF": 0.42563136530486706,
+      "nearestPriorModeGFDistance": 0.23565864570358389,
+      "plannerJoin": "unique",
+      "plannerTurn": 790,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.11276709869681925,
+        0.12441503921415253,
+        0.10846269281153198
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          771,
+          119.11556275728765,
+          513.8426256884247,
+          18.9889840737371,
+          0.18589667926434011,
+          -13.856782624675471,
+          1,
+          false,
+          0.95
+        ],
+        [
+          783,
+          141.28668664964567,
+          521.5538852179922,
+          18.926879739852367,
+          11.3057542614086,
+          -14.325768027056046,
+          -1,
+          false,
+          0.95
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 0.95,
+      "matchedWaveTTC": 0.18589667926434011,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 803,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 783,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 6.006633913472671e-15,
+      "context": 0,
+      "actualHitGF": 0.5103751369982282,
+      "priorLinearGF": 0.3477267195510623,
+      "nearestPriorModeGFDistance": 0.1626484174471659,
+      "plannerJoin": "unique",
+      "plannerTurn": 802,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.08511960204324072,
+        0.12174414868167491,
+        0.100341166016966
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          783,
+          141.28668664964567,
+          521.5538852179922,
+          18.926879739852367,
+          0.0,
+          -14.325768027056046,
+          -1,
+          false,
+          1.95
+        ],
+        [
+          795,
+          100.86664036924743,
+          448.51175328157,
+          18.867045133622504,
+          12.482766490406755,
+          -14.907648234958726,
+          -1,
+          false,
+          1.95
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 1.95,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 2,
+      "turn": 902,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 879,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 5.931703958166268e-15,
+      "context": 3,
+      "actualHitGF": 0.2876278750219036,
+      "priorLinearGF": 0.9994866023464959,
+      "nearestPriorModeGFDistance": 0.2876278750219036,
+      "plannerJoin": "unique",
+      "plannerTurn": 901,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        null,
+        0.2635693634508136,
+        0.2529585437402844
+      ],
+      "unsafe": [
+        true,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          12.0,
+          15.0,
+          20.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          879,
+          34.23320926366119,
+          340.3404798455046,
+          19.165966225455605,
+          0.14754489836592957,
+          4.318453415665241,
+          1,
+          true,
+          6.85
+        ],
+        [
+          891,
+          33.470447981427014,
+          326.37379180538096,
+          19.186923930973165,
+          12.324948100921347,
+          12.605266854617271,
+          1,
+          true,
+          5.8
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 6.85,
+      "matchedWaveTTC": 0.14754489836592957,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 962,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 939,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 8.879208582156436e-15,
+      "context": 3,
+      "actualHitGF": 0.44359908934990183,
+      "priorLinearGF": 0.9980789580647221,
+      "nearestPriorModeGFDistance": 0.44359908934990183,
+      "plannerJoin": "unique",
+      "plannerTurn": 961,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.18996394087336338,
+        0.18880164006843,
+        0.18684179644750204
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          939,
+          30.00954359533356,
+          318.32346614928383,
+          19.20556939332632,
+          0.5731196048975847,
+          -8.305863225422561,
+          -1,
+          true,
+          7.85
+        ],
+        [
+          951,
+          29.91222003960572,
+          333.27572891784223,
+          19.224900127350555,
+          12.815040351526529,
+          -15.536956252673393,
+          1,
+          true,
+          5.8
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 7.85,
+      "matchedWaveTTC": 0.5731196048975847,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 987,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 963,
+      "radialResidual": 3.410605131648481e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.7723454526968074e-14,
+      "context": 2,
+      "actualHitGF": -0.29104572064386763,
+      "priorLinearGF": 0.12091374329084363,
+      "nearestPriorModeGFDistance": 0.29104572064386763,
+      "plannerJoin": "unique",
+      "plannerTurn": 986,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.08789527290760114,
+        0.09683078860329272,
+        0.10613127873307261
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          15.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          963,
+          29.52302594170254,
+          333.1511757392704,
+          19.243455763428578,
+          0.045413483577055325,
+          -20.576494846532437,
+          -1,
+          true,
+          5.8
+        ],
+        [
+          975,
+          44.91390943867419,
+          404.1689462203145,
+          19.2041648654768,
+          12.495190897627216,
+          -29.616970482814295,
+          1,
+          true,
+          5.8
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 5.8,
+      "matchedWaveTTC": 0.045413483577055325,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 1033,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1011,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 8.878545295125019e-15,
+      "context": 3,
+      "actualHitGF": 0.4137931034482781,
+      "priorLinearGF": 0.9995983744775891,
+      "nearestPriorModeGFDistance": 0.4137931034482781,
+      "plannerJoin": "unique",
+      "plannerTurn": 1032,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        null,
+        0.24694624837238005,
+        0.2544190760246002
+      ],
+      "unsafe": [
+        true,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          10.0,
+          13.0,
+          20.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          9.0,
+          12.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          9.0,
+          12.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1011,
+          130.149888738624,
+          514.1638510203821,
+          19.207004178495076,
+          0.762607903975797,
+          -20.069105218620052,
+          1,
+          true,
+          8.85
+        ],
+        [
+          1023,
+          217.42181969075924,
+          545.761793116145,
+          19.226276950619113,
+          8.67035587635045,
+          -18.35032810843818,
+          1,
+          false,
+          2.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 8.85,
+      "matchedWaveTTC": 0.762607903975797,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 1043,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1023,
+      "radialResidual": 1.1368683772161603e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 5.913096852480072e-15,
+      "context": 0,
+      "actualHitGF": -0.28175393358465284,
+      "priorLinearGF": 0.3028729877942243,
+      "nearestPriorModeGFDistance": 0.28175393358465284,
+      "plannerJoin": "unique",
+      "plannerTurn": 1042,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.10504387876671092,
+        0.15578230787189895,
+        0.07339147147269263
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          2.0,
+          11.0,
+          14.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          2.0,
+          11.0,
+          14.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          2.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1023,
+          217.42181969075924,
+          545.761793116145,
+          19.226276950619113,
+          0.0,
+          -18.35032810843818,
+          1,
+          false,
+          2.95
+        ],
+        [
+          1035,
+          224.2139486911653,
+          547.4565073590031,
+          19.18693390148068,
+          10.703057682242699,
+          -16.778964954253606,
+          -1,
+          false,
+          2.95
+        ]
+      ],
+      "anyProfile": false,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 2.95,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 2.0
+    },
+    {
+      "round": 2,
+      "turn": 1115,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1098,
+      "radialResidual": 0.0,
+      "waveJoin": "unique",
+      "residualBulletTurns": 0.0,
+      "context": 1,
+      "actualHitGF": 0.29508342826622547,
+      "priorLinearGF": 0.9220199196554041,
+      "nearestPriorModeGFDistance": 0.29508342826622547,
+      "plannerJoin": "unique",
+      "plannerTurn": 1114,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        1.4159201791181486,
+        0.9853733386249176,
+        0.7726927158879416
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          16.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1098,
+          429.45557350042947,
+          566.3145536436855,
+          14.150000000000002,
+          0.0,
+          -49.096630477807345,
+          -1,
+          false,
+          1.95
+        ],
+        [
+          1113,
+          477.6986788677805,
+          570.8338639319838,
+          14.150000000000002,
+          13.148969571550332,
+          -65.13963991795943,
+          1,
+          true,
+          3.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 1.95,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 2,
+      "turn": 1128,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1113,
+      "radialResidual": 5.684341886080802e-14,
+      "waveJoin": "unique",
+      "residualBulletTurns": 4.0172027463468555e-15,
+      "context": 0,
+      "actualHitGF": -0.48275862068965697,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.48275862068965697,
+      "plannerJoin": "unique",
+      "plannerTurn": 1127,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.4965605503119499,
+        0.4965605503119499,
+        0.6620807337492666
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1113,
+          477.6986788677805,
+          570.8338639319838,
+          14.150000000000002,
+          0.9501906360984193,
+          -65.13963991795943,
+          1,
+          true,
+          3.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 3.95,
+      "matchedWaveTTC": 0.9501906360984193,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 2,
+      "turn": 1278,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1256,
+      "radialResidual": 0.0,
+      "waveJoin": "unique",
+      "residualBulletTurns": 0.0,
+      "context": 0,
+      "actualHitGF": 0.26501543327385896,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.26501543327385896,
+      "plannerJoin": "unique",
+      "plannerTurn": 1277,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.14532914360839877,
+        0.2534911979222998,
+        0.17272548614632044
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          13.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1256,
+          666.5611952616829,
+          509.955873110261,
+          17.720785392598227,
+          0.0,
+          -165.58392481167596,
+          1,
+          true,
+          4.95
+        ],
+        [
+          1269,
+          659.3062050088939,
+          516.6451868722097,
+          17.918022216673847,
+          12.243007611998895,
+          -156.14071480150454,
+          1,
+          true,
+          4.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 4.95,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 2,
+      "turn": 1291,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 1269,
+      "radialResidual": 0.0,
+      "waveJoin": "unique",
+      "residualBulletTurns": 0.0,
+      "context": 0,
+      "actualHitGF": 0.36398936291874584,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.36398936291874584,
+      "plannerJoin": "unique",
+      "plannerTurn": 1290,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.2576420613124174,
+        0.23741132190414843,
+        0.24351967585627265
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          13.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          12.0,
+          14.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          1269,
+          659.3062050088939,
+          516.6451868722097,
+          17.918022216673847,
+          0.0015699453318125088,
+          -156.14071480150454,
+          1,
+          true,
+          5.95
+        ],
+        [
+          1282,
+          703.7139365961455,
+          454.9966627933112,
+          19.699999999999996,
+          11.49454771412368,
+          -164.08770638667488,
+          1,
+          true,
+          5.95
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 5.95,
+      "matchedWaveTTC": 0.0015699453318125088,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 3,
+      "turn": 65,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 47,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2051608239040575e-14,
+      "context": 0,
+      "actualHitGF": 0.4831773914321806,
+      "priorLinearGF": 0.1104776844753815,
+      "nearestPriorModeGFDistance": 0.3726997069567991,
+      "plannerJoin": "unique",
+      "plannerTurn": 64,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        1.0696927252140296,
+        1.1532931233187051,
+        0.9966448840554305
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          17.0,
+          22.0,
+          -1.0,
+          22.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          47,
+          641.4720116294395,
+          516.8458518205437,
+          14.149999999999991,
+          0.0,
+          -134.5090290498639,
+          1,
+          true,
+          6.6025
+        ],
+        [
+          62,
+          666.5433238516069,
+          499.6014014235118,
+          14.149999999999991,
+          14.821797688616844,
+          -125.48361796921517,
+          1,
+          false,
+          2.8024999999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 6.6025,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 3,
+      "turn": 97,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 77,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 0,
+      "actualHitGF": 0.4773341721514138,
+      "priorLinearGF": 0.45842456430896295,
+      "nearestPriorModeGFDistance": 0.018909607842450882,
+      "plannerJoin": "unique",
+      "plannerTurn": 96,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        2.6225505767412076,
+        2.9392192653309506,
+        2.322283058879875
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          77,
+          611.2541439455671,
+          526.6045112936326,
+          14.149999999999991,
+          0.010974824386698903,
+          -113.1719258726185,
+          1,
+          true,
+          7.6025
+        ],
+        [
+          92,
+          604.807735612451,
+          528.5996280755545,
+          14.149999999999991,
+          15.122067053764054,
+          -97.713642668568,
+          1,
+          false,
+          2.8024999999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 7.6025,
+      "matchedWaveTTC": 0.010974824386698903,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 3,
+      "turn": 128,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 107,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2051608239040575e-14,
+      "context": 0,
+      "actualHitGF": -0.3097595086678063,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.3097595086678063,
+      "plannerJoin": "unique",
+      "plannerTurn": 127,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        1.205037765948524,
+        1.0737776907026089,
+        0.8570115966654329
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          107,
+          672.3073623384626,
+          531.4131417255388,
+          14.149999999999991,
+          0.6965139341802649,
+          -103.93189417761957,
+          1,
+          true,
+          8.6025
+        ],
+        [
+          122,
+          716.2373322195377,
+          471.4343154949087,
+          14.149999999999991,
+          13.560156357998334,
+          -121.7214679516963,
+          -1,
+          false,
+          2.8024999999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 8.6025,
+      "matchedWaveTTC": 0.6965139341802649,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 3,
+      "turn": 142,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 122,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2051608239040575e-14,
+      "context": 1,
+      "actualHitGF": 0.3090502755922159,
+      "priorLinearGF": 0.9491267404584157,
+      "nearestPriorModeGFDistance": 0.3090502755922159,
+      "plannerJoin": "unique",
+      "plannerTurn": 141,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.7010147385809493,
+        0.8237643984795042,
+        0.7676100544795932
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          3.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          122,
+          716.2373322195377,
+          471.4343154949087,
+          14.149999999999991,
+          0.0,
+          -121.7214679516963,
+          -1,
+          false,
+          2.8024999999999998
+        ],
+        [
+          137,
+          752.656328230974,
+          357.4549690228803,
+          14.149999999999991,
+          11.396317514673214,
+          -149.50488001980906,
+          1,
+          true,
+          9.6025
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": false,
+      "matchedWaveSupport": 2.8024999999999998,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 3,
+      "turn": 154,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 137,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2051608239040575e-14,
+      "context": 0,
+      "actualHitGF": -0.48275862068965647,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.48275862068965647,
+      "plannerJoin": "unique",
+      "plannerTurn": 153,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.8798951883767919,
+        1.0179678213059344,
+        1.1375236721287443
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          137,
+          752.656328230974,
+          357.4549690228803,
+          14.149999999999991,
+          0.23662823092144436,
+          -149.50488001980906,
+          1,
+          true,
+          9.6025
+        ],
+        [
+          152,
+          761.9421095140668,
+          300.215779247614,
+          14.149999999999991,
+          15.229867164868297,
+          -174.5698972581365,
+          -1,
+          true,
+          3.8024999999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 9.6025,
+      "matchedWaveTTC": 0.23662823092144436,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 3,
+      "turn": 187,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 168,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2051608239040575e-14,
+      "context": 0,
+      "actualHitGF": 0.48275862068965647,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.48275862068965647,
+      "plannerJoin": "unique",
+      "plannerTurn": 186,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        null,
+        1.5122939067398555,
+        1.4991650603677569
+      ],
+      "unsafe": [
+        true,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          22.0,
+          -1.0,
+          26.0,
+          26.0
+        ],
+        [
+          1.0,
+          5.0,
+          19.0,
+          23.0,
+          -1.0,
+          23.0
+        ],
+        [
+          1.0,
+          5.0,
+          21.0,
+          25.0,
+          -1.0,
+          25.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          168,
+          767.0524090409053,
+          333.0703323091903,
+          14.149999999999991,
+          0.6281262438048695,
+          -162.79758990148022,
+          1,
+          true,
+          10.6025
+        ],
+        [
+          183,
+          771.575119529084,
+          398.9319040558934,
+          14.149999999999991,
+          18.810914183903275,
+          -138.58731361067467,
+          1,
+          true,
+          3.8024999999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 10.6025,
+      "matchedWaveTTC": 0.6281262438048695,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 3,
+      "turn": 241,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 213,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 1,
+      "actualHitGF": 0.47801005027612037,
+      "priorLinearGF": 0.7904451284427141,
+      "nearestPriorModeGFDistance": 0.3124350781665937,
+      "plannerJoin": "unique",
+      "plannerTurn": 240,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.7584730346179047,
+        0.39242271872237056,
+        0.4425596305896381
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          213,
+          719.7698241893678,
+          480.70134098608975,
+          14.149999999999991,
+          0.8495299490845014,
+          -123.44729272638995,
+          -1,
+          true,
+          3.8024999999999998
+        ],
+        [
+          228,
+          615.2912301588253,
+          537.2384008740414,
+          14.149999999999991,
+          13.977295464630785,
+          -113.47776578814725,
+          -1,
+          true,
+          11.6025
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 3.8024999999999998,
+      "matchedWaveTTC": 0.8495299490845014,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 3,
+      "turn": 516,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 483,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 3,
+      "actualHitGF": -0.17527502694027328,
+      "priorLinearGF": 0.9958058277446316,
+      "nearestPriorModeGFDistance": 0.17527502694027328,
+      "plannerJoin": "unique",
+      "plannerTurn": 515,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.34282540519476634,
+        0.3292157424404977,
+        0.48493124881870386
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          18.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          483,
+          699.5017676906855,
+          453.645460664011,
+          14.149999999999991,
+          0.789063048866318,
+          -170.99588479426242,
+          -1,
+          true,
+          9.357499999999998
+        ],
+        [
+          498,
+          729.32217346331,
+          384.85483401018337,
+          14.149999999999991,
+          17.02822311529766,
+          177.73015590476723,
+          1,
+          true,
+          6.46
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 9.357499999999998,
+      "matchedWaveTTC": 0.789063048866318,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 3,
+      "turn": 533,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 498,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.5862068965517235,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.5862068965517235,
+      "plannerJoin": "unique",
+      "plannerTurn": 532,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.4910750788010351,
+        0.719548396251421,
+        0.41293320149695073
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          498,
+          729.32217346331,
+          384.85483401018337,
+          14.149999999999991,
+          0.614267335002857,
+          177.73015590476723,
+          1,
+          true,
+          6.46
+        ],
+        [
+          513,
+          731.5323517467061,
+          337.90720840499114,
+          14.149999999999991,
+          14.952055335524236,
+          178.2288944074621,
+          1,
+          true,
+          10.357499999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 6.46,
+      "matchedWaveTTC": 0.614267335002857,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 4,
+      "turn": 106,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 76,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 3,
+      "actualHitGF": 0.2758620689655175,
+      "priorLinearGF": 0.9999991828167464,
+      "nearestPriorModeGFDistance": 0.2758620689655175,
+      "plannerJoin": "unique",
+      "plannerTurn": 105,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        1.6219465246156752,
+        1.7104311305795732,
+        2.4833234220359075
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          4.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          76,
+          115.64176737052502,
+          492.51493157573043,
+          14.149999999999991,
+          0.0,
+          -68.8337115700186,
+          -1,
+          true,
+          9.839625
+        ],
+        [
+          91,
+          160.94556632239536,
+          517.134033066796,
+          14.149999999999991,
+          16.247721024157343,
+          -85.27308269416154,
+          -1,
+          true,
+          9.839625
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 9.839625,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 4,
+      "turn": 153,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 121,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 3,
+      "actualHitGF": 0.6551724137931029,
+      "priorLinearGF": 0.9968088609073245,
+      "nearestPriorModeGFDistance": 0.3416364471142216,
+      "plannerJoin": "unique",
+      "plannerTurn": 152,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.3224678592750135,
+        0.3557997354087461,
+        0.3484209090285293
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          4.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          121,
+          220.70581457196656,
+          556.1215541633263,
+          14.149999999999991,
+          0.19528991909899876,
+          -82.36145786156541,
+          1,
+          true,
+          10.839625
+        ],
+        [
+          136,
+          189.97122482336735,
+          559.9921942760066,
+          14.149999999999991,
+          16.527278434565243,
+          -69.81273317900896,
+          1,
+          true,
+          10.839625
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 10.839625,
+      "matchedWaveTTC": 0.19528991909899876,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 4,
+      "turn": 422,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 391,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.47256916348974537,
+      "priorLinearGF": 0.355259439797783,
+      "nearestPriorModeGFDistance": 0.11730972369196235,
+      "plannerJoin": "unique",
+      "plannerTurn": 421,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        1.4777410705272054,
+        1.3387245656017888,
+        1.5707154269571157
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          391,
+          67.5005043827201,
+          407.09474551964547,
+          14.149999999999991,
+          0.14552123563340144,
+          -15.708734989319062,
+          -1,
+          true,
+          7.087
+        ],
+        [
+          406,
+          58.20038702926141,
+          375.96137232914384,
+          14.163917519931282,
+          14.617025721417553,
+          -19.262465334955596,
+          1,
+          true,
+          7.087
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 7.087,
+      "matchedWaveTTC": 0.14552123563340144,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 4,
+      "turn": 436,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 406,
+      "radialResidual": 1.7053025658242404e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.2039766282347809e-14,
+      "context": 2,
+      "actualHitGF": -0.2068965517241375,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.2068965517241375,
+      "plannerJoin": "unique",
+      "plannerTurn": 435,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.7895586060803087,
+        0.9783899967588907,
+        0.9847996674597769
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          406,
+          58.20038702926141,
+          375.96137232914384,
+          14.163917519931282,
+          0.5458702224570238,
+          -19.262465334955596,
+          1,
+          true,
+          8.087
+        ],
+        [
+          421,
+          68.91520650448473,
+          447.1579237292161,
+          14.688431264813758,
+          16.30645496702191,
+          -34.214802942471245,
+          -1,
+          true,
+          11.839625
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 8.087,
+      "matchedWaveTTC": 0.5458702224570238,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 4,
+      "turn": 512,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 481,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 3,
+      "actualHitGF": -0.20944267305499967,
+      "priorLinearGF": 0.6722884135060682,
+      "nearestPriorModeGFDistance": 0.20944267305499967,
+      "plannerJoin": "unique",
+      "plannerTurn": 511,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.6168778682015537,
+        0.6507599908678756,
+        0.645011797746747
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          481,
+          151.90712618532243,
+          526.6870333385097,
+          14.149999999999991,
+          0.0,
+          -16.13975053942662,
+          1,
+          true,
+          11.839625
+        ],
+        [
+          496,
+          130.23640699456936,
+          483.86249947018644,
+          14.149999999999991,
+          15.062445181630695,
+          -7.332078538803696,
+          1,
+          true,
+          9.087
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 11.839625,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 4,
+      "turn": 541,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 511,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 1,
+      "actualHitGF": 0.6017152450223812,
+      "priorLinearGF": 0.9996238993797729,
+      "nearestPriorModeGFDistance": 0.39790865435739176,
+      "plannerJoin": "unique",
+      "plannerTurn": 540,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.4340164181817443,
+        0.5499431907820718,
+        0.4270874755253995
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          511,
+          164.14740121279422,
+          505.86237006323995,
+          14.149999999999991,
+          0.45578757648963053,
+          -19.086557233525475,
+          -1,
+          true,
+          4.562374999999999
+        ],
+        [
+          526,
+          138.1655213709205,
+          446.2560997428323,
+          14.149999999999991,
+          14.46024860197037,
+          -21.391309842382885,
+          -1,
+          true,
+          12.839625
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 4.562374999999999,
+      "matchedWaveTTC": 0.45578757648963053,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 4,
+      "turn": 570,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 541,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 1,
+      "actualHitGF": 0.4482758620689639,
+      "priorLinearGF": 0.9996630152353727,
+      "nearestPriorModeGFDistance": 0.4482758620689639,
+      "plannerJoin": "unique",
+      "plannerTurn": 569,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.9103375841242904,
+        0.7951243276327739,
+        0.8201957432890201
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          541,
+          174.5664603019486,
+          492.65038700996234,
+          14.149999999999991,
+          0.7660086523942806,
+          -39.58611877831415,
+          -1,
+          true,
+          5.562374999999999
+        ],
+        [
+          557,
+          145.68383158071876,
+          458.90437811966774,
+          14.149999999999991,
+          16.1389493737896,
+          -43.68503344146825,
+          -1,
+          true,
+          11.022374999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 5.562374999999999,
+      "matchedWaveTTC": 0.7660086523942806,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 4,
+      "turn": 679,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 647,
+      "radialResidual": 3.410605131648481e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.410321647808115e-14,
+      "context": 3,
+      "actualHitGF": 0.5865279834828013,
+      "priorLinearGF": 0.999242557571338,
+      "nearestPriorModeGFDistance": 0.4127145740885366,
+      "plannerJoin": "unique",
+      "plannerTurn": 678,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.6317884759020317,
+        0.6751031810085087,
+        0.7394773648499298
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          12.0,
+          15.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          12.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          13.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          647,
+          108.33594047570759,
+          473.4824059710861,
+          14.149999999999991,
+          0.0,
+          -28.102954153558652,
+          1,
+          true,
+          12.839625
+        ],
+        [
+          662,
+          154.79461853902092,
+          511.71628091373725,
+          14.149999999999991,
+          11.976702987599527,
+          -24.591988740053107,
+          1,
+          true,
+          6.562374999999999
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 12.839625,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 5,
+      "turn": 239,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 211,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": -0.41746233991360554,
+      "priorLinearGF": 0.17673403010542663,
+      "nearestPriorModeGFDistance": 0.41746233991360554,
+      "plannerJoin": "unique",
+      "plannerTurn": 238,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.6923746698201133,
+        0.7664219691960631,
+        0.8689701966740496
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          5.0,
+          18.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          5.0,
+          18.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          21.0,
+          -1.0,
+          21.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          211,
+          568.3441999728758,
+          42.24825060297292,
+          14.149999999999991,
+          0.670165436565402,
+          87.19646509226816,
+          -1,
+          true,
+          8.632649999999998
+        ],
+        [
+          226,
+          638.6781083385356,
+          41.60578928873793,
+          14.149999999999991,
+          17.085876653428624,
+          99.14204442449957,
+          1,
+          true,
+          8.632649999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 8.632649999999998,
+      "matchedWaveTTC": 0.670165436565402,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 5,
+      "turn": 269,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 241,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 1,
+      "actualHitGF": 0.6551724137931038,
+      "priorLinearGF": 0.999873584726241,
+      "nearestPriorModeGFDistance": 0.34470117093313724,
+      "plannerJoin": "unique",
+      "plannerTurn": 268,
+      "decisionLag": 1,
+      "chosen": 1,
+      "scores": [
+        0.49266757453551746,
+        0.8138496557313312,
+        0.4902461777915929
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          19.0,
+          22.0,
+          -1.0,
+          22.0
+        ],
+        [
+          1.0,
+          4.0,
+          19.0,
+          23.0,
+          -1.0,
+          23.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          241,
+          604.8490465018577,
+          39.92407775332599,
+          14.149999999999991,
+          0.016514241485459224,
+          108.20772417296087,
+          1,
+          true,
+          6.234256249999999
+        ],
+        [
+          256,
+          678.7762137774093,
+          53.081486641502146,
+          14.149999999999991,
+          18.127384324719845,
+          128.5043965621722,
+          1,
+          true,
+          9.632649999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 6.234256249999999,
+      "matchedWaveTTC": 0.016514241485459224,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 5,
+      "turn": 302,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 271,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.6516806957976994,
+      "priorLinearGF": 0.47686279856432634,
+      "nearestPriorModeGFDistance": 0.17481789723337304,
+      "plannerJoin": "unique",
+      "plannerTurn": 301,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.5409357331343202,
+        1.3127751513500892,
+        1.2567827736063109
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          3.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          271,
+          726.1466464320064,
+          116.98363564241359,
+          14.149999999999991,
+          0.0,
+          150.24223708155296,
+          1,
+          true,
+          9.632649999999998
+        ],
+        [
+          287,
+          718.3396875016325,
+          119.91399291796897,
+          14.149999999999991,
+          15.012619622968645,
+          162.53390035966999,
+          1,
+          true,
+          9.632649999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 9.632649999999998,
+      "matchedWaveTTC": 0.0,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 3.0
+    },
+    {
+      "round": 5,
+      "turn": 349,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 317,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.6171906483940643,
+      "priorLinearGF": 0.11760496284376705,
+      "nearestPriorModeGFDistance": 0.4995856855502973,
+      "plannerJoin": "unique",
+      "plannerTurn": 348,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        1.1309847399243396,
+        0.820148896962758,
+        0.9055298459200749
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          317,
+          744.5030847796528,
+          184.04738895170118,
+          14.149999999999991,
+          0.53414017113577,
+          174.84041815126446,
+          -1,
+          true,
+          10.632649999999998
+        ],
+        [
+          332,
+          755.8285911358148,
+          251.05386335882275,
+          14.149999999999991,
+          14.492363689158902,
+          171.1018704348092,
+          -1,
+          true,
+          13.147643749999999
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 10.632649999999998,
+      "matchedWaveTTC": 0.53414017113577,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 5,
+      "turn": 393,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 362,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.6895807733602985,
+      "priorLinearGF": 0.3553881308305191,
+      "nearestPriorModeGFDistance": 0.3341926425297794,
+      "plannerJoin": "unique",
+      "plannerTurn": 392,
+      "decisionLag": 1,
+      "chosen": -1,
+      "scores": [
+        0.36452408718929263,
+        0.7060012743305628,
+        0.7121184233934051
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          12.0,
+          16.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          14.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          362,
+          768.1634190970206,
+          401.2892818114114,
+          14.149999999999991,
+          0.5724246226027431,
+          -175.6953834750711,
+          1,
+          true,
+          11.632649999999998
+        ],
+        [
+          377,
+          772.9900257343826,
+          329.4630939596541,
+          14.149999999999991,
+          13.778734083110383,
+          -171.01478795170058,
+          1,
+          true,
+          13.147643749999999
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 11.632649999999998,
+      "matchedWaveTTC": 0.5724246226027431,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 5,
+      "turn": 693,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 662,
+      "radialResidual": 2.8421709430404007e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 2.0086013731734294e-14,
+      "context": 2,
+      "actualHitGF": 0.1137541517591803,
+      "priorLinearGF": 0.0,
+      "nearestPriorModeGFDistance": 0.1137541517591803,
+      "plannerJoin": "unique",
+      "plannerTurn": 692,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        1.3451403127470596,
+        0.95273965556902,
+        1.055875048834545
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          15.0,
+          18.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          15.0,
+          19.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          5.0,
+          17.0,
+          20.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          662,
+          251.6290856051163,
+          70.1454948990777,
+          14.149999999999991,
+          0.6082149341499744,
+          39.44210915010448,
+          1,
+          true,
+          12.632649999999998
+        ],
+        [
+          677,
+          269.80005797553036,
+          64.49871850491759,
+          14.149999999999991,
+          14.95186613865955,
+          41.496106552873094,
+          1,
+          true,
+          12.632649999999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 12.632649999999998,
+      "matchedWaveTTC": 0.6082149341499744,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 5.0
+    },
+    {
+      "round": 5,
+      "turn": 734,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 707,
+      "radialResidual": 2.2737367544323206e-13,
+      "waveJoin": "unique",
+      "residualBulletTurns": 1.6068810985387435e-14,
+      "context": 1,
+      "actualHitGF": -0.21102957609998177,
+      "priorLinearGF": 0.725125394346369,
+      "nearestPriorModeGFDistance": 0.21102957609998177,
+      "plannerJoin": "unique",
+      "plannerTurn": 733,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.3750288530021006,
+        0.32957525600702353,
+        0.36332988317664217
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          18.0,
+          21.0,
+          -1.0,
+          21.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          20.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          16.0,
+          19.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          707,
+          431.62327759884056,
+          33.9815037125644,
+          14.149999999999991,
+          0.018554557013952942,
+          59.65437031236577,
+          -1,
+          true,
+          7.23425625
+        ],
+        [
+          722,
+          385.01991509745307,
+          45.891944750502674,
+          14.149999999999991,
+          15.813774550985476,
+          50.86744698612359,
+          1,
+          true,
+          10.471256249999998
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 7.23425625,
+      "matchedWaveTTC": 0.018554557013952942,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    },
+    {
+      "round": 5,
+      "turn": 803,
+      "owner": 2,
+      "matched": true,
+      "creationTurn": 779,
+      "radialResidual": 0.0,
+      "waveJoin": "unique",
+      "residualBulletTurns": 0.0,
+      "context": 1,
+      "actualHitGF": 0.5517241379310343,
+      "priorLinearGF": 0.9999998535461535,
+      "nearestPriorModeGFDistance": 0.44827571561511925,
+      "plannerJoin": "unique",
+      "plannerTurn": 802,
+      "decisionLag": 1,
+      "chosen": 0,
+      "scores": [
+        0.6133544038311506,
+        0.4646584919540924,
+        0.504205505594698
+      ],
+      "unsafe": [
+        false,
+        false,
+        false
+      ],
+      "timings": [
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ],
+        [
+          1.0,
+          4.0,
+          14.0,
+          17.0,
+          -1.0,
+          20.0
+        ]
+      ],
+      "selectedWaves": [
+        [
+          779,
+          322.28910428465815,
+          68.53207774335348,
+          17.074999999999953,
+          0.23713132032553358,
+          52.65150844995259,
+          -1,
+          true,
+          8.23425625
+        ],
+        [
+          792,
+          313.13464235842576,
+          71.89476316801903,
+          17.074999999999953,
+          13.548112963460374,
+          42.875252020312345,
+          -1,
+          true,
+          13.147643749999999
+        ]
+      ],
+      "anyProfile": true,
+      "matchedWaveSlot": 0,
+      "matchedWaveProfile": true,
+      "matchedWaveSupport": 8.23425625,
+      "matchedWaveTTC": 0.23713132032553358,
+      "chosenFirstContact": 1.0,
+      "chosenDone": 4.0
+    }
+  ],
+  "limits": [
+    "Spent five-round exploratory trace, not fresh validation or an intervention.",
+    "Radial matches are legal inferred associations, not independently verified opponent bullet origins/targets.",
+    "No hit label on an inferred wave is unknown, not successful evasion or false inference.",
+    "Recorded alternate scores/contact times describe unexecuted held policies; no alternate survival claim.",
+    "Prior-mode alignment is not full smoothed-density risk: per-decision bin/footprint arrays were not recorded.",
+    "The prior includes uniform mass; distance from its peaks does not imply zero danger or prove primary cause.",
+    "One-step own physics parity does not validate long rollouts, waves or danger calibration."
+  ],
+  "traceSHA256": "2c42ba7b3ed7a761565ed65016354918749fccda7de0884ac746926c5008979d",
+  "traceGzipSHA256": "7d80449fb0b8a15aff0272c70d79a4359bcc68cd00caf09b6c2d940a56428e2c",
+  "status": {
+    "schemaVersion": 1,
+    "records": 12891,
+    "bytes": 3876266,
+    "droppedRecords": 0,
+    "roundsCompleted": 5,
+    "failed": false,
+    "failure": null
+  },
+  "roundSummaries": [
+    {
+      "type": "round",
+      "round": 1,
+      "turn": 584,
+      "shots": 34,
+      "hits": 0,
+      "energySpent": 20.400000000000006,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 2,
+      "turn": 1291,
+      "shots": 79,
+      "hits": 7,
+      "energySpent": 52.20000000000005,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 3,
+      "turn": 533,
+      "shots": 32,
+      "hits": 5,
+      "energySpent": 28.000000000000025,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 4,
+      "turn": 679,
+      "shots": 41,
+      "hits": 0,
+      "energySpent": 24.600000000000016,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    },
+    {
+      "type": "round",
+      "round": 5,
+      "turn": 803,
+      "shots": 51,
+      "hits": 1,
+      "energySpent": 30.60000000000003,
+      "truncated": false,
+      "droppedRecords": 0,
+      "failed": false
+    }
+  ],
+  "analysisSHA256": "8996f5c44ae9b576edb5cdbf09184002b7e8460fe04b0fb2a1b805a2f13e7b8c",
+  "planSHA256": "40d948231584115494f3b4edda0fe04d9d0b595323a34dc6d01487167b5d0c8a"
+}
