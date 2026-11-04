@@ -60,7 +60,7 @@ def metrics(path,game):
         if not enemy_shots:
             raise ValueError("Undefined incoming damage rate")
         extended = dict(enemyShots=enemy_shots, hitsTaken=hits_taken, damagePer100EnemyShots=100*taken/enemy_shots)
-        if game["meridianVersion"] == "0.2.0":
+        if game["meridianVersion"] in ("0.2.0", "0.3.0"):
             labels = {label: 0 for label in ("ACCEPTED", "AMBIGUOUS", "UNMATCHED", "UNORIENTED", "OUTSIDE")}
             for line in markers:
                 fields = line.split()
@@ -68,6 +68,10 @@ def metrics(path,game):
                     labels[fields[2]] += 1
             extended["hitLabels"] = labels
             extended["observerHitsWithoutCallback"] = hits_taken - sum(labels.values())
+        if game["meridianVersion"] == "0.3.0":
+            extended["learnedFireRequests"] = sum(line.endswith(" aim learned") for line in markers)
+            extended["fallbackFireRequests"] = sum(line.endswith(" aim fallback") for line in markers)
+            extended["crossingLabels"] = sum(int(line.split()[2]) for line in markers if " crossings " in line)
     return dict(**extended,share=me["totalScore"]/sum(r["totalScore"] for r in results),wins=me["firstPlaces"],shots=shots,hits=hits,
                 efficiency=hits/shots if shots else None,damageDealt=dealt,damageTaken=taken,shotEnergy=spent,wallContacts=walls,
                 botContacts=rams,skips=sum(" skip " in m for m in markers),results=results,

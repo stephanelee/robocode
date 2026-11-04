@@ -8,6 +8,7 @@ public final class Meridian extends Bot {
     record Scan(int t,Flight.Pose p,double energy,double omega){}
     private final HitAngles hitAngles = new HitAngles();
     record Trial(int due,double[] angles,double x,double y){}
+    private final CrossingGun crossingGun = new CrossingGun();
     private Scan scan;
     private final LinkedList<HitAngles.Wave> waves=new LinkedList<>();
     private final ArrayList<Trial> trials=new ArrayList<>();
@@ -26,6 +27,7 @@ public final class Meridian extends Bot {
         catch(IOException e){throw new UncheckedIOException(e);}
     }
     public void onRoundStarted(RoundStartedEvent e){
+        crossingGun.newRound();
         round=e.getRoundNumber(); scan=null;waves.clear();trials.clear();corrections.clear();Arrays.fill(stamp,-1);
         side=new SplittableRandom(seed+round).nextBoolean()?1:-1;radarSign=side;mark("start");
     }
@@ -39,10 +41,16 @@ public final class Meridian extends Bot {
                 bullet.getDirection(), bullet.getPower());
         mark("hit " + label);
     }
+    public void onBulletFired(BulletFiredEvent event) {
+        var bullet = event.getBullet();
+        crossingGun.fired(event.getTurnNumber(), bullet.getX(), bullet.getY(), bullet.getPower());
+    }
     public void onScannedBot(ScannedBotEvent e){
         int t=e.getTurnNumber();
         if(scan!=null && t<=scan.t)return;
         Flight.Pose p=new Flight.Pose(e.getX(),e.getY(),e.getDirection(),e.getSpeed());
+        int learned = crossingGun.observe(t, p, scan == null ? -1 : scan.t, scan == null ? null : scan.p);
+        if (learned > 0) mark("crossings " + learned);
         double omega=0;
         if(scan!=null && t==scan.t+1){
             omega=Flight.delta(p.h()-scan.p.h());
@@ -85,9 +93,16 @@ public final class Meridian extends Bot {
         int best=0;for(int i=1;i<3;i++)if(skill[i]>skill[best])best=i;
         // Grade all rays on the chosen forecast's impact turn, only when a real scan arrives.
         if(scan.t==t && t%4==0)trials.add(new Trial(arrival[best],aims,own.x(),own.y()));
-        setGunTurnRate(Flight.delta(aims[best]-getGunDirection()));
-        if(scan.t==t && Flight.canShoot(getGunDirection(),aims[best],range,energy,getGunHeat(),power)
-                && (energy>1.2 || scan.energy<=.1))setFire(power);
+        var launch = CrossingGun.launch(t + 1, own, p, power, getArenaWidth(), getArenaHeight());
+        double estimate = crossingGun.aim(launch);
+        boolean learned = Double.isFinite(estimate);
+        double aim = learned ? estimate : aims[best];
+        setGunTurnRate(Flight.delta(aim - getGunDirection()));
+        if (scan.t == t && Flight.canShoot(getGunDirection(), aim, range, energy, getGunHeat(), power)
+                && (energy > 1.2 || scan.energy <= .1) && setFire(power)) {
+            crossingGun.requested(launch);
+            mark(learned ? "aim learned" : "aim fallback");
+        }
     }
     private double route(Flight.Pose p,int t,int sign){
         double risk=sign==side?0:2;
