@@ -47,6 +47,11 @@ jobs:
       - name: Compile isolated wave support diagnostic (no execution)
         if: github.head_ref == 'codex/meridian-wave-support'
         run: ./gradlew -p experiments/Meridian --no-daemon waveSupportArtifact
+      - name: Build isolated MeridianPeak and verify its committed JAR
+        if: github.head_ref == 'codex/meridian-peak-v1'
+        run: |
+          ./gradlew -p experiments/MeridianPeak --no-daemon clean build
+          python tools/verify_jar.py experiments/MeridianPeak/MeridianPeak.jar experiments/MeridianPeak/build/bot/MeridianPeak/MeridianPeak.jar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4

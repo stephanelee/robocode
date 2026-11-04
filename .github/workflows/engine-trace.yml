@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   probe:
-    if: github.head_ref != 'codex/meridian-held-plan-execution' && github.head_ref != 'codex/meridian-wave-support'
+    if: github.head_ref != 'codex/meridian-held-plan-execution' && github.head_ref != 'codex/meridian-wave-support' && github.head_ref != 'codex/meridian-peak-v1'
     name: Record actual 1.4.0 bullet scan timing
     runs-on: ubuntu-26.04
     timeout-minutes: 10

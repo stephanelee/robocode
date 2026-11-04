@@ -1,0 +1,37 @@
+test_atomic_duplicate_stage_receipt_never_writes_activation (test_meridian_peak.PeakIntegrityTests.test_atomic_duplicate_stage_receipt_never_writes_activation) ... ok
+test_boolean_is_not_a_numeric_model_weight (test_meridian_peak.PeakIntegrityTests.test_boolean_is_not_a_numeric_model_weight) ... ok
+test_confirmation_requires_each_opponent_majority_and_no_screen_pooling (test_meridian_peak.PeakIntegrityTests.test_confirmation_requires_each_opponent_majority_and_no_screen_pooling) ... ok
+test_control_bundle_uses_exact_original_v3_artifact (test_meridian_peak.PeakIntegrityTests.test_control_bundle_uses_exact_original_v3_artifact) ... ok
+test_double_round_advance_missing_counter_nonfinite_and_unsealed_endpoint_rejected (test_meridian_peak.PeakIntegrityTests.test_double_round_advance_missing_counter_nonfinite_and_unsealed_endpoint_rejected) ... ok
+test_exact_registered_schedules_and_fixed_stage_receipts (test_meridian_peak.PeakIntegrityTests.test_exact_registered_schedules_and_fixed_stage_receipts) ... ok
+test_host_binding_rejects_cross_boot_or_profile_before_stage (test_meridian_peak.PeakIntegrityTests.test_host_binding_rejects_cross_boot_or_profile_before_stage) ... ok
+test_latest_sealed_revision_and_capped_bank_distinct_from_cumulative_labels (test_meridian_peak.PeakIntegrityTests.test_latest_sealed_revision_and_capped_bank_distinct_from_cumulative_labels) ... ok
+test_masked_label_journal_is_required_and_unknown_reasons_rejected (test_meridian_peak.PeakIntegrityTests.test_masked_label_journal_is_required_and_unknown_reasons_rejected) ... ok
+test_missing_callback_or_duplicate_fire_confirmation_is_invalid (test_meridian_peak.PeakIntegrityTests.test_missing_callback_or_duplicate_fire_confirmation_is_invalid) ... ok
+test_original_twelve_recordings_match_previous_official_aggregate_reducer (test_meridian_peak.PeakIntegrityTests.test_original_twelve_recordings_match_previous_official_aggregate_reducer) ... ok
+test_payload_rejects_protocol_family_or_package_metadata_tampering (test_meridian_peak.PeakIntegrityTests.test_payload_rejects_protocol_family_or_package_metadata_tampering) ... ok
+test_same_tick_death_delivery_and_posthumous_observer_only_hits (test_meridian_peak.PeakIntegrityTests.test_same_tick_death_delivery_and_posthumous_observer_only_hits) ... ok
+test_screen_thresholds_are_strict_and_every_guard_required (test_meridian_peak.PeakIntegrityTests.test_screen_thresholds_are_strict_and_every_guard_required) ... ok
+test_stage_driver_collects_all_valid_scores_but_stops_first_invalid (test_meridian_peak.PeakIntegrityTests.test_stage_driver_collects_all_valid_scores_but_stops_first_invalid) ... ok
+test_stage_receipt_cannot_cross_run_stage_or_payload (test_meridian_peak.PeakIntegrityTests.test_stage_receipt_cannot_cross_run_stage_or_payload) ... ok
+test_unregistered_runtime_rejected_without_asset_normalization (test_meridian_peak.PeakIntegrityTests.test_unregistered_runtime_rejected_without_asset_normalization) ... ok
+test_walls_identity_and_files_come_from_verified_zip (test_meridian_peak.PeakIntegrityTests.test_walls_identity_and_files_come_from_verified_zip) ... ok
+test_one_fresh_collection_then_repeated_verification_never_recreates_environment (test_meridian_peak_prepared.PreparedEnvironmentTests.test_one_fresh_collection_then_repeated_verification_never_recreates_environment) ... ok
+test_readonly_native_verifier_checks_real_fixture_files_and_isolated_commands (test_meridian_peak_prepared.PreparedEnvironmentTests.test_readonly_native_verifier_checks_real_fixture_files_and_isolated_commands) ... ERROR
+test_readonly_retcon_verifier_rejects_source_or_api_mutation_without_repair (test_meridian_peak_prepared.PreparedEnvironmentTests.test_readonly_retcon_verifier_rejects_source_or_api_mutation_without_repair) ... ok
+
+======================================================================
+ERROR: test_readonly_native_verifier_checks_real_fixture_files_and_isolated_commands (test_meridian_peak_prepared.PreparedEnvironmentTests.test_readonly_native_verifier_checks_real_fixture_files_and_isolated_commands)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-meridian-peak/tools/test_meridian_peak_prepared.py", line 103, in test_readonly_native_verifier_checks_real_fixture_files_and_isolated_commands
+    executable,_=verify.verify_native(proof);self.assertEqual(python,executable)
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/private/tmp/robocode-meridian-peak/tools/meridian_peak_verify.py", line 51, in verify_native
+    raise ValueError('Prepared native environment is not the freshly owned workspace environment')
+ValueError: Prepared native environment is not the freshly owned workspace environment
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.470s
+
+FAILED (errors=1)

@@ -1,0 +1,20 @@
+{
+  "scope": "Ordinary local unit/build checks only; zero games. This local Darwin runtime does not qualify as a registered live benchmark profile. Pinned Ubuntu/Temurin CI still required.",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "javaVersion": "openjdk version \"17.0.21.0.3\" 2026-10-24\nOpenJDK Runtime Environment Homebrew (build 17.0.21.0.3+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.21.0.3+0, mixed mode, sharing)\n",
+  "javaHome": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+  "tests": 23,
+  "failures": 0,
+  "errors": 0,
+  "jarSHA256": "acf199f4602dc08c1751e4a9d2297f649313502fbc3055ac1ff7962ddd841aa3",
+  "buildCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home ./gradlew --offline --no-daemon -p experiments/MeridianPeak clean build",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home ./gradlew --offline --no-daemon -p experiments/MeridianPeak build"
+  ],
+  "logs": [
+    "bot-build-test-01.log (failed test compilation: incorrect RoundEndedEvent constructor; retained)",
+    "bot-build-test-02.log (20 tests pass)",
+    "bot-build-test-03.log (clean build,22 tests pass)",
+    "bot-build-test-04.log (23 tests pass; added bank/cumulative reconciliation fixture)"
+  ]
+}

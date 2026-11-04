@@ -1,0 +1,58 @@
+{
+  "checks": {
+    "allowedRuntimeFamilyUnchanged": true,
+    "controlUnchanged": true,
+    "packagePinUnchanged": true,
+    "participantAssetCount": 25,
+    "participantAssetsUnchanged": true,
+    "scheduleUnchanged": true
+  },
+  "clearance": {
+    "confirmation": false,
+    "freshZeroGameProfile": true,
+    "merge": false,
+    "publication": true,
+    "screen": false
+  },
+  "decision": "PASS for publication and one fresh zero-game profile only",
+  "gamesRunByReviewer": 0,
+  "limitations": [
+    "Synthetic ordinary tests exercise collection/verification and mutations; actual hosted repeated-verification path remains untested until the fresh zero-game profile.",
+    "Owned venv proof intentionally excludes regular .pyc/__pycache__ files per existing package convention, while recording every symlink including directory and dangling links. This is provenance validation, not a claim of hostile-host attestation.",
+    "Candidate JAR and all 25 participant assets are unchanged, so no additional bot rebuild was required for this infrastructure-only review.",
+    "New freeze must be generated and independently checked against this reviewed source, then published exact head and actual hosted zero-game profile must be independently cleared before any screen activation. Confirmation is not cleared."
+  ],
+  "oldFreezeSHA256": "c28024373ffd79b900952790d01db517c4fc9e1bb0132222b0ca0b4a59e6b145",
+  "reviewedFilesSHA256": {
+    ".github/workflows/meridian-peak-v1.yml": "334c3e850a10a1d5a6e4dfb8b554b50c7dc29c61423d89220bdaee36892622ca",
+    "docs/improvements/meridian-peak-v1.md": "41d7f23c5771d2a761059da260a909d809fa1a536ae3479be1e12376e1963dd3",
+    "tools/meridian_peak.py": "41639c72278a9391a0847f12da85505251b2c61b8a604f454f0e22968aa17964",
+    "tools/meridian_peak_prepare.py": "89b58098fbcea503b9d55531beb3d174bc402a4f560b78e681859bf85b161699",
+    "tools/meridian_peak_profile.py": "4d07bb2e65075c1b4c30370880040955e3fdde0e5bbf4f215452e569e469c0a9",
+    "tools/meridian_peak_verify.py": "cc045da5d84af90404870ed06f170c462b9cded921a07baf35d08c27aca427cc",
+    "tools/strong_melee_opponents.py": "a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524",
+    "tools/test_meridian_peak.py": "d0d4a710f348de6fb8327cc0670150b8c69169863874cb0f2e193c17125c406b",
+    "tools/test_meridian_peak_prepared.py": "0b1dc0a2697738e3c729af81f70d1f194c2ffa7c94f7430a1141f06f3c1b75b4"
+  },
+  "reviewer": "independent_review",
+  "schemaVersion": 1,
+  "scope": "Prospective infrastructure repair, before new tooling freeze and hosted profile; no gameplay acquisition clearance",
+  "sourceFindings": [
+    "Fresh collection retains original native.prepare freshness refusal and runs only with explicit --collect; default preflight verifies the already-created same-host environment.",
+    "Hosted profile executes collect once, Java25 launcher compilation without launch, then two read-only verifications. Admission, run entry and each game verify existing environment; Retcon play no longer invokes prepare.",
+    "Read-only verifier rehashes pinned source/wheels, owned venv inventory, isolated metadata/pip checks, runtime binaries and installed package contents; changed host, profile/proof, candidate, runtime, source and package identities reject.",
+    "Prepared-environment proof hash is included in host identity, receipt binding and stage raw archive; confirmation requires the proof and its audited host/receipt hash binding.",
+    "All three jobs remain ubuntu-26.04. Existing Java17 build/test/parity followed by Java25 provenance/launcher remains intact. Upload excludes only historical committed preflight trees; live build/provenance/acquisition outputs remain included.",
+    "Original failed preparation and old freeze retained. Independent failure audit records zero games and no activation."
+  ],
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools -p 'test_meridian_peak*.py' -v",
+    "failed": 0,
+    "log": "independent-tests.log",
+    "logSHA256": "b22f71a72d7795dcea8fa17365c39467a2b4a699c037bed5985d5d320ff37ae9",
+    "passed": 21,
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]"
+  },
+  "toolingClosureSHA256": "28c96e833a381c4e0b30368d5195f5a23c5b8f130734cc3dc67942fd87ade74b"
+}

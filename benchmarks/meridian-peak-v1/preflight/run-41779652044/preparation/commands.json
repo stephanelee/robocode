@@ -1,0 +1,101 @@
+[
+  {
+    "command": [
+      "./gradlew",
+      "--no-daemon",
+      "clean",
+      "build"
+    ],
+    "log": "production-build.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/verify_jar.py",
+      "/home/runner/work/_temp/meridian-peak-build-preparation/production.jar",
+      "AISurvivor/AISurvivor.jar"
+    ],
+    "log": "production-parity.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/meridian_gun_plan_fixture.py"
+    ],
+    "log": "fixed-fixture.log"
+  },
+  {
+    "command": [
+      "./gradlew",
+      "--no-daemon",
+      "-p",
+      "experiments/Meridian",
+      "clean",
+      "build"
+    ],
+    "log": "Meridian-build.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/verify_jar.py",
+      "experiments/Meridian/Meridian.jar",
+      "experiments/Meridian/build/bot/Meridian/Meridian.jar"
+    ],
+    "log": "Meridian-parity.log"
+  },
+  {
+    "command": [
+      "./gradlew",
+      "--no-daemon",
+      "-p",
+      "experiments/MeridianPeak",
+      "clean",
+      "build"
+    ],
+    "log": "MeridianPeak-build.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/verify_jar.py",
+      "experiments/MeridianPeak/MeridianPeak.jar",
+      "experiments/MeridianPeak/build/bot/MeridianPeak/MeridianPeak.jar"
+    ],
+    "log": "MeridianPeak-parity.log"
+  },
+  {
+    "command": [
+      "./gradlew",
+      "--no-daemon",
+      "-p",
+      "/home/runner/work/robocode/robocode/build/peak-control-source/experiments/Meridian",
+      "clean",
+      "build"
+    ],
+    "log": "control-build.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/verify_jar.py",
+      "/home/runner/work/robocode/robocode/build/peak-control-source/experiments/Meridian/Meridian.jar",
+      "/home/runner/work/robocode/robocode/build/peak-control-source/experiments/Meridian/build/bot/Meridian/Meridian.jar"
+    ],
+    "log": "control-parity.log"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_meridian_peak*.py",
+      "-v"
+    ],
+    "log": "harness-tests.log"
+  }
+]

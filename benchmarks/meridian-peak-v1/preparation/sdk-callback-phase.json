@@ -1,0 +1,27 @@
+{
+  "sdkCommit": "c8ad3a8d19a843f6258d6f6f9db7f29229963903",
+  "source": "https://github.com/robocode-dev/tank-royale/blob/c8ad3a8d19a843f6258d6f6f9db7f29229963903/bot-api/java/src/main/java/dev/robocode/tankroyale/botapi/internal/WebSocketHandler.java",
+  "sourceBlob": "17dcb4b89ad3b7e2b4b91aa37b3645e63398891f",
+  "roundEndedLines": [
+    177,
+    193
+  ],
+  "roundPhase": [
+    "bot onRoundEnded callback",
+    "internal onRoundEnded stops bot thread",
+    "flushFinalTurnEvents queued callbacks",
+    "transferStdOutToBotIntent"
+  ],
+  "gameEndedLines": [
+    232,
+    244
+  ],
+  "gamePhase": [
+    "bot onGameEnded callback",
+    "internal onGameEnded stops bot thread",
+    "flushFinalTurnEvents queued callbacks"
+  ],
+  "implication": "RoundEnded marks CLOSING under adapter monitor; allow terminal drain. Next RoundStarted or final GameEnded seals once before reset. go outside monitor; registered epoch + preserved SDK interrupt prevent stale run mutation.",
+  "runEntrySource": "BaseBotInternals.java lines156\u2013185 checks thread identity before run; stopThread lines236\u2013264 invalidates then interrupts old thread. Adapter run registration checks interruption under monitor; no extra dispatchEvents call.",
+  "assumptions": "Pinned SDK ordered event dispatch/invalidation and no externally cleared interruption. No arbitrary injected callback discrimination."
+}
