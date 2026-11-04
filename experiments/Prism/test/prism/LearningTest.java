@@ -228,4 +228,30 @@ class LearningTest {
         d.rawHits = 3;
         assertFalse(d.flattenerEnabled());
     }
+
+    @Test
+    void confirmedSurferStoresAreCountedBoundedAndEvictedUnderTheGunBudget() {
+        Brain brain = new Brain(new Rules(800, 600, 0.1, 1), 1, new Telemetry(null));
+        Guns.Data data = brain.guns().data(7);
+        long expected = 0;
+        for (NeighborStore store : data.surfer) {
+            for (int turn = 0; turn < 700; turn++)
+                store.add(new double[store.dims()], new double[] {0.2}, 1, 1, turn, turn);
+            assertEquals(store.capacity(), store.size());
+            assertEquals(700 - store.capacity(), store.samples().get(0).turn());
+            expected += store.payloadBytes();
+        }
+        assertTrue(expected > 0);
+        assertEquals(expected, brain.storePayloadBytes());
+        // Existing low-priority virtual labels are discarded before confirmed-wave labels.
+        data.longStore.add(new double[data.longStore.dims()], new double[] {0.1}, 1, 1, 1, 1);
+        brain.enforceMemoryCap(expected);
+        assertEquals(0, data.longStore.size());
+        for (NeighborStore store : data.surfer) assertEquals(store.capacity(), store.size());
+        brain.enforceMemoryCap(expected / 2);
+        assertTrue(brain.storePayloadBytes() <= expected / 2);
+        brain.enforceMemoryCap(0);
+        assertEquals(0, brain.storePayloadBytes());
+        for (NeighborStore store : data.surfer) assertEquals(0, store.size());
+    }
 }

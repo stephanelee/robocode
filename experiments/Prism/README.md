@@ -4,7 +4,7 @@ Prism is a standalone experimental Java 17 Tank Royale bot. It was implemented i
 
 **Status: registered screen rejected; no confirmation.** The sole200-round screen completed: Diamond28.61% mean score share missed the >40% gate; Retcon94.33%, Adaptive69.29% and samples100% passed their gates. Zero Prism recorded skips/collisions/failures. [Full original evidence and limits](../../benchmarks/prism-screen-v1/README.md) include the missing Diamond game3 round15 telemetry line. This remains a standalone experimental reference, with no production AISurvivor promotion or fresh superiority claim.
 
-**Current candidate: Prism 0.2.0, profile `prism-profile-2-surfer-gun` (`Prism.jar 3ed4935b…`). Not yet measured.** It adds a single anti-surfer gun trained only on confirmed-bullet waves. Its own [registered v2 screen](../../docs/prism-surfer-gun-protocol.md) awaits an independent exact-head review. The v1 results above describe profile 1 only.
+**Current candidate: Prism 0.2.0, profile `prism-profile-2-surfer-gun` (`Prism.jar f9c75a86…`). Not yet measured.** It adds a single anti-surfer gun trained only on confirmed-bullet waves. Its own [registered v2 screen](../../docs/prism-surfer-gun-protocol.md) awaits an independent exact-head review. The v1 results above describe profile 1 only.
 
 ## What it does
 
@@ -54,3 +54,5 @@ Every game starts cold. Learning persists across rounds within a game and resets
 - Bot-collision prediction is a constant-velocity hypothesis. Unknown enemy commands are not modelled.
 - Bullet shadows are capped at 75%. The engine's bullet bounding-circle pre-check is not modelled.
 - The first smoke run (superseded candidate) showed one skipped turn in 566 and a 102.8 ms worst decision, most likely cold-start JIT. The current candidate's smoke showed none in 583, worst 19.3 ms. No warm-up has been added, and turn-budget compliance is not established for real matches.
+
+PR112 readiness maintenance by a separate implementation agent adds surfer-store payload accounting/eviction after existing virtual priority and guarded exact-head label execution; it changes no gun parameters. The refrozen candidate pin is in the v2 plan. Original smoke3 remains evidence for its explicitly named earlier JAR, not this rebuilt readiness candidate.

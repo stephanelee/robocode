@@ -259,9 +259,23 @@ class PlanSelectionTest(unittest.TestCase):
         self.assertTrue(ps.receipt_ref(v2).startswith("refs/tags/prism-screen-v2-"))
         self.assertNotEqual(ps.receipt_ref(v1), ps.receipt_ref(v2))
         self.assertFalse({g["seed"] for g in v1["games"]} & {g["seed"] for g in v2["games"]}, "fresh seeds")
-        self.assertEqual("pending", v2["approvedReview"])
-        self.assertEqual("pending", v2["approvedHead"])
+        self.assert_approval_record(v2)
         self.assertEqual("prism-profile-2-surfer-gun", v2["freeze"]["profile"])
+
+    def assert_approval_record(self, plan):
+        if plan["approvedReview"] == "pending" or plan["approvedHead"] == "pending":
+            self.assertEqual(("pending", "pending"), (plan["approvedReview"], plan["approvedHead"]))
+        else:
+            self.assertRegex(plan["approvedReview"], r"^https://github\.com/stephanelee/robocode/pull/112#(?:issuecomment-|pullrequestreview-)\d+$")
+            self.assertRegex(plan["approvedHead"], r"^[0-9a-f]{40}$")
+
+    def test_pending_and_recorded_approval_states_are_both_supported(self):
+        self.assert_approval_record(dict(approvedReview="pending", approvedHead="pending"))
+        valid = dict(approvedReview="https://github.com/stephanelee/robocode/pull/112#issuecomment-123", approvedHead="a" * 40)
+        self.assert_approval_record(valid)
+        for bad in (dict(valid, approvedHead="pending"), dict(valid, approvedReview="pending"), dict(valid, approvedHead="invalid")):
+            with self.assertRaises(AssertionError):
+                self.assert_approval_record(bad)
 
     def test_v1_receipt_name_is_unchanged(self):
         self.assertTrue(ps.receipt_ref(ps.load_plan()).startswith("refs/tags/prism-screen-v1-"))
