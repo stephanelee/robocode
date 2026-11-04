@@ -26,6 +26,8 @@ for game, row in zip(plan, rows):
 PY
 ```
 
-The [workflow](../../.github/workflows/meridian-surf.yml) rebuilds on Java 17 and checks JAR parity, then uses Java 25 to launch matches. Both arms use the same Ubuntu 26.04 host. The runner extracts the v3 control from 809b880cdcee98d7946d05e6bcd30f623f604348 and checks its runnable files against the v3 manifest. Physical replications have uncontrolled start positions.
+The [archived workflow](source/meridian-surf.yml) rebuilds on Java 17 and checks JAR parity, then uses Java 25 to launch matches. Both arms use the same Ubuntu 26.04 host. The runner extracts the v3 control from 809b880cdcee98d7946d05e6bcd30f623f604348 and checks its runnable files against the v3 manifest. Physical replications have uncontrolled start positions.
 
 To reproduce the separate gun diagnostic, run `python3 tools/meridian_motion_memory.py` from the repository root and compare `memory-result.json` with the committed version.
+
+The completed acquisition launcher is retired from active Actions; its exact executed bytes remain archived. Ordinary Java 17 build/test/JAR-parity CI remains enabled. This historical setup does not authorize another registered run. Earlier versions retain their workflows and observer sources in their own archives.
