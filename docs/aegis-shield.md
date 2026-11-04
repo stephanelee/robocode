@@ -44,3 +44,5 @@ Why it lost (mechanism, not a causal proof):
 - Combine interception with dodging for the adjacent candidate.
 
 Any of these would need a new prospective registration and fresh games. Nothing here transfers to AIS.
+
+**Block-rate work (unregistered, WIP):** a follow-up targeted the measured failure classes. It corrected the shooter self-prediction model, added behind-side adjacent-candidate coverage, a 2 px replay label lead and an adaptive off-centre-aim tracker. In 10-round dev screens it won 2/10 rounds (8–9% share) and blocked 78.7–80.3% of all inferred shots, against 0/10 and 74% for 0.1.0. That is still short of the ≈90% needed. Off-centre aims occur under both TripHammer and Anti-Surfer; the round summaries do not isolate a gun-switching effect. Long rounds are lost in the low-power endgame. See [the Aegis 0.2 dev record](../benchmarks/aegis-v2-dev/README.md). This is not a registered result.
