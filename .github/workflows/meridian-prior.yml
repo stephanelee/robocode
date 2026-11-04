@@ -27,7 +27,7 @@ jobs:
           mkdir -p build/meridian
           java -version 2>build/meridian/build-java.txt
           sha256sum "$JAVA_HOME/bin/javac" "$JAVA_HOME/lib/modules" | sed 's@  .*/@  @' > build/meridian/build-java.sha256
-          python tools/meridian_prior_bank.py
+          python tools/meridian_prior_bank.py --verify
           git diff --exit-code -- experiments/Meridian/src/main/resources/crossing-prior.csv
           ./gradlew --no-daemon -p experiments/Meridian clean build
           python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
