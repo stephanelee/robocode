@@ -103,3 +103,52 @@ Limitations:
 - Ten-round games share learning within a game.
 - Variance between games is large: exploratory development games ranged ±10–15 pp.
 - A screen pass is progress, not superiority. Only the confirmation can support a "beats Diamond" statement, and then only for this pinned port, runtime and arena.
+
+---
+
+## Registered screen result (appended after the run; the rules above are unchanged)
+
+**Decision: `progress; confirmation open`. All 8 games and 80 rounds were valid, with zero Keel skipped turns.**
+
+- Sole run: [41792449000](https://github.com/stephanelee/robocode/actions/runs/41792449000), at reviewed head `843768f` and committed profile `0fb2d496…`.
+- [Pre-execution review](https://github.com/stephanelee/robocode/pull/98#issuecomment-6625216993).
+- Raw evidence (official recordings, markers, attempts/commands, runner logs, AIS model/telemetry, decision) is in [benchmarks/keel-v1/raw/](../../benchmarks/keel-v1/raw/). A second copy is on branch `evidence/keel-v1-run-keel-v1-screen-41792449000` (commit `fac3b6f`).
+- The committed `decision-screen.json` is byte-identical to the evidence branch. All recording SHA-256 values match.
+- An independent reducer (`benchmarks/keel-v1/development/scripts/analyze.py`, which shares no code with the harness) reproduces every share, win count, shot count and hit count below.
+
+| Game | Bot / opponent | Share | Round wins | Hits / shots (rate) | Opponent hits / shots (rate) | Damage dealt / taken | Walls / rams | Mean round length |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| s1 | Keel / Diamond Port | 55.33% | 8/10 | 231/2517 (9.2%) | 296/2784 (10.6%) | 232 / 458 | 11 / 0 | 3,552 turns |
+| s2 | Meridian v3 control / Diamond | 14.18% | 0/10 | 35/489 (7.2%) | 89/629 (14.1%) | 197 / 505 | 3 / 0 | 908 |
+| s3 | Keel / Diamond Port | 73.05% | 10/10 | 252/2782 (9.1%) | 294/3053 (9.6%) | 243 / 328 | 7 / 1 | 3,889 |
+| s4 | Keel / Retcon 0.2.0 | 96.06% | 10/10 | 92/646 (14.2%) | 9/643 (1.4%) | 322 / 40 | 4 / 0 | 1,003 |
+| s5 | Keel / Diamond Port | 67.10% | 9/10 | 258/2858 (9.0%) | 288/3151 (9.1%) | 186 / 402 | 5 / 0 | 4,008 |
+| s6 | Meridian v3 control / Diamond | 21.60% | 1/10 | 39/483 (8.1%) | 89/610 (14.6%) | 230 / 471 | 0 / 0 | 882 |
+| s7 | Keel / Diamond Port | 24.02% | 4/10 | 201/2176 (9.2%) | 284/2415 (11.8%) | 109 / 686 | 6 / 0 | 3,121 |
+| s8 | Keel / AISurvivor 1.2.1 cold TRAIN | 88.28% | 10/10 | 180/560 (32.1%) | 31/483 (6.4%) | 548 / 164 | 0 / 0 | 826 |
+
+Damage is uncapped observer bullet damage. Round lengths come from the decision file's `turnsByRound`.
+
+**Diamond summary:**
+
+- Keel: equal-game mean 54.88%, 31/40 round wins, games 24.0–73.0%, sample SD 21.8 pp.
+- Contemporaneous Meridian v3 control: mean 17.89%, 1/20 wins.
+
+**Gate checks:**
+
+| Check | Result |
+| --- | --- |
+| Keel Diamond mean > 25% | pass |
+| Keel Diamond mean > control mean | pass |
+| ≥ 2 Keel Diamond wins | pass (31) |
+| Retcon > 60% | pass (96.06%) |
+| AISurvivor > 50% | pass (88.28%) |
+| Diamond mean > 45%, so confirmation opens | pass |
+
+**Interpretation and limits:**
+
+- This is a **screen pass (progress)**, not a claim that Keel beats Diamond Port. Only the registered confirmation (6 fresh 20-round games) can support that.
+- Between-game variation is large. Game s7 lost 6 of 10 rounds: it took 686 damage, against 328–458 in the other Keel games, and its first two rounds scored 4–5% share.
+- The mechanism matches development. Rounds were about 3.4–4.5× longer than the control's. Keel fired mostly 0.1-power shots (≈9% hit rate) and kept energy while Diamond spent its own. Diamond's hit rate was 9.1–11.8% vs Keel and 14.1–14.6% vs the control.
+- Keel still lost the bullet-damage exchange in every Diamond game. Its share comes mainly from survival scoring.
+- Diamond's own skipped turns are not observable. CI ran each game sequentially on a 4-vCPU runner.

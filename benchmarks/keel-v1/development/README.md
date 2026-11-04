@@ -43,3 +43,12 @@ These are hypotheses for the registered test, not findings.
 - **Defense.** The flattener lowered Diamond's hit rate by about 1–2 percentage points in every game. Bullet shadows had no measurable effect. The engine-exact shadow interval is nearly zero when our bullet flies radially toward the wave origin, which is the normal case.
 - **Economics.** With firing at 1.2–1.95 power, rounds were lost mainly to our own firing cost: about 100 energy per round at an ~8% hit rate. Diamond then fired 0.1-power finishing shots, because its power is capped by our energy.
 - **Eco policy.** Under the eco fire policy, rounds lasted about 4,500 turns. Diamond ended them near zero energy after spending its own energy. Keel kept 3–14 energy but dealt only about 15–20 bullet damage per round. Share is limited by Diamond's damage dealt on us (about 45 per round) even in rounds we win.
+
+## Post-freeze exploration toward v2 (dev only, not evidence)
+
+These variants were tried on branch `claude/keel-v2-dev` after v1 was frozen. Each was one change on top of v1, tested in 4 cold 10-round local games vs Diamond.
+
+| Variant | Mean share | Round wins | Diamond hit rate | Disposition |
+| --- | ---: | ---: | ---: | --- |
+| + half-speed orbits and mid-path reversal options (`1c31b6e`) | 53.2% | 33/40 | 10.7% | No gain over v1 (54.9%); dropped |
+| + finisher: 1.95 power when Diamond < 20 energy and Keel leads by > 25 | 46.1% | 28/40 | 10.7% | Worse; dropped |
