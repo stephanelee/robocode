@@ -11,6 +11,13 @@ The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a2723
 | Experiment | Budget and decision | Evidence |
 |---|---|---|
 | KeelHelm stopped-heading forecast / [PR108](https://github.com/stephanelee/robocode/pull/108), [issue107](https://github.com/stephanelee/robocode/issues/107) | **Screen PASS, fresh300confirmation eligible only; not run/confirmed.**14cold games/120valid rounds,0skips, no invalid/unplayed IDs; logged maxMs13candidate/12baseline. Diamond equal-game mean48.774673% baseline→58.562467% candidate (+9.787794pp),22/30→27/30firstPlaces. Retcon96.755268%→96.072547%,20/20each; Walls/AIS guards pass. Independent raw/binding audit passed. Both arms lost Diamond damage exchange; candidate incoming hit frequency10.57% vs10.27%, baseline ram events2vs0: no aiming/general-strength or isolated causal claim. | [Protocol](improvements/keel-helm-v1.md), [full result/limits](improvements/keel-helm-v1-results.md), [independent report](../benchmarks/keel-helm-v1/screen-evidence-41874753112/provider-and-audits/keel-helm-screen-outcome-review.md), [all raw/ZIP/14whole recordings](../benchmarks/keel-helm-v1/screen-evidence-41874753112/manifest.json), [sole screen](https://github.com/stephanelee/robocode/actions/runs/41874753112) |
+
+## Frozen Keel versus Prism
+
+| Comparison | Measured budget and result | Evidence |
+|---|---|---|
+| Keel0.1 vs Prism0.1 / [issue109](https://github.com/stephanelee/robocode/issues/109) / [PR110](https://github.com/stephanelee/robocode/pull/110) | **Descriptive only;60 physical rounds.** Keel score4221–3394, official first places47–13; equal-game mean share56.292689%,4/6 games above50%. Both private skips0. Original0-round startup failure and10-round serializer interruption preserved; first10 never replayed, exact remaining50 completed under new clearance. No controller/JAR changes, tuning or confirmation. | [Protocol/results](improvements/keel-prism-v1.md), [raw/combined per-round report/provenance](../benchmarks/keel-prism-v1/README.md) |
+
 ## Prism independent clean-room bot
 
 | Experiment | Measured budget and decision | Evidence |
