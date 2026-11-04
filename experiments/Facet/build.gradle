@@ -20,7 +20,14 @@ tasks.register('semanticTest', JavaExec) {
  workingDir = rootProject.projectDir
  jvmArgs '-Xmx256m'
 }
-test { dependsOn semanticTest }
+tasks.register('adapterConcurrencyTest', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.runtimeClasspath
+ mainClass = 'AdapterConcurrencyTest'
+ workingDir = rootProject.projectDir
+ jvmArgs '-Xmx256m'
+}
+test { dependsOn semanticTest, adapterConcurrencyTest }
 tasks.register('verifyJarParity', Exec) {
  dependsOn jar
  commandLine 'python3', 'parity.py', tasks.jar.archiveFile.get().asFile.absolutePath, 'Facet.jar'

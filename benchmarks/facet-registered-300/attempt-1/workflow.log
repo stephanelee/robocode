@@ -1,0 +1,401 @@
+﻿2026-11-04T15:29:00.1329359Z Current runner version: '2.338.2'
+2026-11-04T15:29:00.1347279Z ##[group]Runner Image Provisioner
+2026-11-04T15:29:00.1347873Z Hosted Compute Agent
+2026-11-04T15:29:00.1348231Z Version: 20261021.618
+2026-11-04T15:29:00.1348655Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-04T15:29:00.1349085Z Build Date: 2026-10-21T00:45:21Z
+2026-11-04T15:29:00.1349487Z Worker ID: {7abadf3e-48f6-4aff-ae71-f2bd31b0a90c}
+2026-11-04T15:29:00.1350012Z Region: centralus
+2026-11-04T15:29:00.1350353Z Cloud: Azure
+2026-11-04T15:29:00.1350716Z ##[endgroup]
+2026-11-04T15:29:00.1351478Z ##[group]Operating System
+2026-11-04T15:29:00.1351834Z Ubuntu
+2026-11-04T15:29:00.1352239Z 26.04.1
+2026-11-04T15:29:00.1352551Z LTS
+2026-11-04T15:29:00.1352892Z ##[endgroup]
+2026-11-04T15:29:00.1353240Z ##[group]Runner Image
+2026-11-04T15:29:00.1353602Z Image: ubuntu-26.04
+2026-11-04T15:29:00.1354040Z Version: 20261025.179.1
+2026-11-04T15:29:00.1354764Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T15:29:00.1355815Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-04T15:29:00.1356380Z ##[endgroup]
+2026-11-04T15:29:00.1357355Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T15:29:00.1358702Z Contents: read
+2026-11-04T15:29:00.1359113Z Metadata: read
+2026-11-04T15:29:00.1359453Z ##[endgroup]
+2026-11-04T15:29:00.1360875Z Secret source: Actions
+2026-11-04T15:29:00.1361446Z Cache mode: write
+2026-11-04T15:29:00.1361888Z Prepare workflow directory
+2026-11-04T15:29:00.1568405Z Prepare all required actions
+2026-11-04T15:29:00.1605667Z Getting action download info
+2026-11-04T15:29:00.4092169Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T15:29:00.4854397Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-04T15:29:00.9687401Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-04T15:29:01.1876829Z Complete job name: registered-duels
+2026-11-04T15:29:01.2474391Z ##[group]Run actions/checkout@v4
+2026-11-04T15:29:01.2474909Z with:
+2026-11-04T15:29:01.2475208Z   repository: stephanelee/robocode
+2026-11-04T15:29:01.2480172Z   token: ***
+2026-11-04T15:29:01.2480458Z   ssh-strict: true
+2026-11-04T15:29:01.2480755Z   ssh-user: git
+2026-11-04T15:29:01.2481065Z   persist-credentials: true
+2026-11-04T15:29:01.2481417Z   clean: true
+2026-11-04T15:29:01.2481730Z   sparse-checkout-cone-mode: true
+2026-11-04T15:29:01.2482119Z   fetch-depth: 1
+2026-11-04T15:29:01.2482409Z   fetch-tags: false
+2026-11-04T15:29:01.2482717Z   show-progress: true
+2026-11-04T15:29:01.2483049Z   lfs: false
+2026-11-04T15:29:01.2483331Z   submodules: false
+2026-11-04T15:29:01.2483643Z   set-safe-directory: true
+2026-11-04T15:29:01.2484016Z   allow-unsafe-pr-checkout: false
+2026-11-04T15:29:01.2484483Z ##[endgroup]
+2026-11-04T15:29:01.4779105Z Syncing repository: stephanelee/robocode
+2026-11-04T15:29:01.4780985Z ##[group]Getting Git version info
+2026-11-04T15:29:01.4781935Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-04T15:29:01.4783187Z [command]/usr/bin/git version
+2026-11-04T15:29:01.4795885Z git version 2.56.0
+2026-11-04T15:29:01.4814335Z ##[endgroup]
+2026-11-04T15:29:01.4820014Z Temporarily overriding HOME='/home/runner/work/_temp/14b5c040-9067-4816-9b6a-78ae852297d1' before making global git config changes
+2026-11-04T15:29:01.4822168Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T15:29:01.4824754Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T15:29:01.4889775Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-04T15:29:01.4891618Z ##[group]Initializing the repository
+2026-11-04T15:29:01.4892638Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-04T15:29:01.5021603Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T15:29:01.5023999Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T15:29:01.5025670Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T15:29:01.5026934Z hint: call:
+2026-11-04T15:29:01.5027650Z hint:
+2026-11-04T15:29:01.5028246Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T15:29:01.5028827Z hint:
+2026-11-04T15:29:01.5029284Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T15:29:01.5030222Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T15:29:01.5031001Z hint:
+2026-11-04T15:29:01.5031345Z hint: 	git branch -m <name>
+2026-11-04T15:29:01.5031686Z hint:
+2026-11-04T15:29:01.5032190Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T15:29:01.5036667Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-04T15:29:01.5046987Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-04T15:29:01.5101026Z ##[endgroup]
+2026-11-04T15:29:01.5101915Z ##[group]Disabling automatic garbage collection
+2026-11-04T15:29:01.5103658Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T15:29:01.5133947Z ##[endgroup]
+2026-11-04T15:29:01.5134733Z ##[group]Setting up auth
+2026-11-04T15:29:01.5139397Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T15:29:01.5174454Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T15:29:01.5555361Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T15:29:01.5583019Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T15:29:01.5797699Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T15:29:01.5824382Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T15:29:01.6039016Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T15:29:01.6070892Z ##[endgroup]
+2026-11-04T15:29:01.6076778Z ##[group]Fetching the repository
+2026-11-04T15:29:01.6078491Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8a129ab3f2e437585dd5d894d71ba824a00e9873:refs/remotes/origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:29:05.3929818Z From https://github.com/stephanelee/robocode
+2026-11-04T15:29:05.3930606Z  * [new ref]         8a129ab3f2e437585dd5d894d71ba824a00e9873 -> origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:29:05.3940393Z ##[endgroup]
+2026-11-04T15:29:05.3940927Z ##[group]Determining the checkout info
+2026-11-04T15:29:05.3942858Z ##[endgroup]
+2026-11-04T15:29:05.3947720Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T15:29:05.3994628Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T15:29:05.4017084Z ##[group]Checking out the ref
+2026-11-04T15:29:05.4021769Z [command]/usr/bin/git checkout --progress --force -B facet/independent-v1-20261104-01a1a639 refs/remotes/origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:29:05.6728303Z Switched to a new branch 'facet/independent-v1-20261104-01a1a639'
+2026-11-04T15:29:05.6731709Z branch 'facet/independent-v1-20261104-01a1a639' set up to track 'origin/facet/independent-v1-20261104-01a1a639'.
+2026-11-04T15:29:05.6758651Z ##[endgroup]
+2026-11-04T15:29:05.6801789Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T15:29:05.6822157Z 8a129ab3f2e437585dd5d894d71ba824a00e9873
+2026-11-04T15:29:05.7068044Z ##[group]Run python3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence facet-runtime-preflight
+2026-11-04T15:29:05.7068814Z [36;1mpython3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence facet-runtime-preflight[0m
+2026-11-04T15:29:05.7069175Z [36;1mecho "$RUNNER_TEMP/facet-python-3.13.9/bin" >> "$GITHUB_PATH"[0m
+2026-11-04T15:29:05.7098125Z shell: /usr/bin/bash -e {0}
+2026-11-04T15:29:05.7098291Z ##[endgroup]
+2026-11-04T15:30:45.4000879Z ##[group]Run actions/setup-java@v4
+2026-11-04T15:30:45.4001041Z with:
+2026-11-04T15:30:45.4001171Z   distribution: temurin
+2026-11-04T15:30:45.4001299Z   java-version: 17.0.17+10
+2026-11-04T15:30:45.4001440Z   java-package: jdk
+2026-11-04T15:30:45.4001655Z   check-latest: false
+2026-11-04T15:30:45.4001832Z   server-id: github
+2026-11-04T15:30:45.4001956Z   server-username: GITHUB_ACTOR
+2026-11-04T15:30:45.4002096Z   server-password: GITHUB_TOKEN
+2026-11-04T15:30:45.4002233Z   overwrite-settings: true
+2026-11-04T15:30:45.4002383Z   job-status: success
+2026-11-04T15:30:45.4003908Z   token: ***
+2026-11-04T15:30:45.4004021Z ##[endgroup]
+2026-11-04T15:30:45.5080352Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T15:30:45.5087040Z ##[group]Installed distributions
+2026-11-04T15:30:45.5185998Z Trying to resolve the latest version from remote
+2026-11-04T15:30:45.5277035Z (node:12749) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:30:45.5277506Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:30:45.9994536Z Resolved latest version as 17.0.17+10
+2026-11-04T15:30:45.9994799Z Trying to download...
+2026-11-04T15:30:45.9995564Z Downloading Java 17.0.17+10 (Temurin-Hotspot) from https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.17%2B10/OpenJDK17U-jdk_x64_linux_hotspot_17.0.17_10.tar.gz ...
+2026-11-04T15:30:46.8002803Z Extracting Java archive...
+2026-11-04T15:30:46.8107075Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/a929e1ca-b2d1-4ef1-89d5-cdc515a0b4f4 -f /home/runner/work/_temp/9e7ea26e-7d51-48fa-b447-117a543e13de
+2026-11-04T15:30:49.4269281Z Java 17.0.17+10 was downloaded
+2026-11-04T15:30:49.4269559Z Setting Java 17.0.17+10 as the default
+2026-11-04T15:30:49.4273847Z Creating toolchains.xml for JDK version 17.0.17+10 from temurin
+2026-11-04T15:30:49.4314404Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-04T15:30:49.4315085Z 
+2026-11-04T15:30:49.4315183Z Java configuration:
+2026-11-04T15:30:49.4315360Z   Distribution: temurin
+2026-11-04T15:30:49.4315621Z   Version: 17.0.17+10
+2026-11-04T15:30:49.4315831Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:30:49.4316096Z 
+2026-11-04T15:30:49.4316372Z ##[endgroup]
+2026-11-04T15:30:49.4331206Z Creating settings.xml with server-id: github
+2026-11-04T15:30:49.4331507Z Writing to /home/runner/.m2/settings.xml
+2026-11-04T15:30:49.4504496Z ##[group]Run cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-committed.jar"
+2026-11-04T15:30:49.4504810Z [36;1mcp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-committed.jar"[0m
+2026-11-04T15:30:49.4505072Z [36;1mcp experiments/Facet/Facet.jar "$RUNNER_TEMP/Facet-committed.jar"[0m
+2026-11-04T15:30:49.4505286Z [36;1m./gradlew --no-daemon clean build[0m
+2026-11-04T15:30:49.4505805Z [36;1mpython tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar[0m
+2026-11-04T15:30:49.4506124Z [36;1m./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity[0m
+2026-11-04T15:30:49.4506443Z [36;1mpython tools/verify_jar.py "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/build/libs/Facet.jar[0m
+2026-11-04T15:30:49.4506758Z [36;1mcp "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar[0m
+2026-11-04T15:30:49.4507011Z [36;1mcp "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/Facet.jar[0m
+2026-11-04T15:30:49.4531741Z shell: /usr/bin/bash -e {0}
+2026-11-04T15:30:49.4531994Z env:
+2026-11-04T15:30:49.4532157Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:30:49.4532411Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:30:49.4532611Z ##[endgroup]
+2026-11-04T15:30:49.5217199Z Downloading https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
+2026-11-04T15:30:50.4922239Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%..............100%
+2026-11-04T15:30:51.4006945Z 
+2026-11-04T15:30:51.4007468Z Welcome to Gradle 8.14.3!
+2026-11-04T15:30:51.4007695Z 
+2026-11-04T15:30:51.4007806Z Here are the highlights of this release:
+2026-11-04T15:30:51.4008105Z  - Java 24 support
+2026-11-04T15:30:51.4008360Z  - GraalVM Native Image toolchain selection
+2026-11-04T15:30:51.4008646Z  - Enhancements to test reporting
+2026-11-04T15:30:51.4008928Z  - Build Authoring improvements
+2026-11-04T15:30:51.4009093Z 
+2026-11-04T15:30:51.4009293Z For more details see https://docs.gradle.org/8.14.3/release-notes.html
+2026-11-04T15:30:51.4009547Z 
+2026-11-04T15:30:51.4010209Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-04T15:30:52.0987401Z Daemon will be stopped at the end of the build 
+2026-11-04T15:30:55.4007331Z > Task :clean UP-TO-DATE
+2026-11-04T15:30:56.5987058Z > Task :compileJava
+2026-11-04T15:30:56.6026637Z > Task :processResources NO-SOURCE
+2026-11-04T15:30:56.6033750Z > Task :classes
+2026-11-04T15:30:56.7986482Z > Task :jar
+2026-11-04T15:30:56.7986689Z > Task :assemble
+2026-11-04T15:30:58.9986836Z > Task :compileTestJava
+2026-11-04T15:30:58.9987527Z > Task :processTestResources NO-SOURCE
+2026-11-04T15:30:58.9987803Z > Task :testClasses
+2026-11-04T15:31:00.4012734Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-04T15:31:08.9913592Z > Task :test
+2026-11-04T15:31:08.9947871Z > Task :check
+2026-11-04T15:31:08.9948089Z > Task :build
+2026-11-04T15:31:08.9948205Z 
+2026-11-04T15:31:08.9948320Z BUILD SUCCESSFUL in 19s
+2026-11-04T15:31:08.9948583Z 5 actionable tasks: 4 executed, 1 up-to-date
+2026-11-04T15:31:09.1575737Z Verified 822 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-04T15:31:09.5532896Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-04T15:31:10.1527637Z Daemon will be stopped at the end of the build 
+2026-11-04T15:31:17.6546582Z > Task :clean UP-TO-DATE
+2026-11-04T15:31:18.7514037Z > Task :compileJava
+2026-11-04T15:31:18.7536214Z > Task :processResources
+2026-11-04T15:31:18.7556675Z > Task :classes
+2026-11-04T15:31:18.9531885Z > Task :jar
+2026-11-04T15:31:19.1519722Z > Task :startScripts
+2026-11-04T15:31:19.1522900Z > Task :distTar
+2026-11-04T15:31:19.2529886Z > Task :distZip
+2026-11-04T15:31:19.2556177Z > Task :assemble
+2026-11-04T15:31:19.6513596Z > Task :compileTestJava
+2026-11-04T15:31:19.6527022Z > Task :processTestResources
+2026-11-04T15:31:19.6536211Z > Task :testClasses
+2026-11-04T15:31:20.8516506Z 
+2026-11-04T15:31:20.8540149Z > Task :semanticTest
+2026-11-04T15:31:20.8547610Z PASS revision2 semantic blockers
+2026-11-04T15:31:20.8548184Z actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+2026-11-04T15:31:20.8548770Z PASS actual motion and shot clocks
+2026-11-04T15:31:20.8549340Z controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+2026-11-04T15:31:20.8549842Z PASS review regressions
+2026-11-04T15:31:20.8550198Z PASS native angles and GF
+2026-11-04T15:31:20.8550581Z PASS native predictor invariants
+2026-11-04T15:31:20.8551275Z PASS exact finite neighbors
+2026-11-04T15:31:20.8551648Z PASS history quality and lifecycle
+2026-11-04T15:31:20.8552025Z PASS circular swept geometry
+2026-11-04T15:31:20.8552398Z PASS shadow validity
+2026-11-04T15:31:20.8552734Z PASS energy and power
+2026-11-04T15:31:20.8553086Z PASS actual official energy replay
+2026-11-04T15:31:20.8553481Z PASS fire transaction synthetic
+2026-11-04T15:31:20.8553863Z PASS learning chronology and integration
+2026-11-04T15:31:20.8554370Z two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+2026-11-04T15:31:20.8554877Z PASS two-wave planner
+2026-11-04T15:31:20.8555222Z PASS active melee and radar
+2026-11-04T15:31:20.8555761Z PASS package boundary and risk bounds
+2026-11-04T15:31:20.8556190Z PASS determinism, online learning and export
+2026-11-04T15:31:20.8556705Z offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=617512 maxns=1413952 totalns=20626976
+2026-11-04T15:31:20.8557226Z PASS bounded full-store stress
+2026-11-04T15:31:20.8557758Z quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+2026-11-04T15:31:20.8558757Z offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+2026-11-04T15:31:20.8559378Z PASS active melee corrections
+2026-11-04T15:31:20.8559737Z total-quota no-fire queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+2026-11-04T15:31:20.8560231Z total-quota physical-preparation queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+2026-11-04T15:31:20.8560716Z total-quota confirmation queries=0 returned=0 projections=0 iterations=0 distanceEvaluations=0
+2026-11-04T15:31:20.8561198Z total-quota cycling-no-fire queries=3 returned=80 projections=80 iterations=933 distanceEvaluations=24576
+2026-11-04T15:31:20.8561577Z PASS whole Core melee TOTAL80
+2026-11-04T15:31:20.8561957Z PASS groups=20 assertions=10243 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+2026-11-04T15:31:20.9512543Z 
+2026-11-04T15:31:20.9513153Z > Task :test
+2026-11-04T15:31:20.9513406Z 
+2026-11-04T15:31:20.9513875Z > Task :verifyJarParity
+2026-11-04T15:31:20.9514594Z PASS source/JAR payload parity entries=836 jar=7729fa0419dc8a6efc08ee7d5812ad28aca76195d51ce44bb53056b6c064788d
+2026-11-04T15:31:20.9514986Z 
+2026-11-04T15:31:20.9515068Z > Task :check
+2026-11-04T15:31:20.9515243Z > Task :build
+2026-11-04T15:31:21.0510986Z 
+2026-11-04T15:31:21.0511548Z [Incubating] Problems report is available at: file:///home/runner/work/robocode/robocode/experiments/Facet/build/reports/problems/problems-report.html
+2026-11-04T15:31:21.0512006Z 
+2026-11-04T15:31:21.0512222Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-11-04T15:31:21.0512509Z 
+2026-11-04T15:31:21.0513109Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-11-04T15:31:21.0513537Z 
+2026-11-04T15:31:21.0513949Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-11-04T15:31:21.0514402Z 
+2026-11-04T15:31:21.0514488Z BUILD SUCCESSFUL in 11s
+2026-11-04T15:31:21.0514716Z 12 actionable tasks: 11 executed, 1 up-to-date
+2026-11-04T15:31:21.7627775Z Verified 837 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-04T15:31:21.8881223Z ##[group]Run actions/setup-java@v4
+2026-11-04T15:31:21.8881483Z with:
+2026-11-04T15:31:21.8881686Z   distribution: temurin
+2026-11-04T15:31:21.8881887Z   java-version: 25.0.1+8.0.LTS
+2026-11-04T15:31:21.8882035Z   java-package: jdk
+2026-11-04T15:31:21.8882153Z   check-latest: false
+2026-11-04T15:31:21.8882276Z   server-id: github
+2026-11-04T15:31:21.8882394Z   server-username: GITHUB_ACTOR
+2026-11-04T15:31:21.8882534Z   server-password: GITHUB_TOKEN
+2026-11-04T15:31:21.8882832Z   overwrite-settings: true
+2026-11-04T15:31:21.8882959Z   job-status: success
+2026-11-04T15:31:21.8884309Z   token: ***
+2026-11-04T15:31:21.8884417Z env:
+2026-11-04T15:31:21.8884588Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:31:21.8884846Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:31:21.8885046Z ##[endgroup]
+2026-11-04T15:31:21.9894895Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T15:31:21.9896393Z ##[group]Installed distributions
+2026-11-04T15:31:21.9929060Z Trying to resolve the latest version from remote
+2026-11-04T15:31:22.0018834Z (node:13184) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:31:22.0019378Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:31:22.5024625Z Resolved latest version as 25.0.1+8.0.LTS
+2026-11-04T15:31:22.5024918Z Trying to download...
+2026-11-04T15:31:22.5025770Z Downloading Java 25.0.1+8.0.LTS (Temurin-Hotspot) from https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.1%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.1_8.tar.gz ...
+2026-11-04T15:31:23.0302885Z Extracting Java archive...
+2026-11-04T15:31:23.0393560Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/26226c46-5a81-4537-872a-ba0e0edff3bc -f /home/runner/work/_temp/ff6034e0-1470-470e-af25-1c44053d96b7
+2026-11-04T15:31:25.4537998Z Java 25.0.1+8.0.LTS was downloaded
+2026-11-04T15:31:25.4566195Z Setting Java 25.0.1+8.0.LTS as the default
+2026-11-04T15:31:25.4573737Z Creating toolchains.xml for JDK version 25.0.1+8.0.LTS from temurin
+2026-11-04T15:31:25.4592296Z Overwriting existing file /home/runner/.m2/toolchains.xml
+2026-11-04T15:31:25.4631205Z 
+2026-11-04T15:31:25.4631719Z Java configuration:
+2026-11-04T15:31:25.4631969Z   Distribution: temurin
+2026-11-04T15:31:25.4632179Z   Version: 25.0.1+8.0.LTS
+2026-11-04T15:31:25.4632387Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64
+2026-11-04T15:31:25.4632558Z 
+2026-11-04T15:31:25.4633456Z ##[endgroup]
+2026-11-04T15:31:25.4639185Z Creating settings.xml with server-id: github
+2026-11-04T15:31:25.4643392Z Overwriting existing file /home/runner/.m2/settings.xml
+2026-11-04T15:31:25.4807372Z ##[group]Run python tools/facet_benchmark.py --freeze docs/facet-run-300.freeze.json --output build/facet-registered-300 --cache "$RUNNER_TEMP/facet-opponent-cache" --java "$JAVA_HOME/bin/java" --python "$(command -v python)"
+2026-11-04T15:31:25.4808182Z [36;1mpython tools/facet_benchmark.py --freeze docs/facet-run-300.freeze.json --output build/facet-registered-300 --cache "$RUNNER_TEMP/facet-opponent-cache" --java "$JAVA_HOME/bin/java" --python "$(command -v python)"[0m
+2026-11-04T15:31:25.4834043Z shell: /usr/bin/bash -e {0}
+2026-11-04T15:31:25.4834189Z env:
+2026-11-04T15:31:25.4834368Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64
+2026-11-04T15:31:25.4834689Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:31:25.4834970Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64
+2026-11-04T15:31:25.4835187Z ##[endgroup]
+2026-11-04T15:31:31.3063479Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+2026-11-04T15:31:31.3110106Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T15:31:31.3123483Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T15:31:31.3263447Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy_extensions-1.1.0-py3-none-any.whl
+2026-11-04T15:31:31.3270808Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pathspec-1.1.1-py3-none-any.whl
+2026-11-04T15:31:31.3283574Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pip-26.3-py3-none-any.whl
+2026-11-04T15:31:31.3325562Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pycountry-26.2.16-py3-none-any.whl
+2026-11-04T15:31:31.3395780Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T15:31:31.3410334Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/robocode_tank_royale-1.3.1-py3-none-any.whl
+2026-11-04T15:31:31.3423818Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/setuptools-84.2.1-py3-none-any.whl
+2026-11-04T15:31:31.3476062Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/typing_extensions-4.16.0-py3-none-any.whl
+2026-11-04T15:31:31.3484218Z Processing /home/runner/work/_temp/facet-opponent-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+2026-11-04T15:31:31.3531591Z Installing collected packages: websockets, typing-extensions, setuptools, robocode-tank-royale, pyyaml, pycountry, pip, pathspec, mypy-extensions, mypy, librt, ast-serialize
+2026-11-04T15:31:31.9592631Z   Attempting uninstall: pip
+2026-11-04T15:31:31.9610249Z     Found existing installation: pip 25.2
+2026-11-04T15:31:31.9800719Z     Uninstalling pip-25.2:
+2026-11-04T15:31:31.9834794Z       Successfully uninstalled pip-25.2
+2026-11-04T15:31:33.5040641Z 
+2026-11-04T15:31:33.5053109Z Successfully installed ast-serialize-0.13.1 librt-0.16.0 mypy-2.4.1 mypy-extensions-1.1.0 pathspec-1.1.1 pip-26.3 pycountry-26.2.16 pyyaml-6.0.3 robocode-tank-royale-1.3.1 setuptools-84.2.1 typing-extensions-4.16.0 websockets-17.4
+2026-11-04T15:34:11.5749687Z Traceback (most recent call last):
+2026-11-04T15:34:11.5790074Z   File "/home/runner/work/robocode/robocode/tools/facet_benchmark.py", line 278, in <module>
+2026-11-04T15:34:11.5790711Z     main(p.parse_args())
+2026-11-04T15:34:11.5791155Z     ~~~~^^^^^^^^^^^^^^^^
+2026-11-04T15:34:11.5793261Z   File "/home/runner/work/robocode/robocode/tools/facet_benchmark.py", line 246, in main
+2026-11-04T15:34:11.5795539Z     rows = validate_metrics(run/'FACET_metrics.jsonl', 20)
+2026-11-04T15:34:11.5796254Z   File "/home/runner/work/robocode/robocode/tools/facet_benchmark.py", line 59, in validate_metrics
+2026-11-04T15:34:11.5797124Z     raise ValueError('Facet completion must contain every round exactly once')
+2026-11-04T15:34:11.5797526Z ValueError: Facet completion must contain every round exactly once
+2026-11-04T15:34:11.6047760Z ##[error]Process completed with exit code 1.
+2026-11-04T15:34:11.6144309Z ##[group]Run actions/upload-artifact@v4
+2026-11-04T15:34:11.6144479Z with:
+2026-11-04T15:34:11.6144939Z   name: facet-registered-300-evidence
+2026-11-04T15:34:11.6146578Z   path: facet-runtime-preflight/
+build/facet-registered-300/results.json
+build/facet-registered-300/registration.json
+build/facet-registered-300/*/battle.json
+build/facet-registered-300/*/FACET_*
+build/facet-registered-300/*/AIS_metrics.jsonl
+build/facet-registered-300/*/runner.log
+experiments/Facet/build/reports/
+build/test-results/
+
+2026-11-04T15:34:11.6148055Z   if-no-files-found: warn
+2026-11-04T15:34:11.6148197Z   compression-level: 6
+2026-11-04T15:34:11.6148531Z   overwrite: false
+2026-11-04T15:34:11.6148661Z   include-hidden-files: false
+2026-11-04T15:34:11.6148934Z env:
+2026-11-04T15:34:11.6149722Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64
+2026-11-04T15:34:11.6150070Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-11-04T15:34:11.6150377Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64
+2026-11-04T15:34:11.6150589Z ##[endgroup]
+2026-11-04T15:34:11.7289794Z (node:14996) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:34:11.7290446Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:34:11.7444695Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T15:34:11.7445552Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-04T15:34:11.7445905Z With the provided path, there will be 77 files uploaded
+2026-11-04T15:34:11.7450103Z Artifact name is valid!
+2026-11-04T15:34:11.7450353Z Root directory input is valid!
+2026-11-04T15:34:12.0459971Z Beginning upload of artifact content to blob storage
+2026-11-04T15:34:12.6035083Z (node:14996) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-04T15:34:13.1880097Z Uploaded bytes 8388608
+2026-11-04T15:34:13.7392945Z Uploaded bytes 16777216
+2026-11-04T15:34:13.8910835Z Uploaded bytes 25165824
+2026-11-04T15:34:14.3613842Z Uploaded bytes 32177709
+2026-11-04T15:34:14.4088639Z Finished uploading artifact content to blob storage!
+2026-11-04T15:34:14.4090707Z SHA256 digest of uploaded artifact zip is 4acbef1a77860739a34f502f181558b413514774794db9b21ea44a7e099a08ee
+2026-11-04T15:34:14.4091931Z Finalizing artifact upload
+2026-11-04T15:34:14.8941676Z Artifact facet-registered-300-evidence.zip successfully finalized. Artifact ID 13338268667
+2026-11-04T15:34:14.8942391Z Artifact facet-registered-300-evidence has been successfully uploaded! Final size is 32177709 bytes. Artifact ID is 13338268667
+2026-11-04T15:34:14.8947512Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41858182879/artifacts/13338268667
+2026-11-04T15:34:14.9178812Z Post job cleanup.
+2026-11-04T15:34:15.0050926Z (node:15010) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:34:15.0051561Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:34:15.0298848Z Post job cleanup.
+2026-11-04T15:34:15.1366634Z (node:15018) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:34:15.1383202Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:34:15.1579126Z Post job cleanup.
+2026-11-04T15:34:15.2226446Z [command]/usr/bin/git version
+2026-11-04T15:34:15.2243781Z git version 2.56.0
+2026-11-04T15:34:15.2277081Z Temporarily overriding HOME='/home/runner/work/_temp/9270b48b-d8cd-4bdb-a259-5f71fd759b68' before making global git config changes
+2026-11-04T15:34:15.2277630Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T15:34:15.2278062Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T15:34:15.2326337Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T15:34:15.2363609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T15:34:15.2638278Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T15:34:15.2683348Z http.https://github.com/.extraheader
+2026-11-04T15:34:15.2706842Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T15:34:15.2747791Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T15:34:15.3006020Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T15:34:15.3037650Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T15:34:15.3417630Z Cleaning up orphan processes
+2026-11-04T15:34:15.3635044Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

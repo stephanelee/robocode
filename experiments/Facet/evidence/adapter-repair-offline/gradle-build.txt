@@ -1,0 +1,76 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+
+> Task :adapterConcurrencyTest
+PASS adapter actual-thread barriers, frozen pending evidence, hash/write faults, lifecycle orders assertions=54 battles=0
+
+> Task :semanticTest
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+{"schema":3,"gameId":"game-1-5074d935-64d8-4aec-b888-2d449011c439","kind":"model.roundHash","round":1,"turn":42,"value":"892e52fa0beffacc1df2f940efac57ccb5bc3cfb31e02863dca9a99e73bdfbdc"}
+{"schema":3,"gameId":"game-2-b1139a18-b5e3-47fc-9945-bcce13c5276f","kind":"model.roundHash","round":1,"turn":1,"value":"797daa9580e27d865be21cc04bf5bb5f07705bffe6c734f882fb366fa374a54f"}
+{"schema":3,"gameId":"game-1-1bf9bdfc-16a6-4267-b82a-8ab92b115c57","kind":"model.roundHash","round":1,"turn":42,"value":"892e52fa0beffacc1df2f940efac57ccb5bc3cfb31e02863dca9a99e73bdfbdc"}
+{"schema":3,"gameId":"game-2-db400cc1-ef8c-49e6-973a-00f0b0672078","kind":"model.roundHash","round":1,"turn":1,"value":"797daa9580e27d865be21cc04bf5bb5f07705bffe6c734f882fb366fa374a54f"}
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+{"schema":3,"gameId":"fixture-ba15cf0e-946a-4b34-8984-28f27f3f5b4e","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalStateException"}
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS active melee and radar
+{"schema":3,"gameId":"fixture-53ad0f06-9473-47c7-8d5b-76640ca5bb4e","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalStateException"}
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=585375 maxns=1293709 totalns=17684708
+PASS bounded full-store stress
+quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+{"schema":3,"gameId":"fixture-938f5a6e-07a8-437a-9453-d3b7b9d197b5","kind":"failure","round":0,"turn":0,"value":"movement:java.lang.ClassCastException: class java.lang.String cannot be cast to class Physics$V (java.lang.String is in module java.base of loader 'bootstrap'; Physics$V is in unnamed module of loader 'app')"}
+{"schema":3,"gameId":"fixture-cabfba36-0609-4b1c-afb9-ea5018f153e9","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalArgumentException: distance overflow"}
+PASS active melee corrections
+total-quota no-fire queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota physical-preparation queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota confirmation queries=0 returned=0 projections=0 iterations=0 distanceEvaluations=0
+total-quota cycling-no-fire queries=3 returned=80 projections=80 iterations=933 distanceEvaluations=24576
+PASS whole Core melee TOTAL80
+PASS groups=20 assertions=10243 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+
+> Task :test
+
+> Task :verifyJarParity
+PASS source/JAR payload parity entries=840 jar=817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792
+
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/experiments/Facet/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+12 actionable tasks: 12 executed

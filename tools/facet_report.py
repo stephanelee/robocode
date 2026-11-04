@@ -39,6 +39,15 @@ def main(args):
         range_text=f'{distance/n:.2f}' if n else 'unavailable'
         age_text=f'{age/n_age:.3f} / {max_age:.0f}' if n_age else 'unavailable'
         lines.append(f"| {name} | {sum(r['confirmed'] for r in metrics)} / {sum(r['physicalHits'] for r in metrics)} | {given:.2f} / {taken:.2f} | {sum(r['wallCollisions'] for r in metrics)} / {sum(r['botCollisions'] for r in metrics)} | {sum(r['reportedSkippedTurns'] for r in metrics)} / {sum(r['botTurnDenominator'] for r in metrics)} | {range_text} | {age_text} | {p99} ns |")
+    lines += ['', '## Work, energy and fallback evidence', '',
+              '| Opponent | Requested / accepted / confirmed | Fire energy / hit bonus | GC count / milliseconds | Maximum recorded predictor steps | Surf truncations / geometry fallbacks | Unmatched confirmations |',
+              '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+    for name,row in data.get('summary',{}).items():
+        raw=row['finalCumulativeTelemetryByGame']
+        def observed_sum(key):return sum(r['observationsCountSumMinMax'].get(key,[0,0])[1] for r in raw)
+        max_steps=max((r['observationsCountSumMinMax'].get('predictorSteps',[0,0,0,0])[3] for r in raw),default=0)
+        lines.append(f"| {name} | {sum(r['shotsRequested'] for r in raw)} / {sum(r['shotsAccepted'] for r in raw)} / {sum(r['shotsConfirmed'] for r in raw)} | {observed_sum('energyFireCost'):.2f} / {observed_sum('energyHitBonus'):.2f} | {sum(r['gcCount'] for r in raw)} / {sum(r['gcMillis'] for r in raw)} | {max_steps:.0f} | {sum(r['surfTruncations'] for r in raw)} / {sum(r['geometryFallbacks'] for r in raw)} | {sum(r['unmatchedConfirmations'] for r in raw)} |")
+    lines += ['', 'All raw counters, inference ambiguity, emergency/budget/shadow fallbacks, payload gauges and model hashes remain in results.json and original metrics. A missing required raw field is not a zero passing measurement. Above predictor maxima are observed turn maxima; GC totals are per fresh process.']
     curves=[]
     for g in completed:
         metrics=args.results.parent/f"{g['opponent']}-g{g['game']:02d}"/'FACET_metrics.jsonl'

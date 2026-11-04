@@ -53,8 +53,9 @@ final class ModelSnapshot {
     try {
       var digest = MessageDigest.getInstance("SHA-256");
       write(core, new java.security.DigestOutputStream(OutputStream.nullOutputStream(), digest));
-      core.log.event("model.roundHash", core.round, core.lastTurn,
-          java.util.HexFormat.of().formatHex(digest.digest()));
+      String hash = java.util.HexFormat.of().formatHex(digest.digest());
+      core.log.event("model.roundHash", core.round, core.lastTurn, hash);
+      core.log.critical("model.roundHash", core.round, core.lastTurn, hash);
     } catch (IOException | NoSuchAlgorithmException ex) {
       throw new IllegalStateException(ex);
     }

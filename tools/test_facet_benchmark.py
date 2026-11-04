@@ -23,6 +23,19 @@ class Acceptance(unittest.TestCase):
             p.write_text(json.dumps(row)+'\n'+json.dumps(row)+'\n')
             with self.assertRaises(ValueError): f.validate_metrics(p, 2)
 
+    def test_schema3_requires_successful_terminal_evidence(self):
+        row=dict(round=1,gameId='new-cold',schema=3,shotsConfirmed=1,shotsAccepted=1,
+                 shotsRequested=1,neighborBytes=1,snapshotStatus='success',
+                 terminalObservation='success',terminalHash='success')
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'FACET_fixture.jsonl'
+            path.write_text(json.dumps(row)+'\n')
+            self.assertEqual(f.validate_metrics(path,1,3),[row])
+            for key in ('snapshotStatus','terminalObservation','terminalHash'):
+                path.write_text(json.dumps(dict(row,**{key:'failed'}))+'\n')
+                with self.assertRaises(ValueError):f.validate_metrics(path,1,3)
+            with self.assertRaises(ValueError):f.validate_metrics(path,1,2)
+
     def test_complete_cold_game_cohorts(self):
         games = [dict(opponent=o, scoreShare=i/10, facet=dict(firstPlaces=i), finalTelemetry={})
                  for o in f.COHORTS for i in range(1,6)]
@@ -58,6 +71,14 @@ class Acceptance(unittest.TestCase):
             self.assertNotIn('opaque-sentinel', str(raised.exception))
             self.assertIn('exit7', str(raised.exception))
             self.assertIn('opaque-sentinel', log.read_text())
+
+    def test_invalid_screen_never_grants_new_budget(self):
+        with self.assertRaises(ValueError):f.authorize_registration({})
+        original=dict(independentReviewEvidence='signed-source-review',premeasurementApproved=True)
+        f.authorize_registration(original)
+        proposed=dict(original,freshAcquisitionAfterInvalid=True,userAuthorizedFreshBudget=False)
+        with self.assertRaises(ValueError):f.authorize_registration(proposed)
+        f.authorize_registration(dict(proposed,userAuthorizedFreshBudget=True))
 
     def test_environment_drops_other_state_and_server_settings(self):
         from unittest.mock import patch

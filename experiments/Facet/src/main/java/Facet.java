@@ -10,6 +10,37 @@ public final class Facet extends Bot {
   int games;
   final Set<Integer> completed = new HashSet<>();
   boolean gameClosed;
+  // batch is the single owner monitor for every Core/lifecycle/command transaction.
+  final Set<Integer> observedTerminal = new HashSet<>();
+  final List<Diagnostics> retired = new ArrayList<>();
+  Frame latest;
+  int activeRound = -1;
+  Thread runOwner;
+  int terminalRound = -1, terminalExpectedTurn = -1;
+  boolean gameEndRequested;
+  java.util.function.Consumer<Core> hashRound = ModelSnapshot::roundHash;
+  record Frame(int game, int round, int turn, Physics.Body own, double energy, int population,
+      List<BulletState> bullets, int myId) {}
+  Frame capture(int round) {
+    return new Frame(games, round, getTurnNumber(),
+        new Physics.Body(new Physics.V(getX(), getY()), Math.toRadians(getDirection()), getSpeed(),
+            Math.toRadians(getGunDirection()), Math.toRadians(getRadarDirection()), getGunHeat()),
+        getEnergy(), getEnemyCount(), List.copyOf(getBulletStates()), getMyId());
+  }
+  void retryEvidence() {
+    diagnostics.retryPending();
+    if (core != null)
+      completed.addAll(diagnostics.completed);
+    var it = retired.iterator();
+    while (it.hasNext()) {
+      Diagnostics old = it.next();
+      old.retryPending();
+      if (old.pending.isEmpty()) {
+        old.close();
+        it.remove();
+      }
+    }
+  }
   public Facet() {
     this(resolveServer(System.getProperty("server.url"), System.getenv("SERVER_URL")));
   }
@@ -59,135 +90,326 @@ public final class Facet extends Bot {
   }
   @Override
   public void onGameStarted(GameStartedEvent e) {
-    if (games++ > 0) {
-      diagnostics.close();
-      diagnostics = new Diagnostics();
-    }
-    completed.clear();
-    gameClosed = false;
-    diagnostics.gameId = "game-" + games + "-" + java.util.UUID.randomUUID();
     synchronized (batch) {
+      retryEvidence();
+      if (games++ > 0) {
+        diagnostics.close();
+        if (!diagnostics.pending.isEmpty()) {
+          if (retired.size() >= 16)
+            throw new IllegalStateException("pending diagnostic game capacity exhausted");
+          retired.add(diagnostics);
+        }
+        diagnostics = new Diagnostics();
+      }
+      completed.clear();
+      observedTerminal.clear();
+      gameClosed = false;
+      diagnostics.gameId = "game-" + games + "-" + java.util.UUID.randomUUID();
       batch.clear();
+      latest = null;
+      terminalRound = terminalExpectedTurn = -1;
+      gameEndRequested = false;
+      runOwner = null;
+      activeRound = roundSeen = -1;
+      diagnostics.event("game.cold", 0, 0, "game=" + games);
+      core = null;
     }
-    diagnostics.event("game.cold", 0, 0, "game=" + games);
-    core = null;
-    roundSeen = -1;
   }
   @Override
   public void onRoundStarted(RoundStartedEvent e) {
     synchronized (batch) {
-      batch.clear();
+      int round = e.getRoundNumber();
+      if (round <= activeRound) {
+        diagnostics.critical("lifecycle.staleReset", round, 0, "active=" + activeRound);
+        return;
+      }
+      // Finish from the previous immutable frame before resetting any transients.
+      finishRound();
+      if (!batch.isEmpty()) {
+        diagnostics.critical(
+            "lifecycle.unattributedEvents", activeRound, 0, "count=" + batch.size());
+        throw new IllegalStateException("cannot reset unobserved terminal events");
+      }
+      activeRound = round;
+      terminalRound = terminalExpectedTurn = -1;
+      latest = null;
+      runOwner = null;
+      if (core != null) {
+        core.roundReset(round);
+        roundSeen = round;
+      }
+      retryEvidence();
     }
-    roundSeen = -1;
   }
   @Override
   public void onTick(TickEvent e) {
+    acceptTick(e, getMyId());
+  }
+  void acceptTick(TickEvent e, int myId) {
     synchronized (batch) {
-      batch.addAll(e.getEvents());
+      if (gameClosed || e.getRoundNumber() < activeRound
+          || observedTerminal.contains(e.getRoundNumber())) {
+        diagnostics.critical(
+            "lifecycle.lateTick", e.getRoundNumber(), e.getTurnNumber(), "active=" + activeRound);
+        return;
+      }
+      if (activeRound != -1 && e.getRoundNumber() != activeRound)
+        throw new IllegalStateException("tick without ordered round start");
+      activeRound = e.getRoundNumber();
+      BotState state = e.getBotState();
+      Frame frame = new Frame(games, activeRound, e.getTurnNumber(),
+          new Physics.Body(new Physics.V(state.getX(), state.getY()),
+              Math.toRadians(state.getDirection()), state.getSpeed(),
+              Math.toRadians(state.getGunDirection()), Math.toRadians(state.getRadarDirection()),
+              state.getGunHeat()),
+          state.getEnergy(), state.getEnemyCount(), List.copyOf(e.getBulletStates()), myId);
+      if (latest == null || frame.turn() >= latest.turn())
+        latest = frame;
+      batch.addAll(List.copyOf(e.getEvents()));
+      completeRequested();
     }
   }
+  void requestRoundFinish(int round, int turn) {
+    synchronized (batch) {
+      if (core == null || core.round != round || observedTerminal.contains(round))
+        return;
+      terminalRound = round;
+      terminalExpectedTurn = Math.max(terminalExpectedTurn, turn);
+      completeRequested();
+    }
+  }
+  void completeRequested() {
+    if (core != null && terminalRound == core.round && latest != null && latest.game() == games
+        && latest.round() == terminalRound && latest.turn() >= terminalExpectedTurn)
+      finishRound(terminalRound);
+    if (gameEndRequested && core != null && observedTerminal.contains(core.round))
+      finishGame(() -> {});
+  }
   void finishRound() {
-    if (core != null)
-      finishRound(core.round);
+    synchronized (batch) {
+      if (core != null)
+        finishRound(core.round);
+    }
   }
   void finishRound(int round) {
     synchronized (batch) {
-      if (core == null || completed.contains(round) || round != core.round)
+      retryEvidence();
+      if (core == null || observedTerminal.contains(round) || round != core.round)
         return;
-      Physics.Body own = new Physics.Body(new Physics.V(getX(), getY()),
-          Math.toRadians(getDirection()), getSpeed(), Math.toRadians(getGunDirection()),
-          Math.toRadians(getRadarDirection()), getGunHeat());
-      finishRound(
-          round, own, getEnergy(), getTurnNumber(), getEnemyCount(), getBulletStates(), getMyId());
+      Frame frame = latest;
+      if (frame == null || frame.game() != games || frame.round() != round
+          || terminalRound == round && frame.turn() < terminalExpectedTurn) {
+        // No replacement-round getters: absence of a legal frame is explicit.
+        diagnostics.count("terminal.missingFrame");
+        diagnostics.critical("completion.missingFrame", round, 0,
+            "terminal not observed; expectedTurn=" + terminalExpectedTurn + " events="
+                + batch.stream()
+                    .map(x
+                        -> x.getClass().getSimpleName() + ":" + x.getTurnNumber() + ":"
+                            + core.identity(x))
+                    .toList());
+        batch.clear();
+        observedTerminal.add(round);
+        diagnostics.terminalObservation = "missing-frame";
+        diagnostics.terminalHash = "not-attempted";
+        diagnostics.snapshot(round, core.fire, core.budget, core.waves, core.planner);
+        completed.addAll(diagnostics.completed);
+        return;
+      }
+      finishRound(round, frame.own(), frame.energy(), frame.turn(), frame.population(),
+          frame.bullets(), frame.myId());
     }
   }
   void finishRound(int round, Physics.Body own, double energy, int turn, int population,
       Collection<BulletState> bullets, int myId) {
     synchronized (batch) {
-      if (core == null || completed.contains(round))
+      retryEvidence();
+      if (core == null || observedTerminal.contains(round) || round != core.round)
         return;
-      core.observe(own, energy, turn, population, List.copyOf(batch), bullets, myId, true);
+      List<BotEvent> events = List.copyOf(batch);
+      // At-most-once attempt: a partially failed observation must not be replayed.
+      observedTerminal.add(round);
       batch.clear();
-      Physics.endWork();
-      completed.add(round);
-      ModelSnapshot.roundHash(core);
+      diagnostics.terminalTurn = turn;
+      diagnostics.terminalSequence = core.sequence;
+      diagnostics.terminalObservation = "success";
+      diagnostics.terminalHash = "success";
+      try {
+        core.observe(own, energy, turn, population, events, List.copyOf(bullets), myId, true);
+      } catch (RuntimeException ex) {
+        diagnostics.terminalObservation = "failed-quarantined";
+        diagnostics.failure("terminal.observe", ex);
+        diagnostics.critical("terminal.quarantined", round, turn,
+            "own=" + own + " energy=" + energy + " population=" + population + " events="
+                + events.stream()
+                    .map(x
+                        -> x.getClass().getSimpleName() + ":" + x.getTurnNumber() + ":"
+                            + core.identity(x))
+                    .toList());
+      } finally {
+        Physics.endWork();
+      }
+      try {
+        hashRound.accept(core);
+      } catch (RuntimeException ex) {
+        diagnostics.terminalHash = "failed";
+        diagnostics.failure("terminal.hash", ex);
+        diagnostics.critical("terminal.hashFailed", round, turn, ex.toString());
+      }
+      // Freeze cumulative metrics now; future retries touch only immutable row bytes.
       diagnostics.snapshot(round, core.fire, core.budget, core.waves, core.planner);
+      completed.addAll(diagnostics.completed);
     }
+  }
+  /** Public API queue includes undelivered TickEvents. Lifecycle precedes final flush in 1.4.0. */
+  void acceptPendingTicks(int round, List<BotEvent> queued, int myId) {
+    synchronized (batch) {
+      for (BotEvent event : queued)
+        if (event instanceof TickEvent tick && tick.getRoundNumber() == round)
+          acceptTick(tick, myId);
+    }
+  }
+  void ensureCore(int round) {
+    if (core == null) {
+      core = new Core(new Physics.Rules(getArenaWidth(), getArenaHeight(), getGunCoolingRate()),
+          diagnostics, seed());
+      core.roundReset(round);
+      roundSeen = activeRound = round;
+    }
+  }
+  void harvestTerminal(int round) {
+    // Lifecycle delivery is ordered on the API websocket; a replacement round must never be read.
+    if (getRoundNumber() == round)
+      acceptPendingTicks(round, List.copyOf(getEvents()), getMyId());
   }
   @Override
   public void onRoundEnded(RoundEndedEvent e) {
-    finishRound(e.getRoundNumber());
+    synchronized (batch) {
+      if (!gameClosed)
+        ensureCore(e.getRoundNumber());
+      if (core != null && core.round == e.getRoundNumber()
+          && !observedTerminal.contains(e.getRoundNumber()))
+        harvestTerminal(e.getRoundNumber());
+      requestRoundFinish(e.getRoundNumber(), e.getTurnNumber());
+    }
   }
   void finishGame(Runnable finalRound) {
-    if (gameClosed)
-      return;
-    finalRound.run();
-    if (core != null)
-      ModelSnapshot.optional(core, games);
-    gameClosed = true;
-    diagnostics.close();
+    synchronized (batch) {
+      retryEvidence();
+      if (gameClosed)
+        return;
+      finalRound.run();
+      if (core != null) {
+        try {
+          ModelSnapshot.optional(core, games);
+        } catch (RuntimeException ex) {
+          diagnostics.failure("terminal.export", ex);
+        }
+      }
+      gameClosed = true;
+      runOwner = null;
+      diagnostics.close();
+    }
   }
   @Override
   public void onGameEnded(GameEndedEvent e) {
-    finishGame(this::finishRound);
+    synchronized (batch) {
+      gameEndRequested = true;
+      if (core != null && !observedTerminal.contains(core.round)) {
+        int round = core.round, turn = getTurnNumber();
+        harvestTerminal(round);
+        requestRoundFinish(round, turn);
+      } else {
+        finishGame(this::finishRound);
+      }
+    }
   }
-  @Override
-  public void run() {
-    setAdjustGunForBodyTurn(true);
-    setAdjustRadarForBodyTurn(true);
-    setAdjustRadarForGunTurn(true);
-    setFireAssist(false);
-    if (core == null)
-      core = new Core(new Physics.Rules(getArenaWidth(), getArenaHeight(), getGunCoolingRate()),
-          diagnostics, seed());
-    while (isRunning()) {
-      if (roundSeen != getRoundNumber()) {
-        core.roundReset(getRoundNumber());
-        roundSeen = getRoundNumber();
-      }
-      Physics.Body own = new Physics.Body(new Physics.V(getX(), getY()),
-          Math.toRadians(getDirection()), getSpeed(), Math.toRadians(getGunDirection()),
-          Math.toRadians(getRadarDirection()), getGunHeat());
-      diagnostics.event("own.commandState", getRoundNumber(), getTurnNumber(),
-          "distanceRemaining=" + getDistanceRemaining() + " bodyRemainingDeg=" + getTurnRemaining()
-              + " gunRemainingDeg=" + getGunTurnRemaining()
-              + " radarRemainingDeg=" + getRadarTurnRemaining()
-              + " targetSpeed=" + getTargetSpeed() + " turnRateDeg=" + getTurnRate()
-              + " gunRateDeg=" + getGunTurnRate() + " radarRateDeg=" + getRadarTurnRate());
-      List<BotEvent> events;
-      synchronized (batch) {
-        events = List.copyOf(batch);
-        batch.clear();
-      }
+
+  /** Owner transaction used by the real loop and independent concurrency fixtures. */
+  void decideFrame(Frame frame, java.util.function.Consumer<Core.Intent> submit) {
+    synchronized (batch) {
+      if (frame.game() != games || gameClosed || core == null || frame.round() != core.round
+          || terminalRound == frame.round() || observedTerminal.contains(frame.round()))
+        return;
+      List<BotEvent> events = List.copyOf(batch);
+      batch.clear();
       try {
-        setFire(0);
-        Core.Intent intent = core.decide(own, getEnergy(), getTurnNumber(), getEnemyCount(), events,
-            getBulletStates(), getMyId());
-        setTargetSpeed(intent.move().speed());
-        setTurnRate(Math.toDegrees(intent.move().turn()));
-        if (intent.fire()) {
-          boolean accepted = setFire(core.fire.plan.power());
-          diagnostics.event("fire.submitted", getRoundNumber(), getTurnNumber(),
-              "accepted=" + accepted + " " + core.fire.plan.evidenceRow());
-          core.fire.submitted(accepted, own, getTurnNumber(), ++core.sequence);
-        }
-        setGunTurnRate(Math.toDegrees(intent.gunTurn()));
-        setRadarTurnRate(Math.toDegrees(intent.radarTurn()));
-        diagnostics.event("command.submitted", getRoundNumber(), getTurnNumber(),
-            "sequence=" + (++core.sequence) + " own=" + own + " speed=" + getTargetSpeed()
-                + " turn=" + getTurnRate() + " gun=" + getGunTurnRate()
-                + " radar=" + getRadarTurnRate() + " fire=" + intent.fire() + " firepower="
-                + (intent.fire() && core.fire.pending != null ? core.fire.pending.power() : 0));
+        Core.Intent intent = core.decide(frame.own(), frame.energy(), frame.turn(),
+            frame.population(), events, frame.bullets(), frame.myId());
+        submit.accept(intent);
       } catch (RuntimeException ex) {
         diagnostics.failure("boundary", ex);
         core.fire.plan = null;
-        setFire(0);
-        setTargetSpeed(0);
-        setTurnRate(0);
-        setGunTurnRate(0);
-        setRadarTurnRate(45);
+        throw ex;
+      } finally {
+        Physics.endWork();
       }
-      Physics.endWork();
+    }
+  }
+  @Override
+  public void run() {
+    final int game;
+    final Thread owner = Thread.currentThread();
+    synchronized (batch) {
+      if (gameClosed)
+        return;
+      game = games;
+      runOwner = owner;
+      setAdjustGunForBodyTurn(true);
+      setAdjustRadarForBodyTurn(true);
+      setAdjustRadarForGunTurn(true);
+      setFireAssist(false);
+      if (core == null)
+        core = new Core(new Physics.Rules(getArenaWidth(), getArenaHeight(), getGunCoolingRate()),
+            diagnostics, seed());
+      if (roundSeen != getRoundNumber()) {
+        core.roundReset(getRoundNumber());
+        activeRound = roundSeen = getRoundNumber();
+      }
+    }
+    while (isRunning()) {
+      synchronized (batch) {
+        if (games != game || runOwner != owner || gameClosed)
+          return;
+        Frame frame = latest != null ? latest : capture(core.round);
+        if (frame.round() != core.round || terminalRound == frame.round()
+            || observedTerminal.contains(frame.round()))
+          return;
+        diagnostics.event("own.commandState", frame.round(), frame.turn(),
+            "distanceRemaining=" + getDistanceRemaining() + " bodyRemainingDeg="
+                + getTurnRemaining() + " gunRemainingDeg=" + getGunTurnRemaining()
+                + " radarRemainingDeg=" + getRadarTurnRemaining()
+                + " targetSpeed=" + getTargetSpeed() + " turnRateDeg=" + getTurnRate()
+                + " gunRateDeg=" + getGunTurnRate() + " radarRateDeg=" + getRadarTurnRate());
+        try {
+          setFire(0);
+          decideFrame(frame, intent -> {
+            setTargetSpeed(intent.move().speed());
+            setTurnRate(Math.toDegrees(intent.move().turn()));
+            if (intent.fire()) {
+              boolean accepted = setFire(core.fire.plan.power());
+              diagnostics.event("fire.submitted", frame.round(), frame.turn(),
+                  "accepted=" + accepted + " " + core.fire.plan.evidenceRow());
+              core.fire.submitted(accepted, frame.own(), frame.turn(), ++core.sequence);
+            }
+            setGunTurnRate(Math.toDegrees(intent.gunTurn()));
+            setRadarTurnRate(Math.toDegrees(intent.radarTurn()));
+            diagnostics.event("command.submitted", frame.round(), frame.turn(),
+                "sequence=" + (++core.sequence) + " own=" + frame.own() + " speed="
+                    + getTargetSpeed() + " turn=" + getTurnRate() + " gun=" + getGunTurnRate()
+                    + " radar=" + getRadarTurnRate() + " fire=" + intent.fire() + " firepower="
+                    + (intent.fire() && core.fire.pending != null ? core.fire.pending.power() : 0));
+          });
+        } catch (RuntimeException ex) {
+          setFire(0);
+          setTargetSpeed(0);
+          setTurnRate(0);
+          setGunTurnRate(0);
+          setRadarTurnRate(45);
+        }
+        retryEvidence();
+      }
+      // API sends/waits/dispatches callbacks here: NEVER hold the owner monitor.
       go();
     }
   }

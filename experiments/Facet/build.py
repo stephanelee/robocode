@@ -59,13 +59,16 @@ def main():
     cp = os.pathsep.join(map(str,[ROOT/"build/classes/main",ROOT/"build/classes/test",ROOT/"src/main/resources",ROOT/"src/test/resources",API]))
     clean_env = {k:v for k,v in os.environ.items() if not k.startswith("FACET_")}
     tests = run([java, "-Xmx256m", "-cp", cp, "FacetSemanticTest"], clean_env)
+    adapter = run([java, "-Xmx256m", "-cp", cp, "AdapterConcurrencyTest"], clean_env)
     evidence = ROOT/"evidence"
     evidence.mkdir(exist_ok=True)
     (evidence/"semantic-tests.txt").write_text(tests)
+    (evidence/"adapter-concurrency-tests.txt").write_text(adapter)
     fixture_env = dict(clean_env)
     for key, name in [("FACET_TRACE_PATH", "FACET_fixture-trace.jsonl"), ("FACET_METRICS_PATH", "FACET_fixture-metrics.jsonl"), ("FACET_MODEL_PATH", "FACET_fixture-model.bin")]:
         path = evidence/name
         path.unlink(missing_ok=True)
+        path.with_name(path.name+".critical.jsonl").unlink(missing_ok=True)
         path.with_name(path.name+".partial").unlink(missing_ok=True)
         fixture_env[key] = str(path)
     fixture = run([java, "-Xmx256m", "-cp", cp, "FacetTelemetryFixture"], fixture_env)
@@ -78,16 +81,18 @@ def main():
     for key, name in [("FACET_TRACE_PATH", "FACET_lifecycle-trace.jsonl"), ("FACET_METRICS_PATH", "FACET_lifecycle-metrics.jsonl")]:
         path = evidence/name
         path.unlink(missing_ok=True)
+        path.with_name(path.name+".critical.jsonl").unlink(missing_ok=True)
         lifecycle_env[key] = str(path)
     lifecycle = run([java, "-Xmx256m", "-cp", cp, "LifecycleTelemetryFixture"], lifecycle_env)
     (evidence/"lifecycle-fixture.txt").write_text(lifecycle)
     rows = [json.loads(line) for line in (evidence/"FACET_lifecycle-metrics.jsonl").read_text().splitlines()]
     assert len(rows)==4 and len({(row["gameId"],row["round"]) for row in rows})==4
     assert [row["shotsConfirmed"] for row in rows]==[1,0,1,0]
-    assert all(row["schema"]==2 and row["counters"].get("metrics.ioFailure",0)==0 for row in rows)
+    assert all(row["schema"]==3 and row["counters"].get("metrics.ioFailure",0)==0 for row in rows)
     follow_env = dict(clean_env)
     follow_path = evidence/"FACET_followup-trace.jsonl"
     follow_path.unlink(missing_ok=True)
+    follow_path.with_name(follow_path.name+".critical.jsonl").unlink(missing_ok=True)
     follow_env["FACET_TRACE_PATH"] = str(follow_path)
     follow = run([java, "-Xmx256m", "-cp", cp, "FollowupTelemetryFixture"], follow_env)
     (evidence/"followup-telemetry.txt").write_text(follow)
@@ -112,7 +117,7 @@ def main():
     source_digest = hashlib.sha256(("\n".join(source_lines)+"\n").encode()).hexdigest()
     (evidence/"source-files.sha256").write_text("\n".join(source_lines)+"\n")
     (evidence/"manifest.sha256").write_text(f"{sha(jar)}  Facet.jar\n{sha(API)}  official API 1.4.0\n{source_digest}  source-files.sha256 content\n")
-    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="supplied revision4 duel prerequisite passed; active melee independent review pending", premeasurementApproved=False, meleeEnabled=True, engineMotionFireAcceptance="866 supplied actual transitions replayed; prior four-round duel adapter report supplied, no new battles", memoryLimitMiB=256, deterministicPackaging=True)
+    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="adapter correction independent review pending; no measured approval", premeasurementApproved=False, meleeEnabled=True, engineMotionFireAcceptance="866 supplied actual transitions replayed; offline adapter correction only, no new battles", memoryLimitMiB=256, deterministicPackaging=True)
     (evidence/"build.json").write_text(json.dumps(metadata,indent=2)+"\n")
     print("OFFLINE BUILD VERIFIED source="+source_digest+" jar="+sha(jar))
 if __name__ == "__main__":

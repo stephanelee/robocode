@@ -51,15 +51,17 @@ def run_black_box(command, env, log):
             raise RuntimeError(f'Official runner exit{code}; opaque log retained')
 
 
-def validate_metrics(path, rounds):
+def validate_metrics(path, rounds, expected_schema=2):
     def finite_json(value):
         raise ValueError('Nonfinite telemetry: ' + value)
     rows = [json.loads(line, parse_constant=finite_json) for line in path.read_text().splitlines()]
     if len(rows) != rounds or [r['round'] for r in rows] != list(range(1, rounds + 1)):
         raise ValueError('Facet completion must contain every round exactly once')
-    if len({r['gameId'] for r in rows}) != 1 or any(r['schema'] != 2 for r in rows):
+    if len({r['gameId'] for r in rows}) != 1 or any(r['schema'] != expected_schema for r in rows):
         raise ValueError('Wrong game identity or telemetry schema')
     for row in rows:
+        if expected_schema == 3 and any(row.get(k) != 'success' for k in ('snapshotStatus','terminalObservation','terminalHash')):
+            raise ValueError('Explicit failed/quarantined terminal evidence; not a valid completion')
         if not 0 <= row['shotsConfirmed'] <= row['shotsAccepted'] <= row['shotsRequested']:
             raise ValueError('Invalid physical shot transaction counts')
         if row['neighborBytes'] > 134217728:
@@ -155,6 +157,13 @@ def runtime_provenance(java):
                 githubImageOS=os.environ.get('ImageOS'), githubImageVersion=os.environ.get('ImageVersion'))
 
 
+def authorize_registration(frozen):
+    if not frozen.get('independentReviewEvidence') or not frozen.get('premeasurementApproved'):
+        raise ValueError('Independent premeasurement approval required')
+    if frozen.get('freshAcquisitionAfterInvalid') and not frozen.get('userAuthorizedFreshBudget'):
+        raise ValueError('Explicit user authorization required for fresh budget after invalid screen')
+
+
 def main(args):
     output = args.output.resolve()
     if output.exists():
@@ -166,8 +175,7 @@ def main(args):
                        ('facetConfigSHA256', ROOT/'experiments/Facet/src/main/resources/facet.properties')]:
         if benchmark.digest(path) != frozen[name]:
             raise ValueError('Frozen artifact differs: ' + name)
-    if not frozen.get('independentReviewEvidence') or not frozen.get('premeasurementApproved'):
-        raise ValueError('Independent premeasurement approval required')
+    authorize_registration(frozen)
     validate_freeze(frozen)
     output.mkdir(parents=True)
     shutil.copy2(args.freeze, output/'registration.json')
@@ -237,13 +245,13 @@ def main(args):
                 deadline = time.monotonic()+5
                 while time.monotonic() < deadline:
                     try:
-                        rows = validate_metrics(run/'FACET_metrics.jsonl', 20)
+                        rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2))
                         if (run/'FACET_model.dat').is_file():
                             break
                     except (ValueError, FileNotFoundError, json.JSONDecodeError):
                         pass
                     time.sleep(.05)
-                rows = validate_metrics(run/'FACET_metrics.jsonl', 20)
+                rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2))
                 result = json.loads((run/'battle.json').read_text())
                 expected_name = next(x['name'] for x in provenance['opponents'] if Path(x['descriptor']).stem == opponent) if opponent == 'diamond-port' else opponent
                 if result['numberOfRounds'] != 20 or len(result['results']) != 2 or {r['name'] for r in result['results']} != {'Facet', expected_name}:

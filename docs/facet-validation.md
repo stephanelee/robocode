@@ -1,3 +1,7 @@
+# Current validation disposition
+
+The first frozen measurement is **INVALID/stopped after140/300physicalrounds**;160unrun. [Complete outcomes/evidence](facet-results.md) include ALL7officialgames, including invalidRetcong2. No automatic continuation/retry/promotion. A separate source-isolated adapter correction passed20semanticgroups/10243assertions+54concurrency/terminal/durable-output assertions and840-entry Gradle source/JAR parity, with independent review; [current artifact/correction](facet-adapter-lifecycle-repair.md). Current repairedJar817a9d53... has0matches; measuredJar7729fa... remains preserved. Historical validation below refers to its identified stages and is superseded by this disposition.
+
 # Facet validation and evidence
 
 2026-11-04. Work in progress; this is a buildable duel milestone, not the full
