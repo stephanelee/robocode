@@ -6,7 +6,7 @@ index efb0b05..e453137 100644
 -{"name":"Aegis","version":"0.1.0","authors":["stephanelee"],"description":"Experimental 1v1 bullet-shield bot: legal energy-drop shot inference, label-preserving lateral planner and 0.1-power interceptors.","platform":"JVM","programmingLang":"Java 17","gameTypes":["1v1"]}
 +{"name":"Aegis","version":"0.2.0","authors":["stephanelee"],"description":"Experimental 1v1 bullet-shield bot: legal energy-drop shot inference, label-preserving lateral planner and 0.1-power interceptors.","platform":"JVM","programmingLang":"Java 17","gameTypes":["1v1"]}
 diff --git a/experiments/Aegis/src/Aegis.java b/experiments/Aegis/src/Aegis.java
-index 861c7f6..8c99455 100644
+index 861c7f6..e984583 100644
 --- a/experiments/Aegis/src/Aegis.java
 +++ b/experiments/Aegis/src/Aegis.java
 @@ -12,13 +12,16 @@ import java.util.*;
@@ -36,10 +36,28 @@ index 861c7f6..8c99455 100644
              for (int i = 0; i < ns; i++) {
                  double sp = planner.position(i), px = homeX + ax() * sp, py = homeY + ay() * sp;
                  double lat = (px - ref[0]) * nx + (py - ref[1]) * ny;
-@@ -221,6 +226,14 @@ public class Aegis extends Bot {
+@@ -220,6 +225,31 @@ public class Aegis extends Bot {
+ 
      static final int PASS_STATES = 8;
      private double lastEnemyPower = 1.95;
- 
++    /** Recent aim classes of resolved enemy shots (0 centre, 1 behind, 2 ahead), kept across rounds of one game. */
++    private final java.util.ArrayDeque<Integer> aimClasses = new java.util.ArrayDeque<>();
++    static final int TRACK = 8;
++
++    private void recordAimClass(Shot s, double bx, double by, double direction) {
++        double e = solverError(s, bx, by, direction), a = s.range * Math.tan(ShieldSolver.candidateSpacing(s.speed));
++        double hn = Math.toRadians(s.heading); // solverError sign is along the actual-bullet normal; map to shot normal
++        double sameSide = Math.cos(Math.toRadians(direction) - hn) >= 0 ? 1 : -1;
++        int cls = Math.abs(e) < a / 2 ? 0 : (-Math.signum(e) * sameSide == s.behind ? 1 : 2);
++        aimClasses.addLast(cls); while (aimClasses.size() > TRACK) aimClasses.removeFirst();
++    }
++
++    private void assignAimPrior(Shot shot) {
++        int n = aimClasses.size(), c0 = 0, cb = 0;
++        for (int c : aimClasses) { if (c == 0) c0++; else if (c == 1) cb++; }
++        shot.pCentre = (c0 + 1.0) / (n + 2.0); shot.pBehind = (cb + 0.5) / (n + 2.0);
++    }
++
 +    /** Sign of our lateral velocity (along normal n) at a past turn, as the shooter's orbit direction sees it; 0 if still. */
 +    private double lateralSign(double tau, double nx, double ny) {
 +        double[] h = ownHistory.get((int) Math.floor(tau));
@@ -47,11 +65,10 @@ index 861c7f6..8c99455 100644
 +        double d = Math.toRadians(h[3]), lat = h[2] * (Math.cos(d) * nx + Math.sin(d) * ny);
 +        return Math.abs(lat) < 1e-9 ? 0 : Math.signum(lat);
 +    }
-+
+ 
      /** Linear interpolation of our end-of-turn history at a fractional turn. */
      private double[] ownAt(double tau) { return interpolate(ownHistory, tau); }
-     private double[] enemyAt(double tau) { return interpolate(enemyHistory, tau); }
-@@ -264,7 +277,7 @@ public class Aegis extends Bot {
+@@ -264,7 +294,7 @@ public class Aegis extends Bot {
          }
          pendingShot = null;
          Shot target = null;
@@ -60,7 +77,7 @@ index 861c7f6..8c99455 100644
                  && (target == null || s.contactTurn() < target.contactTurn())) target = s;
          if (target == null || !axisReady) { if (enemyScanTurn >= 0) setGunTurnRate(clip20(Physics.normalize(Physics.bearing(getX(), getY(), ex, ey) - getGunDirection()))); return; }
          double heat = getGunHeat(); int cool = 0; while (heat > 1e-12) { heat = Math.max(0, heat - 0.1); cool++; }
-@@ -285,7 +298,7 @@ public class Aegis extends Bot {
+@@ -285,7 +315,7 @@ public class Aegis extends Bot {
                  if (best == null || p.score() > best.score() + 1e-9) best = p;
                  if (f <= latestFree && p.covered() > 0 && (bestFree == null || p.score() > bestFree.score() + 1e-9)) bestFree = p;
              }
@@ -69,7 +86,7 @@ index 861c7f6..8c99455 100644
              if (best != null && best.covered() > 0) {
                  intentShot = target; intentFire = best.fireTurn();
                  for (int turn = t + 1; turn <= best.interceptTurn() + 1 && turn - t <= HORIZON; turn++) lockedS.put(turn, lastPlan.positions()[turn - t]);
-@@ -313,8 +326,10 @@ public class Aegis extends Bot {
+@@ -313,8 +343,11 @@ public class Aegis extends Bot {
                  double h = Math.toRadians(aim[3]);
                  Shot shot = new Shot(t, power, ex, ey, aim[0] + Math.cos(h) * aim[2], aim[1] + Math.sin(h) * aim[2]);
                  shot.rx = ref[0]; shot.ry = ref[1];
@@ -79,10 +96,11 @@ index 861c7f6..8c99455 100644
 +                if (e0 != null && em != null) { double cv = classicSpeed(em[4], e0[4]); shot.predictedSource(e0[0] + Math.cos(Math.toRadians(enemyHeading)) * cv, e0[1] + Math.sin(Math.toRadians(enemyHeading)) * cv); }
 +                double hn = Math.toRadians(shot.heading);
 +                shot.behind = -lateralSign(t - 2, -Math.sin(hn), Math.cos(hn));
++                assignAimPrior(shot);
                  shots.add(shot); detected++; lastEnemyPower = power; lastFireTurn = t;
                  emit("fire", t, "power", power, "ox", ex, "oy", ey, "tx", shot.tx, "ty", shot.ty, "psx", shot.psx, "psy", shot.psy);
              }
-@@ -335,16 +350,23 @@ public class Aegis extends Bot {
+@@ -335,22 +368,29 @@ public class Aegis extends Bot {
      }
  
      /**
@@ -113,11 +131,27 @@ index 861c7f6..8c99455 100644
      @Override public void onHitByBullet(HitByBulletEvent e) {
          var b = e.getBullet(); hitsTaken++; taken += e.getDamage();
          energyCorrection.merge(e.getTurnNumber(), 3 * b.getPower(), Double::sum);
+         ownDamage.merge(e.getTurnNumber(), e.getDamage(), Double::sum);
+         Shot s = match(b.getPower(), b.getX(), b.getY(), b.getDirection());
+-        if (s != null) { s.resolved = true; s.outcome = "hit"; }
++        if (s != null) { s.resolved = true; s.outcome = "hit"; recordAimClass(s, b.getX(), b.getY(), b.getDirection()); }
+         double lineError = s == null ? Double.NaN : -Math.sin(Math.toRadians(b.getDirection())) * (s.tx - b.getX()) + Math.cos(Math.toRadians(b.getDirection())) * (s.ty - b.getY());
+         double solverError = s == null ? Double.NaN : solverError(s, b.getX(), b.getY(), b.getDirection());
+         emit("hitBy", e.getTurnNumber(), "power", b.getPower(), "bx", b.getX(), "by", b.getY(), "dir", b.getDirection(), "matched", s != null ? s.fireTurn : -1,
+@@ -364,7 +404,7 @@ public class Aegis extends Bot {
+     @Override public void onBulletHitBullet(BulletHitBulletEvent e) {
+         var b = e.getHitBullet();
+         Shot s = match(b.getPower(), b.getX(), b.getY(), b.getDirection());
+-        if (s != null) { s.resolved = true; s.outcome = "blocked"; blocked++; } else unmatchedRemovals++;
++        if (s != null) { s.resolved = true; s.outcome = "blocked"; blocked++; recordAimClass(s, b.getX(), b.getY(), b.getDirection()); } else unmatchedRemovals++;
+         double lineError = s == null ? Double.NaN : -Math.sin(Math.toRadians(b.getDirection())) * (s.tx - b.getX()) + Math.cos(Math.toRadians(b.getDirection())) * (s.ty - b.getY());
+         emit("blocked", e.getTurnNumber(), "power", b.getPower(), "matched", s != null ? s.fireTurn : -1, "lineError", lineError, "solverError", s == null ? Double.NaN : solverError(s, b.getX(), b.getY(), b.getDirection()));
+     }
 diff --git a/experiments/Aegis/src/ShieldSolver.java b/experiments/Aegis/src/ShieldSolver.java
-index 9496ea8..fb2677f 100644
+index 9496ea8..8302b9c 100644
 --- a/experiments/Aegis/src/ShieldSolver.java
 +++ b/experiments/Aegis/src/ShieldSolver.java
-@@ -6,19 +6,31 @@
+@@ -6,19 +6,34 @@
  final class ShieldSolver {
      static final double POWER = 0.1, SPEED = Physics.bulletSpeed(POWER);
      static final double[] OFFSETS = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
@@ -143,7 +177,10 @@ index 9496ea8..fb2677f 100644
 +        double[] offsets = side == 0 ? new double[]{-4, -3, -2, -1, 0, 1, 2, 3, 4, -a - 1.5, -a + 1.5, a - 1.5, a + 1.5}
 +                : new double[]{-4, -3, -2, -1, 0, 1, 2, 3, 4, side * (a - 1.5), side * a, side * (a + 1.5)};
 +        double[] weights = new double[offsets.length];
-+        for (int i = 0; i < offsets.length; i++) weights[i] = i < CORE_WEIGHTS.length ? CORE_WEIGHTS[i] : (side == 0 ? ADJACENT_WEIGHT : 2 * ADJACENT_WEIGHT * 4 / 6);
++        // Expected-block weights: core mass scales with P(centre); behind-adjacent mass with P(behind) (adaptive prior).
++        double coreTotal = 0; for (double w : CORE_WEIGHTS) coreTotal += w;
++        for (int i = 0; i < offsets.length; i++) weights[i] = i < CORE_WEIGHTS.length ? CORE_WEIGHTS[i] / coreTotal * shot.pCentre
++                : shot.pBehind / (offsets.length - CORE_WEIGHTS.length) * (side == 0 ? 0.5 : 1);
 +        int n = offsets.length; double[] exs = new double[n], eys = new double[n]; int[] hits = new int[n];
          double nx = -Math.sin(Math.toRadians(shot.heading)), ny = Math.cos(Math.toRadians(shot.heading));
          for (int i = 0; i < n; i++) {
@@ -152,7 +189,7 @@ index 9496ea8..fb2677f 100644
              double h = Math.toRadians(Physics.bearing(shot.psx, shot.psy, ax, ay)), ex = Math.cos(h), ey = Math.sin(h);
              int hit = Integer.MAX_VALUE;
              for (int j = Math.max(shot.fireTurn, shot.contactTurn() - 4); j < shot.fireTurn + 400; j++) {
-@@ -28,7 +40,7 @@ final class ShieldSolver {
+@@ -28,7 +43,7 @@ final class ShieldSolver {
              }
              exs[i] = ex; eys[i] = ey; hits[i] = hit;
          }
@@ -161,7 +198,7 @@ index 9496ea8..fb2677f 100644
      }
  
      /** Coverage of one shield direction fired in turn f from the end-of-(f-1) planned position. */
-@@ -42,15 +54,15 @@ final class ShieldSolver {
+@@ -42,15 +57,15 @@ final class ShieldSolver {
          double px = own.x(f - 1), py = own.y(f - 1);
          double cw = Math.cos(Math.toRadians(direction)), sw = Math.sin(Math.toRadians(direction));
          double score = 0; int covered = 0;
@@ -181,15 +218,17 @@ index 9496ea8..fb2677f 100644
          if (coveredOut != null) coveredOut[0] = covered;
          return score;
 diff --git a/experiments/Aegis/src/Shot.java b/experiments/Aegis/src/Shot.java
-index 4b5d2eb..1bc15c8 100644
+index 4b5d2eb..9e422e8 100644
 --- a/experiments/Aegis/src/Shot.java
 +++ b/experiments/Aegis/src/Shot.java
-@@ -13,6 +13,8 @@ final class Shot {
+@@ -13,6 +13,10 @@ final class Shot {
      double psx, psy;
      final double range;
      boolean resolved, shielded, dodge;
 +    /** Side (+1/-1 along the line normal) one candidate angle behind our motion at aim time; 0 if unknown. */
 +    double behind;
++    /** Adaptive prior from recent resolved shots: probability of the centre and behind-adjacent lines. */
++    double pCentre = 0.85, pBehind = 0.1;
      int shieldTurn = -1, shieldBulletId = -1;
      String outcome = "pending";
  

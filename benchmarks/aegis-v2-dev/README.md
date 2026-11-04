@@ -15,13 +15,20 @@ Changes from 0.1.0, each targeting a measured failure class:
 | `v2a` | 1, 2 (both sides) | **2/10** | 7.75% | 79.2% |
 | `v2b` | + aggressive reload chaining (0.3, reverted) | 0/10 | 0.19% | 72.6% |
 | `v2c` | 1, 2 (behind side), 3, 4 | **2/10** | 8.82% | 78.5% |
+| `vg1` (6 rounds, rating instrumentation) | same as v2c | 0/6 | 0.32% | see file |
+| `vg2` | + exact zero-label cost on real-shot waves (reverted) | 0/10 | 0.51% | 74.7% |
+| `vg3` | v2c + 5: adaptive aim-class tracker | **2/10** | 9.19% | **79.9%** |
 
-Remaining failures in `v2c`:
+5. **Adaptive aim-class tracker (gun-switching work).** The shooter picks TripHammer or Anti-Surfer by a battle-long virtual-bullet rating computed only on real-shot waves. In `vg1/virtual-gun-ratings.txt`, our real-shot break centres lean behind our motion (mean −0.0028 rad). Anti-Surfer won more of the disagreements, overtook TripHammer and was selected; under it, centre-candidate aims fall to 68–89%. A direct exact zero-label cost on real-shot waves (`vg2`) did not remove the bias and hurt geometry, so it was reverted. Off-centre aims are persistent: P(next off-centre) is 6% after 0 of the last 8 resolved shots and 32% after 3+. Without trying to prevent them, the tracker turns the last 8 resolved shot classes (centre / behind / ahead, from the actual bullet lines in legal hit/collision events) into adaptive mixture weights for the solver. In `vg3`, off-centre hits fell from about 8% to 5.4% of shots, and the centre-aiming gun won 351 of 602 rating disagreements.
+
+Remaining failures in `v2c` (before change 5):
 - Off-centre aims ≈ 10% of shots. Per-round instrumented logs show 95–98% centre aims under the opponent's TripHammer gun but 68–89% under its Anti-Surfer gun, which it selects by virtual-gun rating.
 - Low-coverage shields ≈ 3.5%.
 - Unshielded dodge cases ≈ 3%.
 
 Rounds 1–2 were won in both v2a and v2c; later rounds were lost.
+
+Long rounds (5,000–7,000 turns) are still lost in the shooter's low-power endgame, where a fixed 0.1 interceptor costs about as much as its bullet. The instrumented opponent's rating logging is a dev-only patch to the private copy (`vg` events) and is never used at runtime or in registered games.
 
 Decision state: not registered. My expectation is that a pilot of this WIP would likely produce at least one round win but fail the registered >20% share gate. The next development target is the opponent's gun-dependent off-centre aims. Any candidate needs its own frozen source/JAR, prospective registration, independent review and fresh games.
 
