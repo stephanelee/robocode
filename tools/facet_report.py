@@ -42,7 +42,7 @@ def main(args):
     curves=[]
     for g in completed:
         metrics=args.results.parent/f"{g['opponent']}-g{g['game']:02d}"/'FACET_metrics.jsonl'
-        if not metrics.is_file():continue
+        if not metrics.is_file():raise ValueError('Missing raw Facet metrics: '+str(metrics))
         rows=[json.loads(x) for x in metrics.read_text().splitlines()]
         previous_shots=previous_hits=previous_turns=0
         for row in rows:

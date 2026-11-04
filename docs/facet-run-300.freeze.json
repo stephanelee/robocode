@@ -87,11 +87,12 @@
     "tools/BenchmarkBattle.java": "ee026cf07ff0b106af187dc97a9a3f2682f57a19b6522496230d1658281f9d17",
     "tools/retcon.py": "4171e5a7e82ce58cc3b66835c9981ce143c9dadd59d7a9fdb34abe98df7c2c52",
     "tools/strong_melee_opponents.py": "a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524",
-    ".github/workflows/facet-benchmark.yml": "7c478db83b03095ae4d1a61442839d27cb8e354b720ffcf28b8f447981a321a4",
+    ".github/workflows/facet-benchmark.yml": "a0e64e47b783caf30fdd0e75ddb98c0eedbc1d51ef3bfe75fd474a4401deee59",
     "experiments/Facet/evidence/final-premeasurement-approval.md": "cb772c15c0893621f83a52ae9eb97a6949825c3693006cab1519a1b36ab8fd2f",
     "tools/facet_python_runtime.py": "3bdec36581be99e0f8d639d669eeb85ff384b3bb843cd35395d8fa4e4c50963f",
     "experiments/Facet/evidence/preflight-setup-failure/concrete-repair-approval.md": "9e81964218a6d6f630c86e54648ebfc8d939512f9450e6616a7d1fbf873435cd",
-    "experiments/Facet/evidence/preflight-source-build-failure/header-repair-approval.md": "95a2bc6465b5c388f72ab9ad893037278d41c05642accfdb349e6c566b7d30da"
+    "experiments/Facet/evidence/preflight-source-build-failure/header-repair-approval.md": "95a2bc6465b5c388f72ab9ad893037278d41c05642accfdb349e6c566b7d30da",
+    "experiments/Facet/evidence/preflight-jdk-selector-failure/independent-selector-approval.md": "fadbc9f4ad7efb74fdaf6cb790a2da1f026c85e6aa68a1fd13f1ac5ce50cab6c"
   },
   "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
   "serverSHA256": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
@@ -145,7 +146,8 @@
       ],
       "packageVersionPolicy": "Ubuntu26.04 repositories; exact installed versions and copyright notices recorded before first game",
       "evidencePath": "facet-runtime-preflight (outside both Gradle build directories)"
-    }
+    },
+    "setupJava25Selector": "25.0.1+8.0.LTS (action vendor metadata spelling for same frozen Temurin25.0.1 build8)"
   },
   "setup": {
     "arenaWidth": 800,
@@ -175,9 +177,9 @@
     "scope": "administrative setup recovery before first actual acquisition; no measured game retry"
   },
   "setupRepairApproval": {
-    "path": "experiments/Facet/evidence/preflight-source-build-failure/header-repair-approval.md",
-    "sha256": "95a2bc6465b5c388f72ab9ad893037278d41c05642accfdb349e6c566b7d30da",
-    "decision": "independent2026-11-04 header/evidence repair approval; successful recorded readiness before first game; no measured retries"
+    "path": "experiments/Facet/evidence/preflight-jdk-selector-failure/independent-selector-approval.md",
+    "sha256": "fadbc9f4ad7efb74fdaf6cb790a2da1f026c85e6aa68a1fd13f1ac5ce50cab6c",
+    "decision": "independent2026-11-04 same-build action selector correction; successful exact runtime checks before first game; no measured retries"
   },
   "preflightHistory": [
     {
@@ -196,6 +198,15 @@
       "registrationSHA256": "7768d28eb53da987ce08e3a4646a2142f9c13b829a1b3aafc36e34bc5fc4352c",
       "evidence": "experiments/Facet/evidence/preflight-source-build-failure/",
       "failure": "required bz2 module missing before Java/build/acquisition; no measured game started"
+    },
+    {
+      "runId": 41856016648,
+      "jobId": 126664718973,
+      "measuredGames": 0,
+      "measuredRounds": 0,
+      "registrationSHA256": "9972285a72e7f534f2a495a3f64aead9306d74423ddade8819049ff54889d169",
+      "evidence": "experiments/Facet/evidence/preflight-jdk-selector-failure/",
+      "failure": "runtime and bothJava17build/parity passed; sameJDK25 actionselector needsLTSmetadata spelling; acquisition skipped"
     }
   ]
 }
