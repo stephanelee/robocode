@@ -1,0 +1,9 @@
+# Independent exact renewed registration revalidation
+
+2026-11-04. **Approve publication of exactly the reviewed final registration to trigger the user-authorized100 NEW Diamond Port rounds, five cold20-round games.** Reviewer launches no games and approves no retries, replacements, resume, retuning, automatic confirmation, promotion or merge.
+
+File /tmp/facet-diamond-renewed.approved-freeze.json independently hashes to `121bfbcca6e9958a2bcaa67ff361d865e5834f2e22c1652a32ae76dd2e93aaff`. All36 file pins and44 source/input hashes independently validate; registration authorization guards pass. Exact scope/opponent/game structure/user authorization checked.
+
+Compared structurally with reviewed draft5838fe25cc051512c00a874630ee763dffaa988d9713f509ba366f6f881ac014. Changes are exactly purpose wording, premeasurementApproved=true, final approval reference/SHA, two added evidence pins (renewed-premeasurement-approval.md and renewed-verified-ci.json), and prospectiveProtocolCommit8ef9ae2bffad1b91f7d1ed6f84b892d818626f9d. All prior pins unchanged. Distinct candidate CODE commit93863d2aa9501c537b098fe556b4ff961c9f772e accurately identifies unchanged source/infrastructure. Both code/prospective-doc CI were independently checked successful, with metadata pinned.
+
+Bot source dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d, JAR817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792, profile, corrected runner barrier, runtime/opponent/schedule/gates unchanged. Preserve original invalid140 plus later invalid20 separately/immutably/unpooled; new100 would bring physical total260 if completed. Existing80 unrun are not resumed/replaced. Publish only these exact registration bytes before game1, retain all preflight/runtime/stop-on-invalid checks and original outcome evidence. No renewed screen game had run at review time.

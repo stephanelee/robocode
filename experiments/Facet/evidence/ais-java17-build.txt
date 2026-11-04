@@ -1,0 +1,42 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :jar
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test FAILED
+
+MasterParityTest > masterMakesIdenticalDecisionsOnEveryGoldenTrace(Path) FAILED
+    org.opentest4j.AssertionFailedError at MasterParityTest.java:188
+
+TraceReplayTest > goldenTracesReplayIdentically(Path) FAILED
+    org.opentest4j.AssertionFailedError at TraceReplayTest.java:29
+
+TraceReplayTest > signedZeroIsNotEqualToZero(Path) FAILED
+    org.opentest4j.AssertionFailedError at TraceReplayTest.java:60
+
+TraceReplayTest > incompleteTracesAreNotSuccessful(Path) FAILED
+    org.opentest4j.AssertionFailedError at TraceReplayTest.java:75
+
+TraceReplayTest > alteredRecordedCommandIsDetected(Path) FAILED
+    org.opentest4j.AssertionFailedError at TraceReplayTest.java:46
+
+89 tests completed, 5 failed, 1 skipped
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 5s
+4 actionable tasks: 4 executed

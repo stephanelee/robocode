@@ -1,0 +1,82 @@
+python3: error: couldn't create cache file '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/xcrun_db-We0oNHSs' (errno=Operation not permitted)
+python3: error: couldn't create cache file '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/xcrun_db-ZKTWFsEl' (errno=Operation not permitted)
+openjdk version "17.0.21.0.3" 2026-10-24
+OpenJDK Runtime Environment Homebrew (build 17.0.21.0.3+0)
+OpenJDK 64-Bit Server VM Homebrew (build 17.0.21.0.3+0, mixed mode, sharing)
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS active melee and radar
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=560583 maxns=1228833 totalns=17591292
+PASS bounded full-store stress
+quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+PASS active melee corrections
+total-quota no-fire queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota physical-preparation queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota confirmation queries=0 returned=0 projections=0 iterations=0 distanceEvaluations=0
+Exception in thread "main" java.lang.AssertionError: transition preserves long and all recent stores
+	at FacetSemanticTest.ok(FacetSemanticTest.java:13)
+	at MeleeTotalQuotaTest.ok(MeleeTotalQuotaTest.java:6)
+	at MeleeTotalQuotaTest.run(MeleeTotalQuotaTest.java:97)
+	at FacetSemanticTest.group(FacetSemanticTest.java:48)
+	at FacetSemanticTest.main(FacetSemanticTest.java:656)
+Traceback (most recent call last):
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 119, in <module>
+    main()
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 61, in main
+    tests = run([java, "-Xmx256m", "-cp", cp, "FacetSemanticTest"], clean_env)
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 15, in run
+    raise RuntimeError(f"command failed ({p.returncode}): {args}\n{p.stdout}")
+RuntimeError: command failed (1): [PosixPath('/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java'), '-Xmx256m', '-cp', '/private/tmp/facet-clean-room/experiments/Facet/build/classes/main:/private/tmp/facet-clean-room/experiments/Facet/build/classes/test:/private/tmp/facet-clean-room/experiments/Facet/src/main/resources:/private/tmp/facet-clean-room/experiments/Facet/src/test/resources:/private/tmp/facet-clean-room/official/robocode-tankroyale-bot-api-1.4.0.jar', 'FacetSemanticTest']
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS active melee and radar
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=560583 maxns=1228833 totalns=17591292
+PASS bounded full-store stress
+quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+PASS active melee corrections
+total-quota no-fire queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota physical-preparation queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota confirmation queries=0 returned=0 projections=0 iterations=0 distanceEvaluations=0
+Exception in thread "main" java.lang.AssertionError: transition preserves long and all recent stores
+	at FacetSemanticTest.ok(FacetSemanticTest.java:13)
+	at MeleeTotalQuotaTest.ok(MeleeTotalQuotaTest.java:6)
+	at MeleeTotalQuotaTest.run(MeleeTotalQuotaTest.java:97)
+	at FacetSemanticTest.group(FacetSemanticTest.java:48)
+	at FacetSemanticTest.main(FacetSemanticTest.java:656)
+

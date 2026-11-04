@@ -1,0 +1,9 @@
+# Independent same-build JDK selector repair review
+
+2026-11-04. **Approve the one-line setup-java selector repair before the first actual acquisition.** No measured retry, replacement, tuning, promotion or merge is approved.
+
+Reviewed workflow and draft registration SHA256 `2a8b9cc8c878601b33bf8843d4e377354c33272c58eb9f218b96c43b79e79e34`; independently validated all 21 file pins and 43 source/input hashes. Workflow changes the JDK25 selector from `25.0.1+8` to the action's advertised `25.0.1+8.0.LTS`. The required runtime remains Temurin25.0.1 build8, including the existing archive pin and observed runtime guard; no version or vendor fallback. Registration changes are confined to that selector metadata, expected workflow/previous-approval pins, approval disposition and preserved preflight history. Candidate JAR7729fa0419dc8a6efc08ee7d5812ad28aca76195d51ce44bb53056b6c064788d/sourceea6ead0e635a78a9190ca435f476def1eeb33179ca5a4355f87a6f18c362a6d8 and configuration/opponents/budget remain unchanged.
+
+Preserved run41856016648/job126664718973 log explicitly rejects the original SemVer selector and lists `25.0.1+8.0.LTS` as available. Required Python readiness, Java17 builds and parity succeeded before this failure; acquisition was skipped, with zero games/rounds. Retain all preparation failures and original registration SHA9972285a72e7f534f2a495a3f64aead9306d74423ddade8819049ff54889d169. This is administrative selection of the same frozen build before the authorized first screen, not repetition of an acquired cohort.
+
+Publish the resulting final registration hash before acquisition. Successful JDK selection and existing observed runtime guards remain mandatory; actual JDK25 launch success is not claimed by this review. Fixed300 budget, no measured retries/replacements and prior candidate premeasurement conditions remain in effect.

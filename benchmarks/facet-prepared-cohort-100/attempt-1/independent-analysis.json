@@ -1,0 +1,3247 @@
+{
+  "status": "valid-complete-reject-profile",
+  "pinValidation": {
+    "filePins": 40,
+    "sourceInputs": 45,
+    "allMatch": true
+  },
+  "registrationSHA256": "1713338d6b6cd9d0d271173a4243f238642913ebe3e717d72b471feaf07ecb58",
+  "sourceSHA256": "22c032253036c936116046f939b0196c8291d45597c9e6ee2387055f64be4f4b",
+  "jarSHA256": "9b489b8429b01ff96caba378fbb481ddac6811a9a48b522649b3e4ea0eccb174",
+  "configSHA256": "9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25",
+  "candidateCommit": "61677622675ca7ac536f3ef5b89b5cce82176f4e",
+  "officialRounds": 100,
+  "firstPlaces": 1,
+  "equalGameScoreShare": 0.056775746505691706,
+  "officialFacetScore": 916,
+  "officialOpponentScore": 15364,
+  "officialFacetBulletDamage": 847,
+  "officialOpponentBulletDamage": 7870,
+  "cumulativeTelemetryTotals": {
+    "shotsRequested": 1601,
+    "shotsAccepted": 1601,
+    "shotsConfirmed": 1601,
+    "shotsCancelled": 0,
+    "unmatchedConfirmations": 0,
+    "neighborEvictions": 0,
+    "waveEvictions": 0,
+    "surfTruncations": 0,
+    "geometryFallbacks": 0,
+    "gcCount": 3605,
+    "gcMillis": 4945
+  },
+  "counters": {
+    "bullet.contact": 48,
+    "gun.cohort.common": 1586,
+    "gun.cohort.confirmed": 1601,
+    "incoming.hit": 1549,
+    "incoming.uncertainContact": 266,
+    "incoming.unmatched": 48,
+    "inference.ambiguous": 528,
+    "inference.reliable": 6272,
+    "learning.terminalNoLearning": 100,
+    "melee.neighborQueries": 0,
+    "melee.projectionPasses": 0,
+    "melee.projectionSamples": 0,
+    "melee.queryReturnedSamples": 0,
+    "movement.emergency": 327,
+    "shot.hit": 107,
+    "trace.truncated": 1108424,
+    "turn.decisions": 96067,
+    "gun.cohort.analyticOnly": 15
+  },
+  "observations": {
+    "damageGiven": {
+      "count": 107.0,
+      "sum": 851.4733751793294,
+      "min": 0.8,
+      "max": 14.799999999999999,
+      "mean": 7.95769509513392
+    },
+    "damageTaken": {
+      "count": 1549.0,
+      "sum": 8106.824942033716,
+      "min": 0.4,
+      "max": 15.700000000000001,
+      "mean": 5.233586147213503
+    },
+    "energy": {
+      "count": 96067.0,
+      "sum": 4225013.987627778,
+      "min": 0.0,
+      "max": 105.6,
+      "mean": 43.979868088186144
+    },
+    "energyFireCost": {
+      "count": 1601.0,
+      "sum": 2592.8732218690434,
+      "min": 0.2,
+      "max": 2.8,
+      "mean": 1.6195335551961545
+    },
+    "energyHitBonus": {
+      "count": 107.0,
+      "sum": 516.3004864018676,
+      "min": 0.6000000000000001,
+      "max": 8.399999999999999,
+      "mean": 4.8252381906716595
+    },
+    "gun.cohort.headingErrorRadians": {
+      "count": 1601.0,
+      "sum": 0.016176065117214235,
+      "min": 0.0,
+      "max": 0.008575584008304438,
+      "mean": 1.0103725869590403e-05
+    },
+    "gun.cohort.requestAge": {
+      "count": 1601.0,
+      "sum": 1601.0,
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0
+    },
+    "meleeDecisionPasses": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "meleeDecisionQueries": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "meleeDecisionReturned": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "meleeDecisionSamples": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "meleeProjectionPasses": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "meleeUnsafeFallbacks": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "predictorSteps": {
+      "count": 96067.0,
+      "sum": 19149031.0,
+      "min": 2.0,
+      "max": 518.0,
+      "mean": 199.32995721735873
+    },
+    "range": {
+      "count": 95619.0,
+      "sum": 41510643.97168281,
+      "min": 50.14963998974014,
+      "max": 791.6769604370854,
+      "mean": 434.125476857976
+    },
+    "realWaveOverflow": {
+      "count": 96067.0,
+      "sum": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "scanAge": {
+      "count": 95619.0,
+      "sum": 5202.0,
+      "min": 0.0,
+      "max": 33.0,
+      "mean": 0.05440341354751671
+    },
+    "shadowAllocationUnits": {
+      "count": 96067.0,
+      "sum": 1478288896.0,
+      "min": 0.0,
+      "max": 213504.0,
+      "mean": 15388.103053077539
+    },
+    "shadowFallbacks": {
+      "count": 96067.0,
+      "sum": 344426761.0,
+      "min": 0.0,
+      "max": 14648.0,
+      "mean": 3585.2765361674665
+    },
+    "shadowIntervals": {
+      "count": 96067.0,
+      "sum": 839862.0,
+      "min": 0.0,
+      "max": 79.0,
+      "mean": 8.74246099076686
+    },
+    "shadowSegmentWork": {
+      "count": 96067.0,
+      "sum": 11549132.0,
+      "min": 0.0,
+      "max": 1668.0,
+      "mean": 120.21955510216827
+    },
+    "waves": {
+      "count": 96067.0,
+      "sum": 13018973.0,
+      "min": 0.0,
+      "max": 202.0,
+      "mean": 135.51972061165645
+    }
+  },
+  "latency": {
+    "decision": {
+      "count": 96067,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          1.048576,
+          2.097152
+        ],
+        "0.95": [
+          2.097152,
+          4.194304
+        ],
+        "0.99": [
+          4.194304,
+          8.388608
+        ],
+        "1.0": [
+          33.554432,
+          67.108864
+        ]
+      }
+    },
+    "gun": {
+      "count": 96067,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          1.048576,
+          2.097152
+        ],
+        "0.95": [
+          2.097152,
+          4.194304
+        ],
+        "0.99": [
+          2.097152,
+          4.194304
+        ],
+        "1.0": [
+          8.388608,
+          16.777216
+        ]
+      }
+    },
+    "inference": {
+      "count": 96167,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          0.032768,
+          0.065536
+        ],
+        "0.95": [
+          0.131072,
+          0.262144
+        ],
+        "0.99": [
+          0.131072,
+          0.262144
+        ],
+        "1.0": [
+          8.388608,
+          16.777216
+        ]
+      }
+    },
+    "movement": {
+      "count": 96067,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          0.262144,
+          0.524288
+        ],
+        "0.95": [
+          0.524288,
+          1.048576
+        ],
+        "0.99": [
+          1.048576,
+          2.097152
+        ],
+        "1.0": [
+          8.388608,
+          16.777216
+        ]
+      }
+    },
+    "radar": {
+      "count": 96067,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          0.004096,
+          0.008192
+        ],
+        "0.95": [
+          0.008192,
+          0.016384
+        ],
+        "0.99": [
+          0.016384,
+          0.032768
+        ],
+        "1.0": [
+          2.097152,
+          4.194304
+        ]
+      }
+    },
+    "storage": {
+      "count": 96167,
+      "bucketIntervalsMillis": {
+        "0.5": [
+          0.016384,
+          0.032768
+        ],
+        "0.95": [
+          0.032768,
+          0.065536
+        ],
+        "0.99": [
+          0.065536,
+          0.131072
+        ],
+        "1.0": [
+          4.194304,
+          8.388608
+        ]
+      }
+    }
+  },
+  "criticalKinds": {
+    "gun.cohort.confirmed": 940,
+    "model.roundHash": 100,
+    "completion.persisted": 100,
+    "lifecycle.lateTick": 11
+  },
+  "cohortSamples": 940,
+  "registeredGateAssessment": {
+    "turns": 96067,
+    "skippedTurns": 0,
+    "collisions": 0,
+    "caughtSubsystemFailures": 0,
+    "scoreShareGatePass": false,
+    "engineeringGatePass": true,
+    "decision": "reject-profile"
+  },
+  "observedRuntimeBeforeGames": {
+    "java": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 69.0\n    java.home = /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64\n    java.io.tmpdir = /tmp\n    java.library.path = /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 25.0.1+8-LTS\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 25\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-25.0.1+8\n    java.version = 25.0.1\n    java.version.date = 2025-10-21\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 25\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 25.0.1+8-LTS\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1017-azure\n    path.separator = :\n    stderr.encoding = UTF-8\n    stdin.encoding = UTF-8\n    stdout.encoding = UTF-8\n    sun.arch.data.model = 64\n    sun.boot.library.path = /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.1-8.0.LTS/x64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"25.0.1\" 2025-10-21 LTS\nOpenJDK Runtime Environment Temurin-25.0.1+8 (build 25.0.1+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.1+8 (build 25.0.1+8-LTS, mixed mode, sharing)\n",
+    "javaExecutableSHA256": "d8b3a3995aff0e30077f26da5be7e021fc910a1d4d5ce3d9b255fd0e900761c3",
+    "python": "3.13.9",
+    "pythonExecutableSHA256": "4ece97b0881eae46b9fbb38c4cc43ba046175ecd07ba5df084b5683e6e884a05",
+    "osRelease": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+    "githubImageOS": "ubuntu26",
+    "githubImageVersion": "20261026.180.1"
+  },
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "retconPrepared": false,
+  "games": [
+    {
+      "game": 1,
+      "gameId": "game-1-496d6ec7-a684-4668-a037-703f057017d9",
+      "seed": 49667,
+      "launchOrder": [
+        "Facet",
+        "diamond-port"
+      ],
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 2,
+        "totalScore": 55,
+        "survival": 0,
+        "bulletDamage": 55,
+        "firstPlaces": 0
+      },
+      "opponent": {
+        "id": 1,
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "rank": 1,
+        "totalScore": 3252,
+        "survival": 1000,
+        "bulletDamage": 1726,
+        "firstPlaces": 20
+      },
+      "scoreShare": 0.016631387964922893,
+      "modelSHA256": "3559776660fb866ba5ae032361678b289ecbd5ff85c3af18f896eb5286a2b586",
+      "modelBytes": 3815699,
+      "finalCumulativeTelemetry": {
+        "schema": 3,
+        "gameId": "game-1-496d6ec7-a684-4668-a037-703f057017d9",
+        "scope": "game-cumulative; neighborBytes gauge; GC process-cumulative",
+        "round": 20,
+        "terminalTurn": 1400,
+        "ownStateVersion": 84099,
+        "snapshotStatus": "success",
+        "terminalObservation": "success",
+        "terminalHash": "success",
+        "shotsRequested": 181,
+        "shotsAccepted": 181,
+        "shotsConfirmed": 181,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 5247120,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 961,
+        "gcMillis": 1408,
+        "counters": {
+          "bullet.contact": 6,
+          "gun.cohort.common": 181,
+          "gun.cohort.confirmed": 181,
+          "incoming.hit": 312,
+          "incoming.uncertainContact": 41,
+          "incoming.unmatched": 3,
+          "inference.ambiguous": 96,
+          "inference.reliable": 1410,
+          "learning.terminalNoLearning": 20,
+          "melee.neighborQueries": 0,
+          "melee.projectionPasses": 0,
+          "melee.projectionSamples": 0,
+          "melee.queryReturnedSamples": 0,
+          "movement.emergency": 54,
+          "shot.hit": 8,
+          "trace.truncated": 273682,
+          "turn.decisions": 20981
+        },
+        "observationsCountSumMinMax": {
+          "damageGiven": [
+            8.0,
+            55.35547478085191,
+            0.8,
+            10.0
+          ],
+          "damageTaken": [
+            312.0,
+            1781.7877894019418,
+            0.4,
+            9.7
+          ],
+          "energy": [
+            20981.0,
+            875439.2756710042,
+            0.0,
+            100.0
+          ],
+          "energyFireCost": [
+            181.0,
+            303.5036449371597,
+            0.2,
+            2.0
+          ],
+          "energyHitBonus": [
+            8.0,
+            34.016606085638934,
+            0.6000000000000001,
+            6.0
+          ],
+          "gun.cohort.headingErrorRadians": [
+            181.0,
+            0.005932214736411569,
+            0.0,
+            0.005932214736392716
+          ],
+          "gun.cohort.requestAge": [
+            181.0,
+            181.0,
+            1.0,
+            1.0
+          ],
+          "meleeDecisionPasses": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionQueries": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionReturned": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionSamples": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeProjectionPasses": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeUnsafeFallbacks": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "predictorSteps": [
+            20981.0,
+            4457987.0,
+            2.0,
+            465.0
+          ],
+          "range": [
+            20894.0,
+            8972087.274004204,
+            72.73745902037247,
+            791.6769604370854
+          ],
+          "realWaveOverflow": [
+            20981.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scanAge": [
+            20894.0,
+            1191.0,
+            0.0,
+            33.0
+          ],
+          "shadowAllocationUnits": [
+            20981.0,
+            122949120.0,
+            0.0,
+            167424.0
+          ],
+          "shadowFallbacks": [
+            20981.0,
+            71131318.0,
+            0.0,
+            6881.0
+          ],
+          "shadowIntervals": [
+            20981.0,
+            85582.0,
+            0.0,
+            56.0
+          ],
+          "shadowSegmentWork": [
+            20981.0,
+            960540.0,
+            0.0,
+            1308.0
+          ],
+          "waves": [
+            20981.0,
+            3238523.0,
+            0.0,
+            202.0
+          ]
+        },
+        "timingLog2Nanos": {
+          "decision": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            33,
+            198,
+            231,
+            94,
+            247,
+            1326,
+            7247,
+            11207,
+            379,
+            17,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gun": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            45,
+            29,
+            195,
+            28,
+            2,
+            45,
+            1447,
+            583,
+            175,
+            27,
+            41,
+            323,
+            731,
+            11231,
+            5916,
+            156,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inference": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            41,
+            66,
+            260,
+            716,
+            7709,
+            7925,
+            3351,
+            775,
+            104,
+            22,
+            18,
+            11,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "movement": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            103,
+            187,
+            166,
+            89,
+            13,
+            80,
+            1478,
+            6686,
+            11710,
+            391,
+            55,
+            22,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "radar": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            33,
+            5857,
+            2560,
+            11130,
+            899,
+            391,
+            82,
+            16,
+            4,
+            2,
+            3,
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "storage": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            142,
+            184,
+            144,
+            110,
+            392,
+            929,
+            1360,
+            4423,
+            12262,
+            942,
+            86,
+            13,
+            9,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "criticalKinds": {
+        "gun.cohort.confirmed": 148,
+        "model.roundHash": 20,
+        "completion.persisted": 20,
+        "lifecycle.lateTick": 3
+      },
+      "cohortSamples": 148,
+      "cohortSampleKinds": {
+        "common": 148
+      },
+      "sampleRounds": {
+        "1": 5,
+        "2": 2,
+        "3": 15,
+        "4": 16,
+        "5": 3,
+        "6": 2,
+        "7": 16,
+        "8": 6,
+        "10": 7,
+        "11": 16,
+        "12": 16,
+        "14": 11,
+        "15": 12,
+        "18": 8,
+        "19": 13
+      },
+      "sampleHeadingErrorMaxRadians": 0.005932214736392716,
+      "samplesWithDivergentRecentVersions": 148,
+      "traceRows": 100000,
+      "lastTraceIdentity": {
+        "round": 8,
+        "turn": 512
+      },
+      "latency": {
+        "decision": {
+          "count": 20981,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              2.097152,
+              4.194304
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              4.194304,
+              8.388608
+            ],
+            "1.0": [
+              33.554432,
+              67.108864
+            ]
+          }
+        },
+        "gun": {
+          "count": 20981,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "inference": {
+          "count": 21001,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.065536,
+              0.131072
+            ],
+            "0.99": [
+              0.131072,
+              0.262144
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        },
+        "movement": {
+          "count": 20981,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.524288,
+              1.048576
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "radar": {
+          "count": 20981,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.004096,
+              0.008192
+            ],
+            "0.95": [
+              0.008192,
+              0.016384
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ],
+            "1.0": [
+              2.097152,
+              4.194304
+            ]
+          }
+        },
+        "storage": {
+          "count": 21001,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.065536,
+              0.131072
+            ],
+            "0.99": [
+              0.065536,
+              0.131072
+            ],
+            "1.0": [
+              2.097152,
+              4.194304
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": 2,
+      "gameId": "game-1-c41c4c3b-049c-4152-a43d-f1673c7fb8a4",
+      "seed": 49668,
+      "launchOrder": [
+        "diamond-port",
+        "Facet"
+      ],
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 2,
+        "totalScore": 190,
+        "survival": 0,
+        "bulletDamage": 190,
+        "firstPlaces": 0
+      },
+      "opponent": {
+        "id": 1,
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "rank": 1,
+        "totalScore": 3155,
+        "survival": 1000,
+        "bulletDamage": 1629,
+        "firstPlaces": 20
+      },
+      "scoreShare": 0.05680119581464873,
+      "modelSHA256": "8e08d3c2801c6b04297af266a7227720b813b2f0597e5f7d6c415abf435102d9",
+      "modelBytes": 3868230,
+      "finalCumulativeTelemetry": {
+        "schema": 3,
+        "gameId": "game-1-c41c4c3b-049c-4152-a43d-f1673c7fb8a4",
+        "scope": "game-cumulative; neighborBytes gauge; GC process-cumulative",
+        "round": 20,
+        "terminalTurn": 1228,
+        "ownStateVersion": 91774,
+        "snapshotStatus": "success",
+        "terminalObservation": "success",
+        "terminalHash": "success",
+        "shotsRequested": 327,
+        "shotsAccepted": 327,
+        "shotsConfirmed": 327,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 5320480,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 846,
+        "gcMillis": 1133,
+        "counters": {
+          "bullet.contact": 8,
+          "gun.cohort.common": 327,
+          "gun.cohort.confirmed": 327,
+          "incoming.hit": 381,
+          "incoming.uncertainContact": 41,
+          "incoming.unmatched": 3,
+          "inference.ambiguous": 61,
+          "inference.reliable": 1626,
+          "learning.terminalNoLearning": 20,
+          "melee.neighborQueries": 0,
+          "melee.projectionPasses": 0,
+          "melee.projectionSamples": 0,
+          "melee.queryReturnedSamples": 0,
+          "movement.emergency": 218,
+          "shot.hit": 25,
+          "trace.truncated": 300269,
+          "turn.decisions": 23111
+        },
+        "observationsCountSumMinMax": {
+          "damageGiven": [
+            25.0,
+            190.33774641669936,
+            0.8,
+            14.799999999999999
+          ],
+          "damageTaken": [
+            381.0,
+            1665.0990369885417,
+            0.4,
+            9.7
+          ],
+          "energy": [
+            23111.0,
+            977377.2399043272,
+            0.0,
+            105.6
+          ],
+          "energyFireCost": [
+            327.0,
+            485.4097578007937,
+            0.2,
+            2.8
+          ],
+          "energyHitBonus": [
+            25.0,
+            114.68824710106895,
+            0.6000000000000001,
+            8.399999999999999
+          ],
+          "gun.cohort.headingErrorRadians": [
+            327.0,
+            6.661338147750939e-14,
+            0.0,
+            1.7763568394002505e-15
+          ],
+          "gun.cohort.requestAge": [
+            327.0,
+            327.0,
+            1.0,
+            1.0
+          ],
+          "meleeDecisionPasses": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionQueries": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionReturned": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionSamples": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeProjectionPasses": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeUnsafeFallbacks": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "predictorSteps": [
+            23111.0,
+            4435715.0,
+            2.0,
+            501.0
+          ],
+          "range": [
+            23012.0,
+            9740924.48553025,
+            50.14963998974014,
+            677.2612426393629
+          ],
+          "realWaveOverflow": [
+            23111.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scanAge": [
+            23012.0,
+            853.0,
+            0.0,
+            24.0
+          ],
+          "shadowAllocationUnits": [
+            23111.0,
+            347690752.0,
+            0.0,
+            185856.0
+          ],
+          "shadowFallbacks": [
+            23111.0,
+            33781637.0,
+            0.0,
+            5155.0
+          ],
+          "shadowIntervals": [
+            23111.0,
+            193411.0,
+            0.0,
+            68.0
+          ],
+          "shadowSegmentWork": [
+            23111.0,
+            2716334.0,
+            0.0,
+            1452.0
+          ],
+          "waves": [
+            23111.0,
+            3363110.0,
+            0.0,
+            197.0
+          ]
+        },
+        "timingLog2Nanos": {
+          "decision": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            38,
+            142,
+            285,
+            97,
+            390,
+            2591,
+            6469,
+            12741,
+            339,
+            14,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gun": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            8,
+            54,
+            29,
+            146,
+            5,
+            0,
+            56,
+            2694,
+            728,
+            210,
+            8,
+            42,
+            279,
+            730,
+            11141,
+            6870,
+            110,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inference": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            26,
+            41,
+            181,
+            639,
+            8049,
+            8566,
+            3984,
+            1465,
+            128,
+            20,
+            19,
+            9,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "movement": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            59,
+            229,
+            170,
+            77,
+            14,
+            220,
+            3194,
+            8350,
+            10346,
+            368,
+            55,
+            26,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "radar": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            10,
+            7335,
+            4331,
+            10258,
+            710,
+            383,
+            65,
+            10,
+            3,
+            1,
+            1,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "storage": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            19,
+            248,
+            123,
+            166,
+            267,
+            1530,
+            2372,
+            7573,
+            10001,
+            716,
+            85,
+            19,
+            3,
+            4,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "criticalKinds": {
+        "gun.cohort.confirmed": 166,
+        "model.roundHash": 20,
+        "completion.persisted": 20,
+        "lifecycle.lateTick": 2
+      },
+      "cohortSamples": 166,
+      "cohortSampleKinds": {
+        "common": 166
+      },
+      "sampleRounds": {
+        "1": 5,
+        "3": 16,
+        "4": 16,
+        "6": 16,
+        "8": 4,
+        "10": 11,
+        "11": 16,
+        "12": 14,
+        "13": 16,
+        "16": 8,
+        "18": 12,
+        "19": 16,
+        "20": 16
+      },
+      "sampleHeadingErrorMaxRadians": 2.021286199229721e-15,
+      "samplesWithDivergentRecentVersions": 166,
+      "traceRows": 100000,
+      "lastTraceIdentity": {
+        "round": 8,
+        "turn": 327
+      },
+      "latency": {
+        "decision": {
+          "count": 23111,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              2.097152,
+              4.194304
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              4.194304,
+              8.388608
+            ],
+            "1.0": [
+              33.554432,
+              67.108864
+            ]
+          }
+        },
+        "gun": {
+          "count": 23111,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "inference": {
+          "count": 23131,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.131072,
+              0.262144
+            ],
+            "0.99": [
+              0.131072,
+              0.262144
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        },
+        "movement": {
+          "count": 23111,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.262144,
+              0.524288
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "radar": {
+          "count": 23111,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.002048,
+              0.004096
+            ],
+            "0.95": [
+              0.008192,
+              0.016384
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ],
+            "1.0": [
+              2.097152,
+              4.194304
+            ]
+          }
+        },
+        "storage": {
+          "count": 23131,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.016384,
+              0.032768
+            ],
+            "0.95": [
+              0.032768,
+              0.065536
+            ],
+            "0.99": [
+              0.065536,
+              0.131072
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": 3,
+      "gameId": "game-1-bc93d9f4-8056-4fcc-bacd-715a7a234b40",
+      "seed": 49669,
+      "launchOrder": [
+        "Facet",
+        "diamond-port"
+      ],
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 2,
+        "totalScore": 112,
+        "survival": 0,
+        "bulletDamage": 112,
+        "firstPlaces": 0
+      },
+      "opponent": {
+        "id": 2,
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "rank": 1,
+        "totalScore": 3102,
+        "survival": 1000,
+        "bulletDamage": 1585,
+        "firstPlaces": 20
+      },
+      "scoreShare": 0.03484754200373367,
+      "modelSHA256": "77bddcc589386643bd422ce688b8ee08842340d9db1d242b4690a946851e7d09",
+      "modelBytes": 3780102,
+      "finalCumulativeTelemetry": {
+        "schema": 3,
+        "gameId": "game-1-bc93d9f4-8056-4fcc-bacd-715a7a234b40",
+        "scope": "game-cumulative; neighborBytes gauge; GC process-cumulative",
+        "round": 20,
+        "terminalTurn": 350,
+        "ownStateVersion": 74158,
+        "snapshotStatus": "success",
+        "terminalObservation": "success",
+        "terminalHash": "success",
+        "shotsRequested": 294,
+        "shotsAccepted": 294,
+        "shotsConfirmed": 294,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 5198720,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 764,
+        "gcMillis": 1062,
+        "counters": {
+          "bullet.contact": 6,
+          "gun.cohort.common": 294,
+          "gun.cohort.confirmed": 294,
+          "incoming.hit": 299,
+          "incoming.uncertainContact": 50,
+          "incoming.unmatched": 4,
+          "inference.ambiguous": 100,
+          "inference.reliable": 1239,
+          "learning.terminalNoLearning": 20,
+          "melee.neighborQueries": 0,
+          "melee.projectionPasses": 0,
+          "melee.projectionSamples": 0,
+          "melee.queryReturnedSamples": 0,
+          "shot.hit": 17,
+          "trace.truncated": 221098,
+          "turn.decisions": 18888
+        },
+        "observationsCountSumMinMax": {
+          "damageGiven": [
+            17.0,
+            111.57399742987081,
+            0.8,
+            10.0
+          ],
+          "damageTaken": [
+            299.0,
+            1635.1158794886219,
+            0.4,
+            9.7
+          ],
+          "energy": [
+            18888.0,
+            816478.2940858265,
+            0.0,
+            102.0
+          ],
+          "energyFireCost": [
+            294.0,
+            483.27025092801745,
+            0.2,
+            2.0
+          ],
+          "energyHitBonus": [
+            17.0,
+            68.68049807240311,
+            0.6000000000000001,
+            6.0
+          ],
+          "gun.cohort.headingErrorRadians": [
+            294.0,
+            3.759145772441741e-14,
+            0.0,
+            1.7763568394002505e-15
+          ],
+          "gun.cohort.requestAge": [
+            294.0,
+            294.0,
+            1.0,
+            1.0
+          ],
+          "meleeDecisionPasses": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionQueries": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionReturned": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionSamples": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeProjectionPasses": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeUnsafeFallbacks": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "predictorSteps": [
+            18888.0,
+            3781004.0,
+            2.0,
+            475.0
+          ],
+          "range": [
+            18797.0,
+            8220888.331248301,
+            113.13150696098164,
+            691.7514511371608
+          ],
+          "realWaveOverflow": [
+            18888.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scanAge": [
+            18797.0,
+            1159.0,
+            0.0,
+            23.0
+          ],
+          "shadowAllocationUnits": [
+            18888.0,
+            281133440.0,
+            0.0,
+            206080.0
+          ],
+          "shadowFallbacks": [
+            18888.0,
+            91548450.0,
+            0.0,
+            10434.0
+          ],
+          "shadowIntervals": [
+            18888.0,
+            144931.0,
+            0.0,
+            71.0
+          ],
+          "shadowSegmentWork": [
+            18888.0,
+            2196355.0,
+            0.0,
+            1610.0
+          ],
+          "waves": [
+            18888.0,
+            2597560.0,
+            0.0,
+            197.0
+          ]
+        },
+        "timingLog2Nanos": {
+          "decision": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9,
+            24,
+            241,
+            168,
+            136,
+            350,
+            2439,
+            6509,
+            8701,
+            302,
+            7,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gun": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            10,
+            52,
+            23,
+            177,
+            18,
+            1,
+            67,
+            1823,
+            1313,
+            234,
+            8,
+            35,
+            308,
+            857,
+            8522,
+            5308,
+            130,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inference": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            10,
+            34,
+            80,
+            294,
+            825,
+            7926,
+            5277,
+            3311,
+            1037,
+            74,
+            17,
+            13,
+            6,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "movement": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            90,
+            260,
+            156,
+            34,
+            9,
+            284,
+            1913,
+            8052,
+            7700,
+            318,
+            48,
+            22,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "radar": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            48,
+            6745,
+            3658,
+            7285,
+            726,
+            357,
+            55,
+            7,
+            2,
+            2,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "storage": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            81,
+            208,
+            103,
+            184,
+            259,
+            1592,
+            2042,
+            6027,
+            7618,
+            690,
+            81,
+            13,
+            2,
+            3,
+            4,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "criticalKinds": {
+        "model.roundHash": 20,
+        "completion.persisted": 20,
+        "gun.cohort.confirmed": 188,
+        "lifecycle.lateTick": 2
+      },
+      "cohortSamples": 188,
+      "cohortSampleKinds": {
+        "common": 188
+      },
+      "sampleRounds": {
+        "3": 12,
+        "4": 12,
+        "6": 16,
+        "7": 16,
+        "8": 16,
+        "9": 16,
+        "11": 12,
+        "12": 11,
+        "13": 16,
+        "15": 12,
+        "16": 7,
+        "17": 5,
+        "18": 5,
+        "19": 16,
+        "20": 16
+      },
+      "sampleHeadingErrorMaxRadians": 1.5314274795707798e-15,
+      "samplesWithDivergentRecentVersions": 188,
+      "traceRows": 100000,
+      "lastTraceIdentity": {
+        "round": 10,
+        "turn": 569
+      },
+      "latency": {
+        "decision": {
+          "count": 18888,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              4.194304,
+              8.388608
+            ],
+            "1.0": [
+              33.554432,
+              67.108864
+            ]
+          }
+        },
+        "gun": {
+          "count": 18888,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "inference": {
+          "count": 18908,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.131072,
+              0.262144
+            ],
+            "0.99": [
+              0.131072,
+              0.262144
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        },
+        "movement": {
+          "count": 18888,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.262144,
+              0.524288
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "radar": {
+          "count": 18888,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.002048,
+              0.004096
+            ],
+            "0.95": [
+              0.008192,
+              0.016384
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ],
+            "1.0": [
+              0.524288,
+              1.048576
+            ]
+          }
+        },
+        "storage": {
+          "count": 18908,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.016384,
+              0.032768
+            ],
+            "0.95": [
+              0.032768,
+              0.065536
+            ],
+            "0.99": [
+              0.065536,
+              0.131072
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": 4,
+      "gameId": "game-1-8c1bc89b-c0e8-4581-8df8-d8782d437fe2",
+      "seed": 49670,
+      "launchOrder": [
+        "diamond-port",
+        "Facet"
+      ],
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 2,
+        "totalScore": 385,
+        "survival": 50,
+        "bulletDamage": 316,
+        "firstPlaces": 1
+      },
+      "opponent": {
+        "id": 1,
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "rank": 1,
+        "totalScore": 2762,
+        "survival": 950,
+        "bulletDamage": 1352,
+        "firstPlaces": 19
+      },
+      "scoreShare": 0.12233873530346362,
+      "modelSHA256": "49ab75b0f4362303ad87402a808a2c935389c8f41931481b76cc54fb8758ae8d",
+      "modelBytes": 2865646,
+      "finalCumulativeTelemetry": {
+        "schema": 3,
+        "gameId": "game-1-8c1bc89b-c0e8-4581-8df8-d8782d437fe2",
+        "scope": "game-cumulative; neighborBytes gauge; GC process-cumulative",
+        "round": 20,
+        "terminalTurn": 209,
+        "ownStateVersion": 48445,
+        "snapshotStatus": "success",
+        "terminalObservation": "success",
+        "terminalHash": "success",
+        "shotsRequested": 481,
+        "shotsAccepted": 481,
+        "shotsConfirmed": 481,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 3948200,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 382,
+        "gcMillis": 498,
+        "counters": {
+          "bullet.contact": 20,
+          "gun.cohort.analyticOnly": 6,
+          "gun.cohort.common": 475,
+          "gun.cohort.confirmed": 481,
+          "incoming.hit": 225,
+          "incoming.uncertainContact": 72,
+          "incoming.unmatched": 32,
+          "inference.ambiguous": 138,
+          "inference.reliable": 703,
+          "learning.terminalNoLearning": 20,
+          "melee.neighborQueries": 0,
+          "melee.projectionPasses": 0,
+          "melee.projectionSamples": 0,
+          "melee.queryReturnedSamples": 0,
+          "movement.emergency": 55,
+          "shot.hit": 35,
+          "trace.truncated": 70590,
+          "turn.decisions": 13207
+        },
+        "observationsCountSumMinMax": {
+          "damageGiven": [
+            35.0,
+            320.38706552550343,
+            1.5286397802354506,
+            14.799999999999999
+          ],
+          "damageTaken": [
+            225.0,
+            1407.47644355903,
+            0.4,
+            15.700000000000001
+          ],
+          "energy": [
+            13207.0,
+            679159.2307258451,
+            0.0,
+            100.0
+          ],
+          "energyFireCost": [
+            481.0,
+            793.43322142184,
+            0.2,
+            2.8
+          ],
+          "energyHitBonus": [
+            35.0,
+            193.80847347378025,
+            1.146479835176588,
+            8.399999999999999
+          ],
+          "gun.cohort.headingErrorRadians": [
+            481.0,
+            0.0016682663723576463,
+            0.0,
+            0.001668266372285565
+          ],
+          "gun.cohort.requestAge": [
+            481.0,
+            481.0,
+            1.0,
+            1.0
+          ],
+          "meleeDecisionPasses": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionQueries": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionReturned": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionSamples": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeProjectionPasses": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeUnsafeFallbacks": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "predictorSteps": [
+            13207.0,
+            2564520.0,
+            2.0,
+            474.0
+          ],
+          "range": [
+            13123.0,
+            6138771.17898855,
+            104.6868077220267,
+            739.6660912959348
+          ],
+          "realWaveOverflow": [
+            13207.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scanAge": [
+            13123.0,
+            276.0,
+            0.0,
+            23.0
+          ],
+          "shadowAllocationUnits": [
+            13207.0,
+            462305152.0,
+            0.0,
+            213504.0
+          ],
+          "shadowFallbacks": [
+            13207.0,
+            71515084.0,
+            0.0,
+            13670.0
+          ],
+          "shadowIntervals": [
+            13207.0,
+            252946.0,
+            0.0,
+            79.0
+          ],
+          "shadowSegmentWork": [
+            13207.0,
+            3611759.0,
+            0.0,
+            1668.0
+          ],
+          "waves": [
+            13207.0,
+            1077266.0,
+            0.0,
+            197.0
+          ]
+        },
+        "timingLog2Nanos": {
+          "decision": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            31,
+            152,
+            269,
+            206,
+            687,
+            3905,
+            4239,
+            3638,
+            72,
+            6,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gun": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            41,
+            25,
+            25,
+            12,
+            13,
+            21,
+            2657,
+            1962,
+            570,
+            104,
+            160,
+            789,
+            1253,
+            3574,
+            1983,
+            12,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inference": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            36,
+            32,
+            263,
+            674,
+            2563,
+            3917,
+            4179,
+            1357,
+            162,
+            19,
+            14,
+            9,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "movement": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            21,
+            389,
+            245,
+            84,
+            15,
+            189,
+            875,
+            6344,
+            4566,
+            433,
+            37,
+            7,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "radar": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            23,
+            1040,
+            1239,
+            9679,
+            797,
+            354,
+            59,
+            8,
+            2,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "storage": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            56,
+            297,
+            123,
+            149,
+            293,
+            2446,
+            3121,
+            3335,
+            3116,
+            263,
+            19,
+            1,
+            2,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "criticalKinds": {
+        "gun.cohort.confirmed": 246,
+        "model.roundHash": 20,
+        "completion.persisted": 20,
+        "lifecycle.lateTick": 1
+      },
+      "cohortSamples": 246,
+      "cohortSampleKinds": {
+        "analyticOnly": 6,
+        "common": 240
+      },
+      "sampleRounds": {
+        "1": 16,
+        "2": 16,
+        "3": 16,
+        "4": 16,
+        "5": 16,
+        "6": 16,
+        "7": 16,
+        "8": 16,
+        "9": 16,
+        "10": 16,
+        "11": 14,
+        "13": 16,
+        "14": 16,
+        "16": 16,
+        "17": 12,
+        "20": 12
+      },
+      "sampleHeadingErrorMaxRadians": 0.0016682663722855653,
+      "samplesWithDivergentRecentVersions": 230,
+      "traceRows": 100000,
+      "lastTraceIdentity": {
+        "round": 11,
+        "turn": 1782
+      },
+      "latency": {
+        "decision": {
+          "count": 13207,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              33.554432,
+              67.108864
+            ]
+          }
+        },
+        "gun": {
+          "count": 13207,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.524288,
+              1.048576
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "inference": {
+          "count": 13227,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.131072,
+              0.262144
+            ],
+            "0.99": [
+              0.262144,
+              0.524288
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        },
+        "movement": {
+          "count": 13207,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.262144,
+              0.524288
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "radar": {
+          "count": 13207,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.004096,
+              0.008192
+            ],
+            "0.95": [
+              0.008192,
+              0.016384
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ],
+            "1.0": [
+              0.524288,
+              1.048576
+            ]
+          }
+        },
+        "storage": {
+          "count": 13227,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.016384,
+              0.032768
+            ],
+            "0.95": [
+              0.032768,
+              0.065536
+            ],
+            "0.99": [
+              0.065536,
+              0.131072
+            ],
+            "1.0": [
+              1.048576,
+              2.097152
+            ]
+          }
+        }
+      }
+    },
+    {
+      "game": 5,
+      "gameId": "game-1-ae12fcbb-0f3e-4393-8948-02dce46c4ea6",
+      "seed": 49671,
+      "launchOrder": [
+        "Facet",
+        "diamond-port"
+      ],
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 2,
+        "totalScore": 174,
+        "survival": 0,
+        "bulletDamage": 174,
+        "firstPlaces": 0
+      },
+      "opponent": {
+        "id": 1,
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "rank": 1,
+        "totalScore": 3093,
+        "survival": 1000,
+        "bulletDamage": 1578,
+        "firstPlaces": 20
+      },
+      "scoreShare": 0.05325987144168962,
+      "modelSHA256": "9b50f102240558e734bf5b5ac7f41455b855a7dee1dbae5b7467d548179737c6",
+      "modelBytes": 3795928,
+      "finalCumulativeTelemetry": {
+        "schema": 3,
+        "gameId": "game-1-ae12fcbb-0f3e-4393-8948-02dce46c4ea6",
+        "scope": "game-cumulative; neighborBytes gauge; GC process-cumulative",
+        "round": 20,
+        "terminalTurn": 597,
+        "ownStateVersion": 77969,
+        "snapshotStatus": "success",
+        "terminalObservation": "success",
+        "terminalHash": "success",
+        "shotsRequested": 318,
+        "shotsAccepted": 318,
+        "shotsConfirmed": 318,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 5220800,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 652,
+        "gcMillis": 844,
+        "counters": {
+          "bullet.contact": 8,
+          "gun.cohort.analyticOnly": 9,
+          "gun.cohort.common": 309,
+          "gun.cohort.confirmed": 318,
+          "incoming.hit": 332,
+          "incoming.uncertainContact": 62,
+          "incoming.unmatched": 6,
+          "inference.ambiguous": 133,
+          "inference.reliable": 1294,
+          "learning.terminalNoLearning": 20,
+          "melee.neighborQueries": 0,
+          "melee.projectionPasses": 0,
+          "melee.projectionSamples": 0,
+          "melee.queryReturnedSamples": 0,
+          "shot.hit": 22,
+          "trace.truncated": 242785,
+          "turn.decisions": 19880
+        },
+        "observationsCountSumMinMax": {
+          "damageGiven": [
+            22.0,
+            173.8190910264038,
+            0.8,
+            14.799999999999999
+          ],
+          "damageTaken": [
+            332.0,
+            1617.3457925955813,
+            0.4,
+            9.7
+          ],
+          "energy": [
+            19880.0,
+            876559.9472407752,
+            0.0,
+            105.6
+          ],
+          "energyFireCost": [
+            318.0,
+            527.2563467812324,
+            0.2,
+            2.8
+          ],
+          "energyHitBonus": [
+            22.0,
+            105.10666166897639,
+            0.6000000000000001,
+            8.399999999999999
+          ],
+          "gun.cohort.headingErrorRadians": [
+            318.0,
+            0.008575584008340813,
+            0.0,
+            0.008575584008304438
+          ],
+          "gun.cohort.requestAge": [
+            318.0,
+            318.0,
+            1.0,
+            1.0
+          ],
+          "meleeDecisionPasses": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionQueries": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionReturned": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeDecisionSamples": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeProjectionPasses": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meleeUnsafeFallbacks": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "predictorSteps": [
+            19880.0,
+            3909805.0,
+            2.0,
+            518.0
+          ],
+          "range": [
+            19793.0,
+            8437972.701911502,
+            93.854892186284,
+            672.7165795026318
+          ],
+          "realWaveOverflow": [
+            19880.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scanAge": [
+            19793.0,
+            1723.0,
+            0.0,
+            24.0
+          ],
+          "shadowAllocationUnits": [
+            19880.0,
+            264210432.0,
+            0.0,
+            162816.0
+          ],
+          "shadowFallbacks": [
+            19880.0,
+            76450272.0,
+            0.0,
+            14648.0
+          ],
+          "shadowIntervals": [
+            19880.0,
+            162992.0,
+            0.0,
+            60.0
+          ],
+          "shadowSegmentWork": [
+            19880.0,
+            2064144.0,
+            0.0,
+            1272.0
+          ],
+          "waves": [
+            19880.0,
+            2742514.0,
+            0.0,
+            197.0
+          ]
+        },
+        "timingLog2Nanos": {
+          "decision": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9,
+            36,
+            227,
+            219,
+            132,
+            390,
+            2510,
+            6517,
+            9559,
+            272,
+            7,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "gun": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            16,
+            44,
+            20,
+            163,
+            11,
+            0,
+            79,
+            2279,
+            834,
+            343,
+            128,
+            210,
+            661,
+            626,
+            9317,
+            5078,
+            69,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inference": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            26,
+            46,
+            242,
+            642,
+            5316,
+            9468,
+            3005,
+            881,
+            218,
+            32,
+            15,
+            3,
+            5,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "movement": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            79,
+            288,
+            150,
+            52,
+            19,
+            368,
+            2413,
+            7373,
+            8312,
+            739,
+            67,
+            19,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "radar": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            103,
+            7292,
+            4052,
+            7402,
+            667,
+            299,
+            50,
+            3,
+            4,
+            3,
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "storage": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            50,
+            234,
+            169,
+            112,
+            301,
+            1636,
+            2026,
+            6382,
+            8489,
+            470,
+            20,
+            4,
+            3,
+            1,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "criticalKinds": {
+        "gun.cohort.confirmed": 192,
+        "model.roundHash": 20,
+        "completion.persisted": 20,
+        "lifecycle.lateTick": 3
+      },
+      "cohortSamples": 192,
+      "cohortSampleKinds": {
+        "analyticOnly": 9,
+        "common": 183
+      },
+      "sampleRounds": {
+        "1": 16,
+        "2": 16,
+        "3": 5,
+        "4": 16,
+        "5": 4,
+        "7": 7,
+        "8": 8,
+        "9": 16,
+        "10": 16,
+        "13": 16,
+        "14": 14,
+        "15": 10,
+        "17": 16,
+        "18": 16,
+        "20": 16
+      },
+      "sampleHeadingErrorMaxRadians": 0.008575584008304438,
+      "samplesWithDivergentRecentVersions": 170,
+      "traceRows": 100000,
+      "lastTraceIdentity": {
+        "round": 7,
+        "turn": 799
+      },
+      "latency": {
+        "decision": {
+          "count": 19880,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              4.194304,
+              8.388608
+            ],
+            "1.0": [
+              33.554432,
+              67.108864
+            ]
+          }
+        },
+        "gun": {
+          "count": 19880,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              1.048576,
+              2.097152
+            ],
+            "0.95": [
+              2.097152,
+              4.194304
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "inference": {
+          "count": 19900,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.131072,
+              0.262144
+            ],
+            "0.99": [
+              0.262144,
+              0.524288
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "movement": {
+          "count": 19880,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.262144,
+              0.524288
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ],
+            "1.0": [
+              8.388608,
+              16.777216
+            ]
+          }
+        },
+        "radar": {
+          "count": 19880,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.002048,
+              0.004096
+            ],
+            "0.95": [
+              0.008192,
+              0.016384
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ],
+            "1.0": [
+              1.048576,
+              2.097152
+            ]
+          }
+        },
+        "storage": {
+          "count": 19900,
+          "bucketIntervalsMillis": {
+            "0.5": [
+              0.016384,
+              0.032768
+            ],
+            "0.95": [
+              0.032768,
+              0.065536
+            ],
+            "0.99": [
+              0.065536,
+              0.131072
+            ],
+            "1.0": [
+              4.194304,
+              8.388608
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

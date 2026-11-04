@@ -1,0 +1,58 @@
+facet	Build Facet, run semantics, verify committed artifact	﻿2026-11-04T16:40:22.8322374Z ##[group]Run ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8323491Z ^[[36;1m./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity^[[0m
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8409540Z shell: /usr/bin/bash -e {0}
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8410041Z env:
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8410797Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8411697Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:22.8412372Z ##[endgroup]
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:23.1379505Z Downloading https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:25.3026973Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%..............100%
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6881180Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6882750Z Welcome to Gradle 8.14.3!
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6883121Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6884990Z Here are the highlights of this release:
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6885613Z  - Java 24 support
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6887340Z  - GraalVM Native Image toolchain selection
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6888241Z  - Enhancements to test reporting
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6889633Z  - Build Authoring improvements
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6894467Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6895339Z For more details see https://docs.gradle.org/8.14.3/release-notes.html
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.6896596Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:26.7871146Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:27.8881535Z Daemon will be stopped at the end of the build 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:34.6911261Z > Task :clean UP-TO-DATE
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.1870988Z > Task :compileJava
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.1891250Z > Task :processResources
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.1910586Z > Task :classes
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.4877928Z > Task :jar
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.7867922Z > Task :startScripts
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.7891892Z > Task :distTar
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.8874057Z > Task :distZip
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:37.8891586Z > Task :assemble
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:38.7870624Z > Task :compileTestJava
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:38.7901463Z > Task :processTestResources
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:38.7910827Z > Task :testClasses
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2871286Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2873929Z > Task :adapterConcurrencyTest FAILED
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2875445Z Exception in thread "main" java.lang.NullPointerException
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2883763Z 10 actionable tasks: 9 executed, 1 up-to-date
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2917694Z 	at java.base/java.util.Objects.requireNonNull(Objects.java:209)
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2931491Z 	at java.base/sun.nio.fs.UnixFileSystem.getPath(UnixFileSystem.java:263)
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2932644Z 	at java.base/java.nio.file.Path.of(Path.java:147)
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2933916Z 	at AdapterConcurrencyTest.actualFileRollback(AdapterConcurrencyTest.java:192)
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2935352Z 	at AdapterConcurrencyTest.main(AdapterConcurrencyTest.java:324)
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2936132Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2936508Z FAILURE: Build failed with an exception.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2937059Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2937375Z * What went wrong:
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2938143Z Execution failed for task ':adapterConcurrencyTest'.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2939369Z > Process 'command '/usr/lib/jvm/temurin-17-jdk-amd64/bin/java'' finished with non-zero exit value 1
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2940683Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2941022Z * Try:
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2941681Z > Run with --stacktrace option to get the stack trace.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2942629Z > Run with --info or --debug option to get more log output.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2943435Z > Run with --scan to get full insights.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2944199Z > Get more help at https://help.gradle.org.
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2944799Z 
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.2945155Z BUILD FAILED in 16s
+facet	Build Facet, run semantics, verify committed artifact	2026-11-04T16:40:39.4957685Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,86 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+
+> Task :adapterConcurrencyTest
+PASS adapter actual-thread barriers, frozen pending evidence, hash/write faults, lifecycle orders assertions=54 battles=0
+
+> Task :preparedCohortTest
+{"schema":3,"gameId":"fixture-c8530cef-5038-4e5a-ab9b-c98367d73643","kind":"gun.cohort.confirmed","round":1,"turn":42,"value":"physicalWave=4 request=41 creation=42 actualAngle=0.6474741377486504 actualOrigin=V[x=399.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14365846686513406, 0.8744698641252813, -0.030454174372522305, 0.3333333333333333, 0.9993941304288929, 0.03480477071145406, 1.5, 1.5, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=2 selected=analytic origin=V[x=399.0, y=300.0] target=2 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=308.0], heading=1.5707963267948966, speed=8.0, gun=0.0, radar=0.0, heat=0.0] positive=0.6618849889570916 negative=0.3859939796560122 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14368510070033463, 0.9992088801945921, -0.03976950766943653, 0.0, 0.9992088801945921, 0.03976950766943653, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=2, turn=40, angle=0.6474741377486504, power=2.0, version=16], long=Prediction[gun=long, wave=2, turn=40, angle=0.3707224929495726, power=2.0, version=16], recent=Prediction[gun=recent, wave=2, turn=40, angle=0.3707224929495726, power=2.0, version=16]} modelViews={analytic=[], long=[16], recent=[16, 16, 16]}"}
+{"schema":3,"gameId":"fixture-297eabe9-e263-4d2b-8b57-f1bfe6bc4880","kind":"gun.cohort.confirmed","round":1,"turn":42,"value":"physicalWave=4 request=41 creation=42 actualAngle=0.6518374608786361 actualOrigin=V[x=399.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14365846686513406, 0.8744698641252813, -0.030454174372522305, 0.3333333333333333, 0.9993941304288929, 0.03480477071145406, 1.5, 1.5, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=2 selected=analytic origin=V[x=399.0, y=300.0] target=2 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=308.0], heading=1.5707963267948966, speed=8.0, gun=0.0, radar=0.0, heat=0.0] positive=0.6618849889570916 negative=0.3859939796560122 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14368510070033463, 0.9992088801945921, -0.03976950766943653, 0.0, 0.9992088801945921, 0.03976950766943653, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=2, turn=40, angle=0.6474741377486504, power=2.0, version=0]} modelViews={analytic=[]}"}
+{"schema":3,"gameId":"fixture-1bdf0897-0939-4175-9e3c-23002384e387","kind":"gun.cohort.confirmed","round":1,"turn":42,"value":"physicalWave=3 request=41 creation=42 actualAngle=0.6082452344191298 actualOrigin=V[x=399.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14365846686513406, 0.8744698641252813, -0.030454174372522305, 0.3333333333333333, 0.9993941304288929, 0.03480477071145406, 1.5, 1.5, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=-1 selected=analytic origin=V[x=399.0, y=300.0] target=2 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=300.0], heading=1.5707963267948966, speed=8.0, gun=0.0, radar=0.0, heat=0.0] positive=0.6082455789102096 negative=0.6082455789102096 quality=0.5 mask=65535 features=[] predictions={analytic=Prediction[gun=analytic, wave=-1, turn=40, angle=0.6082452344191298, power=2.0, version=16]} modelViews={analytic=[]}"}
+{"schema":3,"gameId":"fixture-15029bef-0cdc-4b21-8ef5-8831f90099f4","kind":"gun.cohort.confirmed","round":1,"turn":43,"value":"physicalWave=6 request=42 creation=43 actualAngle=0.6474741377486504 actualOrigin=V[x=399.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14397066027634994, 0.9972269926097788, -0.07441992482162539, 1.0, 0.9972269926097788, 0.07441992482162539, 1.5, 1.5, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=2 selected=analytic origin=V[x=399.0, y=300.0] target=2 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=308.0], heading=1.5707963267948966, speed=8.0, gun=0.0, radar=0.0, heat=0.0] positive=0.6618849889570916 negative=0.3859939796560122 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14368510070033463, 0.9992088801945921, -0.03976950766943653, 0.0, 0.9992088801945921, 0.03976950766943653, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=2, turn=40, angle=0.6474741377486504, power=2.0, version=16], long=Prediction[gun=long, wave=2, turn=40, angle=0.3707224929495726, power=2.0, version=16], recent=Prediction[gun=recent, wave=2, turn=40, angle=0.3707224929495726, power=2.0, version=16]} modelViews={analytic=[], long=[16], recent=[16, 16, 16]}"}
+PASS prepared cohort actual-Core regression assertions=111 battles=0
+
+> Task :semanticTest
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+{"schema":3,"gameId":"game-1-3bcb6059-7b48-4c32-8337-60b38a08a28c","kind":"gun.cohort.confirmed","round":1,"turn":42,"value":"physicalWave=4 request=41 creation=42 actualAngle=0.0 actualOrigin=V[x=400.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14285714285714288, 0.0, -0.0, 0.6666666666666666, 0.0, 1.0, 1.5, 1.5, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=2 selected=analytic origin=V[x=399.0, y=300.0] target=1 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=300.0], heading=0.0, speed=0.0, gun=0.0, radar=0.0, heat=0.0] positive=0.4665048329425316 negative=0.4665048329425317 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14357142857142857, 0.0, -0.0, 0.0, 0.0, 1.0, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=2, turn=40, angle=0.0, power=2.0, version=0]} modelViews={analytic=[]}"}
+{"schema":3,"gameId":"game-2-893b592d-ce18-4035-b565-f43b72dbd43b","kind":"model.roundHash","round":1,"turn":1,"value":"797daa9580e27d865be21cc04bf5bb5f07705bffe6c734f882fb366fa374a54f"}
+{"schema":3,"gameId":"game-1-907edc8d-f781-42d5-824d-e56945a7b7d0","kind":"gun.cohort.confirmed","round":1,"turn":42,"value":"physicalWave=4 request=41 creation=42 actualAngle=0.0 actualOrigin=V[x=400.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14285714285714288, 0.0, -0.0, 0.6666666666666666, 0.0, 1.0, 1.5, 1.5, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=40 expectedOriginTurn=41 preparedWave=2 selected=analytic origin=V[x=399.0, y=300.0] target=1 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=300.0], heading=0.0, speed=0.0, gun=0.0, radar=0.0, heat=0.0] positive=0.4665048329425316 negative=0.4665048329425317 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14357142857142857, 0.0, -0.0, 0.0, 0.0, 1.0, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=2, turn=40, angle=0.0, power=2.0, version=0]} modelViews={analytic=[]}"}
+{"schema":3,"gameId":"game-2-98eec87f-7612-475b-8fc3-a5d22f14a358","kind":"model.roundHash","round":1,"turn":1,"value":"797daa9580e27d865be21cc04bf5bb5f07705bffe6c734f882fb366fa374a54f"}
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+{"schema":3,"gameId":"fixture-1e1dc384-fd26-4d18-85d9-9bb22cf11350","kind":"gun.cohort.confirmed","round":1,"turn":3,"value":"physicalWave=2 request=2 creation=3 actualAngle=0.0 actualOrigin=V[x=400.0, y=300.0] physicalMask=14336 physicalFeatures=[0.6666666666666666, 0.14285714285714288, 0.0, -0.0, 0.6666666666666666, 0.0, 1.0, 1.5, 1.5, 0.13999999999999999, 0.13999999999999999, 0.0, 0.0, 0.0, 0.0, 1.0] preparedTurn=1 expectedOriginTurn=2 preparedWave=1 selected=analytic origin=V[x=399.0, y=300.0] target=1 meleeOrigin=false targetOrigin=Body[p=V[x=600.0, y=300.0], heading=0.0, speed=0.0, gun=0.0, radar=0.0, heat=0.0] positive=0.4665048329425316 negative=0.4665048329425317 quality=0.5 mask=15888 features=[0.6666666666666666, 0.14357142857142857, 0.0, -0.0, 0.0, 0.0, 1.0, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] predictions={analytic=Prediction[gun=analytic, wave=1, turn=1, angle=0.0, power=2.0, version=0]} modelViews={analytic=[]}"}
+{"schema":3,"gameId":"fixture-79c49678-9cfa-4ff8-adf8-104c178461c4","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalStateException"}
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS active melee and radar
+{"schema":3,"gameId":"fixture-1dc589eb-9a4d-40b7-a97e-25d4d4ce1774","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalStateException"}
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=539416 maxns=1329500 totalns=16805167
+PASS bounded full-store stress
+quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+{"schema":3,"gameId":"fixture-9b61a68a-aa91-458c-b6a1-3146daf939c0","kind":"failure","round":0,"turn":0,"value":"movement:java.lang.ClassCastException: class java.lang.String cannot be cast to class Physics$V (java.lang.String is in module java.base of loader 'bootstrap'; Physics$V is in unnamed module of loader 'app')"}
+{"schema":3,"gameId":"fixture-902fe371-6d7b-49dd-b788-8b08790be552","kind":"failure","round":0,"turn":0,"value":"gun:java.lang.IllegalArgumentException: distance overflow"}
+PASS active melee corrections
+total-quota no-fire queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota physical-preparation queries=2 returned=26 projections=26 iterations=26 distanceEvaluations=16384
+total-quota confirmation queries=0 returned=0 projections=0 iterations=0 distanceEvaluations=0
+{"schema":3,"gameId":"fixture-e6e952be-5103-4290-a188-8977c7cdbf92","kind":"gun.cohort.confirmed","round":1,"turn":23,"value":"physicalWave=7 request=22 creation=23 actualAngle=0.0 actualOrigin=V[x=398.0, y=300.0] physicalMask=10240 physicalFeatures=[0.6666666666666666, 0.1442857142857143, 0.0, -0.0, 0.6666666666666666, 0.0, 1.0, 1.5, 1.5, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.5] preparedTurn=21 expectedOriginTurn=22 preparedWave=6 selected=recent origin=V[x=398.0, y=300.0] target=1 meleeOrigin=true targetOrigin=Body[p=V[x=600.0, y=300.0], heading=0.0, speed=0.0, gun=0.0, radar=0.0, heat=0.0] positive=0.4649039732948972 negative=0.4649039732948973 quality=0.5 mask=11792 features=[0.6666666666666666, 0.1442857142857143, 0.0, -0.0, 0.0, 0.0, 1.0, 1.5, 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5] predictions={analytic=Prediction[gun=analytic, wave=6, turn=21, angle=0.0, power=2.0, version=8196], long=Prediction[gun=long, wave=6, turn=21, angle=0.0, power=2.0, version=8196], recent=Prediction[gun=recent, wave=6, turn=21, angle=0.0, power=2.0, version=8196]} modelViews={analytic=[], long=[8196], recent=[132, 516, 2052]}"}
+total-quota cycling-no-fire queries=3 returned=80 projections=80 iterations=933 distanceEvaluations=24576
+PASS whole Core melee TOTAL80
+PASS groups=20 assertions=10243 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+
+> Task :test
+
+> Task :verifyJarParity
+PASS source/JAR payload parity entries=841 jar=7ed22f7340b99cac4bff7bec4fa9b1ad3e1510a14dfb5db1daea451a41f52296
+
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/experiments/Facet/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+14 actionable tasks: 14 executed

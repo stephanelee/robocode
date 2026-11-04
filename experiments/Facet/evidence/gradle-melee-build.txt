@@ -1,0 +1,60 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+
+> Task :semanticTest
+PASS revision2 semantic blockers
+actual trace replay motion=866 physical fired callbacks=1 clocks=55/56
+PASS actual motion and shot clocks
+controlled native two-wave actions=1/0 costs=0.48849771845467166/0.9953806879638507
+PASS review regressions
+PASS native angles and GF
+PASS native predictor invariants
+PASS exact finite neighbors
+PASS history quality and lifecycle
+PASS circular swept geometry
+PASS shadow validity
+PASS energy and power
+PASS actual official energy replay
+PASS fire transaction synthetic
+PASS learning chronology and integration
+two-wave corrected fixture actions=1/1 costs=0.48849771845467166/0.6216610940071685
+PASS two-wave planner
+PASS active melee and radar
+PASS package boundary and risk bounds
+PASS determinism, online learning and export
+offline stress: payloadBytes=4999680 waves=256 iterations=20 p50ns=638750 maxns=1313083 totalns=18292958
+PASS bounded full-store stress
+quota reproduction: power=1.5 range=539.1304226442027 actualSamples=53 stages=2; cycleSamples=80 stages=3
+offline active melee: targets=4 waves=8 filledDisplacementStores=16 payloadBytes=10444800 predictorSteps=437.0 projectionPasses=1 samples=24 solveIterations=60 selectedSteps=8 quotaFallbacks=0 allUnsafe=0
+PASS active melee corrections
+PASS groups=19 assertions=10192 motion/shot-clock fixture replay=PASS live adapter review=PENDING battles=0
+
+> Task :test
+
+> Task :verifyJarParity
+PASS source/JAR payload parity entries=835 jar=78f460de523f8eb15f7998b7f94d75ec150f1ed8e3ef4b6a0a5b4d4957afc1b9
+
+> Task :check
+> Task :build
+
+[Incubating] Problems report is available at: file:///Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/experiments/Facet/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+11 actionable tasks: 11 executed

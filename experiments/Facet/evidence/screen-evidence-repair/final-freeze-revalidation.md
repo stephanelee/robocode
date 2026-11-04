@@ -1,0 +1,9 @@
+# Independent final registration revalidation
+
+2026-11-04. **Approve publication of exactly this registration to trigger the separately authorized Diamond-only100-round acquisition.** Reviewer launches no games and grants no merge/promotion/retry authority.
+
+Exact file: /tmp/facet-diamond-100.approved-freeze.json. SHA256 `1db6ea8f4757bf9e1e4c77c6fbc900dd7ad2deac0d2749ccc2d2b96db220815b` independently recomputed. All31 frozen file pins and44 source/input hashes independently validate; registration authorization guards pass.
+
+Compared structurally against independently reviewed draft954d402c995656606dbd1b4e9596f67267117f52fd67671b780400fe8efd1307. Changes are exactly purpose wording, premeasurementApproved=true, final independent approval reference/SHA, and two added evidence pins: diamond-premeasurement-approval.md and verified-ci.json. Every existing file pin is unchanged. Candidate commit57ec8d521ccb4547240e36964e9a0c7bcf24ad66, source dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d, JAR817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792, profile/runtime/opponents/gates/schedule remain unchanged. Final approval report SHA5704f112499d7cb6563a8e68aa278328cf55d6af7b4bc4fc1f92e4fbde94b6e5 matches copied evidence.
+
+Scope remains exactly five cold20-round games versus pinned Diamond Port,100 NEW rounds, seeds49667–49671, metrics schema3; actual user authorization is recorded. Prior invalid140 remain separate/immutable. All required reviewed CI succeeded as documented in final approval and pinned metadata. Publish only these exact registration bytes; retain preflight/runtime checks before acquisition and stop-on-invalid/no replacements/tuning/automatic confirmation. No other games or changes inherit this approval. No new screen game has run at this review time.

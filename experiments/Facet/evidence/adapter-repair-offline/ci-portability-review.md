@@ -1,0 +1,7 @@
+# Independent test portability correction review
+
+2026-11-04. Approve the test-only correction. Independently compared all44 source/input hashes against the reviewed adapter repair: only src/test/java/AdapterConcurrencyTest.java changed. actualFileRollback now uses Files.createTempDirectory(prefix), the standard JVM temporary directory, instead of constructing Path.of(null) when TMPDIR is absent. Rollback/write/force assertions and cleanup remain intact. No gameplay or runnable artifact change.
+
+Independently recomputed canonical source/input SHA256 dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d and unchanged JAR817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792. Independently compiled the test with Java17 against the committed JAR. First no-TMPDIR run reached actualFileRollback but this host sandbox denied its JVM-default /var/tmp directory; this is not the original null-environment failure. Repeated with TMPDIR still absent and JVM java.io.tmpdir=/tmp (an allowed writable root): all54 assertions PASS. Logs preserve both attempts. No network or engine run occurred. Parent's Linux/Gradle and subsequent hosted CI remain separately reported evidence, not inferred from this macOS check.
+
+User declined the fresh budget: stop with partial results, no more games. Prior proposed screen is unapproved and must remain disabled. Original140 physical rounds and invalid acquisition remain the only competitive evidence. This review grants no new measured budget, promotion or merge approval.

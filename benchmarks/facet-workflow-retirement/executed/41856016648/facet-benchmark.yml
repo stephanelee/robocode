@@ -1,0 +1,60 @@
+name: Facet registered 300-round duels
+on:
+  push:
+    branches: ['facet/independent-v1-20261104-01a1a639']
+    paths: ['docs/facet-run-300.freeze.json']
+permissions:
+  contents: read
+jobs:
+  registered-duels:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned CPython3.13.9 on Ubuntu26.04 before any acquisition
+        run: |
+          python3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence facet-runtime-preflight
+          echo "$RUNNER_TEMP/facet-python-3.13.9/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.17+10'
+      - name: Build and verify both source and committed artifacts under Java 17
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-committed.jar"
+          cp experiments/Facet/Facet.jar "$RUNNER_TEMP/Facet-committed.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+          ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
+          python tools/verify_jar.py "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/build/libs/Facet.jar
+          cp "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/Facet.jar
+      - name: Select frozen Retcon source-launch runtime after builds
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.1+8'
+      - name: Run the single registered acquisition without retries
+        run: >-
+          python tools/facet_benchmark.py
+          --freeze docs/facet-run-300.freeze.json
+          --output build/facet-registered-300
+          --cache "$RUNNER_TEMP/facet-opponent-cache"
+          --java "$JAVA_HOME/bin/java"
+          --python "$(command -v python)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: facet-registered-300-evidence
+          path: |
+            facet-runtime-preflight/
+            build/facet-registered-300/results.json
+            build/facet-registered-300/registration.json
+            build/facet-registered-300/*/battle.json
+            build/facet-registered-300/*/FACET_*
+            build/facet-registered-300/*/AIS_metrics.jsonl
+            build/facet-registered-300/*/runner.log
+            experiments/Facet/build/reports/
+            build/test-results/
+          if-no-files-found: warn

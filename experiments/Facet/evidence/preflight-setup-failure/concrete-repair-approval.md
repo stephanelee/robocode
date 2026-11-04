@@ -1,0 +1,15 @@
+# Independent concrete preflight repair review
+
+2026-11-04. Reviewer: separate Facet review agent; no gameplay implementation edits and no restricted opponent source access.
+
+**Approve the administrative CPython installation repair and the first actual registered acquisition, conditional on successful preflight, unchanged candidate pins, and publication of the final reviewed registration before acquisition.** This does not approve a measured retry, replacement, tuning, confirmation, promotion or merge.
+
+Reviewed `tools/facet_python_runtime.py`, `.github/workflows/facet-benchmark.yml`, `docs/facet-preflight-repair.md` and `/tmp/facet-publish/freeze-repair-draft.json`, SHA256 `fcaf5965613eedf488fae28faa7264831d9c9c81edb9d2f304434d21e93f402c`. Independently validated all 19 frozen file hashes and 43 source/input hashes. The bootstrap constants agree with the registration: official Python3.13.9 tar.xz, 22,681,368 bytes, SHA256 `ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66`; explicit GCC/G++/flags, normal GIL and no PGO/LTO/JIT; two build jobs; fresh installation; required import/version probe; compiler/configuration/OpenSSL/executable hash and upstream LICENSE retained. No Ubuntu image, Python version, JDK version, opponent, game budget or gameplay parameter fallback was added.
+
+Candidate JAR remains `7729fa0419dc8a6efc08ee7d5812ad28aca76195d51ce44bb53056b6c064788d`; canonical source/input remains `ea6ead0e635a78a9190ca435f476def1eeb33179ca5a4355f87a6f18c362a6d8`. Existing independent semantic/premeasurement approval therefore remains applicable. Java17 build/parity precedes JDK25 selection, committed JAR bytes are restored after parity, and all jobs remain exactly ubuntu-26.04. Workflow attempt guard and acquisition no-resume/no-replacement rules remain.
+
+Independently reran both bootstrap tests and all five acquisition tests: 7 tests passed. Evidence: `preflight-repair/runtime-tests.txt`, `preflight-repair/acquisition-tests.txt`, `preflight-repair/freeze-validation.json`. Actual Ubuntu compilation is not claimed; its recorded successful readiness and the existing runtime guards are required before the first game. Any setup failure remains preserved as preflight failure. Any invalid acquisition after games begin stops the fixed schedule without replacement.
+
+Earlier scope review independently verified run41850497212/job126645185755 stopped at setup-python; Java, build and acquisition steps were skipped. Zero measured games or rounds occurred. The preserved original registration and failure evidence must remain published. This repair consequently starts the already authorized first 300-round screen; it does not repeat an observed cohort. Preserve exactly five cold20-round games per opponent, the fixed schedule and all acceptance/rejection rules.
+
+The final registration may replace its pending setup approval field with this disposition and record the resulting registration hash. Infrastructure or candidate changes beyond that reviewed scope require renewed review. No competitive outcome exists at this review time.

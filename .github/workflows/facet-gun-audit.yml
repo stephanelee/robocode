@@ -1,0 +1,51 @@
+name: Facet historical gun and wave audit (no battles)
+on:
+  pull_request:
+    paths:
+      - 'tools/facet_gun_audit/**'
+      - 'docs/facet-gun-wave-audit*.md'
+      - 'experiments/Facet/evidence/gun-wave-audit/**'
+      - '.github/workflows/facet-gun-audit.yml'
+  push:
+    branches: [master, 'facet/**']
+    paths:
+      - 'tools/facet_gun_audit/**'
+      - 'docs/facet-gun-wave-audit*.md'
+      - 'experiments/Facet/evidence/gun-wave-audit/**'
+      - '.github/workflows/facet-gun-audit.yml'
+permissions:
+  contents: read
+jobs:
+  historical-audit:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Fetch only the frozen own Facet JAR and verify its identity
+        run: |
+          python3 - <<'PY'
+          import hashlib, os, urllib.request
+          from pathlib import Path
+          url='https://raw.githubusercontent.com/stephanelee/robocode/93863d2aa9501c537b098fe556b4ff961c9f772e/experiments/Facet/Facet.jar'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              data=response.read(5*1024*1024+1)
+          assert len(data)<=5*1024*1024
+          assert hashlib.sha256(data).hexdigest()=='817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792'
+          (Path(os.environ['RUNNER_TEMP'])/'FACET_audit-frozen.jar').write_bytes(data)
+          PY
+      - name: Reproduce capped own-trace checks and historical coherence defect
+        run: >-
+          python3 tools/facet_gun_audit/reproduce.py
+          --parts-root benchmarks/facet-diamond-repaired-100/attempt-1
+          --jar "$RUNNER_TEMP/FACET_audit-frozen.jar"
+          --java-home "$JAVA_HOME"
+          --output build/facet-gun-wave-audit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: facet-historical-gun-wave-audit
+          path: build/facet-gun-wave-audit/

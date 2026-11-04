@@ -1,0 +1,8 @@
+# Prospective Facet engine-contract diagnostic
+Registered 2026-11-04 before launching any diagnostic. Purpose: observe legal own-state and confirmed-bullet contracts of official Tank Royale 1.4.0, not competitive strength. No Facet, reference opponent, AISurvivor or reserved experiment participates.
+
+Budget: one diagnostic game with two newly written probes, one scheduled round; deliberately stop after the scripted moving probe records 400 decisions (or 240 seconds process deadline). If the first acquisition is invalid, preserve it and allow at most one separately retained second diagnostic round to correct acquisition defects only. No outcome-dependent tuning. Embedded runner allocates its own server; never use interactive port7654. No spectator state consumed.
+
+Probe Alpha records own states, complete continuous commands, event callback order, confirmed fired bullets and legal own bullet snapshots. Beta remains stopped. Alpha exercises acceleration to both signs, immediate zero-target stop, reversal from both signs, maximum turning, gun/radar decoupling, finite distance request, an isolated fire request with simultaneous rotations and movement, an east wall contact, and a corner-directed ray. Uncontrolled starts can affect wall/contact coverage; report gaps. Compare one-step own records against independently derived official engine contracts at 1e-6 position/speed and 1e-6 degrees. Fire request must use previous own position/gun heading; confirmation bullet origin and first visible moved bullet are distinct.
+
+Retain source hashes, official runner/API hashes, runtime, commands, all raw JSONL, runner logs, validation output, deliberate-stop status and coverage failures. No winners or score shares are interpreted.

@@ -1,0 +1,22 @@
+/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/GateReplay.java:24: error: constructor Budget in class Budget cannot be applied to given types;
+        enemy = new Learner.Enemy(target, new Memory.Budget(134217728));
+                                          ^
+  required: no arguments
+  found:    int
+  reason: actual and formal argument lists differ in length
+1 error
+Traceback (most recent call last):
+  File "/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/audit.py", line 355, in <module>
+    main(parser.parse_args())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/audit.py", line 323, in main
+    replay = Replay(args.java_home, args.jar, Path(directory))
+  File "/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/audit.py", line 135, in __init__
+    subprocess.run([str(java_home / 'bin/javac'), '--release', '17', '-cp', str(jar.resolve()),
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    '-d', str(directory), str(source)], check=True, env=self.env)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/subprocess.py", line 692, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command ['/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/javac', '--release', '17', '-cp', '/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/experiments/Facet/Facet.jar', '-d', '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/facet-opportunity-qpglpyqy', '/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/GateReplay.java'] returned non-zero exit status 1.

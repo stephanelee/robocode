@@ -1,0 +1,5 @@
+# Further independent screen infrastructure review
+
+2026-11-04. All14 synthetic tests pass, but current revision remains BLOCKED by an actual schema regression. The new observation-shape check requires type(count) is int. Real Diagnostics serializes double[] observations, whose counts are142.0/12140.0 etc. Independently replaying the immutable old seven-game evidence yields139 parsed rows but ZERO usable rows; every populated row is rejected as invalid count/sum/min/max observation. Official outcomes still replay, concealing this loss unless usable telemetry is checked.
+
+Accept finite nonnegative integer-valued float observation counts as the actual schema requires (keep all other type/shape checks). Add a populated observation fixture with floating count and real-evidence replay assertions that all139 acquired rows remain usable, with the missing12 preserved. The malformed scalar gcCount=[] path is otherwise fixed by the new validation. No other new blocker found; no games, source edits, final acquisition approval or merge.

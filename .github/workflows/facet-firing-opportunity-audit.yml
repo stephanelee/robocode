@@ -1,0 +1,71 @@
+name: Facet recorded firing opportunity audit (no battles)
+on:
+  pull_request:
+    paths:
+      - 'tools/facet_opportunity_audit/**'
+      - 'docs/facet-firing-opportunity-audit*.md'
+      - 'experiments/Facet/evidence/firing-opportunity-audit/**'
+      - '.github/workflows/facet-firing-opportunity-audit.yml'
+  push:
+    branches: [master, 'facet/**']
+    paths:
+      - 'tools/facet_opportunity_audit/**'
+      - 'docs/facet-firing-opportunity-audit*.md'
+      - 'experiments/Facet/evidence/firing-opportunity-audit/**'
+      - '.github/workflows/facet-firing-opportunity-audit.yml'
+permissions:
+  contents: read
+jobs:
+  recorded-audit:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Fetch only the hash-pinned own measured JAR
+        run: |
+          python3 - <<'PY'
+          import hashlib, os, urllib.request
+          from pathlib import Path
+          url='https://raw.githubusercontent.com/stephanelee/robocode/61677622675ca7ac536f3ef5b89b5cce82176f4e/experiments/Facet/Facet.jar'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              data=response.read(5*1024*1024+1)
+          assert len(data)<=5*1024*1024
+          assert hashlib.sha256(data).hexdigest()=='9b489b8429b01ff96caba378fbb481ddac6811a9a48b522649b3e4ea0eccb174'
+          (Path(os.environ['RUNNER_TEMP'])/'FACET_opportunity-audit.jar').write_bytes(data)
+          PY
+      - name: Test parser, input boundary and actual frozen-JAR gate semantics
+        env:
+          FACET_AUDIT_JAR: ${{ runner.temp }}/FACET_opportunity-audit.jar
+        run: >-
+          FACET_AUDIT_JAVA_HOME="$JAVA_HOME" PYTHONPATH=tools/facet_opportunity_audit
+          python3 -m unittest discover -s tools/facet_opportunity_audit -p 'test_*.py'
+      - name: Reproduce the fixed recorded population without launching an engine
+        run: >-
+          python3 tools/facet_opportunity_audit/audit.py
+          --parts-root benchmarks/facet-prepared-cohort-100/attempt-1
+          --jar "$RUNNER_TEMP/FACET_opportunity-audit.jar"
+          --java-home "$JAVA_HOME"
+          --output build/facet-firing-opportunity-audit
+      - name: Verify recorded aggregate reproduction independently of float formatting
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          expected=json.loads(Path('experiments/Facet/evidence/firing-opportunity-audit/analysis.json').read_text())
+          actual=json.loads(Path('build/facet-firing-opportunity-audit/analysis.json').read_text())
+          for key in ('traceRows','totals','coolHoldFailingPredicates','coolFundedAlignedHoldFailingPredicates','observedOutcomes'):
+              assert expected[key]==actual[key], key
+          for before,after in zip(expected['games'],actual['games'],strict=True):
+              for key in ('traceSHA256','counts','holdCombinations','observedOutcomes'):
+                  assert before[key]==after[key], (before['game'],key)
+          print('PASS fixed recorded aggregate counts and trace hashes; no competitive claim')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: facet-recorded-firing-opportunity-audit
+          path: build/facet-firing-opportunity-audit/

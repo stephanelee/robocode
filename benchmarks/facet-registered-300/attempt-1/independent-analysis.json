@@ -1,0 +1,3793 @@
+{
+  "status": "invalid-acquisition-all-physical-games-retained",
+  "physicalRounds": 140,
+  "games": [
+    {
+      "game": "AISurvivor-g01",
+      "opponent": "AISurvivor",
+      "officialRounds": 20,
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 2706,
+        "survival": 950,
+        "bulletDamage": 1312,
+        "firstPlaces": 19
+      },
+      "opponentOfficial": {
+        "id": 1,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 2,
+        "totalScore": 308,
+        "survival": 50,
+        "bulletDamage": 233,
+        "firstPlaces": 1
+      },
+      "scoreShare": 0.8978102189781022,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 618,
+        "shotsAccepted": 618,
+        "shotsConfirmed": 618,
+        "shotsCancelled": 1,
+        "unmatchedConfirmations": 1,
+        "neighborBytes": 2557160,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 176,
+        "gcMillis": 225
+      },
+      "counters": {
+        "bullet.absentReconciled": 8,
+        "bullet.contact": 19,
+        "incoming.hit": 46,
+        "incoming.uncertainContact": 16,
+        "inference.ambiguous": 63,
+        "inference.reliable": 598,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 20,
+        "shot.hit": 142,
+        "trace.truncated": 19302,
+        "turn.decisions": 12140
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 142.0,
+          "sum": 1333.7999999999997,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 9.39295774647887
+        },
+        "damageTaken": {
+          "count": 46.0,
+          "sum": 238.0,
+          "min": 1.2,
+          "max": 8.8,
+          "mean": 5.173913043478261
+        },
+        "energy": {
+          "count": 12140.0,
+          "sum": 948602.1977970967,
+          "min": 0.14513536727950616,
+          "max": 124.0,
+          "mean": 78.13856654012328
+        },
+        "energyFireCost": {
+          "count": 618.0,
+          "sum": 1111.7896441142825,
+          "min": 0.1,
+          "max": 2.0,
+          "mean": 1.799012369116962
+        },
+        "energyHitBonus": {
+          "count": 142.0,
+          "sum": 803.1453464506518,
+          "min": 0.30000000000000004,
+          "max": 6.0,
+          "mean": 5.6559531440186745
+        },
+        "meleeDecisionPasses": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 12140.0,
+          "sum": 1910780.0,
+          "min": 2.0,
+          "max": 449.0,
+          "mean": 157.39538714991764
+        },
+        "range": {
+          "count": 12057.0,
+          "sum": 4977815.149222821,
+          "min": 55.83017794123955,
+          "max": 652.3994228170122,
+          "mean": 412.8568590215494
+        },
+        "realWaveOverflow": {
+          "count": 12140.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 12057.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 12140.0,
+          "sum": 579852672.0,
+          "min": 0.0,
+          "max": 208896.0,
+          "mean": 47763.811532125204
+        },
+        "shadowFallbacks": {
+          "count": 12140.0,
+          "sum": 86409530.0,
+          "min": 0.0,
+          "max": 10298.0,
+          "mean": 7117.753706754531
+        },
+        "shadowIntervals": {
+          "count": 12140.0,
+          "sum": 298126.0,
+          "min": 0.0,
+          "max": 90.0,
+          "mean": 24.557331136738057
+        },
+        "shadowSegmentWork": {
+          "count": 12140.0,
+          "sum": 4530099.0,
+          "min": 0.0,
+          "max": 1632.0,
+          "mean": 373.15477759472816
+        },
+        "waves": {
+          "count": 12140.0,
+          "sum": 545792.0,
+          "min": 0.0,
+          "max": 184.0,
+          "mean": 44.95815485996705
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          17,
+          144,
+          267,
+          886,
+          3412,
+          2698,
+          3236,
+          1324,
+          137,
+          16,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          10,
+          40,
+          23,
+          22,
+          88,
+          3058,
+          2567,
+          683,
+          342,
+          222,
+          103,
+          687,
+          873,
+          2905,
+          502,
+          11,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          14,
+          24,
+          184,
+          509,
+          1075,
+          2788,
+          5198,
+          1967,
+          302,
+          55,
+          26,
+          10,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          25,
+          284,
+          295,
+          112,
+          124,
+          3005,
+          2893,
+          4801,
+          502,
+          53,
+          24,
+          18,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          239,
+          1211,
+          635,
+          7203,
+          2387,
+          252,
+          186,
+          17,
+          2,
+          5,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          47,
+          298,
+          182,
+          233,
+          2099,
+          4611,
+          3250,
+          1121,
+          257,
+          39,
+          18,
+          2,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 16,
+        "lastTurn": 485,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    },
+    {
+      "game": "AISurvivor-g02",
+      "opponent": "AISurvivor",
+      "officialRounds": 20,
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 2687,
+        "survival": 900,
+        "bulletDamage": 1343,
+        "firstPlaces": 18
+      },
+      "opponentOfficial": {
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 2,
+        "totalScore": 476,
+        "survival": 100,
+        "bulletDamage": 324,
+        "firstPlaces": 2
+      },
+      "scoreShare": 0.8495099588997786,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 570,
+        "shotsAccepted": 570,
+        "shotsConfirmed": 570,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 2384272,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 172,
+        "gcMillis": 212
+      },
+      "counters": {
+        "bullet.absentReconciled": 11,
+        "bullet.contact": 8,
+        "incoming.hit": 54,
+        "inference.reliable": 558,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 247,
+        "shot.hit": 148,
+        "turn.decisions": 11035
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 148.0,
+          "sum": 1357.5999999999997,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 9.172972972972971
+        },
+        "damageTaken": {
+          "count": 54.0,
+          "sum": 326.4032494858481,
+          "min": 0.4,
+          "max": 8.8,
+          "mean": 6.044504620108298
+        },
+        "energy": {
+          "count": 11035.0,
+          "sum": 909241.3871570608,
+          "min": 0.2,
+          "max": 130.0,
+          "mean": 82.3961383921215
+        },
+        "energyFireCost": {
+          "count": 570.0,
+          "sum": 988.6000838474856,
+          "min": 0.1,
+          "max": 2.0,
+          "mean": 1.7343861120131328
+        },
+        "energyHitBonus": {
+          "count": 148.0,
+          "sum": 817.6499999999997,
+          "min": 0.30000000000000004,
+          "max": 6.0,
+          "mean": 5.52466216216216
+        },
+        "meleeDecisionPasses": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 11035.0,
+          "sum": 1712553.0,
+          "min": 2.0,
+          "max": 463.0,
+          "mean": 155.19284096057999
+        },
+        "range": {
+          "count": 10942.0,
+          "sum": 4591226.95914825,
+          "min": 113.10711949245704,
+          "max": 702.8348334005651,
+          "mean": 419.5966879133842
+        },
+        "realWaveOverflow": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 10942.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 11035.0,
+          "sum": 516171904.0,
+          "min": 0.0,
+          "max": 179712.0,
+          "mean": 46775.8861803353
+        },
+        "shadowFallbacks": {
+          "count": 11035.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowIntervals": {
+          "count": 11035.0,
+          "sum": 267999.0,
+          "min": 0.0,
+          "max": 71.0,
+          "mean": 24.286270956048934
+        },
+        "shadowSegmentWork": {
+          "count": 11035.0,
+          "sum": 4032591.0,
+          "min": 0.0,
+          "max": 1404.0,
+          "mean": 365.4364295423652
+        },
+        "waves": {
+          "count": 11035.0,
+          "sum": 446530.0,
+          "min": 0.0,
+          "max": 119.0,
+          "mean": 40.46488445854101
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          10,
+          82,
+          324,
+          829,
+          2632,
+          2651,
+          3451,
+          910,
+          122,
+          21,
+          2,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          43,
+          24,
+          24,
+          9,
+          1118,
+          3992,
+          663,
+          425,
+          140,
+          116,
+          601,
+          1572,
+          1962,
+          323,
+          11,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          28,
+          151,
+          1254,
+          1104,
+          1826,
+          4339,
+          1918,
+          344,
+          48,
+          15,
+          12,
+          9,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          126,
+          436,
+          221,
+          56,
+          2648,
+          2243,
+          4363,
+          822,
+          57,
+          36,
+          20,
+          6,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          83,
+          1174,
+          999,
+          6955,
+          1338,
+          309,
+          142,
+          23,
+          5,
+          1,
+          1,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          215,
+          208,
+          362,
+          2236,
+          3825,
+          2931,
+          824,
+          324,
+          62,
+          13,
+          3,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 99993,
+        "lastRound": 20,
+        "lastTurn": 348,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    },
+    {
+      "game": "AISurvivor-g03",
+      "opponent": "AISurvivor",
+      "officialRounds": 20,
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 2619,
+        "survival": 900,
+        "bulletDamage": 1296,
+        "firstPlaces": 18
+      },
+      "opponentOfficial": {
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 2,
+        "totalScore": 406,
+        "survival": 100,
+        "bulletDamage": 273,
+        "firstPlaces": 2
+      },
+      "scoreShare": 0.8657851239669422,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 650,
+        "shotsAccepted": 650,
+        "shotsConfirmed": 650,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 2384584,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 191,
+        "gcMillis": 234
+      },
+      "counters": {
+        "bullet.absentReconciled": 9,
+        "bullet.contact": 11,
+        "incoming.hit": 47,
+        "incoming.uncertainContact": 3,
+        "inference.ambiguous": 18,
+        "inference.reliable": 620,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 2,
+        "shot.hit": 139,
+        "trace.truncated": 14901,
+        "turn.decisions": 12187
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 139.0,
+          "sum": 1324.1774022616562,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 9.526456131378822
+        },
+        "damageTaken": {
+          "count": 47.0,
+          "sum": 276.8764961590853,
+          "min": 5.199999999999999,
+          "max": 8.8,
+          "mean": 5.890989279980539
+        },
+        "energy": {
+          "count": 12187.0,
+          "sum": 918135.4261012442,
+          "min": 3.2764951590854636,
+          "max": 109.325,
+          "mean": 75.33727956849464
+        },
+        "energyFireCost": {
+          "count": 650.0,
+          "sum": 1187.5373173409664,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.8269804882168714
+        },
+        "energyHitBonus": {
+          "count": 139.0,
+          "sum": 797.4063137252557,
+          "min": 0.30000000000000004,
+          "max": 6.0,
+          "mean": 5.736736069965868
+        },
+        "meleeDecisionPasses": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 12187.0,
+          "sum": 1859918.0,
+          "min": 2.0,
+          "max": 453.0,
+          "mean": 152.61491753507835
+        },
+        "range": {
+          "count": 12096.0,
+          "sum": 5062134.128293011,
+          "min": 66.49382815805016,
+          "max": 716.9475544237695,
+          "mean": 418.4965383840122
+        },
+        "realWaveOverflow": {
+          "count": 12187.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 12096.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 12187.0,
+          "sum": 703620864.0,
+          "min": 0.0,
+          "max": 199680.0,
+          "mean": 57735.36259949126
+        },
+        "shadowFallbacks": {
+          "count": 12187.0,
+          "sum": 20640621.0,
+          "min": 0.0,
+          "max": 2097.0,
+          "mean": 1693.6588988266185
+        },
+        "shadowIntervals": {
+          "count": 12187.0,
+          "sum": 336010.0,
+          "min": 0.0,
+          "max": 77.0,
+          "mean": 27.571182407483384
+        },
+        "shadowSegmentWork": {
+          "count": 12187.0,
+          "sum": 5497038.0,
+          "min": 0.0,
+          "max": 1560.0,
+          "mean": 451.05752030852545
+        },
+        "waves": {
+          "count": 12187.0,
+          "sum": 458485.0,
+          "min": 0.0,
+          "max": 119.0,
+          "mean": 37.62082546976286
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          19,
+          177,
+          236,
+          963,
+          3619,
+          2832,
+          3270,
+          938,
+          110,
+          19,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          23,
+          44,
+          10,
+          9,
+          93,
+          2865,
+          3149,
+          652,
+          380,
+          175,
+          116,
+          751,
+          1556,
+          1971,
+          378,
+          8,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          25,
+          24,
+          214,
+          341,
+          1496,
+          2122,
+          5321,
+          2261,
+          306,
+          50,
+          19,
+          17,
+          9,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          14,
+          267,
+          345,
+          94,
+          116,
+          3229,
+          2716,
+          4851,
+          450,
+          63,
+          18,
+          17,
+          6,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          434,
+          2792,
+          997,
+          6189,
+          1369,
+          248,
+          120,
+          17,
+          8,
+          6,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          11,
+          202,
+          169,
+          153,
+          321,
+          2809,
+          4425,
+          3124,
+          707,
+          220,
+          47,
+          10,
+          3,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 18,
+        "lastTurn": 389,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    },
+    {
+      "game": "AISurvivor-g04",
+      "opponent": "AISurvivor",
+      "officialRounds": 20,
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 2835,
+        "survival": 1000,
+        "bulletDamage": 1362,
+        "firstPlaces": 20
+      },
+      "opponentOfficial": {
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 2,
+        "totalScore": 252,
+        "survival": 0,
+        "bulletDamage": 252,
+        "firstPlaces": 0
+      },
+      "scoreShare": 0.9183673469387755,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 611,
+        "shotsAccepted": 611,
+        "shotsConfirmed": 611,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 2530200,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 201,
+        "gcMillis": 223
+      },
+      "counters": {
+        "bullet.absentReconciled": 8,
+        "bullet.contact": 14,
+        "incoming.hit": 52,
+        "inference.reliable": 691,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 25,
+        "shot.hit": 154,
+        "trace.truncated": 7606,
+        "turn.decisions": 11830
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 154.0,
+          "sum": 1389.2125478982525,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 9.020860700638003
+        },
+        "damageTaken": {
+          "count": 52.0,
+          "sum": 252.22509579650608,
+          "min": 1.0250957965062955,
+          "max": 8.8,
+          "mean": 4.8504826114712705
+        },
+        "energy": {
+          "count": 11830.0,
+          "sum": 926345.401191553,
+          "min": 4.518153681858382,
+          "max": 112.0,
+          "mean": 78.30476764087514
+        },
+        "energyFireCost": {
+          "count": 611.0,
+          "sum": 1039.3614211265276,
+          "min": 0.1,
+          "max": 2.0,
+          "mean": 1.7010825223020092
+        },
+        "energyHitBonus": {
+          "count": 154.0,
+          "sum": 838.4104536570953,
+          "min": 0.30000000000000004,
+          "max": 6.0,
+          "mean": 5.444223725046074
+        },
+        "meleeDecisionPasses": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 11830.0,
+          "sum": 1809235.0,
+          "min": 2.0,
+          "max": 476.0,
+          "mean": 152.93617920540999
+        },
+        "range": {
+          "count": 11729.0,
+          "sum": 4931143.841948937,
+          "min": 60.51471981244638,
+          "max": 749.7666988637972,
+          "mean": 420.42321101107825
+        },
+        "realWaveOverflow": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 11729.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 11830.0,
+          "sum": 665018624.0,
+          "min": 0.0,
+          "max": 193024.0,
+          "mean": 56214.59205409975
+        },
+        "shadowFallbacks": {
+          "count": 11830.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowIntervals": {
+          "count": 11830.0,
+          "sum": 341154.0,
+          "min": 0.0,
+          "max": 78.0,
+          "mean": 28.83803888419273
+        },
+        "shadowSegmentWork": {
+          "count": 11830.0,
+          "sum": 5195453.0,
+          "min": 0.0,
+          "max": 1508.0,
+          "mean": 439.1760777683855
+        },
+        "waves": {
+          "count": 11830.0,
+          "sum": 522415.0,
+          "min": 0.0,
+          "max": 148.0,
+          "mean": 44.16018596787828
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          29,
+          189,
+          259,
+          986,
+          2943,
+          2830,
+          3556,
+          927,
+          99,
+          6,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          26,
+          48,
+          20,
+          5,
+          117,
+          2834,
+          2596,
+          683,
+          399,
+          150,
+          155,
+          549,
+          1497,
+          2457,
+          282,
+          9,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          15,
+          38,
+          186,
+          404,
+          749,
+          2420,
+          5524,
+          2080,
+          324,
+          62,
+          25,
+          8,
+          10,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          50,
+          453,
+          240,
+          189,
+          92,
+          2739,
+          1794,
+          5877,
+          288,
+          73,
+          16,
+          16,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          310,
+          2258,
+          1142,
+          6259,
+          1473,
+          244,
+          122,
+          16,
+          2,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          96,
+          270,
+          164,
+          204,
+          2185,
+          4426,
+          3343,
+          905,
+          219,
+          18,
+          13,
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 20,
+        "lastTurn": 12,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    },
+    {
+      "game": "AISurvivor-g05",
+      "opponent": "AISurvivor",
+      "officialRounds": 20,
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 3016,
+        "survival": 900,
+        "bulletDamage": 1636,
+        "firstPlaces": 18
+      },
+      "opponentOfficial": {
+        "id": 2,
+        "name": "AISurvivor",
+        "version": "1.2.1",
+        "rank": 2,
+        "totalScore": 481,
+        "survival": 100,
+        "bulletDamage": 329,
+        "firstPlaces": 2
+      },
+      "scoreShare": 0.862453531598513,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 625,
+        "shotsAccepted": 625,
+        "shotsConfirmed": 625,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 2881520,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 193,
+        "gcMillis": 268
+      },
+      "counters": {
+        "boundary.failure": 1,
+        "bullet.absentReconciled": 10,
+        "bullet.contact": 5,
+        "incoming.hit": 61,
+        "incoming.uncertainContact": 24,
+        "inference.ambiguous": 37,
+        "inference.reliable": 390,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 26,
+        "shot.hit": 181,
+        "trace.truncated": 22781,
+        "turn.decisions": 13083
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 181.0,
+          "sum": 1672.0774990365462,
+          "min": 0.4,
+          "max": 14.799999999999999,
+          "mean": 9.237997232246112
+        },
+        "damageTaken": {
+          "count": 61.0,
+          "sum": 332.0538276683542,
+          "min": 3.2,
+          "max": 12.399999999999999,
+          "mean": 5.443505371612364
+        },
+        "energy": {
+          "count": 13083.0,
+          "sum": 1073651.7846006877,
+          "min": 2.2250000000002714,
+          "max": 118.66666666666666,
+          "mean": 82.06464760381317
+        },
+        "energyFireCost": {
+          "count": 625.0,
+          "sum": 1098.3349032376886,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.7573358451803018
+        },
+        "energyHitBonus": {
+          "count": 181.0,
+          "sum": 1007.5521104135665,
+          "min": 0.30000000000000004,
+          "max": 8.399999999999999,
+          "mean": 5.56658624537882
+        },
+        "meleeDecisionPasses": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 13083.0,
+          "sum": 2216965.0,
+          "min": 2.0,
+          "max": 502.0,
+          "mean": 169.45387143621494
+        },
+        "range": {
+          "count": 12985.0,
+          "sum": 5626534.545023084,
+          "min": 42.67064211169397,
+          "max": 772.2177299001213,
+          "mean": 433.3103230668528
+        },
+        "realWaveOverflow": {
+          "count": 13083.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 12985.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 13083.0,
+          "sum": 348556032.0,
+          "min": 0.0,
+          "max": 182784.0,
+          "mean": 26641.904150424216
+        },
+        "shadowFallbacks": {
+          "count": 13083.0,
+          "sum": 31081623.0,
+          "min": 0.0,
+          "max": 5592.0,
+          "mean": 2375.7259802797525
+        },
+        "shadowIntervals": {
+          "count": 13083.0,
+          "sum": 194271.0,
+          "min": 0.0,
+          "max": 70.0,
+          "mean": 14.849117174959872
+        },
+        "shadowSegmentWork": {
+          "count": 13083.0,
+          "sum": 2723094.0,
+          "min": 0.0,
+          "max": 1428.0,
+          "mean": 208.1398761751892
+        },
+        "waves": {
+          "count": 13083.0,
+          "sum": 651777.0,
+          "min": 0.0,
+          "max": 197.0,
+          "mean": 49.818619582664525
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          26,
+          245,
+          255,
+          1413,
+          3281,
+          2173,
+          4101,
+          1437,
+          124,
+          22,
+          3,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          16,
+          50,
+          15,
+          10,
+          338,
+          2849,
+          2215,
+          1040,
+          379,
+          166,
+          106,
+          421,
+          1368,
+          3553,
+          533,
+          15,
+          5,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          26,
+          38,
+          365,
+          2961,
+          2628,
+          1681,
+          3070,
+          1883,
+          354,
+          54,
+          20,
+          12,
+          8,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          66,
+          420,
+          266,
+          159,
+          87,
+          4217,
+          4034,
+          3300,
+          446,
+          45,
+          30,
+          7,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          221,
+          1059,
+          1345,
+          7355,
+          2563,
+          364,
+          139,
+          24,
+          5,
+          2,
+          1,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          11,
+          144,
+          235,
+          112,
+          374,
+          2430,
+          4316,
+          3298,
+          1689,
+          422,
+          45,
+          17,
+          5,
+          2,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 16,
+        "lastTurn": 106,
+        "failureEvents": [
+          {
+            "schema": 2,
+            "gameId": "game-1-b4292a2d-3a12-4f52-b273-81bb48bce526",
+            "kind": "failure",
+            "round": 0,
+            "turn": 0,
+            "value": "boundary:ConcurrentModificationException"
+          }
+        ]
+      },
+      "failureOnset": {
+        "boundary.failure": [
+          [
+            9,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "game": "Retcon-g01",
+      "opponent": "Retcon",
+      "officialRounds": 20,
+      "facet": {
+        "id": 2,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 1340,
+        "survival": 450,
+        "bulletDamage": 729,
+        "firstPlaces": 10
+      },
+      "opponentOfficial": {
+        "id": 1,
+        "name": "Retcon",
+        "version": "0.2.0",
+        "rank": 2,
+        "totalScore": 1272,
+        "survival": 550,
+        "bulletDamage": 512,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.5130168453292496,
+      "metricRows": 20,
+      "missingRounds": [],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 854,
+        "shotsAccepted": 854,
+        "shotsConfirmed": 854,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 2742536,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 182,
+        "gcMillis": 212
+      },
+      "counters": {
+        "bullet.absentReconciled": 3,
+        "bullet.contact": 15,
+        "incoming.hit": 84,
+        "incoming.uncertainContact": 84,
+        "inference.ambiguous": 154,
+        "inference.reliable": 484,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 467,
+        "shot.hit": 80,
+        "trace.truncated": 61651,
+        "turn.decisions": 16189
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 80.0,
+          "sum": 729.0696869653217,
+          "min": 0.4,
+          "max": 14.799999999999999,
+          "mean": 9.113371087066522
+        },
+        "damageTaken": {
+          "count": 84.0,
+          "sum": 555.1140732987103,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 6.6085008726036945
+        },
+        "energy": {
+          "count": 16189.0,
+          "sum": 964926.506079159,
+          "min": 0.19999999999999996,
+          "max": 102.0,
+          "mean": 59.603836313494284
+        },
+        "energyFireCost": {
+          "count": 854.0,
+          "sum": 1446.8882787172488,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.6942485699265208
+        },
+        "energyHitBonus": {
+          "count": 80.0,
+          "sum": 439.08434737745256,
+          "min": 0.30000000000000004,
+          "max": 8.399999999999999,
+          "mean": 5.488554342218157
+        },
+        "meleeDecisionPasses": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 16189.0,
+          "sum": 2400611.0,
+          "min": 2.0,
+          "max": 480.0,
+          "mean": 148.28655259744272
+        },
+        "range": {
+          "count": 16089.0,
+          "sum": 6111635.849994587,
+          "min": 114.5117442644449,
+          "max": 740.034568314826,
+          "mean": 379.8642457576348
+        },
+        "realWaveOverflow": {
+          "count": 16189.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 16089.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 16189.0,
+          "sum": 327203200.0,
+          "min": 0.0,
+          "max": 159744.0,
+          "mean": 20211.45222064365
+        },
+        "shadowFallbacks": {
+          "count": 16189.0,
+          "sum": 90129810.0,
+          "min": 0.0,
+          "max": 16174.0,
+          "mean": 5567.34881709803
+        },
+        "shadowIntervals": {
+          "count": 16189.0,
+          "sum": 204863.0,
+          "min": 0.0,
+          "max": 56.0,
+          "mean": 12.654456729878312
+        },
+        "shadowSegmentWork": {
+          "count": 16189.0,
+          "sum": 2556275.0,
+          "min": 0.0,
+          "max": 1248.0,
+          "mean": 157.9019704737785
+        },
+        "waves": {
+          "count": 16189.0,
+          "sum": 638973.0,
+          "min": 0.0,
+          "max": 115.0,
+          "mean": 39.46957810859225
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          62,
+          198,
+          536,
+          4237,
+          3388,
+          2068,
+          4369,
+          1187,
+          127,
+          8,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          11,
+          22,
+          185,
+          271,
+          56,
+          1101,
+          4400,
+          2507,
+          734,
+          443,
+          155,
+          104,
+          740,
+          1275,
+          3760,
+          411,
+          12,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          19,
+          61,
+          282,
+          3263,
+          4079,
+          3616,
+          3745,
+          983,
+          95,
+          35,
+          13,
+          11,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          85,
+          395,
+          401,
+          529,
+          967,
+          7553,
+          2894,
+          2487,
+          772,
+          69,
+          22,
+          11,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          18,
+          1764,
+          6541,
+          1425,
+          4152,
+          1866,
+          318,
+          90,
+          5,
+          4,
+          2,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          126,
+          254,
+          297,
+          1193,
+          5122,
+          4958,
+          3373,
+          617,
+          226,
+          21,
+          12,
+          0,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 13,
+        "lastTurn": 401,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    },
+    {
+      "game": "Retcon-g02",
+      "opponent": "Retcon",
+      "officialRounds": 20,
+      "facet": {
+        "id": 1,
+        "name": "Facet",
+        "version": "0.1.0",
+        "rank": 1,
+        "totalScore": 1655,
+        "survival": 550,
+        "bulletDamage": 877,
+        "firstPlaces": 12
+      },
+      "opponentOfficial": {
+        "id": 2,
+        "name": "Retcon",
+        "version": "0.2.0",
+        "rank": 2,
+        "totalScore": 840,
+        "survival": 450,
+        "bulletDamage": 257,
+        "firstPlaces": 8
+      },
+      "scoreShare": 0.6633266533066132,
+      "metricRows": 19,
+      "missingRounds": [
+        12
+      ],
+      "finalMetricRound": 20,
+      "cumulativeTelemetry": {
+        "shotsRequested": 1053,
+        "shotsAccepted": 1053,
+        "shotsConfirmed": 1053,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 3442336,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 304,
+        "gcMillis": 319
+      },
+      "counters": {
+        "bullet.absentReconciled": 6,
+        "bullet.contact": 25,
+        "incoming.hit": 60,
+        "incoming.uncertainContact": 57,
+        "inference.ambiguous": 163,
+        "inference.reliable": 636,
+        "learning.terminalNoLearning": 20,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 16,
+        "shot.hit": 106,
+        "trace.truncated": 93728,
+        "turn.decisions": 20213
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 106.0,
+          "sum": 884.2292849403957,
+          "min": 0.4,
+          "max": 14.799999999999999,
+          "mean": 8.341785706984865
+        },
+        "damageTaken": {
+          "count": 60.0,
+          "sum": 268.2836081811091,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 4.471393469685152
+        },
+        "energy": {
+          "count": 20213.0,
+          "sum": 1149852.270542336,
+          "min": 0.19999999999999996,
+          "max": 110.80000000000001,
+          "mean": 56.88676943265898
+        },
+        "energyFireCost": {
+          "count": 1053.0,
+          "sum": 1776.1948077969382,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.6867946892658483
+        },
+        "energyHitBonus": {
+          "count": 106.0,
+          "sum": 536.4119001789312,
+          "min": 0.30000000000000004,
+          "max": 8.399999999999999,
+          "mean": 5.06048962432954
+        },
+        "meleeDecisionPasses": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 20213.0,
+          "sum": 3326761.0,
+          "min": 2.0,
+          "max": 555.0,
+          "mean": 164.58521743432445
+        },
+        "range": {
+          "count": 20118.0,
+          "sum": 8076933.697643819,
+          "min": 103.2768815489917,
+          "max": 661.6466677801968,
+          "mean": 401.4779648893438
+        },
+        "realWaveOverflow": {
+          "count": 20213.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 20118.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 20213.0,
+          "sum": 490977536.0,
+          "min": 0.0,
+          "max": 181376.0,
+          "mean": 24290.186315737395
+        },
+        "shadowFallbacks": {
+          "count": 20213.0,
+          "sum": 142094185.0,
+          "min": 0.0,
+          "max": 14427.0,
+          "mean": 7029.841438678079
+        },
+        "shadowIntervals": {
+          "count": 20213.0,
+          "sum": 276615.0,
+          "min": 0.0,
+          "max": 61.0,
+          "mean": 13.68500469994558
+        },
+        "shadowSegmentWork": {
+          "count": 20213.0,
+          "sum": 3835762.0,
+          "min": 0.0,
+          "max": 1417.0,
+          "mean": 189.7670805916984
+        },
+        "waves": {
+          "count": 20213.0,
+          "sum": 919214.0,
+          "min": 0.0,
+          "max": 152.0,
+          "mean": 45.4763765893237
+        }
+      },
+      "timingLog2Nanos": {
+        "decision": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          80,
+          191,
+          209,
+          4274,
+          5382,
+          2120,
+          6110,
+          1655,
+          171,
+          15,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gun": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          8,
+          29,
+          34,
+          39,
+          76,
+          1498,
+          5698,
+          3059,
+          678,
+          345,
+          184,
+          122,
+          639,
+          1380,
+          5702,
+          701,
+          19,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inference": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          10,
+          26,
+          84,
+          453,
+          3488,
+          5153,
+          4571,
+          4893,
+          1236,
+          234,
+          51,
+          16,
+          11,
+          5,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "movement": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          110,
+          231,
+          191,
+          50,
+          682,
+          9317,
+          6044,
+          3064,
+          418,
+          68,
+          23,
+          13,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "radar": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1270,
+          10159,
+          1622,
+          5285,
+          1450,
+          238,
+          149,
+          25,
+          7,
+          2,
+          1,
+          2,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "storage": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          57,
+          173,
+          180,
+          237,
+          875,
+          5570,
+          6968,
+          4717,
+          1139,
+          250,
+          48,
+          11,
+          2,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "trace": {
+        "rows": 100000,
+        "lastRound": 9,
+        "lastTurn": 626,
+        "failureEvents": []
+      },
+      "failureOnset": {}
+    }
+  ],
+  "cohorts": {
+    "AISurvivor": {
+      "games": 5,
+      "officialRounds": 100,
+      "firstPlaces": 93,
+      "facetTotalScore": 13863,
+      "opponentTotalScore": 1923,
+      "equalGameScoreShare": 0.8787852360764223,
+      "officialFacetBulletDamage": 6949,
+      "officialOpponentBulletDamage": 1411,
+      "metricRows": 100,
+      "summedCumulativeTelemetry": {
+        "shotsRequested": 3074,
+        "shotsAccepted": 3074,
+        "shotsConfirmed": 3074,
+        "shotsCancelled": 1,
+        "unmatchedConfirmations": 1,
+        "neighborBytes": 12737736,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 933,
+        "gcMillis": 1162
+      },
+      "counters": {
+        "bullet.absentReconciled": 46,
+        "bullet.contact": 57,
+        "incoming.hit": 260,
+        "incoming.uncertainContact": 43,
+        "inference.ambiguous": 118,
+        "inference.reliable": 2857,
+        "learning.terminalNoLearning": 100,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 320,
+        "shot.hit": 764,
+        "trace.truncated": 64590,
+        "turn.decisions": 60275,
+        "boundary.failure": 1
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 764.0,
+          "sum": 7076.867449196455,
+          "min": 0.4,
+          "max": 14.799999999999999,
+          "mean": 9.262915509419443
+        },
+        "damageTaken": {
+          "count": 260.0,
+          "sum": 1425.5586691097938,
+          "min": 0.4,
+          "max": 12.399999999999999,
+          "mean": 5.482917958114592
+        },
+        "energy": {
+          "count": 60275.0,
+          "sum": 4775976.196847642,
+          "min": 0.14513536727950616,
+          "max": 130.0,
+          "mean": 79.23643628117199
+        },
+        "energyFireCost": {
+          "count": 3074.0,
+          "sum": 5425.6233696669515,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.7650043492735692
+        },
+        "energyHitBonus": {
+          "count": 764.0,
+          "sum": 4264.16422424657,
+          "min": 0.30000000000000004,
+          "max": 8.399999999999999,
+          "mean": 5.581366785663049
+        },
+        "meleeDecisionPasses": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 60275.0,
+          "sum": 9509451.0,
+          "min": 2.0,
+          "max": 502.0,
+          "mean": 157.7677478224803
+        },
+        "range": {
+          "count": 59809.0,
+          "sum": 25188854.623636104,
+          "min": 42.67064211169397,
+          "max": 772.2177299001213,
+          "mean": 421.1549202233126
+        },
+        "realWaveOverflow": {
+          "count": 60275.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 59809.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 60275.0,
+          "sum": 2813220096.0,
+          "min": 0.0,
+          "max": 208896.0,
+          "mean": 46673.083301534636
+        },
+        "shadowFallbacks": {
+          "count": 60275.0,
+          "sum": 138131774.0,
+          "min": 0.0,
+          "max": 10298.0,
+          "mean": 2291.6926420572377
+        },
+        "shadowIntervals": {
+          "count": 60275.0,
+          "sum": 1437560.0,
+          "min": 0.0,
+          "max": 90.0,
+          "mean": 23.850020738282872
+        },
+        "shadowSegmentWork": {
+          "count": 60275.0,
+          "sum": 21978275.0,
+          "min": 0.0,
+          "max": 1632.0,
+          "mean": 364.63334715885526
+        },
+        "waves": {
+          "count": 60275.0,
+          "sum": 2624999.0,
+          "min": 0.0,
+          "max": 197.0,
+          "mean": 43.550377436748235
+        }
+      },
+      "latency": {
+        "decision": {
+          "count": 60275,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.262144,
+              0.524288
+            ],
+            "0.95": [
+              1.048576,
+              2.097152
+            ],
+            "0.99": [
+              2.097152,
+              4.194304
+            ]
+          }
+        },
+        "gun": {
+          "count": 60275,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.008192,
+              0.016384
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ]
+          }
+        },
+        "inference": {
+          "count": 60375,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.065536,
+              0.131072
+            ],
+            "0.99": [
+              0.131072,
+              0.262144
+            ]
+          }
+        },
+        "movement": {
+          "count": 60275,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.065536,
+              0.131072
+            ],
+            "0.95": [
+              0.262144,
+              0.524288
+            ],
+            "0.99": [
+              0.262144,
+              0.524288
+            ]
+          }
+        },
+        "radar": {
+          "count": 60275,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.002048,
+              0.004096
+            ],
+            "0.95": [
+              0.004096,
+              0.008192
+            ],
+            "0.99": [
+              0.016384,
+              0.032768
+            ]
+          }
+        },
+        "storage": {
+          "count": 60375,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.004096,
+              0.008192
+            ],
+            "0.95": [
+              0.016384,
+              0.032768
+            ],
+            "0.99": [
+              0.032768,
+              0.065536
+            ]
+          }
+        }
+      }
+    },
+    "Retcon": {
+      "games": 2,
+      "officialRounds": 40,
+      "firstPlaces": 22,
+      "facetTotalScore": 2995,
+      "opponentTotalScore": 2112,
+      "equalGameScoreShare": 0.5881717493179315,
+      "officialFacetBulletDamage": 1606,
+      "officialOpponentBulletDamage": 769,
+      "metricRows": 39,
+      "summedCumulativeTelemetry": {
+        "shotsRequested": 1907,
+        "shotsAccepted": 1907,
+        "shotsConfirmed": 1907,
+        "shotsCancelled": 0,
+        "unmatchedConfirmations": 0,
+        "neighborBytes": 6184872,
+        "neighborEvictions": 0,
+        "waveEvictions": 0,
+        "surfTruncations": 0,
+        "geometryFallbacks": 0,
+        "gcCount": 486,
+        "gcMillis": 531
+      },
+      "counters": {
+        "bullet.absentReconciled": 9,
+        "bullet.contact": 40,
+        "incoming.hit": 144,
+        "incoming.uncertainContact": 141,
+        "inference.ambiguous": 317,
+        "inference.reliable": 1120,
+        "learning.terminalNoLearning": 40,
+        "melee.neighborQueries": 0,
+        "melee.projectionPasses": 0,
+        "melee.projectionSamples": 0,
+        "melee.queryReturnedSamples": 0,
+        "movement.emergency": 483,
+        "shot.hit": 186,
+        "trace.truncated": 155379,
+        "turn.decisions": 36402
+      },
+      "observations": {
+        "damageGiven": {
+          "count": 186.0,
+          "sum": 1613.2989719057173,
+          "min": 0.4,
+          "max": 14.799999999999999,
+          "mean": 8.673650386589879
+        },
+        "damageTaken": {
+          "count": 144.0,
+          "sum": 823.3976814798194,
+          "min": 0.4,
+          "max": 10.0,
+          "mean": 5.7180394547209685
+        },
+        "energy": {
+          "count": 36402.0,
+          "sum": 2114778.776621495,
+          "min": 0.19999999999999996,
+          "max": 110.80000000000001,
+          "mean": 58.09512599916199
+        },
+        "energyFireCost": {
+          "count": 1907.0,
+          "sum": 3223.083086514187,
+          "min": 0.1,
+          "max": 2.8,
+          "mean": 1.6901327144804337
+        },
+        "energyHitBonus": {
+          "count": 186.0,
+          "sum": 975.4962475563838,
+          "min": 0.30000000000000004,
+          "max": 8.399999999999999,
+          "mean": 5.244603481485934
+        },
+        "meleeDecisionPasses": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionQueries": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionReturned": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeDecisionSamples": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeProjectionPasses": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "meleeUnsafeFallbacks": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "predictorSteps": {
+          "count": 36402.0,
+          "sum": 5727372.0,
+          "min": 2.0,
+          "max": 555.0,
+          "mean": 157.33673973957474
+        },
+        "range": {
+          "count": 36207.0,
+          "sum": 14188569.547638405,
+          "min": 103.2768815489917,
+          "max": 740.034568314826,
+          "mean": 391.8736583433702
+        },
+        "realWaveOverflow": {
+          "count": 36402.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "scanAge": {
+          "count": 36207.0,
+          "sum": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "shadowAllocationUnits": {
+          "count": 36402.0,
+          "sum": 818180736.0,
+          "min": 0.0,
+          "max": 181376.0,
+          "mean": 22476.257788033625
+        },
+        "shadowFallbacks": {
+          "count": 36402.0,
+          "sum": 232223995.0,
+          "min": 0.0,
+          "max": 16174.0,
+          "mean": 6379.429564309653
+        },
+        "shadowIntervals": {
+          "count": 36402.0,
+          "sum": 481478.0,
+          "min": 0.0,
+          "max": 61.0,
+          "mean": 13.226690841162574
+        },
+        "shadowSegmentWork": {
+          "count": 36402.0,
+          "sum": 6392037.0,
+          "min": 0.0,
+          "max": 1417.0,
+          "mean": 175.5957639690127
+        },
+        "waves": {
+          "count": 36402.0,
+          "sum": 1558187.0,
+          "min": 0.0,
+          "max": 152.0,
+          "mean": 42.80498324267897
+        }
+      },
+      "latency": {
+        "decision": {
+          "count": 36402,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.131072,
+              0.262144
+            ],
+            "0.95": [
+              1.048576,
+              2.097152
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ]
+          }
+        },
+        "gun": {
+          "count": 36402,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.004096,
+              0.008192
+            ],
+            "0.95": [
+              0.524288,
+              1.048576
+            ],
+            "0.99": [
+              1.048576,
+              2.097152
+            ]
+          }
+        },
+        "inference": {
+          "count": 36442,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.016384,
+              0.032768
+            ],
+            "0.95": [
+              0.065536,
+              0.131072
+            ],
+            "0.99": [
+              0.131072,
+              0.262144
+            ]
+          }
+        },
+        "movement": {
+          "count": 36402,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.032768,
+              0.065536
+            ],
+            "0.95": [
+              0.131072,
+              0.262144
+            ],
+            "0.99": [
+              0.262144,
+              0.524288
+            ]
+          }
+        },
+        "radar": {
+          "count": 36402,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.000512,
+              0.001024
+            ],
+            "0.95": [
+              0.004096,
+              0.008192
+            ],
+            "0.99": [
+              0.008192,
+              0.016384
+            ]
+          }
+        },
+        "storage": {
+          "count": 36442,
+          "bucketIntervalMillis": {
+            "0.5": [
+              0.004096,
+              0.008192
+            ],
+            "0.95": [
+              0.016384,
+              0.032768
+            ],
+            "0.99": [
+              0.032768,
+              0.065536
+            ]
+          }
+        }
+      }
+    }
+  },
+  "all": {
+    "games": 7,
+    "officialRounds": 140,
+    "firstPlaces": 115,
+    "facetTotalScore": 16858,
+    "opponentTotalScore": 4035,
+    "equalGameScoreShare": 0.795752811288282,
+    "officialFacetBulletDamage": 8555,
+    "officialOpponentBulletDamage": 2180,
+    "metricRows": 139,
+    "summedCumulativeTelemetry": {
+      "shotsRequested": 4981,
+      "shotsAccepted": 4981,
+      "shotsConfirmed": 4981,
+      "shotsCancelled": 1,
+      "unmatchedConfirmations": 1,
+      "neighborBytes": 18922608,
+      "neighborEvictions": 0,
+      "waveEvictions": 0,
+      "surfTruncations": 0,
+      "geometryFallbacks": 0,
+      "gcCount": 1419,
+      "gcMillis": 1693
+    },
+    "counters": {
+      "bullet.absentReconciled": 55,
+      "bullet.contact": 97,
+      "incoming.hit": 404,
+      "incoming.uncertainContact": 184,
+      "inference.ambiguous": 435,
+      "inference.reliable": 3977,
+      "learning.terminalNoLearning": 140,
+      "melee.neighborQueries": 0,
+      "melee.projectionPasses": 0,
+      "melee.projectionSamples": 0,
+      "melee.queryReturnedSamples": 0,
+      "movement.emergency": 803,
+      "shot.hit": 950,
+      "trace.truncated": 219969,
+      "turn.decisions": 96677,
+      "boundary.failure": 1
+    },
+    "observations": {
+      "damageGiven": {
+        "count": 950.0,
+        "sum": 8690.166421102173,
+        "min": 0.4,
+        "max": 14.799999999999999,
+        "mean": 9.147543601160182
+      },
+      "damageTaken": {
+        "count": 404.0,
+        "sum": 2248.956350589613,
+        "min": 0.4,
+        "max": 12.399999999999999,
+        "mean": 5.5667236400733
+      },
+      "energy": {
+        "count": 96677.0,
+        "sum": 6890754.973469136,
+        "min": 0.14513536727950616,
+        "max": 130.0,
+        "mean": 71.27605297505235
+      },
+      "energyFireCost": {
+        "count": 4981.0,
+        "sum": 8648.706456181138,
+        "min": 0.1,
+        "max": 2.8,
+        "mean": 1.7363393808835854
+      },
+      "energyHitBonus": {
+        "count": 950.0,
+        "sum": 5239.660471802954,
+        "min": 0.30000000000000004,
+        "max": 8.399999999999999,
+        "mean": 5.515432075582057
+      },
+      "meleeDecisionPasses": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "meleeDecisionQueries": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "meleeDecisionReturned": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "meleeDecisionSamples": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "meleeProjectionPasses": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "meleeUnsafeFallbacks": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "predictorSteps": {
+        "count": 96677.0,
+        "sum": 15236823.0,
+        "min": 2.0,
+        "max": 555.0,
+        "mean": 157.6054594164072
+      },
+      "range": {
+        "count": 96016.0,
+        "sum": 39377424.171274506,
+        "min": 42.67064211169397,
+        "max": 772.2177299001213,
+        "mean": 410.1131495925107
+      },
+      "realWaveOverflow": {
+        "count": 96677.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "scanAge": {
+        "count": 96016.0,
+        "sum": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "mean": 0.0
+      },
+      "shadowAllocationUnits": {
+        "count": 96677.0,
+        "sum": 3631400832.0,
+        "min": 0.0,
+        "max": 208896.0,
+        "mean": 37562.20023376811
+      },
+      "shadowFallbacks": {
+        "count": 96677.0,
+        "sum": 370355769.0,
+        "min": 0.0,
+        "max": 16174.0,
+        "mean": 3830.85707045109
+      },
+      "shadowIntervals": {
+        "count": 96677.0,
+        "sum": 1919038.0,
+        "min": 0.0,
+        "max": 90.0,
+        "mean": 19.849995345325155
+      },
+      "shadowSegmentWork": {
+        "count": 96677.0,
+        "sum": 28370312.0,
+        "min": 0.0,
+        "max": 1632.0,
+        "mean": 293.45461692026026
+      },
+      "waves": {
+        "count": 96677.0,
+        "sum": 4183186.0,
+        "min": 0.0,
+        "max": 197.0,
+        "mean": 43.26971254796901
+      }
+    },
+    "latency": {
+      "decision": {
+        "count": 96677,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.262144,
+            0.524288
+          ],
+          "0.95": [
+            1.048576,
+            2.097152
+          ],
+          "0.99": [
+            2.097152,
+            4.194304
+          ]
+        }
+      },
+      "gun": {
+        "count": 96677,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.008192,
+            0.016384
+          ],
+          "0.95": [
+            0.524288,
+            1.048576
+          ],
+          "0.99": [
+            1.048576,
+            2.097152
+          ]
+        }
+      },
+      "inference": {
+        "count": 96817,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.016384,
+            0.032768
+          ],
+          "0.95": [
+            0.065536,
+            0.131072
+          ],
+          "0.99": [
+            0.131072,
+            0.262144
+          ]
+        }
+      },
+      "movement": {
+        "count": 96677,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.065536,
+            0.131072
+          ],
+          "0.95": [
+            0.131072,
+            0.262144
+          ],
+          "0.99": [
+            0.262144,
+            0.524288
+          ]
+        }
+      },
+      "radar": {
+        "count": 96677,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.002048,
+            0.004096
+          ],
+          "0.95": [
+            0.004096,
+            0.008192
+          ],
+          "0.99": [
+            0.016384,
+            0.032768
+          ]
+        }
+      },
+      "storage": {
+        "count": 96817,
+        "bucketIntervalMillis": {
+          "0.5": [
+            0.004096,
+            0.008192
+          ],
+          "0.95": [
+            0.016384,
+            0.032768
+          ],
+          "0.99": [
+            0.032768,
+            0.065536
+          ]
+        }
+      }
+    }
+  }
+}

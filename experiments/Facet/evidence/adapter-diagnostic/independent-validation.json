@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "purpose": "independent live adapter integration validation, not strength",
+  "status": "passed-required-integration-checks-with-declared-probe-logging-limit",
+  "games": [
+    {
+      "game": 1,
+      "gameId": "game-1-f55f19b4-e170-40a4-bcac-3f0a7165a448",
+      "completedRounds": 2,
+      "confirmedShots": 22,
+      "outgoingHits": 20,
+      "probeHitReceipts": 20,
+      "rawEventDamage": 209.6,
+      "maxOriginError": 0,
+      "maxHeadingErrorRadians": 0,
+      "uniqueRoundRows": 2,
+      "unmatchedConfirmations": 0,
+      "postFinalizationCommands": 0,
+      "fatalTerminalHitsPreserved": 2,
+      "modelSHA256": "2ae85b53f3c97287b5c26e84bf0efbfedc09376d77db4cde46b257304a526902",
+      "modelBytes": 24672,
+      "hashes": {
+        "FACET_trace.jsonl": "82196783fe408ea3a0ce579a6eaa9cddc66d95854a552b2b9a011710da8b0295",
+        "FACET_metrics.jsonl": "83a1b5309f3cbd86981aadc2b825b4cda32adb84d797fa7ab6d8733f026a9d71",
+        "FACET_probe.jsonl": "5ac8a3d6cd48c060e2ca3df920db4648c256b5f1208eb90911d010a0d3d1e4f1",
+        "battle.json": "14aa677660bb55a4cb8da0b2634471738d9c1108d99c112d34e4953289d9daff",
+        "Facet.jar": "73be04d7386a60474743a78fcebf3fd0c143e37120b410b18aa668bd5ed50c16"
+      }
+    },
+    {
+      "game": 2,
+      "gameId": "game-1-f37679b1-8849-4760-857a-4da80000e4d1",
+      "completedRounds": 2,
+      "confirmedShots": 22,
+      "outgoingHits": 20,
+      "probeHitReceipts": 20,
+      "rawEventDamage": 200.0,
+      "maxOriginError": 0,
+      "maxHeadingErrorRadians": 0,
+      "uniqueRoundRows": 2,
+      "unmatchedConfirmations": 0,
+      "postFinalizationCommands": 0,
+      "fatalTerminalHitsPreserved": 2,
+      "modelSHA256": "2bff5a04f83c0f450923729c553f8f01fb9f2473d125445607e5a9fff52f1e16",
+      "modelBytes": 24672,
+      "hashes": {
+        "FACET_trace.jsonl": "9ae14379698d182954296e37fc530233501c80d348ae05eee3476671f519d8a6",
+        "FACET_metrics.jsonl": "ae626a3803d841eb3548960c9486057f4d674875ba9d99835a2829cf06c251e9",
+        "FACET_probe.jsonl": "1982222b81dc49aad3004f09c1d8bbc834f93c24699e5a1967f0e8921b840af0",
+        "battle.json": "14aa677660bb55a4cb8da0b2634471738d9c1108d99c112d34e4953289d9daff",
+        "Facet.jar": "73be04d7386a60474743a78fcebf3fd0c143e37120b410b18aa668bd5ed50c16"
+      }
+    }
+  ],
+  "limitations": [
+    "Probe roundStart rows absent; callback-start observations not claimed. Probe startup logger calls state getters before first tick; required shot/hit/terminal receipts were captured.",
+    "Actual skipped-turn, rejected-request and multicontact families were not acquired in this diagnostic.",
+    "No competitive strength interpretation of stationary probe outcomes.",
+    "learning.disabled increments once per terminal drain by source control flow; no learned subsystem exception was observed.",
+    "Event damage includes overkill and can exceed official capped bullet-damage scores."
+  ],
+  "scheduledRounds": 4,
+  "completedRounds": 4,
+  "competitiveRounds": 0
+}

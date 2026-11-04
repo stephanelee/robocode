@@ -1,0 +1,21 @@
+..F.....
+======================================================================
+FAIL: test_small_legal_scan_can_invalidate_long_horizon_analytic_drift (test_audit.ActualJarGates.test_small_legal_scan_can_invalidate_long_horizon_analytic_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/robert/.codex-workspaces/worktrees/ios-0515edef-dde6-4c10-bb92-d7e158de3449/robocode/tools/facet_opportunity_audit/test_audit.py", line 83, in test_small_legal_scan_can_invalidate_long_horizon_analytic_drift
+    self.assertEqual(result['failed'], ['analyticDrift'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['analyticDrift']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'analyticDrift'
+
+- []
++ ['analyticDrift']
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.635s
+
+FAILED (failures=1)

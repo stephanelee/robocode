@@ -1,0 +1,16 @@
+python3: error: couldn't create cache file '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/xcrun_db-RVp676Bl' (errno=Operation not permitted)
+python3: error: couldn't create cache file '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/xcrun_db-NGmxu4gU' (errno=Operation not permitted)
+Traceback (most recent call last):
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 119, in <module>
+    main()
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 39, in main
+    if sha(API) != EXPECTED_API:
+  File "/private/tmp/facet-clean-room/experiments/Facet/build.py", line 10, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1249, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/facet-clean-room/experiments/Facet/lib/robocode-tankroyale-bot-api-1.4.0.jar'
