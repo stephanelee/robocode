@@ -1,0 +1,2452 @@
+{
+  "schema": 1,
+  "purpose": "Fixed own-trace offline diagnostic; zero new games/training/parameter edits",
+  "artifactSHA256": "ef24b160d461008783fb7bb293c114addbcaa066ebcd40ca48ea383d74143ac4",
+  "registrationSHA256": "1713338d6b6cd9d0d271173a4243f238642913ebe3e717d72b471feaf07ecb58",
+  "sourceSHA256": "22c032253036c936116046f939b0196c8291d45597c9e6ee2387055f64be4f4b",
+  "jarSHA256": "9b489b8429b01ff96caba378fbb481ddac6811a9a48b522649b3e4ea0eccb174",
+  "traceRows": 500000,
+  "totals": {
+    "preparedDecisions": 34296,
+    "hotDecisions": 12357,
+    "noPriorActivePlan": 1301,
+    "submittedDecisions": 34295,
+    "submittedFireCommands": 837,
+    "mechanicallyReplayedDecisions": 32995,
+    "replayMatchesIntent": 32995,
+    "coolDecisions": 21939,
+    "coolFundedAlignedWithActivePlan": 21610,
+    "coolFundedAlignedHeld": 20773,
+    "soleAnalyticDriftBlocker": 20691,
+    "soleAnalyticDriftGun.analytic": 12625,
+    "acceptedPrefixRequests": 837,
+    "prefixRequests": 837,
+    "confirmedPrefixShots": 837,
+    "nativeHeadingOriginNextTickPass": 837,
+    "soleAnalyticDriftGun.long": 6520,
+    "soleAnalyticDriftGun.recent": 1546,
+    "unsubmittedPreparedAtCap": 1,
+    "multipleOutcomeEvidenceRecords": 1
+  },
+  "coolHoldFailingPredicates": {
+    "analyticDrift": 20861,
+    "noPriorActivePlan": 211,
+    "alignment": 113,
+    "powerPolicy": 87,
+    "energy": 5
+  },
+  "coolFundedAlignedHoldFailingPredicates": {
+    "analyticDrift": 20768,
+    "powerPolicy": 82
+  },
+  "holdCombinations": {
+    "noPriorActivePlan": 1301,
+    "alignment+heat": 294,
+    "heat": 6297,
+    "analyticDrift+heat": 4375,
+    "analyticDrift": 20691,
+    "heat+powerPolicy": 37,
+    "alignment+analyticDrift+heat": 239,
+    "analyticDrift+energy+heat+powerPolicy": 1,
+    "alignment": 25,
+    "analyticDrift+powerPolicy": 77,
+    "alignment+analyticDrift": 88,
+    "analyticDrift+heat+powerPolicy": 21,
+    "analyticDrift+energy+powerPolicy": 5,
+    "alignment+heat+powerPolicy": 2,
+    "powerPolicy": 5,
+    "alignment+analyticDrift+heat+powerPolicy": 1
+  },
+  "observedOutcomes": {
+    "BulletHitWallEvent": 713,
+    "BulletHitBotEvent": 57,
+    "BulletHitBulletEvent": 24,
+    "notObservedBeforeCapOrTerminal": 42,
+    "BulletHitBotEvent+BulletHitBulletEvent": 1
+  },
+  "games": [
+    {
+      "game": 1,
+      "traceSHA256": "e65ff19166388449a80caaef1a754ee1964e0bd64a307859d894753f60f8f715",
+      "traceRows": 100000,
+      "lastIdentity": {
+        "round": 8,
+        "turn": 512
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6280,
+        "own.state": 6287,
+        "population.transition": 8,
+        "command.prepared": 6279,
+        "command.submitted": 6279,
+        "ScannedBotEvent": 6252,
+        "scan.observed": 6252,
+        "fire.prepared": 6083,
+        "shadow.zero": 52770,
+        "HitByBulletEvent": 74,
+        "fire.submitted": 87,
+        "BulletFiredEvent": 87,
+        "gun.cohort.confirmed": 87,
+        "fire.confirmed": 87,
+        "bullet.motion": 2969,
+        "BulletHitWallEvent": 77,
+        "DeathEvent": 7,
+        "gun.rating": 21,
+        "model.roundHash": 7,
+        "BulletHitBotEvent": 3,
+        "BulletHitBulletEvent": 2
+      },
+      "counts": {
+        "preparedDecisions": 6279,
+        "hotDecisions": 1361,
+        "noPriorActivePlan": 203,
+        "submittedDecisions": 6279,
+        "submittedFireCommands": 87,
+        "mechanicallyReplayedDecisions": 6076,
+        "replayMatchesIntent": 6076,
+        "coolDecisions": 4918,
+        "coolFundedAlignedWithActivePlan": 4843,
+        "coolFundedAlignedHeld": 4756,
+        "soleAnalyticDriftBlocker": 4744,
+        "soleAnalyticDriftGun.analytic": 1890,
+        "acceptedPrefixRequests": 87,
+        "prefixRequests": 87,
+        "confirmedPrefixShots": 87,
+        "nativeHeadingOriginNextTickPass": 87,
+        "soleAnalyticDriftGun.long": 2517,
+        "soleAnalyticDriftGun.recent": 337
+      },
+      "observedFailingPredicatesForHolds": {
+        "noPriorActivePlan": 203,
+        "heat": 1229,
+        "alignment": 61,
+        "analyticDrift": 5331,
+        "powerPolicy": 19,
+        "energy": 1
+      },
+      "coolHoldFailingPredicates": {
+        "analyticDrift": 4757,
+        "noPriorActivePlan": 71,
+        "alignment": 4,
+        "powerPolicy": 12
+      },
+      "coolFundedAlignedHoldFailingPredicates": {
+        "analyticDrift": 4756,
+        "powerPolicy": 12
+      },
+      "holdCombinations": {
+        "noPriorActivePlan": 203,
+        "alignment+heat": 31,
+        "heat": 621,
+        "analyticDrift+heat": 544,
+        "analyticDrift": 4744,
+        "heat+powerPolicy": 3,
+        "alignment+analyticDrift+heat": 26,
+        "analyticDrift+energy+heat+powerPolicy": 1,
+        "alignment": 3,
+        "analyticDrift+powerPolicy": 12,
+        "alignment+analyticDrift": 1,
+        "analyticDrift+heat+powerPolicy": 3
+      },
+      "requestedByGun": {
+        "analytic": 35,
+        "long": 26,
+        "recent": 26
+      },
+      "observedOutcomes": {
+        "BulletHitWallEvent": 77,
+        "BulletHitBotEvent": 3,
+        "BulletHitBulletEvent": 2,
+        "notObservedBeforeCapOrTerminal": 5
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 33,
+          "BulletHitBotEvent": 2
+        },
+        "long": {
+          "BulletHitWallEvent": 22,
+          "notObservedBeforeCapOrTerminal": 3,
+          "BulletHitBulletEvent": 1
+        },
+        "recent": {
+          "BulletHitWallEvent": 22,
+          "BulletHitBotEvent": 1,
+          "BulletHitBulletEvent": 1,
+          "notObservedBeforeCapOrTerminal": 2
+        }
+      },
+      "examples": {
+        "soleAnalyticDriftBlocker": [
+          {
+            "line": 206,
+            "round": 1,
+            "turn": 30,
+            "driftDegrees": 8.485375433189649,
+            "allowedDegrees": 2.7199579812285974,
+            "own": {
+              "x": 360.55096229116594,
+              "y": 297.31641411301825,
+              "heading": 5.149438972516126,
+              "speed": -3.0,
+              "gun": 0.2950150561512568,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 30
+            },
+            "plan": {
+              "angle": 0.2950150561512568,
+              "power": 2.0,
+              "target": 1,
+              "created": 29,
+              "expires": 31,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 29,
+              "origin": [
+                360.55096229116594,
+                297.31641411301825
+              ],
+              "targetPosition": [
+                703.2291487606404,
+                459.9476497413888
+              ],
+              "targetBody": {
+                "position": [
+                  703.2291487606404,
+                  459.9476497413888
+                ],
+                "heading": 5.233853325279241,
+                "speed": 2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 379.3115583316945,
+                "targetEnergy": 100.0,
+                "observed": 29.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 703.2291487606404,
+              "y": 459.9476497413888,
+              "speed": 0.0,
+              "energy": 100.0,
+              "turn": 30,
+              "heading": 5.4083862504786735,
+              "alive": true
+            }
+          },
+          {
+            "line": 214,
+            "round": 1,
+            "turn": 31,
+            "driftDegrees": 4.046066961902312,
+            "allowedDegrees": 2.7218417686198983,
+            "own": {
+              "x": 358.85788792703005,
+              "y": 300.94043111042674,
+              "heading": 5.169204906456929,
+              "speed": -4.0,
+              "gun": 0.43256728541719813,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 31
+            },
+            "plan": {
+              "angle": 0.4325672854171981,
+              "power": 2.0,
+              "target": 1,
+              "created": 30,
+              "expires": 32,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 30,
+              "origin": [
+                358.85788792703005,
+                300.94043111042674
+              ],
+              "targetPosition": [
+                703.2291487606404,
+                459.9476497413888
+              ],
+              "targetBody": {
+                "position": [
+                  703.2291487606404,
+                  459.9476497413888
+                ],
+                "heading": 5.4083862504786735,
+                "speed": 0.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 379.30839809432786,
+                "targetEnergy": 100.0,
+                "observed": 30.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 702.5879976826958,
+              "y": 460.7150644241063,
+              "speed": -1.0,
+              "energy": 98.05,
+              "turn": 31,
+              "heading": 5.4577953389735985,
+              "alive": true
+            }
+          },
+          {
+            "line": 222,
+            "round": 1,
+            "turn": 32,
+            "driftDegrees": 3.9026488363881353,
+            "allowedDegrees": 2.725364124715237,
+            "own": {
+              "x": 356.6524241072921,
+              "y": 305.4277386929117,
+              "heading": 5.158663447732236,
+              "speed": -5.0,
+              "gun": 0.49226636737168156,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 32
+            },
+            "plan": {
+              "angle": 0.4922663673716815,
+              "power": 2.0,
+              "target": 1,
+              "created": 31,
+              "expires": 33,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 31,
+              "origin": [
+                356.6524241072921,
+                305.4277386929117
+              ],
+              "targetPosition": [
+                702.5879976826958,
+                460.7150644241063
+              ],
+              "targetBody": {
+                "position": [
+                  702.5879976826958,
+                  460.7150644241063
+                ],
+                "heading": 5.4577953389735985,
+                "speed": -1.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 379.19068369052746,
+                "targetEnergy": 98.05,
+                "observed": 31.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 701.231456755187,
+              "y": 462.1846891081646,
+              "speed": -2.0,
+              "energy": 98.05,
+              "turn": 32,
+              "heading": 5.512130792930223,
+              "alive": true
+            }
+          },
+          {
+            "line": 230,
+            "round": 1,
+            "turn": 33,
+            "driftDegrees": 7.892742482202084,
+            "allowedDegrees": 2.7241865845000492,
+            "own": {
+              "x": 354.0627768379669,
+              "y": 310.84010666086033,
+              "heading": 5.145292775432079,
+              "speed": -6.0,
+              "gun": 0.5488543389152806,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 33
+            },
+            "plan": {
+              "angle": 0.5488543389152806,
+              "power": 2.0,
+              "target": 1,
+              "created": 32,
+              "expires": 34,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 32,
+              "origin": [
+                354.0627768379669,
+                310.84010666086033
+              ],
+              "targetPosition": [
+                701.231456755187,
+                462.1846891081646
+              ],
+              "targetBody": {
+                "position": [
+                  701.231456755187,
+                  462.1846891081646
+                ],
+                "heading": 5.512130792930223,
+                "speed": -2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 378.72321681092393,
+                "targetEnergy": 98.05,
+                "observed": 32.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 701.231456755187,
+              "y": 462.1846891081646,
+              "speed": -0.0,
+              "energy": 98.05,
+              "turn": 33,
+              "heading": 5.33759786773079,
+              "alive": true
+            }
+          },
+          {
+            "line": 238,
+            "round": 1,
+            "turn": 34,
+            "driftDegrees": 4.231944386580302,
+            "allowedDegrees": 2.720958439140232,
+            "own": {
+              "x": 351.12621739795253,
+              "y": 317.19436654343224,
+              "heading": 5.129227192093667,
+              "speed": -7.0,
+              "gun": 0.39263077741556873,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 34
+            },
+            "plan": {
+              "angle": 0.39263077741556873,
+              "power": 2.0,
+              "target": 1,
+              "created": 33,
+              "expires": 35,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 33,
+              "origin": [
+                351.12621739795253,
+                317.19436654343224
+              ],
+              "targetPosition": [
+                701.231456755187,
+                462.1846891081646
+              ],
+              "targetBody": {
+                "position": [
+                  701.231456755187,
+                  462.1846891081646
+                ],
+                "heading": 5.33759786773079,
+                "speed": -0.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 378.94046004987587,
+                "targetEnergy": 98.05,
+                "observed": 33.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 701.816723415295,
+              "y": 461.3738482257678,
+              "speed": 1.0,
+              "energy": 98.05,
+              "turn": 34,
+              "heading": 5.176154911921315,
+              "alive": true
+            }
+          }
+        ]
+      },
+      "coveredRounds": {
+        "1": {
+          "decisions": 641,
+          "coolDecisions": 554,
+          "submissions": 5,
+          "firstRequest": 500
+        },
+        "2": {
+          "decisions": 657,
+          "coolDecisions": 600,
+          "submissions": 2,
+          "firstRequest": 31
+        },
+        "3": {
+          "decisions": 1284,
+          "coolDecisions": 1075,
+          "submissions": 15,
+          "firstRequest": 758
+        },
+        "4": {
+          "decisions": 540,
+          "coolDecisions": 116,
+          "submissions": 29,
+          "firstRequest": 30
+        },
+        "5": {
+          "decisions": 853,
+          "coolDecisions": 782,
+          "submissions": 3,
+          "firstRequest": 30
+        },
+        "6": {
+          "decisions": 1350,
+          "coolDecisions": 1307,
+          "submissions": 2,
+          "firstRequest": 1335
+        },
+        "7": {
+          "decisions": 443,
+          "coolDecisions": 86,
+          "submissions": 25,
+          "firstRequest": 30
+        },
+        "8": {
+          "decisions": 511,
+          "coolDecisions": 398,
+          "submissions": 6,
+          "firstRequest": 30
+        }
+      },
+      "fullGameConfirmed": 181,
+      "fullGameHits": 8
+    },
+    {
+      "game": 2,
+      "traceSHA256": "105bde75ae052d000c81f377d91555373f4d37a2898fdd1892f19f5fab0cf4cd",
+      "traceRows": 100000,
+      "lastIdentity": {
+        "round": 8,
+        "turn": 327
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6389,
+        "own.state": 6396,
+        "population.transition": 8,
+        "command.prepared": 6388,
+        "command.submitted": 6388,
+        "ScannedBotEvent": 6324,
+        "scan.observed": 6324,
+        "fire.prepared": 6216,
+        "shadow.zero": 51251,
+        "HitByBulletEvent": 93,
+        "fire.submitted": 100,
+        "BulletFiredEvent": 100,
+        "gun.cohort.confirmed": 100,
+        "fire.confirmed": 100,
+        "bullet.motion": 3694,
+        "BulletHitWallEvent": 84,
+        "DeathEvent": 7,
+        "gun.rating": 21,
+        "model.roundHash": 7,
+        "BulletHitBotEvent": 6,
+        "BulletHitBulletEvent": 2
+      },
+      "counts": {
+        "preparedDecisions": 6388,
+        "hotDecisions": 1552,
+        "noPriorActivePlan": 178,
+        "submittedDecisions": 6388,
+        "submittedFireCommands": 100,
+        "mechanicallyReplayedDecisions": 6210,
+        "replayMatchesIntent": 6210,
+        "coolDecisions": 4836,
+        "coolFundedAlignedWithActivePlan": 4803,
+        "coolFundedAlignedHeld": 4703,
+        "soleAnalyticDriftBlocker": 4688,
+        "soleAnalyticDriftGun.analytic": 4600,
+        "acceptedPrefixRequests": 100,
+        "prefixRequests": 100,
+        "confirmedPrefixShots": 100,
+        "nativeHeadingOriginNextTickPass": 100,
+        "soleAnalyticDriftGun.long": 67,
+        "soleAnalyticDriftGun.recent": 21
+      },
+      "observedFailingPredicatesForHolds": {
+        "noPriorActivePlan": 178,
+        "heat": 1396,
+        "alignment": 70,
+        "analyticDrift": 5259,
+        "powerPolicy": 23,
+        "energy": 1
+      },
+      "coolHoldFailingPredicates": {
+        "analyticDrift": 4710,
+        "powerPolicy": 16,
+        "alignment": 10,
+        "energy": 1,
+        "noPriorActivePlan": 22
+      },
+      "coolFundedAlignedHoldFailingPredicates": {
+        "analyticDrift": 4703,
+        "powerPolicy": 15
+      },
+      "holdCombinations": {
+        "noPriorActivePlan": 178,
+        "alignment+heat": 30,
+        "alignment+analyticDrift+heat": 30,
+        "analyticDrift+heat": 517,
+        "heat": 812,
+        "analyticDrift": 4688,
+        "analyticDrift+powerPolicy": 15,
+        "alignment": 4,
+        "analyticDrift+energy+powerPolicy": 1,
+        "alignment+analyticDrift": 6,
+        "heat+powerPolicy": 5,
+        "analyticDrift+heat+powerPolicy": 2
+      },
+      "requestedByGun": {
+        "analytic": 67,
+        "long": 22,
+        "recent": 11
+      },
+      "observedOutcomes": {
+        "BulletHitWallEvent": 84,
+        "notObservedBeforeCapOrTerminal": 8,
+        "BulletHitBotEvent": 6,
+        "BulletHitBulletEvent": 2
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 52,
+          "notObservedBeforeCapOrTerminal": 8,
+          "BulletHitBotEvent": 5,
+          "BulletHitBulletEvent": 2
+        },
+        "long": {
+          "BulletHitBotEvent": 1,
+          "BulletHitWallEvent": 21
+        },
+        "recent": {
+          "BulletHitWallEvent": 11
+        }
+      },
+      "examples": {
+        "soleAnalyticDriftBlocker": [
+          {
+            "line": 203,
+            "round": 1,
+            "turn": 30,
+            "driftDegrees": 8.445668185991972,
+            "allowedDegrees": 2.0931181922955635,
+            "own": {
+              "x": 747.8745413612668,
+              "y": 229.40600410552005,
+              "heading": 1.5468514234580688,
+              "speed": -3.0,
+              "gun": 3.4386140498721343,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 30
+            },
+            "plan": {
+              "angle": 3.438614049872135,
+              "power": 2.0,
+              "target": 1,
+              "created": 29,
+              "expires": 31,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 29,
+              "origin": [
+                747.8745413612668,
+                229.40600410552005
+              ],
+              "targetPosition": [
+                260.54933978215666,
+                155.94506137448826
+              ],
+              "targetBody": {
+                "position": [
+                  260.54933978215666,
+                  155.94506137448826
+                ],
+                "heading": 4.869823865394071,
+                "speed": 2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 492.83096716932494,
+                "targetEnergy": 100.0,
+                "observed": 29.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 260.54933978215666,
+              "y": 155.94506137448826,
+              "speed": 0.0,
+              "energy": 100.0,
+              "turn": 30,
+              "heading": 4.998771154808013,
+              "alive": true
+            }
+          },
+          {
+            "line": 211,
+            "round": 1,
+            "turn": 31,
+            "driftDegrees": 4.171174419540689,
+            "allowedDegrees": 2.092896309442928,
+            "own": {
+              "x": 747.8625700536498,
+              "y": 228.90614743827038,
+              "heading": 1.714839363962523,
+              "speed": -0.5,
+              "gun": 3.2902098536687334,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 31
+            },
+            "plan": {
+              "angle": 3.290209853668733,
+              "power": 2.0,
+              "target": 1,
+              "created": 30,
+              "expires": 32,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 30,
+              "origin": [
+                747.8625700536498,
+                228.90614743827038
+              ],
+              "targetPosition": [
+                260.54933978215666,
+                155.94506137448826
+              ],
+              "targetBody": {
+                "position": [
+                  260.54933978215666,
+                  155.94506137448826
+                ],
+                "heading": 4.998771154808013,
+                "speed": 0.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 492.74486753008796,
+                "targetEnergy": 100.0,
+                "observed": 30.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 260.2668561800548,
+              "y": 156.90433350195968,
+              "speed": -1.0,
+              "energy": 98.05,
+              "turn": 31,
+              "heading": 4.998771154808013,
+              "alive": true
+            }
+          },
+          {
+            "line": 219,
+            "round": 1,
+            "turn": 32,
+            "driftDegrees": 4.18820297903947,
+            "allowedDegrees": 2.0916986072165944,
+            "own": {
+              "x": 747.7549109711604,
+              "y": 229.64838023325962,
+              "heading": 1.8511377160149747,
+              "speed": 0.75,
+              "gun": 3.2169266981857025,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 32
+            },
+            "plan": {
+              "angle": 3.2169266981857025,
+              "power": 2.0,
+              "target": 1,
+              "created": 31,
+              "expires": 33,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 31,
+              "origin": [
+                747.7549109711604,
+                229.64838023325962
+              ],
+              "targetPosition": [
+                260.2668561800548,
+                156.90433350195968
+              ],
+              "targetBody": {
+                "position": [
+                  260.2668561800548,
+                  156.90433350195968
+                ],
+                "heading": 4.998771154808013,
+                "speed": -1.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 492.88568644145215,
+                "targetEnergy": 98.05,
+                "observed": 31.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 259.70188897585103,
+              "y": 158.82287775690253,
+              "speed": -2.0,
+              "energy": 98.05,
+              "turn": 32,
+              "heading": 4.999410542189871,
+              "alive": true
+            }
+          },
+          {
+            "line": 227,
+            "round": 1,
+            "turn": 33,
+            "driftDegrees": 8.358410969906346,
+            "allowedDegrees": 2.0926946129665343,
+            "own": {
+              "x": 747.2707144499252,
+              "y": 231.33006204883108,
+              "heading": 1.8526649041580907,
+              "speed": 1.75,
+              "gun": 3.1433406116867744,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 33
+            },
+            "plan": {
+              "angle": 3.143340611686775,
+              "power": 2.0,
+              "target": 1,
+              "created": 32,
+              "expires": 34,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 32,
+              "origin": [
+                747.2707144499252,
+                231.33006204883108
+              ],
+              "targetPosition": [
+                259.70188897585103,
+                158.82287775690253
+              ],
+              "targetBody": {
+                "position": [
+                  259.70188897585103,
+                  158.82287775690253
+                ],
+                "heading": 4.999410542189871,
+                "speed": -2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 492.93067600638517,
+                "targetEnergy": 98.05,
+                "observed": 32.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 259.70188897585103,
+              "y": 158.82287775690253,
+              "speed": -0.0,
+              "energy": 98.05,
+              "turn": 33,
+              "heading": 5.173943467389304,
+              "alive": true
+            }
+          },
+          {
+            "line": 235,
+            "round": 1,
+            "turn": 34,
+            "driftDegrees": 3.766057697612153,
+            "allowedDegrees": 2.0955148580511933,
+            "own": {
+              "x": 746.5057992783087,
+              "y": 233.97153981330894,
+              "heading": 1.8559005810404108,
+              "speed": 2.75,
+              "gun": 3.2947551653586657,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 34
+            },
+            "plan": {
+              "angle": 3.2947551653586657,
+              "power": 2.0,
+              "target": 1,
+              "created": 33,
+              "expires": 35,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 33,
+              "origin": [
+                746.5057992783087,
+                233.97153981330894
+              ],
+              "targetPosition": [
+                259.70188897585103,
+                158.82287775690253
+              ],
+              "targetBody": {
+                "position": [
+                  259.70188897585103,
+                  158.82287775690253
+                ],
+                "heading": 5.173943467389304,
+                "speed": -0.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 492.5701660622893,
+                "targetEnergy": 98.05,
+                "observed": 33.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 260.1472294478338,
+              "y": 157.92751645328585,
+              "speed": 1.0,
+              "energy": 98.05,
+              "turn": 34,
+              "heading": 5.33538642319878,
+              "alive": true
+            }
+          }
+        ]
+      },
+      "coveredRounds": {
+        "1": {
+          "decisions": 560,
+          "coolDecisions": 477,
+          "submissions": 5,
+          "firstRequest": 497
+        },
+        "2": {
+          "decisions": 840,
+          "coolDecisions": 811,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "3": {
+          "decisions": 756,
+          "coolDecisions": 333,
+          "submissions": 29,
+          "firstRequest": 227
+        },
+        "4": {
+          "decisions": 679,
+          "coolDecisions": 154,
+          "submissions": 38,
+          "firstRequest": 38
+        },
+        "5": {
+          "decisions": 1812,
+          "coolDecisions": 1783,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "6": {
+          "decisions": 432,
+          "coolDecisions": 83,
+          "submissions": 24,
+          "firstRequest": 30
+        },
+        "7": {
+          "decisions": 983,
+          "coolDecisions": 954,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "8": {
+          "decisions": 326,
+          "coolDecisions": 241,
+          "submissions": 4,
+          "firstRequest": 30
+        }
+      },
+      "fullGameConfirmed": 327,
+      "fullGameHits": 25
+    },
+    {
+      "game": 3,
+      "traceSHA256": "36c0269b1123358532393f1b11019e88c37d496fd86b63ff2ef1959f45a38b90",
+      "traceRows": 100000,
+      "lastIdentity": {
+        "round": 10,
+        "turn": 569
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6885,
+        "own.state": 6894,
+        "population.transition": 10,
+        "command.prepared": 6885,
+        "command.submitted": 6884,
+        "ScannedBotEvent": 6803,
+        "scan.observed": 6803,
+        "fire.prepared": 6583,
+        "shadow.zero": 44454,
+        "HitByBulletEvent": 104,
+        "DeathEvent": 9,
+        "gun.rating": 27,
+        "model.roundHash": 9,
+        "fire.submitted": 176,
+        "BulletFiredEvent": 176,
+        "gun.cohort.confirmed": 176,
+        "fire.confirmed": 176,
+        "bullet.motion": 6777,
+        "BulletHitWallEvent": 152,
+        "BulletHitBotEvent": 11,
+        "BulletHitBulletEvent": 4
+      },
+      "counts": {
+        "preparedDecisions": 6885,
+        "hotDecisions": 2604,
+        "noPriorActivePlan": 307,
+        "submittedDecisions": 6884,
+        "submittedFireCommands": 176,
+        "mechanicallyReplayedDecisions": 6578,
+        "replayMatchesIntent": 6578,
+        "coolDecisions": 4281,
+        "coolFundedAlignedWithActivePlan": 4197,
+        "coolFundedAlignedHeld": 4021,
+        "soleAnalyticDriftBlocker": 4006,
+        "soleAnalyticDriftGun.analytic": 1673,
+        "acceptedPrefixRequests": 176,
+        "prefixRequests": 176,
+        "confirmedPrefixShots": 176,
+        "nativeHeadingOriginNextTickPass": 176,
+        "soleAnalyticDriftGun.long": 2187,
+        "soleAnalyticDriftGun.recent": 146,
+        "unsubmittedPreparedAtCap": 1
+      },
+      "observedFailingPredicatesForHolds": {
+        "noPriorActivePlan": 307,
+        "analyticDrift": 4976,
+        "heat": 2357,
+        "alignment": 115,
+        "powerPolicy": 27,
+        "energy": 2
+      },
+      "coolHoldFailingPredicates": {
+        "analyticDrift": 4038,
+        "powerPolicy": 17,
+        "energy": 2,
+        "noPriorActivePlan": 60,
+        "alignment": 22
+      },
+      "coolFundedAlignedHoldFailingPredicates": {
+        "analyticDrift": 4020,
+        "powerPolicy": 15
+      },
+      "holdCombinations": {
+        "noPriorActivePlan": 307,
+        "alignment+analyticDrift+heat": 45,
+        "analyticDrift+heat": 893,
+        "analyticDrift": 4006,
+        "analyticDrift+powerPolicy": 14,
+        "analyticDrift+energy+powerPolicy": 2,
+        "alignment+heat": 47,
+        "heat": 1362,
+        "alignment+heat+powerPolicy": 1,
+        "heat+powerPolicy": 9,
+        "powerPolicy": 1,
+        "alignment+analyticDrift": 16,
+        "alignment": 6
+      },
+      "requestedByGun": {
+        "analytic": 68,
+        "long": 36,
+        "recent": 72
+      },
+      "observedOutcomes": {
+        "BulletHitWallEvent": 152,
+        "BulletHitBotEvent": 11,
+        "notObservedBeforeCapOrTerminal": 9,
+        "BulletHitBulletEvent": 4
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 59,
+          "BulletHitBotEvent": 3,
+          "notObservedBeforeCapOrTerminal": 5,
+          "BulletHitBulletEvent": 1
+        },
+        "long": {
+          "BulletHitBotEvent": 4,
+          "BulletHitWallEvent": 32
+        },
+        "recent": {
+          "BulletHitWallEvent": 61,
+          "BulletHitBulletEvent": 3,
+          "BulletHitBotEvent": 4,
+          "notObservedBeforeCapOrTerminal": 4
+        }
+      },
+      "examples": {
+        "soleAnalyticDriftBlocker": [
+          {
+            "line": 188,
+            "round": 1,
+            "turn": 30,
+            "driftDegrees": 5.858845088079105,
+            "allowedDegrees": 2.666566333625962,
+            "own": {
+              "x": 612.1830082923257,
+              "y": 131.6494188228314,
+              "heading": 4.672826227792982,
+              "speed": 3.0,
+              "gun": 3.039989213754481,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 30
+            },
+            "plan": {
+              "angle": 3.039989213754481,
+              "power": 2.0,
+              "target": 2,
+              "created": 29,
+              "expires": 31,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 29,
+              "origin": [
+                612.1830082923257,
+                131.6494188228314
+              ],
+              "targetPosition": [
+                225.64409730387965,
+                148.57513600941363
+              ],
+              "targetBody": {
+                "position": [
+                  225.64409730387965,
+                  148.57513600941363
+                ],
+                "heading": 4.683503805094696,
+                "speed": -0.78125
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.9093041145611,
+                "targetEnergy": 100.0,
+                "observed": 29.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 225.62649784778642,
+              "y": 147.96601520877533,
+              "speed": 0.609375,
+              "energy": 100.0,
+              "turn": 30,
+              "heading": 4.850060030197123,
+              "alive": true
+            }
+          },
+          {
+            "line": 196,
+            "round": 1,
+            "turn": 31,
+            "driftDegrees": 3.9335743057771984,
+            "allowedDegrees": 2.6685339325880895,
+            "own": {
+              "x": 612.1632320759652,
+              "y": 131.14981007464291,
+              "heading": 4.666230466937872,
+              "speed": 0.5,
+              "gun": 3.1425047207247268,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 31
+            },
+            "plan": {
+              "angle": 3.1425047207247263,
+              "power": 2.0,
+              "target": 2,
+              "created": 30,
+              "expires": 32,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 30,
+              "origin": [
+                612.1632320759652,
+                131.14981007464291
+              ],
+              "targetPosition": [
+                225.62649784778642,
+                147.96601520877533
+              ],
+              "targetBody": {
+                "position": [
+                  225.62649784778642,
+                  147.96601520877533
+                ],
+                "heading": 4.850060030197123,
+                "speed": 0.609375
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.9023541707894,
+                "targetEnergy": 100.0,
+                "observed": 30.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 225.84736295996493,
+              "y": 146.37186763315776,
+              "speed": 1.609375,
+              "energy": 98.05,
+              "turn": 31,
+              "heading": 5.003526285909594,
+              "alive": true
+            }
+          },
+          {
+            "line": 204,
+            "round": 1,
+            "turn": 32,
+            "driftDegrees": 7.285627702859676,
+            "allowedDegrees": 2.668058239110179,
+            "own": {
+              "x": 612.1978386691455,
+              "y": 131.8990112383556,
+              "heading": 4.66494025046369,
+              "speed": -0.75,
+              "gun": 3.2172626001043962,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 32
+            },
+            "plan": {
+              "angle": 3.217262600104396,
+              "power": 2.0,
+              "target": 2,
+              "created": 31,
+              "expires": 33,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 31,
+              "origin": [
+                612.1978386691455,
+                131.8990112383556
+              ],
+              "targetPosition": [
+                225.84736295996493,
+                146.37186763315776
+              ],
+              "targetBody": {
+                "position": [
+                  225.84736295996493,
+                  146.37186763315776
+                ],
+                "heading": 5.003526285909594,
+                "speed": 1.609375
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.62146041436284,
+                "targetEnergy": 98.05,
+                "observed": 31.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 225.791300097467,
+              "y": 146.55896100050356,
+              "speed": -0.1953125,
+              "energy": 98.05,
+              "turn": 32,
+              "heading": 4.909656896599585,
+              "alive": true
+            }
+          },
+          {
+            "line": 212,
+            "round": 1,
+            "turn": 33,
+            "driftDegrees": 4.125121916295609,
+            "allowedDegrees": 2.666018327383463,
+            "own": {
+              "x": 612.2808427926601,
+              "y": 133.64704164869735,
+              "heading": 4.6668822145425475,
+              "speed": -1.75,
+              "gun": 3.0941249918097906,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 33
+            },
+            "plan": {
+              "angle": 3.0941249918097906,
+              "power": 2.0,
+              "target": 2,
+              "created": 32,
+              "expires": 34,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 32,
+              "origin": [
+                612.2808427926601,
+                133.64704164869735
+              ],
+              "targetPosition": [
+                225.791300097467,
+                146.55896100050356
+              ],
+              "targetBody": {
+                "position": [
+                  225.791300097467,
+                  146.55896100050356
+                ],
+                "heading": 4.909656896599585,
+                "speed": -0.1953125
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.7051645298871,
+                "targetEnergy": 98.05,
+                "observed": 32.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 225.55702964274175,
+              "y": 147.73109125209638,
+              "speed": -1.1953125,
+              "energy": 98.05,
+              "turn": 33,
+              "heading": 4.914303478650141,
+              "alive": true
+            }
+          },
+          {
+            "line": 220,
+            "round": 1,
+            "turn": 34,
+            "driftDegrees": 6.511079081508782,
+            "allowedDegrees": 2.6664127144389798,
+            "own": {
+              "x": 612.4059432105971,
+              "y": 136.3941946996634,
+              "heading": 4.6714233895837385,
+              "speed": -2.75,
+              "gun": 3.0261469983537292,
+              "heat": 0.0,
+              "energy": 100.0,
+              "population": 1.0,
+              "turn": 34
+            },
+            "plan": {
+              "angle": 3.0261469983537292,
+              "power": 2.0,
+              "target": 2,
+              "created": 33,
+              "expires": 35,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 33,
+              "origin": [
+                612.4059432105971,
+                136.3941946996634
+              ],
+              "targetPosition": [
+                225.55702964274175,
+                147.73109125209638
+              ],
+              "targetBody": {
+                "position": [
+                  225.55702964274175,
+                  147.73109125209638
+                ],
+                "heading": 4.914303478650141,
+                "speed": -1.1953125
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 387.0149960299608,
+                "targetEnergy": 98.05,
+                "observed": 33.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 225.63771779131994,
+              "y": 147.33692134476823,
+              "speed": 0.40234375,
+              "energy": 98.05,
+              "turn": 34,
+              "heading": 5.083569736477833,
+              "alive": true
+            }
+          }
+        ]
+      },
+      "coveredRounds": {
+        "1": {
+          "decisions": 599,
+          "coolDecisions": 570,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "2": {
+          "decisions": 966,
+          "coolDecisions": 937,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "3": {
+          "decisions": 285,
+          "coolDecisions": 88,
+          "submissions": 12,
+          "firstRequest": 32
+        },
+        "4": {
+          "decisions": 199,
+          "coolDecisions": 13,
+          "submissions": 12,
+          "firstRequest": 31
+        },
+        "5": {
+          "decisions": 557,
+          "coolDecisions": 528,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "6": {
+          "decisions": 638,
+          "coolDecisions": 143,
+          "submissions": 36,
+          "firstRequest": 63
+        },
+        "7": {
+          "decisions": 556,
+          "coolDecisions": 117,
+          "submissions": 31,
+          "firstRequest": 30
+        },
+        "8": {
+          "decisions": 540,
+          "coolDecisions": 86,
+          "submissions": 32,
+          "firstRequest": 40
+        },
+        "9": {
+          "decisions": 1976,
+          "coolDecisions": 1259,
+          "submissions": 53,
+          "firstRequest": 33
+        },
+        "10": {
+          "decisions": 569,
+          "coolDecisions": 540,
+          "submissions": 0,
+          "firstRequest": null
+        }
+      },
+      "fullGameConfirmed": 294,
+      "fullGameHits": 17
+    },
+    {
+      "game": 4,
+      "traceSHA256": "e546056e67d5df0ad78a7807357c19ddfc3da92c2e62180e1c943f40f2a81f04",
+      "traceRows": 100000,
+      "lastIdentity": {
+        "round": 11,
+        "turn": 1782
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 8438,
+        "own.state": 8448,
+        "population.transition": 12,
+        "command.prepared": 8437,
+        "command.submitted": 8437,
+        "ScannedBotEvent": 8405,
+        "scan.observed": 8405,
+        "fire.prepared": 8019,
+        "fire.submitted": 363,
+        "BulletFiredEvent": 363,
+        "gun.cohort.confirmed": 363,
+        "fire.confirmed": 363,
+        "bullet.motion": 13341,
+        "BulletHitWallEvent": 302,
+        "HitByBulletEvent": 136,
+        "BulletHitBotEvent": 28,
+        "shadow.zero": 26070,
+        "BulletHitBulletEvent": 17,
+        "DeathEvent": 9,
+        "gun.rating": 30,
+        "model.roundHash": 10,
+        "BotDeathEvent": 1,
+        "WonRoundEvent": 1
+      },
+      "counts": {
+        "preparedDecisions": 8437,
+        "hotDecisions": 5149,
+        "noPriorActivePlan": 426,
+        "submittedDecisions": 8437,
+        "submittedFireCommands": 363,
+        "mechanicallyReplayedDecisions": 8011,
+        "replayMatchesIntent": 8011,
+        "coolDecisions": 3288,
+        "coolFundedAlignedWithActivePlan": 3215,
+        "acceptedPrefixRequests": 363,
+        "prefixRequests": 363,
+        "confirmedPrefixShots": 363,
+        "nativeHeadingOriginNextTickPass": 363,
+        "coolFundedAlignedHeld": 2852,
+        "soleAnalyticDriftBlocker": 2827,
+        "soleAnalyticDriftGun.analytic": 483,
+        "soleAnalyticDriftGun.recent": 633,
+        "multipleOutcomeEvidenceRecords": 1,
+        "soleAnalyticDriftGun.long": 1711
+      },
+      "observedFailingPredicatesForHolds": {
+        "noPriorActivePlan": 426,
+        "heat": 4734,
+        "analyticDrift": 4833,
+        "alignment": 319,
+        "powerPolicy": 60
+      },
+      "coolHoldFailingPredicates": {
+        "analyticDrift": 2901,
+        "alignment": 62,
+        "powerPolicy": 25,
+        "noPriorActivePlan": 11
+      },
+      "coolFundedAlignedHoldFailingPredicates": {
+        "analyticDrift": 2849,
+        "powerPolicy": 25
+      },
+      "holdCombinations": {
+        "noPriorActivePlan": 426,
+        "heat": 2634,
+        "analyticDrift+heat": 1810,
+        "analyticDrift": 2827,
+        "alignment+analyticDrift+heat": 108,
+        "alignment+analyticDrift": 52,
+        "powerPolicy": 3,
+        "heat+powerPolicy": 20,
+        "analyticDrift+powerPolicy": 22,
+        "alignment+heat": 147,
+        "alignment": 10,
+        "analyticDrift+heat+powerPolicy": 13,
+        "alignment+heat+powerPolicy": 1,
+        "alignment+analyticDrift+heat+powerPolicy": 1
+      },
+      "requestedByGun": {
+        "analytic": 133,
+        "recent": 141,
+        "long": 89
+      },
+      "observedOutcomes": {
+        "BulletHitWallEvent": 302,
+        "BulletHitBotEvent": 27,
+        "BulletHitBotEvent+BulletHitBulletEvent": 1,
+        "BulletHitBulletEvent": 16,
+        "notObservedBeforeCapOrTerminal": 17
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 109,
+          "BulletHitBotEvent": 5,
+          "BulletHitBotEvent+BulletHitBulletEvent": 1,
+          "BulletHitBulletEvent": 6,
+          "notObservedBeforeCapOrTerminal": 12
+        },
+        "recent": {
+          "BulletHitWallEvent": 118,
+          "BulletHitBotEvent": 13,
+          "BulletHitBulletEvent": 7,
+          "notObservedBeforeCapOrTerminal": 3
+        },
+        "long": {
+          "notObservedBeforeCapOrTerminal": 2,
+          "BulletHitWallEvent": 75,
+          "BulletHitBulletEvent": 3,
+          "BulletHitBotEvent": 9
+        }
+      },
+      "examples": {
+        "soleAnalyticDriftBlocker": [
+          {
+            "line": 623,
+            "round": 1,
+            "turn": 75,
+            "driftDegrees": 20.421693219463876,
+            "allowedDegrees": 2.4396582141315517,
+            "own": {
+              "x": 610.7964644530928,
+              "y": 447.0542083017804,
+              "heading": 4.9091845273695105,
+              "speed": -6.0,
+              "gun": 3.3490553330985082,
+              "heat": 0.0,
+              "energy": 94.0,
+              "population": 1.0,
+              "turn": 75
+            },
+            "plan": {
+              "angle": 3.3490553330985082,
+              "power": 2.0,
+              "target": 1,
+              "created": 74,
+              "expires": 76,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 74,
+              "origin": [
+                610.7964644530928,
+                447.0542083017804
+              ],
+              "targetPosition": [
+                192.61867155295013,
+                509.8121591430703
+              ],
+              "targetBody": {
+                "position": [
+                  192.61867155295013,
+                  509.8121591430703
+                ],
+                "heading": 4.249267210378772,
+                "speed": 5.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 422.8607653455595,
+                "targetEnergy": 94.14999999999999,
+                "observed": 74.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 192.61867155295013,
+              "y": 509.8121591430703,
+              "speed": 0.0,
+              "energy": 94.14999999999999,
+              "turn": 75,
+              "heading": 4.252311845089347,
+              "alive": true
+            }
+          },
+          {
+            "line": 633,
+            "round": 1,
+            "turn": 76,
+            "driftDegrees": 3.9927582464587608,
+            "allowedDegrees": 2.4512516380890608,
+            "own": {
+              "x": 609.4277702811398,
+              "y": 453.91909550141173,
+              "heading": 4.992087666839241,
+              "speed": -7.0,
+              "gun": 3.0082903647919794,
+              "heat": 0.0,
+              "energy": 94.0,
+              "population": 1.0,
+              "turn": 76
+            },
+            "plan": {
+              "angle": 3.0082903647919794,
+              "power": 2.0,
+              "target": 1,
+              "created": 75,
+              "expires": 77,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 75,
+              "origin": [
+                609.4277702811398,
+                453.91909550141173
+              ],
+              "targetPosition": [
+                192.61867155295013,
+                509.8121591430703
+              ],
+              "targetBody": {
+                "position": [
+                  192.61867155295013,
+                  509.8121591430703
+                ],
+                "heading": 4.252311845089347,
+                "speed": 0.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 420.53996165151335,
+                "targetEnergy": 94.14999999999999,
+                "observed": 75.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 192.17465433003136,
+              "y": 508.91614089227875,
+              "speed": 1.0,
+              "energy": 92.19999999999999,
+              "turn": 76,
+              "heading": 4.243261481568659,
+              "alive": true
+            }
+          },
+          {
+            "line": 643,
+            "round": 1,
+            "turn": 77,
+            "driftDegrees": 3.9619704085117777,
+            "allowedDegrees": 2.465492342006015,
+            "own": {
+              "x": 607.219241825125,
+              "y": 461.6082048164737,
+              "heading": 5.061900836919015,
+              "speed": -8.0,
+              "gun": 3.0972949542396333,
+              "heat": 0.0,
+              "energy": 94.0,
+              "population": 1.0,
+              "turn": 77
+            },
+            "plan": {
+              "angle": 3.0972949542396333,
+              "power": 2.0,
+              "target": 1,
+              "created": 76,
+              "expires": 78,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 76,
+              "origin": [
+                607.219241825125,
+                461.6082048164737
+              ],
+              "targetPosition": [
+                192.17465433003136,
+                508.91614089227875
+              ],
+              "targetBody": {
+                "position": [
+                  192.17465433003136,
+                  508.91614089227875
+                ],
+                "heading": 4.243261481568659,
+                "speed": 1.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 417.7320318394615,
+                "targetEnergy": 92.19999999999999,
+                "observed": 76.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 191.27043789261333,
+              "y": 507.1322147070617,
+              "speed": 2.0,
+              "energy": 92.19999999999999,
+              "turn": 77,
+              "heading": 4.238736485127457,
+              "alive": true
+            }
+          },
+          {
+            "line": 653,
+            "round": 1,
+            "turn": 78,
+            "driftDegrees": 4.316086149320508,
+            "allowedDegrees": 2.4794351081039085,
+            "own": {
+              "x": 604.4797280813768,
+              "y": 469.1245246904423,
+              "heading": 5.131714006998788,
+              "speed": -8.0,
+              "gun": 3.187047675432988,
+              "heat": 0.0,
+              "energy": 94.0,
+              "population": 1.0,
+              "turn": 78
+            },
+            "plan": {
+              "angle": 3.187047675432988,
+              "power": 2.0,
+              "target": 1,
+              "created": 77,
+              "expires": 79,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 77,
+              "origin": [
+                604.4797280813768,
+                469.1245246904423
+              ],
+              "targetPosition": [
+                191.27043789261333,
+                507.1322147070617
+              ],
+              "targetBody": {
+                "position": [
+                  191.27043789261333,
+                  507.1322147070617
+                ],
+                "heading": 4.238736485127457,
+                "speed": 2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 414.95361427357295,
+                "targetEnergy": 92.19999999999999,
+                "observed": 77.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 189.9020187741001,
+              "y": 504.4624901676967,
+              "speed": 3.0,
+              "energy": 92.19999999999999,
+              "turn": 78,
+              "heading": 4.321921982245788,
+              "alive": true
+            }
+          },
+          {
+            "line": 662,
+            "round": 1,
+            "turn": 79,
+            "driftDegrees": 4.132640237514845,
+            "allowedDegrees": 2.4806104571325824,
+            "own": {
+              "x": 603.2582959329155,
+              "y": 471.8646165696874,
+              "heading": 4.996450989969227,
+              "speed": -3.0,
+              "gun": 3.2746956270303795,
+              "heat": 0.0,
+              "energy": 94.0,
+              "population": 1.0,
+              "turn": 79
+            },
+            "plan": {
+              "angle": 3.274695627030379,
+              "power": 2.0,
+              "target": 1,
+              "created": 78,
+              "expires": 80,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 78,
+              "origin": [
+                603.2582959329155,
+                471.8646165696874
+              ],
+              "targetPosition": [
+                189.9020187741001,
+                504.4624901676967
+              ],
+              "targetBody": {
+                "position": [
+                  189.9020187741001,
+                  504.4624901676967
+                ],
+                "heading": 4.321921982245788,
+                "speed": 3.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 414.6396426171854,
+                "targetEnergy": 92.19999999999999,
+                "observed": 78.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 188.37953755626032,
+              "y": 500.7635645207926,
+              "speed": 4.0,
+              "energy": 92.19999999999999,
+              "turn": 79,
+              "heading": 4.324187844465815,
+              "alive": true
+            }
+          }
+        ],
+        "multipleOutcomeEvidence": [
+          {
+            "round": 1,
+            "bullet": 42,
+            "prior": [
+              {
+                "kind": "BulletHitBulletEvent",
+                "turn": 411,
+                "line": 3627
+              }
+            ],
+            "additional": {
+              "kind": "BulletHitBotEvent",
+              "turn": 411,
+              "line": 3628
+            }
+          }
+        ]
+      },
+      "coveredRounds": {
+        "1": {
+          "decisions": 542,
+          "coolDecisions": 197,
+          "submissions": 24,
+          "firstRequest": 30
+        },
+        "2": {
+          "decisions": 944,
+          "coolDecisions": 226,
+          "submissions": 51,
+          "firstRequest": 34
+        },
+        "3": {
+          "decisions": 532,
+          "coolDecisions": 145,
+          "submissions": 27,
+          "firstRequest": 36
+        },
+        "4": {
+          "decisions": 674,
+          "coolDecisions": 167,
+          "submissions": 37,
+          "firstRequest": 36
+        },
+        "5": {
+          "decisions": 326,
+          "coolDecisions": 52,
+          "submissions": 18,
+          "firstRequest": 30
+        },
+        "6": {
+          "decisions": 401,
+          "coolDecisions": 122,
+          "submissions": 19,
+          "firstRequest": 58
+        },
+        "7": {
+          "decisions": 725,
+          "coolDecisions": 139,
+          "submissions": 43,
+          "firstRequest": 45
+        },
+        "8": {
+          "decisions": 1412,
+          "coolDecisions": 506,
+          "submissions": 67,
+          "firstRequest": 30
+        },
+        "9": {
+          "decisions": 380,
+          "coolDecisions": 37,
+          "submissions": 23,
+          "firstRequest": 34
+        },
+        "10": {
+          "decisions": 720,
+          "coolDecisions": 141,
+          "submissions": 40,
+          "firstRequest": 30
+        },
+        "11": {
+          "decisions": 1781,
+          "coolDecisions": 1556,
+          "submissions": 14,
+          "firstRequest": 32
+        }
+      },
+      "fullGameConfirmed": 481,
+      "fullGameHits": 35
+    },
+    {
+      "game": 5,
+      "traceSHA256": "208fd972a22bce0fcfd17340e498b1d56445342e1023b03eeed9ed39fa157414",
+      "traceRows": 100000,
+      "lastIdentity": {
+        "round": 7,
+        "turn": 799
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6308,
+        "own.state": 6314,
+        "population.transition": 7,
+        "command.prepared": 6307,
+        "command.submitted": 6307,
+        "ScannedBotEvent": 6243,
+        "scan.observed": 6243,
+        "fire.prepared": 6125,
+        "fire.submitted": 111,
+        "BulletFiredEvent": 111,
+        "gun.cohort.confirmed": 111,
+        "fire.confirmed": 111,
+        "bullet.motion": 4236,
+        "HitByBulletEvent": 80,
+        "BulletHitWallEvent": 98,
+        "BulletHitBotEvent": 10,
+        "shadow.zero": 51246,
+        "DeathEvent": 6,
+        "gun.rating": 18,
+        "model.roundHash": 6
+      },
+      "counts": {
+        "preparedDecisions": 6307,
+        "hotDecisions": 1691,
+        "noPriorActivePlan": 187,
+        "submittedDecisions": 6307,
+        "submittedFireCommands": 111,
+        "mechanicallyReplayedDecisions": 6120,
+        "replayMatchesIntent": 6120,
+        "coolDecisions": 4616,
+        "coolFundedAlignedWithActivePlan": 4552,
+        "acceptedPrefixRequests": 111,
+        "prefixRequests": 111,
+        "confirmedPrefixShots": 111,
+        "nativeHeadingOriginNextTickPass": 111,
+        "coolFundedAlignedHeld": 4441,
+        "soleAnalyticDriftBlocker": 4426,
+        "soleAnalyticDriftGun.analytic": 3979,
+        "soleAnalyticDriftGun.recent": 409,
+        "soleAnalyticDriftGun.long": 38
+      },
+      "observedFailingPredicatesForHolds": {
+        "noPriorActivePlan": 187,
+        "heat": 1551,
+        "alignment": 84,
+        "analyticDrift": 5099,
+        "powerPolicy": 20,
+        "energy": 2
+      },
+      "coolHoldFailingPredicates": {
+        "analyticDrift": 4455,
+        "alignment": 15,
+        "powerPolicy": 17,
+        "energy": 2,
+        "noPriorActivePlan": 47
+      },
+      "coolFundedAlignedHoldFailingPredicates": {
+        "analyticDrift": 4440,
+        "powerPolicy": 15
+      },
+      "holdCombinations": {
+        "noPriorActivePlan": 187,
+        "alignment+heat": 39,
+        "alignment+analyticDrift+heat": 30,
+        "heat": 868,
+        "analyticDrift+heat": 611,
+        "alignment+analyticDrift": 13,
+        "analyticDrift": 4426,
+        "analyticDrift+heat+powerPolicy": 3,
+        "powerPolicy": 1,
+        "analyticDrift+powerPolicy": 14,
+        "analyticDrift+energy+powerPolicy": 2,
+        "alignment": 2
+      },
+      "requestedByGun": {
+        "analytic": 68,
+        "recent": 26,
+        "long": 17
+      },
+      "observedOutcomes": {
+        "BulletHitWallEvent": 98,
+        "BulletHitBotEvent": 10,
+        "notObservedBeforeCapOrTerminal": 3
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 60,
+          "BulletHitBotEvent": 6,
+          "notObservedBeforeCapOrTerminal": 2
+        },
+        "recent": {
+          "BulletHitWallEvent": 21,
+          "BulletHitBotEvent": 4,
+          "notObservedBeforeCapOrTerminal": 1
+        },
+        "long": {
+          "BulletHitWallEvent": 17
+        }
+      },
+      "examples": {
+        "soleAnalyticDriftBlocker": [
+          {
+            "line": 467,
+            "round": 1,
+            "turn": 61,
+            "driftDegrees": 4.337673639295156,
+            "allowedDegrees": 2.6053245896654493,
+            "own": {
+              "x": 166.9784355735333,
+              "y": 391.195669946028,
+              "heading": 1.3667244261805087,
+              "speed": -3.0,
+              "gun": 5.770129367904514,
+              "heat": 0.0,
+              "energy": 96.0,
+              "population": 1.0,
+              "turn": 61
+            },
+            "plan": {
+              "angle": 5.770129367904515,
+              "power": 2.0,
+              "target": 1,
+              "created": 60,
+              "expires": 62,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 60,
+              "origin": [
+                166.9784355735333,
+                391.195669946028
+              ],
+              "targetPosition": [
+                524.6513973513844,
+                222.34659908901062
+              ],
+              "targetBody": {
+                "position": [
+                  524.6513973513844,
+                  222.34659908901062
+                ],
+                "heading": 1.3613849345541893,
+                "speed": -1.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 395.524912383807,
+                "targetEnergy": 96.1,
+                "observed": 60.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 524.235628977019,
+              "y": 220.3902921961951,
+              "speed": -2.0,
+              "energy": 94.14999999999999,
+              "turn": 61,
+              "heading": 1.2130319481346712,
+              "alive": true
+            }
+          },
+          {
+            "line": 476,
+            "round": 1,
+            "turn": 62,
+            "driftDegrees": 8.473510172405385,
+            "allowedDegrees": 2.6115222980762605,
+            "own": {
+              "x": 166.16780194767784,
+              "y": 387.27867197249867,
+              "heading": 1.3748988924602634,
+              "speed": -4.0,
+              "gun": 5.699149064495059,
+              "heat": 0.0,
+              "energy": 96.0,
+              "population": 1.0,
+              "turn": 62
+            },
+            "plan": {
+              "angle": 5.699149064495059,
+              "power": 2.0,
+              "target": 1,
+              "created": 61,
+              "expires": 63,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 61,
+              "origin": [
+                166.16780194767784,
+                387.27867197249867
+              ],
+              "targetPosition": [
+                524.235628977019,
+                220.3902921961951
+              ],
+              "targetBody": {
+                "position": [
+                  524.235628977019,
+                  220.3902921961951
+                ],
+                "heading": 1.2130319481346712,
+                "speed": -2.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 395.04974377649444,
+                "targetEnergy": 94.14999999999999,
+                "observed": 61.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 524.235628977019,
+              "y": 220.3902921961951,
+              "speed": -0.0,
+              "energy": 94.14999999999999,
+              "turn": 62,
+              "heading": 1.2586451379063361,
+              "alive": true
+            }
+          },
+          {
+            "line": 635,
+            "round": 1,
+            "turn": 78,
+            "driftDegrees": 4.331691436950039,
+            "allowedDegrees": 2.6705501814920134,
+            "own": {
+              "x": 155.33359241710238,
+              "y": 331.4769751345521,
+              "heading": 1.26407163598631,
+              "speed": -5.0,
+              "gun": 5.753372718571383,
+              "heat": 0.0,
+              "energy": 84.3,
+              "population": 1.0,
+              "turn": 78
+            },
+            "plan": {
+              "angle": 5.7533727185713825,
+              "power": 2.0,
+              "target": 1,
+              "created": 77,
+              "expires": 79,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 77,
+              "origin": [
+                155.33359241710238,
+                331.4769751345521
+              ],
+              "targetPosition": [
+                522.9997637941826,
+                214.52563405946097
+              ],
+              "targetBody": {
+                "position": [
+                  522.9997637941826,
+                  214.52563405946097
+                ],
+                "heading": 1.384354077184859,
+                "speed": -3.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 385.8186487902611,
+                "targetEnergy": 98.04999999999998,
+                "observed": 77.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 522.258307869588,
+              "y": 210.59495433301626,
+              "speed": -4.0,
+              "energy": 98.04999999999998,
+              "turn": 78,
+              "heading": 1.3843544277226374,
+              "alive": true
+            }
+          },
+          {
+            "line": 644,
+            "round": 1,
+            "turn": 79,
+            "driftDegrees": 4.424500069367636,
+            "allowedDegrees": 2.666479149244764,
+            "own": {
+              "x": 153.52196550402695,
+              "y": 325.7570094066984,
+              "heading": 1.2772036863288532,
+              "speed": -6.0,
+              "gun": 5.682828108521839,
+              "heat": 0.0,
+              "energy": 84.3,
+              "population": 1.0,
+              "turn": 79
+            },
+            "plan": {
+              "angle": 5.682828108521839,
+              "power": 2.0,
+              "target": 1,
+              "created": 78,
+              "expires": 80,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 78,
+              "origin": [
+                153.52196550402695,
+                325.7570094066984
+              ],
+              "targetPosition": [
+                522.258307869588,
+                210.59495433301626
+              ],
+              "targetBody": {
+                "position": [
+                  522.258307869588,
+                  210.59495433301626
+                ],
+                "heading": 1.3843544277226374,
+                "speed": -4.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.30142260924436,
+                "targetEnergy": 98.04999999999998,
+                "observed": 78.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 521.3314896861594,
+              "y": 205.68160435007528,
+              "speed": -5.0,
+              "energy": 98.04999999999998,
+              "turn": 79,
+              "heading": 1.3843544392149423,
+              "alive": true
+            }
+          },
+          {
+            "line": 653,
+            "round": 1,
+            "turn": 80,
+            "driftDegrees": 3.4583175579638237,
+            "allowedDegrees": 2.662208533456115,
+            "own": {
+              "x": 151.4962145178689,
+              "y": 319.05653681574785,
+              "heading": 1.2929841620072533,
+              "speed": -7.0,
+              "gun": 5.61061793841909,
+              "heat": 0.0,
+              "energy": 84.3,
+              "population": 1.0,
+              "turn": 80
+            },
+            "plan": {
+              "angle": 5.61061793841909,
+              "power": 2.0,
+              "target": 1,
+              "created": 79,
+              "expires": 81,
+              "tolerance": 0.008726646259971648,
+              "observationTurn": 79,
+              "origin": [
+                151.4962145178689,
+                319.05653681574785
+              ],
+              "targetPosition": [
+                521.3314896861594,
+                205.68160435007528
+              ],
+              "targetBody": {
+                "position": [
+                  521.3314896861594,
+                  205.68160435007528
+                ],
+                "heading": 1.3843544392149423,
+                "speed": -5.0
+              },
+              "policy": {
+                "population": 1.0,
+                "range": 386.82296476605546,
+                "targetEnergy": 98.04999999999998,
+                "observed": 79.0
+              },
+              "gun": "analytic"
+            },
+            "target": {
+              "x": 520.2193079338041,
+              "y": 199.78558435776455,
+              "speed": -6.0,
+              "energy": 98.04999999999998,
+              "turn": 80,
+              "heading": 1.3843544397060334,
+              "alive": true
+            }
+          }
+        ]
+      },
+      "coveredRounds": {
+        "1": {
+          "decisions": 561,
+          "coolDecisions": 156,
+          "submissions": 29,
+          "firstRequest": 30
+        },
+        "2": {
+          "decisions": 524,
+          "coolDecisions": 114,
+          "submissions": 29,
+          "firstRequest": 43
+        },
+        "3": {
+          "decisions": 491,
+          "coolDecisions": 392,
+          "submissions": 5,
+          "firstRequest": 34
+        },
+        "4": {
+          "decisions": 648,
+          "coolDecisions": 112,
+          "submissions": 37,
+          "firstRequest": 31
+        },
+        "5": {
+          "decisions": 891,
+          "coolDecisions": 806,
+          "submissions": 4,
+          "firstRequest": 31
+        },
+        "6": {
+          "decisions": 2394,
+          "coolDecisions": 2365,
+          "submissions": 0,
+          "firstRequest": null
+        },
+        "7": {
+          "decisions": 798,
+          "coolDecisions": 671,
+          "submissions": 7,
+          "firstRequest": 30
+        }
+      },
+      "fullGameConfirmed": 318,
+      "fullGameHits": 22
+    }
+  ],
+  "limitations": [
+    "Overlapping failed predicates are computed checks, not internally logged first rejection reasons.",
+    "Gate replay uses the frozen own JAR and reconstructed serialized state, not a new engine battle.",
+    "Prefixes are selected/capped; missing later or terminal outcomes are not misses or independent observations.",
+    "No complete target-crossing/prediction-label trace exists; hit/wall counts do not identify aiming-error causes.",
+    "No opponent files/logs or own exported models opened. No training data emitted."
+  ]
+}
