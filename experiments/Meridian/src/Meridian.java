@@ -6,10 +6,10 @@ import java.util.*;
 
 public final class Meridian extends Bot {
     record Scan(int t,Flight.Pose p,double energy,double omega){}
-    record Wave(int t,double x,double y,double center,double lead,double power){}
+    private final HitAngles hitAngles = new HitAngles();
     record Trial(int due,double[] angles,double x,double y){}
     private Scan scan;
-    private final LinkedList<Wave> waves=new LinkedList<>();
+    private final LinkedList<HitAngles.Wave> waves=new LinkedList<>();
     private final ArrayList<Trial> trials=new ArrayList<>();
     private final double[] skill={.2,.3,.25}; // stop, coast, turn
     private final Map<Integer,Double> corrections=new HashMap<>();
@@ -32,7 +32,13 @@ public final class Meridian extends Bot {
     public void onRoundEnded(RoundEndedEvent e){mark("end");}
     public void onSkippedTurn(SkippedTurnEvent e){mark("skip "+e.getTurnNumber());}
     public void onBulletHit(BulletHitBotEvent e){corrections.merge(e.getTurnNumber(),-e.getDamage(),Double::sum);}
-    public void onHitByBullet(HitByBulletEvent e){corrections.merge(e.getTurnNumber(),3*e.getBullet().getPower(),Double::sum);}
+    public void onHitByBullet(HitByBulletEvent e){
+        var bullet = e.getBullet();
+        corrections.merge(e.getTurnNumber(), 3 * bullet.getPower(), Double::sum);
+        var label = hitAngles.observe(waves, e.getTurnNumber(), bullet.getX(), bullet.getY(),
+                bullet.getDirection(), bullet.getPower());
+        mark("hit " + label);
+    }
     public void onScannedBot(ScannedBotEvent e){
         int t=e.getTurnNumber();
         if(scan!=null && t<=scan.t)return;
@@ -45,7 +51,7 @@ public final class Meridian extends Bot {
             if(power>=.09999 && power<=3.00001 && stamp[k]==t-1){
                 var own=history[k]; double a=Flight.angle(own.x()-scan.p.x(),own.y()-scan.p.y());
                 double lat=own.v()*Flight.sin(own.h()-a);
-                waves.add(new Wave(t,scan.p.x(),scan.p.y(),a,a+Math.toDegrees(Math.asin(lat/(20-3*power))),power));
+                waves.add(new HitAngles.Wave(t,scan.p.x(),scan.p.y(),a,a+Math.toDegrees(Math.asin(lat/(20-3*power))),power));
             }
         }
         corrections.keySet().removeIf(k->k<t);
@@ -89,14 +95,10 @@ public final class Meridian extends Bot {
             p=Flight.step(p,Flight.orbit(p,scan.p.x(),scan.p.y(),sign,getArenaWidth(),getArenaHeight()),getArenaWidth(),getArenaHeight());
             double edge=Math.min(Math.min(p.x(),getArenaWidth()-p.x()),Math.min(p.y(),getArenaHeight()-p.y()));
             risk+=Math.max(0,40-edge)*.10;
-            for(Wave w:waves){
-                double dx=p.x()-w.x,dy=p.y()-w.y,r=Math.hypot(dx,dy);
-                double diff=r-Flight.farEdge(w.power,t+i-w.t+1);
-                if(Math.abs(diff)>22)continue;
-                for(double a:new double[]{w.center,w.lead}){
-                    double off=Math.abs(dx*Flight.sin(a)-dy*Flight.cos(a));
-                    risk+=40/(1+off*off/500);
-                }
+            for (var wave : waves) {
+                double dx = p.x() - wave.x(), dy = p.y() - wave.y();
+                double radialError = Math.hypot(dx, dy) - Flight.farEdge(wave.power(), t + i - wave.t() + 1);
+                if (Math.abs(radialError) <= 22) risk += hitAngles.risk(wave, dx, dy);
             }
         }
         return risk;
@@ -107,7 +109,7 @@ public final class Meridian extends Bot {
             int t=getTurnNumber();
             var own=new Flight.Pose(getX(),getY(),getDirection(),getSpeed());
             history[t%4]=own;stamp[t%4]=t;
-            waves.removeIf(w->Flight.farEdge(w.power,t-w.t+1)>Math.hypot(getX()-w.x,getY()-w.y)+36);
+            waves.removeIf(w->Flight.farEdge(w.power(),t-w.t()+1)>Math.hypot(getX()-w.x(),getY()-w.y())+36);
             if(scan==null||t-scan.t>3){
                 setRadarTurnRate(45*radarSign);setTargetSpeed(4);
                 setTurnRate(Flight.delta(Flight.angle(getArenaWidth()/2.-getX(),getArenaHeight()/2.-getY())-getDirection()));
