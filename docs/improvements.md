@@ -8,7 +8,7 @@ Earlier cycles compare narrow candidates with the previously accepted version. C
 
 | Experiment | Budget and status | Evidence |
 |---|---|---|
-| KeelBrace same-turn ram-energy correction / [issue114](https://github.com/stephanelee/robocode/issues/114) | **Prospective only;0games/rounds measured.** Original Keel comparator; primary Retcon gain with Diamond regression guards. Fixed120screen plus conditional300fresh confirmation,420maximum/no replacements. Published-identity review precedes implementation; source/runtime clearance still required. | [Protocol](improvements/keel-brace-v1.md), [registry/pins/review history](../benchmarks/keel-brace-v1/README.md) |
+| KeelBrace same-turn ram-energy correction / [issue114](https://github.com/stephanelee/robocode/issues/114), [PR115](https://github.com/stephanelee/robocode/pull/115) | **Implementation/pure validation;0games/rounds measured.** Published prospective review passed; actual pinned Java17 build/JAR validation pending. Original Keel comparator; primary Retcon gain with Diamond regression guards. Fixed120screen plus conditional300fresh confirmation,420maximum/no replacements. Published-identity review precedes implementation; source/runtime clearance still required. | [Protocol](improvements/keel-brace-v1.md), [registry/pins/review history](../benchmarks/keel-brace-v1/README.md) |
 
 ## Keel experimental baseline
 

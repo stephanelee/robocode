@@ -1,0 +1,92 @@
+diff --git a/experiments/Keel/src/Keel.java b/experiments/KeelBrace/src/KeelBrace.java
+index b7b11da2..458d295a 100644
+--- a/experiments/Keel/src/Keel.java
++++ b/experiments/KeelBrace/src/KeelBrace.java
+@@ -7,28 +7,29 @@ import java.util.HashMap;
+ import java.util.Map;
+ 
+ /**
+- * Keel: experimental 1v1 duelist. Precise-intersection wave surfing over engine-exact paths (including
++ * KeelBrace: experimental 1v1 duelist. Precise-intersection wave surfing over engine-exact paths (including
+  * Tank Royale's instant stop), KNN danger, and KNN guess-factor guns. Uses only its own legal scans,
+  * state, commands and events; never reads opponent internals.
+  */
+-public final class Keel extends Bot {
++public final class KeelBrace extends Bot {
+     private final Surfer surfer = new Surfer();
+     private final Gun gun = new Gun();
+     private final Track me = new Track(), enemy = new Track();
+     private final Map<Integer, Double> corrections = new HashMap<>();
++    private final RamLedger ram = new RamLedger(() -> mark("diagnosticOverflow"));
+     private int scanT = -1, round, orbitDir = 1, radarSign = 1, stuck = 0;
+     private double ex, ey, eEnergy = 100;
+     private Phys.Pose ePrev;
+     private double ePrevEnergy;
+     private int ePrevT = -1;
+-    private final String telemetry = System.getenv("KEEL_METRICS");
+-    private final long seed = Long.parseLong(System.getenv().getOrDefault("KEEL_SEED", "0"));
++    private final String telemetry = System.getenv("KEEL_BRACE_METRICS");
++    private final long seed = Long.parseLong(System.getenv().getOrDefault("KEEL_BRACE_SEED", "0"));
+     long maxNanos = 0;
+-    /** Energy lead over the opponent above which Keel fires normal 1.2-power shots instead of 0.1 tokens. */
++    /** Energy lead over the opponent above which KeelBrace fires normal 1.2-power shots instead of 0.1 tokens. */
+     static final double LEAD = 15, BASE_POWER = 1.2;
+ 
+-    Keel() { super(BotInfo.fromFile("Keel.json")); }
+-    public static void main(String[] args) { new Keel().start(); }
++    KeelBrace() { super(BotInfo.fromFile("KeelBrace.json")); }
++    public static void main(String[] args) { new KeelBrace().start(); }
+ 
+     private synchronized void mark(String value) {
+         if (telemetry == null) return;
+@@ -38,7 +39,7 @@ public final class Keel extends Bot {
+ 
+     @Override public void onRoundStarted(RoundStartedEvent e) {
+         round = e.getRoundNumber();
+-        surfer.newRound(); gun.newRound(); me.clear(); enemy.clear(); corrections.clear();
++        surfer.newRound(); gun.newRound(); me.clear(); enemy.clear(); corrections.clear(); ram.newRound();
+         scanT = -1; ePrevT = -1; ePrev = null; stuck = 0; maxNanos = 0;
+         orbitDir = new java.util.SplittableRandom(seed * 31 + round).nextBoolean() ? 1 : -1;
+         radarSign = orbitDir;
+@@ -46,7 +47,12 @@ public final class Keel extends Bot {
+     }
+     @Override public void onRoundEnded(RoundEndedEvent e) {
+         mark("stats shots=" + surfer.enemyShots + " hitsTaken=" + surfer.enemyHits + " gun=" + gun.lastChoice
+-                + " score=" + String.format("%.3f/%.3f", gun.score[0], gun.score[1]) + " maxMs=" + maxNanos / 1_000_000);
++                + " score=" + String.format("%.3f/%.3f", gun.score[0], gun.score[1]) + " maxMs=" + maxNanos / 1_000_000
++                + " rawRamEvents=" + ram.rawRamEvents
++                + " eligibleRamCorrectedScans=" + ram.eligibleRamCorrectedScans
++                + " eligibleRamCorrectionEvents=" + ram.eligibleRamCorrectionEvents
++                + " ramChangedPowerScans=" + ram.ramChangedPowerScans
++                + " ramChangedGateScans=" + ram.ramChangedGateScans);
+         mark("end");
+     }
+     @Override public void onSkippedTurn(SkippedTurnEvent e) { mark("skip " + e.getTurnNumber()); }
+@@ -65,7 +71,7 @@ public final class Keel extends Bot {
+     private void dropOwn(int id) {
+         if (surfer.bullets.removeIf(b -> b.id() == id)) surfer.reshade(getArenaWidth(), getArenaHeight());
+     }
+-    @Override public void onHitBot(HitBotEvent e) { corrections.merge(e.getTurnNumber(), -0.6, Double::sum); }
++    @Override public void onHitBot(HitBotEvent e) { ram.hit(e.getTurnNumber(), scanT); }
+     @Override public void onHitByBullet(HitByBulletEvent e) {
+         var b = e.getBullet();
+         corrections.merge(e.getTurnNumber(), 3 * b.getPower(), Double::sum);
+@@ -80,6 +86,7 @@ public final class Keel extends Bot {
+     @Override public void onScannedBot(ScannedBotEvent e) {
+         int t = e.getTurnNumber();
+         if (t <= scanT) return;
++        RamLedger.Snapshot ramCorrection = ram.take(t);
+         Phys.Pose p = new Phys.Pose(e.getX(), e.getY(), e.getDirection(), e.getSpeed());
+         enemy.add(t, p, getX(), getY());
+         double w = getArenaWidth(), h = getArenaHeight();
+@@ -88,7 +95,9 @@ public final class Keel extends Bot {
+             boolean wall = Math.abs(p.v()) < 0.01 && Math.abs(ePrev.v()) > 2
+                     && (p.x() < 18.5 || p.y() < 18.5 || p.x() > w - 18.5 || p.y() > h - 18.5);
+             if (wall) corr -= Math.max(0, (Math.abs(ePrev.v()) + 1) / 2 - 1);
+-            double power = ePrevEnergy - e.getEnergy() + corr;
++            double withoutRamPower = ePrevEnergy - e.getEnergy() + corr;
++            double power = ePrevEnergy - e.getEnergy() + (corr + ramCorrection.correction());
++            ram.inferred(ramCorrection, withoutRamPower, power);
+             if (power >= 0.0999 && power <= 3.0001) {
+                 Phys.Pose aimed = me.atOrBefore(t - 2, 2);
+                 if (aimed != null) {
