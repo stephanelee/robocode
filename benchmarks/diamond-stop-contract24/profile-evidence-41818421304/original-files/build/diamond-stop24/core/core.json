@@ -1,0 +1,55 @@
+{
+  "bridge": "bridge.jar",
+  "bridgeClasses": {
+    "DiamondStopBridge.class": "fa3407838b46812a252b6efccc1d7602a348837ca1f397f38916cee503dad59b"
+  },
+  "bridgeSHA256": "e93b90303b8a93418c7ee75c3dfed9b52dc2325e1ebafb89ab71b6314ad699ba",
+  "cases": "benchmarks/diamond-stop-contract24/cases.json",
+  "engineClassMajor": 55,
+  "pins": {
+    "casesSHA256": "7e0182abdaef86877e3e9dd9b9dfdd5057939845b38b89fb5891ae1b779483d0",
+    "engineCommit": "c8ad3a8d19a843f6258d6f6f9db7f29229963903",
+    "engineReferenceSources": {
+      "benchmarks/meridian-wave-support/engine-source/core/CollisionDetector.kt": "4e21342043ff81ca99fc877cc655d7e2683b11e9bb99bdf6d5fb12867441d905",
+      "benchmarks/meridian-wave-support/engine-source/core/TurnProcessor.kt": "0c3c8d03f258c9b8fcdbda6f94b17da0f29aabb347719b2600334f0def27bdf6",
+      "benchmarks/meridian-wave-support/engine-source/model/MutableBot.kt": "17565154c030851f5e4f29bdc7163b6181e1c99d0ebbc41ddd8b58fac9708c2b",
+      "benchmarks/meridian-wave-support/engine-source/model/math.kt": "88a65819071eaf3725041802c6359b0b245aedbcd798429526adff3134cfcf42",
+      "benchmarks/meridian-wave-support/engine-source/rules/math.kt": "0cbd8f9b465545ebea59e59b38e52c8cb78080ba46a1df5d0a5fa33fe831bd21"
+    },
+    "mathClassSHA256": "3ed7d2e227d8f7c38e4f65fe3773e40d947732d1c954322bf2aa0fe8bca25cf7",
+    "port": {
+      "diamond_port/dia_utils.py": "3f4e7f35ff3ddf6f15bc3b8652fd0151077a62f3ba09619caea6c951a390970e",
+      "diamond_port/movement_predictor.py": "355bbd10bf196d397a8dd17c0ab5001399488c4437679a79235dd5b640a35dfc"
+    },
+    "schemaVersion": 1,
+    "sdk": {
+      "robocode_tank_royale/bot_api/bot_exception.py": "4a94e7acd77bcf7edd764b5448c888413c4fedf04d6b03a81b480cf495f09d3f",
+      "robocode_tank_royale/bot_api/constants.py": "fdc9379efbe2e32ec28f0ddce59ba3f0de20e064bf00c811ad479817480c99f6",
+      "robocode_tank_royale/bot_api/graphics/color.py": "571ce90959657fac59db3885e2ca51ccf23f8d2aef2e8c57deac31b3e4383771",
+      "robocode_tank_royale/bot_api/internal/intent_validator.py": "df3a025da92f09a9508bb7c4ab5f53444e92b584ed79bdef010ae6e2e7918cf0",
+      "robocode_tank_royale/bot_api/util/math_util.py": "306a30dc9539d06afe70d941f2aecc6515c1d50f51e29bef9217c459d25fcf87",
+      "robocode_tank_royale/schema/color.py": "a638873bd088f44ce697110ab092490f2b96f504f1b694b0a5a4e37fba59734b"
+    },
+    "serverSHA256": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
+    "wheelSHA256": "074f28f1f62ede458801739d8f84651af8c33bb2aee3290e7841fbd9bc327df2"
+  },
+  "pythonRuntimeVerifier": {
+    "proofFilename": "python-runtime.json",
+    "sha256": "58174fd8a7a8d5a228b1612c91be59c3219b835a2fcbfa4ee12d1811a3b93aa4",
+    "source": "tools/diamond_stop24_python_proof.py"
+  },
+  "role": "ZERO CASE COMPILE AND METADATA ONLY",
+  "schemaVersion": 1,
+  "signatures": [
+    "public static final double calcNewBotSpeed(double, double);",
+    "public static final double limitTurnRate(double, double);"
+  ],
+  "toolSources": {
+    "DiamondStopBridge.java": "6254d89615e5d364295391a36d0a768c8d1c93587d908f32bd639f7435363049",
+    "README.md": "84f21dd52421817d08120596da805e97686430199e9837e21cdc3b2bdf4e5ed7",
+    "evaluate.py": "101d85fb94ec1296f49b697118d04545cf589e13647b30ae4ac9b0a97d19ebfb",
+    "loader.py": "66674fc9d2f856cda29fd02fce71af1ceebda142f6de8cfe52e70197737c2284",
+    "prepare.py": "4d86868cfc7fe305e9b440ef0b89184ab42931c0a3b652dfee93ab352bc62204",
+    "source_pins.json": "3b5bdc7b333d6cde44c8593489eaf6abfa42aefbed963446699e5a6ea26383ea"
+  }
+}

@@ -1,0 +1,367 @@
+﻿2026-11-04T11:04:39.0802955Z Current runner version: '2.338.2'
+2026-11-04T11:04:39.0829440Z ##[group]Runner Image Provisioner
+2026-11-04T11:04:39.0830281Z Hosted Compute Agent
+2026-11-04T11:04:39.0831272Z Version: 20261028.624
+2026-11-04T11:04:39.0832005Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-04T11:04:39.0832751Z Build Date: 2026-10-28T21:51:42Z
+2026-11-04T11:04:39.0833605Z Worker ID: {39b8e897-3a9a-4410-8a21-a79736630b35}
+2026-11-04T11:04:39.0834355Z Region: eastus2
+2026-11-04T11:04:39.0834940Z Cloud: Azure
+2026-11-04T11:04:39.0835485Z ##[endgroup]
+2026-11-04T11:04:39.0836976Z ##[group]Operating System
+2026-11-04T11:04:39.0837746Z Ubuntu
+2026-11-04T11:04:39.0838278Z 26.04.1
+2026-11-04T11:04:39.0838777Z LTS
+2026-11-04T11:04:39.0839366Z ##[endgroup]
+2026-11-04T11:04:39.0839915Z ##[group]Runner Image
+2026-11-04T11:04:39.0840610Z Image: ubuntu-26.04
+2026-11-04T11:04:39.0841338Z Version: 20261101.186.1
+2026-11-04T11:04:39.0842643Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T11:04:39.0844230Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-04T11:04:39.0845242Z ##[endgroup]
+2026-11-04T11:04:39.0846312Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T11:04:39.0849026Z Contents: read
+2026-11-04T11:04:39.0849661Z Metadata: read
+2026-11-04T11:04:39.0850262Z ##[endgroup]
+2026-11-04T11:04:39.0852721Z Secret source: Actions
+2026-11-04T11:04:39.0853691Z Cache mode: write
+2026-11-04T11:04:39.0854771Z Prepare workflow directory
+2026-11-04T11:04:39.1334528Z Prepare all required actions
+2026-11-04T11:04:39.1408452Z Getting action download info
+2026-11-04T11:04:39.3344154Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T11:04:39.4348701Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-04T11:04:39.6649708Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-04T11:04:39.7221438Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-04T11:04:39.9049829Z Complete job name: profile
+2026-11-04T11:04:40.0057439Z ##[group]Run actions/checkout@v4
+2026-11-04T11:04:40.0058509Z with:
+2026-11-04T11:04:40.0059185Z   ref: da95d98a3308b2dbff8c89f56ba3d0d6a20720b5
+2026-11-04T11:04:40.0059897Z   fetch-depth: 0
+2026-11-04T11:04:40.0060439Z   persist-credentials: false
+2026-11-04T11:04:40.0061307Z   repository: stephanelee/robocode
+2026-11-04T11:04:40.0065403Z   token: ***
+2026-11-04T11:04:40.0065999Z   ssh-strict: true
+2026-11-04T11:04:40.0066529Z   ssh-user: git
+2026-11-04T11:04:40.0067030Z   clean: true
+2026-11-04T11:04:40.0067625Z   sparse-checkout-cone-mode: true
+2026-11-04T11:04:40.0068279Z   fetch-tags: false
+2026-11-04T11:04:40.0068843Z   show-progress: true
+2026-11-04T11:04:40.0069423Z   lfs: false
+2026-11-04T11:04:40.0069910Z   submodules: false
+2026-11-04T11:04:40.0070506Z   set-safe-directory: true
+2026-11-04T11:04:40.0071350Z   allow-unsafe-pr-checkout: false
+2026-11-04T11:04:40.0072358Z ##[endgroup]
+2026-11-04T11:04:40.2744402Z Syncing repository: stephanelee/robocode
+2026-11-04T11:04:40.2747200Z ##[group]Getting Git version info
+2026-11-04T11:04:40.2748542Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-04T11:04:40.2750565Z [command]/usr/bin/git version
+2026-11-04T11:04:40.2769898Z git version 2.56.0
+2026-11-04T11:04:40.2878335Z ##[endgroup]
+2026-11-04T11:04:40.2886317Z Temporarily overriding HOME='/home/runner/work/_temp/882cbea0-b613-488e-bd85-5b8fca99ab83' before making global git config changes
+2026-11-04T11:04:40.2888580Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T11:04:40.2890384Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T11:04:40.2893108Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-04T11:04:40.2894756Z ##[group]Initializing the repository
+2026-11-04T11:04:40.2896140Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-04T11:04:40.3034337Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T11:04:40.3035943Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T11:04:40.3037455Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T11:04:40.3038652Z hint: call:
+2026-11-04T11:04:40.3039289Z hint:
+2026-11-04T11:04:40.3040082Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T11:04:40.3041209Z hint:
+2026-11-04T11:04:40.3042142Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T11:04:40.3043660Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T11:04:40.3044863Z hint:
+2026-11-04T11:04:40.3045516Z hint: 	git branch -m <name>
+2026-11-04T11:04:40.3046260Z hint:
+2026-11-04T11:04:40.3047254Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T11:04:40.3049101Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-04T11:04:40.3058409Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-04T11:04:40.3112138Z ##[endgroup]
+2026-11-04T11:04:40.3113755Z ##[group]Disabling automatic garbage collection
+2026-11-04T11:04:40.3117029Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T11:04:40.3154068Z ##[endgroup]
+2026-11-04T11:04:40.3155438Z ##[group]Setting up auth
+2026-11-04T11:04:40.3161897Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T11:04:40.3199270Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T11:04:40.3633549Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T11:04:40.3686599Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T11:04:40.3963566Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T11:04:40.3997759Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T11:04:40.4262051Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T11:04:40.4369108Z ##[endgroup]
+2026-11-04T11:04:40.4370647Z ##[group]Fetching the repository
+2026-11-04T11:04:40.4373180Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-04T11:04:43.1988899Z From https://github.com/stephanelee/robocode
+2026-11-04T11:04:43.1990178Z  * [new branch]      claude/aa-calibration   -> origin/claude/aa-calibration
+2026-11-04T11:04:43.1991690Z  * [new branch]      claude/aim-corridor     -> origin/claude/aim-corridor
+2026-11-04T11:04:43.1992515Z  * [new branch]      claude/aim-corridor-v2  -> origin/claude/aim-corridor-v2
+2026-11-04T11:04:43.1993207Z  * [new branch]      claude/duel-surf        -> origin/claude/duel-surf
+2026-11-04T11:04:43.1993891Z  * [new branch]      claude/foundations      -> origin/claude/foundations
+2026-11-04T11:04:43.1994554Z  * [new branch]      claude/keel-v1          -> origin/claude/keel-v1
+2026-11-04T11:04:43.1995392Z  * [new branch]      claude/keel-v2-dev      -> origin/claude/keel-v2-dev
+2026-11-04T11:04:43.1996149Z  * [new branch]      claude/melee-coherent   -> origin/claude/melee-coherent
+2026-11-04T11:04:43.1996922Z  * [new branch]      claude/replay-harness   -> origin/claude/replay-harness
+2026-11-04T11:04:43.1997685Z  * [new branch]      claude/wall-search      -> origin/claude/wall-search
+2026-11-04T11:04:43.1998730Z  * [new branch]      codex/api-1.4.0         -> origin/codex/api-1.4.0
+2026-11-04T11:04:43.1999517Z  * [new branch]      codex/battle-benchmarks -> origin/codex/battle-benchmarks
+2026-11-04T11:04:43.2000300Z  * [new branch]      codex/ci-bootstrap      -> origin/codex/ci-bootstrap
+2026-11-04T11:04:43.2001322Z  * [new branch]      codex/coherent-duel     -> origin/codex/coherent-duel
+2026-11-04T11:04:43.2002139Z  * [new branch]      codex/coherent-duel-v2  -> origin/codex/coherent-duel-v2
+2026-11-04T11:04:43.2003190Z  * [new branch]      codex/collector-compat-wrapper -> origin/codex/collector-compat-wrapper
+2026-11-04T11:04:43.2004202Z  * [new branch]      codex/containment-v2    -> origin/codex/containment-v2
+2026-11-04T11:04:43.2005474Z  * [new branch]      codex/core-correctness  -> origin/codex/core-correctness
+2026-11-04T11:04:43.2006416Z  * [new branch]      codex/current-runnable-jar -> origin/codex/current-runnable-jar
+2026-11-04T11:04:43.2007261Z  * [new branch]      codex/default-duel-policy -> origin/codex/default-duel-policy
+2026-11-04T11:04:43.2008142Z  * [new branch]      codex/diamond-stop-contract24 -> origin/codex/diamond-stop-contract24
+2026-11-04T11:04:43.2009165Z  * [new branch]      codex/final-default-confirmation -> origin/codex/final-default-confirmation
+2026-11-04T11:04:43.2010230Z  * [new branch]      codex/final-default-confirmation-redo -> origin/codex/final-default-confirmation-redo
+2026-11-04T11:04:43.2011570Z  * [new branch]      codex/fire-alignment    -> origin/codex/fire-alignment
+2026-11-04T11:04:43.2012534Z  * [new branch]      codex/foundation-scan-lag -> origin/codex/foundation-scan-lag
+2026-11-04T11:04:43.2013671Z  * [new branch]      codex/improve-cycle2-walls -> origin/codex/improve-cycle2-walls
+2026-11-04T11:04:43.2014720Z  * [new branch]      codex/improve-cycle3-gf-confidence -> origin/codex/improve-cycle3-gf-confidence
+2026-11-04T11:04:43.2015772Z  * [new branch]      codex/improve-steering-cycle1 -> origin/codex/improve-steering-cycle1
+2026-11-04T11:04:43.2016778Z  * [new branch]      codex/learning-modes-persistence -> origin/codex/learning-modes-persistence
+2026-11-04T11:04:43.2017948Z  * [new branch]      codex/legal-motion-recorder -> origin/codex/legal-motion-recorder
+2026-11-04T11:04:43.2018844Z  * [new branch]      codex/melee-baseline    -> origin/codex/melee-baseline
+2026-11-04T11:04:43.2019640Z  * [new branch]      codex/meridian-aim      -> origin/codex/meridian-aim
+2026-11-04T11:04:43.2020491Z  * [new branch]      codex/meridian-duel     -> origin/codex/meridian-duel
+2026-11-04T11:04:43.2021649Z  * [new branch]      codex/meridian-economy  -> origin/codex/meridian-economy
+2026-11-04T11:04:43.2022557Z  * [new branch]      codex/meridian-held-plan-90 -> origin/codex/meridian-held-plan-90
+2026-11-04T11:04:43.2023531Z  * [new branch]      codex/meridian-held-plan-execution -> origin/codex/meridian-held-plan-execution
+2026-11-04T11:04:43.2024483Z  * [new branch]      codex/meridian-hit-angles -> origin/codex/meridian-hit-angles
+2026-11-04T11:04:43.2025356Z  * [new branch]      codex/meridian-motion-memory -> origin/codex/meridian-motion-memory
+2026-11-04T11:04:43.2026252Z  * [new branch]      codex/meridian-peak-v1  -> origin/codex/meridian-peak-v1
+2026-11-04T11:04:43.2027058Z  * [new branch]      codex/meridian-prior    -> origin/codex/meridian-prior
+2026-11-04T11:04:43.2027901Z  * [new branch]      codex/meridian-wave-support -> origin/codex/meridian-wave-support
+2026-11-04T11:04:43.2028781Z  * [new branch]      codex/mixed-population-v4 -> origin/codex/mixed-population-v4
+2026-11-04T11:04:43.2029644Z  * [new branch]      codex/mixed-training-audit -> origin/codex/mixed-training-audit
+2026-11-04T11:04:43.2030522Z  * [new branch]      codex/nonlinear-containment-v5 -> origin/codex/nonlinear-containment-v5
+2026-11-04T11:04:43.2031727Z  * [new branch]      codex/nonlinear-gain-v5 -> origin/codex/nonlinear-gain-v5
+2026-11-04T11:04:43.2032515Z  * [new branch]      codex/own-wave-context  -> origin/codex/own-wave-context
+2026-11-04T11:04:43.2033497Z  * [new branch]      codex/own-wave-context-diagnostic -> origin/codex/own-wave-context-diagnostic
+2026-11-04T11:04:43.2035155Z  * [new branch]      codex/pin-ubuntu-26.04  -> origin/codex/pin-ubuntu-26.04
+2026-11-04T11:04:43.2036000Z  * [new branch]      codex/retcon-benchmarks -> origin/codex/retcon-benchmarks
+2026-11-04T11:04:43.2036872Z  * [new branch]      codex/retcon-observability -> origin/codex/retcon-observability
+2026-11-04T11:04:43.2037908Z  * [new branch]      codex/retcon-strategy-plan -> origin/codex/retcon-strategy-plan
+2026-11-04T11:04:43.2038938Z  * [new branch]      codex/strong-melee-baseline -> origin/codex/strong-melee-baseline
+2026-11-04T11:04:43.2039743Z  * [new branch]      codex/targeting-seam    -> origin/codex/targeting-seam
+2026-11-04T11:04:43.2040725Z  * [new branch]      docs/aisurvivor-description -> origin/docs/aisurvivor-description
+2026-11-04T11:04:43.2042196Z  * [new branch]      docs/breakwater-findings -> origin/docs/breakwater-findings
+2026-11-04T11:04:43.2043134Z  * [new branch]      docs/challenger-defense-trace -> origin/docs/challenger-defense-trace
+2026-11-04T11:04:43.2044150Z  * [new branch]      docs/diamond-challenger-direction -> origin/docs/diamond-challenger-direction
+2026-11-04T11:04:43.2045203Z  * [new branch]      docs/pinned-opponent-analysis -> origin/docs/pinned-opponent-analysis
+2026-11-04T11:04:43.2046426Z  * [new branch]      docs/retcon-component-experiments -> origin/docs/retcon-component-experiments
+2026-11-04T11:04:43.2047403Z  * [new branch]      docs/retcon-opponent-analysis -> origin/docs/retcon-opponent-analysis
+2026-11-04T11:04:43.2048508Z  * [new branch]      evidence/keel-v1-run-keel-v1-screen-41792449000 -> origin/evidence/keel-v1-run-keel-v1-screen-41792449000
+2026-11-04T11:04:43.2050225Z  * [new branch]      experiment/advanced-python-duels -> origin/experiment/advanced-python-duels
+2026-11-04T11:04:43.2051812Z  * [new branch]      experiment/aegis-dodge-v2 -> origin/experiment/aegis-dodge-v2
+2026-11-04T11:04:43.2053125Z  * [new branch]      experiment/aegis-shield-v1 -> origin/experiment/aegis-shield-v1
+2026-11-04T11:04:43.2054488Z  * [new branch]      experiment/aegis-v2-dev -> origin/experiment/aegis-v2-dev
+2026-11-04T11:04:43.2055791Z  * [new branch]      experiment/breakwater-envelope-v3 -> origin/experiment/breakwater-envelope-v3
+2026-11-04T11:04:43.2056797Z  * [new branch]      experiment/breakwater-mobile-v2 -> origin/experiment/breakwater-mobile-v2
+2026-11-04T11:04:43.2057755Z  * [new branch]      experiment/diamond-breakwater-v1 -> origin/experiment/diamond-breakwater-v1
+2026-11-04T11:04:43.2058729Z  * [new branch]      experiment/diamond-challenger-build -> origin/experiment/diamond-challenger-build
+2026-11-04T11:04:43.2059657Z  * [new branch]      experiment/diamond-context-v2 -> origin/experiment/diamond-context-v2
+2026-11-04T11:04:43.2060621Z  * [new branch]      experiment/diamond-diagnostic-v5 -> origin/experiment/diamond-diagnostic-v5
+2026-11-04T11:04:43.2062114Z  * [new branch]      experiment/diamond-guarded-ray-v6 -> origin/experiment/diamond-guarded-ray-v6
+2026-11-04T11:04:43.2063151Z  * [new branch]      experiment/diamond-outgoing-context-v7 -> origin/experiment/diamond-outgoing-context-v7
+2026-11-04T11:04:43.2064174Z  * [new branch]      experiment/diamond-wave-horizon-v4 -> origin/experiment/diamond-wave-horizon-v4
+2026-11-04T11:04:43.2065077Z  * [new branch]      experiment/diamond-wave-v3 -> origin/experiment/diamond-wave-v3
+2026-11-04T11:04:43.2065982Z  * [new branch]      fix/challenger-completion-wait -> origin/fix/challenger-completion-wait
+2026-11-04T11:04:43.2066884Z  * [new branch]      fix/challenger-round-lifecycle -> origin/fix/challenger-round-lifecycle
+2026-11-04T11:04:43.2067732Z  * [new branch]      fix/engine-trace-fire-cost -> origin/fix/engine-trace-fire-cost
+2026-11-04T11:04:43.2068580Z  * [new branch]      improve/adaptive-duel-danger -> origin/improve/adaptive-duel-danger
+2026-11-04T11:04:43.2069469Z  * [new branch]      improve/ais-breakwater-movement -> origin/improve/ais-breakwater-movement
+2026-11-04T11:04:43.2070507Z  * [new branch]      improve/blended-duel-danger -> origin/improve/blended-duel-danger
+2026-11-04T11:04:43.2071510Z  * [new branch]      master                  -> origin/master
+2026-11-04T11:04:43.2072328Z  * [new branch]      research/frozen-duel-confirmation -> origin/research/frozen-duel-confirmation
+2026-11-04T11:04:43.2073300Z  * [new branch]      test/dual-aim-component-diagnostic -> origin/test/dual-aim-component-diagnostic
+2026-11-04T11:04:43.2074254Z  * [new branch]      tools/legal-scan-forecast-dataset -> origin/tools/legal-scan-forecast-dataset
+2026-11-04T11:04:43.2075219Z  * [new tag]         experiment-receipts/meridian-gp60-issue90 -> experiment-receipts/meridian-gp60-issue90
+2026-11-04T11:04:43.2076228Z  * [new tag]         experiment-receipts/meridian-peak-v1-screen -> experiment-receipts/meridian-peak-v1-screen
+2026-11-04T11:04:43.2078061Z [command]/usr/bin/git rev-parse --verify --quiet da95d98a3308b2dbff8c89f56ba3d0d6a20720b5^{object}
+2026-11-04T11:04:43.2078805Z da95d98a3308b2dbff8c89f56ba3d0d6a20720b5
+2026-11-04T11:04:43.2080054Z ##[endgroup]
+2026-11-04T11:04:43.2080728Z ##[group]Determining the checkout info
+2026-11-04T11:04:43.2081852Z ##[endgroup]
+2026-11-04T11:04:43.2082327Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T11:04:43.2103942Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T11:04:43.2134580Z ##[group]Checking out the ref
+2026-11-04T11:04:43.2138199Z [command]/usr/bin/git checkout --progress --force da95d98a3308b2dbff8c89f56ba3d0d6a20720b5
+2026-11-04T11:04:43.8220784Z Note: switching to 'da95d98a3308b2dbff8c89f56ba3d0d6a20720b5'.
+2026-11-04T11:04:43.8222538Z 
+2026-11-04T11:04:43.8223004Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-04T11:04:43.8224010Z changes and commit them, and you can discard any commits you make in this
+2026-11-04T11:04:43.8224970Z state without impacting any branches by switching back to a branch.
+2026-11-04T11:04:43.8225518Z 
+2026-11-04T11:04:43.8225895Z If you want to create a new branch to retain commits you create, you may
+2026-11-04T11:04:43.8226824Z do so (now or later) by using -c with the switch command. Example:
+2026-11-04T11:04:43.8227317Z 
+2026-11-04T11:04:43.8227908Z   git switch -c <new-branch-name>
+2026-11-04T11:04:43.8228274Z 
+2026-11-04T11:04:43.8228522Z Or undo this operation with:
+2026-11-04T11:04:43.8228839Z 
+2026-11-04T11:04:43.8229048Z   git switch -
+2026-11-04T11:04:43.8229326Z 
+2026-11-04T11:04:43.8229833Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-04T11:04:43.8230432Z 
+2026-11-04T11:04:43.8231162Z HEAD is now at da95d98 Implement reviewed zero-case STOP24 preparation and isolated evaluator
+2026-11-04T11:04:43.8268595Z ##[endgroup]
+2026-11-04T11:04:43.8314558Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T11:04:43.8341431Z da95d98a3308b2dbff8c89f56ba3d0d6a20720b5
+2026-11-04T11:04:43.8351802Z ##[group]Removing auth
+2026-11-04T11:04:43.8356013Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T11:04:43.8388867Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T11:04:43.8672253Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T11:04:43.8696693Z http.https://github.com/.extraheader
+2026-11-04T11:04:43.8704441Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T11:04:43.8736271Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T11:04:43.9010539Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T11:04:43.9041784Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T11:04:43.9311406Z ##[endgroup]
+2026-11-04T11:04:43.9594525Z ##[group]Run actions/setup-java@v4
+2026-11-04T11:04:43.9594896Z with:
+2026-11-04T11:04:43.9595154Z   distribution: temurin
+2026-11-04T11:04:43.9595434Z   java-version: 17.0.21+9
+2026-11-04T11:04:43.9595726Z   java-package: jdk
+2026-11-04T11:04:43.9595996Z   check-latest: false
+2026-11-04T11:04:43.9596290Z   server-id: github
+2026-11-04T11:04:43.9596554Z   server-username: GITHUB_ACTOR
+2026-11-04T11:04:43.9596869Z   server-password: GITHUB_TOKEN
+2026-11-04T11:04:43.9597177Z   overwrite-settings: true
+2026-11-04T11:04:43.9597463Z   job-status: success
+2026-11-04T11:04:43.9600233Z   token: ***
+2026-11-04T11:04:43.9600493Z ##[endgroup]
+2026-11-04T11:04:44.1334027Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T11:04:44.1344833Z ##[group]Installed distributions
+2026-11-04T11:04:44.1379068Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-04T11:04:44.1379812Z Setting Java 17.0.21+9 as the default
+2026-11-04T11:04:44.1389917Z (node:2507) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T11:04:44.1390797Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T11:04:44.1393992Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+2026-11-04T11:04:44.1468407Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-04T11:04:44.1468909Z 
+2026-11-04T11:04:44.1469148Z Java configuration:
+2026-11-04T11:04:44.1469688Z   Distribution: temurin
+2026-11-04T11:04:44.1470468Z   Version: 17.0.21+9
+2026-11-04T11:04:44.1471620Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:04:44.1472321Z 
+2026-11-04T11:04:44.1472964Z ##[endgroup]
+2026-11-04T11:04:44.1487568Z Creating settings.xml with server-id: github
+2026-11-04T11:04:44.1525048Z Writing to /home/runner/.m2/settings.xml
+2026-11-04T11:04:44.1753516Z ##[group]Run actions/setup-python@v5
+2026-11-04T11:04:44.1754101Z with:
+2026-11-04T11:04:44.1754503Z   python-version: 3.13.18
+2026-11-04T11:04:44.1754976Z   check-latest: false
+2026-11-04T11:04:44.1759049Z   token: ***
+2026-11-04T11:04:44.1759345Z   update-environment: true
+2026-11-04T11:04:44.1759648Z   allow-prereleases: false
+2026-11-04T11:04:44.1759926Z   freethreaded: false
+2026-11-04T11:04:44.1760176Z env:
+2026-11-04T11:04:44.1760519Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:04:44.1761373Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:04:44.1761871Z ##[endgroup]
+2026-11-04T11:04:44.3193632Z ##[group]Installed versions
+2026-11-04T11:04:44.3235266Z (node:2522) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T11:04:44.3236297Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T11:04:44.3237644Z Successfully set up CPython (3.13.18)
+2026-11-04T11:04:44.3238674Z ##[endgroup]
+2026-11-04T11:04:44.3405336Z ##[group]Run mkdir -p build
+2026-11-04T11:04:44.3405770Z [36;1mmkdir -p build[0m
+2026-11-04T11:04:44.3406335Z [36;1mpython -I -B -S tools/diamond_stop24_host.py --collect 2>&1 | tee build/diamond-stop24-preparation.log[0m
+2026-11-04T11:04:44.3407002Z [36;1mpython -I -B -S tools/diamond_stop24_host.py --verify[0m
+2026-11-04T11:04:44.3407466Z [36;1mpython -I -B -S tools/diamond_stop24_host.py --verify[0m
+2026-11-04T11:04:44.3492329Z shell: /usr/bin/bash -e {0}
+2026-11-04T11:04:44.3492856Z env:
+2026-11-04T11:04:44.3493447Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:04:44.3494352Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:04:44.3495173Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:04:44.3495948Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib/pkgconfig
+2026-11-04T11:04:44.3497121Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:04:44.3497912Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:04:44.3498465Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:04:44.3498934Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib
+2026-11-04T11:04:44.3499608Z ##[endgroup]
+2026-11-04T11:04:49.2532758Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+2026-11-04T11:04:49.2607432Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T11:04:49.2632705Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T11:04:49.2846781Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy_extensions-1.1.0-py3-none-any.whl
+2026-11-04T11:04:49.2862007Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pathspec-1.1.1-py3-none-any.whl
+2026-11-04T11:04:49.2887416Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pip-26.3-py3-none-any.whl
+2026-11-04T11:04:49.2959773Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pycountry-26.2.16-py3-none-any.whl
+2026-11-04T11:04:49.3071377Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T11:04:49.3097962Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/robocode_tank_royale-1.3.1-py3-none-any.whl
+2026-11-04T11:04:49.3124425Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/setuptools-84.2.1-py3-none-any.whl
+2026-11-04T11:04:49.3207420Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/typing_extensions-4.16.0-py3-none-any.whl
+2026-11-04T11:04:49.3225790Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+2026-11-04T11:04:49.3400827Z Installing collected packages: websockets, typing-extensions, setuptools, robocode-tank-royale, pyyaml, pycountry, pip, pathspec, mypy-extensions, mypy, librt, ast-serialize
+2026-11-04T11:04:50.3448562Z   Attempting uninstall: pip
+2026-11-04T11:04:50.3477798Z     Found existing installation: pip 26.2.2
+2026-11-04T11:04:50.3848485Z     Uninstalling pip-26.2.2:
+2026-11-04T11:04:50.3909028Z       Successfully uninstalled pip-26.2.2
+2026-11-04T11:04:52.9847865Z 
+2026-11-04T11:04:52.9868192Z Successfully installed ast-serialize-0.13.1 librt-0.16.0 mypy-2.4.1 mypy-extensions-1.1.0 pathspec-1.1.1 pip-26.3 pycountry-26.2.16 pyyaml-6.0.3 robocode-tank-royale-1.3.1 setuptools-84.2.1 typing-extensions-4.16.0 websockets-17.4
+2026-11-04T11:06:38.8613466Z ##[group]Run actions/upload-artifact@v4
+2026-11-04T11:06:38.8613778Z with:
+2026-11-04T11:06:38.8614016Z   name: diamond-stop24-profile-41818421304
+2026-11-04T11:06:38.8615032Z   path: build/diamond-stop24/
+build/diamond-stop24-preparation.log
+benchmarks/diamond-stop-contract24/
+docs/improvements/diamond-stop-contract24.md
+tools/diamond_stop24/
+tools/diamond_stop24_host.py
+tools/diamond_stop24_python_proof.py
+
+2026-11-04T11:06:38.8616013Z   if-no-files-found: warn
+2026-11-04T11:06:38.8616250Z   retention-days: 90
+2026-11-04T11:06:38.8616470Z   compression-level: 6
+2026-11-04T11:06:38.8616694Z   overwrite: false
+2026-11-04T11:06:38.8616905Z   include-hidden-files: false
+2026-11-04T11:06:38.8617135Z env:
+2026-11-04T11:06:38.8617429Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:06:38.8618160Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T11:06:38.8618639Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:06:38.8619056Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib/pkgconfig
+2026-11-04T11:06:38.8619465Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:06:38.8619840Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:06:38.8620214Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.18/x64
+2026-11-04T11:06:38.8620596Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.18/x64/lib
+2026-11-04T11:06:38.8621122Z ##[endgroup]
+2026-11-04T11:06:39.0304761Z (node:3318) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T11:06:39.0305498Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T11:06:39.0454509Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T11:06:39.0458203Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-04T11:06:39.0459377Z With the provided path, there will be 29 files uploaded
+2026-11-04T11:06:39.0464631Z Artifact name is valid!
+2026-11-04T11:06:39.0465173Z Root directory input is valid!
+2026-11-04T11:06:39.2795548Z Beginning upload of artifact content to blob storage
+2026-11-04T11:06:39.5819443Z (node:3318) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-04T11:06:39.7094002Z Uploaded bytes 6433046
+2026-11-04T11:06:39.7293160Z Finished uploading artifact content to blob storage!
+2026-11-04T11:06:39.7294332Z SHA256 digest of uploaded artifact zip is 4daed32af85cb6fa6eaa34fe68c0779c63edca1d072bc3f11e13f8ae5031ea79
+2026-11-04T11:06:39.7296428Z Finalizing artifact upload
+2026-11-04T11:06:40.1616774Z Artifact diamond-stop24-profile-41818421304.zip successfully finalized. Artifact ID 13316355272
+2026-11-04T11:06:40.1618929Z Artifact diamond-stop24-profile-41818421304 has been successfully uploaded! Final size is 6433046 bytes. Artifact ID is 13316355272
+2026-11-04T11:06:40.1625847Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41818421304/artifacts/13316355272
+2026-11-04T11:06:40.1848931Z Post job cleanup.
+2026-11-04T11:06:40.3052540Z (node:3331) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T11:06:40.3053798Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T11:06:40.3253130Z Post job cleanup.
+2026-11-04T11:06:40.4710764Z (node:3339) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T11:06:40.4712542Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T11:06:40.4915258Z Post job cleanup.
+2026-11-04T11:06:40.5828664Z [command]/usr/bin/git version
+2026-11-04T11:06:40.5873821Z git version 2.56.0
+2026-11-04T11:06:40.5914066Z Temporarily overriding HOME='/home/runner/work/_temp/dac97368-be27-4a1b-9617-73d348c6d2bc' before making global git config changes
+2026-11-04T11:06:40.5915507Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T11:06:40.5918872Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T11:06:40.5961479Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T11:06:40.6000141Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T11:06:40.6316417Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T11:06:40.6354680Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T11:06:40.6695616Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T11:06:40.6735086Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T11:06:40.7196005Z Cleaning up orphan processes
+2026-11-04T11:06:40.7607048Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
