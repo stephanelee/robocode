@@ -2,18 +2,20 @@
 
 This screen follows the third "next direction" in [docs/aegis-shield.md](../../../../docs/aegis-shield.md). It is exploratory development only. No registered game was spent, no strength claim is made, and nothing here is pooled with registered data.
 
-**Variant.** The frozen Aegis 0.1.0, modified by `dodge-all.patch`. Every inferred shot carries a dominant lateral-clearance cost: at least 28 px from the modelled centre-candidate line between contact−2 and the pass turn, with weight 200 against a replay weight of 10. Interceptors stay as backup. The variant was built locally and played 4 rounds (seed 3) against a **dev-only instrumented copy** of the pinned Diamond Port, which logs its labels and aim candidates and is never used at runtime.
+**Reported variant.** The author describes a local build of Aegis 0.1.0 modified by `dodge-all.patch`, with interceptors as backup. The retained diff raises the desired lateral clearance to 28 px and its cost weight to 200 against a replay weight of 10, and enables the dodge flag for every inferred shot. It is reported to have played 4 rounds (seed 3) against a **dev-only instrumented copy** of the pinned Diamond Port. The exact executed build and instrumentation provenance for this screen are unverified; the retained patch describes the proposed changes, not proof of the executed bytes.
 
-**Result: rejected at screen.**
+**Decision: reject this tested exploratory variant after the four-round screen.** No registered acceptance or general conclusion about dodging follows.
 
-| Measure | Dodge-all screen | Registered 0.1.0 pilot |
+| Measure | Four-round screen | Separate reference (not paired) |
 | --- | --- | --- |
 | Rounds won | 0 / 4 | 0 / 20 |
 | Hits taken per round | 11, every round | 18.2 |
 | Shots blocked | 5 of 80 inferred | 71.7% of inferred |
-| Mean label \|GF\| (all waves / real shots) | 0.075 / 0.133 | ≈0.01–0.015 in development |
-| Aims on the centre candidate | 25 of 326 | ≈97% in development |
+| Reported mean label \|GF\| (all waves / real shots) | 0.075 / 0.133 (unverified aggregate) | ≈0.01–0.015 in earlier development |
+| Centre-candidate count in the reported aim summary | 25 of 326 (aggregate only) | ≈97% in earlier development |
 
-**Measured finding.** Dodging moves exactly the real-shot (firing-wave) labels. Within a few rounds Diamond's aim spread to candidates ±1–4 from centre, so it was predicting our dodges. That destroyed the predictability that interception depends on. Its real-shot labels are therefore influential, despite the low 0.38 weight on its virtuality feature. Short-window AntiSurfer views plausibly explain this, but it was not isolated. Making dodging the main defence is not a viable direction against this opponent.
+**What the retained records support.** The four metric rows report 11 incoming hits each, five blocks among 80 inferred shots, and zero own skipped turns. The battle summary gives Aegis zero of four first places. The two-line instrumented summary reports a broader aggregate aim distribution than the separate earlier development summary. It has no per-round sequence or retained raw labels from which to reproduce the label means. These records do not isolate changes in opponent learning, real-shot label weighting, shield timing or other mechanisms. Other dodge policies remain untested.
 
-Files: `metrics.jsonl` and `battle.json` from the dev game, and `instrumented-aim-bins.txt` with the instrumented copy's aim and label summary.
+**Provenance limits.** No exact executed Aegis source/JAR hash, executed opponent instrumentation patch/hash, launcher/runtime manifest, raw aim/label rows or raw-to-summary aggregation command is retained for this screen. Consequently the instrumented mechanism measurements and the claim that its modifications were observation-only cannot be independently verified here. The registered pilot and earlier development references use separate cohorts and configurations; their differences are descriptive, not a controlled effect estimate.
+
+Files preserved unchanged: `dodge-all.patch`, `metrics.jsonl`, `battle.json`, and the reported two-line `instrumented-aim-bins.txt`. No missing evidence is reconstructed and no repeat game is proposed.
