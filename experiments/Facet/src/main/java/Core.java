@@ -21,6 +21,7 @@ final class Core {
   int tracePopulation = -1;
   int survivorSince = -1;
   Waves.Wave shotContext;
+  int cohortEvidenceSamples;
   record Intent(Physics.Control move, double gunTurn, double radarTurn, boolean fire) {}
   Core(Physics.Rules r, Diagnostics log, long seed) {
     rules = r;
@@ -52,6 +53,7 @@ final class Core {
     survivorSince = -1;
     lastTurn = -1;
     shotContext = null;
+    cohortEvidenceSamples = 0;
     melee.recent.clear();
     melee.retained = null;
     melee.resetAim();
@@ -193,15 +195,11 @@ final class Core {
         // The combined melee gun learns crossings, but has no duel comparison cohort.
         // Resume the ensemble only in the fresh-scan survivor duel.
         if (population == 1) {
-          for (String name : List.of("analytic", "long", "recent"))
-            if (name.equals("analytic")
-                || (firingTarget.crossings >= 16 && !log.disabled.contains("gun")))
-              shotContext.predictions.put(name,
-                  new Waves.Prediction(name, shotContext.id, turn,
-                      Learner.gun(name, firingTarget, shotContext, own.gun(), rules),
-                      shotContext.powerHi,
-                      beganMelee ? firingTarget.displacement.version
-                                 : firingTarget.longGun.version));
+          shotContext.preparedCohort = fire.plan.cohort();
+          if (shotContext.preparedCohort != null)
+            shotContext.predictions.putAll(shotContext.preparedCohort.bind(shotContext.id));
+          else
+            log.count("gun.cohort.missing"); // Legacy/manual plans are explicitly unrated.
         }
       } catch (RuntimeException ex) {
         log.failure("gun", ex);
@@ -218,6 +216,7 @@ final class Core {
     double gunTurn = 0;
     try {
       if (target != null) {
+        FireControl.Cohort prepared = null;
         double power = Energy.power(own.p().distance(target.latest.body().p()), energy,
                    target.latest.energy(), meleeMode),
                angle = nextOwn.p().bearing(target.latest.body().p());
@@ -259,13 +258,23 @@ final class Core {
             angle = virtual.predictions
                         .getOrDefault(target.selected, virtual.predictions.get("analytic"))
                         .angle();
+            if (!submit)
+              prepared = FireControl.Cohort.from(virtual,
+                  virtual.predictions.containsKey(target.selected) ? target.selected : "analytic",
+                  turn);
             if (own.heat() <= 1e-10 && !submit)
               waves.add(virtual);
           } else
             angle = Physics.intercept(nextOwn.p(), target.latest.body(), power, rules);
           // Keep prior plan until request has been submitted by boundary.
-          if (!submit && !meleeMode)
+          if (!submit && !meleeMode) {
             fire.plan = FireControl.prepare(angle, power, target, nextOwn, turn, sequence);
+            if (prepared == null)
+              prepared = FireControl.Cohort.analytic(target.id, beganMelee, turn, nextOwn.p(),
+                  target.latest.body(), angle, power,
+                  beganMelee ? target.displacement.version : target.longGun.version);
+            fire.plan = fire.plan.withCohort(prepared);
+          }
           if (!submit && meleeMode && log.disabled.contains("gun"))
             fire.plan = FireControl.prepare(angle, power, target, nextOwn, turn, sequence,
                 new FireControl.Policy(population, target.id,
@@ -274,7 +283,8 @@ final class Core {
                     target.latest.energy(), target.latest.turn()));
           if (!submit && fire.plan != null) {
             var actual = enemies.get(fire.plan.target());
-            String selected = meleeMode && !log.disabled.contains("gun") ? "combinedmelee"
+            String selected = fire.plan.cohort() != null ? fire.plan.cohort().selected()
+                : meleeMode && !log.disabled.contains("gun") ? "combinedmelee"
                 : own.heat() / rules.cooling() <= 3 && !log.disabled.contains("gun")
                     && (actual.selected.equals("analytic") || actual.crossings >= 16)
                 ? actual.selected
@@ -492,12 +502,35 @@ final class Core {
                 frozen.confidence, frozen.features, frozen.targetOrigin, frozen.melee);
             w.originQuality = frozen.originQuality;
             w.missingFeatures = frozen.missingFeatures;
-            w.predictions.putAll(frozen.predictions);
+            if (p.cohort() != null && p.cohort() == frozen.preparedCohort) {
+              w.preparedCohort = p.cohort();
+              w.predictions.putAll(p.cohort().bind(w.id));
+            } else if (p.cohort() != null || frozen.preparedCohort != null) {
+              log.failure("gun.cohort", new IllegalStateException("accepted cohort binding differs"));
+            }
             w.creationTurn = t;
             w.firstMotionTurn = t;
             w.bullet = b.getBulletId();
             w.actualAngle = Math.toRadians(b.getDirection());
             w.ratingEligible = !w.predictions.isEmpty();
+            if (w.preparedCohort != null) {
+              var c = w.preparedCohort;
+              double error = Math.abs(Physics.wrap(
+                  w.actualAngle - c.predictions().get(c.selected()).angle()));
+              log.count("gun.cohort.confirmed");
+              log.count(w.predictions.size() == 3 ? "gun.cohort.common" : "gun.cohort.analyticOnly");
+              log.observe("gun.cohort.headingErrorRadians", error);
+              log.observe("gun.cohort.requestAge", p.requestedTurn() - c.preparedTurn());
+              String evidence = "physicalWave=" + w.id + " request=" + p.requestedTurn()
+                  + " creation=" + t + " actualAngle=" + w.actualAngle
+                  + " actualOrigin=" + w.origin + " physicalMask=" + w.missingFeatures
+                  + " physicalFeatures=" + Arrays.toString(w.features) + " " + c.evidenceRow();
+              log.event("gun.cohort.confirmed", round, t, evidence);
+              if (cohortEvidenceSamples < 16) {
+                cohortEvidenceSamples++;
+                log.critical("gun.cohort.confirmed", round, t, evidence);
+              }
+            }
             waves.add(w);
             shotContext = null;
           }

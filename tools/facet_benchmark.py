@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -51,7 +52,7 @@ def run_black_box(command, env, log):
             raise RuntimeError(f'Official runner exit{code}; opaque log retained')
 
 
-def validate_metrics(path, rounds, expected_schema=2):
+def validate_metrics(path, rounds, expected_schema=2, require_prepared_cohort=False):
     def finite_json(value):
         raise ValueError('Nonfinite telemetry: ' + value)
     rows = [json.loads(line, parse_constant=finite_json) for line in path.read_text().splitlines()]
@@ -66,6 +67,21 @@ def validate_metrics(path, rounds, expected_schema=2):
             raise ValueError('Invalid physical shot transaction counts')
         if row['neighborBytes'] > 134217728:
             raise ValueError('Memory payload cap violated')
+        if require_prepared_cohort:
+            counters = row['counters']; observations = row['observationsCountSumMinMax']
+            shots = row['shotsConfirmed']
+            if (counters.get('gun.cohort.confirmed', 0) != shots
+                    or counters.get('gun.cohort.common', 0) + counters.get('gun.cohort.analyticOnly', 0) != shots
+                    or counters.get('gun.cohort.missing', 0) or counters.get('gun.cohort.failure', 0)):
+                raise ValueError('Prepared cohort missing or inconsistent')
+            for name, lower, upper in (('headingErrorRadians', 0, math.radians(.5)+1e-9), ('requestAge', 1, 2)):
+                value = observations.get('gun.cohort.'+name)
+                if not shots:
+                    if value and value[0]: raise ValueError('Cohort observation without confirmed shot')
+                elif (not value or len(value) != 4 or not all(math.isfinite(v) for v in value)
+                      or value[0] != shots or not lower <= value[2] <= value[3] <= upper
+                      or not lower*shots-1e-9 <= value[1] <= upper*shots+1e-9):
+                    raise ValueError('Prepared cohort observation invalid: '+name)
     return rows
 
 
@@ -278,13 +294,13 @@ def main(args):
                 deadline = time.monotonic()+5
                 while time.monotonic() < deadline:
                     try:
-                        rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2))
+                        rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2), frozen.get('requirePreparedCohort', False))
                         if (run/'FACET_model.dat').is_file():
                             break
                     except (ValueError, FileNotFoundError, json.JSONDecodeError):
                         pass
                     time.sleep(.05)
-                rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2))
+                rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2), frozen.get('requirePreparedCohort', False))
                 record['stage'] = 'opponent-completion'
                 if opponent == 'AISurvivor':
                     benchmark.validate_metrics([json.loads(x) for x in (run/'AIS_metrics.jsonl').read_text().splitlines()], 20, 'train', seed, 20)

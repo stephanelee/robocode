@@ -15,6 +15,7 @@ final class Waves {
     double originQuality = 1;
     int missingFeatures;
     boolean ratingEligible;
+    FireControl.Cohort preparedCohort;
     double actualAngle = Double.NaN;
     Memory.Sample center;
     Integer bullet;

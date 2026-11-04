@@ -60,10 +60,12 @@ def main():
     clean_env = {k:v for k,v in os.environ.items() if not k.startswith("FACET_")}
     tests = run([java, "-Xmx256m", "-cp", cp, "FacetSemanticTest"], clean_env)
     adapter = run([java, "-Xmx256m", "-cp", cp, "AdapterConcurrencyTest"], clean_env)
-    evidence = ROOT/"evidence"
-    evidence.mkdir(exist_ok=True)
+    cohort = run([java, "-Xmx256m", "-cp", cp, "PreparedCohortTest"], clean_env)
+    evidence = pathlib.Path(os.environ.get("FACET_BUILD_EVIDENCE_DIR", ROOT/"evidence/prepared-cohort-fix"))
+    evidence.mkdir(parents=True,exist_ok=True)
     (evidence/"semantic-tests.txt").write_text(tests)
     (evidence/"adapter-concurrency-tests.txt").write_text(adapter)
+    (evidence/"prepared-cohort-tests.txt").write_text(cohort)
     fixture_env = dict(clean_env)
     for key, name in [("FACET_TRACE_PATH", "FACET_fixture-trace.jsonl"), ("FACET_METRICS_PATH", "FACET_fixture-metrics.jsonl"), ("FACET_MODEL_PATH", "FACET_fixture-model.bin")]:
         path = evidence/name
@@ -117,7 +119,7 @@ def main():
     source_digest = hashlib.sha256(("\n".join(source_lines)+"\n").encode()).hexdigest()
     (evidence/"source-files.sha256").write_text("\n".join(source_lines)+"\n")
     (evidence/"manifest.sha256").write_text(f"{sha(jar)}  Facet.jar\n{sha(API)}  official API 1.4.0\n{source_digest}  source-files.sha256 content\n")
-    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="adapter correction independent review pending; no measured approval", premeasurementApproved=False, meleeEnabled=True, engineMotionFireAcceptance="866 supplied actual transitions replayed; offline adapter correction only, no new battles", memoryLimitMiB=256, deterministicPackaging=True)
+    metadata = dict(schema=1, java=runtime, os=platform.platform(), machine=platform.machine(), apiSHA256=sha(API), engineSourceManifest=json.loads((ROOT/"src/test/resources/independent-contracts/engine-source-manifest.json").read_text()), independentValidationSHA256=sha(ROOT/"src/test/resources/independent-contracts/validation.json"), jarSHA256=sha(jar), sourceManifestSHA256=source_digest, configSHA256=sha(ROOT/"src/main/resources/facet.properties"), rawEnergySHA256=report["rawSHA256"], battles=0, gradle="NOT RUN; delegated to parent cached Maven/Gradle integration", independentReview="prepared-cohort correction independent review pending; no measured approval", premeasurementApproved=False, meleeEnabled=True, engineMotionFireAcceptance="866 supplied actual transitions replayed; offline prepared-cohort correction only, no new battles", memoryLimitMiB=256, deterministicPackaging=True)
     (evidence/"build.json").write_text(json.dumps(metadata,indent=2)+"\n")
     print("OFFLINE BUILD VERIFIED source="+source_digest+" jar="+sha(jar))
 if __name__ == "__main__":

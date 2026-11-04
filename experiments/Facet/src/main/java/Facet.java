@@ -391,6 +391,8 @@ public final class Facet extends Bot {
               diagnostics.event("fire.submitted", frame.round(), frame.turn(),
                   "accepted=" + accepted + " " + core.fire.plan.evidenceRow());
               core.fire.submitted(accepted, frame.own(), frame.turn(), ++core.sequence);
+              if (!accepted)
+                core.shotContext = null;
             }
             setGunTurnRate(Math.toDegrees(intent.gunTurn()));
             setRadarTurnRate(Math.toDegrees(intent.radarTurn()));

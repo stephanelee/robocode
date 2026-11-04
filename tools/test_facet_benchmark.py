@@ -36,6 +36,29 @@ class Acceptance(unittest.TestCase):
                 with self.assertRaises(ValueError):f.validate_metrics(path,1,3)
             with self.assertRaises(ValueError):f.validate_metrics(path,1,2)
 
+    def test_prepared_cohort_all_shot_integrity(self):
+        import copy
+        row=dict(round=1,gameId='fixture',schema=3,shotsConfirmed=2,shotsAccepted=2,
+                 shotsRequested=2,neighborBytes=0,snapshotStatus='success',
+                 terminalObservation='success',terminalHash='success',
+                 counters={'gun.cohort.confirmed':2,'gun.cohort.common':1,'gun.cohort.analyticOnly':1},
+                 observationsCountSumMinMax={'gun.cohort.headingErrorRadians':[2,.004,0,.004],
+                                             'gun.cohort.requestAge':[2,3,1,2]})
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'FACET_fixture.jsonl'
+            def validate(r):
+                p.write_text(json.dumps(r)+'\n'); return f.validate_metrics(p,1,3,True)
+            self.assertEqual(validate(row),[row])
+            for key,val in (('gun.cohort.confirmed',1),('gun.cohort.common',2),('gun.cohort.missing',1),('gun.cohort.failure',1)):
+                changed=copy.deepcopy(row); changed['counters'][key]=val
+                with self.subTest(key=key),self.assertRaises(ValueError):validate(changed)
+            for name,value in (('requestAge',[2,3,0,2]),('requestAge',[1,1,1,1]),
+                               ('headingErrorRadians',[2,.02,0,.02]),('headingErrorRadians',[2,99,0,.001])):
+                changed=copy.deepcopy(row);changed['observationsCountSumMinMax']['gun.cohort.'+name]=value
+                with self.subTest(name=name,value=value),self.assertRaises(ValueError):validate(changed)
+            empty=copy.deepcopy(row);empty.update(shotsConfirmed=0,counters={},observationsCountSumMinMax={})
+            self.assertEqual(validate(empty),[empty])
+
     def test_complete_cold_game_cohorts(self):
         games = [dict(opponent=o, scoreShare=i/10, facet=dict(firstPlaces=i), finalTelemetry={})
                  for o in f.COHORTS for i in range(1,6)]

@@ -1,5 +1,61 @@
 import java.util.*;
 final class FireControl {
+  /** Forecast provenance and predictions are immutable; physical training context is separate. */
+  record Cohort(String selected, int target, boolean meleeOrigin, int preparedTurn,
+      int expectedOriginTurn, long sourceWave, Physics.V origin, Physics.Body targetOrigin,
+      double[] features, double positive, double negative, double quality, int missingFeatures,
+      Map<String, Waves.Prediction> predictions) {
+    Cohort {
+      features = features.clone();
+      Physics.finite(features);
+      Physics.finite(positive, negative, quality);
+      predictions = Collections.unmodifiableMap(new LinkedHashMap<>(predictions));
+      if (preparedTurn < 0 || expectedOriginTurn < preparedTurn || sourceWave < -1
+          || positive < 0 || negative < 0 || quality <= 0 || quality > 1)
+        throw new IllegalArgumentException("prepared context bounds");
+      if (features.length != 0 && features.length != Learner.DIM
+          || !(predictions.keySet().equals(Set.of("analytic"))
+              || predictions.keySet().equals(Set.of("analytic", "long", "recent")))
+          || !predictions.containsKey(selected))
+        throw new IllegalArgumentException("prepared cohort schema");
+      for (var entry : predictions.entrySet()) {
+        var p = entry.getValue();
+        if (!Set.of("analytic", "long", "recent").contains(entry.getKey())
+            || !entry.getKey().equals(p.gun()) || p.wave() != sourceWave
+            || p.turn() != preparedTurn)
+          throw new IllegalArgumentException("prepared prediction provenance");
+        Physics.finite(p.angle(), p.power());
+      }
+    }
+    @Override public double[] features() { return features.clone(); }
+    static Cohort from(Waves.Wave wave, String selected, int turn) {
+      return new Cohort(selected, wave.target, wave.melee, turn, wave.start, wave.id, wave.origin,
+          wave.targetOrigin, wave.features, wave.positive, wave.negative, wave.originQuality,
+          wave.missingFeatures, wave.predictions);
+    }
+    static Cohort analytic(int target, boolean meleeOrigin, int turn, Physics.V origin,
+        Physics.Body targetOrigin, double angle, double power, long version) {
+      return new Cohort("analytic", target, meleeOrigin, turn, turn + 1, -1, origin, targetOrigin,
+          new double[0], Physics.escape(power), Physics.escape(power), .5, 0xffff,
+          Map.of("analytic", new Waves.Prediction("analytic", -1, turn, angle, power, version)));
+    }
+    Map<String, Waves.Prediction> bind(long physicalWave) {
+      Map<String, Waves.Prediction> result = new LinkedHashMap<>();
+      for (var p : predictions.values())
+        result.put(p.gun(), new Waves.Prediction(
+            p.gun(), physicalWave, p.turn(), p.angle(), p.power(), p.version()));
+      return Collections.unmodifiableMap(result);
+    }
+    String evidenceRow() {
+      return "preparedTurn=" + preparedTurn + " expectedOriginTurn=" + expectedOriginTurn
+          + " preparedWave=" + sourceWave + " selected=" + selected + " origin=" + origin
+          + " target=" + target + " meleeOrigin=" + meleeOrigin
+          + " targetOrigin=" + targetOrigin + " positive=" + positive + " negative=" + negative
+          + " quality=" + quality + " mask=" + missingFeatures
+          + " features=" + Arrays.toString(features) + " predictions=" + predictions;
+    }
+    @Override public String toString() { return evidenceRow(); }
+  }
   record Policy(int population, int target, double range, double targetEnergy, int observed) {
     Policy {
       Physics.finite(range, targetEnergy);
@@ -12,10 +68,29 @@ final class FireControl {
   }
   record Plan(double angle, double power, int target, int created, int expires, double tolerance,
       Physics.V origin, int observationTurn, Physics.V targetPosition, long version,
-      Physics.Body targetBody, Policy policy, String evidence) {
+      Physics.Body targetBody, Policy policy, String evidence, Cohort cohort) {
+    Plan {
+      if (cohort != null && (cohort.target() != target || cohort.preparedTurn() != created
+          || cohort.origin().distance(origin) > 1e-6
+          || Math.abs(Physics.wrap(cohort.predictions().get(cohort.selected()).angle() - angle))
+              > 1e-12
+          || cohort.predictions().values().stream()
+              .anyMatch(p -> Math.abs(p.power() - power) > 1e-12)))
+        throw new IllegalArgumentException("plan/cohort mismatch");
+    }
+    Plan(double angle, double power, int target, int created, int expires, double tolerance,
+        Physics.V origin, int observationTurn, Physics.V targetPosition, long version,
+        Physics.Body targetBody, Policy policy, String evidence) {
+      this(angle, power, target, created, expires, tolerance, origin, observationTurn,
+          targetPosition, version, targetBody, policy, evidence, null);
+    }
     Plan withEvidence(String value) {
       return new Plan(angle, power, target, created, expires, tolerance, origin, observationTurn,
-          targetPosition, version, targetBody, policy, value);
+          targetPosition, version, targetBody, policy, value, cohort);
+    }
+    Plan withCohort(Cohort value) {
+      return new Plan(angle, power, target, created, expires, tolerance, origin, observationTurn,
+          targetPosition, version, targetBody, policy, evidence, value);
     }
     String evidenceRow() {
       return "plan=" + created + ":" + version + ":" + target + " target=" + target
@@ -23,7 +98,11 @@ final class FireControl {
     }
   }
   record Pending(long sequence, int requestedTurn, double power, int target, double heading,
-      Physics.V origin, Policy policy, String evidence) {
+      Physics.V origin, Policy policy, String evidence, Cohort cohort) {
+    Pending(long sequence, int requestedTurn, double power, int target, double heading,
+        Physics.V origin, Policy policy, String evidence) {
+      this(sequence, requestedTurn, power, target, heading, origin, policy, evidence, null);
+    }
     Pending(long sequence, int requestedTurn, double power, int target, double heading,
         Physics.V origin) {
       this(sequence, requestedTurn, power, target, heading, origin, null, "fixture");
@@ -66,7 +145,7 @@ final class FireControl {
     if (result) {
       accepted++;
       pending = new Pending(sequence, turn, plan.power, plan.target, own.gun(), own.p(),
-          plan.policy, plan.evidenceRow());
+          plan.policy, plan.evidenceRow(), plan.cohort);
     } else
       rejected++;
     plan = null;
