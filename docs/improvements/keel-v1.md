@@ -164,3 +164,49 @@ This is an infrastructure failure, not a result. Confirmation will run once, at 
 **Runtime drift found by the gate review.** Run 41819088130 used Python 3.13.18 and printed `Profile: 3ba1fcaa…`. The registered profile is `0fb2d496…`, recorded under Python 3.13.17. The harness refuses to play unless the two profiles are byte-equal, so a confirmation run would have stopped with zero games.
 
 To keep the registered runtime rather than re-profile it, the workflow now pins the registered toolchain exactly: Python 3.13.17, Temurin 17.0.21+9 and Temurin 25.0.5+8 (previously `3.13`, `17` and `25`). A zero-game `profile-keel-v1` run must reproduce `0fb2d496…` byte for byte before confirmation. If it does not, for example because the runner image changed, confirmation stays blocked and any re-profile is disclosed and reviewed as a runtime change.
+
+---
+
+## Registered confirmation result (appended after the run; rules unchanged)
+
+**Decision: `confirmed`. Under the registered rule, Keel 0.1.0 beats pinned Diamond Port 1.8.28 in this runtime.**
+
+- Sole games-playing confirmation run: [41831109687](https://github.com/stephanelee/robocode/actions/runs/41831109687), at gate-cleared head `2127675` ([gate review](https://github.com/stephanelee/robocode/pull/98#issuecomment-6630805846)).
+- Byte-identical registered profile `0fb2d496…`.
+- All 6 games and 120 rounds valid, with zero Keel skipped turns.
+- Raw evidence (official recordings, markers, attempts, runner logs, decision) is in [benchmarks/keel-v1/raw-confirmation/](../../benchmarks/keel-v1/raw-confirmation/). A second copy is on branch `evidence/keel-v1-run-keel-v1-confirm-41831109687` (`ee5899f`); the decision bytes match.
+- The independent dev reducer reproduces every share, win count and hit count below. All recording SHA-256 values match.
+
+| Game | Share | Round wins | Keel hits / shots | Diamond hits / shots | Damage dealt / taken | Walls / rams | Mean round length (turns) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| c1 | 57.98% | 18/20 | 498/5480 (9.1%) | 613/6013 (10.2%) | 367 / 942 | 2 / 0 | 3,851 |
+| c2 | 59.00% | 18/20 | 560/6225 (9.0%) | 735/6797 (10.8%) | 344 / 879 | 4 / 0 | 4,354 |
+| c3 | 55.23% | 17/20 | 494/5601 (8.8%) | 628/6191 (10.1%) | 374 / 952 | 19 / 0 | 3,948 |
+| c4 | 54.59% | 16/20 | 472/5172 (9.1%) | 599/5725 (10.5%) | 356 / 965 | 8 / 0 | 3,684 |
+| c5 | 58.91% | 18/20 | 540/6042 (8.9%) | 682/6590 (10.3%) | 366 / 903 | 9 / 0 | 4,212 |
+| c6 | 53.46% | 16/20 | 506/5621 (9.0%) | 664/6130 (10.8%) | 349 / 895 | 6 / 0 | 3,924 |
+
+**Summary:**
+
+- Equal-game mean share **56.53%**, game range 53.46–59.00%, sample SD 2.40 pp.
+- **103/120** official round wins.
+- **6/6** games above 50%.
+- Descriptive one-sided Student-t 95% lower bound on the game-mean share: 54.56%. This was not a registered gate.
+
+**Registered checks:**
+
+| Check | Result |
+| --- | --- |
+| All games valid | pass |
+| Zero Keel skips | pass |
+| Mean share > 50% | pass |
+| More than 60/120 round wins | pass (103) |
+| At least 4/6 games > 50% | pass (6) |
+
+**What this does and does not show:**
+
+- **Scope.** This is a registered win against one pinned opponent build, Diamond Port 1.8.28. It ran on the Python 3.13.17 / Temurin 25.0.5 / ubuntu-26.04 runtime, in the default 800×600 arena, with cold games of 20 rounds. It is not a claim about the original Java Diamond, other arenas, other runtimes or other opponents.
+- **Mechanism: energy attrition and survival scoring.** Keel lost the bullet-damage exchange in every game (≈350 dealt vs ≈900 taken). It wins by firing mostly 0.1-power shots while Diamond spends its energy in rounds of about 3,700–4,350 turns, then collecting survival points.
+- **Unobserved factors.** Diamond's own skipped turns are not observable. The reviewer-noted ram correction limitation of the frozen bot remains.
+- **Development history.** The candidate was selected by exploratory local games, and the screen and confirmation are the unbiased tests. Confirmation attempt 1 played zero games. Only run 41831109687 played confirmation games.
+- **Guards.** These were measured only in the screen (Retcon 96.06%, AISurvivor 88.28%, one game each). Transfer to other strong opponents is untested.
