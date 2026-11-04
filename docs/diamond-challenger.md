@@ -2,6 +2,8 @@
 
 The user requested a separate bot to fight Diamond Port before applying successful ideas to AISurvivor. This task is tracked under [issue53](https://github.com/stephanelee/robocode/issues/53), alongside the [overall priorities](advanced-opponents.md).
 
+Subsequently the user explicitly requested [Breakwater movement transfer into AIS](improvements/ais-breakwater-transfer-v1.md) and new benchmarks in PR74. That request lifts the earlier ordering restriction for this measured AIS candidate; the separate challenger identities, state and historical evidence remain isolated.
+
 ## Objective and isolation
 
 Build a coherent experimental 1v1 challenger and demonstrate repeatable wins against the pinned Python Diamond Port1.8.28. The AIS baseline recorded0/60 official first places and averaged3.886%share; preserve that negative evidence. A modest score gain is useful progress, not a claim that the challenger beats Diamond.
