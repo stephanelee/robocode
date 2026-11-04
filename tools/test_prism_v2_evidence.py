@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 B = ROOT / "benchmarks/prism-screen-v2"
@@ -74,7 +75,13 @@ def reproduce():
     assert sum(x["rounds"] for x in rows) == 200
     spec = importlib.util.spec_from_file_location("frozen_prism_screen", B / "source/tools/prism_screen.py")
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    old_path, old_bytecode = list(sys.path), sys.dont_write_bytecode
+    try:
+        sys.dont_write_bytecode = True
+        spec.loader.exec_module(module)
+    finally:
+        sys.path[:] = old_path
+        sys.dont_write_bytecode = old_bytecode
     assert module.gates(report["games"]) == report["gates"]
     assert report["decision"] == report["gates"]["decision"] == "reject"
     assert [k for k, v in report["gates"].items() if v is False] == ["diamondAbove40"]
