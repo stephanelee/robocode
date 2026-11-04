@@ -1,0 +1,173 @@
+name: Registered MeridianPeak v1 stages
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+concurrency:
+  group: meridian-peak-v1
+  cancel-in-progress: false
+jobs:
+  profile:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/meridian-peak-v1' && github.run_attempt == 1 &&
+      github.event.label.name == 'profile-meridian-peak-v1'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Java 17 build tests parity and official Walls source check (zero games)
+        run: python tools/meridian_peak_prepare.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Exact runtime and pinned assets preflight (zero games)
+        run: |
+          python tools/meridian_peak_profile.py --stage profile
+          "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
+      - name: Preserve complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-peak-v1-profile-${{ github.run_id }}
+          path: |
+            build/meridian/
+            build/meridian-peak/
+            build/test-results/
+            experiments/Meridian/build/test-results/
+            experiments/MeridianPeak/build/test-results/
+            benchmarks/meridian-peak-v1/
+          if-no-files-found: warn
+          retention-days: 90
+  screen:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/meridian-peak-v1' && github.run_attempt == 1 &&
+      github.event.label.name == 'run-meridian-peak-v1-screen'
+      && contains(github.event.pull_request.body, format('MERIDIAN-PEAK-V1-SCREEN-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Java 17 build tests parity and official Walls source check (zero games)
+        run: python tools/meridian_peak_prepare.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Exact runtime and pinned assets preflight (zero games)
+        run: |
+          python tools/meridian_peak_profile.py --stage screen
+          "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
+      - name: Verify frozen stage admit budget and consume sole receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAYLOAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/meridian_peak.py --stage screen
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" > build/meridian-peak/admission-jobs.json
+          python -c 'import json,datetime; rows=[j for j in json.load(open("build/meridian-peak/admission-jobs.json"))["jobs"] if j["name"] == "screen"]; assert len(rows)==1; start=datetime.datetime.fromisoformat(rows[0]["started_at"].replace("Z","+00:00")); assert (datetime.datetime.now(datetime.timezone.utc)-start).total_seconds() <= 1800, "Fewer than 150 minutes remain; no acquisition"'
+          python tools/meridian_peak_activate.py --stage screen
+          python tools/meridian_peak.py --stage screen --run
+      - name: Preserve complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-peak-v1-screen-${{ github.run_id }}
+          path: |
+            build/meridian/
+            build/meridian-peak/
+            build/test-results/
+            experiments/Meridian/build/test-results/
+            experiments/MeridianPeak/build/test-results/
+            benchmarks/meridian-peak-v1/
+          if-no-files-found: warn
+          retention-days: 90
+  confirmation:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/meridian-peak-v1' && github.run_attempt == 1 &&
+      github.event.label.name == 'run-meridian-peak-v1-confirmation'
+      && contains(github.event.pull_request.body, format('MERIDIAN-PEAK-V1-CONFIRMATION-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 300
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Java 17 build tests parity and official Walls source check (zero games)
+        run: python tools/meridian_peak_prepare.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Exact runtime and pinned assets preflight (zero games)
+        run: |
+          python tools/meridian_peak_profile.py --stage confirmation
+          "$JAVA_HOME/bin/javac" -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java
+      - name: Verify frozen stage admit budget and consume sole receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAYLOAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/meridian_peak.py --stage confirmation
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" > build/meridian-peak/admission-jobs.json
+          python -c 'import json,datetime; rows=[j for j in json.load(open("build/meridian-peak/admission-jobs.json"))["jobs"] if j["name"] == "confirmation"]; assert len(rows)==1; start=datetime.datetime.fromisoformat(rows[0]["started_at"].replace("Z","+00:00")); assert (datetime.datetime.now(datetime.timezone.utc)-start).total_seconds() <= 2280, "Fewer than 262 minutes remain; no acquisition"'
+          python tools/meridian_peak_activate.py --stage confirmation
+          python tools/meridian_peak.py --stage confirmation --run
+      - name: Preserve complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-peak-v1-confirmation-${{ github.run_id }}
+          path: |
+            build/meridian/
+            build/meridian-peak/
+            build/test-results/
+            experiments/Meridian/build/test-results/
+            experiments/MeridianPeak/build/test-results/
+            benchmarks/meridian-peak-v1/
+          if-no-files-found: warn
+          retention-days: 90

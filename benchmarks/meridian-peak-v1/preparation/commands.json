@@ -1,0 +1,28 @@
+{
+  "newPhysicalGames": 0,
+  "newPhysicalRounds": 0,
+  "tests": "python3 -m unittest discover -s tools -p test_meridian_peak.py -v",
+  "testEvidence": "Retrospective re-reduction of existing twelve gp60 recordings, plus explicitly synthetic guard/model fixtures. No new battle or strength evidence.",
+  "assetDownload": "python3 -c: benchmark.download of only the two literal-SHA assets in benchmark.ASSETS",
+  "wallsPreparation": "JAVA_HOME=/opt/homebrew/opt/openjdk@17 python3 tools/meridian_peak_profile.py --prepare-walls",
+  "launcherCompile": "/opt/homebrew/opt/openjdk@17/bin/javac -cp .benchmark-cache/robocode-tankroyale-runner-1.4.0.jar -d build/meridian-peak/launcher-classes benchmarks/meridian-peak-v1/MeridianPeakBattle.java",
+  "runtime": "Local Homebrew Java 17 source checks only; native package/Ubuntu runtime not run locally. Hosted zero-game profile remains required.",
+  "preparationCorrections": [
+    "First ad hoc workflow-generator command failed with an unterminated Python triple-quoted string before writing a workflow; replaced with structured file generation.",
+    "Synthetic stage-driver test double initially returned a duplicate status key; removed it before captured final test verification. This did not alter any gameplay or historical evidence."
+  ],
+  "walls": {
+    "archive": "sample-bots-Java-1.4.0.zip",
+    "archiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+    "botRoot": "Walls",
+    "descriptor": "Walls/Walls.json",
+    "files": {
+      "Walls/Walls.java": "7a56d4ff8489f460c38c57748d0beffc844496a66c4fff419c2d09f083f86ef0",
+      "Walls/Walls.json": "553ac58cf7be86a2f3078baecc08c5f7a390cf4f52a132dca9c88fbf77275336",
+      "lib/robocode-tankroyale-bot-api-1.4.0.jar": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752"
+    },
+    "name": "Walls",
+    "sharedRoot": "lib",
+    "version": "1.0"
+  }
+}

@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   battle:
-    if: github.head_ref != 'codex/meridian-held-plan-execution' && github.head_ref != 'codex/meridian-wave-support'
+    if: github.head_ref != 'codex/meridian-held-plan-execution' && github.head_ref != 'codex/meridian-wave-support' && github.head_ref != 'codex/meridian-peak-v1'
     name: Headless battle smoke
     runs-on: ubuntu-26.04
     timeout-minutes: 25

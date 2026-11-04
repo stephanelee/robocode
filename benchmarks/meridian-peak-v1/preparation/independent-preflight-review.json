@@ -1,0 +1,45 @@
+{
+  "reviewer": "independent_review agent",
+  "decision": "PASS for source/JAR/schema and integrated zero-game preflight publication; no screen/confirmation clearance",
+  "competitiveRounds": 0,
+  "java17": {
+    "tests": 27,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "isolatedProject": "/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/peak-independent-3f7vr9a9",
+    "command": "JAVA_HOME=/opt/homebrew/opt/openjdk@17 /bin/sh ./gradlew --offline --no-daemon -p experiments/MeridianPeak clean test assemble",
+    "jarSHA256": "7ee19c304744a807ffd29cc2b282464ae8e8b999c597225729b41c91b79c0d9c",
+    "verifiedJarEntries": 805
+  },
+  "python": {
+    "tests": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools -p 'test_meridian_peak*.py' -v"
+  },
+  "sourceProofs": {
+    "originalControlCommit": "809b880cdcee98d7946d05e6bcd30f623f604348",
+    "FlightByteIdentical": true,
+    "gunMethodByteIdentical": true,
+    "HitAnglesOriginalBodyByteIdentical": true,
+    "CrossingGunOriginalBodyByteIdentical": true,
+    "onlyReadOnlyAccessorsAppended": true
+  },
+  "sourceFilesSHA256": {
+    "experiments/MeridianPeak/src/CrossingGun.java": "d055d757358bdf0027fbb64c4695a1ccaecfc40b8fd8ef58a358fee48c7f3bd9",
+    "experiments/MeridianPeak/src/Flight.java": "6f64cd798146e0529034e332aadd172de42ddabbe041b5f76fee6b010dccf700",
+    "experiments/MeridianPeak/src/HitAngles.java": "8d01589241267b0467ed30cbd225128af47f7233885f1fedde56785d56d4f12b",
+    "experiments/MeridianPeak/src/MeridianPeak.java": "c8b6ab91b85460ecf910abc8c090ac4a8cce739f09a85cf0884cda702c7ffdda",
+    "experiments/MeridianPeak/src/PeakMotion.java": "a9123116262ef23908d299039568aa128ffa9d39045581bc174e86084c32bc00",
+    "experiments/MeridianPeak/src/PeakRisk.java": "1a3e99e3b193ea874badf19feea53fd268488c7c4af722289243f12f3596837a",
+    "experiments/MeridianPeak/src/PeakTelemetry.java": "fbd4ebf063fd80f37784f6bfce7abce35d95f46ed3f5b9662b5e444c4e93e7f3"
+  },
+  "evidenceFilesSHA256": {
+    "independent-source-audit.md": "483739edbbc5fb15f7693720f19ab39728811d1d62c3436c8bdb329fc4b2c2d5",
+    "independent-harness-tests.log": "31e7d0af258c2264beda30e339d1a3df631dad43d72ed1bd7389f293cd8a0f72",
+    "independent-java17-tests.log": "0d7e1ff8eeda5971c35c4b2879c170524d3ddeb50a3e418c600ca8707c551058"
+  },
+  "limitations": "No live game/dispatch/server. Independent acquisition clearance awaits exact published head and successful hosted runtime/profile matching. SDK lifecycle assumptions and observer/private cohort distinctions are documented in independent-source-audit.md."
+}

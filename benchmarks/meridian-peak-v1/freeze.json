@@ -1,0 +1,763 @@
+{
+  "allowedRuntime": [
+    {
+      "arch": "x86_64",
+      "botApi140": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+      "buildJava": "1f0ccaede1af2ff0d3cbc6eda708080fa073237bb53a7b2340bbccc378db523f  javac\nfcdfc72acc1ec5e8542fc2170c587ef23edbbdeddcbf435f169d270e02469d7c  modules\n",
+      "image": "20261101.186.1",
+      "java17Version": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+      "java25": {
+        "bin/java": "1bf1aaef01e4f8d7c85d913c60fb2ee4624cbe54d4053254c59657b7ea913b25",
+        "lib/modules": "f5463cffa81c51b3c13f57e2c23eacceab2b12e842069acf2facd5485f63bc85",
+        "lib/server/libjvm.so": "30b96b2f2b69f313f4c85d9b437511a1d97e64c29a3d13b0abd6b07c7f50335b",
+        "release": "8545053a54a73969a65db2c8157f40f89bcdcf7526ae90a7ce9b3061c01bc34a"
+      },
+      "os": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+      "python": {
+        "commit": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf",
+        "lockSHA256": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+        "opponents": [
+          {
+            "descriptor": "adaptive-prime.json",
+            "gitTreeSHA": "3ee9457fecb84be772add6108cf8485060a758aa",
+            "launcher": "adaptive-prime.sh",
+            "license": "Apache-2.0",
+            "licensePath": "LICENSE",
+            "name": "Adaptive Prime",
+            "sourcePath": "bots/adaptive-prime",
+            "version": "1.0"
+          },
+          {
+            "descriptor": "diamond-port.json",
+            "gitTreeSHA": "cb09712712b3b360278518aa604ad355de1f4911",
+            "launcher": "diamond-port.sh",
+            "license": "Zlib",
+            "licensePath": "bots/ports/diamond-port/LICENSE",
+            "name": "Diamond Port",
+            "sourcePath": "bots/ports/diamond-port",
+            "version": "1.8.28"
+          }
+        ],
+        "pipCheck": "No broken requirements found.",
+        "repository": "fduch-stranger/robocode-bot",
+        "runtime": {
+          "packages": [
+            [
+              "PyYAML",
+              "6.0.3"
+            ],
+            [
+              "ast_serialize",
+              "0.13.1"
+            ],
+            [
+              "librt",
+              "0.16.0"
+            ],
+            [
+              "mypy",
+              "2.4.1"
+            ],
+            [
+              "mypy_extensions",
+              "1.1.0"
+            ],
+            [
+              "pathspec",
+              "1.1.1"
+            ],
+            [
+              "pip",
+              "26.3"
+            ],
+            [
+              "pycountry",
+              "26.2.16"
+            ],
+            [
+              "robocode-tank-royale",
+              "1.3.1"
+            ],
+            [
+              "setuptools",
+              "84.2.1"
+            ],
+            [
+              "typing_extensions",
+              "4.16.0"
+            ],
+            [
+              "websockets",
+              "17.4"
+            ]
+          ],
+          "version": "3.13.18 (main, Oct 26 2026, 14:19:33) [GCC 15.2.0]"
+        },
+        "sourceSHA256": "a9bf0b5d62b510ce3a405db9dcbe11cf2c1bce3f982e2a5d12b9fdc76b8fbc92",
+        "wheels": [
+          {
+            "filename": "ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "name": "ast_serialize",
+            "requiresDist": [],
+            "requiresPython": ">=3.7",
+            "sha256": "9f99786e0d62082a5b121b3437f3167562133711df22128de1e9886f57f0b226",
+            "size": 1313260,
+            "url": "https://files.pythonhosted.org/packages/c5/fa/da311559dd3dae9af5825cf21660775a929b970f72e3786af3f2cd667944/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "version": "0.13.1"
+          },
+          {
+            "filename": "librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "librt",
+            "requiresDist": [],
+            "requiresPython": ">=3.9",
+            "sha256": "17bac7f7a16b328fff77e440287693eb017abde913595b5827ebccbc21ecd8a6",
+            "size": 531689,
+            "url": "https://files.pythonhosted.org/packages/a9/59/16c409c56f708eda2db9a0553662845d45e3871c77d70a240dae3f3bdc56/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "0.16.0"
+          },
+          {
+            "filename": "mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "mypy",
+            "requiresDist": [
+              "typing_extensions>=4.6.0; python_version < \"3.15\"",
+              "typing_extensions>=4.14.0; python_version >= \"3.15\"",
+              "mypy_extensions>=1.0.0",
+              "pathspec>=1.0.0",
+              "tomli>=1.1.0; python_version < \"3.11\"",
+              "librt>=0.16.0; platform_python_implementation != \"PyPy\"",
+              "ast-serialize<1.0.0,>=0.12.1",
+              "psutil>=4.0; extra == \"dmypy\"",
+              "setuptools>=50; extra == \"mypyc\"",
+              "lxml; extra == \"reports\"",
+              "pip; extra == \"install-types\"",
+              "orjson; extra == \"faster-cache\""
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "1fb70621535c22fd4b1a0450d37ed1d6c5eb39656a1cebfb189084c12de54ba7",
+            "size": 15467623,
+            "url": "https://files.pythonhosted.org/packages/a2/45/089b4724b85f0f408941be5298f817ee89181c1ce031a73d60ebb150c2c7/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "2.4.1"
+          },
+          {
+            "filename": "mypy_extensions-1.1.0-py3-none-any.whl",
+            "name": "mypy_extensions",
+            "requiresDist": [],
+            "requiresPython": ">=3.8",
+            "sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+            "size": 4963,
+            "url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+            "version": "1.1.0"
+          },
+          {
+            "filename": "pathspec-1.1.1-py3-none-any.whl",
+            "name": "pathspec",
+            "requiresDist": [
+              "hyperscan >=0.7 ; extra == \"hyperscan\"",
+              "typing-extensions >=4 ; extra == \"optional\"",
+              "google-re2 >=1.1 ; extra == \"re2\""
+            ],
+            "requiresPython": ">=3.9",
+            "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+            "size": 57328,
+            "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+            "version": "1.1.1"
+          },
+          {
+            "filename": "pip-26.3-py3-none-any.whl",
+            "name": "pip",
+            "requiresDist": [],
+            "requiresPython": ">=3.10",
+            "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13",
+            "size": 1950951,
+            "url": "https://files.pythonhosted.org/packages/07/25/ee8c38ae72d66b844ce8eb9711ba905dba21ca1a8a0c960057c41cd23337/pip-26.3-py3-none-any.whl",
+            "version": "26.3"
+          },
+          {
+            "filename": "pycountry-26.2.16-py3-none-any.whl",
+            "name": "pycountry",
+            "requiresDist": [],
+            "requiresPython": ">=3.10",
+            "sha256": "115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a",
+            "size": 8044600,
+            "url": "https://files.pythonhosted.org/packages/9c/42/7703bd45b62fecd44cd7d3495423097e2f7d28bc2e99e7c1af68892ab157/pycountry-26.2.16-py3-none-any.whl",
+            "version": "26.2.16"
+          },
+          {
+            "filename": "pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "PyYAML",
+            "requiresDist": [],
+            "requiresPython": ">=3.8",
+            "sha256": "0f29edc409a6392443abf94b9cf89ce99889a1dd5376d94316ae5145dfedd5d6",
+            "size": 801626,
+            "url": "https://files.pythonhosted.org/packages/74/27/e5b8f34d02d9995b80abcef563ea1f8b56d20134d8f4e5e81733b1feceb2/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "6.0.3"
+          },
+          {
+            "filename": "robocode_tank_royale-1.3.1-py3-none-any.whl",
+            "name": "robocode-tank-royale",
+            "requiresDist": [
+              "pip>=24",
+              "PyYAML>=6",
+              "setuptools>=77",
+              "pycountry>=24",
+              "websockets>=15",
+              "mypy"
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "074f28f1f62ede458801739d8f84651af8c33bb2aee3290e7841fbd9bc327df2",
+            "size": 144463,
+            "url": "https://files.pythonhosted.org/packages/9b/7c/8e99d83e5185331a0d3534b948ee2247c5ef9d22abe0b6d57bf99c17166a/robocode_tank_royale-1.3.1-py3-none-any.whl",
+            "version": "1.3.1"
+          },
+          {
+            "filename": "setuptools-84.2.1-py3-none-any.whl",
+            "name": "setuptools",
+            "requiresDist": [
+              "pytest!=8.1.*,>=6; extra == \"test\"",
+              "virtualenv>=13.0.0; extra == \"test\"",
+              "wheel>=0.44.0; extra == \"test\"",
+              "pip>=19.1; extra == \"test\"",
+              "packaging>=26.3; extra == \"test\"",
+              "jaraco.envs>=2.2; extra == \"test\"",
+              "pytest-xdist>=3; extra == \"test\"",
+              "jaraco.path>=3.7.2; extra == \"test\"",
+              "build[virtualenv]>=1.0.3; extra == \"test\"",
+              "filelock>=3.4.0; extra == \"test\"",
+              "ini2toml[lite]>=0.14; extra == \"test\"",
+              "tomli-w>=1.0.0; extra == \"test\"",
+              "pytest-timeout; extra == \"test\"",
+              "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+              "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+              "pytest-home>=0.5; extra == \"test\"",
+              "pytest-subprocess; extra == \"test\"",
+              "pyproject-hooks!=1.1; extra == \"test\"",
+              "jaraco.test>=5.5; extra == \"test\"",
+              "sphinx>=3.5; extra == \"doc\"",
+              "jaraco.packaging>=9.3; extra == \"doc\"",
+              "rst.linker>=1.9; extra == \"doc\"",
+              "furo; extra == \"doc\"",
+              "sphinx-lint; extra == \"doc\"",
+              "jaraco.tidelift>=1.4; extra == \"doc\"",
+              "pygments-github-lexers==0.0.5; extra == \"doc\"",
+              "sphinx-favicon; extra == \"doc\"",
+              "sphinx-inline-tabs; extra == \"doc\"",
+              "sphinx-reredirects; extra == \"doc\"",
+              "sphinxcontrib-towncrier; extra == \"doc\"",
+              "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+              "pyproject-hooks!=1.1; extra == \"doc\"",
+              "towncrier<24.7; extra == \"doc\"",
+              "packaging>=26.3; extra == \"core\"",
+              "more_itertools>=8.8; extra == \"core\"",
+              "jaraco.text>=3.7; extra == \"core\"",
+              "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+              "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+              "wheel>=0.43.0; extra == \"core\"",
+              "jaraco.functools>=4; extra == \"core\"",
+              "more_itertools; extra == \"core\"",
+              "pytest-checkdocs>=2.14; extra == \"check\"",
+              "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+              "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+              "pytest-cov; extra == \"cover\"",
+              "pytest-enabler>=3.4; extra == \"enabler\"",
+              "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+              "mypy==1.18.*; extra == \"type\"",
+              "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+              "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2",
+            "size": 876263,
+            "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl",
+            "version": "84.2.1"
+          },
+          {
+            "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+            "name": "typing_extensions",
+            "requiresDist": [],
+            "requiresPython": ">=3.9",
+            "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+            "size": 45571,
+            "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+            "version": "4.16.0"
+          },
+          {
+            "filename": "websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+            "name": "websockets",
+            "requiresDist": [],
+            "requiresPython": ">=3.11",
+            "sha256": "25eb661d8ba7e2b85ebb4e7a1bb9f6a3280910ed10b84330a7abfb5ed32d2764",
+            "size": 226382,
+            "url": "https://files.pythonhosted.org/packages/ef/75/6a95f93661bba2f1a4ec82eb26c6d30e6ba253569ecabb7a675139db6051/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+            "version": "17.4"
+          }
+        ]
+      },
+      "pythonBinary": "a320e4e17ce92f6f9615eb922344155f74fbfa6855ea0aca40266dbecba7a52d",
+      "retcon": {
+        "authors": [
+          "Flemming N. Larsen"
+        ],
+        "botApi": {
+          "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+          "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar",
+          "version": "1.3.1"
+        },
+        "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "license": "MIT",
+        "name": "Retcon",
+        "repository": "robocode-dev/rumble-bots",
+        "sourcePath": "bots/java/Retcon",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "version": "0.2.0"
+      },
+      "runner": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf"
+    },
+    {
+      "arch": "x86_64",
+      "botApi140": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+      "buildJava": "1f0ccaede1af2ff0d3cbc6eda708080fa073237bb53a7b2340bbccc378db523f  javac\nfcdfc72acc1ec5e8542fc2170c587ef23edbbdeddcbf435f169d270e02469d7c  modules\n",
+      "image": "20261026.180.1",
+      "java17Version": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+      "java25": {
+        "bin/java": "1bf1aaef01e4f8d7c85d913c60fb2ee4624cbe54d4053254c59657b7ea913b25",
+        "lib/modules": "f5463cffa81c51b3c13f57e2c23eacceab2b12e842069acf2facd5485f63bc85",
+        "lib/server/libjvm.so": "30b96b2f2b69f313f4c85d9b437511a1d97e64c29a3d13b0abd6b07c7f50335b",
+        "release": "8545053a54a73969a65db2c8157f40f89bcdcf7526ae90a7ce9b3061c01bc34a"
+      },
+      "os": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+      "python": {
+        "commit": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf",
+        "lockSHA256": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+        "opponents": [
+          {
+            "descriptor": "adaptive-prime.json",
+            "gitTreeSHA": "3ee9457fecb84be772add6108cf8485060a758aa",
+            "launcher": "adaptive-prime.sh",
+            "license": "Apache-2.0",
+            "licensePath": "LICENSE",
+            "name": "Adaptive Prime",
+            "sourcePath": "bots/adaptive-prime",
+            "version": "1.0"
+          },
+          {
+            "descriptor": "diamond-port.json",
+            "gitTreeSHA": "cb09712712b3b360278518aa604ad355de1f4911",
+            "launcher": "diamond-port.sh",
+            "license": "Zlib",
+            "licensePath": "bots/ports/diamond-port/LICENSE",
+            "name": "Diamond Port",
+            "sourcePath": "bots/ports/diamond-port",
+            "version": "1.8.28"
+          }
+        ],
+        "pipCheck": "No broken requirements found.",
+        "repository": "fduch-stranger/robocode-bot",
+        "runtime": {
+          "packages": [
+            [
+              "PyYAML",
+              "6.0.3"
+            ],
+            [
+              "ast_serialize",
+              "0.13.1"
+            ],
+            [
+              "librt",
+              "0.16.0"
+            ],
+            [
+              "mypy",
+              "2.4.1"
+            ],
+            [
+              "mypy_extensions",
+              "1.1.0"
+            ],
+            [
+              "pathspec",
+              "1.1.1"
+            ],
+            [
+              "pip",
+              "26.3"
+            ],
+            [
+              "pycountry",
+              "26.2.16"
+            ],
+            [
+              "robocode-tank-royale",
+              "1.3.1"
+            ],
+            [
+              "setuptools",
+              "84.2.1"
+            ],
+            [
+              "typing_extensions",
+              "4.16.0"
+            ],
+            [
+              "websockets",
+              "17.4"
+            ]
+          ],
+          "version": "3.13.18 (main, Oct 26 2026, 14:19:33) [GCC 15.2.0]"
+        },
+        "sourceSHA256": "a9bf0b5d62b510ce3a405db9dcbe11cf2c1bce3f982e2a5d12b9fdc76b8fbc92",
+        "wheels": [
+          {
+            "filename": "ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "name": "ast_serialize",
+            "requiresDist": [],
+            "requiresPython": ">=3.7",
+            "sha256": "9f99786e0d62082a5b121b3437f3167562133711df22128de1e9886f57f0b226",
+            "size": 1313260,
+            "url": "https://files.pythonhosted.org/packages/c5/fa/da311559dd3dae9af5825cf21660775a929b970f72e3786af3f2cd667944/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "version": "0.13.1"
+          },
+          {
+            "filename": "librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "librt",
+            "requiresDist": [],
+            "requiresPython": ">=3.9",
+            "sha256": "17bac7f7a16b328fff77e440287693eb017abde913595b5827ebccbc21ecd8a6",
+            "size": 531689,
+            "url": "https://files.pythonhosted.org/packages/a9/59/16c409c56f708eda2db9a0553662845d45e3871c77d70a240dae3f3bdc56/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "0.16.0"
+          },
+          {
+            "filename": "mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "mypy",
+            "requiresDist": [
+              "typing_extensions>=4.6.0; python_version < \"3.15\"",
+              "typing_extensions>=4.14.0; python_version >= \"3.15\"",
+              "mypy_extensions>=1.0.0",
+              "pathspec>=1.0.0",
+              "tomli>=1.1.0; python_version < \"3.11\"",
+              "librt>=0.16.0; platform_python_implementation != \"PyPy\"",
+              "ast-serialize<1.0.0,>=0.12.1",
+              "psutil>=4.0; extra == \"dmypy\"",
+              "setuptools>=50; extra == \"mypyc\"",
+              "lxml; extra == \"reports\"",
+              "pip; extra == \"install-types\"",
+              "orjson; extra == \"faster-cache\""
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "1fb70621535c22fd4b1a0450d37ed1d6c5eb39656a1cebfb189084c12de54ba7",
+            "size": 15467623,
+            "url": "https://files.pythonhosted.org/packages/a2/45/089b4724b85f0f408941be5298f817ee89181c1ce031a73d60ebb150c2c7/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "2.4.1"
+          },
+          {
+            "filename": "mypy_extensions-1.1.0-py3-none-any.whl",
+            "name": "mypy_extensions",
+            "requiresDist": [],
+            "requiresPython": ">=3.8",
+            "sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+            "size": 4963,
+            "url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+            "version": "1.1.0"
+          },
+          {
+            "filename": "pathspec-1.1.1-py3-none-any.whl",
+            "name": "pathspec",
+            "requiresDist": [
+              "hyperscan >=0.7 ; extra == \"hyperscan\"",
+              "typing-extensions >=4 ; extra == \"optional\"",
+              "google-re2 >=1.1 ; extra == \"re2\""
+            ],
+            "requiresPython": ">=3.9",
+            "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+            "size": 57328,
+            "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+            "version": "1.1.1"
+          },
+          {
+            "filename": "pip-26.3-py3-none-any.whl",
+            "name": "pip",
+            "requiresDist": [],
+            "requiresPython": ">=3.10",
+            "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13",
+            "size": 1950951,
+            "url": "https://files.pythonhosted.org/packages/07/25/ee8c38ae72d66b844ce8eb9711ba905dba21ca1a8a0c960057c41cd23337/pip-26.3-py3-none-any.whl",
+            "version": "26.3"
+          },
+          {
+            "filename": "pycountry-26.2.16-py3-none-any.whl",
+            "name": "pycountry",
+            "requiresDist": [],
+            "requiresPython": ">=3.10",
+            "sha256": "115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a",
+            "size": 8044600,
+            "url": "https://files.pythonhosted.org/packages/9c/42/7703bd45b62fecd44cd7d3495423097e2f7d28bc2e99e7c1af68892ab157/pycountry-26.2.16-py3-none-any.whl",
+            "version": "26.2.16"
+          },
+          {
+            "filename": "pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "name": "PyYAML",
+            "requiresDist": [],
+            "requiresPython": ">=3.8",
+            "sha256": "0f29edc409a6392443abf94b9cf89ce99889a1dd5376d94316ae5145dfedd5d6",
+            "size": 801626,
+            "url": "https://files.pythonhosted.org/packages/74/27/e5b8f34d02d9995b80abcef563ea1f8b56d20134d8f4e5e81733b1feceb2/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+            "version": "6.0.3"
+          },
+          {
+            "filename": "robocode_tank_royale-1.3.1-py3-none-any.whl",
+            "name": "robocode-tank-royale",
+            "requiresDist": [
+              "pip>=24",
+              "PyYAML>=6",
+              "setuptools>=77",
+              "pycountry>=24",
+              "websockets>=15",
+              "mypy"
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "074f28f1f62ede458801739d8f84651af8c33bb2aee3290e7841fbd9bc327df2",
+            "size": 144463,
+            "url": "https://files.pythonhosted.org/packages/9b/7c/8e99d83e5185331a0d3534b948ee2247c5ef9d22abe0b6d57bf99c17166a/robocode_tank_royale-1.3.1-py3-none-any.whl",
+            "version": "1.3.1"
+          },
+          {
+            "filename": "setuptools-84.2.1-py3-none-any.whl",
+            "name": "setuptools",
+            "requiresDist": [
+              "pytest!=8.1.*,>=6; extra == \"test\"",
+              "virtualenv>=13.0.0; extra == \"test\"",
+              "wheel>=0.44.0; extra == \"test\"",
+              "pip>=19.1; extra == \"test\"",
+              "packaging>=26.3; extra == \"test\"",
+              "jaraco.envs>=2.2; extra == \"test\"",
+              "pytest-xdist>=3; extra == \"test\"",
+              "jaraco.path>=3.7.2; extra == \"test\"",
+              "build[virtualenv]>=1.0.3; extra == \"test\"",
+              "filelock>=3.4.0; extra == \"test\"",
+              "ini2toml[lite]>=0.14; extra == \"test\"",
+              "tomli-w>=1.0.0; extra == \"test\"",
+              "pytest-timeout; extra == \"test\"",
+              "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+              "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+              "pytest-home>=0.5; extra == \"test\"",
+              "pytest-subprocess; extra == \"test\"",
+              "pyproject-hooks!=1.1; extra == \"test\"",
+              "jaraco.test>=5.5; extra == \"test\"",
+              "sphinx>=3.5; extra == \"doc\"",
+              "jaraco.packaging>=9.3; extra == \"doc\"",
+              "rst.linker>=1.9; extra == \"doc\"",
+              "furo; extra == \"doc\"",
+              "sphinx-lint; extra == \"doc\"",
+              "jaraco.tidelift>=1.4; extra == \"doc\"",
+              "pygments-github-lexers==0.0.5; extra == \"doc\"",
+              "sphinx-favicon; extra == \"doc\"",
+              "sphinx-inline-tabs; extra == \"doc\"",
+              "sphinx-reredirects; extra == \"doc\"",
+              "sphinxcontrib-towncrier; extra == \"doc\"",
+              "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+              "pyproject-hooks!=1.1; extra == \"doc\"",
+              "towncrier<24.7; extra == \"doc\"",
+              "packaging>=26.3; extra == \"core\"",
+              "more_itertools>=8.8; extra == \"core\"",
+              "jaraco.text>=3.7; extra == \"core\"",
+              "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+              "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+              "wheel>=0.43.0; extra == \"core\"",
+              "jaraco.functools>=4; extra == \"core\"",
+              "more_itertools; extra == \"core\"",
+              "pytest-checkdocs>=2.14; extra == \"check\"",
+              "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+              "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+              "pytest-cov; extra == \"cover\"",
+              "pytest-enabler>=3.4; extra == \"enabler\"",
+              "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+              "mypy==1.18.*; extra == \"type\"",
+              "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+              "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+            ],
+            "requiresPython": ">=3.10",
+            "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2",
+            "size": 876263,
+            "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl",
+            "version": "84.2.1"
+          },
+          {
+            "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+            "name": "typing_extensions",
+            "requiresDist": [],
+            "requiresPython": ">=3.9",
+            "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+            "size": 45571,
+            "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+            "version": "4.16.0"
+          },
+          {
+            "filename": "websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+            "name": "websockets",
+            "requiresDist": [],
+            "requiresPython": ">=3.11",
+            "sha256": "25eb661d8ba7e2b85ebb4e7a1bb9f6a3280910ed10b84330a7abfb5ed32d2764",
+            "size": 226382,
+            "url": "https://files.pythonhosted.org/packages/ef/75/6a95f93661bba2f1a4ec82eb26c6d30e6ba253569ecabb7a675139db6051/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+            "version": "17.4"
+          }
+        ]
+      },
+      "pythonBinary": "a320e4e17ce92f6f9615eb922344155f74fbfa6855ea0aca40266dbecba7a52d",
+      "retcon": {
+        "authors": [
+          "Flemming N. Larsen"
+        ],
+        "botApi": {
+          "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+          "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar",
+          "version": "1.3.1"
+        },
+        "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+        "license": "MIT",
+        "name": "Retcon",
+        "repository": "robocode-dev/rumble-bots",
+        "sourcePath": "bots/java/Retcon",
+        "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+        "version": "0.2.0"
+      },
+      "runner": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf"
+    }
+  ],
+  "assets": {
+    "AISurvivor/AISurvivor.cmd": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115",
+    "AISurvivor/AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+    "AISurvivor/AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+    "AISurvivor/AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+    "experiments/Meridian/Meridian.jar": "7667ef48974e67fe1e42ecee15005905bfe915c4c4afe7cba8e52c146ec2cafe",
+    "experiments/Meridian/bot/Meridian.cmd": "caf8325e0ad0c9a26e30f388ec248cf270fbfd8c607fd8684a3c434e05d89d2b",
+    "experiments/Meridian/bot/Meridian.json": "f9f5a34e586653741e3310305db3e3f4768822bf26467689f2d33bdd61f6c5de",
+    "experiments/Meridian/bot/Meridian.sh": "cfbc8d7798947cf4857336f91a908e6f040d32b374192f09b48b04e092394788",
+    "experiments/Meridian/src/CrossingGun.java": "63fde2dc564484f78a87357d99f0a249316a2dd4cdc52b71856665e056ab145a",
+    "experiments/Meridian/src/Flight.java": "6f64cd798146e0529034e332aadd172de42ddabbe041b5f76fee6b010dccf700",
+    "experiments/Meridian/src/HitAngles.java": "7a9a316ad49c165bc612efccf479e319d824470ea482553b923b7d9eabf91519",
+    "experiments/Meridian/src/Meridian.java": "5268264c49dd1150eb862b4cd59814a9e589abb3e5f284c56bf07dd07989d0d1",
+    "experiments/MeridianPeak/MeridianPeak.jar": "7ee19c304744a807ffd29cc2b282464ae8e8b999c597225729b41c91b79c0d9c",
+    "experiments/MeridianPeak/bot/MeridianPeak.cmd": "ddcd4e132d170157365644e4375f1beff76c686c2f0250b648139a0a3b837e88",
+    "experiments/MeridianPeak/bot/MeridianPeak.json": "39406c8c55d03242c154149309500ddc5a1f3faae5568a24057dec038e133d4c",
+    "experiments/MeridianPeak/bot/MeridianPeak.sh": "3e531b139daed2e3572b817c7966e6d3ac0173aca1ff33676ff4ef6c02e7ca62",
+    "experiments/MeridianPeak/src/CrossingGun.java": "d055d757358bdf0027fbb64c4695a1ccaecfc40b8fd8ef58a358fee48c7f3bd9",
+    "experiments/MeridianPeak/src/Flight.java": "6f64cd798146e0529034e332aadd172de42ddabbe041b5f76fee6b010dccf700",
+    "experiments/MeridianPeak/src/HitAngles.java": "8d01589241267b0467ed30cbd225128af47f7233885f1fedde56785d56d4f12b",
+    "experiments/MeridianPeak/src/MeridianPeak.java": "c8b6ab91b85460ecf910abc8c090ac4a8cce739f09a85cf0884cda702c7ffdda",
+    "experiments/MeridianPeak/src/PeakMotion.java": "a9123116262ef23908d299039568aa128ffa9d39045581bc174e86084c32bc00",
+    "experiments/MeridianPeak/src/PeakRisk.java": "1a3e99e3b193ea874badf19feea53fd268488c7c4af722289243f12f3596837a",
+    "experiments/MeridianPeak/src/PeakTelemetry.java": "fbd4ebf063fd80f37784f6bfce7abce35d95f46ed3f5b9662b5e444c4e93e7f3",
+    "tools/opponents/retcon.lock.json": "438b4d08ce1df2e323760529e03a5f66ba26fa5de2767e43416d89003b08104f",
+    "tools/opponents/strong-melee.lock.json": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3"
+  },
+  "controlCommit": "809b880cdcee98d7946d05e6bcd30f623f604348",
+  "controlJarSHA256": "5875565a13b5759940ccb080c0c7f237caec0bae525a68e68643a35890a1a8a9",
+  "gamesSHA256": "77e4c838825aa13f0ea225b9437812d123a4f817fd77d86fe34015566217ff0f",
+  "packageSHA256": "52b7bfcf10f8226711798f27784be64583ea4c8fc676452d27f6e16b906bf191",
+  "protocolSHA256": "3ade468909c287210fa01da17983f78a1a707862b8fe05bcfecca093dc02c6da",
+  "schemaVersion": 1,
+  "tooling": {
+    ".github/workflows/meridian-peak-v1.yml": "0bebaeabf1da4e7c4b5c1cef0a689d288e916aafcbe17ef6379d1fd8f9cb2799",
+    "benchmarks/meridian-aim/profile-20261026.json": "b51e3d6adc8fc5ebb4328e605beabca9f3add3cf88130279081270097988da5f",
+    "benchmarks/meridian-aim/profile.json": "29003b3cdb45cb3f0d546bc400582301f0ac1bd5ef2da754ebf9babc4d5cbfab",
+    "benchmarks/meridian-gun-plan/package-contents.json": "52b7bfcf10f8226711798f27784be64583ea4c8fc676452d27f6e16b906bf191",
+    "benchmarks/meridian-peak-v1/MeridianPeakBattle.java": "b2a43b396ea6445d787de54122a7f329d94109c276fcff205a946ef889121062",
+    "benchmarks/meridian-peak-v1/games.json": "77e4c838825aa13f0ea225b9437812d123a4f817fd77d86fe34015566217ff0f",
+    "build.gradle": "54af9982f8fe6cf23a2b180be0baa5bebb7fdcc0576b71e980b7d62b1bdde481",
+    "experiments/Meridian/build.gradle": "657f58da312c3acdf994c13b60c14a64692cf2df8c5cf40fdfe76cf699c870a8",
+    "experiments/Meridian/settings.gradle": "7efd0fb8f490df1057eb5317e521f2e39b059c86927ff0f7648a205c3dd8de48",
+    "experiments/Meridian/test/CrossingGunTest.java": "2f437d738bc6bcd1bb8757b2eb5e30098b5ca42cfb5d0a73c0d5d0d73a86eefe",
+    "experiments/Meridian/test/FlightTest.java": "6f14bf6baabfcbbb805110a9760ec54c9a1da46a05576039161e16c1abb6fa1f",
+    "experiments/Meridian/test/GunHarness.java": "c1915d9116f7e54fa1f226badea323d7b28ca638c805a7e8d12ed4a723deff3b",
+    "experiments/Meridian/test/GunPlanTest.java": "cbae60c0e308ede0a46f0efd2ef30ff6d82240caadf6cb277de02a1f456729d8",
+    "experiments/Meridian/test/HitAnglesTest.java": "63a98974f5cafe412290c7be80cfa962c3f16624e0a159a35b55e4d867c06916",
+    "experiments/Meridian/test/RecordedGunLivenessTest.java": "5c3cc4f87c3c990d7b1822a6271df192402dc9a4ea88dfcceaf64f950ce3505c",
+    "experiments/Meridian/test/baseline/BaselineMeridian.java": "6643f603624c755a676f6bfd9184abea6cac5ba85e54dc2a69fb767ba4225b5f",
+    "experiments/MeridianPeak/build.gradle": "937487cb05517da91ee472f6ff560a275692fcea009ea143fa0afdbae57d4c71",
+    "experiments/MeridianPeak/settings.gradle": "a40353c3fb1ebd6ea7bcad40e3ffcf1fa348f0d42e5968b82a713100ed85341c",
+    "experiments/MeridianPeak/test/CrossingGunTest.java": "2f437d738bc6bcd1bb8757b2eb5e30098b5ca42cfb5d0a73c0d5d0d73a86eefe",
+    "experiments/MeridianPeak/test/FlightTest.java": "6f14bf6baabfcbbb805110a9760ec54c9a1da46a05576039161e16c1abb6fa1f",
+    "experiments/MeridianPeak/test/HitAnglesTest.java": "63a98974f5cafe412290c7be80cfa962c3f16624e0a159a35b55e4d867c06916",
+    "experiments/MeridianPeak/test/PeakCallbackTest.java": "0bf2e883eb826cb08ef64c65734ecf4d805097e211513d64092bc4b175c0f323",
+    "experiments/MeridianPeak/test/PeakLabelTest.java": "2e3cb5eae60e6e61d5306f52bff38d546afe0e58c33261206f1b2dacc18acfc9",
+    "experiments/MeridianPeak/test/PeakLifecycleTest.java": "1b3bfad6215aa486818640316d16d006c3036dd2a37420e423c2711112ab431b",
+    "experiments/MeridianPeak/test/PeakMotionTest.java": "df7e4a388d3814a24756ffef42dda1f2b075d434c88022e3fd9d1e01610ed072",
+    "experiments/MeridianPeak/test/PeakRiskTest.java": "147f3f8c8f27ac53a61c6dc7594641e2ca54b676f9e87c1ee644546c4378b64c",
+    "experiments/MeridianPeak/test/PeakTelemetryTest.java": "0df98c48c80fbb6e59d7cf8c1a39f784d06b4bbe22679a539cf290542d1a21bf",
+    "gradle/wrapper/gradle-wrapper.jar": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172",
+    "gradle/wrapper/gradle-wrapper.properties": "e7b4d7f2edf511cac799802e08d0ac9ea3fd8f309fad984bdec6b40c2a796e94",
+    "gradlew": "b187b4c52e749f5760afdd6fadc31b2a98ad35fb249bf0dff03b72650f320409",
+    "settings.gradle": "0a514c0788d5c0df02cf0324639e25d508ddc65effa42d7ad1368ebbb6ab66b3",
+    "src/main/java/AISurvivor.java": "dedaf12349812a8ba17ff1e6577b293afc78dae353ff7076a7dce37298d2e335",
+    "src/main/java/AimCorridor.java": "11dafadec2a46ec26681790cface81768f1c72ec15a6ff0065149d3ec89e73ec",
+    "src/main/java/BotConfig.java": "bc9b65479cbe40aa8fb3a384a74b580910a65e8c4cf53f5e1a55cb177d9662b7",
+    "src/main/java/BotPort.java": "2454c89144cee4e62c51f7f0d048318c3fa8cc9010916faa1127a1982fd02dbd",
+    "src/main/java/CombatMath.java": "e7b9fc83ca9905b366c8565705cc640e8f58b36bf2ad84a13ff0f1d82af41d38",
+    "src/main/java/DQNAgent.java": "327ff74ea03b57e1f199b6d38a95059ad0be1cddb3428670c7c240de9c2c9b32",
+    "src/main/java/DuelGun.java": "9237f47247276915533a80d60418fa78455b96fa2d64f58d6a0424b7b491f2d6",
+    "src/main/java/DuelRadar.java": "f1cb79c4182fda2df2509b17fe0e49f4d51a6b15b209c32839f89f16e8a34257",
+    "src/main/java/DuelSurf.java": "2ce7a17c5f7d0f467ecbe44be7bddc7735f19c9e176faf2aa6de0d5f12c1938f",
+    "src/main/java/EnemyFireTracker.java": "7417cb930c8dda9b15c504cbe416c022163f95ca0631f1d44ac16644f8291803",
+    "src/main/java/EnemyWave.java": "83fc9763ce025dc1a4c7ed8d7ee2b98508e6da4ac84fad5f5dab9b7dad5f226a",
+    "src/main/java/GameTrace.java": "96b4ffd719f0ab2fa33c010e534dec366895f3d48004157fe636f3ee92536794",
+    "src/main/java/LegalScanRecorder.java": "0c25d3f837976161e2688c28796404ebeb0cc680f3e9ef75e25e147dfe518997",
+    "src/main/java/MLP.java": "237f402d696460197a740252ea145f578f4fb5801869407a1cbc8708159dde47",
+    "src/main/java/ModelStore.java": "d8761f15d9e474eaeef238447d33fc67f14f90e68ca792043148c69f56f201c2",
+    "src/main/java/RoundLifecycle.java": "e3906bf3306365ce4c346fbf1c6c1b0b9c137ba053dc724837a93e2145b3bd83",
+    "src/main/java/RoundMetrics.java": "337a1da79e569e97dfe7ca6355a066ddfd0bd62666e8116cb18b5f342e03ca07",
+    "src/main/java/SurvivorBrain.java": "a605762ceda9a1bf37fdb24a1e556ef23a9e33e1cd7b410f51699674d2fae9b0",
+    "src/main/java/TargetingGeometry.java": "bd24b3cd51d80bd1674171bc106b5e1e7128294e4a9db4ef4139c3ad6beadb16",
+    "src/main/java/TraceReplay.java": "1a0e84963cb4d457d9f657412b2d19205949cc36e769803f10184e5749c5e4e8",
+    "src/main/java/Warmup.java": "361767b6fac17024fd230217b49e76896489c64620f1e9b7ab2540b69df07c40",
+    "src/test/java/AimCorridorTest.java": "2bab55fbe197dd18f4830b7ebee2084dbed21e3697abf540ab5ce1656f8899da",
+    "src/test/java/CombatMathTest.java": "b89d56b6d401c2290977d30ffcd00a8521cbba4485c0f0e612952026b4e08856",
+    "src/test/java/DefaultDuelPolicyTest.java": "4b2ef56e6dd55cca5fb9adc255e3b99c4261411d38897edf907d6af7d9a978c6",
+    "src/test/java/DuelCompositionTest.java": "5adf14932aa5f312ee27de3eb0cf7116c546eb4ac67c097bc47c479e7ec2c8d7",
+    "src/test/java/DuelGunTest.java": "232d4dba03ce6a98fad8ea481d1d34c8dd2ea6957e24c368921726739cc10e37",
+    "src/test/java/DuelSurfTest.java": "d16e5ba9bbf8fe2da7119eed76ae39197cf13ae45b21204e38250b016f98cbd7",
+    "src/test/java/EnemyFireTrackerTest.java": "c4fde29848d374c0a9698e6d797b3bc9da6768a483b3aecc049efb473f733826",
+    "src/test/java/EnemyWaveTest.java": "8b1fa34888ca02d9cfe3367f6e10cb6a2ad9165c549d52844e621ad37e9d5dc0",
+    "src/test/java/LearningTest.java": "222d6287f1b69683a6822388ca0a3a747bd3fee8b067642888334404c43e9457",
+    "src/test/java/LegalScanRecorderTest.java": "138707df516006925d2374f634204234a29c0da1b8ee8cb2d772084cdf079147",
+    "src/test/java/MasterAISurvivor.java": "60e5f215ced27884351f39b6255e446c7c98d3155a9ccefa09c6fa82151b5030",
+    "src/test/java/MasterParityTest.java": "1e53799a25a34025814b37da79c35487b543ac7047136f5de46f312ca2009dd8",
+    "src/test/java/RoundLifecycleTest.java": "b565084256b8ee9047bd609e9f874d3fc7326df5f36d7fbd0313ce256b40b987",
+    "src/test/java/TargetingCharacterizationTest.java": "3afa20e18013405406398f11fbb2937d23f4f9925af812e15434487108986523",
+    "src/test/java/TargetingGeometryTest.java": "28d7313ac3ce2de9a44cf9ae89498eab32c4b51331b94c174d93c86f847c4aff",
+    "src/test/java/TraceReplayTest.java": "cd85b8d105288883951532c5b1543ce9ac32263f73d5119e6174b447bfc76a93",
+    "src/test/java/WarmupTest.java": "063f18d1d131068a9db3f72b0bb1899177593a3aaa28433c0678bc5593eaf939",
+    "tools/benchmark.py": "f31a7f85d06d99ca5f19e6a2eddb6264059443d1856816a4860fe3691aa2a576",
+    "tools/compare.py": "bc6e2088ea2b0809d8975243ede1595c51995ce1d9c4ba19229c125ab1480719",
+    "tools/meridian_duels.py": "994432a0d9a95dc6120d896f9f2d87320dc2820904ba06458e07ba30902dec02",
+    "tools/meridian_gun_plan.py": "f37824e9ac9fea9c5db67068182ac0584dfcaec58451d833abaac0face20aa41",
+    "tools/meridian_gun_plan_fixture.py": "1e6cd418a479251e0bd86bb6da1f2975be95830875fd4b7a864178adfa2773c4",
+    "tools/meridian_peak.py": "81a642a188137d5060c0c2bfee2f6036a61084079442599feec44c12d0909baf",
+    "tools/meridian_peak_activate.py": "ca0271da65c6df71807b2609edc22b819c460305c063c64c746a302e00896ccf",
+    "tools/meridian_peak_common.py": "50dbe3d7c0bfdd5b3630770c8389b1336b72e1979d83c67615add48e532bb1e9",
+    "tools/meridian_peak_prepare.py": "534636287d484f550017f1682a6d5129314103d98df2f671815cb7978e114436",
+    "tools/meridian_peak_profile.py": "bb6786db0cc78dafa9500ddeb8cfecd84702e8d07dc4fcde0559571f90c305d2",
+    "tools/meridian_peak_state.py": "d1b7a301f278a10520f0498ac6b17863bfa6558dff8bfba659db02f68b2a8a77",
+    "tools/meridian_profile.py": "73db988a2fd2d6953bb381029325764a51b0516b23068725cae48f46ecd8be2a",
+    "tools/retcon.py": "4171e5a7e82ce58cc3b66835c9981ce143c9dadd59d7a9fdb34abe98df7c2c52",
+    "tools/retcon_stats.py": "822a43e0e8d8f28667051c6d4407da2bf224df4d3f9a67e4230c44988abb55db",
+    "tools/strong_melee_opponents.py": "a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524",
+    "tools/test_meridian_peak.py": "b99a55d32f72e310019a80727f65018a18a150eb908cca6763368732ab9cf16c",
+    "tools/verify_jar.py": "a4665744388c00fe69fbeedbb450b0fc4e73c6f4d1711b2309badb1afb864870"
+  },
+  "walls": {
+    "archive": "sample-bots-Java-1.4.0.zip",
+    "archiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+    "botRoot": "Walls",
+    "descriptor": "Walls/Walls.json",
+    "files": {
+      "Walls/Walls.java": "7a56d4ff8489f460c38c57748d0beffc844496a66c4fff419c2d09f083f86ef0",
+      "Walls/Walls.json": "553ac58cf7be86a2f3078baecc08c5f7a390cf4f52a132dca9c88fbf77275336",
+      "lib/robocode-tankroyale-bot-api-1.4.0.jar": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752"
+    },
+    "name": "Walls",
+    "sharedRoot": "lib",
+    "version": "1.0"
+  }
+}
