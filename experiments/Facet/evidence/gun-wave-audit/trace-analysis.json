@@ -1,0 +1,1191 @@
+{
+  "schema": 1,
+  "purpose": "offline gun/wave audit; no battles/training/parameter edits",
+  "sourceSHA256": "dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d",
+  "jarSHA256": "817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792",
+  "configSHA256": "9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25",
+  "inputBudget": "five own100000-line capped traces and100ownmetricrows; no models or opponent logs",
+  "totals": {
+    "coolFundedDecisions": 21574,
+    "coolFundedWithPriorPlan": 21574,
+    "coolPriorPlanFundedAlignedWithinMaxTolerance": 21477,
+    "coolPriorPlanFundedAlignedButNoSubmission": 20680,
+    "submittedFireCommands": 797,
+    "confirmedPrefixShots": 797,
+    "nativeFiredRecordPass": 797,
+    "independentlyReconciledConfirmations": 797,
+    "headingPass": 797,
+    "originPass": 797,
+    "requestNextTickPass": 797,
+    "creationSameTickPass": 797,
+    "firstMotionSameTickPass": 797,
+    "pendingPass": 797,
+    "submittedPass": 797,
+    "firstObservedMotionSameTick": 796,
+    "traceRows": 500000,
+    "submittedDecisions": 33615,
+    "prefixHitCallbacks": 53,
+    "firstObservedMotionMissing": 1
+  },
+  "confirmedByGunInCoveredPrefix": {
+    "analytic": 223,
+    "recent": 330,
+    "long": 244
+  },
+  "ratingChecks": {
+    "completeCommonRatingRoundSnapshots": 35
+  },
+  "games": [
+    {
+      "game": 1,
+      "traceSHA256": "f2652b0bbd682bba940a8af392970966d01ebb239d93b0714e5e61acfab1fb24",
+      "traceRows": 100000,
+      "lastObservedIdentity": {
+        "round": 6,
+        "turn": 363
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6113,
+        "own.state": 6117,
+        "population.transition": 6,
+        "command.prepared": 6112,
+        "command.submitted": 6112,
+        "ScannedBotEvent": 6063,
+        "scan.observed": 6063,
+        "fire.prepared": 5924,
+        "shadow.zero": 52252,
+        "HitByBulletEvent": 93,
+        "fire.submitted": 122,
+        "BulletFiredEvent": 122,
+        "fire.confirmed": 122,
+        "bullet.motion": 4635,
+        "BulletHitWallEvent": 103,
+        "BulletHitBulletEvent": 5,
+        "BulletHitBotEvent": 9,
+        "DeathEvent": 5,
+        "gun.rating": 15,
+        "model.roundHash": 5
+      },
+      "checks": {
+        "coolFundedDecisions": 4338,
+        "coolFundedWithPriorPlan": 4338,
+        "coolPriorPlanFundedAlignedWithinMaxTolerance": 4333,
+        "coolPriorPlanFundedAlignedButNoSubmission": 4211,
+        "submittedFireCommands": 122,
+        "confirmedPrefixShots": 122,
+        "nativeFiredRecordPass": 122,
+        "independentlyReconciledConfirmations": 122,
+        "headingPass": 122,
+        "originPass": 122,
+        "requestNextTickPass": 122,
+        "creationSameTickPass": 122,
+        "firstMotionSameTickPass": 122,
+        "pendingPass": 122,
+        "submittedPass": 122,
+        "firstObservedMotionSameTick": 122,
+        "traceRows": 100000,
+        "submittedDecisions": 6112,
+        "prefixHitCallbacks": 9
+      },
+      "gunConfirmations": {
+        "analytic": 49,
+        "recent": 30,
+        "long": 43
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 39,
+          "BulletHitBulletEvent": 2,
+          "BulletHitBotEvent": 3,
+          "not-observed-before-cap": 5
+        },
+        "recent": {
+          "BulletHitBotEvent": 4,
+          "BulletHitWallEvent": 25,
+          "BulletHitBulletEvent": 1
+        },
+        "long": {
+          "BulletHitWallEvent": 39,
+          "BulletHitBulletEvent": 2,
+          "BulletHitBotEvent": 2
+        }
+      },
+      "commonRatingRoundSnapshots": {
+        "1": {
+          "analytic": {
+            "cohort": 29,
+            "raw": 0.1627179470793276,
+            "adjusted": 1.3897583580210826
+          },
+          "long": {
+            "cohort": 29,
+            "raw": 0.10552789247367425,
+            "adjusted": 0.969576724856262
+          },
+          "recent": {
+            "cohort": 29,
+            "raw": 0.08047432396939036,
+            "adjusted": 0.7625795338232758
+          }
+        },
+        "2": {
+          "analytic": {
+            "cohort": 54,
+            "raw": 0.07193171135197306,
+            "adjusted": 0.6532297469436801
+          },
+          "long": {
+            "cohort": 54,
+            "raw": 0.2120844836214616,
+            "adjusted": 1.9791598489979798
+          },
+          "recent": {
+            "cohort": 54,
+            "raw": 0.1378920861219548,
+            "adjusted": 1.3096529456403236
+          }
+        },
+        "3": {
+          "analytic": {
+            "cohort": 107,
+            "raw": 0.21583423541841307,
+            "adjusted": 1.9672587830886727
+          },
+          "long": {
+            "cohort": 107,
+            "raw": 0.18760636229313807,
+            "adjusted": 1.7064458313142359
+          },
+          "recent": {
+            "cohort": 107,
+            "raw": 0.15598957996192991,
+            "adjusted": 1.4200211262592601
+          }
+        },
+        "4": {
+          "analytic": {
+            "cohort": 107,
+            "raw": 0.21583423541841307,
+            "adjusted": 1.9672587830886727
+          },
+          "long": {
+            "cohort": 107,
+            "raw": 0.18760636229313807,
+            "adjusted": 1.7064458313142359
+          },
+          "recent": {
+            "cohort": 107,
+            "raw": 0.15598957996192991,
+            "adjusted": 1.4200211262592601
+          }
+        },
+        "5": {
+          "analytic": {
+            "cohort": 118,
+            "raw": 0.12688027762921816,
+            "adjusted": 1.1514378722136414
+          },
+          "long": {
+            "cohort": 118,
+            "raw": 0.13303455609125417,
+            "adjusted": 1.2336316732749302
+          },
+          "recent": {
+            "cohort": 118,
+            "raw": 0.13604435849033372,
+            "adjusted": 1.2806475856749568
+          }
+        }
+      },
+      "mechanicallyAlignedHoldExamples": [
+        {
+          "line": 204,
+          "round": 1,
+          "turn": 30,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 212,
+          "round": 1,
+          "turn": 31,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 220,
+          "round": 1,
+          "turn": 32,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        }
+      ],
+      "fullGameConfirmed": 223,
+      "fullGameHitCallbacks": 13
+    },
+    {
+      "game": 2,
+      "traceSHA256": "5ed78a2bbd62310ccf669786bd4040a256d44b0d77f4dd0d54eb0096b2838856",
+      "traceRows": 100000,
+      "lastObservedIdentity": {
+        "round": 11,
+        "turn": 158
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 7764,
+        "own.state": 7774,
+        "population.transition": 12,
+        "command.prepared": 7763,
+        "command.submitted": 7763,
+        "ScannedBotEvent": 7706,
+        "scan.observed": 7706,
+        "fire.prepared": 7373,
+        "fire.submitted": 279,
+        "BulletFiredEvent": 279,
+        "fire.confirmed": 279,
+        "bullet.motion": 10243,
+        "shadow.zero": 34624,
+        "BulletHitWallEvent": 247,
+        "BulletHitBulletEvent": 5,
+        "HitByBulletEvent": 112,
+        "DeathEvent": 9,
+        "gun.rating": 30,
+        "model.roundHash": 10,
+        "BulletHitBotEvent": 18,
+        "BotDeathEvent": 1,
+        "WonRoundEvent": 1
+      },
+      "checks": {
+        "coolFundedDecisions": 3710,
+        "coolFundedWithPriorPlan": 3710,
+        "coolPriorPlanFundedAlignedWithinMaxTolerance": 3670,
+        "submittedFireCommands": 279,
+        "confirmedPrefixShots": 279,
+        "nativeFiredRecordPass": 279,
+        "independentlyReconciledConfirmations": 279,
+        "headingPass": 279,
+        "originPass": 279,
+        "requestNextTickPass": 279,
+        "creationSameTickPass": 279,
+        "firstMotionSameTickPass": 279,
+        "pendingPass": 279,
+        "submittedPass": 279,
+        "coolPriorPlanFundedAlignedButNoSubmission": 3391,
+        "firstObservedMotionSameTick": 278,
+        "firstObservedMotionMissing": 1,
+        "traceRows": 100000,
+        "submittedDecisions": 7763,
+        "prefixHitCallbacks": 18
+      },
+      "gunConfirmations": {
+        "analytic": 56,
+        "long": 102,
+        "recent": 121
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 47,
+          "not-observed-before-cap": 3,
+          "BulletHitBotEvent": 6
+        },
+        "long": {
+          "BulletHitWallEvent": 92,
+          "BulletHitBotEvent": 3,
+          "BulletHitBulletEvent": 3,
+          "not-observed-before-cap": 4
+        },
+        "recent": {
+          "BulletHitWallEvent": 108,
+          "BulletHitBotEvent": 9,
+          "BulletHitBulletEvent": 1,
+          "not-observed-before-cap": 3
+        }
+      },
+      "commonRatingRoundSnapshots": {
+        "1": {
+          "analytic": {
+            "cohort": 4,
+            "raw": 0.00013282925929762005,
+            "adjusted": 0.0010430927445919441
+          },
+          "long": {
+            "cohort": 4,
+            "raw": 0.08415243792901378,
+            "adjusted": 0.680094472984578
+          },
+          "recent": {
+            "cohort": 4,
+            "raw": 0.08415243792901378,
+            "adjusted": 0.680094472984578
+          }
+        },
+        "2": {
+          "analytic": {
+            "cohort": 31,
+            "raw": 0.2042270040328104,
+            "adjusted": 1.8044346751578224
+          },
+          "long": {
+            "cohort": 31,
+            "raw": 0.11980350999573863,
+            "adjusted": 1.1574463238905055
+          },
+          "recent": {
+            "cohort": 31,
+            "raw": 0.10102508622590221,
+            "adjusted": 0.9697830873213346
+          }
+        },
+        "3": {
+          "analytic": {
+            "cohort": 64,
+            "raw": 0.09831800659988428,
+            "adjusted": 0.9162207475733823
+          },
+          "long": {
+            "cohort": 64,
+            "raw": 0.11495702764316658,
+            "adjusted": 1.1018741002805867
+          },
+          "recent": {
+            "cohort": 64,
+            "raw": 0.12467886059342895,
+            "adjusted": 1.130507369712075
+          }
+        },
+        "4": {
+          "analytic": {
+            "cohort": 64,
+            "raw": 0.09831800659988428,
+            "adjusted": 0.9162207475733823
+          },
+          "long": {
+            "cohort": 64,
+            "raw": 0.11495702764316658,
+            "adjusted": 1.1018741002805867
+          },
+          "recent": {
+            "cohort": 64,
+            "raw": 0.12467886059342895,
+            "adjusted": 1.130507369712075
+          }
+        },
+        "5": {
+          "analytic": {
+            "cohort": 135,
+            "raw": 0.15234443125383615,
+            "adjusted": 1.2943648305539739
+          },
+          "long": {
+            "cohort": 135,
+            "raw": 0.20080600563992912,
+            "adjusted": 1.8425810993639196
+          },
+          "recent": {
+            "cohort": 135,
+            "raw": 0.1487440626966749,
+            "adjusted": 1.3391619807949398
+          }
+        },
+        "6": {
+          "analytic": {
+            "cohort": 157,
+            "raw": 0.12152245921149693,
+            "adjusted": 1.0575329048704862
+          },
+          "long": {
+            "cohort": 157,
+            "raw": 0.13553876594226602,
+            "adjusted": 1.3018496317263735
+          },
+          "recent": {
+            "cohort": 157,
+            "raw": 0.16326874727027457,
+            "adjusted": 1.5832706859069958
+          }
+        },
+        "7": {
+          "analytic": {
+            "cohort": 230,
+            "raw": 0.1241202043651991,
+            "adjusted": 0.7811426310752764
+          },
+          "long": {
+            "cohort": 230,
+            "raw": 0.06926645278625483,
+            "adjusted": 0.45980452270952227
+          },
+          "recent": {
+            "cohort": 230,
+            "raw": 0.255685415293581,
+            "adjusted": 1.5982619795022657
+          }
+        },
+        "8": {
+          "analytic": {
+            "cohort": 231,
+            "raw": 0.11791561434002823,
+            "adjusted": 0.7420992845110763
+          },
+          "long": {
+            "cohort": 231,
+            "raw": 0.06581343340200103,
+            "adjusted": 0.43691430428747036
+          },
+          "recent": {
+            "cohort": 231,
+            "raw": 0.24344785369833133,
+            "adjusted": 1.5236554689431332
+          }
+        },
+        "9": {
+          "analytic": {
+            "cohort": 254,
+            "raw": 0.14367095446537115,
+            "adjusted": 1.1231325151520672
+          },
+          "long": {
+            "cohort": 254,
+            "raw": 0.021262012944626475,
+            "adjusted": 0.14462653602021136
+          },
+          "recent": {
+            "cohort": 254,
+            "raw": 0.1212552668804854,
+            "adjusted": 0.9034380250067972
+          }
+        },
+        "10": {
+          "analytic": {
+            "cohort": 263,
+            "raw": 0.19259964128065976,
+            "adjusted": 1.676028728621848
+          },
+          "long": {
+            "cohort": 263,
+            "raw": 0.01343501942646515,
+            "adjusted": 0.09142082522967528
+          },
+          "recent": {
+            "cohort": 263,
+            "raw": 0.12514571513362457,
+            "adjusted": 1.0046291094887376
+          }
+        }
+      },
+      "mechanicallyAlignedHoldExamples": [
+        {
+          "line": 714,
+          "round": 1,
+          "turn": 76,
+          "gun": "analytic",
+          "angleErrorDegrees": 5.088887490341627e-14,
+          "energy": 94.0,
+          "power": 2.0
+        },
+        {
+          "line": 727,
+          "round": 1,
+          "turn": 77,
+          "gun": "analytic",
+          "angleErrorDegrees": 5.088887490341627e-14,
+          "energy": 94.0,
+          "power": 2.0
+        },
+        {
+          "line": 740,
+          "round": 1,
+          "turn": 78,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 94.0,
+          "power": 2.0
+        }
+      ],
+      "fullGameConfirmed": 408,
+      "fullGameHitCallbacks": 24
+    },
+    {
+      "game": 3,
+      "traceSHA256": "fea756f8490ed99084d124e63a6f4e3c881d6994baef14e7c0683dafe227e0d5",
+      "traceRows": 100000,
+      "lastObservedIdentity": {
+        "round": 6,
+        "turn": 1846
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 5969,
+        "own.state": 5974,
+        "population.transition": 6,
+        "command.prepared": 5968,
+        "command.submitted": 5968,
+        "ScannedBotEvent": 5903,
+        "scan.observed": 5903,
+        "fire.prepared": 5805,
+        "fire.submitted": 56,
+        "BulletFiredEvent": 56,
+        "fire.confirmed": 56,
+        "bullet.motion": 1979,
+        "BulletHitBulletEvent": 2,
+        "shadow.zero": 56194,
+        "HitByBulletEvent": 80,
+        "DeathEvent": 5,
+        "gun.rating": 15,
+        "model.roundHash": 5,
+        "BulletHitWallEvent": 51,
+        "BulletHitBotEvent": 3
+      },
+      "checks": {
+        "coolFundedDecisions": 4973,
+        "coolFundedWithPriorPlan": 4973,
+        "coolPriorPlanFundedAlignedWithinMaxTolerance": 4953,
+        "submittedFireCommands": 56,
+        "confirmedPrefixShots": 56,
+        "nativeFiredRecordPass": 56,
+        "independentlyReconciledConfirmations": 56,
+        "headingPass": 56,
+        "originPass": 56,
+        "requestNextTickPass": 56,
+        "creationSameTickPass": 56,
+        "firstMotionSameTickPass": 56,
+        "pendingPass": 56,
+        "submittedPass": 56,
+        "coolPriorPlanFundedAlignedButNoSubmission": 4897,
+        "firstObservedMotionSameTick": 56,
+        "traceRows": 100000,
+        "submittedDecisions": 5968,
+        "prefixHitCallbacks": 3
+      },
+      "gunConfirmations": {
+        "analytic": 27,
+        "long": 2,
+        "recent": 27
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitBulletEvent": 2,
+          "BulletHitWallEvent": 24,
+          "BulletHitBotEvent": 1
+        },
+        "long": {
+          "BulletHitWallEvent": 2
+        },
+        "recent": {
+          "BulletHitBotEvent": 2,
+          "BulletHitWallEvent": 25
+        }
+      },
+      "commonRatingRoundSnapshots": {
+        "1": {
+          "analytic": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "long": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "recent": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          }
+        },
+        "2": {
+          "analytic": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "long": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "recent": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          }
+        },
+        "3": {
+          "analytic": {
+            "cohort": 33,
+            "raw": 0.1791941458124634,
+            "adjusted": 1.6125056629753647
+          },
+          "long": {
+            "cohort": 33,
+            "raw": 0.1047300593204302,
+            "adjusted": 0.846697094313891
+          },
+          "recent": {
+            "cohort": 33,
+            "raw": 0.13803793692291894,
+            "adjusted": 1.0628528884487258
+          }
+        },
+        "4": {
+          "analytic": {
+            "cohort": 55,
+            "raw": 0.05978689211705029,
+            "adjusted": 0.5398154222681406
+          },
+          "long": {
+            "cohort": 55,
+            "raw": 0.16993794129735856,
+            "adjusted": 1.6234504028477907
+          },
+          "recent": {
+            "cohort": 55,
+            "raw": 0.20113864450874264,
+            "adjusted": 1.8980323138550557
+          }
+        },
+        "5": {
+          "analytic": {
+            "cohort": 55,
+            "raw": 0.05978689211705029,
+            "adjusted": 0.5398154222681406
+          },
+          "long": {
+            "cohort": 55,
+            "raw": 0.16993794129735856,
+            "adjusted": 1.6234504028477907
+          },
+          "recent": {
+            "cohort": 55,
+            "raw": 0.20113864450874264,
+            "adjusted": 1.8980323138550557
+          }
+        }
+      },
+      "mechanicallyAlignedHoldExamples": [
+        {
+          "line": 321,
+          "round": 1,
+          "turn": 45,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 98.0,
+          "power": 2.0
+        },
+        {
+          "line": 330,
+          "round": 1,
+          "turn": 46,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 98.0,
+          "power": 2.0
+        },
+        {
+          "line": 339,
+          "round": 1,
+          "turn": 47,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 98.0,
+          "power": 2.0
+        }
+      ],
+      "fullGameConfirmed": 262,
+      "fullGameHitCallbacks": 18
+    },
+    {
+      "game": 4,
+      "traceSHA256": "7d081cb6cd70e94fbb3c7d61e5db0d65ee6f2a1b89b8f83a36d536ca91afedfa",
+      "traceRows": 100000,
+      "lastObservedIdentity": {
+        "round": 7,
+        "turn": 762
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 6338,
+        "own.state": 6344,
+        "population.transition": 7,
+        "command.prepared": 6337,
+        "command.submitted": 6337,
+        "ScannedBotEvent": 6287,
+        "scan.observed": 6287,
+        "fire.prepared": 6105,
+        "shadow.zero": 49619,
+        "HitByBulletEvent": 87,
+        "DeathEvent": 6,
+        "gun.rating": 18,
+        "model.roundHash": 6,
+        "fire.submitted": 151,
+        "BulletFiredEvent": 151,
+        "fire.confirmed": 151,
+        "bullet.motion": 5622,
+        "BulletHitWallEvent": 136,
+        "BulletHitBotEvent": 7,
+        "BulletHitBulletEvent": 2
+      },
+      "checks": {
+        "coolFundedDecisions": 4129,
+        "coolFundedWithPriorPlan": 4129,
+        "coolPriorPlanFundedAlignedWithinMaxTolerance": 4107,
+        "coolPriorPlanFundedAlignedButNoSubmission": 3956,
+        "submittedFireCommands": 151,
+        "confirmedPrefixShots": 151,
+        "nativeFiredRecordPass": 151,
+        "independentlyReconciledConfirmations": 151,
+        "headingPass": 151,
+        "originPass": 151,
+        "requestNextTickPass": 151,
+        "creationSameTickPass": 151,
+        "firstMotionSameTickPass": 151,
+        "pendingPass": 151,
+        "submittedPass": 151,
+        "firstObservedMotionSameTick": 151,
+        "traceRows": 100000,
+        "submittedDecisions": 6337,
+        "prefixHitCallbacks": 7
+      },
+      "gunConfirmations": {
+        "analytic": 42,
+        "recent": 54,
+        "long": 55
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 38,
+          "BulletHitBotEvent": 1,
+          "not-observed-before-cap": 2,
+          "BulletHitBulletEvent": 1
+        },
+        "recent": {
+          "BulletHitWallEvent": 48,
+          "BulletHitBotEvent": 3,
+          "not-observed-before-cap": 3
+        },
+        "long": {
+          "not-observed-before-cap": 1,
+          "BulletHitWallEvent": 50,
+          "BulletHitBotEvent": 3,
+          "BulletHitBulletEvent": 1
+        }
+      },
+      "commonRatingRoundSnapshots": {
+        "1": {
+          "analytic": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "long": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          },
+          "recent": {
+            "cohort": 0,
+            "raw": 0.0,
+            "adjusted": 0.0
+          }
+        },
+        "2": {
+          "analytic": {
+            "cohort": 27,
+            "raw": 0.034678014467450204,
+            "adjusted": 0.346780144674502
+          },
+          "long": {
+            "cohort": 27,
+            "raw": 0.15351965613215782,
+            "adjusted": 1.5351965557990093
+          },
+          "recent": {
+            "cohort": 27,
+            "raw": 0.13951561569835233,
+            "adjusted": 1.3951561569835231
+          }
+        },
+        "3": {
+          "analytic": {
+            "cohort": 58,
+            "raw": 0.16365585559720056,
+            "adjusted": 1.2611175385777604
+          },
+          "long": {
+            "cohort": 58,
+            "raw": 0.07782247504945923,
+            "adjusted": 0.7456717280707152
+          },
+          "recent": {
+            "cohort": 58,
+            "raw": 0.047398749359658876,
+            "adjusted": 0.40816178853639934
+          }
+        },
+        "4": {
+          "analytic": {
+            "cohort": 86,
+            "raw": 0.10123628186774149,
+            "adjusted": 0.9054279238824448
+          },
+          "long": {
+            "cohort": 86,
+            "raw": 0.11488934628547805,
+            "adjusted": 1.01982731892817
+          },
+          "recent": {
+            "cohort": 86,
+            "raw": 0.09087702908001094,
+            "adjusted": 0.8278143734569409
+          }
+        },
+        "5": {
+          "analytic": {
+            "cohort": 133,
+            "raw": 0.09613535646774997,
+            "adjusted": 0.9233256141520815
+          },
+          "long": {
+            "cohort": 133,
+            "raw": 0.13965273137438095,
+            "adjusted": 1.3356397452481064
+          },
+          "recent": {
+            "cohort": 133,
+            "raw": 0.15108108735392942,
+            "adjusted": 1.3300120966913727
+          }
+        },
+        "6": {
+          "analytic": {
+            "cohort": 145,
+            "raw": 0.05240371753244511,
+            "adjusted": 0.5029717246053277
+          },
+          "long": {
+            "cohort": 145,
+            "raw": 0.08592983546287243,
+            "adjusted": 0.8207354540176505
+          },
+          "recent": {
+            "cohort": 145,
+            "raw": 0.14133296449844215,
+            "adjusted": 1.309245195457543
+          }
+        }
+      },
+      "mechanicallyAlignedHoldExamples": [
+        {
+          "line": 195,
+          "round": 1,
+          "turn": 30,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 203,
+          "round": 1,
+          "turn": 31,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 211,
+          "round": 1,
+          "turn": 32,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        }
+      ],
+      "fullGameConfirmed": 440,
+      "fullGameHitCallbacks": 23
+    },
+    {
+      "game": 5,
+      "traceSHA256": "dd4b6badbd151ca1ef2ff695a552d08c1479f396e66fd2830d529c477ffaf25b",
+      "traceRows": 100000,
+      "lastObservedIdentity": {
+        "round": 10,
+        "turn": 95
+      },
+      "recordKinds": {
+        "game.cold": 1,
+        "profile": 1,
+        "own.commandState": 7436,
+        "own.state": 7445,
+        "population.transition": 10,
+        "command.prepared": 7436,
+        "command.submitted": 7435,
+        "ScannedBotEvent": 7383,
+        "scan.observed": 7383,
+        "fire.prepared": 7042,
+        "shadow.zero": 40091,
+        "HitByBulletEvent": 146,
+        "fire.submitted": 189,
+        "BulletFiredEvent": 189,
+        "fire.confirmed": 189,
+        "bullet.motion": 7394,
+        "BulletHitBulletEvent": 5,
+        "BulletHitWallEvent": 164,
+        "BulletHitBotEvent": 16,
+        "DeathEvent": 9,
+        "gun.rating": 27,
+        "model.roundHash": 9
+      },
+      "checks": {
+        "coolFundedDecisions": 4424,
+        "coolFundedWithPriorPlan": 4424,
+        "coolPriorPlanFundedAlignedWithinMaxTolerance": 4414,
+        "coolPriorPlanFundedAlignedButNoSubmission": 4225,
+        "submittedFireCommands": 189,
+        "confirmedPrefixShots": 189,
+        "nativeFiredRecordPass": 189,
+        "independentlyReconciledConfirmations": 189,
+        "headingPass": 189,
+        "originPass": 189,
+        "requestNextTickPass": 189,
+        "creationSameTickPass": 189,
+        "firstMotionSameTickPass": 189,
+        "pendingPass": 189,
+        "submittedPass": 189,
+        "firstObservedMotionSameTick": 189,
+        "traceRows": 100000,
+        "submittedDecisions": 7435,
+        "prefixHitCallbacks": 16
+      },
+      "gunConfirmations": {
+        "analytic": 49,
+        "long": 42,
+        "recent": 98
+      },
+      "observedOutcomesByGun": {
+        "analytic": {
+          "BulletHitWallEvent": 37,
+          "BulletHitBulletEvent": 3,
+          "BulletHitBotEvent": 5,
+          "not-observed-before-cap": 4
+        },
+        "long": {
+          "BulletHitWallEvent": 40,
+          "BulletHitBotEvent": 2
+        },
+        "recent": {
+          "BulletHitWallEvent": 87,
+          "BulletHitBotEvent": 9,
+          "BulletHitBulletEvent": 2
+        }
+      },
+      "commonRatingRoundSnapshots": {
+        "1": {
+          "analytic": {
+            "cohort": 8,
+            "raw": 0.040316014734791086,
+            "adjusted": 0.40316013757676405
+          },
+          "long": {
+            "cohort": 8,
+            "raw": 0.060690221552194626,
+            "adjusted": 0.49495140593401193
+          },
+          "recent": {
+            "cohort": 8,
+            "raw": 0.031273340238308654,
+            "adjusted": 0.27031319168357926
+          }
+        },
+        "2": {
+          "analytic": {
+            "cohort": 25,
+            "raw": 0.025812799588476293,
+            "adjusted": 0.22695579083397388
+          },
+          "long": {
+            "cohort": 25,
+            "raw": 0.07395207524268788,
+            "adjusted": 0.6546263322098964
+          },
+          "recent": {
+            "cohort": 25,
+            "raw": 0.020509905314916484,
+            "adjusted": 0.18735766222286848
+          }
+        },
+        "3": {
+          "analytic": {
+            "cohort": 53,
+            "raw": 0.21437562667369753,
+            "adjusted": 1.6503544925801539
+          },
+          "long": {
+            "cohort": 53,
+            "raw": 0.1550696103932137,
+            "adjusted": 1.5191392846384062
+          },
+          "recent": {
+            "cohort": 53,
+            "raw": 0.20015018214718713,
+            "adjusted": 1.9664250289372431
+          }
+        },
+        "4": {
+          "analytic": {
+            "cohort": 106,
+            "raw": 0.12207316453732282,
+            "adjusted": 1.0815206417899692
+          },
+          "long": {
+            "cohort": 106,
+            "raw": 0.1146179299770161,
+            "adjusted": 1.0385464413780947
+          },
+          "recent": {
+            "cohort": 106,
+            "raw": 0.16817171072757983,
+            "adjusted": 1.5291582766551164
+          }
+        },
+        "5": {
+          "analytic": {
+            "cohort": 110,
+            "raw": 0.09942935556863776,
+            "adjusted": 0.8809053228677387
+          },
+          "long": {
+            "cohort": 110,
+            "raw": 0.09500989423100943,
+            "adjusted": 0.8597234285598707
+          },
+          "recent": {
+            "cohort": 110,
+            "raw": 0.13733683652676518,
+            "adjusted": 1.2485342460780033
+          }
+        },
+        "6": {
+          "analytic": {
+            "cohort": 110,
+            "raw": 0.09942935556863776,
+            "adjusted": 0.8809053228677387
+          },
+          "long": {
+            "cohort": 110,
+            "raw": 0.09500989423100943,
+            "adjusted": 0.8597234285598707
+          },
+          "recent": {
+            "cohort": 110,
+            "raw": 0.13733683652676518,
+            "adjusted": 1.2485342460780033
+          }
+        },
+        "7": {
+          "analytic": {
+            "cohort": 148,
+            "raw": 0.10452574278190327,
+            "adjusted": 0.8604015517412771
+          },
+          "long": {
+            "cohort": 148,
+            "raw": 0.07203030946044045,
+            "adjusted": 0.7052943120362365
+          },
+          "recent": {
+            "cohort": 148,
+            "raw": 0.06850831757116375,
+            "adjusted": 0.6656095432727002
+          }
+        },
+        "8": {
+          "analytic": {
+            "cohort": 160,
+            "raw": 0.11815567431120007,
+            "adjusted": 1.0322927901982784
+          },
+          "long": {
+            "cohort": 160,
+            "raw": 0.09922189189927837,
+            "adjusted": 0.978239213847221
+          },
+          "recent": {
+            "cohort": 160,
+            "raw": 0.11016979905793704,
+            "adjusted": 1.0232983419855706
+          }
+        },
+        "9": {
+          "analytic": {
+            "cohort": 186,
+            "raw": 0.07538870143080492,
+            "adjusted": 0.7145528830643085
+          },
+          "long": {
+            "cohort": 186,
+            "raw": 0.12041752485110849,
+            "adjusted": 1.2004913145873533
+          },
+          "recent": {
+            "cohort": 186,
+            "raw": 0.15911482220126433,
+            "adjusted": 1.5704883391276716
+          }
+        }
+      },
+      "mechanicallyAlignedHoldExamples": [
+        {
+          "line": 210,
+          "round": 1,
+          "turn": 30,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 218,
+          "round": 1,
+          "turn": 31,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        },
+        {
+          "line": 226,
+          "round": 1,
+          "turn": 32,
+          "gun": "analytic",
+          "angleErrorDegrees": 0.0,
+          "energy": 100.0,
+          "power": 2.0
+        }
+      ],
+      "fullGameConfirmed": 371,
+      "fullGameHitCallbacks": 26
+    }
+  ],
+  "limitations": [
+    "Unobserved post-cap outcomes are not misses. Prefix gun outcomes are selected/nonrandom and do not compare competitive gun strength.",
+    "Actual bullet power and immutable per-gun wave predictions/labels are not independently serialized in these traces. pending=true is bot validation evidence, not independent actual-power replay.",
+    "Cool/funded/aligned does not imply every plan gate passes; For this registered800x600 field the plan tolerance is capped at0.5degrees; drift/freshness/policy gates remain. No rejection reasons were logged.",
+    "No model read, fit, search, parameter or gameplay modification and no new engine game."
+  ]
+}

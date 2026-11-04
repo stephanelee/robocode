@@ -140,3 +140,5 @@ Final premeasurement approval is [recorded independently](../experiments/Facet/e
 ## Java17 CI portability follow-up
 
 The first repaired-candidate CI run41869600041 failed before gameplay because AdapterConcurrencyTest required the macOS TMPDIR environment variable. The single test-only change uses Files.createTempDirectory(prefix), which honors Java’s platform temporary-directory contract. With TMPDIR unset, Java17 Gradle clean build verifyJarParity passes20groups/10243assertions+54adapterassertions and840-entry parity. RunnableJAR remains817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792; current canonical source/input isdc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d. Previous12ed1e... remains the exact reviewed earlier input; gameplay and parameters are unchanged. No new battles. The declined proposed registration remains historical and disabled.
+
+Latestofflineaudit: [prepared-shot/cohort coherence gap](facet-gun-wave-audit-results.md) nowreproduced, despiteexistingsemanticfixturepasses. No gameplaychangeornewmeasurement; oldresults/source/JAR unchanged. Syntheticproofnotstrength/frequencyproof.

@@ -42,3 +42,7 @@ Finaluserdecision2026-11-04: **Stop with20Diamondrounds**; fresh100proposaldecli
 ## Completed repaired-runner Diamond screen
 
 The user renewed100rounds after the earlierstop; exact5cold20schedule and allgates stayedfixed. Same bot/source/JAR/profile, correctedofficialrunnercompletion lifetime only. Valid100round acquisition with5exports/100rows;1firstplace and5.7386344431%equal-gameshare fail40%strengthgate. Rejectprofile, no retuning/confirmation/promotion/merge. Incomingattribution/primarytracecaps remainexplicitlimits; completedexportsdo notprovethespecificpastfailurecause orstrategicimprovement. Priorinvalid140+20separate. [Fullreport/raw/review](../../docs/facet-diamond-repaired-100-results.md).
+
+## Offline gun/cohort coherence finding
+
+The current implementation recomputes a physical ratingcohort atrequest afterchoosingthepreparedangle earlier; its originalrationale wasnotrecorded. Offlineaudit nowreproduces5.1243degree prepared-vs-rated difference despitevalidpriorplan. This is acoherencegap under the prepared-shot interpretation ofspec8.2; freshcounterfactualratingswouldneedexplicitseparateattribution. No gameplaycode/profilechange inthisaudit. Proposedonecorrection:retainimmutablepreparedcohort/contextthroughconfirmation andvalidatemutuallycompatibleactualorigin/heading. Syntheticproofestablishespossibility,notfrequency/cause/strengthimprovement. [Fullaudit/reviews](../../docs/facet-gun-wave-audit-results.md).
