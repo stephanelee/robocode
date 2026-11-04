@@ -159,7 +159,7 @@ The confirmation gate review [cleared head `eaacb2b`](https://github.com/stephan
 
 Run [41819088130](https://github.com/stephanelee/robocode/actions/runs/41819088130) therefore checked out `843768f`, where `benchmarks/keel-v1/raw/decision-screen.json` does not exist. The gate step raised `FileNotFoundError` before `keel_experiment.py run confirmation` started. **No confirmation game or round was played**, so nothing is consumed or replaced. The run's evidence push also failed with a GitHub `Internal Server Error`. Two artifacts were uploaded (`keel-profile-41819088130` and `keel-games-run-keel-v1-confirm-41819088130`); both contain only the zero-game profile files.
 
-This is an infrastructure failure, not a result. Confirmation will run once, at a head that GitHub reports as the PR head, after a fresh independent stage check of this documentation-only change.
+This is an infrastructure failure, not a result. Confirmation will run once, at a head that GitHub reports as the PR head, after a fresh independent stage check of the subsequent changes.
 
 **Runtime drift found by the gate review.** Run 41819088130 used Python 3.13.18 and printed `Profile: 3ba1fcaa…`. The registered profile is `0fb2d496…`, recorded under Python 3.13.17. The harness refuses to play unless the two profiles are byte-equal, so a confirmation run would have stopped with zero games.
 
@@ -205,7 +205,7 @@ To keep the registered runtime rather than re-profile it, the workflow now pins 
 
 **What this does and does not show:**
 
-- **Scope.** This is a registered win against one pinned opponent build, Diamond Port 1.8.28. It ran on the Python 3.13.17 / Temurin 25.0.5 / ubuntu-26.04 runtime, in the default 800×600 arena, with cold games of 20 rounds. It is not a claim about the original Java Diamond, other arenas, other runtimes or other opponents.
+- **Scope.** This is a registered win against one pinned opponent build, Diamond Port 1.8.28. It ran on the Python 3.13.17 / Temurin 25.0.5 / ubuntu-26.04 runtime, in the default 800×600 arena with 100 ms turn timeouts, with cold games of 20 rounds. It is not a claim about the original Java Diamond, other arenas, other runtimes or other opponents.
 - **Mechanism: energy attrition and survival scoring.** Keel lost the bullet-damage exchange in every game (≈350 dealt vs ≈900 taken). It wins by firing mostly 0.1-power shots while Diamond spends its energy in rounds of about 3,700–4,350 turns, then collecting survival points.
 - **Unobserved factors.** Diamond's own skipped turns are not observable. The reviewer-noted ram correction limitation of the frozen bot remains.
 - **Development history.** The candidate was selected by exploratory local games, and the screen and confirmation are the unbiased tests. Confirmation attempt 1 played zero games. Only run 41831109687 played confirmation games.
