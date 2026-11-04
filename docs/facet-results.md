@@ -4,7 +4,7 @@
 
 The acquisition completed five20-round AISurvivor games and two20-round Retcon games. Retcon game2 has only19completion rows, missing round12, so the frozen completeness gate stopped acquisition. Its official20rounds and all outcomes are retained, including its favorable score; it is not silently excluded. The trace cap reached round9/turn626, so the exact missing-row cause is unidentified.
 
-AISurvivor game5 also recorded boundary:ConcurrentModificationException near round9terminal observation/model hashing; one unmatched confirmation was reported in AIS game1. Independent source review found Core decision mutations outside the monitor used by terminal observation/hash/snapshot and completion markers before successful output. These are concrete hazards warranting semantic repair; they do not prove the missing-row cause. A separate source-isolated adapter repair is being implemented without strategy/parameter changes or new matches.
+AISurvivor game5 also recorded boundary:ConcurrentModificationException near round9terminal observation/model hashing; one unmatched confirmation was reported in AIS game1. Independent source review found Core decision mutations outside the monitor used by terminal observation/hash/snapshot and completion markers before successful output. These are concrete hazards warranting semantic repair; they do not prove the missing-row cause. The source-isolated adapter repair is implemented and independently reviewed offline, without strategy/parameter changes or new matches. It has no battle result; see [repair and verification](facet-adapter-lifecycle-repair.md).
 
 ## Official outcomes
 
@@ -56,3 +56,7 @@ Latency comes from log2 buckets, not exact quantiles; range uses the latest lega
 ## Decision and remaining authority
 
 **Reject promotion; screen invalid/incomplete.** Positive observed shares do not waive the completeness/engineering gates. No automatic remaining160or new300round acquisition is authorized under the registered stop rule. A user exception/new registered decision is required; a semantic fix alone grants no measured budget. No confirmation or parameter search ran. Adaptive/sample transfer, competitive melee and declared actual skipped/rejected/multicontact contracts also remain unestablished. The repaired candidate must be hashed/built/reviewed independently and must not inherit this predecessor measurement claim.
+
+## Final user decision
+
+On2026-11-04 the user explicitly selected **“Stop with partial results”** in response to the proposed300 NEW-round budget (440total including retained140). Zero further games are authorized or scheduled. The disabled fresh-screen proposal remains historical planning evidence; both approval flags remain false. PR103 remains draft, unmerged and not promoted. The current repaired candidate is published at67f43dffd185019780444a659c7afd8590c65d50 with zero battle rounds.
