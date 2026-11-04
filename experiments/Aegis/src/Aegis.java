@@ -12,16 +12,13 @@ import java.util.*;
  * Only legal scans, own state and confirmed events are used; there is no persisted model or cross-round state.
  */
 public class Aegis extends Bot {
-    static final String NAME = "Aegis", VERSION = "0.2.0";
+    static final String NAME = "Aegis", VERSION = "0.1.0";
     static final int HORIZON = 26;
     static final double SPAN = 70, SHIELD_OFFSET = 30, MIN_SHIELD_POWER = 0.09, WALL_MARGIN = 22;
     static final int PREP = 4;
     static final double REPLAY = 10, OFFSET_WEIGHT = 0.5, SEED_AMPLITUDE = 50, SEED_WEIGHT = 1;
     static final int SEED_PERIOD = 22;
     static final int RELOAD = 12, SEARCH_LEAD = 10;
-    static final double CHAIN_RATIO = 0.6;
-    /** Replay lead (px) in our direction of motion at wave launch: keeps the shooter's recent labels from leaning negative. */
-    static final double LABEL_LEAD = 2.0;
     static final double DODGE_CLEARANCE = 26, DODGE_WEIGHT = 60; static final int GOOD_COVERAGE = 5;
     static final double FAST_SPEED = 8, FAST_WEIGHT = 40, LOCK = 1000;
     private int lastFireTurn = 16;
@@ -171,8 +168,6 @@ public class Aegis extends Bot {
                 continue;
             }
             double lx = ref[0] - src[0], ly = ref[1] - src[1], ll = Math.hypot(lx, ly), nx = -ly / ll, ny = lx / ll;
-            double orbit = lateralSign(tau, nx, ny);
-            ref = new double[]{ref[0] + LABEL_LEAD * orbit * nx, ref[1] + LABEL_LEAD * orbit * ny};
             for (int i = 0; i < ns; i++) {
                 double sp = planner.position(i), px = homeX + ax() * sp, py = homeY + ay() * sp;
                 double lat = (px - ref[0]) * nx + (py - ref[1]) * ny;
@@ -226,14 +221,6 @@ public class Aegis extends Bot {
     static final int PASS_STATES = 8;
     private double lastEnemyPower = 1.95;
 
-    /** Sign of our lateral velocity (along normal n) at a past turn, as the shooter's orbit direction sees it; 0 if still. */
-    private double lateralSign(double tau, double nx, double ny) {
-        double[] h = ownHistory.get((int) Math.floor(tau));
-        if (h == null || Math.abs(h[2]) < 1e-9) return 0;
-        double d = Math.toRadians(h[3]), lat = h[2] * (Math.cos(d) * nx + Math.sin(d) * ny);
-        return Math.abs(lat) < 1e-9 ? 0 : Math.signum(lat);
-    }
-
     /** Linear interpolation of our end-of-turn history at a fractional turn. */
     private double[] ownAt(double tau) { return interpolate(ownHistory, tau); }
     private double[] enemyAt(double tau) { return interpolate(enemyHistory, tau); }
@@ -277,7 +264,7 @@ public class Aegis extends Bot {
         }
         pendingShot = null;
         Shot target = null;
-        for (Shot s : shots) if (!s.resolved && !s.shielded && s.power >= MIN_SHIELD_POWER && s.contactTurn() >= t + 2
+        for (Shot s : shots) if (!s.resolved && !s.shielded && s.power >= MIN_SHIELD_POWER && s.contactTurn() > t + 2
                 && (target == null || s.contactTurn() < target.contactTurn())) target = s;
         if (target == null || !axisReady) { if (enemyScanTurn >= 0) setGunTurnRate(clip20(Physics.normalize(Physics.bearing(getX(), getY(), ex, ey) - getGunDirection()))); return; }
         double heat = getGunHeat(); int cool = 0; while (heat > 1e-12) { heat = Math.max(0, heat - 0.1); cool++; }
@@ -298,7 +285,7 @@ public class Aegis extends Bot {
                 if (best == null || p.score() > best.score() + 1e-9) best = p;
                 if (f <= latestFree && p.covered() > 0 && (bestFree == null || p.score() > bestFree.score() + 1e-9)) bestFree = p;
             }
-            if (bestFree != null && bestFree.score() >= CHAIN_RATIO * best.score()) best = bestFree; // keep the next shot shieldable
+            if (bestFree != null && bestFree.score() >= 0.6 * best.score()) best = bestFree;
             if (best != null && best.covered() > 0) {
                 intentShot = target; intentFire = best.fireTurn();
                 for (int turn = t + 1; turn <= best.interceptTurn() + 1 && turn - t <= HORIZON; turn++) lockedS.put(turn, lastPlan.positions()[turn - t]);
@@ -326,10 +313,8 @@ public class Aegis extends Bot {
                 double h = Math.toRadians(aim[3]);
                 Shot shot = new Shot(t, power, ex, ey, aim[0] + Math.cos(h) * aim[2], aim[1] + Math.sin(h) * aim[2]);
                 shot.rx = ref[0]; shot.ry = ref[1];
-                double[] e0 = enemyHistory.get(t - 2), em = enemyHistory.get(t - 3);
-                if (e0 != null && em != null) { double cv = classicSpeed(em[4], e0[4]); shot.predictedSource(e0[0] + Math.cos(Math.toRadians(enemyHeading)) * cv, e0[1] + Math.sin(Math.toRadians(enemyHeading)) * cv); }
-                double hn = Math.toRadians(shot.heading);
-                shot.behind = -lateralSign(t - 2, -Math.sin(hn), Math.cos(hn));
+                double[] e0 = enemyHistory.get(t - 2);
+                if (e0 != null) { double cv = classicSpeed(e0[4], enemySpeed); shot.predictedSource(e0[0] + Math.cos(Math.toRadians(enemyHeading)) * cv, e0[1] + Math.sin(Math.toRadians(enemyHeading)) * cv); }
                 shots.add(shot); detected++; lastEnemyPower = power; lastFireTurn = t;
                 emit("fire", t, "power", power, "ox", ex, "oy", ey, "tx", shot.tx, "ty", shot.ty, "psx", shot.psx, "psy", shot.psy);
             }
@@ -350,22 +335,15 @@ public class Aegis extends Bot {
     }
 
     /**
-     * Speed the shooter's classic-order self-predictor expects one turn after the scan two turns before creation.
-     * It continues the shooter's last observed speed change under classic Robocode rules (accelerate 1,
-     * decelerate 2, classic zero crossing), not knowing the pinned engine's instant stop/reversal outcomes.
-     * Inputs are the legal scan speeds at N-3 and N-2.
+     * Speed the shooter's classic-order predictor expected after one turn, inferred from observed speeds:
+     * the pinned engine stops or reverses faster than classic Robocode (which decelerates by 2).
      */
-    static double classicSpeed(double previous, double current) {
-        double delta = current - previous;
-        if (Math.abs(delta) < 1e-9) return current;
-        if (current != 0 && previous != 0 && Math.signum(current) != Math.signum(previous)) return clampSpeed(current + Math.signum(current));
-        if (Math.abs(current) > Math.abs(previous)) return clampSpeed(current + Math.signum(current));
-        if (current == 0) return Math.abs(previous) <= 2 ? -Math.signum(previous) : 0;
-        if (Math.abs(current) > 2) return current - 2 * Math.signum(current);
-        return -(1 - Math.abs(current) / 2) * Math.signum(current);
+    static double classicSpeed(double v0, double v1) {
+        double sign = v0 > 0 ? 1 : -1;
+        if (Math.abs(v0) > 2.0001 && (Math.abs(v1) < 1e-9 || (Math.abs(Math.abs(v1) - (Math.abs(v0) / 2 - 1)) < 1e-6 && Math.abs(v0) - Math.abs(v1) > 2.0001)))
+            return v0 - 2 * sign;
+        return v1;
     }
-
-    private static double clampSpeed(double v) { return Math.max(-8, Math.min(8, v)); }
 
     @Override public void onHitByBullet(HitByBulletEvent e) {
         var b = e.getBullet(); hitsTaken++; taken += e.getDamage();

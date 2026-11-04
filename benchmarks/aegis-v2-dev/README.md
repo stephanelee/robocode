@@ -1,6 +1,6 @@
 # Aegis 0.2.0 development screens (unregistered, exploratory)
 
-Work-in-progress follow-up to the rejected [Aegis v1 pilot](../../docs/improvements/aegis-shield-v1.md), aimed at raising the block rate directly. **Not registered, no strength claim.** These are local container dev games against the pinned Diamond Port; `v2c` also used the dev-only instrumented copy, which is never used at runtime or in registered games. The 0.2.0 source on this branch is WIP and not frozen.
+Work-in-progress follow-up to the rejected [Aegis v1 pilot](../../docs/improvements/aegis-shield-v1.md), aimed at raising the block rate directly. **Not registered, no strength claim.** These are local container dev games against the pinned Diamond Port; `v2c` also used the dev-only instrumented copy, which is never used at runtime or in registered games. The 0.2.0 changes are preserved as `aegis-0.2.0-wip.patch` against the registered 0.1.0 source (`git apply` from the repository root). They are not frozen and have no rebuilt JAR. The tracked `experiments/Aegis/` source and JAR remain the registered 0.1.0 bytes. The patch also changes `classicSpeed`'s semantics, so the 0.1.0 unit test of the old rule must be updated before any freeze.
 
 Changes from 0.1.0, each targeting a measured failure class:
 
@@ -22,3 +22,7 @@ Remaining failures in `v2c`:
 - Unshielded dodge cases ≈ 3%.
 
 Rounds 1–2 were won in both v2a and v2c; later rounds were lost.
+
+Decision state: not registered. My expectation is that a pilot of this WIP would likely produce at least one round win but fail the registered >20% share gate. The next development target is the opponent's gun-dependent off-centre aims. Any candidate needs its own frozen source/JAR, prospective registration, independent review and fresh games.
+
+Scripts: `predrule.py` (offline rule validation over dev logs). The dev harness and classifier are in `../aegis-shield-v1/development/tools/`.

@@ -6,31 +6,19 @@
 final class ShieldSolver {
     static final double POWER = 0.1, SPEED = Physics.bulletSpeed(POWER);
     static final double[] OFFSETS = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
-    /** Mixture weights for the core lateral errors (centre candidate after self-prediction modelling). */
-    static final double[] CORE_WEIGHTS = {0.2, 0.4, 0.8, 1.5, 3.0, 1.5, 0.8, 0.4, 0.2};
-    /** Weight of each of the four adjacent-candidate points (two per side). */
-    static final double ADJACENT_WEIGHT = 0.35;
-    /** Angular spacing of the shooter's 59 candidate firing angles over +/- the max escape angle, in radians. */
-    static double candidateSpacing(double bulletSpeed) { return Math.asin(8 / bulletSpeed) / 29; }
 
     record Plan(int fireTurn, double direction, int covered, double score, int interceptTurn, int mask) {}
 
     interface Positions { double x(int turn); double y(int turn); }
 
     /** Per-offset unit directions and first unshielded hit turns against our planned positions. */
-    record Lines(double[] offsets, double[] weights, double[] ex, double[] ey, int[] hit) {}
+    record Lines(double[] ex, double[] ey, int[] hit) {}
 
     static Lines lines(Shot shot, Positions own) {
-        double a = shot.range * Math.tan(candidateSpacing(shot.speed));
-        double side = shot.behind;
-        double[] offsets = side == 0 ? new double[]{-4, -3, -2, -1, 0, 1, 2, 3, 4, -a - 1.5, -a + 1.5, a - 1.5, a + 1.5}
-                : new double[]{-4, -3, -2, -1, 0, 1, 2, 3, 4, side * (a - 1.5), side * a, side * (a + 1.5)};
-        double[] weights = new double[offsets.length];
-        for (int i = 0; i < offsets.length; i++) weights[i] = i < CORE_WEIGHTS.length ? CORE_WEIGHTS[i] : (side == 0 ? ADJACENT_WEIGHT : 2 * ADJACENT_WEIGHT * 4 / 6);
-        int n = offsets.length; double[] exs = new double[n], eys = new double[n]; int[] hits = new int[n];
+        int n = OFFSETS.length; double[] exs = new double[n], eys = new double[n]; int[] hits = new int[n];
         double nx = -Math.sin(Math.toRadians(shot.heading)), ny = Math.cos(Math.toRadians(shot.heading));
         for (int i = 0; i < n; i++) {
-            double ax = shot.tx + nx * offsets[i], ay = shot.ty + ny * offsets[i];
+            double ax = shot.tx + nx * OFFSETS[i], ay = shot.ty + ny * OFFSETS[i];
             double h = Math.toRadians(Physics.bearing(shot.psx, shot.psy, ax, ay)), ex = Math.cos(h), ey = Math.sin(h);
             int hit = Integer.MAX_VALUE;
             for (int j = Math.max(shot.fireTurn, shot.contactTurn() - 4); j < shot.fireTurn + 400; j++) {
@@ -40,7 +28,7 @@ final class ShieldSolver {
             }
             exs[i] = ex; eys[i] = ey; hits[i] = hit;
         }
-        return new Lines(offsets, weights, exs, eys, hits);
+        return new Lines(exs, eys, hits);
     }
 
     /** Coverage of one shield direction fired in turn f from the end-of-(f-1) planned position. */
@@ -54,15 +42,15 @@ final class ShieldSolver {
         double px = own.x(f - 1), py = own.y(f - 1);
         double cw = Math.cos(Math.toRadians(direction)), sw = Math.sin(Math.toRadians(direction));
         double score = 0; int covered = 0;
-        for (int i = 0; i < lines.offsets().length; i++) {
-            double ex = lines.ex()[i], ey = lines.ey()[i]; int hit = lines.hit()[i];
+        for (int i = 0; i < OFFSETS.length; i++) {
+            double offset = OFFSETS[i], ex = lines.ex()[i], ey = lines.ey()[i]; int hit = lines.hit()[i];
             boolean ok = false;
             for (int j = f; j < Math.min(hit, f + 14); j++) {
                 double d1 = shot.travelled(j), d2 = d1 + shot.speed, s1 = SPEED * (j - f + 1), s2 = s1 + SPEED;
                 if (Physics.segmentsIntersect(shot.ox + ex * d1, shot.oy + ey * d1, shot.ox + ex * d2, shot.oy + ey * d2,
                         px + cw * s1, py + sw * s1, px + cw * s2, py + sw * s2)) { ok = true; latestIntercept[0] = Math.max(latestIntercept[0], j); break; }
             }
-            if (ok) { if (i < OFFSETS.length) { covered++; if (coveredOut != null && coveredOut.length > 1) coveredOut[1] |= 1 << i; } score += lines.weights()[i]; }
+            if (ok) { covered++; if (coveredOut != null && coveredOut.length > 1) coveredOut[1] |= 1 << i; score += Math.exp(-offset * offset / 8.0) + (offset == 0 ? 1.0 : 0.0); }
         }
         if (coveredOut != null) coveredOut[0] = covered;
         return score;
