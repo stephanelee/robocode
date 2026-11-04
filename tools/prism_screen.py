@@ -287,14 +287,18 @@ def main():
         raise SystemExit("output directory must be empty")
     out.mkdir(parents=True, exist_ok=True)
     report = dict(plan=str(PLAN.relative_to(ROOT)), planSHA256=sha256(PLAN), head=a.head, receipt=receipt_ref(plan),
-                  games=[], decision="pending")
+                  games=[], unplayedGameIds=[], decision="pending")
     dest = out / "decision.json"
-    for game in plan["games"]:
+    for index, game in enumerate(plan["games"]):
         try:
             row = dict(**game, status="valid", **play(game, out))
         except Exception as e:  # preserved as evidence; never rerun
             row = dict(**game, status="invalid", error=repr(e))
         report["games"].append(row)
+        if row["status"] == "invalid":
+            report["unplayedGameIds"] = [g["id"] for g in plan["games"][index + 1:]]
+            dest.write_text(json.dumps(report, indent=1), encoding="utf-8")
+            break  # acquisition/integrity failure only; ordinary score/safety losses never stop the budget
         dest.write_text(json.dumps(report, indent=1), encoding="utf-8")
     report["gates"] = gates(report["games"])
     report["decision"] = report["gates"]["decision"]

@@ -280,5 +280,45 @@ class PlanSelectionTest(unittest.TestCase):
     def test_v1_receipt_name_is_unchanged(self):
         self.assertTrue(ps.receipt_ref(ps.load_plan()).startswith("refs/tags/prism-screen-v1-"))
 
+class AcquisitionStopTest(unittest.TestCase):
+    def tearDown(self):
+        ps.select_plan("docs/prism/screen-plan.json")
+
+    def run_actual_main(self, invalid):
+        import tempfile
+        import sys
+        from pathlib import Path
+        from unittest.mock import patch
+        plan = json.loads((ps.ROOT / "docs/prism/screen-v2-plan.json").read_bytes())
+        called = []
+        def fake_play(game, out):
+            called.append(game["id"])
+            if invalid:
+                raise ValueError("incomplete acquisition fixture")
+            return dict(share=0.01, failures=0, skipped=0, turns=100, collisions=0)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "output"
+            argv = ["prism_screen.py", "--out", str(out), "--head", "a" * 40,
+                    "--review", "fixture", "--plan", "docs/prism/screen-v2-plan.json"]
+            with patch.object(sys, "argv", argv), patch.object(ps, "play", fake_play), \
+                 patch.object(ps, "verify_clearance"), patch.object(ps, "verify_receipt"), \
+                 patch.object(ps, "sha256", return_value=plan["freeze"]["prismJarSHA256"]):
+                ps.main()
+            return plan, called, json.loads((out / "decision.json").read_bytes())
+
+    def test_invalid_first_game_preserves_failure_and_never_calls_later_games(self):
+        plan, called, report = self.run_actual_main(True)
+        self.assertEqual([plan["games"][0]["id"]], called)
+        self.assertEqual("invalid", report["games"][0]["status"])
+        self.assertEqual([g["id"] for g in plan["games"][1:]], report["unplayedGameIds"])
+        self.assertEqual("reject", report["decision"])
+
+    def test_poor_valid_scores_still_complete_every_registered_game(self):
+        plan, called, report = self.run_actual_main(False)
+        self.assertEqual([g["id"] for g in plan["games"]], called)
+        self.assertEqual(13, len(report["games"]))
+        self.assertEqual([], report["unplayedGameIds"])
+        self.assertEqual("reject", report["decision"])
+
 if __name__ == "__main__":
     unittest.main()
