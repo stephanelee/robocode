@@ -4,6 +4,12 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## Frozen Keel versus Prism
+
+| Comparison | Measured budget and result | Evidence |
+|---|---|---|
+| Keel0.1 vs Prism0.1 / [issue109](https://github.com/stephanelee/robocode/issues/109) / [PR110](https://github.com/stephanelee/robocode/pull/110) | **Descriptive only;60 physical rounds.** Keel score4221–3394, official first places47–13; equal-game mean share56.292689%,4/6 games above50%. Both private skips0. Original0-round startup failure and10-round serializer interruption preserved; first10 never replayed, exact remaining50 completed under new clearance. No controller/JAR changes, tuning or confirmation. | [Protocol/results](improvements/keel-prism-v1.md), [raw/combined per-round report/provenance](../benchmarks/keel-prism-v1/README.md) |
+
 ## Prism independent clean-room bot
 
 | Experiment | Measured budget and decision | Evidence |

@@ -1,0 +1,1712 @@
+{
+  "plan": {
+    "status": "five unplayed games administrative continuation registered, not run",
+    "base": "d76c508cc0f575b2191fe66a3eb61fd1f64ba498",
+    "runtime": "local Windows XPS; Microsoft OpenJDK17.0.18+8; no cross-environment pooling",
+    "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "jars": {
+      "Keel": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f",
+      "Prism": "8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca"
+    },
+    "games": [
+      {
+        "id": "kp-utf8-02",
+        "seed": 2026270202,
+        "rounds": 10,
+        "first": "Prism"
+      },
+      {
+        "id": "kp-utf8-03",
+        "seed": 2026270203,
+        "rounds": 10,
+        "first": "Keel"
+      },
+      {
+        "id": "kp-utf8-04",
+        "seed": 2026270204,
+        "rounds": 10,
+        "first": "Prism"
+      },
+      {
+        "id": "kp-utf8-05",
+        "seed": 2026270205,
+        "rounds": 10,
+        "first": "Keel"
+      },
+      {
+        "id": "kp-utf8-06",
+        "seed": 2026270206,
+        "rounds": 10,
+        "first": "Prism"
+      }
+    ],
+    "jvmOptions": "JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 for both bots/runner",
+    "completedPhysicalGame": {
+      "id": "kp-utf8-01",
+      "rounds": 10,
+      "originalAttempt": "invalid serializer; preserved unchanged",
+      "source": "fa14ee26b1485650dcef1bb2262f13c93445da88",
+      "recordingSHA256": "36063f9c1d0060b54e828b5115bc510c4165494624fe289383f97007b99b7653"
+    }
+  },
+  "execution": "ab418c610833a44574bcf9544513561f394e1057",
+  "games": [
+    {
+      "id": "kp-utf8-02",
+      "seed": 2026270202,
+      "rounds": 10,
+      "first": "Prism",
+      "status": "valid",
+      "recordingSHA256": "2396a5f1e104a6b2651ed575d92ead21bda8f4123beb5b304590b1a5d0fc1a91",
+      "results": [
+        {
+          "id": 2,
+          "name": "Keel",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 1,
+          "survival": 450,
+          "lastSurvivorBonus": 90,
+          "bulletDamage": 183,
+          "bulletKillBonus": 35,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 758,
+          "firstPlaces": 8,
+          "secondPlaces": 2,
+          "thirdPlaces": 0
+        },
+        {
+          "id": 1,
+          "name": "Prism",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 2,
+          "survival": 50,
+          "lastSurvivorBonus": 10,
+          "bulletDamage": 398,
+          "bulletKillBonus": 17,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 476,
+          "firstPlaces": 2,
+          "secondPlaces": 8,
+          "thirdPlaces": 0
+        }
+      ],
+      "bots": {
+        "Keel": {
+          "shots": 622,
+          "hits": 93,
+          "shotEnergy": 351.81257157748723,
+          "damage": 189.5006572894882,
+          "minEnergy": -0.3844480187597229,
+          "privateSkips": 0,
+          "score": 758,
+          "firstPlaces": 8,
+          "bulletDamage": 183
+        },
+        "Prism": {
+          "shots": 667,
+          "hits": 57,
+          "shotEnergy": 1051.871746185911,
+          "damage": 398.68381057798774,
+          "minEnergy": -3.641521334469102,
+          "privateSkips": 0,
+          "score": 476,
+          "firstPlaces": 2,
+          "bulletDamage": 398
+        }
+      },
+      "perRound": [
+        {
+          "round": 1,
+          "turns": 1585,
+          "bots": {
+            "Keel": {
+              "shots": 99,
+              "hits": 18,
+              "shotEnergy": 15.39999999999998,
+              "damage": 7.200000000000002,
+              "lastObservedEnergy": -0.3844480187597229,
+              "score": 7,
+              "firstPlaces": 0,
+              "bulletDamage": 7
+            },
+            "Prism": {
+              "shots": 112,
+              "hits": 15,
+              "shotEnergy": 142.23258212847546,
+              "damage": 87.38444801875983,
+              "lastObservedEnergy": 5.159641880904094,
+              "score": 164,
+              "firstPlaces": 1,
+              "bulletDamage": 87
+            }
+          }
+        },
+        {
+          "round": 2,
+          "turns": 875,
+          "bots": {
+            "Keel": {
+              "shots": 61,
+              "hits": 7,
+              "shotEnergy": 49.18005294936846,
+              "damage": 21.999999999999996,
+              "lastObservedEnergy": 45.319947050631505,
+              "score": 86,
+              "firstPlaces": 1,
+              "bulletDamage": 22
+            },
+            "Prism": {
+              "shots": 57,
+              "hits": 3,
+              "shotEnergy": 90.80000000000003,
+              "damage": 20.8,
+              "lastObservedEnergy": -0.2,
+              "score": 21,
+              "firstPlaces": 0,
+              "bulletDamage": 21
+            }
+          }
+        },
+        {
+          "round": 3,
+          "turns": 826,
+          "bots": {
+            "Keel": {
+              "shots": 51,
+              "hits": 8,
+              "shotEnergy": 49.10000000000003,
+              "damage": 36.8,
+              "lastObservedEnergy": 44.33370067575265,
+              "score": 104,
+              "firstPlaces": 1,
+              "bulletDamage": 36
+            },
+            "Prism": {
+              "shots": 57,
+              "hits": 5,
+              "shotEnergy": 83.21668524810015,
+              "damage": 32.06629932424728,
+              "lastObservedEnergy": -0.466960754914707,
+              "score": 32,
+              "firstPlaces": 0,
+              "bulletDamage": 32
+            }
+          }
+        },
+        {
+          "round": 4,
+          "turns": 921,
+          "bots": {
+            "Keel": {
+              "shots": 64,
+              "hits": 11,
+              "shotEnergy": 39.82006893072878,
+              "damage": 28.428027572291505,
+              "lastObservedEnergy": 48.03983426602967,
+              "score": 94,
+              "firstPlaces": 1,
+              "bulletDamage": 29
+            },
+            "Prism": {
+              "shots": 57,
+              "hits": 5,
+              "shotEnergy": 91.24281053955366,
+              "damage": 31.961117482460185,
+              "lastObservedEnergy": -0.2,
+              "score": 32,
+              "firstPlaces": 0,
+              "bulletDamage": 32
+            }
+          }
+        },
+        {
+          "round": 5,
+          "turns": 966,
+          "bots": {
+            "Keel": {
+              "shots": 20,
+              "hits": 3,
+              "shotEnergy": 20.7233312870456,
+              "damage": 10.831108382727464,
+              "lastObservedEnergy": 46.097696801663574,
+              "score": 73,
+              "firstPlaces": 1,
+              "bulletDamage": 10
+            },
+            "Prism": {
+              "shots": 62,
+              "hits": 7,
+              "shotEnergy": 107.14484699268895,
+              "damage": 35.20230319833669,
+              "lastObservedEnergy": -0.2,
+              "score": 35,
+              "firstPlaces": 0,
+              "bulletDamage": 35
+            }
+          }
+        },
+        {
+          "round": 6,
+          "turns": 1456,
+          "bots": {
+            "Keel": {
+              "shots": 92,
+              "hits": 14,
+              "shotEnergy": 30.309262048993396,
+              "damage": 10.399999999999999,
+              "lastObservedEnergy": 12.590737951006673,
+              "score": 72,
+              "firstPlaces": 1,
+              "bulletDamage": 10
+            },
+            "Prism": {
+              "shots": 99,
+              "hits": 8,
+              "shotEnergy": 127.00000000000004,
+              "damage": 61.599999999999994,
+              "lastObservedEnergy": -0.2,
+              "score": 62,
+              "firstPlaces": 0,
+              "bulletDamage": 62
+            }
+          }
+        },
+        {
+          "round": 7,
+          "turns": 813,
+          "bots": {
+            "Keel": {
+              "shots": 52,
+              "hits": 8,
+              "shotEnergy": 51.52076066723458,
+              "damage": 25.8415213344691,
+              "lastObservedEnergy": 46.99073777943345,
+              "score": 86,
+              "firstPlaces": 1,
+              "bulletDamage": 23
+            },
+            "Prism": {
+              "shots": 55,
+              "hits": 3,
+              "shotEnergy": 90.63482127709186,
+              "damage": 19.66964255418374,
+              "lastObservedEnergy": -3.641521334469102,
+              "score": 20,
+              "firstPlaces": 0,
+              "bulletDamage": 19
+            }
+          }
+        },
+        {
+          "round": 8,
+          "turns": 1168,
+          "bots": {
+            "Keel": {
+              "shots": 84,
+              "hits": 10,
+              "shotEnergy": 14.184333333333317,
+              "damage": 3.9999999999999996,
+              "lastObservedEnergy": 18.815666666666704,
+              "score": 65,
+              "firstPlaces": 0,
+              "bulletDamage": 3
+            },
+            "Prism": {
+              "shots": 70,
+              "hits": 7,
+              "shotEnergy": 138.19999999999996,
+              "damage": 70.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 70,
+              "firstPlaces": 1,
+              "bulletDamage": 70
+            }
+          }
+        },
+        {
+          "round": 9,
+          "turns": 800,
+          "bots": {
+            "Keel": {
+              "shots": 51,
+              "hits": 6,
+              "shotEnergy": 40.62476236078275,
+              "damage": 16.799999999999997,
+              "lastObservedEnergy": 61.07523763921724,
+              "score": 80,
+              "firstPlaces": 1,
+              "bulletDamage": 17
+            },
+            "Prism": {
+              "shots": 52,
+              "hits": 1,
+              "shotEnergy": 89.39999999999995,
+              "damage": 10.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 10,
+              "firstPlaces": 0,
+              "bulletDamage": 10
+            }
+          }
+        },
+        {
+          "round": 10,
+          "turns": 721,
+          "bots": {
+            "Keel": {
+              "shots": 48,
+              "hits": 8,
+              "shotEnergy": 40.95000000000001,
+              "damage": 27.199999999999996,
+              "lastObservedEnergy": 47.94999999999993,
+              "score": 91,
+              "firstPlaces": 1,
+              "bulletDamage": 26
+            },
+            "Prism": {
+              "shots": 46,
+              "hits": 3,
+              "shotEnergy": 92.0,
+              "damage": 30.0,
+              "lastObservedEnergy": -1.2000000000000206,
+              "score": 30,
+              "firstPlaces": 0,
+              "bulletDamage": 30
+            }
+          }
+        }
+      ],
+      "prismRoundSnapshots": 10
+    },
+    {
+      "id": "kp-utf8-03",
+      "seed": 2026270203,
+      "rounds": 10,
+      "first": "Keel",
+      "status": "valid",
+      "recordingSHA256": "4cb9732ff5df6ea36930abb18efe69b389250d487962f5aa1ab5a9d63b7267a2",
+      "results": [
+        {
+          "id": 1,
+          "name": "Keel",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 1,
+          "survival": 500,
+          "lastSurvivorBonus": 100,
+          "bulletDamage": 208,
+          "bulletKillBonus": 41,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 850,
+          "firstPlaces": 10,
+          "secondPlaces": 0,
+          "thirdPlaces": 0
+        },
+        {
+          "id": 2,
+          "name": "Prism",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 2,
+          "survival": 0,
+          "lastSurvivorBonus": 0,
+          "bulletDamage": 294,
+          "bulletKillBonus": 0,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 294,
+          "firstPlaces": 0,
+          "secondPlaces": 10,
+          "thirdPlaces": 0
+        }
+      ],
+      "bots": {
+        "Keel": {
+          "shots": 557,
+          "hits": 77,
+          "shotEnergy": 405.73162344757844,
+          "damage": 221.82287345786702,
+          "minEnergy": 5.727717242871933,
+          "privateSkips": 0,
+          "score": 850,
+          "firstPlaces": 10,
+          "bulletDamage": 208
+        },
+        "Prism": {
+          "shots": 622,
+          "hits": 43,
+          "shotEnergy": 962.081360661374,
+          "damage": 293.6291099968945,
+          "minEnergy": -4.999999999999999,
+          "privateSkips": 0,
+          "score": 294,
+          "firstPlaces": 0,
+          "bulletDamage": 294
+        }
+      },
+      "perRound": [
+        {
+          "round": 1,
+          "turns": 859,
+          "bots": {
+            "Keel": {
+              "shots": 61,
+              "hits": 11,
+              "shotEnergy": 43.54221866415513,
+              "damage": 42.8,
+              "lastObservedEnergy": 38.51464630407915,
+              "score": 105,
+              "firstPlaces": 1,
+              "bulletDamage": 38
+            },
+            "Prism": {
+              "shots": 58,
+              "hits": 5,
+              "shotEnergy": 91.02156751588292,
+              "damage": 47.64313503176574,
+              "lastObservedEnergy": -4.999999999999999,
+              "score": 48,
+              "firstPlaces": 0,
+              "bulletDamage": 48
+            }
+          }
+        },
+        {
+          "round": 2,
+          "turns": 727,
+          "bots": {
+            "Keel": {
+              "shots": 50,
+              "hits": 4,
+              "shotEnergy": 47.6485823052447,
+              "damage": 18.022873457867014,
+              "lastObservedEnergy": 64.96857278815551,
+              "score": 81,
+              "firstPlaces": 1,
+              "bulletDamage": 17
+            },
+            "Prism": {
+              "shots": 48,
+              "hits": 0,
+              "shotEnergy": 82.57712654213299,
+              "damage": 0.0,
+              "lastObservedEnergy": -0.6000000000000003,
+              "score": 0,
+              "firstPlaces": 0,
+              "bulletDamage": 0
+            }
+          }
+        },
+        {
+          "round": 3,
+          "turns": 986,
+          "bots": {
+            "Keel": {
+              "shots": 37,
+              "hits": 3,
+              "shotEnergy": 37.23512632830315,
+              "damage": 10.799999999999999,
+              "lastObservedEnergy": 33.45625367467481,
+              "score": 73,
+              "firstPlaces": 1,
+              "bulletDamage": 11
+            },
+            "Prism": {
+              "shots": 62,
+              "hits": 5,
+              "shotEnergy": 96.30619782361981,
+              "damage": 26.008619997022524,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 26,
+              "firstPlaces": 0,
+              "bulletDamage": 26
+            }
+          }
+        },
+        {
+          "round": 4,
+          "turns": 1464,
+          "bots": {
+            "Keel": {
+              "shots": 88,
+              "hits": 11,
+              "shotEnergy": 64.07228275712804,
+              "damage": 18.79999999999999,
+              "lastObservedEnergy": 5.927717242871934,
+              "score": 82,
+              "firstPlaces": 1,
+              "bulletDamage": 18
+            },
+            "Prism": {
+              "shots": 91,
+              "hits": 8,
+              "shotEnergy": 107.80000000000005,
+              "damage": 43.199999999999996,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 43,
+              "firstPlaces": 0,
+              "bulletDamage": 43
+            }
+          }
+        },
+        {
+          "round": 5,
+          "turns": 1567,
+          "bots": {
+            "Keel": {
+              "shots": 46,
+              "hits": 4,
+              "shotEnergy": 22.200000000000024,
+              "damage": 6.4,
+              "lastObservedEnergy": 24.685976209470073,
+              "score": 68,
+              "firstPlaces": 1,
+              "bulletDamage": 7
+            },
+            "Prism": {
+              "shots": 96,
+              "hits": 10,
+              "shotEnergy": 129.5105178428974,
+              "damage": 57.61402379052993,
+              "lastObservedEnergy": -0.2,
+              "score": 57,
+              "firstPlaces": 0,
+              "bulletDamage": 57
+            }
+          }
+        },
+        {
+          "round": 6,
+          "turns": 1183,
+          "bots": {
+            "Keel": {
+              "shots": 72,
+              "hits": 9,
+              "shotEnergy": 34.79245271531692,
+              "damage": 13.200000000000001,
+              "lastObservedEnergy": 18.413734412149687,
+              "score": 75,
+              "firstPlaces": 1,
+              "bulletDamage": 13
+            },
+            "Prism": {
+              "shots": 67,
+              "hits": 7,
+              "shotEnergy": 121.24690643626668,
+              "damage": 56.09381287253333,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 57,
+              "firstPlaces": 0,
+              "bulletDamage": 57
+            }
+          }
+        },
+        {
+          "round": 7,
+          "turns": 1058,
+          "bots": {
+            "Keel": {
+              "shots": 73,
+              "hits": 11,
+              "shotEnergy": 34.97018712038055,
+              "damage": 18.799999999999997,
+              "lastObservedEnergy": 38.229812879619566,
+              "score": 83,
+              "firstPlaces": 1,
+              "bulletDamage": 18
+            },
+            "Prism": {
+              "shots": 60,
+              "hits": 4,
+              "shotEnergy": 105.39999999999999,
+              "damage": 40.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 40,
+              "firstPlaces": 0,
+              "bulletDamage": 40
+            }
+          }
+        },
+        {
+          "round": 8,
+          "turns": 681,
+          "bots": {
+            "Keel": {
+              "shots": 44,
+              "hits": 10,
+              "shotEnergy": 39.37004905544754,
+              "damage": 32.8,
+              "lastObservedEnergy": 58.2181437623435,
+              "score": 97,
+              "firstPlaces": 1,
+              "bulletDamage": 32
+            },
+            "Prism": {
+              "shots": 44,
+              "hits": 3,
+              "shotEnergy": 82.37865916486656,
+              "damage": 22.211807182208926,
+              "lastObservedEnergy": -1.519803778209873,
+              "score": 22,
+              "firstPlaces": 0,
+              "bulletDamage": 22
+            }
+          }
+        },
+        {
+          "round": 9,
+          "turns": 582,
+          "bots": {
+            "Keel": {
+              "shots": 34,
+              "hits": 6,
+              "shotEnergy": 28.999999999999986,
+              "damage": 28.199999999999985,
+              "lastObservedEnergy": 90.64999999999996,
+              "score": 92,
+              "firstPlaces": 1,
+              "bulletDamage": 26
+            },
+            "Prism": {
+              "shots": 37,
+              "hits": 0,
+              "shotEnergy": 73.79999999999998,
+              "damage": 0.0,
+              "lastObservedEnergy": -1.9999999999999896,
+              "score": 0,
+              "firstPlaces": 0,
+              "bulletDamage": 0
+            }
+          }
+        },
+        {
+          "round": 10,
+          "turns": 831,
+          "bots": {
+            "Keel": {
+              "shots": 52,
+              "hits": 8,
+              "shotEnergy": 52.90072450160465,
+              "damage": 31.999999999999996,
+              "lastObservedEnergy": 68.44156437556121,
+              "score": 94,
+              "firstPlaces": 1,
+              "bulletDamage": 28
+            },
+            "Prism": {
+              "shots": 59,
+              "hits": 1,
+              "shotEnergy": 72.0403853357071,
+              "damage": 0.8577111228340536,
+              "lastObservedEnergy": -3.3971019935815248,
+              "score": 1,
+              "firstPlaces": 0,
+              "bulletDamage": 1
+            }
+          }
+        }
+      ],
+      "prismRoundSnapshots": 10
+    },
+    {
+      "id": "kp-utf8-04",
+      "seed": 2026270204,
+      "rounds": 10,
+      "first": "Prism",
+      "status": "valid",
+      "recordingSHA256": "ce50449b2f4895cee724fdb0e57f98e519f8a73cc54fd4a9885f79d0ecb73984",
+      "results": [
+        {
+          "id": 2,
+          "name": "Keel",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 1,
+          "survival": 450,
+          "lastSurvivorBonus": 90,
+          "bulletDamage": 175,
+          "bulletKillBonus": 34,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 750,
+          "firstPlaces": 8,
+          "secondPlaces": 2,
+          "thirdPlaces": 0
+        },
+        {
+          "id": 1,
+          "name": "Prism",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 2,
+          "survival": 50,
+          "lastSurvivorBonus": 10,
+          "bulletDamage": 436,
+          "bulletKillBonus": 16,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 512,
+          "firstPlaces": 2,
+          "secondPlaces": 8,
+          "thirdPlaces": 0
+        }
+      ],
+      "bots": {
+        "Keel": {
+          "shots": 658,
+          "hits": 93,
+          "shotEnergy": 402.2478339845319,
+          "damage": 180.49248066458694,
+          "minEnergy": -0.4,
+          "privateSkips": 0,
+          "score": 750,
+          "firstPlaces": 8,
+          "bulletDamage": 175
+        },
+        "Prism": {
+          "shots": 790,
+          "hits": 76,
+          "shotEnergy": 1086.197487438792,
+          "damage": 436.04701041372476,
+          "minEnergy": -2.3000000000000007,
+          "privateSkips": 0,
+          "score": 512,
+          "firstPlaces": 2,
+          "bulletDamage": 436
+        }
+      },
+      "perRound": [
+        {
+          "round": 1,
+          "turns": 1837,
+          "bots": {
+            "Keel": {
+              "shots": 141,
+              "hits": 24,
+              "shotEnergy": 16.28226993979517,
+              "damage": 9.600000000000003,
+              "lastObservedEnergy": 0.8756789952314753,
+              "score": 71,
+              "firstPlaces": 0,
+              "bulletDamage": 9
+            },
+            "Prism": {
+              "shots": 125,
+              "hits": 18,
+              "shotEnergy": 147.27119117340789,
+              "damage": 90.04205106497334,
+              "lastObservedEnergy": -0.12260740700740969,
+              "score": 90,
+              "firstPlaces": 1,
+              "bulletDamage": 90
+            }
+          }
+        },
+        {
+          "round": 2,
+          "turns": 1218,
+          "bots": {
+            "Keel": {
+              "shots": 19,
+              "hits": 3,
+              "shotEnergy": 14.704885133578511,
+              "damage": 10.799999999999999,
+              "lastObservedEnergy": 61.47651948568661,
+              "score": 73,
+              "firstPlaces": 1,
+              "bulletDamage": 11
+            },
+            "Prism": {
+              "shots": 81,
+              "hits": 7,
+              "shotEnergy": 101.43894653555125,
+              "damage": 23.918595380735074,
+              "lastObservedEnergy": -0.2,
+              "score": 24,
+              "firstPlaces": 0,
+              "bulletDamage": 24
+            }
+          }
+        },
+        {
+          "round": 3,
+          "turns": 1317,
+          "bots": {
+            "Keel": {
+              "shots": 29,
+              "hits": 4,
+              "shotEnergy": 29.918362181326774,
+              "damage": 13.953349817901017,
+              "lastObservedEnergy": 19.946650182098946,
+              "score": 76,
+              "firstPlaces": 1,
+              "bulletDamage": 13
+            },
+            "Prism": {
+              "shots": 93,
+              "hits": 6,
+              "shotEnergy": 122.64665018209908,
+              "damage": 60.0,
+              "lastObservedEnergy": -0.6000000000000005,
+              "score": 60,
+              "firstPlaces": 0,
+              "bulletDamage": 60
+            }
+          }
+        },
+        {
+          "round": 4,
+          "turns": 915,
+          "bots": {
+            "Keel": {
+              "shots": 61,
+              "hits": 6,
+              "shotEnergy": 51.83260289993159,
+              "damage": 21.498246959835726,
+              "lastObservedEnergy": 42.31652057998629,
+              "score": 83,
+              "firstPlaces": 1,
+              "bulletDamage": 20
+            },
+            "Prism": {
+              "shots": 62,
+              "hits": 3,
+              "shotEnergy": 93.4017530401643,
+              "damage": 20.8,
+              "lastObservedEnergy": -2.3000000000000007,
+              "score": 21,
+              "firstPlaces": 0,
+              "bulletDamage": 21
+            }
+          }
+        },
+        {
+          "round": 5,
+          "turns": 892,
+          "bots": {
+            "Keel": {
+              "shots": 60,
+              "hits": 8,
+              "shotEnergy": 50.2522057292145,
+              "damage": 18.9155461309797,
+              "lastObservedEnergy": 46.203805369082595,
+              "score": 82,
+              "firstPlaces": 1,
+              "bulletDamage": 18
+            },
+            "Prism": {
+              "shots": 61,
+              "hits": 4,
+              "shotEnergy": 92.6935332300213,
+              "damage": 16.830648499937684,
+              "lastObservedEnergy": -0.5999999999999999,
+              "score": 17,
+              "firstPlaces": 0,
+              "bulletDamage": 17
+            }
+          }
+        },
+        {
+          "round": 6,
+          "turns": 1192,
+          "bots": {
+            "Keel": {
+              "shots": 82,
+              "hits": 11,
+              "shotEnergy": 55.30123803749387,
+              "damage": 16.248287157422663,
+              "lastObservedEnergy": 19.228791108611272,
+              "score": 79,
+              "firstPlaces": 1,
+              "bulletDamage": 16
+            },
+            "Prism": {
+              "shots": 84,
+              "hits": 8,
+              "shotEnergy": 107.44385250904877,
+              "damage": 37.05618622196183,
+              "lastObservedEnergy": -0.40000000000000036,
+              "score": 37,
+              "firstPlaces": 0,
+              "bulletDamage": 37
+            }
+          }
+        },
+        {
+          "round": 7,
+          "turns": 1097,
+          "bots": {
+            "Keel": {
+              "shots": 71,
+              "hits": 13,
+              "shotEnergy": 47.76107491345929,
+              "damage": 29.19999999999999,
+              "lastObservedEnergy": 25.171172490318295,
+              "score": 95,
+              "firstPlaces": 1,
+              "bulletDamage": 29
+            },
+            "Prism": {
+              "shots": 73,
+              "hits": 8,
+              "shotEnergy": 100.60081444716684,
+              "damage": 47.467752596222475,
+              "lastObservedEnergy": -0.2,
+              "score": 47,
+              "firstPlaces": 0,
+              "bulletDamage": 47
+            }
+          }
+        },
+        {
+          "round": 8,
+          "turns": 1151,
+          "bots": {
+            "Keel": {
+              "shots": 74,
+              "hits": 10,
+              "shotEnergy": 71.29519514973283,
+              "damage": 25.877050598447756,
+              "lastObservedEnergy": 21.057551038758213,
+              "score": 91,
+              "firstPlaces": 1,
+              "bulletDamage": 25
+            },
+            "Prism": {
+              "shots": 83,
+              "hits": 8,
+              "shotEnergy": 90.91423072181085,
+              "damage": 25.85504176034478,
+              "lastObservedEnergy": -0.40000000000000036,
+              "score": 26,
+              "firstPlaces": 0,
+              "bulletDamage": 26
+            }
+          }
+        },
+        {
+          "round": 9,
+          "turns": 717,
+          "bots": {
+            "Keel": {
+              "shots": 45,
+              "hits": 6,
+              "shotEnergy": 43.000000000000014,
+              "damage": 31.199999999999996,
+              "lastObservedEnergy": 45.42326511045047,
+              "score": 97,
+              "firstPlaces": 1,
+              "bulletDamage": 31
+            },
+            "Prism": {
+              "shots": 47,
+              "hits": 4,
+              "shotEnergy": 89.48651559952026,
+              "damage": 33.176734889549465,
+              "lastObservedEnergy": -0.3039644323581818,
+              "score": 33,
+              "firstPlaces": 0,
+              "bulletDamage": 33
+            }
+          }
+        },
+        {
+          "round": 10,
+          "turns": 1204,
+          "bots": {
+            "Keel": {
+              "shots": 76,
+              "hits": 8,
+              "shotEnergy": 21.900000000000013,
+              "damage": 3.1999999999999997,
+              "lastObservedEnergy": -0.4,
+              "score": 3,
+              "firstPlaces": 0,
+              "bulletDamage": 3
+            },
+            "Prism": {
+              "shots": 81,
+              "hits": 10,
+              "shotEnergy": 140.29999999999998,
+              "damage": 80.9,
+              "lastObservedEnergy": 5.175000000000002,
+              "score": 157,
+              "firstPlaces": 1,
+              "bulletDamage": 81
+            }
+          }
+        }
+      ],
+      "prismRoundSnapshots": 10
+    },
+    {
+      "id": "kp-utf8-05",
+      "seed": 2026270205,
+      "rounds": 10,
+      "first": "Keel",
+      "status": "valid",
+      "recordingSHA256": "5d6e367f76b5be1b63b8f50589b735d0e8e530959798296c9b6ac2d149204215",
+      "results": [
+        {
+          "id": 2,
+          "name": "Prism",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 1,
+          "survival": 100,
+          "lastSurvivorBonus": 20,
+          "bulletDamage": 554,
+          "bulletKillBonus": 33,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 708,
+          "firstPlaces": 3,
+          "secondPlaces": 7,
+          "thirdPlaces": 0
+        },
+        {
+          "id": 1,
+          "name": "Keel",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 2,
+          "survival": 400,
+          "lastSurvivorBonus": 80,
+          "bulletDamage": 78,
+          "bulletKillBonus": 12,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 570,
+          "firstPlaces": 7,
+          "secondPlaces": 3,
+          "thirdPlaces": 0
+        }
+      ],
+      "bots": {
+        "Keel": {
+          "shots": 471,
+          "hits": 64,
+          "shotEnergy": 166.62339275833008,
+          "damage": 79.05366944462824,
+          "minEnergy": -0.4,
+          "privateSkips": 0,
+          "score": 570,
+          "firstPlaces": 7,
+          "bulletDamage": 78
+        },
+        "Prism": {
+          "shots": 861,
+          "hits": 89,
+          "shotEnergy": 1213.8640294566187,
+          "damage": 554.8520465855937,
+          "minEnergy": -0.3999999999999999,
+          "privateSkips": 0,
+          "score": 708,
+          "firstPlaces": 3,
+          "bulletDamage": 554
+        }
+      },
+      "perRound": [
+        {
+          "round": 1,
+          "turns": 827,
+          "bots": {
+            "Keel": {
+              "shots": 60,
+              "hits": 13,
+              "shotEnergy": 36.04768243429381,
+              "damage": 29.199999999999996,
+              "lastObservedEnergy": 64.35231756570624,
+              "score": 95,
+              "firstPlaces": 1,
+              "bulletDamage": 29
+            },
+            "Prism": {
+              "shots": 53,
+              "hits": 2,
+              "shotEnergy": 82.99999999999999,
+              "damage": 20.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 20,
+              "firstPlaces": 0,
+              "bulletDamage": 20
+            }
+          }
+        },
+        {
+          "round": 2,
+          "turns": 1382,
+          "bots": {
+            "Keel": {
+              "shots": 72,
+              "hits": 6,
+              "shotEnergy": 36.90000000000004,
+              "damage": 12.0,
+              "lastObservedEnergy": -0.4,
+              "score": 12,
+              "firstPlaces": 0,
+              "bulletDamage": 12
+            },
+            "Prism": {
+              "shots": 98,
+              "hits": 12,
+              "shotEnergy": 124.21183901077131,
+              "damage": 71.89999999999993,
+              "lastObservedEnergy": 9.203134125043478,
+              "score": 146,
+              "firstPlaces": 1,
+              "bulletDamage": 71
+            }
+          }
+        },
+        {
+          "round": 3,
+          "turns": 1223,
+          "bots": {
+            "Keel": {
+              "shots": 45,
+              "hits": 6,
+              "shotEnergy": 18.799999999999994,
+              "damage": 2.4,
+              "lastObservedEnergy": 22.80000000000004,
+              "score": 62,
+              "firstPlaces": 1,
+              "bulletDamage": 2
+            },
+            "Prism": {
+              "shots": 69,
+              "hits": 6,
+              "shotEnergy": 133.39999999999998,
+              "damage": 60.0,
+              "lastObservedEnergy": -5.551115123125783e-17,
+              "score": 60,
+              "firstPlaces": 0,
+              "bulletDamage": 60
+            }
+          }
+        },
+        {
+          "round": 4,
+          "turns": 1235,
+          "bots": {
+            "Keel": {
+              "shots": 16,
+              "hits": 1,
+              "shotEnergy": 1.6000000000000003,
+              "damage": 0.4,
+              "lastObservedEnergy": 58.699999999999974,
+              "score": 60,
+              "firstPlaces": 1,
+              "bulletDamage": 1
+            },
+            "Prism": {
+              "shots": 62,
+              "hits": 4,
+              "shotEnergy": 123.8,
+              "damage": 40.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 40,
+              "firstPlaces": 0,
+              "bulletDamage": 40
+            }
+          }
+        },
+        {
+          "round": 5,
+          "turns": 1322,
+          "bots": {
+            "Keel": {
+              "shots": 66,
+              "hits": 6,
+              "shotEnergy": 11.97054362002861,
+              "damage": 7.199999999999999,
+              "lastObservedEnergy": 28.029456379971496,
+              "score": 69,
+              "firstPlaces": 1,
+              "bulletDamage": 7
+            },
+            "Prism": {
+              "shots": 91,
+              "hits": 8,
+              "shotEnergy": 126.7,
+              "damage": 61.599999999999994,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 61,
+              "firstPlaces": 0,
+              "bulletDamage": 62
+            }
+          }
+        },
+        {
+          "round": 6,
+          "turns": 1604,
+          "bots": {
+            "Keel": {
+              "shots": 2,
+              "hits": 1,
+              "shotEnergy": 0.2,
+              "damage": 0.4,
+              "lastObservedEnergy": 74.37839260394267,
+              "score": 60,
+              "firstPlaces": 1,
+              "bulletDamage": 0
+            },
+            "Prism": {
+              "shots": 110,
+              "hits": 8,
+              "shotEnergy": 116.09120554704315,
+              "damage": 25.721607396057365,
+              "lastObservedEnergy": -0.2,
+              "score": 26,
+              "firstPlaces": 0,
+              "bulletDamage": 26
+            }
+          }
+        },
+        {
+          "round": 7,
+          "turns": 1068,
+          "bots": {
+            "Keel": {
+              "shots": 41,
+              "hits": 5,
+              "shotEnergy": 17.140252083471168,
+              "damage": 7.453669444628234,
+              "lastObservedEnergy": 35.67796341835081,
+              "score": 69,
+              "firstPlaces": 1,
+              "bulletDamage": 7
+            },
+            "Prism": {
+              "shots": 71,
+              "hits": 6,
+              "shotEnergy": 124.80035799160869,
+              "damage": 52.4720365816493,
+              "lastObservedEnergy": -0.3999999999999999,
+              "score": 53,
+              "firstPlaces": 0,
+              "bulletDamage": 52
+            }
+          }
+        },
+        {
+          "round": 8,
+          "turns": 954,
+          "bots": {
+            "Keel": {
+              "shots": 50,
+              "hits": 7,
+              "shotEnergy": 4.999999999999998,
+              "damage": 2.8,
+              "lastObservedEnergy": -0.29999999999999805,
+              "score": 2,
+              "firstPlaces": 0,
+              "bulletDamage": 3
+            },
+            "Prism": {
+              "shots": 61,
+              "hits": 10,
+              "shotEnergy": 117.4833333333333,
+              "damage": 97.39999999999999,
+              "lastObservedEnergy": 38.41666666666668,
+              "score": 176,
+              "firstPlaces": 1,
+              "bulletDamage": 97
+            }
+          }
+        },
+        {
+          "round": 9,
+          "turns": 1892,
+          "bots": {
+            "Keel": {
+              "shots": 6,
+              "hits": 0,
+              "shotEnergy": 0.9075111329799243,
+              "damage": 0.0,
+              "lastObservedEnergy": 30.646183718087897,
+              "score": 60,
+              "firstPlaces": 0,
+              "bulletDamage": 0
+            },
+            "Prism": {
+              "shots": 135,
+              "hits": 15,
+              "shotEnergy": 143.41016772058475,
+              "damage": 68.14630514893217,
+              "lastObservedEnergy": -0.1,
+              "score": 68,
+              "firstPlaces": 1,
+              "bulletDamage": 69
+            }
+          }
+        },
+        {
+          "round": 10,
+          "turns": 1561,
+          "bots": {
+            "Keel": {
+              "shots": 113,
+              "hits": 19,
+              "shotEnergy": 38.05740348755849,
+              "damage": 17.199999999999996,
+              "lastObservedEnergy": 13.630499053486403,
+              "score": 81,
+              "firstPlaces": 1,
+              "bulletDamage": 17
+            },
+            "Prism": {
+              "shots": 111,
+              "hits": 18,
+              "shotEnergy": 120.96712585327141,
+              "damage": 57.612097458955226,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 58,
+              "firstPlaces": 0,
+              "bulletDamage": 57
+            }
+          }
+        }
+      ],
+      "prismRoundSnapshots": 10
+    },
+    {
+      "id": "kp-utf8-06",
+      "seed": 2026270206,
+      "rounds": 10,
+      "first": "Prism",
+      "status": "valid",
+      "recordingSHA256": "03422534d224d7960ced7babf1a36c095fc95ce227964c111d0913103377222b",
+      "results": [
+        {
+          "id": 2,
+          "name": "Keel",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 1,
+          "survival": 450,
+          "lastSurvivorBonus": 90,
+          "bulletDamage": 175,
+          "bulletKillBonus": 32,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 747,
+          "firstPlaces": 9,
+          "secondPlaces": 1,
+          "thirdPlaces": 0
+        },
+        {
+          "id": 1,
+          "name": "Prism",
+          "isTeam": false,
+          "version": "0.1.0",
+          "rank": 2,
+          "survival": 50,
+          "lastSurvivorBonus": 10,
+          "bulletDamage": 403,
+          "bulletKillBonus": 18,
+          "ramDamage": 0,
+          "ramKillBonus": 0,
+          "totalScore": 481,
+          "firstPlaces": 1,
+          "secondPlaces": 9,
+          "thirdPlaces": 0
+        }
+      ],
+      "bots": {
+        "Keel": {
+          "shots": 768,
+          "hits": 98,
+          "shotEnergy": 397.52874794307024,
+          "damage": 183.91731790786565,
+          "minEnergy": -0.4,
+          "privateSkips": 0,
+          "score": 747,
+          "firstPlaces": 9,
+          "bulletDamage": 175
+        },
+        "Prism": {
+          "shots": 779,
+          "hits": 68,
+          "shotEnergy": 1073.216483330853,
+          "damage": 403.37400188835255,
+          "minEnergy": -4.300000000000001,
+          "privateSkips": 0,
+          "score": 481,
+          "firstPlaces": 1,
+          "bulletDamage": 403
+        }
+      },
+      "perRound": [
+        {
+          "round": 1,
+          "turns": 1091,
+          "bots": {
+            "Keel": {
+              "shots": 80,
+              "hits": 15,
+              "shotEnergy": 29.143601788120435,
+              "damage": 21.37180089406022,
+              "lastObservedEnergy": 34.38524888242471,
+              "score": 85,
+              "firstPlaces": 1,
+              "bulletDamage": 21
+            },
+            "Prism": {
+              "shots": 75,
+              "hits": 7,
+              "shotEnergy": 110.22819910593981,
+              "damage": 51.599999999999994,
+              "lastObservedEnergy": -0.3999999999999999,
+              "score": 52,
+              "firstPlaces": 0,
+              "bulletDamage": 52
+            }
+          }
+        },
+        {
+          "round": 2,
+          "turns": 960,
+          "bots": {
+            "Keel": {
+              "shots": 65,
+              "hits": 8,
+              "shotEnergy": 52.88785684071565,
+              "damage": 22.399999999999995,
+              "lastObservedEnergy": 41.73871860932389,
+              "score": 87,
+              "firstPlaces": 1,
+              "bulletDamage": 22
+            },
+            "Prism": {
+              "shots": 62,
+              "hits": 3,
+              "shotEnergy": 90.53006841247034,
+              "damage": 20.973424549960445,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 21,
+              "firstPlaces": 0,
+              "bulletDamage": 21
+            }
+          }
+        },
+        {
+          "round": 3,
+          "turns": 1739,
+          "bots": {
+            "Keel": {
+              "shots": 121,
+              "hits": 15,
+              "shotEnergy": 41.67907517924607,
+              "damage": 6.000000000000001,
+              "lastObservedEnergy": 11.879760747870613,
+              "score": 67,
+              "firstPlaces": 1,
+              "bulletDamage": 6
+            },
+            "Prism": {
+              "shots": 114,
+              "hits": 12,
+              "shotEnergy": 126.17621976512362,
+              "damage": 50.94116407288331,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 51,
+              "firstPlaces": 0,
+              "bulletDamage": 51
+            }
+          }
+        },
+        {
+          "round": 4,
+          "turns": 1034,
+          "bots": {
+            "Keel": {
+              "shots": 70,
+              "hits": 9,
+              "shotEnergy": 66.55781423776097,
+              "damage": 32.06625139020871,
+              "lastObservedEnergy": 32.311355487070045,
+              "score": 93,
+              "firstPlaces": 1,
+              "bulletDamage": 28
+            },
+            "Prism": {
+              "shots": 74,
+              "hits": 5,
+              "shotEnergy": 86.83171558749635,
+              "damage": 23.463955970273336,
+              "lastObservedEnergy": -4.300000000000001,
+              "score": 23,
+              "firstPlaces": 0,
+              "bulletDamage": 23
+            }
+          }
+        },
+        {
+          "round": 5,
+          "turns": 732,
+          "bots": {
+            "Keel": {
+              "shots": 48,
+              "hits": 3,
+              "shotEnergy": 41.00074424332349,
+              "damage": 15.599999999999998,
+              "lastObservedEnergy": 59.79925575667651,
+              "score": 78,
+              "firstPlaces": 1,
+              "bulletDamage": 14
+            },
+            "Prism": {
+              "shots": 47,
+              "hits": 1,
+              "shotEnergy": 91.2955345400591,
+              "damage": 10.0,
+              "lastObservedEnergy": -0.8955345400590957,
+              "score": 10,
+              "firstPlaces": 0,
+              "bulletDamage": 10
+            }
+          }
+        },
+        {
+          "round": 6,
+          "turns": 879,
+          "bots": {
+            "Keel": {
+              "shots": 55,
+              "hits": 4,
+              "shotEnergy": 45.13333333333336,
+              "damage": 13.2,
+              "lastObservedEnergy": 24.166666666666607,
+              "score": 73,
+              "firstPlaces": 1,
+              "bulletDamage": 11
+            },
+            "Prism": {
+              "shots": 57,
+              "hits": 4,
+              "shotEnergy": 113.0,
+              "damage": 40.0,
+              "lastObservedEnergy": -2.2,
+              "score": 40,
+              "firstPlaces": 0,
+              "bulletDamage": 40
+            }
+          }
+        },
+        {
+          "round": 7,
+          "turns": 1425,
+          "bots": {
+            "Keel": {
+              "shots": 99,
+              "hits": 12,
+              "shotEnergy": 32.85525994741641,
+              "damage": 10.355259947416329,
+              "lastObservedEnergy": 17.794012618334275,
+              "score": 72,
+              "firstPlaces": 1,
+              "bulletDamage": 10
+            },
+            "Prism": {
+              "shots": 101,
+              "hits": 12,
+              "shotEnergy": 125.15761934869239,
+              "damage": 56.81717239481155,
+              "lastObservedEnergy": -0.3999999999999999,
+              "score": 57,
+              "firstPlaces": 0,
+              "bulletDamage": 57
+            }
+          }
+        },
+        {
+          "round": 8,
+          "turns": 1861,
+          "bots": {
+            "Keel": {
+              "shots": 117,
+              "hits": 16,
+              "shotEnergy": 17.199999999999985,
+              "damage": 11.200000000000005,
+              "lastObservedEnergy": -0.4,
+              "score": 11,
+              "firstPlaces": 0,
+              "bulletDamage": 12
+            },
+            "Prism": {
+              "shots": 136,
+              "hits": 15,
+              "shotEnergy": 143.67790617672534,
+              "damage": 91.30000000000005,
+              "lastObservedEnergy": 1.5970938232743381,
+              "score": 169,
+              "firstPlaces": 1,
+              "bulletDamage": 91
+            }
+          }
+        },
+        {
+          "round": 9,
+          "turns": 629,
+          "bots": {
+            "Keel": {
+              "shots": 41,
+              "hits": 9,
+              "shotEnergy": 27.199999999999996,
+              "damage": 32.4,
+              "lastObservedEnergy": 85.30000000000001,
+              "score": 99,
+              "firstPlaces": 1,
+              "bulletDamage": 32
+            },
+            "Prism": {
+              "shots": 38,
+              "hits": 1,
+              "shotEnergy": 73.79999999999998,
+              "damage": 10.0,
+              "lastObservedEnergy": -0.20000000000000007,
+              "score": 10,
+              "firstPlaces": 0,
+              "bulletDamage": 10
+            }
+          }
+        },
+        {
+          "round": 10,
+          "turns": 1094,
+          "bots": {
+            "Keel": {
+              "shots": 72,
+              "hits": 7,
+              "shotEnergy": 43.871062373151176,
+              "damage": 19.324005676180313,
+              "lastObservedEnergy": 21.443656983560302,
+              "score": 82,
+              "firstPlaces": 1,
+              "bulletDamage": 19
+            },
+            "Prism": {
+              "shots": 75,
+              "hits": 8,
+              "shotEnergy": 112.51922039434474,
+              "damage": 48.27828490042381,
+              "lastObservedEnergy": -0.6000000000000003,
+              "score": 48,
+              "firstPlaces": 0,
+              "bulletDamage": 48
+            }
+          }
+        }
+      ],
+      "prismRoundSnapshots": 10
+    }
+  ],
+  "decision": "descriptive only",
+  "meanKeelShare": 0.6011759805174832
+}
