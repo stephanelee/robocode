@@ -261,7 +261,7 @@ final class Core {
             if (!submit)
               prepared = FireControl.Cohort.from(virtual,
                   virtual.predictions.containsKey(target.selected) ? target.selected : "analytic",
-                  turn);
+                  turn, target);
             if (own.heat() <= 1e-10 && !submit)
               waves.add(virtual);
           } else

@@ -34,3 +34,7 @@ The first repaired-candidate CI run41869600041 failed before gameplay because Ad
 ## New offline coherence gap (candidate unchanged)
 
 [Gun/waveaudit](../../docs/facet-gun-wave-audit-results.md) reproducesa5.1243degree difference between a validpreparedanalyticshot andthefresh analyticpredictionlaterplacedinitsratingcohort. Existingcommon-denominator/freeze-before-outcome fixtures stillpass, butdonot establishcoherencewiththeearlierpreparedensemble. No correction/gameplayedit ornewbattleperformed; no fullsemanticcompletion/strengthclaim.797coverednativeconfirmationsmatchrequestheading/origin/creation; tracescannotquantifythecohortmismatchfrequency.
+
+## Prepared-cohort correction verification (new candidate)
+
+PreparedCohortTest now exercises actual Core preparation, lawful intervening scan/model/selector changes, fire acceptance/confirmation, shared rating and fresh physical-context training.111assertions cover originalangles/times/eligibility/sourceIDs, immutable arrays/maps/model-view vectors, physical-IDrebinding, analyticfallback, headingtolerance, two-turnplan, rejection/unmatched/cancellation/reset and duplicateoutcomes. Existing10243semantic+54adapterassertions,866native transitions,17Python acquisition/report/runtime tests and Java17Gradle/parity pass. Exact model-view FIFO-boundary regression preserves recent[130,129,129] vs long129. These fixtures correct the reproduced handoff gap semantically; competitive impact awaits the separately frozen new100-round screen. Historical audit still runs the old817aJAR deliberately.

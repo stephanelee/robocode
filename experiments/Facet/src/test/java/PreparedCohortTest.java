@@ -139,7 +139,7 @@ public final class PreparedCohortTest {
     check(c.features()[0]!=99,"feature accessor cannot mutate snapshot");
     try {c.predictions().clear();throw new AssertionError("mutable map");}catch(UnsupportedOperationException expected){assertions++;}
     var source=c.features();var map=new LinkedHashMap<>(c.predictions());
-    var copy=new FireControl.Cohort(c.selected(),c.target(),c.meleeOrigin(),c.preparedTurn(),c.expectedOriginTurn(),c.sourceWave(),c.origin(),c.targetOrigin(),source,c.positive(),c.negative(),c.quality(),c.missingFeatures(),map);
+    var copy=new FireControl.Cohort(c.selected(),c.target(),c.meleeOrigin(),c.preparedTurn(),c.expectedOriginTurn(),c.sourceWave(),c.origin(),c.targetOrigin(),source,c.positive(),c.negative(),c.quality(),c.missingFeatures(),map,c.modelViews());
     source[0]=99;map.clear();check(copy.features()[0]!=99 && copy.predictions().size()==3,"constructor deep-copies mutable containers");
     request(s,0);s.core().fire.submitted(false,s.requestOwn(),41,1000);
     check(s.core().fire.pending==null,"rejection creates no pending cohort");
@@ -149,8 +149,27 @@ public final class PreparedCohortTest {
     check(s.core().shotContext==null,"reconciliation discards rejected shot context");
     s.core().log.close();
   }
+  static void exactModelViews() {
+    var core=new Core(new Physics.Rules(800,600,.1),new Diagnostics(),1);core.roundReset(1);
+    var e=core.enemy(2);var own=new Physics.Body(new Physics.V(400,300),0,0,.65,0,0);
+    e.observe(new Memory.Sample(1,39,new Physics.Body(new Physics.V(600,292),Math.PI/2,8,0,0,0),100,Memory.Quality.OBSERVED,0),own.p());
+    for(int i=1;i<=129;i++) {
+      e.longGun.add(new Memory.Observation(new double[Learner.LONG.length],Memory.Label.PRECISE_GF,.5,0,i,1,i,1,i,false));
+      for(var store:e.recent)store.add(new Memory.Observation(new double[Learner.RECENT.length],Memory.Label.PRECISE_GF,.5,0,i,1,i,1,i,false));
+    }
+    e.crossings=129;
+    core.decide(own,100,40,1,List.of(new ScannedBotEvent(40,1,2,100,600,300,90,8)),List.of(),1);
+    var cohort=core.fire.plan.cohort();
+    check(cohort.modelViews().get("recent").equals(List.of(130L,129L,129L)),"recent versions preserve actual eviction epochs");
+    check(cohort.modelViews().get("long").equals(List.of(129L)),"long version exact");
+    check(cohort.modelViews().get("analytic").isEmpty(),"analytic queries no learned view");
+    boolean immutable=false;try{cohort.modelViews().get("recent").set(0,999L);}catch(UnsupportedOperationException expected){immutable=true;}
+    check(immutable,"version vector immutable");
+    immutable=false;try{cohort.modelViews().put("extra",List.of());}catch(UnsupportedOperationException expected){immutable=true;}
+    check(immutable,"version map immutable");core.log.close();
+  }
   public static void main(String[] args) {
-    mainRegression();eligibilityAndTolerance();immutableAndDiscarded();lifetimeAndCancellation();
+    exactModelViews();mainRegression();eligibilityAndTolerance();immutableAndDiscarded();lifetimeAndCancellation();
     Physics.endWork();System.out.println("PASS prepared cohort actual-Core regression assertions="+assertions+" battles=0");
   }
 }
