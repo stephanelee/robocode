@@ -4,6 +4,12 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## Prism independent clean-room bot
+
+| Experiment | Measured budget and decision | Evidence |
+|---|---|---|
+| Prism 0.1.0 implementation milestone / [issue #104](https://github.com/stephanelee/robocode/issues/104) / PR pending | **No experiment run; no decision.** Zero gameplay rounds against any opponent. Offline only: 34 JUnit tests pass, including replay of a real Tank Royale 1.4.0 engine trace (predictor within 1e-6; fire timing; scan-energy inference). One non-competitive 3-round lifecycle smoke against a passive probe bot: 33/33 shots confirmed, 0 failures, 1 skipped turn in 566. The registered 200-round screen awaits independent premeasurement review. None of this implies competitive strength. | [Protocol](prism-screen-protocol.md), [plan](prism/screen-plan.json), [decision log](prism-implementation-decisions.md), [bot README](../experiments/Prism/README.md), [engine evidence](../experiments/Prism/fixtures/README.md) |
+
 ## Meridian standalone duel
 
 | Experiment | Measured budget and decision | Evidence |

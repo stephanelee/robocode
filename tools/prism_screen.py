@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+"""Registered Prism 200-round screen (docs/prism-screen-protocol.md). Python 3.10+.
+
+The harness refuses to run unless the frozen plan, the committed JAR hash and an explicit
+independent premeasurement review reference all match. It never retunes, reruns or launches a
+confirmation; every game (valid or invalid) is preserved in decision.json.
+"""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import statistics
+import subprocess
+import sys
+
+TOOLS = Path(__file__).resolve().parent
+sys.path.insert(0, str(TOOLS))
+ROOT = TOOLS.parent
+PLAN = ROOT / "docs/prism/screen-plan.json"
+CACHE = ROOT / ".benchmark-cache"
+BUNDLE = ROOT / "experiments/Prism"
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def load_plan():
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    games = plan["games"]
+    if len(games) != 13 or sum(g["rounds"] for g in games) != 200:
+        raise ValueError("plan must contain the registered 13 games / 200 rounds")
+    ids = [g["id"] for g in games]
+    if len(set(ids)) != len(ids):
+        raise ValueError("duplicate game id")
+    for opp, n, rounds in (("Diamond Port", 3, 20), ("Retcon", 3, 20), ("Adaptive Prime", 3, 20), ("SpinBot", 2, 5), ("Walls", 2, 5)):
+        g = [x for x in games if x["opponent"] == opp]
+        if len(g) != n or any(x["rounds"] != rounds for x in g):
+            raise ValueError("cohort mismatch: " + opp)
+    return plan
+
+
+def share(prism, other):
+    total = prism + other
+    return prism / total if total > 0 else 0.5
+
+
+def telemetry_game(path):
+    if not path.exists():
+        return None
+    rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    games = [r for r in rows if r.get("event") == "game"]
+    return games[-1] if games else None
+
+
+def gates(rows):
+    """Specification 13.3 screen gates; failing any gate rejects the profile."""
+    out = {}
+    valid = all(r["status"] == "valid" for r in rows)
+    out["allGamesValid"] = valid
+    if not valid:
+        out["decision"] = "reject"
+        return out
+    out["noFailures"] = all(r["failures"] == 0 for r in rows)
+    by = {}
+    for r in rows:
+        by.setdefault(r["opponent"], []).append(r)
+    out["skipRateBelow0.5pct"] = all(sum(r["skipped"] for r in g) < 0.005 * sum(r["turns"] for r in g) for g in by.values())
+    out["collisionsBelow1pct"] = sum(r["collisions"] for r in rows) < 0.01 * sum(r["turns"] for r in rows)
+    mean = {k: statistics.mean(r["share"] for r in v) for k, v in by.items()}
+    out["meanShare"] = mean
+    out["diamondAbove40"] = mean["Diamond Port"] > 0.40
+    out["retconAbove40"] = mean["Retcon"] > 0.40
+    out["adaptiveAtLeast50"] = mean["Adaptive Prime"] >= 0.50
+    out["samplesAtLeast50"] = mean["SpinBot"] >= 0.50 and mean["Walls"] >= 0.50
+    keys = [k for k in out if k not in ("meanShare",)]
+    out["decision"] = "passed screen" if all(out[k] for k in keys) else "reject"
+    return out
+
+
+def stage_opponent(name, stage, env):
+    import benchmark
+    if name == "Retcon":
+        import retcon
+        src, api, rc = retcon.prepare(CACHE)
+        other = stage / "Retcon"
+        benchmark.isolate_opponent(src, other)
+        if retcon.source_hash(other) != rc["sourceSHA256"]:
+            raise ValueError("Retcon tree mismatch")
+        env["RUMBLE_JAVA_CACHE"] = str(api)
+        return other
+    if name in ("Diamond Port", "Adaptive Prime"):
+        import strong_melee_opponents as native
+        key = "diamond-port" if name == "Diamond Port" else "adaptive-prime"
+        lock = native.manifest()
+        python = os.environ.get("PRISM_OPPONENT_PYTHON", "python3.13")
+        native.prepare(CACHE, python)
+        base = CACHE / "strong-python" / lock["commit"]
+        src = base / "source"
+        env.update(native.stage(src, stage, base / "venv/bin/python"))
+        other = stage / "opponents" / key
+        benchmark.isolate_opponent(src / "bots/ports" / key, other)
+        native.verify_staged(stage, [key])
+        return other
+    if name in ("SpinBot", "Walls"):
+        archive = benchmark.download(CACHE, "sample-bots-Java-1.4.0.zip", benchmark.ASSETS["sample-bots-Java-1.4.0.zip"])
+        samples = stage / "official-samples"
+        benchmark.extract(archive, samples)
+        descriptor, = samples.rglob(name + ".json")
+        other = stage / name
+        benchmark.isolate_opponent(descriptor.parent, other)
+        return other
+    raise ValueError("unregistered opponent " + name)
+
+
+def play(game, out):
+    import benchmark
+    data = out / game["id"]
+    data.mkdir(parents=True)
+    stage = ROOT / "build/prism-staging" / game["id"]
+    if stage.exists():
+        raise FileExistsError(stage)
+    stage.mkdir(parents=True)
+    own = stage / "Prism"
+    shutil.copytree(BUNDLE / "bot", own)
+    shutil.copy2(BUNDLE / "Prism.jar", own / "Prism.jar")
+    env = {k: os.environ[k] for k in ("PATH", "HOME", "JAVA_HOME", "LANG", "SystemRoot", "TEMP", "TMP") if k in os.environ}
+    env.update(PRISM_SEED=str(game["seed"]), PRISM_TELEMETRY_PATH=str(data / "prism-telemetry.jsonl"), PYTHONDONTWRITEBYTECODE="1")
+    other = stage_opponent(game["opponent"], stage, env)
+    pair = [own, other] if game["seat"] == "prism-first" else [other, own]
+    runner = benchmark.download(CACHE, "robocode-tankroyale-runner-1.4.0.jar", benchmark.ASSETS["robocode-tankroyale-runner-1.4.0.jar"])
+    command = ["java", "-Dfile.encoding=UTF-8", "-cp", str(runner), str(TOOLS / "PrismBattle.java"),
+               str(game["rounds"]), str(240 * game["rounds"]), str(data / "results.json"), str(pair[0]), str(pair[1])]
+    (data / "attempt.json").write_text(json.dumps(dict(game=game, command=command,
+        execution=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        prismJarSHA256=sha256(own / "Prism.jar")), indent=1), encoding="utf-8")
+    benchmark.run_process(command, stage, env, data / "runner.log", 300 * game["rounds"] + 300)
+    res = json.loads((data / "results.json").read_text(encoding="utf-8"))
+    if res["numberOfRounds"] != game["rounds"]:
+        raise ValueError("incomplete game")
+    p = [r for r in res["results"] if r["name"] == "Prism"]
+    o = [r for r in res["results"] if r["name"] != "Prism"]
+    if len(p) != 1 or len(o) != 1:
+        raise ValueError("identity mismatch")
+    tel = telemetry_game(data / "prism-telemetry.jsonl")
+    if tel is None:
+        raise ValueError("missing Prism game telemetry")
+    c = tel["counters"]
+    turns = sum(v for k, v in c.items() if k.startswith("move.action.")) + c.get("move.reason.min-risk", 0)
+    return dict(prismScore=p[0]["totalScore"], opponentScore=o[0]["totalScore"], share=share(p[0]["totalScore"], o[0]["totalScore"]),
+                prismFirstPlaces=p[0]["firstPlaces"], opponentFirstPlaces=o[0]["firstPlaces"],
+                prismBulletDamage=p[0]["bulletDamage"], opponentBulletDamage=o[0]["bulletDamage"],
+                shotsRequested=c.get("fire.requested", 0), shotsConfirmed=c.get("fire.confirmed", 0), shotsHit=c.get("fire.hit", 0),
+                collisions=c.get("collision.wall", 0) + c.get("collision.bot", 0), skipped=c.get("turns.skipped", 0), turns=turns,
+                failures=sum(v for k, v in c.items() if k.startswith("failure.")), latency=tel.get("latencyMicros"),
+                counters=c)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--review", required=True, help="URL of the recorded independent premeasurement review")
+    ap.add_argument("--check-only", action="store_true", help="validate plan and pins; run nothing")
+    a = ap.parse_args()
+    plan = load_plan()
+    freeze = plan["freeze"]
+    if sha256(BUNDLE / "Prism.jar") != freeze["prismJarSHA256"]:
+        raise SystemExit("Prism.jar does not match the frozen hash")
+    if plan.get("approvedReview") in (None, "", "pending") or plan["approvedReview"] != a.review:
+        raise SystemExit("independent premeasurement review not recorded in the frozen plan")
+    if a.check_only:
+        print("plan and pins valid; no games run")
+        return
+    out = a.out.resolve()
+    if out.exists() and any(out.iterdir()):
+        raise SystemExit("output directory must be empty")
+    out.mkdir(parents=True, exist_ok=True)
+    report = dict(plan=str(PLAN.relative_to(ROOT)), planSHA256=sha256(PLAN), games=[], decision="pending")
+    dest = out / "decision.json"
+    for game in plan["games"]:
+        try:
+            row = dict(**game, status="valid", **play(game, out))
+        except Exception as e:  # preserved as evidence; never rerun
+            row = dict(**game, status="invalid", error=repr(e))
+        report["games"].append(row)
+        dest.write_text(json.dumps(report, indent=1), encoding="utf-8")
+    report["gates"] = gates(report["games"])
+    report["decision"] = report["gates"]["decision"]
+    dest.write_text(json.dumps(report, indent=1), encoding="utf-8")
+    print(report["decision"])
+
+
+if __name__ == "__main__":
+    main()

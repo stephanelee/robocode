@@ -1,0 +1,61 @@
+name: Prism registered screen
+# Manual only. The harness refuses to run unless docs/prism/screen-plan.json records the same
+# independent premeasurement review URL and the committed JAR matches the frozen hash.
+on:
+  workflow_dispatch:
+    inputs:
+      review:
+        description: URL of the recorded independent premeasurement review
+        required: true
+      check_only:
+        description: Validate plan and pins without running games
+        type: boolean
+        default: true
+permissions:
+  contents: read
+jobs:
+  screen:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Java 17 build, tests and source/JAR parity (before any JDK 25 use)
+        run: |
+          ./gradlew -p experiments/Prism --no-daemon clean build
+          python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/bot/Prism/Prism.jar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Record runtime
+        run: |
+          java -version 2>&1 | tee prism-runtime.txt
+          python --version | tee -a prism-runtime.txt
+          uname -a | tee -a prism-runtime.txt
+      - name: Run or validate the frozen screen
+        env:
+          PRISM_OPPONENT_PYTHON: python3.13
+          REVIEW: ${{ inputs.review }}
+          CHECK_ONLY: ${{ inputs.check_only }}
+        run: |
+          if [ "$CHECK_ONLY" = "true" ]; then
+            python tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --check-only
+          else
+            python tools/prism_screen.py --out build/prism-screen --review "$REVIEW"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prism-screen-${{ github.sha }}
+          path: |
+            build/prism-screen/
+            prism-runtime.txt
+          if-no-files-found: warn
