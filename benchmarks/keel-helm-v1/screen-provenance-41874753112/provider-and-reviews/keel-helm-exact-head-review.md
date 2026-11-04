@@ -1,0 +1,31 @@
+# Independent exact-head source/artifact clearance: KeelHelm v1
+
+**PASS at published head `368b49a9bae42a0cefd4fd9aa033a6bd576e566d`, tree `fb4e4176b8c40a183654852369840f86ed3d7696`.** This clears this exact source/artifact payload for ONE registered screen workflow only, provided root first assigns/starts an independent reviewer and records its dispatch provenance. The workflow may prepare/upload zero-game provenance; it MUST receive the separate actual same-running-worker runtime approval before any permanentreceipt/game. This is NOT that runtime approval, an outcome, confirmation/promotion or merge clearance.
+
+## Exact published identity and CI
+
+Independently queried PR108 head/state and GitHubcommit tree/parents: head368b49…, treefb4e417…, parents04c6440c16d499e89daad4c684aaba02c691abe2 and masterd76c508cc0f575b2191fe66a3eb61fd1f64ba498. CleanlocalHEAD/tree match. The routine master/Prism integration preserves both CIreportpaths/ordinarytests and both ledgersections. All90 executionfreezeassets remain byte-identical; candidate/controller/sourcecriteria/registry/runtimeallowances are unchanged. No old04c644 stage clearance was issued while its PR was dirty.
+
+Exact-head requiredCI is green: Java17build/tests/parity run41873586394 SUCCESS1m51s; componentfixtures41873586403 SUCCESS1m39s. Ordinarybattle/Retcon/energy jobs areSKIPPED by this experimentalbranch's explicit guards, not additionalregisteredgames. Full decoded sourceCIlog retained `/private/tmp/keel-helm-exact368-ci.log`, SHA256 765f0cbf6ce44aec978e5a90bf5929fc167f4398d15368eebd459f24dee32b36; APIjobstatus `/private/tmp/keel-helm-exact368-ci.json`. Log shows all15KeelHelmsemantic tests and21pureharness tests pass with committedJARparity; existingAISsource/committedJARparity and baselineKeelbuild/parity remain enabled. No registeredstage label or receipt existed on independentquery before thiscomment.
+
+## Frozen source/artifacts and intervention
+
+SourcefreezeSHA256 `ef876a82069d5c73baf7171aa95cf4058e3bc4a196f46d51bdf5ff1cf0b81a9b` binds90assets. Independentlyrehashchecked everyasset. Requiredmain873501cf08e1afbaa8e5dfb326d52f097624a3c52ffdc6b632f2f724e1ee62dd, strict21testfixturefile0b90cf…, harnessdoc9c57e6…, battlewrapperf745412…, Pythonproof19ce6c… matchcorrectivereview. Originalprotocol+prospectiveR1–R3 SHA d6f236669deaac74abe49699627e32af85f0c7fc604a516ba429e63c03ec913c and immutablegamesSHA bb10a78bd6344a85837d6d0e003d72617810542fe9930425462cad4996e6fcd5 remain unchanged.
+
+CandidateKeelHelm0.1.0 JAR `60ef5b1d33c3deb7100d1e66135f311d4b7b6fd5651cd1146effb899b9ea08c2`; immutableKeel0.1.0 control `77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f`. All17baseline/productionmanifestfiles match. Independentcopiedsource cleanofflineJava17rebuild passed15tests and produced identicalrawcandidateJAR/all788entries. Its localHomebrew17/macOScontext is correctlylimited topreparation, not hostedruntimeapproval.
+
+Onlygameplaydelta is first-leg stopped suffix invoking unchangedorbit+Phys.step(target0), allowingexistingbodyturn whilepositionstaysstationary beforesecondwavemovingcontinuation. Gun/Phys/Track/Knn sourcebytes remaincontrolidentical, powers/search/danger/learning/radar/terminalsecondWaveSTOP/knownramlogic unchanged. Isolateddescriptor/main/envrenames and boundedcandidate-onlyexposurecounters aredisclosed; no policy consumesdiagnostics. Existingcontrol/productionAIS remain unchanged.
+
+## Source correctness and integrity conditions
+
+Initial B1–B3 findings and failures are preserved in source-review evidence. Corrections independentlypass: livepinnedapproval/report/dispatch/currentartifact/exactPRidentity are refetched before receipt and everynewchild, edits/deletions/revocation/ambiguity failclosed; allacceptedmetadata anchors and fullpreparedgamecommand/environment/identitybytes remainbound to originalacceptedAPIapproval and laterremoteimmutabletag; ownedgroup teardown covers descendants evenafterrootexit with boundedTERM/KILL/reap. All21pureharnessfixtures independentlyrerunPASS. Existing completedKeelc1 rawrecording compatibilitycheck reconciledscore/wins/shots/hits/damage/energy/hash exactly; no newgame/outcomeaudit was therebyclaimed.
+
+The registered14game/120roundscreen and conditional18game/300freshconfirmation populations/gates are fixed. Firstinvalid/partial/timeout/runtime/skip/maxMs>=75/missingtiming stopsremainingIDs, retaining actualobserved/completedrounds andunplayedIDs. No scoreadaptive stop or replacement. KeelmodelhashesN/A,in-memorylearning/coldfreshprocesses; candidate-onlyexposure/controlN/A; completeactualAIS TRAIN files whenregistered. ExactUbuntu26.04 allowedrevisions, Temurin17.0.21+9build/parity before25.0.5+8Retcon/battles, Python3.13.17 and pinnedopponent/source/wheel/runner/sample/APIclosure are enforced.
+
+## Mandatory next gate: actual same-worker provenance
+
+Root must actually start the separate reviewer beforedispatch and publish the exact prospectiveassignmentcomment beforeworkflowcreation (providersecondprecision requires a real earliersecond). No reliance onhourlyheartbeat. Reviewer must independentlydownload the finalized originalprovenanceZIP, verifyAPIartifactdigest/allsource/JAR/runtime/native/package/command/populationbindings, inspect actualboot/workspace/runattempt1 and emit the reasonedreport plus strict20keyapproval onlyif everythingpasses. Missing/late/malformed/changedidentityabort0games afterbounded30minutes. Rehashwithoutrepair afterapproval/everychild; fixedcreate-onlyscreenreceipt thenexactregisteredorder. No approval is given inadvance for unknown actualruntime.
+
+Confirmation opens ONLY after completevalidscreen passesallregisteredgates and its rawdecision/recordings/receipt/run receive separateindependentoutcomeaudit, plus newlyreviewedexacthead/sourcegate and actualsame-workerconfirmationruntimeapproval. Never poolold/screen/confirmation or reset/resume/relabelspentstage. UserselectedKeelbaseline goal continues; otherownedFacet/Prismwork is not duplicated. No general-strength/causalclaim is automatic.
+
+I implemented no candidate/harness correction. I reviewedsource/artifacts, ran pureunit/build/parity checks and readexistingimmutableoldrecording, queriedGitHubmetadata and wroteindependentreports only. No bot/server/registeredgame, runtimecollection, token/label/dispatch/refmutation or merge was performed.
