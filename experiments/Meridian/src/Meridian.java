@@ -5,16 +5,11 @@ import java.io.*;
 import java.util.*;
 
 public final class Meridian extends Bot {
-    record Scan(int t,Flight.Pose p,double energy,double omega){}
+    record Scan(int t,Flight.Pose p,double energy){}
     private final HitAngles hitAngles = new HitAngles();
-    record Trial(int due,double[] angles,double x,double y){}
-    private final CrossingGun crossingGun = new CrossingGun();
+    private final CrossingGun crossingGun = CrossingGun.loadPrior();
     private Scan scan;
-    private int earliestShot, stopTurns, twoFrontTurns;
-    private double lastPower;
     private final LinkedList<HitAngles.Wave> waves=new LinkedList<>();
-    private final ArrayList<Trial> trials=new ArrayList<>();
-    private final double[] skill={.2,.3,.25}; // stop, coast, turn
     private final Map<Integer,Double> corrections=new HashMap<>();
     private final Flight.Pose[] history=new Flight.Pose[4];
     private final int[] stamp=new int[4];
@@ -29,14 +24,10 @@ public final class Meridian extends Bot {
         catch(IOException e){throw new UncheckedIOException(e);}
     }
     public void onRoundStarted(RoundStartedEvent e){
-        crossingGun.newRound();
-        earliestShot = 1 + SurfPlan.coolingTurns(3, getGunCoolingRate());
-        lastPower = 1.95;
-        stopTurns = twoFrontTurns = 0;
-        round=e.getRoundNumber(); scan=null;waves.clear();trials.clear();corrections.clear();Arrays.fill(stamp,-1);
+        round=e.getRoundNumber(); scan=null;waves.clear();corrections.clear();Arrays.fill(stamp,-1);
         side=new SplittableRandom(seed+round).nextBoolean()?1:-1;radarSign=side;mark("start");
     }
-    public void onRoundEnded(RoundEndedEvent e){mark("surf " + stopTurns + " " + twoFrontTurns); mark("end");}
+    public void onRoundEnded(RoundEndedEvent e){mark("end");}
     public void onSkippedTurn(SkippedTurnEvent e){mark("skip "+e.getTurnNumber());}
     public void onBulletHit(BulletHitBotEvent e){corrections.merge(e.getTurnNumber(),-e.getDamage(),Double::sum);}
     public void onHitByBullet(HitByBulletEvent e){
@@ -46,70 +37,46 @@ public final class Meridian extends Bot {
                 bullet.getDirection(), bullet.getPower());
         mark("hit " + label);
     }
-    public void onBulletFired(BulletFiredEvent event) {
-        var bullet = event.getBullet();
-        crossingGun.fired(event.getTurnNumber(), bullet.getX(), bullet.getY(), bullet.getPower());
-    }
     public void onScannedBot(ScannedBotEvent e){
         int t=e.getTurnNumber();
         if(scan!=null && t<=scan.t)return;
         Flight.Pose p=new Flight.Pose(e.getX(),e.getY(),e.getDirection(),e.getSpeed());
-        int learned = crossingGun.observe(t, p, scan == null ? -1 : scan.t, scan == null ? null : scan.p);
-        if (learned > 0) mark("crossings " + learned);
-        double omega=0;
         if(scan!=null && t==scan.t+1){
-            omega=Flight.delta(p.h()-scan.p.h());
             double power=scan.energy-e.getEnergy()+corrections.getOrDefault(t-1,0.);
             int k=(t-1)%4;
             if(power>=.09999 && power<=3.00001 && stamp[k]==t-1){
-                lastPower = Flight.clip(power, .1, 3);
-                earliestShot = SurfPlan.readyAfter(t, lastPower, getGunCoolingRate());
                 var own=history[k]; double a=Flight.angle(own.x()-scan.p.x(),own.y()-scan.p.y());
                 double lat=own.v()*Flight.sin(own.h()-a);
                 waves.add(new HitAngles.Wave(t,scan.p.x(),scan.p.y(),a,a+Math.toDegrees(Math.asin(lat/(20-3*power))),power));
             }
         }
         corrections.keySet().removeIf(k->k<t);
-        for(var it=trials.iterator();it.hasNext();){
-            Trial q=it.next(); if(q.due>t)continue;
-            if(q.due==t){
-                double a=Flight.angle(p.x()-q.x,p.y()-q.y),r=Math.hypot(p.x()-q.x,p.y()-q.y);
-                for(int i=0;i<3;i++){
-                    double miss=2*r*Math.abs(Flight.sin(Flight.delta(a-q.angles[i])/2));
-                    skill[i]=.94*skill[i]+.06/(1+miss*miss/324);
-                }
-            }
-            it.remove();
-        }
-        scan=new Scan(t,p,e.getEnergy(),omega);
+        scan=new Scan(t,p,e.getEnergy());
     }
     private void gun(int t,Flight.Pose own,double range){
         var p=scan.p; double energy=getEnergy();
         double power=Flight.clip(Math.min(Math.min(range<300?2.8:1.65,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
-        double[] aims=new double[3]; int[] arrival=new int[3];
-        for(int i=0;i<3;i++){
-            var pred=p;
-            for(int n=1;n<=120;n++){
-                pred=Flight.step(pred,new Flight.Command(i==2?scan.omega:0,i==0?0:pred.v()),getArenaWidth(),getArenaHeight());
-                if(Flight.farEdge(power,n)>=Math.hypot(pred.x()-own.x(),pred.y()-own.y())){
-                    arrival[i]=t+n;break;
-                }
-            }
-            aims[i]=Flight.angle(pred.x()-own.x(),pred.y()-own.y());
-        }
-        int best=0;for(int i=1;i<3;i++)if(skill[i]>skill[best])best=i;
-        // Grade all rays on the chosen forecast's impact turn, only when a real scan arrives.
-        if(scan.t==t && t%4==0)trials.add(new Trial(arrival[best],aims,own.x(),own.y()));
         var launch = CrossingGun.launch(t + 1, own, p, power, getArenaWidth(), getArenaHeight());
-        double estimate = crossingGun.aim(launch);
-        boolean learned = Double.isFinite(estimate);
-        double aim = learned ? estimate : aims[best];
+        double aim = crossingGun.aim(launch);
         setGunTurnRate(Flight.delta(aim - getGunDirection()));
         if (scan.t == t && Flight.canShoot(getGunDirection(), aim, range, energy, getGunHeat(), power)
                 && (energy > 1.2 || scan.energy <= .1) && setFire(power)) {
-            crossingGun.requested(launch);
-            mark(learned ? "aim learned" : "aim fallback");
+            mark("aim prior");
         }
+    }
+    private double route(Flight.Pose p,int t,int sign){
+        double risk=sign==side?0:2;
+        for(int i=1;i<=50;i++){
+            p=Flight.step(p,Flight.orbit(p,scan.p.x(),scan.p.y(),sign,getArenaWidth(),getArenaHeight()),getArenaWidth(),getArenaHeight());
+            double edge=Math.min(Math.min(p.x(),getArenaWidth()-p.x()),Math.min(p.y(),getArenaHeight()-p.y()));
+            risk+=Math.max(0,40-edge)*.10;
+            for (var wave : waves) {
+                double dx = p.x() - wave.x(), dy = p.y() - wave.y();
+                double radialError = Math.hypot(dx, dy) - Flight.farEdge(wave.power(), t + i - wave.t() + 1);
+                if (Math.abs(radialError) <= 22) risk += hitAngles.risk(wave, dx, dy);
+            }
+        }
+        return risk;
     }
     public void run(){
         setAdjustGunForBodyTurn(true);setAdjustRadarForGunTurn(true);setAdjustRadarForBodyTurn(true);setFireAssist(false);
@@ -125,13 +92,8 @@ public final class Meridian extends Bot {
                 var p=scan.p;double a=Flight.angle(p.x()-getX(),p.y()-getY());
                 double d=Flight.delta(a-getRadarDirection());if(Math.abs(d)>.01)radarSign=d>0?1:-1;
                 setRadarTurnRate(d+radarSign*18);
-                var planner = new SurfPlan(hitAngles, p, getArenaWidth(), getArenaHeight());
-                var choice = planner.choose(own, t, side, waves, earliestShot, lastPower);
-                if (choice.warned()) mark("warn " + (t + 1));
-                if (choice.fronts() == 2) twoFrontTurns++;
-                if (choice.mode() == 0) stopTurns++;
-                else side = choice.mode();
-                var cmd = planner.command(own, choice.mode());
+                side=route(own,t,1)<route(own,t,-1)?1:-1;
+                var cmd=Flight.orbit(own,p.x(),p.y(),side,getArenaWidth(),getArenaHeight());
                 setTurnRate(cmd.turn());setTargetSpeed(cmd.speed());
                 gun(t,own,Math.hypot(p.x()-getX(),p.y()-getY()));
             }

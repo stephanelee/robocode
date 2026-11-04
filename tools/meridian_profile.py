@@ -31,6 +31,11 @@ def main():
                 buildJava=(OUT/"build-java.sha256").read_text(), java17Version=(OUT/"build-java.txt").read_text(),
                 os=Path("/etc/os-release").read_text(), arch=platform.machine(), image=os.environ.get("ImageVersion"),
                 pythonBinary=benchmark.digest(python.resolve()), python=py, retcon=rc)
+    prior = bot / "src/main/resources/crossing-prior.csv"
+    if prior.exists():
+        data["assets"][str(prior.relative_to(ROOT))] = benchmark.digest(prior)
+        name = "sample-bots-Java-1.4.0.zip"
+        data["sampleArchive"] = benchmark.digest(benchmark.download(CACHE, name, benchmark.ASSETS[name]))
     (OUT/"profile.json").write_text(json.dumps(data,indent=2,sort_keys=True)+"\n")
     print("Verified:",hashlib.sha256((OUT/"profile.json").read_bytes()).hexdigest(),flush=True)
 

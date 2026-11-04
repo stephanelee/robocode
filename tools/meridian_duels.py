@@ -72,6 +72,8 @@ def metrics(path,game):
             extended["learnedFireRequests"] = sum(line.endswith(" aim learned") for line in markers)
             extended["fallbackFireRequests"] = sum(line.endswith(" aim fallback") for line in markers)
             extended["crossingLabels"] = sum(int(line.split()[2]) for line in markers if " crossings " in line)
+        if game["meridianVersion"] == "0.6.0":
+            extended["priorFireRequests"] = sum(line.endswith(" aim prior") for line in markers)
         if game["meridianVersion"] == "0.5.0":
             warnings = {(int(r), int(t)) for r, tag, t in (m.split() for m in markers if " warn " in m)}
             observed = {(tick["roundNumber"], tick["turnNumber"]) for tick in events
@@ -105,6 +107,14 @@ def play(game,profile,*,bundle=ROOT/"experiments/Meridian"):
         env.update(native.stage(src,stage,base/"venv/bin/python"))
         other=stage/"opponents/diamond-port";benchmark.isolate_opponent(src/"bots/ports/diamond-port",other)
         native.verify_staged(stage,["diamond-port"])
+    elif enemy == "Walls":
+        name = "sample-bots-Java-1.4.0.zip"
+        archive = benchmark.download(CACHE, name, profile["sampleArchive"])
+        samples = stage / "official-samples"
+        benchmark.extract(archive, samples)
+        descriptor, = samples.rglob("Walls.json")
+        other = stage / "Walls"
+        benchmark.isolate_opponent(descriptor.parent, other)
     elif enemy=="AISurvivor":
         other=stage/"AISurvivor";shutil.copytree(ROOT/"AISurvivor",other)
         env.update(AISURVIVOR_MODEL_PATH=str(data/"ais-model.dat"),AISURVIVOR_METRICS_PATH=str(data/"ais.jsonl"),
