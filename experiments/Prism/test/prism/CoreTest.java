@@ -145,6 +145,22 @@ class CoreTest {
     }
 
     @Test
+    void branchCutSegmentsSplitIntoShortPieces() {
+        // segment due west of the origin, reference east: the short arc straddles +/-pi
+        List<Geometry.Interval> iv = Geometry.union(Geometry.segmentShell(0, 0, -100, 5, -100, -5, 0, 1000, 0));
+        assertEquals(2, iv.size());
+        double total = 0;
+        for (Geometry.Interval i : iv) { total += i.width(); assertFalse(i.contains(0)); }
+        assertEquals(2 * Math.atan(0.05), total, 1e-9);
+        List<Geometry.Interval> n = Geometry.normalize(new Geometry.Interval(Math.PI - 0.1, Math.PI + 0.2));
+        assertEquals(2, n.size());
+        assertEquals(Math.PI, n.get(0).hi(), 1e-12);
+        assertEquals(-Math.PI + 0.2, n.get(1).hi(), 1e-12);
+        assertEquals(1, Geometry.normalize(new Geometry.Interval(-0.1, 0.1)).size());
+        assertEquals(2 * Math.PI, Geometry.normalize(new Geometry.Interval(-4, 4)).get(0).width(), 1e-12);
+    }
+
+    @Test
     void segmentShellMatchesBruteForce() {
         Random r = new Random(11);
         for (int k = 0; k < 200; k++) {

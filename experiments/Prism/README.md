@@ -32,7 +32,7 @@ python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/b
 
 The build writes the runnable bot directory to `build/bot/Prism/`. `Prism.jar` is committed, and CI checks source/JAR parity. Two clean builds produce byte-identical JARs. If the checkout lives in a synced folder that locks files, set `PRISM_BUILD_DIR` to a directory outside it.
 
-There are 34 JUnit tests: `CoreTest`, `LearningTest`, `BehaviourTest` and `EngineTraceTest`. `EngineTraceTest` replays real Tank Royale 1.4.0 recordings (see [fixtures](fixtures/README.md)).
+There are 39 JUnit tests: `CoreTest`, `LearningTest`, `BehaviourTest` (including the PR #105 review regressions) and `EngineTraceTest`. `EngineTraceTest` replays real Tank Royale 1.4.0 recordings (see [fixtures](fixtures/README.md)).
 
 ## Run
 
@@ -51,4 +51,4 @@ Every game starts cold. Learning persists across rounds within a game and resets
 - The recorded engine trace covers acceleration, instant stop, reversal from high and low speed, maximum turns at several speeds, wall contact and a near-corner diagonal contact. A simultaneous two-axis corner clamp is checked only against the engine formula.
 - Bot-collision prediction is a constant-velocity hypothesis. Unknown enemy commands are not modelled.
 - Bullet shadows are capped at 75%. The engine's bullet bounding-circle pre-check is not modelled.
-- The smoke run showed one skipped turn in 566 and a 102.8 ms worst decision, most likely cold-start JIT. No warm-up has been added.
+- The first smoke run (superseded candidate) showed one skipped turn in 566 and a 102.8 ms worst decision, most likely cold-start JIT. The current candidate's smoke showed none in 583, worst 19.3 ms. No warm-up has been added, and turn-budget compliance is not established for real matches.

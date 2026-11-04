@@ -30,10 +30,13 @@ public final class MeleePlanner {
 
     public MeleePlanner(Rules rules, long seed) { this.rules = rules; this.rng = new SplittableRandom(seed); }
 
+    public int recentSamples() { return recent.size(); }
+
     public void resetRound() { recent.clear(); destX = destY = Double.NaN; lastSampleTurn = Integer.MIN_VALUE; }
 
     public void record(int turn, double x, double y) {
-        if (turn - lastSampleTurn >= 8) {
+        // explicit uninitialised case: subtracting the sentinel would overflow
+        if (lastSampleTurn == Integer.MIN_VALUE || (long) turn - lastSampleTurn >= 8) {
             recent.addLast(new double[] {x, y});
             while (recent.size() > 32) recent.removeFirst();
             lastSampleTurn = turn;

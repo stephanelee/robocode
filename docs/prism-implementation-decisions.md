@@ -73,4 +73,16 @@ Each contract comes from the official v1.4.0 source and is confirmed by the reco
 | Melee and radar | Pass on synthetic fixtures (unknown and stale, last-survivor transition, all-unsafe emergency). No real melee trace yet |
 | Runtime | Saturated 8,192-sample store over 800 turns on the development machine: p50 4.2 ms, p99 17.1 ms, worst 92.6 ms (includes JIT). The real smoke had 1 skipped turn in 566, worst 102.8 ms, p99 14.0 ms. This is not yet a measured turn-budget guarantee |
 
-Build: 34/34 JUnit tests and 6/6 harness tests pass under Microsoft OpenJDK 17.0.18. Two clean builds produced byte-identical `Prism.jar` (`684a80d580619fc36666b41a3ba2827232e36fd1be59b57fa54922669691e0ed`).
+Build: 39/39 JUnit tests and 11/11 harness tests pass under Microsoft OpenJDK 17.0.18. Two clean builds produced byte-identical `Prism.jar` (`8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca`). The first frozen candidate, `684a80d5…`, is superseded (section 5).
+
+## 5 Review fixes (PR #105, review of head `1fe315a`)
+
+Each defect reproduced against the reviewed JAR. Each fix has a regression test. I mutation-checked every regression: with only the behavioural line reverted, the test fails and reproduces the reviewer's numbers (frozen power 0.9 instead of 1.0; shadow interval `[-3.1404826, 3.1182328]`; 0 revisit samples instead of 13).
+
+| Finding | Fix | Regression |
+| --- | --- | --- |
+| A confirmation promoted an independently powered virtual wave (1.0 shot vs 0.9 wave, speed 17.3 vs 17.0) | On the request tick the wave for the pending target is always created with the request's own power. The pending record stores that wave's ID. `onFired` promotes only that wave, and only if fire turn, origin and power all match. Otherwise no physical wave is invented (`fire.confirmedWithoutWave`); the bullet still casts shadows | `confirmationBindsToTheRequestPowerWhenTargetEnergyChangesOnTheRequestTick` |
+| A same-batch scan resurrected a bot killed in that batch | Round-local `Enemy.deathTurn` tombstone. Scans at or before it are ignored (`scan.ignoredAtOrBeforeDeath`); round reset clears it. The real smoke recorded 3 such scans in 3 rounds, so the defect occurred in real play | `sameBatchScanNeverResurrectsAConfirmedDeath` |
+| A shadow segment crossing ±π became the long arc and shadowed bearing 0 | `segmentShell` unwraps the second endpoint relative to the first (a segment not through the origin subtends < π). `Geometry.normalize` splits at the branch cut. The planner compares footprints with shadows in the same normalized frame | `shadowAcrossTheBranchCutStaysAShortArc`, `branchCutSegmentsSplitIntoShortPieces` |
+| The melee revisit sampler never sampled (`turn - Integer.MIN_VALUE` overflow) | Explicit uninitialised case and long arithmetic | `meleeRevisitSamplesStartOnTheFirstTurnAndAfterReset` (also after reset) |
+| No durable replay protection for the screen | Atomic receipt tag at the execution head, consumed in its own step before any game; exact-head clearance; run-ID-bound receipt file; workflow concurrency group. See the [protocol](prism-screen-protocol.md) | `ReceiptTest` (5 tests: second dispatch refused, spent receipt kept, other run/head rejected, extra diff rejected, review mismatch rejected) |

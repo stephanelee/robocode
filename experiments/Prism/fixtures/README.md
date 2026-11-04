@@ -21,6 +21,10 @@ Two scripted probe bots took part (`probe/prism/probe/Probe.java`, built by `gra
 
 Three earlier recordings in the same session are not preserved here. Each was a superset attempt that failed to reach the corner because of probe-script bugs: a wall-phase counter reset and a diagonal push that pins the bot. The first recording (362/363 ticks, mover SHA-256 `658803fa…`) passed the same tests before it was superseded. It revealed no predictor disagreement. The corner recording then exposed one: the engine applies its wall constraint twice. `Physics` was corrected and the test now covers it.
 
-## `lifecycle-smoke-1/`: API integration smoke (not a measurement)
+## `lifecycle-smoke-2/`: API integration smoke of the current candidate (not a measurement)
+
+Prism `8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca` (after the PR #105 review fixes) played three rounds against the same passive probe shooter. Results: 34 fire requests, 34 confirmations, each bound to its own frozen request wave (0 `fire.confirmedWithoutWave`), 30 hits, 0 cancelled requests, 0 subsystem failures, 0 skipped turns in 583. Worst decision 19.3 ms (p99 5.2 ms). `scan.ignoredAtOrBeforeDeath` was 3: in each round the kill-turn scan arrived in the same batch as the death, the case the review identified.
+
+## `lifecycle-smoke-1/`: superseded candidate (not a measurement)
 
 Prism `684a80d580619fc36666b41a3ba2827232e36fd1be59b57fa54922669691e0ed` played three rounds against the passive probe shooter. This checks the real API path: round resets, fire request → confirmation, telemetry, and no exceptions. Results: 33 fire requests, 33 engine confirmations, 30 hits, 0 unconfirmed or cancelled requests, 0 subsystem failures. There was **1 skipped turn** in 566, and the worst decision took 102.8 ms (p99 14.0 ms, p50 0.62 ms). A passive diagnostic bot is not an opponent, so this result supports no strength claim.

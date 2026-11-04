@@ -176,6 +176,80 @@ class BehaviourTest {
         }
     }
 
+    // ------------------------------------------------------------------ review regressions (PR #105)
+
+    @Test
+    void confirmationBindsToTheRequestPowerWhenTargetEnergyChangesOnTheRequestTick() {
+        Brain b = duelBrain();
+        Gun g = new Gun();
+        double energy = 4;                      // kill cap 4/4 = 1.0 while the plan is prepared
+        Command c = null;
+        int t;
+        for (t = 1; t <= 60; t++) {
+            double heat = Math.max(0, 3.0 - 0.1 * t); if (heat < 1e-9) heat = 0;
+            c = b.turn(new Obs.Turn(1, ownG(t, heat, 100, g.heading), List.of(new Obs.Scan(t, 7, energy, 600, 300, 0, 0))));
+            g.apply(c);
+            if (c.firepower() > 0) break;
+            if (b.plan() != null) energy = 3.6;  // the request tick sees a lower energy (kill cap 0.9)
+        }
+        assertEquals(1.0, c.firepower(), 1e-12, "the prepared plan's power is fired");
+        assertEquals(1.0, b.pending().power(), 1e-12);
+        Wave frozen = b.waves().stream().filter(w -> w.id == b.pending().waveId()).findFirst().orElseThrow();
+        assertEquals(1.0, frozen.power, 1e-12, "request wave frozen with the request's power");
+        b.turn(new Obs.Turn(1, ownG(t + 1, 1.2, 99, g.heading), List.of(new Obs.BulletFired(t + 1, 1, 1.0, 200, 300, 0), new Obs.Scan(t + 1, 7, 3.6, 600, 300, 0, 0))));
+        List<Wave> physical = b.waves().stream().filter(w -> w.physical).toList();
+        assertEquals(1, physical.size());
+        assertEquals(1.0, physical.get(0).power, 1e-12);
+        assertEquals(17.0, physical.get(0).speed, 1e-12);
+        assertEquals(0, b.telemetry().get("fire.confirmedWithoutWave"));
+    }
+
+    @Test
+    void sameBatchScanNeverResurrectsAConfirmedDeath() {
+        Brain b = duelBrain();
+        b.turn(new Obs.Turn(1, own(10, 200, 300, 1, 100), List.of(new Obs.Scan(10, 7, 50, 600, 300, 0, 0))));
+        // legal batch: scan at k, then the bullet-phase death at k
+        b.turn(new Obs.Turn(1, own(11, 200, 300, 1, 100), List.of(new Obs.Scan(11, 7, 0.5, 600, 300, 0, 0), new Obs.BotDeath(11, 7))));
+        assertFalse(b.enemies().get(7).alive);
+        b.turn(new Obs.Turn(1, own(12, 200, 300, 1, 100), List.of()));
+        assertFalse(b.enemies().get(7).alive);
+        assertEquals(1, b.telemetry().get("scan.ignoredAtOrBeforeDeath"));
+        // the tombstone is round-local
+        b.turn(new Obs.Turn(2, own(1, 200, 300, 3, 100), List.of(new Obs.Scan(1, 7, 100, 600, 300, 0, 0))));
+        assertTrue(b.enemies().get(7).alive);
+    }
+
+    @Test
+    void shadowAcrossTheBranchCutStaysAShortArc() {
+        // reviewer's case: reference 0 (east), own bullet heading west-north-west behind the source
+        Wave w = new Wave(1, Wave.Role.INCOMING, 7, -1, 101, 101, 400, 300, 2.8, 0, 0, 1, Wave.Escape.THEORETICAL, 0, 0, ctx(), 1, 101);
+        Shadows.Bullet b = new Shadows.Bullet(1, 72, 700, 420, Math.atan2(-120, -400), 3, Integer.MAX_VALUE);
+        List<Geometry.Interval> sh = Shadows.compute(w, List.of(b), 108, 700, 300, R);
+        double total = 0;
+        for (Geometry.Interval i : sh) {
+            assertTrue(i.lo() >= -Math.PI && i.hi() <= Math.PI, "normalized " + i);
+            assertFalse(i.contains(0), "forward bearing must not be shadowed: " + i);
+            total += i.width();
+        }
+        assertTrue(total < 0.5, "short westward arc, total " + total);
+    }
+
+    @Test
+    void meleeRevisitSamplesStartOnTheFirstTurnAndAfterReset() {
+        MeleePlanner m = new MeleePlanner(R, 1);
+        for (int t = 1; t <= 100; t++) m.record(t, 400, 300);
+        assertEquals(13, m.recentSamples());
+        m.resetRound();
+        assertEquals(0, m.recentSamples());
+        m.record(1, 400, 300);
+        assertEquals(1, m.recentSamples());
+        // the penalty is active: a revisited point is riskier than a fresh one
+        List<MeleePlanner.Opponent> o = List.of(new MeleePlanner.Opponent(1, 100, 100, 100, 1, 0, 0, 0));
+        assertTrue(m.risk(400, 300, 400, 300, 100, o) > m.risk(400, 300, 400, 300, 100, o) / 1.9);
+        MeleePlanner fresh = new MeleePlanner(R, 1);
+        assertTrue(m.risk(400, 300, 390, 300, 100, o) > fresh.risk(400, 300, 390, 300, 100, o));
+    }
+
     // ------------------------------------------------------------------ firing policy
 
     @Test

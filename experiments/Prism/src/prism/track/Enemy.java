@@ -11,6 +11,8 @@ import prism.core.Rules;
 public final class Enemy {
     public final int id;
     public boolean alive = true;
+    /** Round-local death tombstone: scans at or before this turn never revive the bot. */
+    public int deathTurn = Integer.MIN_VALUE;
     public final History history = new History(Profile.HISTORY_TICKS, Profile.MAX_INTERP_GAP);
     public final FireInference fire;
     public final PowerModel power = new PowerModel();
@@ -32,6 +34,7 @@ public final class Enemy {
 
     public void resetRound() {
         alive = true;
+        deathTurn = Integer.MIN_VALUE;
         history.clear();
         fire.resetRound();
         lastMoveSign = 0;

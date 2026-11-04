@@ -100,9 +100,13 @@ public final class Geometry {
         }
         for (double[] s : segs) {
             if (s[0] > s[1]) continue;
-            double t0 = rel(Math.atan2(py + s[0] * uy, px + s[0] * ux), reference);
-            double t1 = rel(Math.atan2(py + s[1] * uy, px + s[1] * ux), reference);
-            out.add(new Interval(Math.min(t0, t1), Math.max(t0, t1)));
+            // a segment not through the origin subtends less than pi: unwrap the second endpoint
+            // relative to the first so a short arc across the +/-pi branch cut stays short
+            double a0 = Math.atan2(py + s[0] * uy, px + s[0] * ux);
+            double a1 = Math.atan2(py + s[1] * uy, px + s[1] * ux);
+            double t0 = rel(a0, reference);
+            double t1 = t0 + Angles.wrap(a1 - a0);
+            out.addAll(normalize(new Interval(Math.min(t0, t1), Math.max(t0, t1))));
         }
         return out;
     }
@@ -112,6 +116,21 @@ public final class Geometry {
         if (disc < 0) return null;
         double s = Math.sqrt(disc);
         return new double[] {(-b - s) / a, (-b + s) / a};
+    }
+
+    /**
+     * Splits an unwrapped relative interval at the +/-pi branch cut into pieces inside [-pi, pi].
+     * An interval of width >= 2*pi becomes the full circle.
+     */
+    public static List<Interval> normalize(Interval iv) {
+        List<Interval> out = new ArrayList<>();
+        if (iv.width() >= Angles.TWO_PI) { out.add(new Interval(-Math.PI, Math.PI)); return out; }
+        double lo = iv.lo(), hi = iv.hi();
+        while (lo < -Math.PI) { lo += Angles.TWO_PI; hi += Angles.TWO_PI; }
+        while (lo >= Math.PI) { lo -= Angles.TWO_PI; hi -= Angles.TWO_PI; }
+        if (hi <= Math.PI) out.add(new Interval(lo, hi));
+        else { out.add(new Interval(lo, Math.PI)); out.add(new Interval(-Math.PI, hi - Angles.TWO_PI)); }
+        return out;
     }
 
     /** Sorted, merged union of intervals; disconnected parts are retained. */

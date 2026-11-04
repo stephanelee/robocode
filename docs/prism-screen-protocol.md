@@ -1,6 +1,6 @@
 # Prism prospective screen protocol
 
-**Status: registered, not run.** No Prism gameplay battle against any opponent has happened. Running the screen needs an independent premeasurement review recorded in [`docs/prism/screen-plan.json`](prism/screen-plan.json) (`approvedReview`) and in the tracking issue. The implementer must not approve their own protocol. This protocol is frozen as written. No value may change after any outcome is observed.
+**Status: registered, not run.** No Prism gameplay battle against any opponent has happened. The first premeasurement review (PR #105, head `1fe315a`) found four gameplay defects and missing replay protection. The candidate was fixed and refrozen; that review does not clear it. Running the screen needs a **new** independent premeasurement review of the exact refrozen head, recorded in [`docs/prism/screen-plan.json`](prism/screen-plan.json) as `approvedReview` (review URL) and `approvedHead` (the exact 40-character reviewed commit), and in the tracking issue. The implementer must not approve their own protocol. This protocol is frozen as written. No value may change after any outcome is observed.
 
 ## Hypothesis
 
@@ -18,6 +18,8 @@ The expected outcome is not stated as a claim. The repository's history (Meridia
 | Diamond Port, Adaptive Prime | `tools/opponents/strong-melee.lock.json` at git blob `8e2dac721b240d57330fd1afd00cf7c919bc256c`, staged unchanged by `strong_melee_opponents.prepare/stage/verify_staged` under Python 3.13 |
 | Retcon | `tools/opponents/retcon.lock.json` at git blob `885137b3638f3d19d537bb9189333e747886e21a`, via `retcon.prepare`, source tree hash verified, JDK 25.0.5+8 |
 | Official samples | SpinBot and Walls from `sample-bots-Java-1.4.0.zip`, SHA-256 `1707c101…a0765fe2` |
+| Replay protection | A durable receipt: tag `refs/tags/prism-screen-v1-<first 16 hex of the frozen JAR SHA-256>`, created atomically through the GitHub API at the exact execution head before the first game, in a separate workflow step. Creation fails if the tag exists, so any later dispatch or re-run attempt stops before a match. The receipt is never deleted, including after a failed or invalid screen. The game step requires a receipt file from the same run ID, and the remote tag must point at the execution head |
+| Exact-head clearance | The execution head must descend from `approvedHead`, and `git diff approvedHead..head` may touch only `docs/prism/screen-plan.json` (the approval record). Any other change refuses the run |
 | Runtime | GitHub Actions `ubuntu-26.04`. Temurin 17 for the Gradle build and JAR parity, then Temurin 25.0.5+8 for every match after Gradle has finished. Harness: `tools/prism_screen.py`, `tools/PrismBattle.java` |
 
 ## Budget and structure (fixed)

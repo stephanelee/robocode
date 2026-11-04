@@ -213,7 +213,8 @@ public final class DuelPlanner {
                 double g0 = w.orbitSign * iv.lo() / w.maxEscape, g1 = w.orbitSign * iv.hi() / w.maxEscape;
                 prob += Danger.integrate(th.density(), Math.min(g0, g1), Math.max(g0, g1), w.maxEscape);
                 total += iv.width();
-                shadowed += Geometry.overlap(iv, th.shadows());
+                // shadows live in normalized [-pi, pi] pieces: compare in the same frame
+                for (Geometry.Interval piece : Geometry.normalize(iv)) shadowed += Geometry.overlap(piece, th.shadows());
             }
             if (total > 0) unshadow = 1 - th.shadowCap() * Math.min(1, shadowed / total);
         }

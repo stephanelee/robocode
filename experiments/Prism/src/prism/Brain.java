@@ -249,14 +249,18 @@ public final class Brain {
     private boolean onFired(Obs.BulletFired bf) {
         tel.inc("fire.confirmed");
         bullets.put(bf.bulletId(), new Shadows.Bullet(bf.bulletId(), bf.turn(), bf.x(), bf.y(), bf.heading(), bf.power(), Integer.MAX_VALUE));
-        // associate with the virtual wave created on the request tick (origin = our position then)
+        // bind to the wave frozen for this exact pending request: same id, fire turn, origin and power
         Wave match = null;
-        for (Wave w : waves) {
-            if (w.ownerId != -1 || w.role != Wave.Role.VIRTUAL || w.fireTurnMin != bf.turn()) continue;
-            if (Math.hypot(w.ox - bf.x(), w.oy - bf.y()) < 1e-6) { match = w; break; }
+        if (pending != null && pending.waveId() >= 0) {
+            for (Wave w : waves) {
+                if (w.id != pending.waveId()) continue;
+                if (w.role == Wave.Role.VIRTUAL && w.fireTurnMin == bf.turn() && Math.hypot(w.ox - bf.x(), w.oy - bf.y()) < 1e-6
+                        && Math.abs(w.power - bf.power()) < 1e-9) match = w;
+                break;
+            }
         }
         if (match != null) { match.role = Wave.Role.OUTGOING; match.physical = true; match.bulletId = bf.bulletId(); }
-        else tel.inc("fire.confirmedWithoutWave");
+        else tel.inc("fire.confirmedWithoutWave"); // the bullet still casts shadows; no physical wave is invented
         if (pending == null) tel.inc("fire.confirmedWithoutRequest");
         pending = null;
         return true;
@@ -283,8 +287,9 @@ public final class Brain {
     }
 
     private void onBotDeath(Obs.BotDeath bd) {
-        Enemy e = enemies.get(bd.botId());
-        if (e != null) e.alive = false;
+        Enemy e = enemy(bd.botId());
+        e.alive = false;
+        e.deathTurn = Math.max(e.deathTurn, bd.turn()); // round-local tombstone
         for (Wave w : waves) if (w.targetId == bd.botId() && !w.isThreat() && !w.labelEmitted) { w.cancelled = true; w.cancelReason = "target death"; }
         if (plan != null && plan.targetId() == bd.botId()) plan = null;
     }
@@ -339,6 +344,10 @@ public final class Brain {
 
     private void onScan(Obs.Scan s, Obs.Own own) {
         Enemy e = enemy(s.botId());
+        if (e.deathTurn != Integer.MIN_VALUE && s.turn() <= e.deathTurn) {
+            tel.inc("scan.ignoredAtOrBeforeDeath"); // a same-batch scan never resurrects a confirmed death
+            return;
+        }
         e.alive = true;
         History.Sample prev = e.latest();
         double wMin = 0, wMax = 0;
@@ -580,11 +589,14 @@ public final class Brain {
         int coolTurns = rules.turnsToCool(own.gunHeat());
         // virtual waves for every fresh target
         for (Enemy e : enemies.values()) {
-            if (!e.alive || e.scanAge(turn) != 0) continue;
+            // the wave of an actual request is always created and frozen with the request's own power
+            boolean request = firingNow && pending != null && pending.waveId() < 0 && pending.targetId() == e.id && e.latest() != null;
+            if (!e.alive || (e.scanAge(turn) != 0 && !request)) continue;
             History.Sample ts = e.latest();
             double range = Math.hypot(ts.x() - own.x(), ts.y() - own.y());
             double power = liveCount > 1 ? Firing.meleePower(range, own.energy(), ts.energy()) : Firing.duelPower(range, own.energy(), ts.energy());
             if (power <= 0) power = Rules.MIN_POWER;
+            if (request) power = pending.power();
             Guns.Aim a = aimFor(e, own.x(), own.y(), turn + 1, power, firingNow ? 0 : coolTurns, population, own.gunHeading());
             Wave w = new Wave(waveIds++, Wave.Role.VIRTUAL, -1, e.id, turn + 1, turn + 1, own.x(), own.y(), power, 0,
                     a.reference(), a.orbitSign(), Wave.Escape.PRECISE, a.escPos(), a.escNeg(), a.context(), 1.0, turn);
@@ -600,6 +612,10 @@ public final class Brain {
                 }
             }
             addWave(w);
+            if (request) {
+                Firing.Pending p = pending;
+                pending = new Firing.Pending(p.requestTurn(), p.expectedConfirmTurn(), p.power(), p.angle(), p.originX(), p.originY(), p.targetId(), w.id);
+            }
         }
         // the plan for next tick
         if (liveCount > 1) return aimMelee(turn, own, next, coolTurns);

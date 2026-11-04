@@ -158,26 +158,100 @@ def play(game, out):
                 counters=c)
 
 
+# ---------------------------------------------------------------- clearance and durable receipt
+
+SCREEN_ID = "prism-screen-v1"
+PLAN_REL = "docs/prism/screen-plan.json"
+
+
+def _run(cmd):
+    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    return p.returncode, p.stdout.strip()
+
+
+def receipt_ref(plan):
+    """Durable receipt for this frozen screen: one tag per frozen candidate, never reused."""
+    return "refs/tags/%s-%s" % (SCREEN_ID, plan["freeze"]["prismJarSHA256"][:16])
+
+
+def verify_clearance(plan, review, head, run=_run):
+    """The review must be recorded, and the execution head may differ from the exact reviewed head
+    only by the plan file that records the approval."""
+    if plan.get("approvedReview") in (None, "", "pending") or plan["approvedReview"] != review:
+        raise SystemExit("independent premeasurement review not recorded in the frozen plan")
+    reviewed = plan.get("approvedHead")
+    if not reviewed or reviewed == "pending" or len(reviewed) != 40:
+        raise SystemExit("exact reviewed head not recorded in the frozen plan")
+    code, _ = run(["git", "merge-base", "--is-ancestor", reviewed, head])
+    if code != 0:
+        raise SystemExit("execution head does not descend from the reviewed head")
+    code, out = run(["git", "diff", "--name-only", reviewed, head])
+    changed = {l for l in out.splitlines() if l.strip()}
+    if code != 0 or not changed <= {PLAN_REL}:
+        raise SystemExit("execution head changes more than the approval record: %s" % sorted(changed - {PLAN_REL}))
+
+
+def consume_receipt(plan, repo, head, run_id, run=_run, receipt_file=None):
+    """Atomically create the receipt tag at the execution head before any game. Creation fails if
+    the tag already exists, so a second dispatch (or a re-run attempt) is refused. The receipt is
+    never deleted, including after failure."""
+    ref = receipt_ref(plan)
+    code, out = run(["gh", "api", "-X", "POST", "repos/%s/git/refs" % repo, "-f", "ref=" + ref, "-f", "sha=" + head])
+    if code != 0:
+        raise SystemExit("screen receipt %s already consumed or unavailable; refusing to launch any game" % ref)
+    receipt = dict(ref=ref, head=head, runId=str(run_id), repo=repo)
+    path = receipt_file or (ROOT / "build/prism-screen-receipt.json")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "x", encoding="utf-8") as f:  # exclusive: one receipt per workspace
+        json.dump(receipt, f)
+    return receipt
+
+
+def verify_receipt(plan, head, run_id, run=_run, receipt_file=None):
+    """Before launching games: this run consumed the receipt, and the remote tag points at this head."""
+    path = receipt_file or (ROOT / "build/prism-screen-receipt.json")
+    if not path.exists():
+        raise SystemExit("no receipt consumed by this run; refusing to launch any game")
+    r = json.loads(path.read_text(encoding="utf-8"))
+    ref = receipt_ref(plan)
+    if r.get("ref") != ref or r.get("head") != head or r.get("runId") != str(run_id):
+        raise SystemExit("receipt does not belong to this run and head")
+    code, out = run(["git", "ls-remote", "origin", ref])
+    if code != 0 or not out.startswith(head):
+        raise SystemExit("remote receipt does not point at the execution head")
+    return r
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--review", required=True, help="URL of the recorded independent premeasurement review")
-    ap.add_argument("--check-only", action="store_true", help="validate plan and pins; run nothing")
+    ap.add_argument("--head", required=True, help="exact execution commit (GITHUB_SHA)")
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--check-only", action="store_true", help="validate plan, pins and clearance; run nothing")
+    mode.add_argument("--consume-receipt", metavar="OWNER/REPO", help="atomically consume the durable receipt; run nothing")
     a = ap.parse_args()
     plan = load_plan()
     freeze = plan["freeze"]
     if sha256(BUNDLE / "Prism.jar") != freeze["prismJarSHA256"]:
         raise SystemExit("Prism.jar does not match the frozen hash")
-    if plan.get("approvedReview") in (None, "", "pending") or plan["approvedReview"] != a.review:
-        raise SystemExit("independent premeasurement review not recorded in the frozen plan")
+    verify_clearance(plan, a.review, a.head)
+    run_id = os.environ.get("GITHUB_RUN_ID", "")
     if a.check_only:
-        print("plan and pins valid; no games run")
+        print("plan, pins and clearance valid; no games run")
         return
+    if a.consume_receipt:
+        if not run_id:
+            raise SystemExit("receipts are consumed only inside the registered workflow")
+        print("consumed", consume_receipt(plan, a.consume_receipt, a.head, run_id)["ref"])
+        return
+    verify_receipt(plan, a.head, run_id)
     out = a.out.resolve()
     if out.exists() and any(out.iterdir()):
         raise SystemExit("output directory must be empty")
     out.mkdir(parents=True, exist_ok=True)
-    report = dict(plan=str(PLAN.relative_to(ROOT)), planSHA256=sha256(PLAN), games=[], decision="pending")
+    report = dict(plan=str(PLAN.relative_to(ROOT)), planSHA256=sha256(PLAN), head=a.head, receipt=receipt_ref(plan),
+                  games=[], decision="pending")
     dest = out / "decision.json"
     for game in plan["games"]:
         try:
