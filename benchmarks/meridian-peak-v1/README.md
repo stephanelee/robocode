@@ -48,3 +48,11 @@ All25 participant assets, schedule, runtime family, packages and success criteri
 match the preserved original registration. A fresh zero-game hosted profile must
 exercise collect-once followed by two read-only verifications before any renewed
 exact-head screen clearance. The screen and confirmation receipts remain unused.
+
+Repaired hosted zero-game [preflight41782792500](https://github.com/stephanelee/robocode/actions/runs/41782792500)
+passed at `05b3abdd3ce742d72de943e7a8a00d2fe1ba42f2`, allowed image
+`20261026.180.1`: one fresh collection and two strict read-only verifications.
+[Full original ZIP, log, environment proof and preparation evidence](preflight/run-41782792500/)
+are retained. ZIP SHA256: `41ad46e0fe5704449ce4d7bf2b10d861410dcc269b2694bf5a3c7a971399a2da`.
+This validates preparation, not strength. Physical games/rounds remain0; both
+permanent acquisition receipts remain unused pending renewed exact-head clearance.

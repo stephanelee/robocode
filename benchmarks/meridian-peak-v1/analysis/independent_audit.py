@@ -165,6 +165,22 @@ assert activation['hostIdentity']==host and activation['hostDocumentSHA256']==sh
 assert host['stage']=='screen' and host['runID']==activation['runID'] and host['runAttempt']=='1' and host['bootID'] and host['workspace']=='/home/runner/work/robocode/robocode'
 assert host['profileSHA256']==sha(RAW/'profile.json') and host['packageSHA256']==PACKAGE and host['freezeSHA256']==FREEZE
 assert host['toolingSHA256']==hashlib.sha256(json.dumps(frozen['tooling'],sort_keys=True).encode()).hexdigest()
+proof=read(RAW/'prepared-environment.json')
+assert host['preparationSHA256']==sha(RAW/'prepared-environment.json')
+assert set(proof)=={'schemaVersion','venv','pythonExecutable','venvInventoryPolicy','pyvenvConfigSHA256','venvFiles','java17Home','java17JavaSHA256','java17HomeProofSHA256'} and type(proof['schemaVersion']) is int and proof['schemaVersion']==1
+assert proof['venvInventoryPolicy']=='regular .pyc/__pycache__ excluded; every symlink identity included'
+expected_venv=host['workspace']+'/.benchmark-cache/strong-python/'+profile['runtime']['python']['commit']+'/venv'
+assert proof['venv']==expected_venv and proof['pythonExecutable']==expected_venv+'/bin/python'
+def hex64(x):return isinstance(x,str) and len(x)==64 and all(c in '0123456789abcdef' for c in x)
+assert all(hex64(proof[k]) for k in ['pyvenvConfigSHA256','java17JavaSHA256','java17HomeProofSHA256'])
+assert pathlib.PurePosixPath(proof['java17Home']).is_absolute() and proof['venvFiles']
+for name,entry in proof['venvFiles'].items():
+ path=pathlib.PurePosixPath(name);assert name and not path.is_absolute() and '..' not in path.parts and set(entry)=={'sha256','symlink'}
+ assert entry['sha256'] is None or hex64(entry['sha256'])
+ assert entry['symlink'] is None or isinstance(entry['symlink'],str)
+ assert entry['sha256'] is not None or entry['symlink'] is not None
+assert proof['venvFiles']['pyvenv.cfg']==dict(sha256=proof['pyvenvConfigSHA256'],symlink=None)
+prepared_summary=dict(sha256=sha(RAW/'prepared-environment.json'),venv=proof['venv'],inventoryEntries=len(proof['venvFiles']),symlinks=sum(e['symlink'] is not None for e in proof['venvFiles'].values()),inventoryPolicy=proof['venvInventoryPolicy'],hostAndReceiptBound=True,limitation='Archived proof structure and host/receipt hash binding verified. Live environment bytes were verified by the frozen hosted harness; the full venv and JDK installations are not part of this raw archive.')
 for name,h in read(RAW/'artifact-files.json').items():assert sha(RAW/name)==h,name
 plan=[g.copy() for g in read(REG/'games.json') if g['stage']=='screen'];assert len(plan)==5 and sum(g['rounds'] for g in plan)==25
 for g in plan:
@@ -216,7 +232,7 @@ for game,declared in zip(plan,decision['games']):
 control,diamond,*transfer=rows
 passed=diamond['share']>control['share'] and diamond['damagePer100EnemyShots']<control['damagePer100EnemyShots'] and all(r['share']>.35 and r['wins']>=1 for r in [diamond,*transfer])
 assert decision['decision'] is passed,(decision['decision'],passed)
-output=dict(audit='PASS',stage='screen',independent=True,head=HEAD,freezeSHA256=FREEZE,runID=activation['runID'],receiptObject=activation['receiptObject'],physicalRounds=25,invalidRounds=0,screenPass=passed,games=rows,artifactSHA256=sha(A.artifact_zip) if A.artifact_zip else None,limitations='No repository reducer or candidate evaluator imported; no new game, matrix or Java process. Full staged archive required. Incoming histogram bin positions are not reconstructed; finite legal mass/accepted-label conservation and source provenance checked. Outgoing bank and gun-skill updates independently replayed from actual legal scan labels. Offline audit cannot prove absence of external unrecorded games; live durable-ref/run identity must be independently queried.')
+output=dict(audit='PASS',stage='screen',independent=True,head=HEAD,freezeSHA256=FREEZE,runID=activation['runID'],receiptObject=activation['receiptObject'],preparedEnvironment=prepared_summary,physicalRounds=25,invalidRounds=0,screenPass=passed,games=rows,artifactSHA256=sha(A.artifact_zip) if A.artifact_zip else None,limitations='No repository reducer or candidate evaluator imported; no new game, matrix or Java process. Full staged archive required. Incoming histogram bin positions are not reconstructed; finite legal mass/accepted-label conservation and source provenance checked. Outgoing bank and gun-skill updates independently replayed from actual legal scan labels. Offline audit cannot prove absence of external unrecorded games; live durable-ref/run identity must be independently queried.')
 if A.output:A.output.parent.mkdir(parents=True,exist_ok=True);A.output.write_text(json.dumps(output,indent=2,sort_keys=True)+'\n')
 for r in rows:print(r['id'],f"share={100*r['share']:.6f}% wins={r['wins']}/{r['rounds']} shots/hits={r['shots']}/{r['hits']} damage={r['damageDealt']:.6f}/{r['damageTaken']:.6f}")
 print('Independent full SCREEN audit PASS; registered screen decision:',passed)
