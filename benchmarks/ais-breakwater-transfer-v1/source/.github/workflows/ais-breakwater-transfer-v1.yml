@@ -1,0 +1,61 @@
+name: Registered AIS Breakwater movement transfer
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    if: github.event.label.name == 'run-ais-breakwater-transfer-v1' && github.run_attempt == 1
+    runs-on: ubuntu-26.04
+    timeout-minutes: 95
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Fetch immutable comparison sources
+        run: git fetch origin b9f61e536c0ff5860f6aabc0f6d3f4a11685a3d9 9b1624da2d9b09ec9cc4f580b51bc82edd2c1485
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Compile, test and verify committed candidate
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/ais-candidate.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/ais-candidate.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/ais-candidate.jar" AISurvivor/AISurvivor.jar
+          python -m unittest discover -s tools -p test_ais_breakwater_transfer.py -v
+      - name: Stage the unchanged accepted baseline
+        run: |
+          python - <<'PY'
+          import subprocess
+          from pathlib import Path
+          root = Path('build/frozen-accepted')
+          root.mkdir(parents=True)
+          for name in ('AISurvivor.jar','AISurvivor.json','AISurvivor.sh','AISurvivor.cmd'):
+              (root/name).write_bytes(subprocess.check_output(['git','show','9b1624da2d9b09ec9cc4f580b51bc82edd2c1485:AISurvivor/'+name]))
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: One complete screen and conditional fresh confirmation
+        run: |
+          python tools/ais_breakwater_transfer.py --previous build/frozen-accepted --candidate AISurvivor --java "$JAVA_HOME/bin/java" --python "$(command -v python)" --output transfer-evidence
+      - name: Preserve every valid or invalid attempt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ais-breakwater-transfer-${{ github.run_id }}
+          path: transfer-evidence/
+          if-no-files-found: warn
+          retention-days: 30

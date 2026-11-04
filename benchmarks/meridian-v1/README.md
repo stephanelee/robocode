@@ -19,7 +19,7 @@ for game in json.loads((root / "games.json").read_text()):
 PY
 ```
 
-**Reproduce the setup.** In a separate checkout with the exact Linux image and toolchains in the manifest, use the [registered workflow](../../.github/workflows/meridian.yml). The equivalent commands, including private staging, are:
+**Reproduce the setup.** In a separate checkout with the exact Linux image and toolchains in the manifest, inspect the [archived registered workflow](source/meridian-registered-duel.yml). Its exact executed bytes are retained here; the completed acquisition launcher has been retired from active Actions, while ordinary build/test/JAR-parity CI remains enabled. This is historical setup documentation, not authorization for another registered run. The equivalent commands, including private staging, are:
 
 ```sh
 # With Temurin 17 active and the repository's wrapper:

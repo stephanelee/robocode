@@ -26,4 +26,6 @@ assert passes_screen(report["games"][:4]) == (len(report["games"]) == 13)
 PY
 ```
 
-For a physical replication, follow the [registered workflow](../../.github/workflows/meridian-aim.yml) on a fresh Ubuntu 26.04 checkout with Git history available. Build with Java 17 and verify JAR entry parity. Switch to Java 25, use Python 3.13.18 and run `python tools/meridian_profile.py`. Compare `build/meridian/profile.json` to the two registered fingerprints, then run `python tools/meridian_aim.py`. The runner reconstructs the exact v2 control from commit `85cccdeb5f9bde8af42f971510e13f0e089f28ec` and hashes all four bot assets. Starts vary across physical games.
+For a physical replication, follow the [archived registered workflow](source/meridian-aim.yml) on a fresh Ubuntu 26.04 checkout with Git history available. Build with Java 17 and verify JAR entry parity. Switch to Java 25, use Python 3.13.18 and run `python tools/meridian_profile.py`. Compare `build/meridian/profile.json` to the two registered fingerprints, then run `python tools/meridian_aim.py`. The runner reconstructs the exact v2 control from commit `85cccdeb5f9bde8af42f971510e13f0e089f28ec` and hashes all four bot assets. Starts vary across physical games.
+
+The completed acquisition launcher is retired from active Actions. Its exact executed bytes are preserved above; ordinary Java 17 build/test/JAR-parity CI remains enabled. This is historical setup documentation, not authorization for another registered run. Earlier v1/v2 workflows and observers remain in their benchmark source archives.

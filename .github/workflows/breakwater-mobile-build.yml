@@ -1,0 +1,42 @@
+name: Breakwater mobile Java 17 build
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  build:
+    if: github.head_ref == 'experiment/breakwater-mobile-v2'
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - run: |
+          ./gradlew -p experiments/Breakwater --no-daemon clean build
+          python -m unittest discover -s tools -p 'test_breakwater_mobile_experiment.py'
+          if test -e tools/breakwater-v2-freeze.json; then
+            python tools/verify_jar.py experiments/Breakwater/{Breakwater.jar,build/bot/Breakwater/Breakwater.jar}
+          fi
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - run: python tools/breakwater_experiment.py --show-runtime > breakwater-runtime.json
+      - name: Verify exact runtime without starting bots
+        run: python -c 'import json; assert json.load(open("breakwater-runtime.json")) == json.load(open("tools/breakwater-v2-freeze.json"))["runtime"]'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: breakwater-mobile-build-${{ github.event.pull_request.head.sha }}
+          path: |
+            experiments/Breakwater/build/bot/Breakwater/
+            breakwater-runtime.json
