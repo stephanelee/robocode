@@ -37,6 +37,10 @@ jobs:
         run: |
           ./gradlew -p experiments/DiamondChallenger --no-daemon clean build
           python tools/verify_jar.py experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
+      - name: Test isolated Keel experiment and verify its JAR
+        run: |
+          ./gradlew -p experiments/Keel --no-daemon clean build
+          python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -45,6 +49,7 @@ jobs:
           path: |
             build/reports/tests/
             experiments/DiamondChallenger/build/reports/tests/
+            experiments/Keel/build/reports/tests/
           if-no-files-found: ignore
       - name: Upload runnable bot
         uses: actions/upload-artifact@v4

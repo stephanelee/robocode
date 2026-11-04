@@ -1,0 +1,55 @@
+name: Keel v1 registered duel
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+jobs:
+  keel:
+    if: github.run_attempt == 1 && github.head_ref == 'claude/keel-v1' && (github.event.label.name == 'profile-keel-v1' || github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build Keel on Java 17, run contract tests and verify JAR parity
+        run: |
+          mkdir -p build/keel
+          java -version 2>build/keel/build-java.txt
+          ./gradlew --no-daemon -p experiments/Keel clean build
+          python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Acquire and identify the exact battle runtime (no games)
+        run: python tools/keel_experiment.py profile
+      - name: Publish runtime identity before any game
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-profile-${{ github.run_id }}
+          path: build/keel/
+      - name: Run the reviewed screen
+        if: github.event.label.name == 'run-keel-v1-screen'
+        run: python tools/keel_experiment.py run screen
+      - name: Run the conditional confirmation
+        if: github.event.label.name == 'run-keel-v1-confirm'
+        run: |
+          python -c "import json,sys; d=json.load(open('benchmarks/keel-v1/raw/decision-screen.json')); sys.exit(0 if d['decision']=='progress; confirmation open' else 'confirmation closed by the registered screen')"
+          python tools/keel_experiment.py run confirmation
+      - name: Preserve every attempt
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-games-${{ github.event.label.name }}-${{ github.run_id }}
+          path: build/keel/
+          retention-days: 90
