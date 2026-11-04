@@ -2,7 +2,7 @@
 
 Prism is a standalone experimental Java 17 Tank Royale bot. It was implemented independently from [the clean-room specification](../../docs/diamond-port-clean-room-specification.md) (version 1, 2026-11-04). Wherever the specification says Facet, Prism is used instead. Prism shares no code, descriptor, JAR, configuration, model or telemetry with AISurvivor or any other experimental bot.
 
-**Status: implementation milestone. No gameplay measurement has been run.** The registered [200-round screen](../../docs/prism-screen-protocol.md) waits for an independent premeasurement review. Prism has no measured strength. Fixtures and the lifecycle smoke check correctness only.
+**Status: registered screen rejected; no confirmation.** The sole200-round screen completed: Diamond28.61% mean score share missed the >40% gate; Retcon94.33%, Adaptive69.29% and samples100% passed their gates. Zero Prism recorded skips/collisions/failures. [Full original evidence and limits](../../benchmarks/prism-screen-v1/README.md) include the missing Diamond game3 round15 telemetry line. This remains a standalone experimental reference, with no production AISurvivor promotion or fresh superiority claim.
 
 ## What it does
 
