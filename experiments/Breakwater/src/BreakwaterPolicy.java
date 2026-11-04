@@ -84,8 +84,7 @@ final class BreakwaterPolicy {
         if (target == null || own.turn() < target.turn() || own.turn() - target.turn() > 1)
             return new Decision(motion.turn(), motion.speed(), own.gun(), 0, -1, threats.size(), side);
         double range = Math.hypot(ex - own.x(), ey - own.y());
-        double power = Math.min(range <= 320 ? 2 : 1.35, own.energy() / 16);
-        power = clamp(Math.min(power, (target.energy() + .001) / 4), .1, 2);
+        double power = shotPower(own, target, range);
         int launch = own.turn() + 1;
         Rays rays = new Rays(forecast(own, target, power, 0), bearing(own.x(), own.y(), ex, ey),
                 forecast(own, target, power, turnRate));
@@ -96,7 +95,10 @@ final class BreakwaterPolicy {
         double half = Math.toDegrees(Math.asin(Math.min(1, BODY / Math.max(BODY, range))));
         boolean fire = own.energy() > power && own.heat() <= 1e-9
                 && Math.abs(CombatMath.relativeAngle(aim - own.gun())) <= .75 * half;
-        if (fire) pending = new Pending(launch, own.x(), own.y(), power, rays);
+        // In envelope mode the actual ray can be aligned even when the legacy ray is not.
+        // The shared comparator still admits these rays only after a matching confirmed launch.
+        if (own.energy() > power && own.heat() <= 1e-9)
+            pending = new Pending(launch, own.x(), own.y(), power, rays);
         return new Decision(motion.turn(), motion.speed(), aim, fire ? power : 0, gun, threats.size(), side);
     }
 
@@ -279,6 +281,11 @@ final class BreakwaterPolicy {
             for (int gun = 0; gun < 3; gun++) counts[gun] += (hits >> gun) & 1;
         }
         return counts;
+    }
+
+    static double shotPower(Own own, Target target, double range) {
+        double power = Math.min(range <= 320 ? 2 : 1.35, own.energy() / 16);
+        return clamp(Math.min(power, (target.energy() + .001) / 4), .1, 2);
     }
 
     private static double bearing(double x, double y, double targetX, double targetY) {
