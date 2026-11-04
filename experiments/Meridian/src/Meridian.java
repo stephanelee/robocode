@@ -10,6 +10,8 @@ public final class Meridian extends Bot {
     record Trial(int due,double[] angles,double x,double y){}
     private final CrossingGun crossingGun = new CrossingGun();
     private Scan scan;
+    private int earliestShot, stopTurns, twoFrontTurns;
+    private double lastPower;
     private final LinkedList<HitAngles.Wave> waves=new LinkedList<>();
     private final ArrayList<Trial> trials=new ArrayList<>();
     private final double[] skill={.2,.3,.25}; // stop, coast, turn
@@ -28,10 +30,13 @@ public final class Meridian extends Bot {
     }
     public void onRoundStarted(RoundStartedEvent e){
         crossingGun.newRound();
+        earliestShot = 1 + SurfPlan.coolingTurns(3, getGunCoolingRate());
+        lastPower = 1.95;
+        stopTurns = twoFrontTurns = 0;
         round=e.getRoundNumber(); scan=null;waves.clear();trials.clear();corrections.clear();Arrays.fill(stamp,-1);
         side=new SplittableRandom(seed+round).nextBoolean()?1:-1;radarSign=side;mark("start");
     }
-    public void onRoundEnded(RoundEndedEvent e){mark("end");}
+    public void onRoundEnded(RoundEndedEvent e){mark("surf " + stopTurns + " " + twoFrontTurns); mark("end");}
     public void onSkippedTurn(SkippedTurnEvent e){mark("skip "+e.getTurnNumber());}
     public void onBulletHit(BulletHitBotEvent e){corrections.merge(e.getTurnNumber(),-e.getDamage(),Double::sum);}
     public void onHitByBullet(HitByBulletEvent e){
@@ -57,6 +62,8 @@ public final class Meridian extends Bot {
             double power=scan.energy-e.getEnergy()+corrections.getOrDefault(t-1,0.);
             int k=(t-1)%4;
             if(power>=.09999 && power<=3.00001 && stamp[k]==t-1){
+                lastPower = Flight.clip(power, .1, 3);
+                earliestShot = SurfPlan.readyAfter(t, lastPower, getGunCoolingRate());
                 var own=history[k]; double a=Flight.angle(own.x()-scan.p.x(),own.y()-scan.p.y());
                 double lat=own.v()*Flight.sin(own.h()-a);
                 waves.add(new HitAngles.Wave(t,scan.p.x(),scan.p.y(),a,a+Math.toDegrees(Math.asin(lat/(20-3*power))),power));
@@ -78,7 +85,7 @@ public final class Meridian extends Bot {
     }
     private void gun(int t,Flight.Pose own,double range){
         var p=scan.p; double energy=getEnergy();
-        double power=Flight.clip(Math.min(Math.min(range<300?2.8:0.4,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
+        double power=Flight.clip(Math.min(Math.min(range<300?2.8:1.65,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
         double[] aims=new double[3]; int[] arrival=new int[3];
         for(int i=0;i<3;i++){
             var pred=p;
@@ -104,20 +111,6 @@ public final class Meridian extends Bot {
             mark(learned ? "aim learned" : "aim fallback");
         }
     }
-    private double route(Flight.Pose p,int t,int sign){
-        double risk=sign==side?0:2;
-        for(int i=1;i<=50;i++){
-            p=Flight.step(p,Flight.orbit(p,scan.p.x(),scan.p.y(),sign,getArenaWidth(),getArenaHeight()),getArenaWidth(),getArenaHeight());
-            double edge=Math.min(Math.min(p.x(),getArenaWidth()-p.x()),Math.min(p.y(),getArenaHeight()-p.y()));
-            risk+=Math.max(0,40-edge)*.10;
-            for (var wave : waves) {
-                double dx = p.x() - wave.x(), dy = p.y() - wave.y();
-                double radialError = Math.hypot(dx, dy) - Flight.farEdge(wave.power(), t + i - wave.t() + 1);
-                if (Math.abs(radialError) <= 22) risk += hitAngles.risk(wave, dx, dy);
-            }
-        }
-        return risk;
-    }
     public void run(){
         setAdjustGunForBodyTurn(true);setAdjustRadarForGunTurn(true);setAdjustRadarForBodyTurn(true);setFireAssist(false);
         while(isRunning()){
@@ -132,8 +125,13 @@ public final class Meridian extends Bot {
                 var p=scan.p;double a=Flight.angle(p.x()-getX(),p.y()-getY());
                 double d=Flight.delta(a-getRadarDirection());if(Math.abs(d)>.01)radarSign=d>0?1:-1;
                 setRadarTurnRate(d+radarSign*18);
-                side=route(own,t,1)<route(own,t,-1)?1:-1;
-                var cmd=Flight.orbit(own,p.x(),p.y(),side,getArenaWidth(),getArenaHeight());
+                var planner = new SurfPlan(hitAngles, p, getArenaWidth(), getArenaHeight());
+                var choice = planner.choose(own, t, side, waves, earliestShot, lastPower);
+                if (choice.warned()) mark("warn " + (t + 1));
+                if (choice.fronts() == 2) twoFrontTurns++;
+                if (choice.mode() == 0) stopTurns++;
+                else side = choice.mode();
+                var cmd = planner.command(own, choice.mode());
                 setTurnRate(cmd.turn());setTargetSpeed(cmd.speed());
                 gun(t,own,Math.hypot(p.x()-getX(),p.y()-getY()));
             }
