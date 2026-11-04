@@ -1,0 +1,9 @@
+# Independent screen infrastructure re-review
+
+2026-11-04. No games or gameplay edits. All14 infrastructure tests independently PASS. Actual old seven-game replay independently matches140 official rounds, AIS93/100 and87.87852360764223% equal-game share, Retcon22/40 and58.81717493179315%, retaining invalid game2. Missing12 appears as interval12–13,128shots/16hits/2368decisions, with no invented individual-round label.
+
+The original supported minimal-schema3 failed snapshot blocker is corrected: explicit failed rows, malformed JSON, nonfinite values and several structural faults are now treated as unusable evidence while official outcomes remain included. Missing/invalid own rows no longer become fabricated zero totals or learning deltas.
+
+One remaining reporting robustness blocker is independently reproducible: a metric row otherwise identical to the full fixture but with gcCount=[] is accepted as usable by read_own_metrics/metric_summary; report.main then raises TypeError for int+list when rendering GC totals, preventing the official report. Validate every rendering-consumed scalar/array type and dimensions (including GC/count gauges, observation4-tuples, histogram bins and raw counter values), or quarantine rendering-unusable per-game telemetry before cohort aggregation. Preserve official result and explicit own evidence errors; do not replace these with zero counts. Add an unmocked report.main fixture for malformed numeric scalar/array shapes.
+
+No other new protocol/infrastructure blocker identified. Prospective100 Diamond-only scope, unchanged candidate/profile, exact workflows/runtime/build parity order, stop-on-invalid/no replacement, separate invalid140 history and final independent pin/CI gate remain appropriate. Final acquisition approval is still separate and not granted here. This report records current review state and will be supplemented after the remaining shape correction is stable.

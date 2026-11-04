@@ -5,11 +5,15 @@ on:
     paths:
       - 'experiments/Facet/**'
       - '.github/workflows/facet.yml'
+      - 'tools/facet_*.py'
+      - 'tools/test_facet_*.py'
   push:
     branches: [master, 'facet/**']
     paths:
       - 'experiments/Facet/**'
       - '.github/workflows/facet.yml'
+      - 'tools/facet_*.py'
+      - 'tools/test_facet_*.py'
   workflow_dispatch:
 
 permissions:
@@ -27,6 +31,8 @@ jobs:
           java-version: '17'
       - name: Build Facet, run semantics, verify committed artifact
         run: ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
+      - name: Test screen evidence and acquisition guards without battles
+        run: PYTHONPATH=tools python3 -m unittest tools/test_facet_benchmark.py tools/test_facet_python_runtime.py tools/test_facet_report.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -46,6 +46,32 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(result['Retcon']['officialFirstPlaces'], 15)
         with self.assertRaises(ValueError): f.summarize(games[:-1])
 
+    def test_diamond_only_roster_keeps_five_cold_games(self):
+        from unittest.mock import patch
+        games = [dict(opponent='diamond-port', scoreShare=.5, facet=dict(firstPlaces=10), finalTelemetry={}) for _ in range(5)]
+        with patch.object(f, 'metric_summary', return_value=dict(botTurnDenominator=100, reportedSkippedTurns=0, wallCollisions=0, botCollisions=0, failuresAndFallbacks={})):
+            result = f.summarize(games, ['diamond-port'])
+            self.assertEqual(list(result), ['diamond-port'])
+            self.assertEqual(result['diamond-port']['rounds'], 100)
+            with self.assertRaises(ValueError): f.summarize(games[:-1], ['diamond-port'])
+
+    def test_official_outcome_survives_invalid_completion(self):
+        result = dict(numberOfRounds=20, results=[dict(name='Facet', version='0.1.0', totalScore=60, firstPlaces=12), dict(name='Fixture', version='1', totalScore=40)])
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d)/'battle.json'; p.write_text(json.dumps(result))
+            record = dict(rounds=20, status='running')
+            report = dict(status='running', games=[record])
+            f.retain_official_result(record, p, 'Fixture', '1')
+            record['stage'] = 'facet-completion'
+            f.invalidate_active_game(report, ValueError('missing round12'))
+            self.assertEqual(record['official'], result)
+            self.assertEqual(record['officialRounds'], 20)
+            self.assertEqual(record['scoreShare'], .6)
+            self.assertEqual(record['status'], 'invalid')
+            self.assertEqual(record['stage'], 'facet-completion')
+            self.assertEqual(report['status'], 'invalid')
+            with self.assertRaises(ValueError): f.retain_official_result(dict(rounds=20), p, 'Wrong', '1')
+
     def test_freeze_rejects_changed_artifacts_and_source(self):
         from unittest.mock import patch
         import hashlib

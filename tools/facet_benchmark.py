@@ -97,11 +97,11 @@ def metric_summary(row):
                 failuresAndFallbacks=counters, gcCount=row['gcCount'], gcMillis=row['gcMillis'])
 
 
-def summarize(games):
-    if len(games) != 15 or any(sum(g['opponent'] == opponent for g in games) != 5 for opponent in COHORTS):
-        raise ValueError('Complete fixed fifteen-game schedule required')
+def summarize(games, opponents=COHORTS):
+    if len(games) != 5*len(opponents) or any(sum(g['opponent'] == opponent for g in games) != 5 for opponent in opponents):
+        raise ValueError('Complete fixed registered game schedule required')
     summary = {}
-    for opponent in COHORTS:
+    for opponent in opponents:
         selected = [g for g in games if g['opponent'] == opponent]
         if len(selected) != 5:
             raise ValueError('Complete five-game cohort required')
@@ -164,12 +164,38 @@ def authorize_registration(frozen):
         raise ValueError('Explicit user authorization required for fresh budget after invalid screen')
 
 
+def retain_official_result(record, path, expected_name, expected_version):
+    """Retain official outcomes independently of subsequent own-telemetry acceptance."""
+    record['stage'] = 'official-result'
+    result = json.loads(path.read_text())
+    if result['numberOfRounds'] != record['rounds'] or len(result['results']) != 2 or {r['name'] for r in result['results']} != {'Facet', expected_name}:
+        raise ValueError('Official result roster/round count differs')
+    facet = next(r for r in result['results'] if r['name'] == 'Facet')
+    if facet['version'] != '0.1.0':
+        raise ValueError('Facet identity differs')
+    if next(r for r in result['results'] if r['name'] == expected_name)['version'] != expected_version:
+        raise ValueError('Opponent version differs')
+    total = sum(r['totalScore'] for r in result['results'])
+    if total <= 0:
+        raise ValueError('Official score denominator must be positive')
+    record.update(official=result, facet=facet, scoreShare=facet['totalScore']/total,
+                  officialRounds=result['numberOfRounds'])
+
+
+def invalidate_active_game(report, error):
+    """A failed acquisition is evidence, never a still-running or passing game."""
+    report.update(status='invalid', error=str(error), errorType=type(error).__name__)
+    if report['games'] and report['games'][-1]['status'] != 'complete':
+        report['games'][-1].update(status='invalid', error=str(error), errorType=type(error).__name__)
+
+
 def main(args):
     output = args.output.resolve()
     if output.exists():
         raise ValueError('Never overwrite or resume a measured attempt')
     frozen = json.loads(args.freeze.read_text())
-    if frozen['roundsPerGame'] != 20 or frozen['gamesPerOpponent'] != 5 or frozen['opponents'] != list(COHORTS) or frozen['seeds'] != list(SEEDS):
+    opponents = frozen['opponents']
+    if frozen['roundsPerGame'] != 20 or frozen['gamesPerOpponent'] != 5 or opponents not in (list(COHORTS), ['diamond-port']) or frozen['seeds'] != list(SEEDS):
         raise ValueError('Frozen game structure differs')
     for name, path in [('facetJarSHA256', ROOT/'experiments/Facet/Facet.jar'), ('aisJarSHA256', ROOT/'AISurvivor/AISurvivor.jar'),
                        ('facetConfigSHA256', ROOT/'experiments/Facet/src/main/resources/facet.properties')]:
@@ -180,6 +206,7 @@ def main(args):
     output.mkdir(parents=True)
     shutil.copy2(args.freeze, output/'registration.json')
     report = {'status': 'preparing', 'freezeSHA256': benchmark.digest(args.freeze), 'runtime': platform.platform(), 'games': [],
+              'scheduledOpponents': opponents, 'scheduledGames': len(opponents)*5, 'scheduledRounds': len(opponents)*100,
               'java': subprocess.check_output([args.java, '-version'], stderr=subprocess.STDOUT, text=True),
               'seatAndEngineSeedControl': 'unsupported; alternating launch order only; rounds within a game dependent'}
     target = output/'results.json'
@@ -197,10 +224,10 @@ def main(args):
                 raise ValueError('Frozen official server differs')
         # Packaging utilities verify pinned bytes without exposing source or private telemetry.
         source, python, provenance = native.prepare(cache, args.python)
-        retcon_source, api_cache, retcon_provenance = retcon.prepare(cache)
+        retcon_source, api_cache, retcon_provenance = retcon.prepare(cache) if 'Retcon' in opponents else (None, None, None)
         report.update(pythonOpponents=provenance, retcon=retcon_provenance, status='running')
         save(target, report)
-        for opponent in COHORTS:
+        for opponent in opponents:
             for index, seed in enumerate(SEEDS):
                 validate_freeze(frozen)
                 run = output/f'{opponent}-g{index+1:02d}'
@@ -240,7 +267,13 @@ def main(args):
                 record['launchArgv'] = cmd
                 record['launchStateEnvironment'] = {k:v for k,v in env.items() if k.startswith(('FACET_', 'AISURVIVOR_', 'ROBOCODE_')) or k in ('JAVA_HOME','RUMBLE_JAVA_CACHE','PYTHONNOUSERSITE')}
                 save(target, report)
+                record['stage'] = 'official-runner'
                 run_black_box(cmd, env, run/'runner.log')
+                expected_name = next(x['name'] for x in provenance['opponents'] if Path(x['descriptor']).stem == opponent) if opponent == 'diamond-port' else opponent
+                expected_version = json.loads((other/(opponent+'.json')).read_text())['version']
+                retain_official_result(record, run/'battle.json', expected_name, expected_version)
+                record['stage'] = 'facet-completion'
+                save(target, report)
                 # Completion callbacks flush asynchronously; this bounded readiness wait never starts another battle.
                 deadline = time.monotonic()+5
                 while time.monotonic() < deadline:
@@ -252,25 +285,17 @@ def main(args):
                         pass
                     time.sleep(.05)
                 rows = validate_metrics(run/'FACET_metrics.jsonl', 20, frozen.get('metricsSchema', 2))
-                result = json.loads((run/'battle.json').read_text())
-                expected_name = next(x['name'] for x in provenance['opponents'] if Path(x['descriptor']).stem == opponent) if opponent == 'diamond-port' else opponent
-                if result['numberOfRounds'] != 20 or len(result['results']) != 2 or {r['name'] for r in result['results']} != {'Facet', expected_name}:
-                    raise ValueError('Official result roster/round count differs')
-                facet = next(r for r in result['results'] if r['name'] == 'Facet')
-                if facet['version'] != '0.1.0':
-                    raise ValueError('Facet identity differs')
-                expected_version = json.loads((other/(opponent+'.json')).read_text())['version']
-                if next(r for r in result['results'] if r['name'] == expected_name)['version'] != expected_version:
-                    raise ValueError('Opponent version differs')
+                record['stage'] = 'opponent-completion'
                 if opponent == 'AISurvivor':
                     benchmark.validate_metrics([json.loads(x) for x in (run/'AIS_metrics.jsonl').read_text().splitlines()], 20, 'train', seed, 20)
-                record.update(status='complete', official=result, facet=facet,
-                              scoreShare=facet['totalScore']/sum(r['totalScore'] for r in result['results']),
+                record['stage'] = 'facet-model-export'
+                record.update(status='complete',
                               finalTelemetry=rows[-1], facetModelSHA256=benchmark.digest(run/'FACET_model.dat'))
+                record['stage'] = 'complete'
                 save(target, report)
-        report.update(status='complete', summary=summarize(report['games']))
+        report.update(status='complete', summary=summarize(report['games'], opponents))
     except BaseException as error:
-        report.update(status='invalid', error=str(error))
+        invalidate_active_game(report, error)
         raise
     finally:
         save(target, report)
