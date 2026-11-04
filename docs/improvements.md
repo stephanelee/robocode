@@ -11,6 +11,11 @@ The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a2723
 | Experiment | Budget and decision | Evidence |
 |---|---|---|
 | KeelHelm stopped-heading forecast / [PR108](https://github.com/stephanelee/robocode/pull/108), [issue107](https://github.com/stephanelee/robocode/issues/107) | **Prepared;0games.**120roundscreen vs fresh Keel controls, conditional300freshconfirmation. Isolated candidate15Java17tests/788entryparity and independent exact rebuild passed; harness21puretests/sourcecorrections passed. Exacthead/CI and same-worker runtime review pending; no improvement claim. | [Protocol](improvements/keel-helm-v1.md), [registry/status](../benchmarks/keel-helm-v1/README.md) |
+## Prism independent clean-room bot
+
+| Experiment | Measured budget and decision | Evidence |
+|---|---|---|
+| Prism 0.1.0 registered screen / [issue #104](https://github.com/stephanelee/robocode/issues/104) / [PR #105](https://github.com/stephanelee/robocode/pull/105) | **Reject; no confirmation.** All13 games/200 official rounds completed. Equal-game shares Diamond28.608206%, Retcon94.327397%, Adaptive69.294953%, Spin Bot/Walls100%; only Diamond >40% gate failed. Official Prism first places8/60,54/60,43/60,10/10,10/10 (ties possible). Zero Prism skips/collisions/failures.199 round snapshots: Diamond game3 round15 absent, final cumulative20 present. No A/B, general-strength or superiority claim; production AIS unchanged. | [Frozen protocol/result](prism-screen-protocol.md), [original raw/provenance/reproduction](../benchmarks/prism-screen-v1/README.md), [sole run41863990617](https://github.com/stephanelee/robocode/actions/runs/41863990617) |
 
 ## Meridian standalone duel
 

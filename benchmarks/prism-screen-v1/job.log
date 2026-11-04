@@ -1,0 +1,648 @@
+﻿2026-11-04T16:05:18.7574544Z Current runner version: '2.338.2'
+2026-11-04T16:05:18.7610263Z ##[group]Runner Image Provisioner
+2026-11-04T16:05:18.7611751Z Hosted Compute Agent
+2026-11-04T16:05:18.7612920Z Version: 20261021.618
+2026-11-04T16:05:18.7614055Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-04T16:05:18.7615256Z Build Date: 2026-10-21T00:45:21Z
+2026-11-04T16:05:18.7616890Z Worker ID: {94c5c7ec-a85b-48a1-ae60-6375f12a73ce}
+2026-11-04T16:05:18.7618366Z Region: centralus
+2026-11-04T16:05:18.7619466Z Cloud: Azure
+2026-11-04T16:05:18.7620553Z ##[endgroup]
+2026-11-04T16:05:18.7623082Z ##[group]Operating System
+2026-11-04T16:05:18.7624218Z Ubuntu
+2026-11-04T16:05:18.7625139Z 26.04.1
+2026-11-04T16:05:18.7626327Z LTS
+2026-11-04T16:05:18.7627204Z ##[endgroup]
+2026-11-04T16:05:18.7628071Z ##[group]Runner Image
+2026-11-04T16:05:18.7629084Z Image: ubuntu-26.04
+2026-11-04T16:05:18.7630084Z Version: 20261025.179.1
+2026-11-04T16:05:18.7632313Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T16:05:18.7635212Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-04T16:05:18.7637453Z ##[endgroup]
+2026-11-04T16:05:18.7639527Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T16:05:18.7642586Z Contents: write
+2026-11-04T16:05:18.7643739Z Metadata: read
+2026-11-04T16:05:18.7644933Z ##[endgroup]
+2026-11-04T16:05:18.7648221Z Secret source: Actions
+2026-11-04T16:05:18.7649981Z Cache mode: write
+2026-11-04T16:05:18.7651370Z Prepare workflow directory
+2026-11-04T16:05:18.8287975Z Prepare all required actions
+2026-11-04T16:05:18.8361414Z Getting action download info
+2026-11-04T16:05:19.0797654Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T16:05:19.1839863Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-04T16:05:19.6387604Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-11-04T16:05:20.3146696Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-04T16:05:20.3833279Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-04T16:05:20.6589410Z Complete job name: screen
+2026-11-04T16:05:20.7798951Z ##[group]Run actions/checkout@v4
+2026-11-04T16:05:20.7800417Z with:
+2026-11-04T16:05:20.7801289Z   fetch-depth: 0
+2026-11-04T16:05:20.7802558Z   ref: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:20.7803822Z   persist-credentials: false
+2026-11-04T16:05:20.7804901Z   repository: stephanelee/robocode
+2026-11-04T16:05:20.7814066Z   token: ***
+2026-11-04T16:05:20.7814985Z   ssh-strict: true
+2026-11-04T16:05:20.7816198Z   ssh-user: git
+2026-11-04T16:05:20.7817083Z   clean: true
+2026-11-04T16:05:20.7818014Z   sparse-checkout-cone-mode: true
+2026-11-04T16:05:20.7819099Z   fetch-tags: false
+2026-11-04T16:05:20.7820031Z   show-progress: true
+2026-11-04T16:05:20.7820976Z   lfs: false
+2026-11-04T16:05:20.7821836Z   submodules: false
+2026-11-04T16:05:20.7822968Z   set-safe-directory: true
+2026-11-04T16:05:20.7824039Z   allow-unsafe-pr-checkout: false
+2026-11-04T16:05:20.7825736Z env:
+2026-11-04T16:05:20.7826790Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:20.7828104Z ##[endgroup]
+2026-11-04T16:05:21.0934132Z Syncing repository: stephanelee/robocode
+2026-11-04T16:05:21.0936964Z ##[group]Getting Git version info
+2026-11-04T16:05:21.0937902Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-04T16:05:21.0939784Z [command]/usr/bin/git version
+2026-11-04T16:05:21.0946184Z git version 2.56.0
+2026-11-04T16:05:21.0977190Z ##[endgroup]
+2026-11-04T16:05:21.0993371Z Temporarily overriding HOME='/home/runner/work/_temp/070400b5-03a5-4499-9ee5-6bc576567e3b' before making global git config changes
+2026-11-04T16:05:21.0997130Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T16:05:21.1000256Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T16:05:21.1077327Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-04T16:05:21.1080724Z ##[group]Initializing the repository
+2026-11-04T16:05:21.1086675Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-04T16:05:21.1220591Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T16:05:21.1222569Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T16:05:21.1224316Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T16:05:21.1225835Z hint: call:
+2026-11-04T16:05:21.1226587Z hint:
+2026-11-04T16:05:21.1227571Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T16:05:21.1228627Z hint:
+2026-11-04T16:05:21.1229764Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T16:05:21.1231472Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T16:05:21.1233124Z hint:
+2026-11-04T16:05:21.1233919Z hint: 	git branch -m <name>
+2026-11-04T16:05:21.1234728Z hint:
+2026-11-04T16:05:21.1236170Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T16:05:21.1239869Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-04T16:05:21.1251829Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-04T16:05:21.1312207Z ##[endgroup]
+2026-11-04T16:05:21.1313378Z ##[group]Disabling automatic garbage collection
+2026-11-04T16:05:21.1316897Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T16:05:21.1356006Z ##[endgroup]
+2026-11-04T16:05:21.1357204Z ##[group]Setting up auth
+2026-11-04T16:05:21.1363648Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T16:05:21.1404954Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T16:05:21.1923909Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T16:05:21.1964577Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T16:05:21.2242164Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T16:05:21.2280325Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T16:05:21.2557769Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T16:05:21.2600740Z ##[endgroup]
+2026-11-04T16:05:21.2602217Z ##[group]Fetching the repository
+2026-11-04T16:05:21.2613685Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-04T16:05:28.0664591Z From https://github.com/stephanelee/robocode
+2026-11-04T16:05:28.0666136Z  * [new branch]      claude/aa-calibration   -> origin/claude/aa-calibration
+2026-11-04T16:05:28.0667216Z  * [new branch]      claude/aim-corridor     -> origin/claude/aim-corridor
+2026-11-04T16:05:28.0668242Z  * [new branch]      claude/aim-corridor-v2  -> origin/claude/aim-corridor-v2
+2026-11-04T16:05:28.0669299Z  * [new branch]      claude/duel-surf        -> origin/claude/duel-surf
+2026-11-04T16:05:28.0670377Z  * [new branch]      claude/foundations      -> origin/claude/foundations
+2026-11-04T16:05:28.0671386Z  * [new branch]      claude/keel-v1          -> origin/claude/keel-v1
+2026-11-04T16:05:28.0672359Z  * [new branch]      claude/keel-v2-dev      -> origin/claude/keel-v2-dev
+2026-11-04T16:05:28.0673343Z  * [new branch]      claude/melee-coherent   -> origin/claude/melee-coherent
+2026-11-04T16:05:28.0674870Z  * [new branch]      claude/replay-harness   -> origin/claude/replay-harness
+2026-11-04T16:05:28.0676185Z  * [new branch]      claude/wall-search      -> origin/claude/wall-search
+2026-11-04T16:05:28.0677166Z  * [new branch]      codex/api-1.4.0         -> origin/codex/api-1.4.0
+2026-11-04T16:05:28.0678170Z  * [new branch]      codex/battle-benchmarks -> origin/codex/battle-benchmarks
+2026-11-04T16:05:28.0679156Z  * [new branch]      codex/ci-bootstrap      -> origin/codex/ci-bootstrap
+2026-11-04T16:05:28.0680142Z  * [new branch]      codex/coherent-duel     -> origin/codex/coherent-duel
+2026-11-04T16:05:28.0681171Z  * [new branch]      codex/coherent-duel-v2  -> origin/codex/coherent-duel-v2
+2026-11-04T16:05:28.0682251Z  * [new branch]      codex/collector-compat-wrapper -> origin/codex/collector-compat-wrapper
+2026-11-04T16:05:28.0683372Z  * [new branch]      codex/containment-v2    -> origin/codex/containment-v2
+2026-11-04T16:05:28.0684412Z  * [new branch]      codex/core-correctness  -> origin/codex/core-correctness
+2026-11-04T16:05:28.0685850Z  * [new branch]      codex/current-runnable-jar -> origin/codex/current-runnable-jar
+2026-11-04T16:05:28.0687113Z  * [new branch]      codex/default-duel-policy -> origin/codex/default-duel-policy
+2026-11-04T16:05:28.0688411Z  * [new branch]      codex/diamond-stop-contract24 -> origin/codex/diamond-stop-contract24
+2026-11-04T16:05:28.0689678Z  * [new branch]      codex/final-default-confirmation -> origin/codex/final-default-confirmation
+2026-11-04T16:05:28.0691041Z  * [new branch]      codex/final-default-confirmation-redo -> origin/codex/final-default-confirmation-redo
+2026-11-04T16:05:28.0692373Z  * [new branch]      codex/fire-alignment    -> origin/codex/fire-alignment
+2026-11-04T16:05:28.0693476Z  * [new branch]      codex/foundation-scan-lag -> origin/codex/foundation-scan-lag
+2026-11-04T16:05:28.0694583Z  * [new branch]      codex/improve-cycle2-walls -> origin/codex/improve-cycle2-walls
+2026-11-04T16:05:28.0696037Z  * [new branch]      codex/improve-cycle3-gf-confidence -> origin/codex/improve-cycle3-gf-confidence
+2026-11-04T16:05:28.0697495Z  * [new branch]      codex/improve-steering-cycle1 -> origin/codex/improve-steering-cycle1
+2026-11-04T16:05:28.0699130Z  * [new branch]      codex/learning-modes-persistence -> origin/codex/learning-modes-persistence
+2026-11-04T16:05:28.0700900Z  * [new branch]      codex/legal-motion-recorder -> origin/codex/legal-motion-recorder
+2026-11-04T16:05:28.0701962Z  * [new branch]      codex/melee-baseline    -> origin/codex/melee-baseline
+2026-11-04T16:05:28.0702960Z  * [new branch]      codex/meridian-aim      -> origin/codex/meridian-aim
+2026-11-04T16:05:28.0703860Z  * [new branch]      codex/meridian-duel     -> origin/codex/meridian-duel
+2026-11-04T16:05:28.0704877Z  * [new branch]      codex/meridian-economy  -> origin/codex/meridian-economy
+2026-11-04T16:05:28.0706237Z  * [new branch]      codex/meridian-held-plan-90 -> origin/codex/meridian-held-plan-90
+2026-11-04T16:05:28.0707498Z  * [new branch]      codex/meridian-held-plan-execution -> origin/codex/meridian-held-plan-execution
+2026-11-04T16:05:28.0708703Z  * [new branch]      codex/meridian-hit-angles -> origin/codex/meridian-hit-angles
+2026-11-04T16:05:28.0709840Z  * [new branch]      codex/meridian-motion-memory -> origin/codex/meridian-motion-memory
+2026-11-04T16:05:28.0710936Z  * [new branch]      codex/meridian-peak-v1  -> origin/codex/meridian-peak-v1
+2026-11-04T16:05:28.0711912Z  * [new branch]      codex/meridian-prior    -> origin/codex/meridian-prior
+2026-11-04T16:05:28.0712922Z  * [new branch]      codex/meridian-wave-support -> origin/codex/meridian-wave-support
+2026-11-04T16:05:28.0714097Z  * [new branch]      codex/mixed-population-v4 -> origin/codex/mixed-population-v4
+2026-11-04T16:05:28.0715384Z  * [new branch]      codex/mixed-training-audit -> origin/codex/mixed-training-audit
+2026-11-04T16:05:28.0716859Z  * [new branch]      codex/nonlinear-containment-v5 -> origin/codex/nonlinear-containment-v5
+2026-11-04T16:05:28.0718281Z  * [new branch]      codex/nonlinear-gain-v5 -> origin/codex/nonlinear-gain-v5
+2026-11-04T16:05:28.0719254Z  * [new branch]      codex/own-wave-context  -> origin/codex/own-wave-context
+2026-11-04T16:05:28.0720393Z  * [new branch]      codex/own-wave-context-diagnostic -> origin/codex/own-wave-context-diagnostic
+2026-11-04T16:05:28.0721571Z  * [new branch]      codex/pin-ubuntu-26.04  -> origin/codex/pin-ubuntu-26.04
+2026-11-04T16:05:28.0722563Z  * [new branch]      codex/retcon-benchmarks -> origin/codex/retcon-benchmarks
+2026-11-04T16:05:28.0723562Z  * [new branch]      codex/retcon-observability -> origin/codex/retcon-observability
+2026-11-04T16:05:28.0724712Z  * [new branch]      codex/retcon-strategy-plan -> origin/codex/retcon-strategy-plan
+2026-11-04T16:05:28.0726097Z  * [new branch]      codex/strong-melee-baseline -> origin/codex/strong-melee-baseline
+2026-11-04T16:05:28.0727148Z  * [new branch]      codex/targeting-seam    -> origin/codex/targeting-seam
+2026-11-04T16:05:28.0728065Z  * [new branch]      dismond-specs           -> origin/dismond-specs
+2026-11-04T16:05:28.0729095Z  * [new branch]      docs/aisurvivor-description -> origin/docs/aisurvivor-description
+2026-11-04T16:05:28.0730185Z  * [new branch]      docs/breakwater-findings -> origin/docs/breakwater-findings
+2026-11-04T16:05:28.0731388Z  * [new branch]      docs/challenger-defense-trace -> origin/docs/challenger-defense-trace
+2026-11-04T16:05:28.0732720Z  * [new branch]      docs/diamond-challenger-direction -> origin/docs/diamond-challenger-direction
+2026-11-04T16:05:28.0734016Z  * [new branch]      docs/pinned-opponent-analysis -> origin/docs/pinned-opponent-analysis
+2026-11-04T16:05:28.0735343Z  * [new branch]      docs/retcon-component-experiments -> origin/docs/retcon-component-experiments
+2026-11-04T16:05:28.0736949Z  * [new branch]      docs/retcon-opponent-analysis -> origin/docs/retcon-opponent-analysis
+2026-11-04T16:05:28.0738427Z  * [new branch]      evidence/keel-v1-run-keel-v1-confirm-41831109687 -> origin/evidence/keel-v1-run-keel-v1-confirm-41831109687
+2026-11-04T16:05:28.0740179Z  * [new branch]      evidence/keel-v1-run-keel-v1-screen-41792449000 -> origin/evidence/keel-v1-run-keel-v1-screen-41792449000
+2026-11-04T16:05:28.0741707Z  * [new branch]      experiment/advanced-python-duels -> origin/experiment/advanced-python-duels
+2026-11-04T16:05:28.0743221Z  * [new branch]      experiment/aegis-dodge-v2 -> origin/experiment/aegis-dodge-v2
+2026-11-04T16:05:28.0744427Z  * [new branch]      experiment/aegis-shield-v1 -> origin/experiment/aegis-shield-v1
+2026-11-04T16:05:28.0745750Z  * [new branch]      experiment/aegis-v2-dev -> origin/experiment/aegis-v2-dev
+2026-11-04T16:05:28.0746960Z  * [new branch]      experiment/breakwater-envelope-v3 -> origin/experiment/breakwater-envelope-v3
+2026-11-04T16:05:28.0748279Z  * [new branch]      experiment/breakwater-mobile-v2 -> origin/experiment/breakwater-mobile-v2
+2026-11-04T16:05:28.0749573Z  * [new branch]      experiment/diamond-breakwater-v1 -> origin/experiment/diamond-breakwater-v1
+2026-11-04T16:05:28.0750954Z  * [new branch]      experiment/diamond-challenger-build -> origin/experiment/diamond-challenger-build
+2026-11-04T16:05:28.0752558Z  * [new branch]      experiment/diamond-context-v2 -> origin/experiment/diamond-context-v2
+2026-11-04T16:05:28.0753841Z  * [new branch]      experiment/diamond-diagnostic-v5 -> origin/experiment/diamond-diagnostic-v5
+2026-11-04T16:05:28.0755121Z  * [new branch]      experiment/diamond-guarded-ray-v6 -> origin/experiment/diamond-guarded-ray-v6
+2026-11-04T16:05:28.0756821Z  * [new branch]      experiment/diamond-outgoing-context-v7 -> origin/experiment/diamond-outgoing-context-v7
+2026-11-04T16:05:28.0758240Z  * [new branch]      experiment/diamond-wave-horizon-v4 -> origin/experiment/diamond-wave-horizon-v4
+2026-11-04T16:05:28.0759449Z  * [new branch]      experiment/diamond-wave-v3 -> origin/experiment/diamond-wave-v3
+2026-11-04T16:05:28.0760715Z  * [new branch]      facet/independent-v1-20261104-01a1a639 -> origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T16:05:28.0762294Z  * [new branch]      fix/challenger-completion-wait -> origin/fix/challenger-completion-wait
+2026-11-04T16:05:28.0763536Z  * [new branch]      fix/challenger-round-lifecycle -> origin/fix/challenger-round-lifecycle
+2026-11-04T16:05:28.0764689Z  * [new branch]      fix/engine-trace-fire-cost -> origin/fix/engine-trace-fire-cost
+2026-11-04T16:05:28.0766182Z  * [new branch]      improve/adaptive-duel-danger -> origin/improve/adaptive-duel-danger
+2026-11-04T16:05:28.0767445Z  * [new branch]      improve/ais-breakwater-movement -> origin/improve/ais-breakwater-movement
+2026-11-04T16:05:28.0768634Z  * [new branch]      improve/blended-duel-danger -> origin/improve/blended-duel-danger
+2026-11-04T16:05:28.0769593Z  * [new branch]      master                  -> origin/master
+2026-11-04T16:05:28.0770489Z  * [new branch]      prism/independent-v1    -> origin/prism/independent-v1
+2026-11-04T16:05:28.0771675Z  * [new branch]      research/frozen-duel-confirmation -> origin/research/frozen-duel-confirmation
+2026-11-04T16:05:28.0773139Z  * [new branch]      test/dual-aim-component-diagnostic -> origin/test/dual-aim-component-diagnostic
+2026-11-04T16:05:28.0774542Z  * [new branch]      tools/legal-scan-forecast-dataset -> origin/tools/legal-scan-forecast-dataset
+2026-11-04T16:05:28.0776251Z  * [new tag]         experiment-receipts/meridian-gp60-issue90 -> experiment-receipts/meridian-gp60-issue90
+2026-11-04T16:05:28.0777791Z  * [new tag]         experiment-receipts/meridian-peak-v1-screen -> experiment-receipts/meridian-peak-v1-screen
+2026-11-04T16:05:28.0780512Z [command]/usr/bin/git rev-parse --verify --quiet 0ac58d50ddaf041d0103a125b745fd4f2709a90c^{object}
+2026-11-04T16:05:28.0781595Z 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:28.0783237Z ##[endgroup]
+2026-11-04T16:05:28.0784083Z ##[group]Determining the checkout info
+2026-11-04T16:05:28.0785019Z ##[endgroup]
+2026-11-04T16:05:28.0785834Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T16:05:28.0800182Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T16:05:28.0830751Z ##[group]Checking out the ref
+2026-11-04T16:05:28.0834620Z [command]/usr/bin/git checkout --progress --force 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:28.7499516Z Note: switching to '0ac58d50ddaf041d0103a125b745fd4f2709a90c'.
+2026-11-04T16:05:28.7500305Z 
+2026-11-04T16:05:28.7500623Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-04T16:05:28.7501351Z changes and commit them, and you can discard any commits you make in this
+2026-11-04T16:05:28.7502069Z state without impacting any branches by switching back to a branch.
+2026-11-04T16:05:28.7502476Z 
+2026-11-04T16:05:28.7502748Z If you want to create a new branch to retain commits you create, you may
+2026-11-04T16:05:28.7503405Z do so (now or later) by using -c with the switch command. Example:
+2026-11-04T16:05:28.7503782Z 
+2026-11-04T16:05:28.7503942Z   git switch -c <new-branch-name>
+2026-11-04T16:05:28.7504197Z 
+2026-11-04T16:05:28.7504371Z Or undo this operation with:
+2026-11-04T16:05:28.7504609Z 
+2026-11-04T16:05:28.7504731Z   git switch -
+2026-11-04T16:05:28.7504910Z 
+2026-11-04T16:05:28.7505221Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-04T16:05:28.7506111Z 
+2026-11-04T16:05:28.7506501Z HEAD is now at 0ac58d5 Bind frozen Prism screen to final independent acquisition clearance
+2026-11-04T16:05:28.7582219Z ##[endgroup]
+2026-11-04T16:05:28.7632533Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T16:05:28.7661607Z 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:28.7677357Z ##[group]Removing auth
+2026-11-04T16:05:28.7678468Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T16:05:28.7710874Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T16:05:28.7995172Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T16:05:28.8018712Z http.https://github.com/.extraheader
+2026-11-04T16:05:28.8025986Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T16:05:28.8058559Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T16:05:28.8332894Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T16:05:28.8362240Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T16:05:28.8641439Z ##[endgroup]
+2026-11-04T16:05:28.8935942Z ##[group]Run actions/setup-java@v4
+2026-11-04T16:05:28.8936248Z with:
+2026-11-04T16:05:28.8936444Z   distribution: temurin
+2026-11-04T16:05:28.8936666Z   java-version: 17
+2026-11-04T16:05:28.8936885Z   java-package: jdk
+2026-11-04T16:05:28.8937090Z   check-latest: false
+2026-11-04T16:05:28.8937300Z   server-id: github
+2026-11-04T16:05:28.8937501Z   server-username: GITHUB_ACTOR
+2026-11-04T16:05:28.8937749Z   server-password: GITHUB_TOKEN
+2026-11-04T16:05:28.8937988Z   overwrite-settings: true
+2026-11-04T16:05:28.8938214Z   job-status: success
+2026-11-04T16:05:28.8940597Z   token: ***
+2026-11-04T16:05:28.8940787Z env:
+2026-11-04T16:05:28.8941034Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:28.8941351Z ##[endgroup]
+2026-11-04T16:05:29.0714254Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T16:05:29.0721790Z ##[group]Installed distributions
+2026-11-04T16:05:29.0760280Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-04T16:05:29.0760852Z Setting Java 17.0.21+9 as the default
+2026-11-04T16:05:29.0816647Z (node:2465) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:05:29.0817771Z Creating toolchains.xml for JDK version 17 from temurin
+2026-11-04T16:05:29.0822643Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:05:29.0870479Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-04T16:05:29.0870843Z 
+2026-11-04T16:05:29.0871002Z Java configuration:
+2026-11-04T16:05:29.0871366Z   Distribution: temurin
+2026-11-04T16:05:29.0871729Z   Version: 17.0.21+9
+2026-11-04T16:05:29.0872245Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:29.0872725Z 
+2026-11-04T16:05:29.0873163Z ##[endgroup]
+2026-11-04T16:05:29.0888365Z Creating settings.xml with server-id: github
+2026-11-04T16:05:29.0918744Z Writing to /home/runner/.m2/settings.xml
+2026-11-04T16:05:29.1247050Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-11-04T16:05:29.1247525Z with:
+2026-11-04T16:05:29.1247732Z   cache-disabled: false
+2026-11-04T16:05:29.1247965Z   cache-read-only: true
+2026-11-04T16:05:29.1248209Z   cache-write-only: false
+2026-11-04T16:05:29.1248452Z   cache-overwrite-existing: false
+2026-11-04T16:05:29.1248714Z   cache-cleanup: on-success
+2026-11-04T16:05:29.1249002Z   gradle-home-cache-includes: caches
+notifications
+
+2026-11-04T16:05:29.1249316Z   add-job-summary: always
+2026-11-04T16:05:29.1249566Z   add-job-summary-as-pr-comment: never
+2026-11-04T16:05:29.1249854Z   dependency-graph: disabled
+2026-11-04T16:05:29.1250168Z   dependency-graph-report-dir: dependency-graph-reports
+2026-11-04T16:05:29.1250530Z   dependency-graph-continue-on-failure: true
+2026-11-04T16:05:29.1250827Z   build-scan-publish: false
+2026-11-04T16:05:29.1251067Z   validate-wrappers: true
+2026-11-04T16:05:29.1251314Z   allow-snapshot-wrappers: false
+2026-11-04T16:05:29.1251645Z   gradle-home-cache-strict-match: false
+2026-11-04T16:05:29.1251926Z   workflow-job-context: null
+2026-11-04T16:05:29.1254391Z   github-token: ***
+2026-11-04T16:05:29.1254601Z env:
+2026-11-04T16:05:29.1254855Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:29.1255944Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:29.1256466Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:29.1256851Z ##[endgroup]
+2026-11-04T16:05:29.5915971Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-11-04T16:05:29.5919740Z ##[group]Restore Gradle state from cache
+2026-11-04T16:05:29.7303835Z Cache hit for restore-key: gradle-home-v1|Linux-X64|battle[319f413f8fd6bbbffffbe5be3fc6d805]-24fb9a5f02065c0bf0b146b8387c2a9d8a272373
+2026-11-04T16:05:30.3616577Z Received 655090 of 655090 (100.0%), 1.4 MBs/sec
+2026-11-04T16:05:30.3618347Z Cache Size: ~1 MB (655090 B)
+2026-11-04T16:05:30.3653209Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7ba08474-2764-43e6-ab91-fd9ee34f85b4/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T16:05:30.3839394Z Cache restored successfully
+2026-11-04T16:05:30.3844718Z Restored cache entry with key gradle-home-v1|Linux-X64|screen[acf6bdd9216a3d6ff4764ce7cd428a01]-09fc015dc0e3dce82f5b1f6ad2b57afe4d34dcff to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 791ms
+2026-11-04T16:05:30.5099704Z Cache hit for: gradle-instrumented-jars-v1-f30a11c6ae1ec64e77f5791bb87cd9b0
+2026-11-04T16:05:30.5208304Z Cache hit for: gradle-groovy-dsl-v1-5fa1fad238c810752f48221127b5b5e6
+2026-11-04T16:05:30.5220178Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+2026-11-04T16:05:30.5359485Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+2026-11-04T16:05:30.9448953Z Received 129293 of 129293 (100.0%), 0.5 MBs/sec
+2026-11-04T16:05:30.9449596Z Cache Size: ~0 MB (129293 B)
+2026-11-04T16:05:30.9480004Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b54b3c50-fe42-4a9f-897f-4d058cc15f0d/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T16:05:30.9632276Z Cache restored successfully
+2026-11-04T16:05:30.9634414Z Restored cache entry with key gradle-instrumented-jars-v1-f30a11c6ae1ec64e77f5791bb87cd9b0 to /home/runner/.gradle/caches/jars-*/*/ in 578ms
+2026-11-04T16:05:31.0331397Z Received 243579 of 243579 (100.0%), 0.7 MBs/sec
+2026-11-04T16:05:31.0332082Z Cache Size: ~0 MB (243579 B)
+2026-11-04T16:05:31.0384832Z [command]/usr/bin/tar -xf /home/runner/work/_temp/aa824df5-6ecb-43c0-9431-6f40f33000f6/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T16:05:31.0890411Z Cache restored successfully
+2026-11-04T16:05:31.0892200Z Restored cache entry with key gradle-groovy-dsl-v1-5fa1fad238c810752f48221127b5b5e6 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 703ms
+2026-11-04T16:05:31.2361577Z Received 6690088 of 6690088 (100.0%), 11.5 MBs/sec
+2026-11-04T16:05:31.2362499Z Cache Size: ~6 MB (6690088 B)
+2026-11-04T16:05:31.2413323Z [command]/usr/bin/tar -xf /home/runner/work/_temp/37948026-c7c0-49fc-a47e-30cb53b5ae99/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T16:05:31.2779297Z Cache restored successfully
+2026-11-04T16:05:31.2785714Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 893ms
+2026-11-04T16:05:31.6593040Z Received 100663296 of 136693260 (73.6%), 96.0 MBs/sec
+2026-11-04T16:05:31.9314692Z Received 136693260 of 136693260 (100.0%), 102.5 MBs/sec
+2026-11-04T16:05:31.9317603Z Cache Size: ~130 MB (136693260 B)
+2026-11-04T16:05:31.9343424Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0886a402-4f76-431f-9d53-63d7a28c2657/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T16:05:32.1543455Z Cache restored successfully
+2026-11-04T16:05:32.1605940Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 1776ms
+2026-11-04T16:05:32.1681239Z ##[endgroup]
+2026-11-04T16:05:32.2708560Z ##[group]All Gradle Wrapper jars are valid
+2026-11-04T16:05:32.2709503Z ✓ Found known Gradle Wrapper JAR files:
+2026-11-04T16:05:32.2710146Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+2026-11-04T16:05:32.2710934Z ##[endgroup]
+2026-11-04T16:05:32.2927786Z ##[group]Run actions/setup-python@v5
+2026-11-04T16:05:32.2928125Z with:
+2026-11-04T16:05:32.2928346Z   python-version: 3.13
+2026-11-04T16:05:32.2928603Z   check-latest: false
+2026-11-04T16:05:32.2930993Z   token: ***
+2026-11-04T16:05:32.2931237Z   update-environment: true
+2026-11-04T16:05:32.2931516Z   allow-prereleases: false
+2026-11-04T16:05:32.2931775Z   freethreaded: false
+2026-11-04T16:05:32.2932010Z env:
+2026-11-04T16:05:32.2932270Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:32.2932741Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:32.2933279Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:32.2933755Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:32.2934103Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:32.2934423Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:32.2934791Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:32.2935263Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:32.2936230Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:32.2936604Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:32.2936902Z ##[endgroup]
+2026-11-04T16:05:32.4336293Z ##[group]Installed versions
+2026-11-04T16:05:32.4457310Z (node:2552) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:05:32.4458328Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:05:32.4459159Z Successfully set up CPython (3.13.17)
+2026-11-04T16:05:32.4460029Z ##[endgroup]
+2026-11-04T16:05:32.4640398Z ##[group]Run ./gradlew -p experiments/Prism --no-daemon clean build
+2026-11-04T16:05:32.4641026Z [36;1m./gradlew -p experiments/Prism --no-daemon clean build[0m
+2026-11-04T16:05:32.4641673Z [36;1mpython tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/bot/Prism/Prism.jar[0m
+2026-11-04T16:05:32.4702316Z shell: /usr/bin/bash -e {0}
+2026-11-04T16:05:32.4702700Z env:
+2026-11-04T16:05:32.4703110Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:32.4703582Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:32.4704287Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:32.4704994Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:32.4705718Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:32.4706122Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:32.4706457Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:32.4706984Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:32.4707742Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:32.4708256Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:32.4708789Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:32.4709499Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:32.4710286Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:32.4711014Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:32.4711747Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:32.4712483Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:32.4713105Z ##[endgroup]
+2026-11-04T16:05:33.5168344Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-04T16:05:35.0143302Z Daemon will be stopped at the end of the build 
+2026-11-04T16:05:41.0152013Z > Task :clean UP-TO-DATE
+2026-11-04T16:05:43.4161976Z > Task :compileJava
+2026-11-04T16:05:43.4162509Z > Task :processResources NO-SOURCE
+2026-11-04T16:05:43.4163026Z > Task :classes
+2026-11-04T16:05:43.8156943Z > Task :jar
+2026-11-04T16:05:43.8176639Z > Task :prepareBot
+2026-11-04T16:05:43.8177589Z > Task :assemble
+2026-11-04T16:05:44.4142790Z > Task :compileTestJava
+2026-11-04T16:05:44.4143766Z > Task :processTestResources NO-SOURCE
+2026-11-04T16:05:44.4144706Z > Task :testClasses
+2026-11-04T16:05:48.6167973Z > Task :test
+2026-11-04T16:05:48.6168906Z > Task :check
+2026-11-04T16:05:48.6169508Z > Task :build
+2026-11-04T16:05:48.6170680Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793808337247.json
+2026-11-04T16:05:48.6171808Z 
+2026-11-04T16:05:48.6172941Z [Incubating] Problems report is available at: file:///home/runner/work/robocode/robocode/experiments/Prism/build/reports/problems/problems-report.html
+2026-11-04T16:05:48.6174236Z 
+2026-11-04T16:05:48.6174947Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-11-04T16:05:48.6176100Z 
+2026-11-04T16:05:48.6177053Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-11-04T16:05:48.6178189Z 
+2026-11-04T16:05:48.6179469Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-11-04T16:05:48.6180736Z 
+2026-11-04T16:05:48.6181086Z BUILD SUCCESSFUL in 16s
+2026-11-04T16:05:48.6181757Z 6 actionable tasks: 5 executed, 1 up-to-date
+2026-11-04T16:05:48.9699652Z Verified 855 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-04T16:05:48.9851301Z ##[group]Run actions/setup-java@v4
+2026-11-04T16:05:48.9851628Z with:
+2026-11-04T16:05:48.9851854Z   distribution: temurin
+2026-11-04T16:05:48.9852112Z   java-version: 25.0.5+8
+2026-11-04T16:05:48.9852368Z   java-package: jdk
+2026-11-04T16:05:48.9852606Z   check-latest: false
+2026-11-04T16:05:48.9852846Z   server-id: github
+2026-11-04T16:05:48.9853085Z   server-username: GITHUB_ACTOR
+2026-11-04T16:05:48.9853374Z   server-password: GITHUB_TOKEN
+2026-11-04T16:05:48.9853657Z   overwrite-settings: true
+2026-11-04T16:05:48.9853920Z   job-status: success
+2026-11-04T16:05:48.9856671Z   token: ***
+2026-11-04T16:05:48.9856909Z env:
+2026-11-04T16:05:48.9857301Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:48.9857838Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:48.9858517Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:48.9859236Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:48.9859919Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:48.9860493Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:48.9861052Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:48.9861814Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:48.9862354Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:48.9862721Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:48.9863103Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:48.9863572Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:48.9864038Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:48.9864470Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:48.9864891Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:48.9865323Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:48.9866197Z ##[endgroup]
+2026-11-04T16:05:49.1632091Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T16:05:49.1633922Z ##[group]Installed distributions
+2026-11-04T16:05:49.1676380Z Resolved Java 25.0.5+8 from tool-cache
+2026-11-04T16:05:49.1676854Z Setting Java 25.0.5+8 as the default
+2026-11-04T16:05:49.1686053Z (node:2723) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:05:49.1687358Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:05:49.1690741Z Creating toolchains.xml for JDK version 25.0.5+8 from temurin
+2026-11-04T16:05:49.1820971Z Overwriting existing file /home/runner/.m2/toolchains.xml
+2026-11-04T16:05:49.1823036Z 
+2026-11-04T16:05:49.1823297Z Java configuration:
+2026-11-04T16:05:49.1823808Z   Distribution: temurin
+2026-11-04T16:05:49.1824294Z   Version: 25.0.5+8
+2026-11-04T16:05:49.1824989Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.1825763Z 
+2026-11-04T16:05:49.1826307Z ##[endgroup]
+2026-11-04T16:05:49.1829968Z Creating settings.xml with server-id: github
+2026-11-04T16:05:49.1859122Z Overwriting existing file /home/runner/.m2/settings.xml
+2026-11-04T16:05:49.2006755Z ##[group]Run java -version 2>&1 | tee prism-runtime.txt
+2026-11-04T16:05:49.2007260Z [36;1mjava -version 2>&1 | tee prism-runtime.txt[0m
+2026-11-04T16:05:49.2007653Z [36;1mpython --version | tee -a prism-runtime.txt[0m
+2026-11-04T16:05:49.2008044Z [36;1muname -a | tee -a prism-runtime.txt[0m
+2026-11-04T16:05:49.2039641Z shell: /usr/bin/bash -e {0}
+2026-11-04T16:05:49.2039925Z env:
+2026-11-04T16:05:49.2040214Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:49.2040688Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.2041209Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:49.2041673Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:49.2041995Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:49.2042309Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:49.2042630Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:49.2043141Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:49.2043645Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:49.2043992Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:49.2044359Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.2044807Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:49.2045253Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.2045937Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.2046341Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.2046759Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:49.2047230Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.2047635Z ##[endgroup]
+2026-11-04T16:05:49.3468288Z openjdk version "25.0.5" 2026-10-20 LTS
+2026-11-04T16:05:49.3469487Z OpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)
+2026-11-04T16:05:49.3470629Z OpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)
+2026-11-04T16:05:49.3573519Z Python 3.13.17
+2026-11-04T16:05:49.3601848Z Linux runnervmnwato 7.0.0-1017-azure #17-Ubuntu SMP PREEMPT Thu Sep 24 15:54:51 UTC 2026 x86_64 GNU/Linux
+2026-11-04T16:05:49.3643846Z ##[group]Run REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+2026-11-04T16:05:49.3644810Z [36;1mREVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"[0m
+2026-11-04T16:05:49.3646201Z [36;1mpython tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA" --check-only[0m
+2026-11-04T16:05:49.3677876Z shell: /usr/bin/bash -e {0}
+2026-11-04T16:05:49.3678152Z env:
+2026-11-04T16:05:49.3678433Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:49.3678886Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.3679410Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:49.3679869Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:49.3680213Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:49.3680584Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:49.3680910Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:49.3681378Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:49.3681881Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:49.3682236Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:49.3682608Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.3683059Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:49.3683510Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.3683910Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.3684314Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.3684721Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:49.3685194Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.3685864Z   REVIEW: 
+2026-11-04T16:05:49.3686076Z ##[endgroup]
+2026-11-04T16:05:49.4710726Z plan, pins and clearance valid; no games run
+2026-11-04T16:05:49.4829269Z ##[group]Run REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+2026-11-04T16:05:49.4830407Z [36;1mREVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"[0m
+2026-11-04T16:05:49.4831520Z [36;1mpython tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA" --consume-receipt "$GITHUB_REPOSITORY"[0m
+2026-11-04T16:05:49.4875146Z shell: /usr/bin/bash -e {0}
+2026-11-04T16:05:49.4875670Z env:
+2026-11-04T16:05:49.4875973Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:49.4876451Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.4876976Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:49.4877431Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:49.4877801Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:49.4878110Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:49.4878431Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:49.4878919Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:49.4879446Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:49.4879795Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:49.4880164Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.4880621Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:49.4881100Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.4881538Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.4881954Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:49.4882373Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:49.4882854Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:49.4883259Z   REVIEW: 
+2026-11-04T16:05:49.4886047Z   GH_TOKEN: ***
+2026-11-04T16:05:49.4886305Z ##[endgroup]
+2026-11-04T16:05:50.4481066Z consumed refs/tags/prism-screen-v1-8c045f80d37a3076
+2026-11-04T16:05:50.4591510Z ##[group]Run REVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"
+2026-11-04T16:05:50.4592435Z [36;1mREVIEW="${REVIEW:-$(python -c 'import json; print(json.load(open("docs/prism/screen-plan.json"))["approvedReview"])')}"[0m
+2026-11-04T16:05:50.4593217Z [36;1mpython tools/prism_screen.py --out build/prism-screen --review "$REVIEW" --head "$PAYLOAD_SHA"[0m
+2026-11-04T16:05:50.4623987Z shell: /usr/bin/bash -e {0}
+2026-11-04T16:05:50.4624259Z env:
+2026-11-04T16:05:50.4624638Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:05:50.4625184Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:50.4626012Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:05:50.4626471Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:05:50.4626821Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:05:50.4627322Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:05:50.4627646Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:05:50.4628179Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:05:50.4628752Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:05:50.4629100Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:05:50.4629602Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:50.4630058Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:05:50.4630616Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:50.4631052Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:50.4631461Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:05:50.4632011Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:05:50.4632501Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:05:50.4632927Z   PRISM_OPPONENT_PYTHON: python3.13
+2026-11-04T16:05:50.4633208Z   REVIEW: 
+2026-11-04T16:05:50.4633415Z ##[endgroup]
+2026-11-04T16:05:56.7575363Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+2026-11-04T16:05:56.7651746Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T16:05:56.7677068Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T16:05:56.7894537Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy_extensions-1.1.0-py3-none-any.whl
+2026-11-04T16:05:56.7910760Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pathspec-1.1.1-py3-none-any.whl
+2026-11-04T16:05:56.7936238Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pip-26.3-py3-none-any.whl
+2026-11-04T16:05:56.8010056Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pycountry-26.2.16-py3-none-any.whl
+2026-11-04T16:05:56.8126014Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+2026-11-04T16:05:56.8153525Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/robocode_tank_royale-1.3.1-py3-none-any.whl
+2026-11-04T16:05:56.8180208Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/setuptools-84.2.1-py3-none-any.whl
+2026-11-04T16:05:56.8260986Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/typing_extensions-4.16.0-py3-none-any.whl
+2026-11-04T16:05:56.8278899Z Processing ./.benchmark-cache/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+2026-11-04T16:05:56.8456216Z Installing collected packages: websockets, typing-extensions, setuptools, robocode-tank-royale, pyyaml, pycountry, pip, pathspec, mypy-extensions, mypy, librt, ast-serialize
+2026-11-04T16:05:57.8644000Z   Attempting uninstall: pip
+2026-11-04T16:05:57.8673152Z     Found existing installation: pip 26.2.2
+2026-11-04T16:05:57.9041255Z     Uninstalling pip-26.2.2:
+2026-11-04T16:05:57.9102275Z       Successfully uninstalled pip-26.2.2
+2026-11-04T16:06:00.6912311Z 
+2026-11-04T16:06:00.6934034Z Successfully installed ast-serialize-0.13.1 librt-0.16.0 mypy-2.4.1 mypy-extensions-1.1.0 pathspec-1.1.1 pip-26.3 pycountry-26.2.16 pyyaml-6.0.3 robocode-tank-royale-1.3.1 setuptools-84.2.1 typing-extensions-4.16.0 websockets-17.4
+2026-11-04T16:21:09.0377688Z reject
+2026-11-04T16:21:09.0649440Z ##[group]Run actions/upload-artifact@v4
+2026-11-04T16:21:09.0649774Z with:
+2026-11-04T16:21:09.0650148Z   name: prism-screen-0ac58d50ddaf041d0103a125b745fd4f2709a90c-41863990617-1
+2026-11-04T16:21:09.0650738Z   path: build/prism-screen/
+build/prism-screen-receipt.json
+prism-runtime.txt
+
+2026-11-04T16:21:09.0651186Z   if-no-files-found: warn
+2026-11-04T16:21:09.0651623Z   compression-level: 6
+2026-11-04T16:21:09.0652089Z   overwrite: false
+2026-11-04T16:21:09.0665097Z   include-hidden-files: false
+2026-11-04T16:21:09.0665626Z env:
+2026-11-04T16:21:09.0666080Z   PAYLOAD_SHA: 0ac58d50ddaf041d0103a125b745fd4f2709a90c
+2026-11-04T16:21:09.0666569Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:21:09.0667111Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T16:21:09.0667565Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T16:21:09.0667918Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T16:21:09.0668281Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T16:21:09.0668599Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T16:21:09.0669069Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T16:21:09.0669588Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T16:21:09.0669936Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T16:21:09.0670311Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:21:09.0670764Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T16:21:09.0671214Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:21:09.0671618Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:21:09.0672028Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T16:21:09.0672449Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T16:21:09.0672954Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-04T16:21:09.0673353Z ##[endgroup]
+2026-11-04T16:21:09.2428832Z (node:5687) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:21:09.2430101Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:21:09.2670470Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T16:21:09.2673831Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-04T16:21:09.2674971Z With the provided path, there will be 55 files uploaded
+2026-11-04T16:21:09.2683515Z Artifact name is valid!
+2026-11-04T16:21:09.2684139Z Root directory input is valid!
+2026-11-04T16:21:09.5676084Z Beginning upload of artifact content to blob storage
+2026-11-04T16:21:09.6465795Z (node:5687) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-04T16:21:09.8671353Z Uploaded bytes 55755
+2026-11-04T16:21:09.9141211Z Finished uploading artifact content to blob storage!
+2026-11-04T16:21:09.9142753Z SHA256 digest of uploaded artifact zip is 26489fff821c0237536c0442f6c674e845dfe2756ac208e37cceb7203ed46a8f
+2026-11-04T16:21:09.9144632Z Finalizing artifact upload
+2026-11-04T16:21:10.4192415Z Artifact prism-screen-0ac58d50ddaf041d0103a125b745fd4f2709a90c-41863990617-1.zip successfully finalized. Artifact ID 13343025344
+2026-11-04T16:21:10.4194804Z Artifact prism-screen-0ac58d50ddaf041d0103a125b745fd4f2709a90c-41863990617-1 has been successfully uploaded! Final size is 55755 bytes. Artifact ID is 13343025344
+2026-11-04T16:21:10.4200675Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41863990617/artifacts/13343025344
+2026-11-04T16:21:10.4417221Z Post job cleanup.
+2026-11-04T16:21:10.5837215Z (node:5701) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:21:10.5838562Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:21:10.6036788Z Post job cleanup.
+2026-11-04T16:21:10.7426074Z (node:5710) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:21:10.7427109Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:21:10.7641335Z Post job cleanup.
+2026-11-04T16:21:11.0152217Z In post-action step
+2026-11-04T16:21:11.0162790Z Cache is read-only: will not save state for use in subsequent builds.
+2026-11-04T16:21:11.0169762Z Generating Job Summary
+2026-11-04T16:21:11.0188124Z Completed post-action step
+2026-11-04T16:21:11.0310734Z Post job cleanup.
+2026-11-04T16:21:11.1846807Z (node:5730) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T16:21:11.1847866Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T16:21:11.2019943Z Post job cleanup.
+2026-11-04T16:21:11.3081044Z [command]/usr/bin/git version
+2026-11-04T16:21:11.3132471Z git version 2.56.0
+2026-11-04T16:21:11.3178311Z Temporarily overriding HOME='/home/runner/work/_temp/698ac1e9-9b74-4efc-ae08-862439030b01' before making global git config changes
+2026-11-04T16:21:11.3179900Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T16:21:11.3184778Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T16:21:11.3232864Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T16:21:11.3280802Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T16:21:11.3613161Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T16:21:11.3656245Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T16:21:11.3994429Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T16:21:11.4036350Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T16:21:11.4490022Z Cleaning up orphan processes
+2026-11-04T16:21:11.4885131Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
