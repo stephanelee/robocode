@@ -1,3 +1,5 @@
+# HISTORICAL exploratory script: reads local scratch paths and skips missing runs.
+# Superseded by analyses.py, which reads the retained raw/ inputs and fails on missing data.
 import json,math,sys
 def sgn(x):return (x>0)-(x<0)
 def v2(vm,v0):

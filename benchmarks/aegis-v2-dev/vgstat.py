@@ -1,3 +1,5 @@
+# HISTORICAL exploratory script: reads local scratch paths and skips missing runs.
+# Superseded by analyses.py, which reads the retained raw/ inputs and fails on missing data.
 import json,math,sys,statistics
 from collections import Counter,defaultdict
 D=[json.loads(l) for l in open(sys.argv[1]+'/diamond.jsonl')]
