@@ -10,6 +10,10 @@ public final class Meridian extends Bot {
     record Trial(int due,double[] angles,double x,double y){}
     private final CrossingGun crossingGun = new CrossingGun();
     private Scan scan;
+    // Commit only the aim offset/power; learning uses the firing-decision state.
+    record AimPlan(double offset, double power, boolean learned) {}
+    private AimPlan aimPlan;
+    private int pendingFireTurn = -1, targetId = -1;
     private final LinkedList<HitAngles.Wave> waves=new LinkedList<>();
     private final ArrayList<Trial> trials=new ArrayList<>();
     private final double[] skill={.2,.3,.25}; // stop, coast, turn
@@ -28,10 +32,11 @@ public final class Meridian extends Bot {
     }
     public void onRoundStarted(RoundStartedEvent e){
         crossingGun.newRound();
+        aimPlan = null; pendingFireTurn = -1; targetId = -1;
         round=e.getRoundNumber(); scan=null;waves.clear();trials.clear();corrections.clear();Arrays.fill(stamp,-1);
         side=new SplittableRandom(seed+round).nextBoolean()?1:-1;radarSign=side;mark("start");
     }
-    public void onRoundEnded(RoundEndedEvent e){mark("end");}
+    public void onRoundEnded(RoundEndedEvent e){aimPlan=null;pendingFireTurn=-1;mark("end");}
     public void onSkippedTurn(SkippedTurnEvent e){mark("skip "+e.getTurnNumber());}
     public void onBulletHit(BulletHitBotEvent e){corrections.merge(e.getTurnNumber(),-e.getDamage(),Double::sum);}
     public void onHitByBullet(HitByBulletEvent e){
@@ -43,7 +48,13 @@ public final class Meridian extends Bot {
     }
     public void onBulletFired(BulletFiredEvent event) {
         var bullet = event.getBullet();
+        if (event.getTurnNumber() != pendingFireTurn) return;
         crossingGun.fired(event.getTurnNumber(), bullet.getX(), bullet.getY(), bullet.getPower());
+        aimPlan = null;
+        pendingFireTurn = -1;
+    }
+    public void onBotDeath(BotDeathEvent e) {
+        if (e.getVictimId() == targetId) { scan = null; aimPlan = null; targetId = -1; }
     }
     public void onScannedBot(ScannedBotEvent e){
         int t=e.getTurnNumber();
@@ -75,9 +86,18 @@ public final class Meridian extends Bot {
             it.remove();
         }
         scan=new Scan(t,p,e.getEnergy(),omega);
+        targetId=e.getScannedBotId();
     }
     private void gun(int t,Flight.Pose own,double range){
         var p=scan.p; double energy=getEnergy();
+        // Events for turn t are delivered before its decision. If confirmation was
+        // missed, wait through the expected turn before allowing another request.
+        if (pendingFireTurn >= 0 && t > pendingFireTurn) {
+            pendingFireTurn = -1;
+            crossingGun.requested(null);
+            aimPlan = null;
+        }
+        if (scan.t != t || (aimPlan != null && energy <= aimPlan.power)) aimPlan = null;
         double power=Flight.clip(Math.min(Math.min(range<300?2.8:1.65,energy/12),Math.max(.1,(scan.energy+2)/6)),.1,3);
         double[] aims=new double[3]; int[] arrival=new int[3];
         for(int i=0;i<3;i++){
@@ -93,17 +113,33 @@ public final class Meridian extends Bot {
         int best=0;for(int i=1;i<3;i++)if(skill[i]>skill[best])best=i;
         // Grade all rays on the chosen forecast's impact turn, only when a real scan arrives.
         if(scan.t==t && t%4==0)trials.add(new Trial(arrival[best],aims,own.x(),own.y()));
-        var launch = CrossingGun.launch(t + 1, own, p, power, getArenaWidth(), getArenaHeight());
-        double estimate = crossingGun.aim(launch);
-        boolean learned = Double.isFinite(estimate);
-        double aim = learned ? estimate : aims[best];
+        double bearing = Flight.angle(p.x()-own.x(), p.y()-own.y());
+        double aim;
+        boolean learned;
+        if (aimPlan == null) {
+            var query = CrossingGun.launch(t + 1, own, p, power, getArenaWidth(), getArenaHeight());
+            double estimate = crossingGun.aim(query);
+            learned = Double.isFinite(estimate);
+            aim = learned ? estimate : aims[best];
+            if (scan.t == t && getGunHeat() == 0 && energy > power && pendingFireTurn < 0)
+                aimPlan = new AimPlan(Flight.delta(aim - bearing), power, learned);
+        } else {
+            aim = bearing + aimPlan.offset;
+            power = aimPlan.power;
+            learned = aimPlan.learned;
+        }
         setGunTurnRate(Flight.delta(aim - getGunDirection()));
-        if (scan.t == t && Flight.canShoot(getGunDirection(), aim, range, energy, getGunHeat(), power)
+        if (pendingFireTurn < 0 && scan.t == t
+                && Flight.canShoot(getGunDirection(), aim, range, energy, getGunHeat(), power)
                 && (energy > 1.2 || scan.energy <= .1) && setFire(power)) {
+            // Never reuse the planning scan/context for the eventual shot.
+            var launch = CrossingGun.launch(t + 1, own, p, power, getArenaWidth(), getArenaHeight());
             crossingGun.requested(launch);
+            pendingFireTurn = t + 1;
             mark(learned ? "aim learned" : "aim fallback");
         }
     }
+
     private double route(Flight.Pose p,int t,int sign){
         double risk=sign==side?0:2;
         for(int i=1;i<=50;i++){
@@ -126,6 +162,7 @@ public final class Meridian extends Bot {
             history[t%4]=own;stamp[t%4]=t;
             waves.removeIf(w->Flight.farEdge(w.power(),t-w.t()+1)>Math.hypot(getX()-w.x(),getY()-w.y())+36);
             if(scan==null||t-scan.t>3){
+                aimPlan=null;
                 setRadarTurnRate(45*radarSign);setTargetSpeed(4);
                 setTurnRate(Flight.delta(Flight.angle(getArenaWidth()/2.-getX(),getArenaHeight()/2.-getY())-getDirection()));
             }else{

@@ -17,6 +17,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
 }
 
 sourceSets {
@@ -25,7 +26,12 @@ sourceSets {
 }
 
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
-test { useJUnitPlatform() }
+test {
+    useJUnitPlatform()
+    workingDir = file('bot')
+    systemProperty 'meridian.fixture', file('../../local-evidence/control.battle.gz').absolutePath
+    testLogging { events 'passed', 'skipped', 'failed'; showStandardStreams = true }
+}
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
