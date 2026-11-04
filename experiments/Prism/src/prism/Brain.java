@@ -11,6 +11,7 @@ import prism.core.Rules;
 import prism.gun.Firing;
 import prism.gun.Guns;
 import prism.learn.Features;
+import prism.learn.NeighborStore;
 import prism.move.Danger;
 import prism.move.DuelPlanner;
 import prism.move.MeleePlanner;
@@ -729,6 +730,7 @@ public final class Brain {
         for (Guns.Data d : guns.all().values()) {
             total += d.longStore.payloadBytes() + d.displacement.payloadBytes();
             for (var s : d.recent) total += s.payloadBytes();
+            for (var s : d.surfer) total += s.payloadBytes();
         }
         for (Danger d : danger.values()) total += d.simple.payloadBytes() + d.context.payloadBytes() + d.recent.payloadBytes() + d.visits.payloadBytes();
         return total;
@@ -736,14 +738,27 @@ public final class Brain {
 
     /** Global cap: evict the oldest low-priority virtual-wave samples (gun stores) first. */
     void enforceMemoryCap() {
-        long cap = Profile.GLOBAL_STORE_BYTES;
+        enforceMemoryCap(Profile.GLOBAL_STORE_BYTES);
+    }
+
+    /** Package-private explicit budget permits bounded cap regression fixtures. */
+    void enforceMemoryCap(long cap) {
+        if (cap < 0) throw new IllegalArgumentException("negative payload cap");
         int guard = 0;
         while (storePayloadBytes() > cap && guard++ < 10_000) {
             Guns.Data victim = null;
             for (Guns.Data d : guns.all().values()) if (victim == null || d.longStore.size() + d.displacement.size() > victim.longStore.size() + victim.displacement.size()) victim = d;
-            if (victim == null || victim.longStore.size() + victim.displacement.size() == 0) break;
-            victim.longStore.evictOldest(64);
-            victim.displacement.evictOldest(64);
+            if (victim != null && victim.longStore.size() + victim.displacement.size() > 0) {
+                victim.longStore.evictOldest(64);
+                victim.displacement.evictOldest(64);
+            } else {
+                // Preserve virtual-wave eviction priority, then include confirmed-wave stores.
+                NeighborStore physical = null;
+                for (Guns.Data d : guns.all().values()) for (NeighborStore store : d.surfer)
+                    if (physical == null || store.payloadBytes() > physical.payloadBytes()) physical = store;
+                if (physical == null || physical.size() == 0) break;
+                physical.evictOldest(64);
+            }
             tel.inc("memory.evictions");
         }
     }

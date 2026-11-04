@@ -246,5 +246,79 @@ class NativeStagingTest(unittest.TestCase):
             self.assertEqual(1, len(prepared), "the static venv is installed only once, not once per game")
 
 
+
+class PlanSelectionTest(unittest.TestCase):
+    def tearDown(self):
+        ps.select_plan("docs/prism/screen-plan.json")
+
+    def test_v2_plan_has_its_own_receipt_seeds_and_approval_path(self):
+        v1 = ps.load_plan()
+        ps.select_plan("docs/prism/screen-v2-plan.json")
+        v2 = ps.load_plan()
+        self.assertEqual("docs/prism/screen-v2-plan.json", ps.PLAN_REL)
+        self.assertTrue(ps.receipt_ref(v2).startswith("refs/tags/prism-screen-v2-"))
+        self.assertNotEqual(ps.receipt_ref(v1), ps.receipt_ref(v2))
+        self.assertFalse({g["seed"] for g in v1["games"]} & {g["seed"] for g in v2["games"]}, "fresh seeds")
+        self.assert_approval_record(v2)
+        self.assertEqual("prism-profile-2-surfer-gun", v2["freeze"]["profile"])
+
+    def assert_approval_record(self, plan):
+        if plan["approvedReview"] == "pending" or plan["approvedHead"] == "pending":
+            self.assertEqual(("pending", "pending"), (plan["approvedReview"], plan["approvedHead"]))
+        else:
+            self.assertRegex(plan["approvedReview"], r"^https://github\.com/stephanelee/robocode/pull/112#(?:issuecomment-|pullrequestreview-)\d+$")
+            self.assertRegex(plan["approvedHead"], r"^[0-9a-f]{40}$")
+
+    def test_pending_and_recorded_approval_states_are_both_supported(self):
+        self.assert_approval_record(dict(approvedReview="pending", approvedHead="pending"))
+        valid = dict(approvedReview="https://github.com/stephanelee/robocode/pull/112#issuecomment-123", approvedHead="a" * 40)
+        self.assert_approval_record(valid)
+        for bad in (dict(valid, approvedHead="pending"), dict(valid, approvedReview="pending"), dict(valid, approvedHead="invalid")):
+            with self.assertRaises(AssertionError):
+                self.assert_approval_record(bad)
+
+    def test_v1_receipt_name_is_unchanged(self):
+        self.assertTrue(ps.receipt_ref(ps.load_plan()).startswith("refs/tags/prism-screen-v1-"))
+
+class AcquisitionStopTest(unittest.TestCase):
+    def tearDown(self):
+        ps.select_plan("docs/prism/screen-plan.json")
+
+    def run_actual_main(self, invalid):
+        import tempfile
+        import sys
+        from pathlib import Path
+        from unittest.mock import patch
+        plan = json.loads((ps.ROOT / "docs/prism/screen-v2-plan.json").read_bytes())
+        called = []
+        def fake_play(game, out):
+            called.append(game["id"])
+            if invalid:
+                raise ValueError("incomplete acquisition fixture")
+            return dict(share=0.01, failures=0, skipped=0, turns=100, collisions=0)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "output"
+            argv = ["prism_screen.py", "--out", str(out), "--head", "a" * 40,
+                    "--review", "fixture", "--plan", "docs/prism/screen-v2-plan.json"]
+            with patch.object(sys, "argv", argv), patch.object(ps, "play", fake_play), \
+                 patch.object(ps, "verify_clearance"), patch.object(ps, "verify_receipt"), \
+                 patch.object(ps, "sha256", return_value=plan["freeze"]["prismJarSHA256"]):
+                ps.main()
+            return plan, called, json.loads((out / "decision.json").read_bytes())
+
+    def test_invalid_first_game_preserves_failure_and_never_calls_later_games(self):
+        plan, called, report = self.run_actual_main(True)
+        self.assertEqual([plan["games"][0]["id"]], called)
+        self.assertEqual("invalid", report["games"][0]["status"])
+        self.assertEqual([g["id"] for g in plan["games"][1:]], report["unplayedGameIds"])
+        self.assertEqual("reject", report["decision"])
+
+    def test_poor_valid_scores_still_complete_every_registered_game(self):
+        plan, called, report = self.run_actual_main(False)
+        self.assertEqual([g["id"] for g in plan["games"]], called)
+        self.assertEqual(13, len(report["games"]))
+        self.assertEqual([], report["unplayedGameIds"])
+        self.assertEqual("reject", report["decision"])
+
 if __name__ == "__main__":
     unittest.main()

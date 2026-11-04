@@ -21,7 +21,7 @@ import java.util.List;
  * explicit zero firepower whenever the gun is cool, so a stale request can never fire.
  */
 public final class Prism extends Bot {
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.2.0";
 
     private Brain brain;
     private Telemetry tel;
