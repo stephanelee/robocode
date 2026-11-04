@@ -1,0 +1,33 @@
+# Reproduce the Meridian anticipatory defense and gun memory tests
+
+[Protocol and results](../../docs/improvements/meridian-motion-memory.md) · [manifest](games.json) · [hosted run](https://github.com/stephanelee/robocode/actions/runs/41744048035)
+
+From the repository root, check the recorded runtime, recompute each valid row from the official recording and bot markers, and verify that confirmation was run only if the screen passed:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tools python3 - <<'PY'
+import json
+from pathlib import Path
+from meridian_surf import passes_screen
+from meridian_duels import metrics
+root = Path("benchmarks/meridian-motion-memory")
+raw = root / "raw"
+assert (raw / "profile.json").read_bytes() in [(root / n).read_bytes() for n in ("profile.json", "profile-20261026.json")]
+plan = json.loads((root / "games.json").read_text())
+report = json.loads((raw / "decision.json").read_text())
+rows = report["games"]
+assert len(rows) == (len(plan) if passes_screen(rows[:4]) else 4)
+for game, row in zip(plan, rows):
+    assert all(row[k] == v for k, v in game.items())
+    if row["status"] == "valid":
+        actual = metrics(raw / game["id"], game)
+        assert all(row[k] == v for k, v in actual.items())
+        print(game["id"], row["wins"], row["share"], row["damagePer100EnemyShots"])
+PY
+```
+
+The [archived workflow](source/meridian-surf.yml) rebuilds on Java 17 and checks JAR parity, then uses Java 25 to launch matches. Both arms use the same Ubuntu 26.04 host. The runner extracts the v3 control from 809b880cdcee98d7946d05e6bcd30f623f604348 and checks its runnable files against the v3 manifest. Physical replications have uncontrolled start positions.
+
+To reproduce the separate gun diagnostic, run `python3 tools/meridian_motion_memory.py` from the repository root and compare `memory-result.json` with the committed version.
+
+The completed acquisition launcher is retired from active Actions; its exact executed bytes remain archived. Ordinary Java 17 build/test/JAR-parity CI remains enabled. This historical setup does not authorize another registered run. Earlier versions retain their workflows and observer sources in their own archives.

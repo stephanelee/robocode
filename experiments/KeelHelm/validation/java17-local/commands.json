@@ -1,0 +1,53 @@
+{
+  "initialAttempt": {
+    "command": "JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin:$PATH ./gradlew -p experiments/KeelHelm clean build",
+    "result": "failed before build: read-only user Gradle wrapper cache lock"
+  },
+  "ownedCacheAttempt": {
+    "command": "JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home PATH=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin:$PATH GRADLE_USER_HOME=/private/tmp/keel-helm-gradle-home /Users/robert/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3/bin/gradle -p experiments/KeelHelm --offline --no-daemon clean build",
+    "result": "failed before build: sandbox file-lock socket denied"
+  },
+  "successfulBuilds": {
+    "environment": {
+      "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+      "GRADLE_USER_HOME": "/private/tmp/keel-helm-gradle-home",
+      "PATHPrefix": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin"
+    },
+    "executable": "/Users/robert/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3/bin/gradle",
+    "arguments": [
+      "-p",
+      "experiments/KeelHelm",
+      "--offline",
+      "--no-daemon",
+      "clean",
+      "build"
+    ],
+    "result": "PASS twice; local file-lock socket authorized; no bot/server launched"
+  },
+  "baselineBuild": {
+    "arguments": [
+      "-p",
+      "experiments/Keel",
+      "--offline",
+      "--no-daemon",
+      "clean",
+      "build"
+    ],
+    "sameExecutableAndEnvironment": true,
+    "result": "PASS"
+  },
+  "parityCommands": [
+    [
+      "python3",
+      "tools/verify_jar.py",
+      "experiments/KeelHelm/KeelHelm.jar",
+      "experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar"
+    ],
+    [
+      "python3",
+      "tools/verify_jar.py",
+      "experiments/Keel/Keel.jar",
+      "experiments/Keel/build/bot/Keel/Keel.jar"
+    ]
+  ]
+}

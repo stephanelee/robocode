@@ -1,0 +1,79 @@
+{
+  "game": {
+    "id": "s13",
+    "bot": "candidate",
+    "opponent": "ais",
+    "rounds": 5,
+    "seed": 1013,
+    "port": 32223
+  },
+  "name": "KeelHelm",
+  "version": "0.1.0",
+  "opponentName": "AISurvivor",
+  "opponentVersion": "1.2.1",
+  "command": [
+    "/usr/lib/jvm/temurin-25-jdk-amd64/bin/java",
+    "-cp",
+    "/home/runner/work/robocode/robocode/.benchmark-cache/keel-helm/robocode-tankroyale-runner-1.4.0.jar",
+    "/home/runner/work/robocode/robocode/tools/KeelHelmBattle.java",
+    "32223",
+    "5",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s13",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s13/KeelHelm",
+    "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s13/AISurvivor"
+  ],
+  "cwd": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s13",
+  "environment": {
+    "PATH": "/usr/lib/jvm/temurin-25-jdk-amd64/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "JAVA_HOME": "/usr/lib/jvm/temurin-25-jdk-amd64",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "LC_ALL": "C.UTF-8",
+    "HOME": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s13/empty-home",
+    "KEEL_HELM_METRICS": "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s13/markers.txt",
+    "KEEL_HELM_SEED": "1013",
+    "AISURVIVOR_MODEL_PATH": "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s13/ais-model.dat",
+    "AISURVIVOR_METRICS_PATH": "/home/runner/work/robocode/robocode/build/keel-helm/screen/games/s13/ais.jsonl",
+    "AISURVIVOR_SEED": "1013",
+    "AISURVIVOR_MODE": "train"
+  },
+  "inputFiles": {
+    "build/keel-helm/screen/work/s13/KeelHelm/KeelHelm.sh": {
+      "sha256": "95ea8b7ea19d75d5d867e696bdc2a447a11ebbc6cf4950bfb63e7a5e8399a141",
+      "mode": 493
+    },
+    "build/keel-helm/screen/work/s13/KeelHelm/KeelHelm.cmd": {
+      "sha256": "8384adefd1427bc5cc55472959f79c3860005193345310f4b5c315fab2b3db12",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/KeelHelm/KeelHelm.jar": {
+      "sha256": "60ef5b1d33c3deb7100d1e66135f311d4b7b6fd5651cd1146effb899b9ea08c2",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/KeelHelm/KeelHelm.json": {
+      "sha256": "0e285d7e804efac154b991d21888a3e248c4164c4d8726098973cb80b5b3dc7c",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/AISurvivor/AISurvivor.json": {
+      "sha256": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/AISurvivor/AISurvivor.cmd": {
+      "sha256": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/AISurvivor/AISurvivor.sh": {
+      "sha256": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+      "mode": 420
+    },
+    "build/keel-helm/screen/work/s13/AISurvivor/AISurvivor.jar": {
+      "sha256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+      "mode": 420
+    }
+  },
+  "ownWritableHome": "/home/runner/work/robocode/robocode/build/keel-helm/screen/work/s13/empty-home",
+  "persistentModelBefore": "N/A: both Keel arms learn only in memory",
+  "candidateExposureOnly": true,
+  "modelFilesBefore": []
+}

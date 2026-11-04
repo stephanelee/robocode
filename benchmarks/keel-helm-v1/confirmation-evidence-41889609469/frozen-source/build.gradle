@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+group   = 'dev.robocode.bots'
+version = '1.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+// Build a fat JAR directly into the AISurvivor/ bot directory
+jar {
+    archiveFileName      = 'AISurvivor.jar'
+    destinationDirectory = file('AISurvivor')
+
+    manifest {
+        attributes 'Main-Class': 'AISurvivor'
+    }
+
+    // Bundle all runtime dependencies (bot-api + transitive) into the JAR
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

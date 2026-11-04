@@ -1,0 +1,74 @@
+name: Keel v1 registered duel
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: write  # only used to push registered evidence to a new evidence/keel-v1-<run> branch
+concurrency:
+  group: keel-v1-registered
+  cancel-in-progress: false
+jobs:
+  keel:
+    if: github.run_attempt == 1 && github.head_ref == 'claude/keel-v1' && (github.event.label.name == 'profile-keel-v1' || github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false  # no token in .git/config while third-party opponents run
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Build Keel on Java 17, run contract tests and verify JAR parity
+        run: |
+          mkdir -p build/keel
+          java -version 2>build/keel/build-java.txt
+          ./gradlew --no-daemon -p experiments/Keel clean build
+          python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Acquire and identify the exact battle runtime (no games)
+        run: |
+          python tools/keel_experiment.py profile
+          echo "PROFILE-GZ-B64 $(gzip -9nc build/keel/profile.json | base64 -w0)"
+      - name: Publish runtime identity before any game
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-profile-${{ github.run_id }}
+          path: build/keel/
+      - name: Run the reviewed screen
+        if: github.event.label.name == 'run-keel-v1-screen'
+        run: python tools/keel_experiment.py run screen
+      - name: Run the conditional confirmation
+        if: github.event.label.name == 'run-keel-v1-confirm'
+        run: |
+          python -c "import json,sys; d=json.load(open('benchmarks/keel-v1/raw/decision-screen.json')); sys.exit(0 if d['decision']=='progress; confirmation open' else 'confirmation closed by the registered screen')"
+          python tools/keel_experiment.py run confirmation
+      - name: Print decisions into the log
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        run: for f in build/keel/decision-*.json; do [ -f "$f" ] && echo "DECISION-GZ-B64 $f $(gzip -9nc "$f" | base64 -w0)"; done; true
+      - name: Push every attempt to a dedicated evidence branch
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        run: |
+          branch="evidence/keel-v1-${{ github.event.label.name }}-${{ github.run_id }}"
+          mkdir -p "$RUNNER_TEMP/evidence" && cp -r build/keel "$RUNNER_TEMP/evidence/keel"
+          cd "$RUNNER_TEMP/evidence"
+          git init -q -b "$branch" && git config user.name "github-actions" && git config user.email "github-actions@users.noreply.github.com"
+          printf 'Registered Keel v1 evidence from run %s at head %s\n' "${{ github.run_id }}" "${{ github.event.pull_request.head.sha }}" > README.txt
+          git add -A && git commit -q -m "Keel v1 registered evidence, run ${{ github.run_id }}"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "HEAD:refs/heads/$branch"
+      - name: Preserve every attempt
+        if: always() && (github.event.label.name == 'run-keel-v1-screen' || github.event.label.name == 'run-keel-v1-confirm')
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-games-${{ github.event.label.name }}-${{ github.run_id }}
+          path: build/keel/
+          retention-days: 90

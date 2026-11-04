@@ -1,0 +1,114 @@
+{
+ "protocol": "docs/prism-screen-protocol.md",
+ "status": "registered, not run",
+ "approvedReview": "https://github.com/stephanelee/robocode/pull/105#issuecomment-6635424606",
+ "approvedHead": "e4d51c5c32ab22bfcf93ecb5ce388dcd868c53ae",
+ "receipt": "refs/tags/prism-screen-v1-8c045f80d37a3076 (created atomically at the execution head before the first game; never deleted)",
+ "freeze": {
+  "prismJarSHA256": "8c045f80d37a3076ced7b337b020d14bf3942c6c2a89152f11021f8ff9e9e7ca",
+  "profile": "prism-initial-profile-1",
+  "engine": "Tank Royale 1.4.0 runner robocode-tankroyale-runner-1.4.0.jar sha256 02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "samples": "sample-bots-Java-1.4.0.zip sha256 1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "retconLock": "tools/opponents/retcon.lock.json git blob 885137b3638f3d19d537bb9189333e747886e21a",
+  "strongPythonLock": "tools/opponents/strong-melee.lock.json git blob 8e2dac721b240d57330fd1afd00cf7c919bc256c",
+  "buildJava": "Temurin 17 (actions/setup-java java-version 17)",
+  "runJava": "Temurin 25.0.5+8 after the Gradle build",
+  "opponentPython": "Python 3.13 per the strong-melee lock",
+  "runnerImage": "ubuntu-26.04",
+  "turnTimeoutMicros": 100000,
+  "prismSourceTree": "git tree 7c3ce215060b47c9de0c53a89ce39ca96da62c6f of experiments/Prism/src"
+ },
+ "games": [
+  {
+   "id": "diamond-1",
+   "opponent": "Diamond Port",
+   "rounds": 20,
+   "seed": 4101,
+   "seat": "prism-first"
+  },
+  {
+   "id": "diamond-2",
+   "opponent": "Diamond Port",
+   "rounds": 20,
+   "seed": 4102,
+   "seat": "opponent-first"
+  },
+  {
+   "id": "diamond-3",
+   "opponent": "Diamond Port",
+   "rounds": 20,
+   "seed": 4103,
+   "seat": "prism-first"
+  },
+  {
+   "id": "retcon-1",
+   "opponent": "Retcon",
+   "rounds": 20,
+   "seed": 4104,
+   "seat": "prism-first"
+  },
+  {
+   "id": "retcon-2",
+   "opponent": "Retcon",
+   "rounds": 20,
+   "seed": 4105,
+   "seat": "opponent-first"
+  },
+  {
+   "id": "retcon-3",
+   "opponent": "Retcon",
+   "rounds": 20,
+   "seed": 4106,
+   "seat": "prism-first"
+  },
+  {
+   "id": "adaptive-1",
+   "opponent": "Adaptive Prime",
+   "rounds": 20,
+   "seed": 4107,
+   "seat": "prism-first"
+  },
+  {
+   "id": "adaptive-2",
+   "opponent": "Adaptive Prime",
+   "rounds": 20,
+   "seed": 4108,
+   "seat": "opponent-first"
+  },
+  {
+   "id": "adaptive-3",
+   "opponent": "Adaptive Prime",
+   "rounds": 20,
+   "seed": 4109,
+   "seat": "prism-first"
+  },
+  {
+   "id": "spinbot-1",
+   "opponent": "SpinBot",
+   "rounds": 5,
+   "seed": 4110,
+   "seat": "prism-first"
+  },
+  {
+   "id": "spinbot-2",
+   "opponent": "SpinBot",
+   "rounds": 5,
+   "seed": 4111,
+   "seat": "opponent-first"
+  },
+  {
+   "id": "walls-1",
+   "opponent": "Walls",
+   "rounds": 5,
+   "seed": 4112,
+   "seat": "prism-first"
+  },
+  {
+   "id": "walls-2",
+   "opponent": "Walls",
+   "rounds": 5,
+   "seed": 4113,
+   "seat": "opponent-first"
+  }
+ ]
+}
