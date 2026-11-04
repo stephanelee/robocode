@@ -4,6 +4,12 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+## KeelHelm confirmation publication
+
+| Experiment | Measured budget and decision | Evidence |
+|---|---|---|
+| KeelHelm stopped-heading confirmation / [issue107](https://github.com/stephanelee/robocode/issues/107) / original [PR108](https://github.com/stephanelee/robocode/pull/108) | **Not confirmed / REJECT.**18valid games/300fresh rounds. Diamond54.121006% candidate vs56.438736% Keel,delta-2.317730pp fails required+2pp; official first places95/120 vs101/120. Retcon93.747432% vs93.084976%,30/30both. Zero own skips,max logged18msboth. XPS storage publication only; original Keel unchanged, no rerun/promotion. | [Detailed report](improvements/keel-helm-v1-confirmation-publication.md), [lossless2194-member/18-recording archive and proof](../benchmarks/keel-helm-v1/confirmation-evidence-41889609469/README.md), [independent audit6644053839](https://github.com/stephanelee/robocode/issues/107#issuecomment-6644053839) |
+
 ## Frozen Keel versus Prism
 
 | Comparison | Measured budget and result | Evidence |

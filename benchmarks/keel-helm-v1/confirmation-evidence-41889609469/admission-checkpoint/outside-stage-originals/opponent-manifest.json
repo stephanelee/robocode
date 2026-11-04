@@ -1,0 +1,567 @@
+{
+  "diamond": {
+    "repository": "fduch-stranger/robocode-bot",
+    "commit": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf",
+    "sourceSHA256": "a9bf0b5d62b510ce3a405db9dcbe11cf2c1bce3f982e2a5d12b9fdc76b8fbc92",
+    "lockSHA256": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+    "opponents": [
+      {
+        "name": "Adaptive Prime",
+        "version": "1.0",
+        "sourcePath": "bots/adaptive-prime",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "descriptor": "adaptive-prime.json",
+        "launcher": "adaptive-prime.sh",
+        "gitTreeSHA": "3ee9457fecb84be772add6108cf8485060a758aa"
+      },
+      {
+        "name": "Diamond Port",
+        "version": "1.8.28",
+        "sourcePath": "bots/ports/diamond-port",
+        "license": "Zlib",
+        "licensePath": "bots/ports/diamond-port/LICENSE",
+        "descriptor": "diamond-port.json",
+        "launcher": "diamond-port.sh",
+        "gitTreeSHA": "cb09712712b3b360278518aa604ad355de1f4911"
+      }
+    ],
+    "wheels": [
+      {
+        "name": "ast_serialize",
+        "version": "0.13.1",
+        "filename": "ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/c5/fa/da311559dd3dae9af5825cf21660775a929b970f72e3786af3f2cd667944/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "9f99786e0d62082a5b121b3437f3167562133711df22128de1e9886f57f0b226",
+        "size": 1313260,
+        "requiresPython": ">=3.7",
+        "requiresDist": []
+      },
+      {
+        "name": "librt",
+        "version": "0.16.0",
+        "filename": "librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/a9/59/16c409c56f708eda2db9a0553662845d45e3871c77d70a240dae3f3bdc56/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "17bac7f7a16b328fff77e440287693eb017abde913595b5827ebccbc21ecd8a6",
+        "size": 531689,
+        "requiresPython": ">=3.9",
+        "requiresDist": []
+      },
+      {
+        "name": "mypy",
+        "version": "2.4.1",
+        "filename": "mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/a2/45/089b4724b85f0f408941be5298f817ee89181c1ce031a73d60ebb150c2c7/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "1fb70621535c22fd4b1a0450d37ed1d6c5eb39656a1cebfb189084c12de54ba7",
+        "size": 15467623,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "typing_extensions>=4.6.0; python_version < \"3.15\"",
+          "typing_extensions>=4.14.0; python_version >= \"3.15\"",
+          "mypy_extensions>=1.0.0",
+          "pathspec>=1.0.0",
+          "tomli>=1.1.0; python_version < \"3.11\"",
+          "librt>=0.16.0; platform_python_implementation != \"PyPy\"",
+          "ast-serialize<1.0.0,>=0.12.1",
+          "psutil>=4.0; extra == \"dmypy\"",
+          "setuptools>=50; extra == \"mypyc\"",
+          "lxml; extra == \"reports\"",
+          "pip; extra == \"install-types\"",
+          "orjson; extra == \"faster-cache\""
+        ]
+      },
+      {
+        "name": "mypy_extensions",
+        "version": "1.1.0",
+        "filename": "mypy_extensions-1.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+        "sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+        "size": 4963,
+        "requiresPython": ">=3.8",
+        "requiresDist": []
+      },
+      {
+        "name": "pathspec",
+        "version": "1.1.1",
+        "filename": "pathspec-1.1.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+        "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+        "size": 57328,
+        "requiresPython": ">=3.9",
+        "requiresDist": [
+          "hyperscan >=0.7 ; extra == \"hyperscan\"",
+          "typing-extensions >=4 ; extra == \"optional\"",
+          "google-re2 >=1.1 ; extra == \"re2\""
+        ]
+      },
+      {
+        "name": "pip",
+        "version": "26.3",
+        "filename": "pip-26.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/07/25/ee8c38ae72d66b844ce8eb9711ba905dba21ca1a8a0c960057c41cd23337/pip-26.3-py3-none-any.whl",
+        "sha256": "f3b60b20ffaadd4415ed7957212a38ac63fa4c5fa375bd0f4a797777940fad13",
+        "size": 1950951,
+        "requiresPython": ">=3.10",
+        "requiresDist": []
+      },
+      {
+        "name": "pycountry",
+        "version": "26.2.16",
+        "filename": "pycountry-26.2.16-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9c/42/7703bd45b62fecd44cd7d3495423097e2f7d28bc2e99e7c1af68892ab157/pycountry-26.2.16-py3-none-any.whl",
+        "sha256": "115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a",
+        "size": 8044600,
+        "requiresPython": ">=3.10",
+        "requiresDist": []
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3",
+        "filename": "pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/74/27/e5b8f34d02d9995b80abcef563ea1f8b56d20134d8f4e5e81733b1feceb2/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "0f29edc409a6392443abf94b9cf89ce99889a1dd5376d94316ae5145dfedd5d6",
+        "size": 801626,
+        "requiresPython": ">=3.8",
+        "requiresDist": []
+      },
+      {
+        "name": "robocode-tank-royale",
+        "version": "1.3.1",
+        "filename": "robocode_tank_royale-1.3.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9b/7c/8e99d83e5185331a0d3534b948ee2247c5ef9d22abe0b6d57bf99c17166a/robocode_tank_royale-1.3.1-py3-none-any.whl",
+        "sha256": "074f28f1f62ede458801739d8f84651af8c33bb2aee3290e7841fbd9bc327df2",
+        "size": 144463,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "pip>=24",
+          "PyYAML>=6",
+          "setuptools>=77",
+          "pycountry>=24",
+          "websockets>=15",
+          "mypy"
+        ]
+      },
+      {
+        "name": "setuptools",
+        "version": "84.2.1",
+        "filename": "setuptools-84.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl",
+        "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2",
+        "size": 876263,
+        "requiresPython": ">=3.10",
+        "requiresDist": [
+          "pytest!=8.1.*,>=6; extra == \"test\"",
+          "virtualenv>=13.0.0; extra == \"test\"",
+          "wheel>=0.44.0; extra == \"test\"",
+          "pip>=19.1; extra == \"test\"",
+          "packaging>=26.3; extra == \"test\"",
+          "jaraco.envs>=2.2; extra == \"test\"",
+          "pytest-xdist>=3; extra == \"test\"",
+          "jaraco.path>=3.7.2; extra == \"test\"",
+          "build[virtualenv]>=1.0.3; extra == \"test\"",
+          "filelock>=3.4.0; extra == \"test\"",
+          "ini2toml[lite]>=0.14; extra == \"test\"",
+          "tomli-w>=1.0.0; extra == \"test\"",
+          "pytest-timeout; extra == \"test\"",
+          "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+          "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+          "pytest-home>=0.5; extra == \"test\"",
+          "pytest-subprocess; extra == \"test\"",
+          "pyproject-hooks!=1.1; extra == \"test\"",
+          "jaraco.test>=5.5; extra == \"test\"",
+          "sphinx>=3.5; extra == \"doc\"",
+          "jaraco.packaging>=9.3; extra == \"doc\"",
+          "rst.linker>=1.9; extra == \"doc\"",
+          "furo; extra == \"doc\"",
+          "sphinx-lint; extra == \"doc\"",
+          "jaraco.tidelift>=1.4; extra == \"doc\"",
+          "pygments-github-lexers==0.0.5; extra == \"doc\"",
+          "sphinx-favicon; extra == \"doc\"",
+          "sphinx-inline-tabs; extra == \"doc\"",
+          "sphinx-reredirects; extra == \"doc\"",
+          "sphinxcontrib-towncrier; extra == \"doc\"",
+          "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+          "pyproject-hooks!=1.1; extra == \"doc\"",
+          "towncrier<24.7; extra == \"doc\"",
+          "packaging>=26.3; extra == \"core\"",
+          "more_itertools>=8.8; extra == \"core\"",
+          "jaraco.text>=3.7; extra == \"core\"",
+          "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+          "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+          "wheel>=0.43.0; extra == \"core\"",
+          "jaraco.functools>=4; extra == \"core\"",
+          "more_itertools; extra == \"core\"",
+          "pytest-checkdocs>=2.14; extra == \"check\"",
+          "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+          "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+          "pytest-cov; extra == \"cover\"",
+          "pytest-enabler>=3.4; extra == \"enabler\"",
+          "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+          "mypy==1.18.*; extra == \"type\"",
+          "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+          "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+        ]
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0",
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "size": 45571,
+        "requiresPython": ">=3.9",
+        "requiresDist": []
+      },
+      {
+        "name": "websockets",
+        "version": "17.4",
+        "filename": "websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/75/6a95f93661bba2f1a4ec82eb26c6d30e6ba253569ecabb7a675139db6051/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "sha256": "25eb661d8ba7e2b85ebb4e7a1bb9f6a3280910ed10b84330a7abfb5ed32d2764",
+        "size": 226382,
+        "requiresPython": ">=3.11",
+        "requiresDist": []
+      }
+    ],
+    "runtime": {
+      "version": "3.13.17 (main, Oct 22 2026, 02:41:26) [GCC 15.2.0]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.1.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.3"
+        ],
+        [
+          "pycountry",
+          "26.2.16"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "17.4"
+        ]
+      ]
+    },
+    "pipCheck": "No broken requirements found."
+  },
+  "retcon": {
+    "name": "Retcon",
+    "version": "0.2.0",
+    "repository": "robocode-dev/rumble-bots",
+    "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+    "sourcePath": "bots/java/Retcon",
+    "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+    "license": "MIT",
+    "authors": [
+      "Flemming N. Larsen"
+    ],
+    "botApi": {
+      "version": "1.3.1",
+      "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+      "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+    }
+  },
+  "samplesArchiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+  "sampleFiles": {
+    "Corners/Corners.java": {
+      "sha256": "327caf6a5a9bf48b97b6779c966bca5347d3f72659348a2489aeafa9688db261",
+      "mode": 420
+    },
+    "Corners/Corners.json": {
+      "sha256": "58aff2679a5b1d1989d18f83a09b81e442133ae688bbb98f8466a8fbb5d8e64d",
+      "mode": 420
+    },
+    "Crazy/Crazy.java": {
+      "sha256": "dc596586939176f7f59aa3131ef5e2f7efed3ad67d45f5cd626f5feac175ab79",
+      "mode": 420
+    },
+    "Crazy/Crazy.json": {
+      "sha256": "287e4061d8d922b43acf96bee160d375d84cecc7ef27b90738927f9590637b69",
+      "mode": 420
+    },
+    "Fire/Fire.java": {
+      "sha256": "0a67ade6a30dac7aeeae9280a657f214ad203ad2f18b40ca527f3183f65091e4",
+      "mode": 420
+    },
+    "Fire/Fire.json": {
+      "sha256": "69a2c33fefc5799ae2d7e59c6c6b3815a915cc7bec07ff726b8ba2235b5a0968",
+      "mode": 420
+    },
+    "MyFirstBot/MyFirstBot.java": {
+      "sha256": "5d379065f3e024c7decd55a97cb2fd5d892d3c608d6fc9c90b8770910f7f1602",
+      "mode": 420
+    },
+    "MyFirstBot/MyFirstBot.json": {
+      "sha256": "808db7ca09785f07d0718d9feb37dd94a4f914b4454548662bc78c87a658fcc8",
+      "mode": 420
+    },
+    "MyFirstDroid/MyFirstDroid.java": {
+      "sha256": "31a9d58f007b27171c8eee2376e50a43cc8e42d6bf92d95d1ebca496488d56a9",
+      "mode": 420
+    },
+    "MyFirstDroid/MyFirstDroid.json": {
+      "sha256": "d6e2671a07fa6e232e9d6e21097edc3d2f2b934f26536936a9238be5c97b62ba",
+      "mode": 420
+    },
+    "MyFirstLeader/MyFirstLeader.java": {
+      "sha256": "3c2dc642b5f39873e7a02c451b7b1e0d029a63e417e03684326c8446f302ba21",
+      "mode": 420
+    },
+    "MyFirstLeader/MyFirstLeader.json": {
+      "sha256": "f0e6873cb0b1598f5a177fd88f1797dea580debde3cc07921361464f1b8fd473",
+      "mode": 420
+    },
+    "MyFirstTeam/MyFirstTeam.cmd": {
+      "sha256": "6b5991aeb997cf50d90fc6556f900cec8b1de208d20b45d6d913d71fa6e14b21",
+      "mode": 420
+    },
+    "MyFirstTeam/MyFirstTeam.json": {
+      "sha256": "d3d90e81bb133d88020ff3efefc2ac5411602e3ae31fed30cdd223e4efc8e3d0",
+      "mode": 420
+    },
+    "MyFirstTeam/MyFirstTeam.sh": {
+      "sha256": "2167f9a184b06bb2b09c224db33178bde13230438938f242277138374d4b6d45",
+      "mode": 493
+    },
+    "MyFirstTeam/README.md": {
+      "sha256": "5b59dfb8038dc3eb6f8b6a124b23f122e5f4ef53a16d32f7749eeaf80491af5c",
+      "mode": 420
+    },
+    "PaintingBot/PaintingBot.java": {
+      "sha256": "b9036daba2a74752a1e1f5488cdc169cd3a46da30601046cedc14f8627d8e622",
+      "mode": 420
+    },
+    "PaintingBot/PaintingBot.json": {
+      "sha256": "211711217038668dc0e7bb68fdc198d70cdbb6712aa1729c077b7673f7939e24",
+      "mode": 420
+    },
+    "RamFire/RamFire.java": {
+      "sha256": "5222c6dc7dc69c84771761be18adece6fbc970d6ccf1aa7c96c9d8b9966f7a91",
+      "mode": 420
+    },
+    "RamFire/RamFire.json": {
+      "sha256": "785cc6b16caa6b6b07f11a06565d7c213182a7fcf7e2d882235be497678692a1",
+      "mode": 420
+    },
+    "ReadMe.md": {
+      "sha256": "31ec9f364491e4f57f593659371be5315268236abba87ed16e6313e19c3ad74d",
+      "mode": 420
+    },
+    "SpinBot/SpinBot.java": {
+      "sha256": "e4813352985685104cc96747517d52c2dba98d416bdc392b76b597a376917e73",
+      "mode": 420
+    },
+    "SpinBot/SpinBot.json": {
+      "sha256": "f034d393e3c0373d6e32cf614d77068cc595f942d5a7aadae9b1a26f23816241",
+      "mode": 420
+    },
+    "Target/Target.java": {
+      "sha256": "f9e4cda7bbba662b0b796c8546ab5519548d6fe73611199ebe74b96e66e5b78b",
+      "mode": 420
+    },
+    "Target/Target.json": {
+      "sha256": "f0cd71b49067408808639bbdb72ae6e9003d4a8e1c485c1660989068194006ef",
+      "mode": 420
+    },
+    "TeamMessageBatchControl/TeamMessageBatchControl.java": {
+      "sha256": "c4fb8c589bc1f4e5fa50953831d74c8618ae62c46471d6505dcf84edda717b9c",
+      "mode": 420
+    },
+    "TeamMessageBatchControl/TeamMessageBatchControl.json": {
+      "sha256": "5ee74178e8c0d457d671959ffd151cc1f587fd43561c76e393a468ff74728517",
+      "mode": 420
+    },
+    "TeamMessageBatchControl32/TeamMessageBatchControl32.java": {
+      "sha256": "386c31c9d441ef9ed5d0f36d62c38896fd6bd5926f1fa39c71a2894356c56725",
+      "mode": 420
+    },
+    "TeamMessageBatchControl32/TeamMessageBatchControl32.json": {
+      "sha256": "af4ea815d22da6ea5ab9e310936b6d56508e38ee4efc0ae9641637e39aed114d",
+      "mode": 420
+    },
+    "TeamMessageBatchControl32Team/TeamMessageBatchControl32Team.cmd": {
+      "sha256": "9efd8800b3e12a6142667b03a482009196ed9f27f3c001316aa57afc85154eb0",
+      "mode": 420
+    },
+    "TeamMessageBatchControl32Team/TeamMessageBatchControl32Team.json": {
+      "sha256": "15374dc328264f1f6bb413c73d4aaa4855e312da11801df61b912cb8fb566030",
+      "mode": 420
+    },
+    "TeamMessageBatchControl32Team/TeamMessageBatchControl32Team.sh": {
+      "sha256": "015f5e8dda131505dc3e90ee328a122fb29d14508c728d9debea8137e62986db",
+      "mode": 493
+    },
+    "TeamMessageBatchControl64/TeamMessageBatchControl64.java": {
+      "sha256": "f571eb39a68790eff8c89b96bb542ea5449481ab94dda913ba3a2875f3d84efb",
+      "mode": 420
+    },
+    "TeamMessageBatchControl64/TeamMessageBatchControl64.json": {
+      "sha256": "8f7531e2e5fe8dba3ba795ef8be2f2157fb7ce5eb42364421fa321d46d5c2738",
+      "mode": 420
+    },
+    "TeamMessageBatchControl64Team/TeamMessageBatchControl64Team.cmd": {
+      "sha256": "6926caf283ecdea6e36df2f2f6560f98fb1f9d9f0404fc528ab23e39af7daef4",
+      "mode": 420
+    },
+    "TeamMessageBatchControl64Team/TeamMessageBatchControl64Team.json": {
+      "sha256": "22fee9f51966e5b8f317add08f591969794fb2eaaa1dff824ee765c2e73f3a25",
+      "mode": 420
+    },
+    "TeamMessageBatchControl64Team/TeamMessageBatchControl64Team.sh": {
+      "sha256": "6e168081f131a8ab4eb9e2afc23fcc761a6bd158189cc6a0b89bd500430d962e",
+      "mode": 493
+    },
+    "TeamMessageBatchControlTeam/TeamMessageBatchControlTeam.cmd": {
+      "sha256": "cb8bb4f721490c1ca0852f7bed476e684f7d636d84cefc74b324539859fbce91",
+      "mode": 420
+    },
+    "TeamMessageBatchControlTeam/TeamMessageBatchControlTeam.json": {
+      "sha256": "8fcaf6cbeef643edd0885dd7f95510a1809f4ec62da5983ad116a777c93a0230",
+      "mode": 420
+    },
+    "TeamMessageBatchControlTeam/TeamMessageBatchControlTeam.sh": {
+      "sha256": "041c8687080e3db24fd7450734429e2fcba937ceb98d283ab1871f5b5485dede",
+      "mode": 493
+    },
+    "TeamMessageBatchStress/TeamMessageBatchStress.java": {
+      "sha256": "39551e9fddab6d372055ae2b591a134bf95ff7683aca212e958dce8e177206b9",
+      "mode": 420
+    },
+    "TeamMessageBatchStress/TeamMessageBatchStress.json": {
+      "sha256": "bad6146f67c25a89f2d583e075fd070ac1568f18abad508849966ee12200e05f",
+      "mode": 420
+    },
+    "TeamMessageBatchStress32/TeamMessageBatchStress32.java": {
+      "sha256": "5f5efef07ec7dc1d8495400525ab1a0ae191fb60217364d0bba142b73da8b4ef",
+      "mode": 420
+    },
+    "TeamMessageBatchStress32/TeamMessageBatchStress32.json": {
+      "sha256": "e2b346104396c536fa49e5f1428683ce5af143e1b096b5d02556c16d44c227a6",
+      "mode": 420
+    },
+    "TeamMessageBatchStress32Team/TeamMessageBatchStress32Team.cmd": {
+      "sha256": "15479764447ec27fc81433a5021bacde3c947840dd3b560761736d35ae173705",
+      "mode": 420
+    },
+    "TeamMessageBatchStress32Team/TeamMessageBatchStress32Team.json": {
+      "sha256": "82271d713b10709a69cadba6e500a06bb6a64c0505d4044b8a940f9ec317c95c",
+      "mode": 420
+    },
+    "TeamMessageBatchStress32Team/TeamMessageBatchStress32Team.sh": {
+      "sha256": "c728739b9c92b3d4c3b4a439c24e6d9131f8f4c6459f8a73ddf0e7671fcbc39f",
+      "mode": 493
+    },
+    "TeamMessageBatchStress64/TeamMessageBatchStress64.java": {
+      "sha256": "b98d5783a11a4c4e2f569ffb13d852204a32941b59183fa338100ff4bc2aed1d",
+      "mode": 420
+    },
+    "TeamMessageBatchStress64/TeamMessageBatchStress64.json": {
+      "sha256": "0d2cdaacb4ef108bab3fcb3a861f3b5a980fca5492f71e95dac407112a126aa5",
+      "mode": 420
+    },
+    "TeamMessageBatchStress64Team/TeamMessageBatchStress64Team.cmd": {
+      "sha256": "06c70e943f206150312687f809a891ffa7ff4a313133fa8d5b7d85e5530fe4df",
+      "mode": 420
+    },
+    "TeamMessageBatchStress64Team/TeamMessageBatchStress64Team.json": {
+      "sha256": "87302501e1e5ce812a77af913297ec4859c9a6aaa297db6ff8eb55838bb51fe7",
+      "mode": 420
+    },
+    "TeamMessageBatchStress64Team/TeamMessageBatchStress64Team.sh": {
+      "sha256": "44ff9b975399ff82a20f58aa0583d5311eb62a38f4a13f3e8bc1e1ae64a59026",
+      "mode": 493
+    },
+    "TeamMessageBatchStressTeam/TeamMessageBatchStressTeam.cmd": {
+      "sha256": "1731b318e1445998c7383f3c75ce2160933b1318f1c76f8a6f1a79e7391cda45",
+      "mode": 420
+    },
+    "TeamMessageBatchStressTeam/TeamMessageBatchStressTeam.json": {
+      "sha256": "4bbfa0bfff207ff0dd565cf135ab67216031c0596e0cec04cc6f1f918f98813f",
+      "mode": 420
+    },
+    "TeamMessageBatchStressTeam/TeamMessageBatchStressTeam.sh": {
+      "sha256": "1366be5d32d8e1b529df3580ebd0bc610eb6a330dedd3646606501bd57252fbe",
+      "mode": 493
+    },
+    "TrackFire/TrackFire.java": {
+      "sha256": "20ad09d9d17b24fe98672f9a6dc4dd7b9ab8be4d1cec9cb9936110eeb0dd7b80",
+      "mode": 420
+    },
+    "TrackFire/TrackFire.json": {
+      "sha256": "dcb7dd05e6c273aa8e9c03cc88cfe22198649a02c0620ca8ed5cebb820b9081e",
+      "mode": 420
+    },
+    "VelociBot/VelociBot.java": {
+      "sha256": "34e197594ecc60ee1964eb9dd333f6d6efd4de5d96f5f84286a6cf829d085d02",
+      "mode": 420
+    },
+    "VelociBot/VelociBot.json": {
+      "sha256": "9bd7465ae7068f1aa32cd18edbe0ac788014e54a67fdbd3659f41ddc19c5b23a",
+      "mode": 420
+    },
+    "Walls/Walls.java": {
+      "sha256": "7a56d4ff8489f460c38c57748d0beffc844496a66c4fff419c2d09f083f86ef0",
+      "mode": 420
+    },
+    "Walls/Walls.json": {
+      "sha256": "553ac58cf7be86a2f3078baecc08c5f7a390cf4f52a132dca9c88fbf77275336",
+      "mode": 420
+    },
+    "lib/robocode-tankroyale-bot-api-1.4.0.jar": {
+      "sha256": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+      "mode": 420
+    }
+  },
+  "productionAISurvivor": [
+    {
+      "path": "AISurvivor/AISurvivor.cmd",
+      "sha256": "b0b636b4743cba65f2d9b777b96d1e753d0b5868ce1606a754524f0e0ef5c115"
+    },
+    {
+      "path": "AISurvivor/AISurvivor.jar",
+      "sha256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800"
+    },
+    {
+      "path": "AISurvivor/AISurvivor.json",
+      "sha256": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215"
+    },
+    {
+      "path": "AISurvivor/AISurvivor.sh",
+      "sha256": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d"
+    }
+  ]
+}

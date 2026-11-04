@@ -1,0 +1,962 @@
+import dev.robocode.tankroyale.botapi.*;
+import dev.robocode.tankroyale.botapi.events.*;
+
+import java.io.*;
+import java.util.*;
+
+/**
+ * All AISurvivor decision logic, independent of the Bot API connection. It reads game state and issues commands only
+ * through {@link BotPort}, so recorded games can be replayed through it exactly (see {@link TraceReplay}).
+ * The bodies were moved verbatim from the former {@code AISurvivor extends Bot}; the private helpers at the end keep
+ * the original Bot API method names and semantics.
+ */
+final class SurvivorBrain {
+
+    // ─── GuessFactor constants ────────────────────────────────────────────────
+    private static final int    GF_BINS   = 47;
+    private static final int    GF_MID    = GF_BINS / 2;
+    private static final int    DIST_SEGS = 3;
+    private static final int    LAT_SEGS  = 3;
+    private static final int    NUM_SEGS  = DIST_SEGS * LAT_SEGS;
+    private static final double WALL_MARGIN = 80.0;
+    private static final double GF_DECAY  = 0.92;
+
+    // ─── Actions ──────────────────────────────────────────────────────────────
+    private static final int NUM_ACTIONS   = 6;
+    private static final int A_MINRISK     = 0;
+    private static final int A_CIRCLE_CW   = 1;
+    private static final int A_CIRCLE_CCW  = 2;
+    private static final int A_FLEE        = 3;
+    private static final int A_WAVE_SURF   = 4;
+    private static final int A_HUNT        = 5;
+
+    // ─── Features ─────────────────────────────────────────────────────────────
+    private static final int NUM_FEATURES = 14;
+
+    // ─── Opponent classes ─────────────────────────────────────────────────────
+    private static final int CLASS_UNKNOWN    = 0;
+    private static final int CLASS_RANDOM     = 1;
+    private static final int CLASS_OSCILLATOR = 2;
+    private static final int CLASS_CIRCULAR   = 3;
+    private static final int CLASS_LINEAR     = 4;
+
+    // ─── Misc constants ─────────────────────────────────────────────────────
+    private static final double SURVIVAL_BONUS = 0.1;
+    private static final int    STALE_TURNS    = 40;
+    private static final int    OWN_HISTORY    = 64;
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Inner classes
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private static final class Enemy {
+        final int id;
+        double x, y, direction, speed, energy;
+        double lateralVelocity, prevEnergy, turnRate;
+        int    lastScanTurn;
+
+        // Opponent-modelling accumulators (carried forward across scans)
+        int    scanCount;
+        int    dirChanges;
+        int    speedReversals;
+        double sumAbsTurnRate;
+        int    lastFireTurn;
+
+        Enemy(int id, double x, double y, double dir, double spd,
+              double en, double latVel, double prevEn, double tr, int turn) {
+            this.id = id; this.x = x; this.y = y;
+            this.direction = dir; this.speed = spd; this.energy = en;
+            this.lateralVelocity = latVel; this.prevEnergy = prevEn;
+            this.turnRate = tr; this.lastScanTurn = turn;
+        }
+
+        void carryForward(Enemy prev) {
+            scanCount      = prev.scanCount + 1;
+            dirChanges     = prev.dirChanges + (Math.abs(turnRate) > 15 ? 1 : 0);
+            speedReversals = prev.speedReversals +
+                    (Math.signum(speed) != Math.signum(prev.speed)
+                            && Math.abs(speed) > 0.5 ? 1 : 0);
+            sumAbsTurnRate = prev.sumAbsTurnRate + Math.abs(turnRate);
+            lastFireTurn = prev.lastFireTurn;
+        }
+    }
+
+    private static final class TargetingWave {
+        double originX, originY, baseAngle, bulletSpeed;
+        int fireTurn, targetId, segment;
+        double lateralDir;
+        double[] bins;
+        double aimX, aimY;
+    }
+
+    private record FireScan(Enemy previous, Enemy current, double ourX, double ourY) {}
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Fields
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private final Map<Integer, Enemy>        enemies        = new HashMap<>();
+    private final Map<Integer, double[][]>   gfStats        = new HashMap<>();
+    private final List<TargetingWave>        targetingWaves = new ArrayList<>();
+    private final EnemyFireTracker fireTracker = new EnemyFireTracker();
+    private final List<FireScan> pendingFireScans = new ArrayList<>();
+    private TargetingWave pendingTargetingWave;
+    private final List<EnemyWave>            enemyWaves     = new ArrayList<>();
+    private final Map<Integer, double[]>     surfStats      = new HashMap<>();
+    private final Map<Integer, AimCorridor.OwnState> ownHistory = new HashMap<>();
+    private int duelSign = 1;
+    private final DuelGun duelGun = new DuelGun();
+    private boolean pendingDuelShot;
+
+    private int    radarTargetId = -1;
+    private int    radarSign     = 1;
+    private int    dodgeSign     = 1;
+    private final RoundLifecycle round = new RoundLifecycle();
+
+    private DQNAgent agent;
+    private final BotConfig config;
+    private final RoundMetrics metrics = new RoundMetrics();
+    private final LegalScanRecorder scanRecorder;
+    private final BotPort port;
+    private boolean checkpointLoaded;
+    private long tickReceivedNanos;
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Construction
+    // ═════════════════════════════════════════════════════════════════════════
+
+    SurvivorBrain(BotPort port, BotConfig config, LegalScanRecorder scanRecorder) {
+        this.port = port;
+        this.config = config;
+        this.scanRecorder = scanRecorder;
+        loadAgent();
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Main run loop
+    // ═════════════════════════════════════════════════════════════════════════
+
+    /** Called once when the run thread starts, before the first turn. */
+    void beginRun() {
+        setAdjustGunForBodyTurn(true);
+        setAdjustRadarForGunTurn(true);
+    }
+
+    /** One decision turn; the adapter calls {@code go()} afterwards. */
+    void turn() {
+        {
+            recordOwnState();
+            pruneStaleEnemies();
+            advanceTargetingWaves();
+            advanceEnemyWaves();
+
+            if (scanRecorder.enabled()) recordLegalFrame();
+
+            double[] features = encodeFeatures();
+            boolean duelEligible = getEnemyCount() == 1 && enemies.size() == 1;
+            int action = agent.observe(features, round.pendingReward + SURVIVAL_BONUS, false, duelEligible);
+            metrics.actionCounts[action]++;
+            if (duelEligible) metrics.duelEligibleTurns++;
+            if (duelEligible && config.forceDuel()) metrics.forcedDuelTurns++;
+            metrics.reward += SURVIVAL_BONUS;
+            round.pendingReward = 0.0;
+
+            executeMovement(action);
+            updateRadar();
+            aimGF();
+            if (scanRecorder.enabled()) scanRecorder.submitted(new LegalScanRecorder.Intent(getTurnNumber(),
+                    getTargetSpeed(), getTurnRate(), getGunTurnRate(), getRadarTurnRate(), null, action));
+            if (tickReceivedNanos != 0) metrics.recordTurnLatency((System.nanoTime() - tickReceivedNanos) / 1000);
+        }
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Lifecycle
+    // ═════════════════════════════════════════════════════════════════════════
+
+    public void onRoundStarted(RoundStartedEvent e) {
+        enemies.clear();
+        targetingWaves.clear();
+        fireTracker.clear();
+        pendingFireScans.clear();
+        pendingTargetingWave = null;
+        enemyWaves.clear();
+        ownHistory.clear();
+        tickReceivedNanos = 0;  // never measure across the pause between rounds
+        duelSign      = 1;
+        duelGun.startRound();
+        pendingDuelShot = false;
+        dodgeSign     = 1;
+        radarTargetId = -1;
+        radarSign     = 1;
+        agent.startEpisode();
+        round.start();
+        metrics.reset();
+        if (scanRecorder.enabled()) scanRecorder.startRound(e.getRoundNumber());
+
+        // Decay GF and surf stats
+        if (!config.training()) return;
+        for (double[][] segs : gfStats.values())
+            for (double[] bins : segs)
+                for (int i = 0; i < bins.length; i++) bins[i] *= GF_DECAY;
+        for (double[] bins : surfStats.values())
+            for (int i = 0; i < bins.length; i++) bins[i] *= GF_DECAY;
+    }
+
+    public void onRoundEnded(RoundEndedEvent e) {
+        finishRound(e);
+        saveAgent();
+        if (scanRecorder.configured()) scanRecorder.finishRound(e.getRoundNumber());
+    }
+
+    public void onGameEnded(GameEndedEvent e) {
+        saveAgent();
+        if (scanRecorder.configured()) scanRecorder.finishGame();
+    }
+
+    private void recordLegalFrame() {
+        var own = new LegalScanRecorder.Own(getX(), getY(), getDirection(), getSpeed(),
+                getGunDirection(), getRadarDirection(), getEnergy());
+        var targets = new ArrayList<LegalScanRecorder.Target>();
+        for (Enemy enemy : enemies.values()) targets.add(new LegalScanRecorder.Target(enemy.id,
+                new LegalScanRecorder.Scan(enemy.lastScanTurn, enemy.x, enemy.y, enemy.direction,
+                        enemy.speed, enemy.energy)));
+        scanRecorder.frame(getRoundNumber(), getTurnNumber(), own, targets);
+    }
+
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Combat events
+    // ═════════════════════════════════════════════════════════════════════════
+
+    /** The tick is the first event of a turn; latency runs from here to the go() that answers it. */
+    public void onTick(TickEvent e) {
+        tickReceivedNanos = System.nanoTime();
+    }
+
+    public void onScannedBot(ScannedBotEvent e) {
+        Enemy prev = enemies.get(e.getScannedBotId());
+        double prevEn   = (prev != null) ? prev.energy : e.getEnergy();
+        double turnRate = (prev != null)
+                ? CombatMath.turnRate(prev.direction, e.getDirection(),
+                        e.getTurnNumber() - prev.lastScanTurn) : 0.0;
+
+        double bearingToEnemy = directionTo(e.getX(), e.getY());
+        double latVel = e.getSpeed() *
+                Math.sin(Math.toRadians(e.getDirection() - bearingToEnemy));
+
+        Enemy info = new Enemy(
+                e.getScannedBotId(), e.getX(), e.getY(),
+                e.getDirection(), e.getSpeed(), e.getEnergy(),
+                latVel, prevEn, turnRate, e.getTurnNumber());
+        if (prev != null) info.carryForward(prev);
+        enemies.put(info.id, info);
+        if (duelComponents()) duelGun.onScan(new DuelGun.Scan(info.id, info.lastScanTurn,
+                info.x, info.y, info.direction, info.speed, info.energy));
+        gfStats.computeIfAbsent(info.id, k -> new double[NUM_SEGS][GF_BINS]);
+
+        // Process after the turn's damage/bonus events, independent of event priority.
+        if (prev != null) pendingFireScans.add(new FireScan(prev, info, getX(), getY()));
+    }
+
+    public void onHitByBullet(HitByBulletEvent e) {
+        BulletState bullet = e.getBullet();
+        if (duelComponents()) fireTracker.recordBulletHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
+        else fireTracker.recordHitBonus(bullet.getOwnerId(), e.getTurnNumber(), bullet.getPower());
+        recordSurfHit(bullet, e.getTurnNumber());
+        metrics.damageTaken += e.getDamage();
+        addReward(-e.getDamage() * (0.6 + 0.1 * getEnemyCount()));
+        dodgeSign = -dodgeSign;
+    }
+
+    public void onBulletHit(BulletHitBotEvent e) {
+        if (duelComponents()) fireTracker.recordBulletDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
+        else fireTracker.recordDamage(e.getVictimId(), e.getTurnNumber(), e.getDamage());
+        metrics.bulletHits++;
+        metrics.damageDealt += e.getDamage();
+        addReward(e.getDamage() * 0.6);
+        if (e.getEnergy() <= 0) {
+            enemies.remove(e.getVictimId());
+            addReward(30.0);
+        }
+    }
+
+    public void onBotDeath(BotDeathEvent e) {
+        enemies.remove(e.getVictimId());
+        addReward(15.0);
+        if (e.getVictimId() == radarTargetId) radarTargetId = -1;
+    }
+
+    public void onDeath(DeathEvent e) {
+        round.died(getEnemyCount());
+    }
+
+    public void onHitWall(HitWallEvent e) {
+        metrics.wallCollisions++;
+        addReward(-3.0);
+        dodgeSign = -dodgeSign;
+    }
+
+    public void onHitBot(HitBotEvent e) {
+        metrics.botCollisions++;
+        addReward(-1.5);
+        dodgeSign = -dodgeSign;
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Feature encoding (14 continuous features)
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private double[] encodeFeatures() {
+        double[] f = new double[NUM_FEATURES];
+        f[0] = getEnergy() / 100.0;
+
+        Enemy t = bestTarget();
+        if (t != null) {
+            double dist = distanceTo(t.x, t.y);
+            f[1]  = dist / 1000.0;
+            f[2]  = clamp((getEnergy() - t.energy) / 100.0, -1, 1);
+            double bearing = directionTo(t.x, t.y);
+
+            // Closing speed: target's radial velocity component toward us
+            double bearingFromTarget = Math.toDegrees(
+                    Math.atan2(getY() - t.y, getX() - t.x));
+            f[7]  = clamp(-t.speed * Math.cos(
+                    Math.toRadians(t.direction - bearingFromTarget)) / 16.0, -1, 1);
+            f[8]  = clamp((getTurnNumber() - t.lastFireTurn) / 20.0, 0, 1);
+            double bearRad = Math.toRadians(bearing);
+            f[10] = Math.sin(bearRad);
+            f[11] = Math.cos(bearRad);
+            f[12] = t.speed / 8.0;
+            f[13] = clamp(t.turnRate / 10.0, -1, 1);
+        } else {
+            f[1] = 0.5; f[2] = 0; f[7] = 0; f[8] = 1; f[10] = 0; f[11] = 1;
+            f[12] = 0; f[13] = 0;
+        }
+
+        f[3] = getEnemyCount() / 5.0;
+        f[4] = clamp(1.0 - minWallDist() / 200.0, 0, 1);
+        f[5] = getGunHeat() / 3.0;
+
+        // Enemy bullets are not exposed by TickEvent; use inferred approaching waves.
+        int threats = 0;
+        for (EnemyWave wave : enemyWaves) {
+            double remaining = wave.remaining(getX(), getY(), getTurnNumber());
+            if (remaining > 0 && remaining < wave.bulletSpeed * 20) threats++;
+        }
+        f[6] = Math.min(1, threats / 5.0);
+        f[9] = getSpeed() / 8.0;
+
+        return f;
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  GuessFactor Targeting + Opponent Modelling
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private void advanceTargetingWaves() {
+        Iterator<TargetingWave> it = targetingWaves.iterator();
+        while (it.hasNext()) {
+            TargetingWave w = it.next();
+            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
+
+            Enemy t = enemies.get(w.targetId);
+            if (t == null) { it.remove(); continue; }
+            if (t.lastScanTurn != getTurnNumber()) continue;
+
+            double dist = Math.sqrt(sq(t.x - w.originX) + sq(t.y - w.originY));
+            CombatMath.WaveObservation observation = CombatMath.observeTargetWave(
+                    traveled, dist, w.bulletSpeed);
+            if (observation == CombatMath.WaveObservation.PASSED) { it.remove(); continue; }
+            if (observation == CombatMath.WaveObservation.BEFORE) continue;
+
+            double absAngle = Math.toDegrees(Math.atan2(t.y - w.originY, t.x - w.originX));
+            double latAngle = normalizeAngle(absAngle - w.baseAngle) * w.lateralDir;
+            double maxAngle = Math.toDegrees(Math.asin(Math.min(1.0, 8.0 / w.bulletSpeed)));
+            double gf = clamp(latAngle / maxAngle, -1.0, 1.0);
+            int bin = gfBin(gf);
+
+            // Update per-enemy stats
+            if (config.training()) w.bins[bin] += 1.0;
+
+            // Update per-class stats
+            int cls = classifyEnemy(t);
+            if (config.training()) agent.classGF[cls][w.segment][bin] += 1.0;
+
+            it.remove();
+        }
+    }
+
+    private int classifyEnemy(Enemy e) {
+        if (e.scanCount < 8) return CLASS_UNKNOWN;
+        double changeRate   = (double) e.dirChanges / e.scanCount;
+        double reversalRate = (double) e.speedReversals / e.scanCount;
+        double avgTurnRate  = e.sumAbsTurnRate / e.scanCount;
+
+        if (changeRate > 0.35)   return CLASS_RANDOM;
+        if (reversalRate > 0.25) return CLASS_OSCILLATOR;
+        if (avgTurnRate > 4.0)   return CLASS_CIRCULAR;
+        return CLASS_LINEAR;
+    }
+
+    private void aimGF() {
+        Enemy t = bestTarget();
+        if (t == null) return;
+        if (duelComponents()) {
+            pendingTargetingWave = null;
+            pendingDuelShot = false;
+            double power = DuelGun.firepower(getEnergy(), t.energy, distanceTo(t.x, t.y));
+            DuelLegacyContext legacy = duelLegacyAim(t, power);
+            TargetingGeometry.Aim legacyAim = legacy.aim();
+            DuelGun.Plan plan = duelGun.decide(new DuelGun.Input(getTurnNumber(), getX(), getY(),
+                    getGunDirection(), getEnergy(), getGunHeat(), getArenaWidth(), getArenaHeight(),
+                    new DuelGun.Scan(t.id, t.lastScanTurn, t.x, t.y, t.direction, t.speed, t.energy),
+                    new DuelGun.LegacyAim(legacyAim.aimAngle(),
+                            Math.hypot(legacyAim.x() - getX(), legacyAim.y() - getY()), power)));
+            setGunTurnRate(clamp(normalizeAngle(plan.direction() - getGunDirection()), -20, 20));
+            if (plan.shouldFire()) pendingDuelShot = setFire(plan.power());
+            if (pendingDuelShot && legacy.bins() != null) {
+                TargetingWave wave = new TargetingWave();
+                wave.targetId = t.id; wave.segment = legacy.segment(); wave.bins = legacy.bins();
+                wave.lateralDir = legacyAim.lateralDirection();
+                // Keep the unperturbed circular point as the residual-GF reference.
+                // onBulletFired supplies the actual origin, power and creation turn.
+                wave.aimX = legacyAim.x(); wave.aimY = legacyAim.y();
+                pendingTargetingWave = wave;
+            }
+            return;
+        }
+
+        double dist = distanceTo(t.x, t.y);
+        double fp   = firePower(dist);
+        double bspd = calcBulletSpeed(fp > 0 ? fp : 1.0);
+
+        int        seg     = segment(dist, Math.abs(t.lateralVelocity));
+        double[][] st      = gfStats.get(t.id);
+
+        // Blend per-enemy + per-class GF stats
+        int cls = classifyEnemy(t);
+        double w = Math.min(1.0, t.scanCount / 30.0);
+        int bestBin = CombatMath.bestBin(st != null ? st[seg] : new double[GF_BINS],
+                agent.classGF[cls][seg], w);
+
+        double gf       = (bestBin / (double)(GF_BINS - 1)) * 2.0 - 1.0;
+        TargetingGeometry.Aim aim = TargetingGeometry.calculate(new TargetingGeometry.Snapshot(
+                getX(), getY(), getArenaWidth(), getArenaHeight(), getTurnNumber(), getGunDirection(),
+                t.x, t.y, t.direction, t.speed, t.turnRate, t.lastScanTurn, dist, bspd, gf, t.lateralVelocity));
+        double predX = aim.x(), predY = aim.y(), baseAngle = aim.baseAngle();
+        double latDir = aim.lateralDirection(), gunTurn = aim.gunTurn();
+        setGunTurnRate(aim.gunTurnRate());
+
+        if (fp > 0 && getGunHeat() == 0 && Math.abs(gunTurn) < 10.0 && setFire(fp)) {
+            if (st != null) {
+                TargetingWave tw = new TargetingWave();
+                tw.originX    = getX();    tw.originY    = getY();
+                tw.baseAngle  = baseAngle; tw.bulletSpeed = bspd;
+                tw.fireTurn   = getTurnNumber(); tw.targetId = t.id;
+                tw.lateralDir = latDir;    tw.segment    = seg;
+                tw.bins       = st[seg];
+                tw.aimX = predX; tw.aimY = predY;
+                pendingTargetingWave = tw;
+            }
+        }
+    }
+
+    private record DuelLegacyContext(TargetingGeometry.Aim aim, int segment, double[] bins) {}
+
+    /** Reuse the legacy GF profile/geometry at the duel gun's exact proposed power. */
+    private DuelLegacyContext duelLegacyAim(Enemy target, double power) {
+        double distance = distanceTo(target.x, target.y);
+        int seg = segment(distance, Math.abs(target.lateralVelocity));
+        double[][] stats = gfStats.get(target.id);
+        int cls = classifyEnemy(target);
+        double weight = Math.min(1.0, target.scanCount / 30.0);
+        int best = CombatMath.bestBin(stats != null ? stats[seg] : new double[GF_BINS],
+                agent.classGF[cls][seg], weight);
+        double gf = best / (double) (GF_BINS - 1) * 2.0 - 1.0;
+        double bulletSpeed = calcBulletSpeed(power > 0 ? power : 1.0);
+        TargetingGeometry.Aim aim = TargetingGeometry.calculate(new TargetingGeometry.Snapshot(
+                getX(), getY(), getArenaWidth(), getArenaHeight(), getTurnNumber(), getGunDirection(),
+                target.x, target.y, target.direction, target.speed, target.turnRate, target.lastScanTurn,
+                distance, bulletSpeed, gf, target.lateralVelocity));
+        return new DuelLegacyContext(aim, seg, stats == null ? null : stats[seg]);
+    }
+
+    public void onBulletFired(BulletFiredEvent e) {
+        metrics.shotsFired++;
+        if (pendingDuelShot) {
+            BulletState shot = e.getBullet();
+            duelGun.onFired(e.getTurnNumber(), shot.getX(), shot.getY(), shot.getPower());
+            pendingDuelShot = false;
+        }
+        if (scanRecorder.enabled()) {
+            BulletState shot = e.getBullet();
+            scanRecorder.confirmed(new LegalScanRecorder.Shot(e.getTurnNumber(), shot.getBulletId(),
+                    shot.getPower(), shot.getDirection(), shot.getX(), shot.getY()));
+        }
+        if (pendingTargetingWave == null) return;
+        TargetingWave wave = pendingTargetingWave;
+        pendingTargetingWave = null;
+        BulletState bullet = e.getBullet();
+        wave.originX = bullet.getX(); wave.originY = bullet.getY();
+        wave.baseAngle = CombatMath.bearing(wave.aimX - wave.originX, wave.aimY - wave.originY);
+        wave.bulletSpeed = bullet.getSpeed();
+        wave.fireTurn = e.getTurnNumber();
+        targetingWaves.add(wave);
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Movement — selected action + force-vector interface
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private void executeMovement(int action) {
+        if (action == A_MINRISK && getEnemyCount() == 1 && enemies.size() == 1) {
+            duelMovement(enemies.values().iterator().next());
+            return;
+        }
+        double[] force = actionForce(action);
+        double heading = normDir(Math.toDegrees(Math.atan2(force[1], force[0])));
+        steerTo(wallSmooth(getX(), getY(), heading, 1), force[2]);
+    }
+
+    private double[] actionForce(int action) {
+        return switch (action) {
+            case A_MINRISK    -> minRiskForce(1.0);
+            case A_CIRCLE_CW  -> circleForce(true);
+            case A_CIRCLE_CCW -> circleForce(false);
+            case A_FLEE       -> minRiskForce(3.0);
+            case A_WAVE_SURF  -> waveSurfForce();
+            case A_HUNT       -> huntForce();
+            default           -> minRiskForce(1.0);
+        };
+    }
+
+    // ─── 1v1 shot-reactive movement ──────────────────────────────────────────
+
+    private void duelMovement(Enemy enemy) {
+        List<DuelSurf.Threat> threats = new ArrayList<>();
+        for (EnemyWave wave : enemyWaves) {
+            if (Double.isNaN(wave.aimDistance) || wave.remaining(getX(), getY(), getTurnNumber()) < -18) continue;
+            threats.add(new DuelSurf.Threat(wave.originX, wave.originY, wave.bulletSpeed, wave.fireTurn,
+                    wave.headOnAim, wave.linearAim));
+        }
+        DuelSurf.Command command = DuelSurf.choose(getX(), getY(), getDirection(), getSpeed(), getTurnNumber(),
+                enemy.x, enemy.y, threats, duelSign, getArenaWidth(), getArenaHeight());
+        if (command.travelSign() != 0) duelSign = command.travelSign();
+        setTurnRate(clamp(normalizeAngle(command.bodyHeading() - getDirection()), -maxBodyTurn(), maxBodyTurn()));
+        setTargetSpeed(command.targetSpeed());
+    }
+
+    // ─── Minimum-risk movement ───────────────────────────────────────────────
+
+    private double[] minRiskForce(double enemyScale) {
+        double myX = getX(), myY = getY();
+        double bestRisk = Double.MAX_VALUE, bestX = myX, bestY = myY;
+
+        // 24 points at 120px + 12 at 60px + 12 at 200px = 48 candidates
+        for (int ring = 0; ring < 3; ring++) {
+            double radius = ring == 0 ? 120 : ring == 1 ? 60 : 200;
+            int count = ring == 0 ? 24 : 12;
+            for (int i = 0; i < count; i++) {
+                double angle = i * (2 * Math.PI / count);
+                double px = clamp(myX + Math.cos(angle) * radius,
+                        WALL_MARGIN, getArenaWidth()  - WALL_MARGIN);
+                double py = clamp(myY + Math.sin(angle) * radius,
+                        WALL_MARGIN, getArenaHeight() - WALL_MARGIN);
+                double risk = evaluateRisk(px, py, enemyScale);
+                if (risk < bestRisk) { bestRisk = risk; bestX = px; bestY = py; }
+            }
+        }
+
+        double dx = bestX - myX, dy = bestY - myY;
+        double d = Math.sqrt(dx * dx + dy * dy) + 1;
+        return new double[]{ dx / d, dy / d, 8.0 };
+    }
+
+    private double evaluateRisk(double px, double py, double enemyScale) {
+        double risk = 0;
+
+        // Wall proximity
+        double wd = Math.min(Math.min(px, getArenaWidth() - px),
+                Math.min(py, getArenaHeight() - py));
+        if (wd < WALL_MARGIN) risk += 3.0 * (1.0 - wd / WALL_MARGIN);
+
+        // Enemy danger: proximity + crosshair alignment + energy
+        for (Enemy e : enemies.values()) {
+            double dist = Math.sqrt(sq(px - e.x) + sq(py - e.y)) + 1;
+            risk += enemyScale * e.energy / dist * 0.5;
+
+            // Body direction is a movement-risk heuristic; enemy gun direction is not visible.
+            double bearFromEnemy = Math.toDegrees(Math.atan2(py - e.y, px - e.x));
+            double angleOff = Math.abs(normalizeAngle(e.direction - bearFromEnemy));
+            if (angleOff < 30) risk += enemyScale * 2.0 * (1.0 - angleOff / 30.0);
+        }
+
+        // Score inferred wave fronts at this candidate's estimated arrival time.
+        double travelTurns = Math.hypot(px - getX(), py - getY()) / 8.0;
+        for (EnemyWave wave : enemyWaves) {
+            double radialGap = Math.abs(Math.hypot(px - wave.originX, py - wave.originY)
+                    - (getTurnNumber() + travelTurns - wave.fireTurn) * wave.bulletSpeed);
+            if (radialGap < 50) risk += 4 * (1 - radialGap / 50);
+        }
+
+        // Slight center preference
+        double cx = getArenaWidth() / 2, cy = getArenaHeight() / 2;
+        risk += Math.sqrt(sq(px - cx) + sq(py - cy)) * 0.002;
+
+        return risk;
+    }
+
+    // ─── Circle movement ─────────────────────────────────────────────────────
+
+    private double[] circleForce(boolean cw) {
+        Enemy t = nearestEnemy();
+        if (t == null) return minRiskForce(1.0);
+        double orbitAngle = Math.toRadians(CombatMath.orbitHeading(directionTo(t.x, t.y), cw));
+        double speed = 8.0 * ((getTurnNumber() % 11 < 7) ? 1.0 : 0.5);
+        return new double[]{ Math.cos(orbitAngle), Math.sin(orbitAngle), speed };
+    }
+
+    // ─── Wave surfing ────────────────────────────────────────────────────────
+
+    private double[] waveSurfForce() {
+        EnemyWave closest = closestWave();
+        if (closest == null) return minRiskForce(1.0);
+
+        double[] danger = surfStats.get(closest.shooterId);
+        if (danger == null) return minRiskForce(1.0);
+
+        double bearFromWave = Math.toDegrees(
+                Math.atan2(getY() - closest.originY, getX() - closest.originX));
+        double maxEscape = Math.toDegrees(
+                Math.asin(Math.min(1.0, 8.0 / closest.bulletSpeed)));
+
+        // Compare GF danger for CW vs CCW orbit
+        double cwGF  = clamp(normalizeAngle(bearFromWave + 5 - closest.bearingToUs)
+                / maxEscape, -1, 1);
+        double ccwGF = clamp(normalizeAngle(bearFromWave - 5 - closest.bearingToUs)
+                / maxEscape, -1, 1);
+
+        double cwDanger  = danger[gfBin(cwGF)];
+        double ccwDanger = danger[gfBin(ccwGF)];
+
+        double orbitDir = (cwDanger <= ccwDanger)
+                ? bearFromWave + 90 : bearFromWave - 90;
+        double rad = Math.toRadians(orbitDir);
+        return new double[]{ Math.cos(rad), Math.sin(rad), 8.0 };
+    }
+
+    private EnemyWave closestWave() {
+        EnemyWave best = null;
+        double minDist = Double.MAX_VALUE;
+        double myX = getX(), myY = getY();
+        for (EnemyWave w : enemyWaves) {
+            double traveled = (getTurnNumber() - w.fireTurn) * w.bulletSpeed;
+            double dist = Math.sqrt(sq(myX - w.originX) + sq(myY - w.originY));
+            double remaining = dist - traveled;
+            if (remaining > 0 && remaining < minDist) {
+                minDist = remaining;
+                best = w;
+            }
+        }
+        return best;
+    }
+
+    private void advanceEnemyWaves() {
+        for (FireScan scan : pendingFireScans) {
+            Enemy prev = scan.previous(), current = scan.current();
+            double power = fireTracker.inferPower(current.id, prev.lastScanTurn,
+                    current.lastScanTurn, prev.energy, current.energy);
+            if (power > 0) {
+                current.lastFireTurn = prev.lastScanTurn;
+                double bulletSpeed = calcBulletSpeed(power);
+                EnemyWave wave = new EnemyWave(prev.x, prev.y, bulletSpeed,
+                        CombatMath.bearing(scan.ourX() - prev.x, scan.ourY() - prev.y),
+                        prev.lastScanTurn, current.id);
+                AimCorridor.OwnState own = ownHistory.get(prev.lastScanTurn);
+                if (own != null) wave.setAims(AimCorridor.headOn(prev.x, prev.y, own),
+                        AimCorridor.linear(prev.x, prev.y, own, bulletSpeed, getArenaWidth(), getArenaHeight()),
+                        Math.hypot(own.x() - prev.x, own.y() - prev.y));
+                enemyWaves.add(wave);
+                surfStats.computeIfAbsent(current.id, ignored -> new double[GF_BINS]);
+            }
+        }
+        pendingFireScans.clear();
+        fireTracker.prune(getTurnNumber());
+        // Keep a collision margin so a hit event can still match the wave.
+        enemyWaves.removeIf(w -> w.remaining(getX(), getY(), getTurnNumber())
+                < -w.bulletSpeed - 36);
+    }
+
+    private void recordSurfHit(BulletState bullet, int turn) {
+        EnemyWave match = null;
+        double bestError = Double.POSITIVE_INFINITY;
+        for (EnemyWave wave : enemyWaves) {
+            double error = wave.matchError(bullet.getOwnerId(), bullet.getPower(),
+                    bullet.getX(), bullet.getY(), turn);
+            if (error < bestError) { match = wave; bestError = error; }
+        }
+        if (match != null) {
+            double[] danger = surfStats.get(match.shooterId);
+            match.learnHit(danger, bullet.getX(), bullet.getY(), config.training());
+            enemyWaves.remove(match);
+        }
+    }
+
+    // ─── Hunt movement ───────────────────────────────────────────────────────
+
+    private double[] huntForce() {
+        Enemy t = weakestEnemy();
+        if (t == null) return minRiskForce(1.0);
+        double angle = Math.toRadians(directionTo(t.x, t.y));
+        return new double[]{ Math.cos(angle), Math.sin(angle), 8.0 };
+    }
+
+    // ─── Steering helper ─────────────────────────────────────────────────────
+
+    private void steerTo(double heading, double speed) {
+        double turn = normalizeAngle(heading - getDirection()) * 2.0;
+        setTurnRate(clamp(turn, -maxBodyTurn(), maxBodyTurn()));
+        setTargetSpeed(speed);
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Radar
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private void updateRadar() {
+        setAdjustRadarForBodyTurn(duelComponents());
+        if (duelComponents()) {
+            Enemy target = bestTarget();
+            if (target == null) { setRadarTurnRate(45 * radarSign); return; }
+            double turn = DuelRadar.turn(getX(), getY(), getRadarDirection(), target.x, target.y,
+                    getTurnNumber() - target.lastScanTurn, radarSign);
+            if (turn != 0) radarSign = turn < 0 ? -1 : 1;
+            setRadarTurnRate(turn);
+            return;
+        }
+        if (getEnemyCount() > 1) {
+            Enemy target = bestTarget();
+            if (target != null) {
+                double radarTurn = normalizeAngle(
+                        directionTo(target.x, target.y) - getRadarDirection());
+                int staleness = getTurnNumber() - target.lastScanTurn;
+                if (staleness <= 2 && Math.abs(radarTurn) < 20) {
+                    setRadarTurnRate(45.0 * radarSign);
+                } else {
+                    setRadarTurnRate(clamp(
+                            radarTurn + Math.signum(radarTurn) * 15.0, -45, 45));
+                }
+            } else {
+                setRadarTurnRate(45.0);
+            }
+        } else {
+            Enemy target = enemies.get(radarTargetId);
+            if (target == null) {
+                target = bestTarget();
+                radarTargetId = (target != null) ? target.id : -1;
+            }
+            if (target == null) { setRadarTurnRate(45.0); return; }
+
+            int staleness = getTurnNumber() - target.lastScanTurn;
+            double radarTurn = normalizeAngle(
+                    directionTo(target.x, target.y) - getRadarDirection());
+
+            if (staleness == 0) {
+                radarSign = -radarSign;
+                setRadarTurnRate(clamp(radarTurn + radarSign * 8.0, -45, 45));
+            } else {
+                double overshoot = Math.min(10.0 + staleness * 7.0, 45.0);
+                setRadarTurnRate(clamp(
+                        radarTurn + Math.signum(radarTurn) * overshoot, -45, 45));
+            }
+        }
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Persistence
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private void loadAgent() {
+        agent = new DQNAgent(NUM_FEATURES, NUM_ACTIONS, config);
+        if (config.mode() == BotConfig.Mode.FIXED) return;
+        try {
+            checkpointLoaded = ModelStore.load(config.modelPath(), agent);
+            System.out.println("[AISurvivor] checkpointLoaded=" + checkpointLoaded);
+        } catch (IOException ex) {
+            System.out.println("[AISurvivor] Incompatible or corrupt checkpoint preserved: " + ex.getMessage());
+        }
+    }
+
+    private void saveAgent() {
+        if (!config.training()) return;
+        try { ModelStore.save(config.modelPath(), agent); }
+        catch (IOException ex) { System.out.println("[AISurvivor] Save failed: " + ex.getMessage()); }
+    }
+
+    private void addReward(double reward) {
+        round.addReward(reward);
+        metrics.reward += reward;
+    }
+
+    public void onWonRound(WonRoundEvent e) {
+        round.won();
+    }
+
+    public void onSkippedTurn(SkippedTurnEvent e) { metrics.skippedTurns++; }
+
+    private void finishRound(RoundEndedEvent event) {
+        double finalPending = round.pendingReward;
+        RoundLifecycle.Completion completed = round.finish(event);
+        if (completed == null) return;
+        metrics.reward += completed.reward() - finalPending;
+        agent.finishEpisode(completed.reward());
+        metrics.write(config, completed.round(), completed.turns(), agent.totalRounds,
+                checkpointLoaded, completed.won(), completed.died());
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Enemy selection helpers
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private Enemy nearestEnemy() {
+        Enemy best = null; double minD = Double.MAX_VALUE;
+        for (Enemy e : enemies.values()) {
+            double d = distanceTo(e.x, e.y);
+            if (d < minD) { minD = d; best = e; }
+        }
+        return best;
+    }
+
+    private Enemy weakestEnemy() {
+        Enemy best = null; double minEn = Double.MAX_VALUE;
+        for (Enemy e : enemies.values())
+            if (e.energy < minEn) { minEn = e.energy; best = e; }
+        return best;
+    }
+
+    private Enemy bestTarget() {
+        Enemy best = null; double minScore = Double.MAX_VALUE;
+        for (Enemy e : enemies.values()) {
+            double score = distanceTo(e.x, e.y) * 0.7 + e.energy * 1.5;
+            if (score < minScore) { minScore = score; best = e; }
+        }
+        return best;
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Utilities
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private void recordOwnState() {
+        int now = getTurnNumber();
+        ownHistory.put(now, new AimCorridor.OwnState(now, getX(), getY(), getDirection(), getSpeed()));
+        ownHistory.keySet().removeIf(turn -> turn <= now - OWN_HISTORY);
+    }
+
+    private void pruneStaleEnemies() {
+        int now = getTurnNumber();
+        enemies.values().removeIf(e -> now - e.lastScanTurn > STALE_TURNS);
+    }
+
+    private double minWallDist() {
+        double x = getX(), y = getY();
+        return Math.min(Math.min(x, getArenaWidth() - x),
+                Math.min(y, getArenaHeight() - y));
+    }
+
+    private double maxBodyTurn() { return 10.0 - 0.75 * Math.abs(getSpeed()); }
+
+    /** The new composition is a default TRAIN duel policy; legacy, FIXED/EVAL and melee retain their paths. */
+    private boolean duelComponents() { return config.forceDuel() && getEnemyCount() == 1; }
+
+    private double wallSmooth(double x, double y, double heading, int rotDir) {
+        double h = heading;
+        for (int i = 0; i < 36; i++) {
+            double tx = x + Math.cos(Math.toRadians(h)) * WALL_MARGIN;
+            double ty = y + Math.sin(Math.toRadians(h)) * WALL_MARGIN;
+            if (tx > WALL_MARGIN && tx < getArenaWidth()  - WALL_MARGIN &&
+                ty > WALL_MARGIN && ty < getArenaHeight() - WALL_MARGIN) break;
+            h = normDir(h + rotDir * 5.0);
+        }
+        return h;
+    }
+
+    private static double normDir(double d) { return ((d % 360) + 360) % 360; }
+
+    private static int segment(double dist, double latSpeed) {
+        int dBucket = dist < 200 ? 0 : dist < 500 ? 1 : 2;
+        int vBucket = latSpeed < 2.0 ? 0 : latSpeed < 5.0 ? 1 : 2;
+        return dBucket * LAT_SEGS + vBucket;
+    }
+
+    private static int gfBin(double gf) {
+        return (int) clamp(Math.round((gf + 1.0) / 2.0 * (GF_BINS - 1)), 0, GF_BINS - 1);
+    }
+
+    private double firePower(double dist) {
+        double en = getEnergy();
+        if (en < 12.0) return 0.0;
+        double fp = clamp(700.0 / (dist + 50.0), 0.5, 3.0);
+        if (en < 25.0)      fp = Math.min(fp, 0.8);
+        else if (en < 50.0) fp = Math.min(fp, 1.5);
+        if (getEnemyCount() > 3) fp = Math.min(fp, 1.5);
+        return fp;
+    }
+
+    private static double normalizeAngle(double a) {
+        while (a >  180.0) a -= 360.0;
+        while (a < -180.0) a += 360.0;
+        return a;
+    }
+
+    private static double clamp(double v, double lo, double hi) {
+        return Math.max(lo, Math.min(hi, v));
+    }
+
+    private static double sq(double v) { return v * v; }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    //  Bot API surface (same names and semantics as Tank Royale 1.4.0 BaseBot)
+    // ═════════════════════════════════════════════════════════════════════════
+
+    private int getTurnNumber() { return port.turnNumber(); }
+    private int getRoundNumber() { return port.roundNumber(); }
+    private int getEnemyCount() { return port.enemyCount(); }
+    private int getArenaWidth() { return port.arenaWidth(); }
+    private int getArenaHeight() { return port.arenaHeight(); }
+    private double getX() { return port.x(); }
+    private double getY() { return port.y(); }
+    private double getDirection() { return port.direction(); }
+    private double getSpeed() { return port.speed(); }
+    private double getEnergy() { return port.energy(); }
+    private double getGunHeat() { return port.gunHeat(); }
+    private double getGunDirection() { return port.gunDirection(); }
+    private double getRadarDirection() { return port.radarDirection(); }
+    private double getTurnRate() { return port.turnRate(); }
+    private double getTargetSpeed() { return port.targetSpeed(); }
+    private double getGunTurnRate() { return port.gunTurnRate(); }
+    private double getRadarTurnRate() { return port.radarTurnRate(); }
+    private void setTurnRate(double rate) { port.commandTurnRate(rate); }
+    private void setTargetSpeed(double speed) { port.commandTargetSpeed(speed); }
+    private void setGunTurnRate(double rate) { port.commandGunTurnRate(rate); }
+    private void setRadarTurnRate(double rate) { port.commandRadarTurnRate(rate); }
+    private boolean setFire(double power) { return port.commandFire(power); }
+    private void setAdjustGunForBodyTurn(boolean adjust) { port.adjustGunForBodyTurn(adjust); }
+    private void setAdjustRadarForGunTurn(boolean adjust) { port.adjustRadarForGunTurn(adjust); }
+    private void setAdjustRadarForBodyTurn(boolean adjust) { port.adjustRadarForBodyTurn(adjust); }
+
+    /** IBaseBot.directionTo: absolute direction in [0, 360) from this bot to (x, y). */
+    private double directionTo(double x, double y) {
+        double angle = Math.toDegrees(Math.atan2(y - getY(), x - getX()));
+        return (angle %= 360) >= 0 ? angle : (angle + 360);
+    }
+
+    /** IBaseBot.distanceTo. */
+    private double distanceTo(double x, double y) { return Math.hypot(x - getX(), y - getY()); }
+
+    /** BaseBot.calcBulletSpeed, including its firepower clamp. */
+    private static double calcBulletSpeed(double firepower) {
+        return 20 - 3 * Math.max(0.1, Math.min(3.0, firepower));
+    }
+}
