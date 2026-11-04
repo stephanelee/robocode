@@ -12,9 +12,10 @@ jobs:
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13.9'
+      - name: Build pinned CPython3.13.9 on Ubuntu26.04 before any acquisition
+        run: |
+          python3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence build/facet-preflight
+          echo "$RUNNER_TEMP/facet-python-3.13.9/bin" >> "$GITHUB_PATH"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -47,6 +48,7 @@ jobs:
         with:
           name: facet-registered-300-evidence
           path: |
+            build/facet-preflight/
             build/facet-registered-300/results.json
             build/facet-registered-300/registration.json
             build/facet-registered-300/*/battle.json

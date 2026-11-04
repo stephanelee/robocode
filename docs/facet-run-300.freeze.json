@@ -87,8 +87,10 @@
     "tools/BenchmarkBattle.java": "ee026cf07ff0b106af187dc97a9a3f2682f57a19b6522496230d1658281f9d17",
     "tools/retcon.py": "4171e5a7e82ce58cc3b66835c9981ce143c9dadd59d7a9fdb34abe98df7c2c52",
     "tools/strong_melee_opponents.py": "a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524",
-    ".github/workflows/facet-benchmark.yml": "af7a1b484d5773376daebb386d6fbba6b297a01d4c0472c25de2553c7f568f44",
-    "experiments/Facet/evidence/final-premeasurement-approval.md": "cb772c15c0893621f83a52ae9eb97a6949825c3693006cab1519a1b36ab8fd2f"
+    ".github/workflows/facet-benchmark.yml": "5020ae0bb5782c7d72b5b27807ca0c567e1c8c3ab31b5fd4e05e4f52f18dcbc5",
+    "experiments/Facet/evidence/final-premeasurement-approval.md": "cb772c15c0893621f83a52ae9eb97a6949825c3693006cab1519a1b36ab8fd2f",
+    "tools/facet_python_runtime.py": "d87722ea830775e525a3783bb160823d469ebe60d542026eb6cfc6c21deedc27",
+    "experiments/Facet/evidence/preflight-setup-failure/concrete-repair-approval.md": "9e81964218a6d6f630c86e54648ebfc8d939512f9450e6616a7d1fbf873435cd"
   },
   "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
   "serverSHA256": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
@@ -102,7 +104,34 @@
     "python": "3.13.9",
     "buildJDKArchiveSHA256": "992f96e7995075ac7636bb1a8de52b0c61d71ed3137fafc979ab96b4ab78dd75",
     "battleJDKArchiveSHA256": "8daf77d1aacffe38c9889689bc224a13557de77559d9a5bb91991e6a298baa0d",
-    "provenancePolicy": "observe actual JVM properties, executable hashes, OS release and runner image version before first game; reject mismatched required versions/image/architecture"
+    "provenancePolicy": "observe actual JVM properties, executable hashes, OS release and runner image version before first game; reject mismatched required versions/image/architecture",
+    "pythonInstallation": {
+      "method": "official source bootstrap on required Ubuntu26.04; no image/version fallback",
+      "url": "https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz",
+      "sha256": "ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66",
+      "bytes": 22681368,
+      "configure": [
+        "--with-ensurepip=install",
+        "--disable-test-modules"
+      ],
+      "compiler": "gcc/g++; actual version recorded",
+      "cflags": "-O3 -fno-omit-frame-pointer",
+      "cppflags": "",
+      "ldflags": "",
+      "makeJobs": 2,
+      "pgo": false,
+      "lto": false,
+      "experimentalJit": false,
+      "freeThreaded": false,
+      "requiredModules": [
+        "ssl",
+        "venv",
+        "ctypes",
+        "lzma",
+        "bz2",
+        "sqlite3"
+      ]
+    }
   },
   "setup": {
     "arenaWidth": 800,
@@ -122,5 +151,18 @@
     "jobMinutes": 180
   },
   "promotionPolicy": "no automatic promotion; original Diamond/Retcon40% and skip<.5%/collision<1% gates retained; AIS descriptive; Adaptive/sample/melee transfer still unmeasured; no automatic fresh confirmation",
-  "candidateCommit": "7f405b4f0673f677d7e5030bfa2610f7a9f38e51"
+  "candidateCommit": "7f405b4f0673f677d7e5030bfa2610f7a9f38e51",
+  "preflightSetupFailure": {
+    "runId": 41850497212,
+    "measuredGames": 0,
+    "measuredRounds": 0,
+    "registrationSHA256": "96f307e06becf3bfa5b8fc302558d5a14c1e35851dc1f752f6b77f9f45f0424a",
+    "evidence": "experiments/Facet/evidence/preflight-setup-failure/",
+    "scope": "administrative setup recovery before first actual acquisition; no measured game retry"
+  },
+  "setupRepairApproval": {
+    "path": "experiments/Facet/evidence/preflight-setup-failure/concrete-repair-approval.md",
+    "sha256": "9e81964218a6d6f630c86e54648ebfc8d939512f9450e6616a7d1fbf873435cd",
+    "decision": "independent2026-11-04 concrete repair approval; successful recorded installation required before FIRST acquisition; no measured retries"
+  }
 }
