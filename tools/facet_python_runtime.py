@@ -16,6 +16,8 @@ URL = 'https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz'
 SHA256 = 'ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66'
 SIZE = 22681368
 CONFIGURE = ('--with-ensurepip=install', '--disable-test-modules')
+PREREQUISITES = ('build-essential', 'libssl-dev', 'zlib1g-dev', 'libffi-dev', 'liblzma-dev',
+                 'libbz2-dev', 'libreadline-dev', 'libsqlite3-dev')
 BUILD_ENV = dict(CC='gcc', CXX='g++', CFLAGS='-O3 -fno-omit-frame-pointer', CPPFLAGS='', LDFLAGS='')
 
 
@@ -35,7 +37,7 @@ def main(args):
     work.mkdir()
     report = dict(status='preparing', version=VERSION, sourceURL=URL, sourceSHA256=SHA256,
                   sourceBytes=SIZE, configure=list(CONFIGURE), explicitBuildEnvironment=BUILD_ENV,
-                  makeJobs=2, optimization='O3, no PGO, no LTO; normal GIL, no experimental JIT',
+                  makeJobs=2, developmentPackages=list(PREREQUISITES), optimization='O3, no PGO, no LTO; normal GIL, no experimental JIT',
                   license='PSF-2.0 and historical bundled notices; LICENSE copied to evidence')
     def save():
         (evidence/'runtime-build.json').write_text(json.dumps(report, indent=2)+'\n')
@@ -50,6 +52,21 @@ def main(args):
             save()
             subprocess.run(command, cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=timeout)
         try:
+            run(['sudo','apt-get','update'], timeout=300)
+            run(['sudo','apt-get','install','--yes','--no-install-recommends',*PREREQUISITES], timeout=600)
+            report['observedDevelopmentPackages'] = subprocess.check_output(
+                ['dpkg-query','-W','-f=${Package}=${Version}\n',*PREREQUISITES], text=True)
+            notices = evidence/'system-licenses'
+            notices.mkdir()
+            report['systemLicenseSHA256'] = {}
+            for package in PREREQUISITES:
+                notice = Path('/usr/share/doc')/package/'copyright'
+                if notice.is_file():
+                    content = notice.read_bytes()
+                    (notices/(package+'.copyright')).write_bytes(content)
+                    report['systemLicenseSHA256'][package] = hashlib.sha256(content).hexdigest()
+                else:
+                    report.setdefault('missingSystemLicenseNotices', []).append(package)
             archive = work/'Python-3.13.9.tar.xz'
             request = urllib.request.Request(URL, headers={'User-Agent':'Facet-pinned-runtime'})
             with urllib.request.urlopen(request, timeout=90) as response:
@@ -65,7 +82,7 @@ def main(args):
             run(['make','-j2'], cwd=source, timeout=1200)
             run(['make','install'], cwd=source, timeout=600)
             (prefix/'bin/python').symlink_to('python3.13')
-            probe = 'import ssl,venv,ctypes,lzma,bz2,sqlite3,sys,sysconfig,json; assert sys.version_info[:3]==(3,13,9); print(json.dumps(dict(version=sys.version,ssl=ssl.OPENSSL_VERSION,configArgs=sysconfig.get_config_var("CONFIG_ARGS"),cflags=sysconfig.get_config_var("CFLAGS"))))'
+            probe = 'import ssl,venv,ctypes,lzma,bz2,sqlite3,readline,sys,sysconfig,json; assert sys.version_info[:3]==(3,13,9); print(json.dumps(dict(version=sys.version,ssl=ssl.OPENSSL_VERSION,configArgs=sysconfig.get_config_var("CONFIG_ARGS"),cflags=sysconfig.get_config_var("CFLAGS"))))'
             report['observed'] = json.loads(subprocess.check_output([str(prefix/'bin/python'),'-c',probe],text=True,env=env))
             report['pythonExecutableSHA256'] = hashlib.sha256((prefix/'bin/python').read_bytes()).hexdigest()
             report['status'] = 'ready-before-any-game'

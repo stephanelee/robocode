@@ -1,0 +1,39 @@
+{
+  "status": "invalid-preflight-no-games",
+  "version": "3.13.9",
+  "sourceURL": "https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz",
+  "sourceSHA256": "ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66",
+  "sourceBytes": 22681368,
+  "configure": [
+    "--with-ensurepip=install",
+    "--disable-test-modules"
+  ],
+  "explicitBuildEnvironment": {
+    "CC": "gcc",
+    "CXX": "g++",
+    "CFLAGS": "-O3 -fno-omit-frame-pointer",
+    "CPPFLAGS": "",
+    "LDFLAGS": ""
+  },
+  "makeJobs": 2,
+  "optimization": "O3, no PGO, no LTO; normal GIL, no experimental JIT",
+  "license": "PSF-2.0 and historical bundled notices; LICENSE copied to evidence",
+  "compiler": "gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "commands": [
+    [
+      "./configure",
+      "--prefix=/home/runner/work/_temp/facet-python-3.13.9",
+      "--with-ensurepip=install",
+      "--disable-test-modules"
+    ],
+    [
+      "make",
+      "-j2"
+    ],
+    [
+      "make",
+      "install"
+    ]
+  ],
+  "error": "Command '['/home/runner/work/_temp/facet-python-3.13.9/bin/python', '-c', 'import ssl,venv,ctypes,lzma,bz2,sqlite3,sys,sysconfig,json; assert sys.version_info[:3]==(3,13,9); print(json.dumps(dict(version=sys.version,ssl=ssl.OPENSSL_VERSION,configArgs=sysconfig.get_config_var(\"CONFIG_ARGS\"),cflags=sysconfig.get_config_var(\"CFLAGS\"))))']' returned non-zero exit status 1."
+}
