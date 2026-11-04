@@ -90,3 +90,11 @@ The independently verified live receipt is also preserved in
 [github-screen-receipt.json](analysis/github-screen-receipt.json). The portable
 archive cannot rehash unarchived live JDK/venv bytes or prove absence of external
 unrecorded games; retain the original hosted provenance and remote-ref audit.
+
+## Later prior-art correction
+
+The initial exploratory continuation proposal was deferred before registration or
+implementation: issue84/PR85 already tested its central mechanism. A generic
+common-cohort gun guard also repeats PR64. The original audit is preserved; read
+[the source-only triage and correction](../robocode-research-triage-20261104/README.md).
+No new budget or games were opened, and the Peak rejection is unchanged.
