@@ -44,6 +44,9 @@ jobs:
           python tools/meridian_gun_plan_fixture.py
           ./gradlew -p experiments/Meridian --no-daemon clean build
           python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
+      - name: Compile isolated wave support diagnostic (no execution)
+        if: github.head_ref == 'codex/meridian-wave-support'
+        run: ./gradlew -p experiments/Meridian --no-daemon waveSupportArtifact
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4

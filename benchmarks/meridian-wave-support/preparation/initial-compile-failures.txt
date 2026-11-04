@@ -1,0 +1,16 @@
+Recovered from the tool transcript; compile preparation only, zero diagnostic cases.
+
+Initial sandbox attempt:
+Exception in thread "main" java.io.FileNotFoundException: /Users/robert/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3-bin.zip.lck (Operation not permitted)
+
+First authorized compile:
+> Task :compileDiagnosticJava FAILED
+/private/tmp/robocode-wave-support/experiments/Meridian/diagnostic/WaveSupportDiagnostic.java:236: error: var is not allowed in a compound declaration
+        var minus=trajectory(s,wave,-1,eligibility,positions,count),plus=trajectory(s,wave,1,eligibility,positions,count);
+/private/tmp/robocode-wave-support/experiments/Meridian/diagnostic/WaveSupportDiagnostic.java:244: error: var is not allowed in a compound declaration
+            var oldRoute=chosen(minus,plus,oldChoice),newRoute=chosen(minus,plus,newChoice);
+2 errors
+BUILD FAILED in 2s
+1 actionable task: 1 executed
+
+Both syntax errors were corrected before any diagnostic execution.

@@ -51,3 +51,28 @@ tasks.register('prepareBot', Copy) {
     into layout.buildDirectory.dir('bot/Meridian')
 }
 assemble.dependsOn tasks.named('prepareBot')
+
+// Isolated component diagnostic. Compile only: no test, bot or acquisition task runs it.
+sourceSets {
+    diagnostic {
+        java.srcDirs = ['diagnostic']
+        compileClasspath = files('Meridian.jar') + configurations.testRuntimeClasspath
+        runtimeClasspath = output + compileClasspath
+    }
+}
+tasks.register('waveSupportJar', Jar) {
+    dependsOn tasks.named('diagnosticClasses')
+    archiveFileName = 'wave-support-diagnostic.jar'
+    destinationDirectory = layout.buildDirectory.dir('wave-support')
+    from sourceSets.diagnostic.output
+    manifest { attributes 'Main-Class': 'WaveSupportDiagnostic' }
+}
+tasks.register('waveSupportArtifact') {
+    dependsOn tasks.named('waveSupportJar')
+    doLast {
+        def entries = [tasks.named('waveSupportJar').get().archiveFile.get().asFile]
+        entries.addAll((sourceSets.diagnostic.runtimeClasspath - sourceSets.diagnostic.output).files)
+        layout.buildDirectory.file('wave-support/classpath.txt').get().asFile.text =
+            entries.collect { it.absolutePath }.join('\n') + '\n'
+    }
+}

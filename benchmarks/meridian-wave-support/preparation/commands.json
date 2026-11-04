@@ -1,0 +1,23 @@
+{
+  "matrixOrUnitCasesExecuted": 0,
+  "compileCommands": [
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew --offline --no-daemon -p experiments/Meridian waveSupportArtifact",
+    "JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew --offline --no-daemon -p experiments/Meridian waveSupportArtifact jar"
+  ],
+  "parityCommand": "python3 tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar",
+  "metadataFreezeCommand": "python3 tools/meridian_wave_support.py --freeze",
+  "preparationFailures": [
+    "Initial sandbox wrapper cache lock access denied; authorized offline compile used existing cache.",
+    "Initial compile found two var-in-compound-declaration Java syntax errors; fixed before source freeze and before any diagnostic case.",
+    "Initial metadata freeze used Homebrew package root rather than actual JDK Contents/Home; no lib/modules there. Corrected path via resolved bin/java, preserved failure log; no diagnostic cases."
+  ],
+  "unavailableEnginePaths404": [
+    "core/BulletEngine.kt",
+    "rules/collision.kt",
+    "rules/geometry.kt",
+    "NOTICE"
+  ],
+  "engineRepository": "robocode-dev/tank-royale",
+  "engineCommit": "c8ad3a8d19a843f6258d6f6f9db7f29229963903",
+  "unusedPreReviewFreeze": "First metadata freeze archived before review because explicit diagnosticValid/exit-status reporting and bounded Mockito call bookkeeping were added. No unit/matrix case had run; final freeze replaces unused preparation metadata."
+}
