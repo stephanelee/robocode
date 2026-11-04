@@ -4,7 +4,7 @@ Prism is a standalone experimental Java 17 Tank Royale bot. It was implemented i
 
 **Status: registered screen rejected; no confirmation.** The sole200-round screen completed: Diamond28.61% mean score share missed the >40% gate; Retcon94.33%, Adaptive69.29% and samples100% passed their gates. Zero Prism recorded skips/collisions/failures. [Full original evidence and limits](../../benchmarks/prism-screen-v1/README.md) include the missing Diamond game3 round15 telemetry line. This remains a standalone experimental reference, with no production AISurvivor promotion or fresh superiority claim.
 
-**Current candidate: Prism 0.2.0, profile `prism-profile-2-surfer-gun` (`Prism.jar f9c75a86…`). Not yet measured.** It adds a single anti-surfer gun trained only on confirmed-bullet waves. Its own [registered v2 screen](../../docs/prism-surfer-gun-protocol.md) awaits an independent exact-head review. The v1 results above describe profile 1 only.
+**Current standalone reference: Prism0.2.0, profile `prism-profile-2-surfer-gun` (`Prism.jar f9c75a86...`), screen rejected.** Its13-game/200-round v2 screen missed only the Diamond>40% gate (30.34%); Retcon99.34%, Adaptive63.43% and samples100% passed their gates. Recorded skips/collisions/failures were zero. [Exact v2 evidence, maintenance provenance and limits](../../benchmarks/prism-screen-v2/README.md). No confirmation or production promotion; v1 results above describe profile1 only.
 
 ## What it does
 
