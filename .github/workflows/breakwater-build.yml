@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '25'
+          java-version: '25.0.5+8'
       - run: python tools/breakwater_experiment.py --show-runtime > breakwater-runtime.json
       - uses: actions/upload-artifact@v4
         with:

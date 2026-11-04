@@ -1,0 +1,41 @@
+## Screens: blocked / enemyShotsDetected (all inferred shots) from metrics.jsonl
+v2a: rounds=10 wins=2 blocked=956/1207=0.7920 skips=0
+v2b: rounds=10 wins=0 blocked=926/1269=0.7297 skips=0
+v2c: rounds=10 wins=2 blocked=1396/1774=0.7869 skips=0
+vg1: rounds=6 wins=0 blocked=645/893=0.7223 skips=0
+vg2: rounds=10 wins=0 blocked=1529/2028=0.7539 skips=0
+vg3: rounds=10 wins=2 blocked=1850/2303=0.8033 skips=0
+eg1: rounds=8 wins=2 blocked=1664/2107=0.7897 skips=0
+vg4: rounds=10 wins=1 blocked=1650/2099=0.7861 skips=0
+vg5: rounds=10 wins=1 blocked=1960/2569=0.7629 skips=0
+## Self-prediction origin error vs logged opponent source (px)
+frozen 0.1.0 rule: n=2945 mean=0.609 >1px=0.2197 >2px=0.1786 max=3.33
+new rule: n=2945 mean=0.135 >1px=0.0217 >2px=0.0000 max=1.95
+## Aim candidate (orbit-normalised, -1 = behind) by mean GF of the previous 20 wave breaks
+mid: n=2823 centre=0.947 behind=0.052 ahead=0.001
+neg (<-0.015): n=276 centre=0.725 behind=0.257 ahead=0.018
+pos (>0.015): n=78 centre=0.808 behind=0.141 ahead=0.051
+## v2c: per-round centre-candidate share and gun used
+1 aims=1728 centre=0.947 behind=77 ahead=9 {'Perceptu': 8, 'Main Gun': 1680, 'Anti-Sur': 40}
+2 aims=217 centre=0.977 behind=5 ahead=0 {'Main Gun': 217}
+3 aims=928 centre=0.809 behind=175 ahead=2 {'Main Gun': 928}
+4 aims=364 centre=0.843 behind=56 ahead=1 {'Main Gun': 356, 'Anti-Sur': 8}
+5 aims=357 centre=0.854 behind=42 ahead=8 {'Anti-Sur': 345, 'Main Gun': 12}
+6 aims=398 centre=0.884 behind=24 ahead=21 {'Anti-Sur': 398}
+7 aims=748 centre=0.679 behind=89 ahead=145 {'Anti-Sur': 748}
+8 aims=416 centre=0.784 behind=38 ahead=47 {'Anti-Sur': 416}
+9 aims=1552 centre=0.976 behind=35 ahead=2 {'Anti-Sur': 28, 'Main Gun': 1524}
+10 aims=603 centre=0.828 behind=67 ahead=37 {'Main Gun': 276, 'Anti-Sur': 327}
+## vg1: real-shot wave hit angle (rad, orbit-normalised) mean=-0.0028 mean|.|=0.0103 n=877; candidate disagreements won by {'TripHammer': 126, 'AntiSurfer': 162}
+## vg3: real-shot wave hit angle (rad, orbit-normalised) mean=-0.0030 mean|.|=0.0096 n=2276; candidate disagreements won by {'AntiSurfer': 251, 'TripHammer': 351}
+## Off-centre persistence (resolved shots, game order): base=0.154
+off-centre among previous 8 = 0: P(next off-centre)=0.060 n=2485
+off-centre among previous 8 = 1: P(next off-centre)=0.153 n=1289
+off-centre among previous 8 = 2: P(next off-centre)=0.235 n=824
+off-centre among previous 8 = 3+: P(next off-centre)=0.319 n=1041
+## vg3+eg1 resolved shots (blocked or hit, matched): block share by inferred enemy power
+>=1.5: resolved=574 blocked=0.918
+0.5-1.5: resolved=424 blocked=0.825
+0.2-0.5: resolved=579 blocked=0.805
+<0.2: resolved=2623 blocked=0.828
+## vg3+eg1 actual-line error vs solver centre (n=4200): {'about a': 0.12, '<1 px': 0.877, '>=1.5a': 0.003, '1 px .. a/2': 0.0}

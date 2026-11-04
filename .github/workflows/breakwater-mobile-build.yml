@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '25'
+          java-version: '25.0.5+8'
       - run: python tools/breakwater_experiment.py --show-runtime > breakwater-runtime.json
       - name: Verify exact runtime without starting bots
         run: python -c 'import json; assert json.load(open("breakwater-runtime.json")) == json.load(open("tools/breakwater-v2-freeze.json"))["runtime"]'

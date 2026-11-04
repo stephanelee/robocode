@@ -33,8 +33,11 @@ final class PressureGun {
     private Pending pending;
     private int learnedAimDecisions,fallbackAimDecisions,confirmedLearnedShots;
     private int pairedCreatedRound,pairedCompletedRound,pairedDiscardedRound,learnedQualifiedDecisions,supportedDecisions;
+    private boolean closed;
 
-    void startRound() {
+    synchronized void closeRound(){closed=true;context.closeRound();}
+    synchronized void startRound() {
+        closed=false;
         latest=previous=null;pending=null;flights.clear();pairedFlights.clear();context.startRound();
         learnedAimDecisions=fallbackAimDecisions=confirmedLearnedShots=0;
         pairedCreatedRound=pairedCompletedRound=pairedDiscardedRound=learnedQualifiedDecisions=supportedDecisions=0;
@@ -56,13 +59,14 @@ final class PressureGun {
     int gateEligibleDecisions(){return learnedQualifiedDecisions;}
     int learnedQualifiedDecisions(){return learnedQualifiedDecisions;}
     ContextGun context() { return context; }
-    void removed(long bulletId){context.removed(bulletId);}
+    synchronized void removed(long bulletId){if(!closed)context.removed(bulletId);}
     double turnRate() {
         return previous==null || latest==null || latest.turn()-previous.turn()>3 ? 0
                 : CombatMath.relativeAngle(latest.direction()-previous.direction())/(latest.turn()-previous.turn());
     }
 
-    void onScan(DuelGun.Scan scan) {
+    synchronized void onScan(DuelGun.Scan scan) {
+        if(closed)return;
         if (scan==null || scan.targetId()<1 || !finite(scan.x(),scan.y(),scan.direction(),scan.speed(),scan.energy())) return;
         if (scan.targetId()!=target) {
             target=scan.targetId(); Arrays.fill(attempts,0); Arrays.fill(hits,0);
@@ -119,10 +123,11 @@ final class PressureGun {
         });
     }
 
-    void onFired(int turn,double x,double y,double power) {
+    synchronized void onFired(int turn,double x,double y,double power) {
         onFired(turn,-1,x,y,power,Double.NaN);
     }
-    void onFired(int turn,long bulletId,double x,double y,double power,double direction) {
+    synchronized void onFired(int turn,long bulletId,double x,double y,double power,double direction) {
+        if(closed)return;
         Pending p=pending; pending=null;
         boolean matched=p!=null && p.turn()==turn && p.target()==target && Math.abs(p.power()-power)<=1e-9;
         if(diagnostic!=null)diagnostic.shot(turn,bulletId,x,y,power,direction,matched);
@@ -139,7 +144,8 @@ final class PressureGun {
         if (latest!=null && latest.turn()==turn) score(latest);
     }
 
-    Plan decide(int now,double x,double y,double gun,double energy,double heat,double width,double height) {
+    synchronized Plan decide(int now,double x,double y,double gun,double energy,double heat,double width,double height) {
+        if(closed)return new Plan(gun,0,false,1);
         if (latest==null || now<latest.turn() || now-latest.turn()>1) {
             pending=null; return new Plan(gun,0,false,1);
         }

@@ -21,15 +21,19 @@ final class ChallengerWaves {
     private DuelGun.Scan previous;
     private int target=-1,inferred,matched,unmatched,rejected,totalInferred,totalMatched;
     private DiagnosticTrace diagnostic;
+    private boolean closed;
     void diagnostic(DiagnosticTrace trace){diagnostic=trace;}
 
-    void startRound() {
+    synchronized void closeRound(int now,double width,double height){if(!closed){flush(now,width,height);closed=true;}}
+    synchronized void startRound() {
+        closed=false;
         energy.clear();history.clear();scans.clear();hits.clear();active.clear();collisionTurns.clear();previous=null;
         inferred=matched=unmatched=rejected=0;
         for(double[] bins:danger)for(int i=0;i<bins.length;i++)bins[i]*=.95;
     }
-    void own(Own state) { history.put(state.turn(),state);while(history.size()>128)history.pollFirstEntry(); }
-    void scan(DuelGun.Scan state) {
+    synchronized void own(Own state) { if(closed)return;history.put(state.turn(),state);while(history.size()>128)history.pollFirstEntry(); }
+    synchronized void scan(DuelGun.Scan state) {
+        if(closed)return;
         if(state==null || state.targetId()<0 || !Double.isFinite(state.x()) || !Double.isFinite(state.y())
                 || !Double.isFinite(state.energy()) || !Double.isFinite(state.direction()) || !Double.isFinite(state.speed()))return;
         if(state.targetId()!=target) {
@@ -40,10 +44,11 @@ final class ChallengerWaves {
         if(previous!=null)scans.add(new Pair(previous,state));
         previous=state;
     }
-    void damage(int owner,int turn,double value) { energy.recordBulletDamage(owner,turn,value); }
-    void bonus(int owner,int turn,double power) { energy.recordBulletHitBonus(owner,turn,power); }
-    void collision(int turn) { collisionTurns.add(turn); }
-    void hit(Hit hit) {
+    synchronized void damage(int owner,int turn,double value) { if(!closed)energy.recordBulletDamage(owner,turn,value); }
+    synchronized void bonus(int owner,int turn,double power) { if(!closed)energy.recordBulletHitBonus(owner,turn,power); }
+    synchronized void collision(int turn) { if(!closed)collisionTurns.add(turn); }
+    synchronized void hit(Hit hit) {
+        if(closed)return;
         if(hit==null || hit.owner()<0 || !Double.isFinite(hit.power()) || hit.power()<.1 || hit.power()>3
                 || !Double.isFinite(hit.x()) || !Double.isFinite(hit.y()) || !Double.isFinite(hit.direction())) {
             unmatched++;return;
@@ -52,7 +57,8 @@ final class ChallengerWaves {
     }
 
     /** All scan pairs are inferred first, then original-turn hit events matched, then old waves pruned. */
-    void flush(int now,double width,double height) {
+    synchronized void flush(int now,double width,double height) {
+        if(closed)return;
         scans.sort(java.util.Comparator.comparingInt(pair->pair.current().turn()));
         for(Pair pair:scans) {
             var before=pair.previous();var after=pair.current();

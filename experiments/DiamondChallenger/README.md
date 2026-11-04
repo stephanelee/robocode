@@ -36,3 +36,6 @@ v0.5 guarded learned-ray selector: shared four-ray completed cohorts with fixedN
 
 
 v0.6 two estimated own-wave contexts: sole20physical-round attempt INVALID (endpoint531vs logged530cohort completions),0validated summaries/no strength decision/no60. [Fixed semantics and failed evidence](../../docs/improvements/diamond-outgoing-context-v7.md). No retry/waiver/production transfer; actual callback cause remains unknown.
+
+
+Version0.6.1 is a [closed-round correctness repair](../../docs/improvements/challenger-round-lifecycle.md), validated with deterministic tests only. It stops decisions at RoundEnded, retains the API final-event drain, and seals model/metrics before reset or at GameEnded. Future harnesses must wait for final output before killing the process. No new matches, strategy promotion or rehabilitation of the invalid0.6.0 cohort is implied.
