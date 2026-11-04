@@ -21,6 +21,7 @@ ROOT = TOOLS.parent
 PLAN = ROOT / "docs/prism/screen-plan.json"
 CACHE = ROOT / ".benchmark-cache"
 BUNDLE = ROOT / "experiments/Prism"
+_NATIVE_PREPARED = None  # static pinned code/runtime only; every battle still starts fresh bot processes
 
 
 def sha256(path):
@@ -96,10 +97,13 @@ def stage_opponent(name, stage, env):
         key = "diamond-port" if name == "Diamond Port" else "adaptive-prime"
         lock = native.manifest()
         python = os.environ.get("PRISM_OPPONENT_PYTHON", "python3.13")
-        native.prepare(CACHE, python)
-        base = CACHE / "strong-python" / lock["commit"]
-        src = base / "source"
-        env.update(native.stage(src, stage, base / "venv/bin/python"))
+        global _NATIVE_PREPARED
+        if _NATIVE_PREPARED is None:
+            _NATIVE_PREPARED = native.prepare(CACHE, python)
+        src, executable, provenance = _NATIVE_PREPARED
+        if provenance["commit"] != lock["commit"]:
+            raise ValueError("Prepared native source differs from the pinned lock")
+        env.update(native.stage(src, stage, executable))
         other = stage / "opponents" / key
         spec = next(bot for bot in lock["opponents"] if Path(bot["descriptor"]).stem == key)
         benchmark.isolate_opponent(src / spec["sourcePath"], other)

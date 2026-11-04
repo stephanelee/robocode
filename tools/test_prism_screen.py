@@ -228,15 +228,22 @@ class NativeStagingTest(unittest.TestCase):
                     bot = next(b for b in opponents if Path(b["descriptor"]).stem == key)
                     self.assertEqual(bot["sourcePath"], (stage / "opponents" / key / bot["descriptor"]).read_text())
                     checked.append(key)
+            prepared = []
+            def prepare(*_):
+                if prepared:
+                    raise ValueError("Opponent venv must be fresh; never reuse ambient packages")
+                prepared.append(True)
+                return source, cache / "private-python", dict(commit="fixture")
             fake = SimpleNamespace(manifest=lambda: dict(commit="fixture", opponents=opponents),
-                                   prepare=lambda *_: None, stage=lambda *_: {}, verify_staged=verify)
-            with patch.dict(sys.modules, {"strong_melee_opponents": fake}), patch.object(ps, "CACHE", cache):
+                                   prepare=prepare, stage=lambda *_: {}, verify_staged=verify)
+            with patch.dict(sys.modules, {"strong_melee_opponents": fake}), patch.object(ps, "CACHE", cache), patch.object(ps, "_NATIVE_PREPARED", None):
                 for name, key in [("Diamond Port", "diamond-port"), ("Adaptive Prime", "adaptive-prime")]:
                     stage = root / key
                     stage.mkdir()
                     result = ps.stage_opponent(name, stage, {})
                     self.assertEqual(stage / "opponents" / key, result)
             self.assertEqual(["diamond-port", "adaptive-prime"], checked)
+            self.assertEqual(1, len(prepared), "the static venv is installed only once, not once per game")
 
 
 if __name__ == "__main__":
