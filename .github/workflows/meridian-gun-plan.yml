@@ -1,0 +1,83 @@
+name: Meridian held gun plan 90
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+concurrency:
+  group: meridian-gp60-issue90
+  cancel-in-progress: false
+jobs:
+  compare:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/meridian-held-plan-execution' &&
+      github.run_attempt == 1 &&
+      (github.event.label.name == 'profile-meridian-gp60' ||
+       (github.event.label.name == 'run-meridian-gp60' &&
+        contains(github.event.pull_request.body, format('GP60-CLEARED {0}', github.event.pull_request.head.sha))))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 355
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.18'
+      - name: Java 17 builds, tests and artifact parity (zero games)
+        run: |
+          mkdir -p build/meridian
+          java -version 2>build/meridian/build-java.txt
+          sha256sum "$JAVA_HOME/bin/javac" "$JAVA_HOME/lib/modules" | sed 's@  .*/@  @' > build/meridian/build-java.sha256
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/production.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/production.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/production.jar" AISurvivor/AISurvivor.jar
+          python tools/meridian_gun_plan_fixture.py
+          ./gradlew --no-daemon -p experiments/Meridian clean build
+          python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
+          mkdir -p build/gp60-control-source
+          git archive 809b880cdcee98d7946d05e6bcd30f623f604348 experiments/Meridian | tar -x -C build/gp60-control-source
+          ./gradlew --no-daemon -p build/gp60-control-source/experiments/Meridian clean build
+          python tools/verify_jar.py build/gp60-control-source/experiments/Meridian/Meridian.jar build/gp60-control-source/experiments/Meridian/build/bot/Meridian/Meridian.jar
+          python -m unittest discover -s tools -p test_meridian_gun_plan.py -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Fingerprint exact runtime and locked assets (zero games)
+        run: |
+          python tools/meridian_profile.py
+          python tools/meridian_gun_plan.py --preflight
+      - name: Consume sole durable attempt and run reviewed schedule
+        if: github.event.label.name == 'run-meridian-gp60'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAYLOAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/meridian_gun_plan.py --check-frozen
+          python tools/meridian_gun_plan_activate.py
+          python tools/meridian_gun_plan.py --run
+      - name: Preserve complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-gp60-${{ github.run_id }}
+          path: |
+            build/meridian/
+            build/meridian-staging/
+            local-comparison/execution/
+            experiments/Meridian/build/test-results/
+            build/test-results/
+            benchmarks/meridian-gun-plan/
+          if-no-files-found: warn
+          retention-days: 90
