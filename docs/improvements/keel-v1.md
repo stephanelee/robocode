@@ -148,7 +148,15 @@ Damage is uncapped observer bullet damage. Round lengths come from the decision 
 **Interpretation and limits:**
 
 - This is a **screen pass (progress)**, not a claim that Keel beats Diamond Port. Only the registered confirmation (6 fresh 20-round games) can support that.
-- Between-game variation is large. Game s7 lost 6 of 10 rounds: it took 686 damage, against 328–458 in the other Keel games, and its first two rounds scored 4–5% share.
+- Between-game variation is large. Game s7 lost 6 of 10 rounds: it took 686 damage, against 328–458 in the other Keel games, and its first two rounds scored 3.5% and 7.0% share.
 - The mechanism matches development. Rounds were about 3.4–4.5× longer than the control's. Keel fired mostly 0.1-power shots (≈9% hit rate) and kept energy while Diamond spent its own. Diamond's hit rate was 9.1–11.8% vs Keel and 14.1–14.6% vs the control.
 - Keel still lost the bullet-damage exchange in every Diamond game. Its share comes mainly from survival scoring.
 - Diamond's own skipped turns are not observable. CI ran each game sequentially on a 4-vCPU runner.
+
+## Confirmation attempt 1: zero games (stale pull-request head)
+
+The confirmation gate review [cleared head `eaacb2b`](https://github.com/stephanelee/robocode/pull/98#issuecomment-6629120243). When `run-keel-v1-confirm` was applied, however, GitHub still reported the PR head as `843768f`. The branch ref was `eaacb2b`, but `refs/pull/98/head` had not been updated after the 58 MB evidence push.
+
+Run [41819088130](https://github.com/stephanelee/robocode/actions/runs/41819088130) therefore checked out `843768f`, where `benchmarks/keel-v1/raw/decision-screen.json` does not exist. The gate step raised `FileNotFoundError` before `keel_experiment.py run confirmation` started. **No confirmation game or round was played**, so nothing is consumed or replaced. The run's evidence push also failed with a GitHub `Internal Server Error`; only the zero-game profile artifact was uploaded.
+
+This is an infrastructure failure, not a result. Confirmation will run once, at a head that GitHub reports as the PR head, after a fresh independent stage check of this documentation-only change.
