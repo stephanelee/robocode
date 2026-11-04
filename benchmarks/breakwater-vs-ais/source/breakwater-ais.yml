@@ -1,0 +1,69 @@
+name: Breakwater vs production AISurvivor
+on:
+  pull_request:
+    types: [synchronize]
+permissions:
+  contents: read
+jobs:
+  duel:
+    if: github.head_ref == 'experiment/diamond-breakwater-v1' && github.run_attempt == 1
+    runs-on: ubuntu-26.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Check unique registration
+        id: register
+        run: |
+          if [ "$(git rev-parse HEAD^)" = "642a3fa6d823cae6a69aece021ce65ba4df6957a" ]; then
+            git diff --exit-code HEAD^ -- src AISurvivor experiments tools build.gradle settings.gradle gradle gradlew
+            echo 'active=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-java@v4
+        if: steps.register.outputs.active == 'true'
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify committed participants
+        if: steps.register.outputs.active == 'true'
+        run: |
+          mkdir -p build-duel/{Breakwater,AISurvivor,evidence}
+          cp AISurvivor/AISurvivor.{jar,json,cmd,sh} build-duel/AISurvivor/
+          cp experiments/Breakwater/Breakwater.jar experiments/Breakwater/bot/Breakwater.{cmd,sh,json} build-duel/Breakwater/
+          chmod +x build-duel/{Breakwater/Breakwater,AISurvivor/AISurvivor}.sh
+          echo '21163f89f97c0cce0c2c90072965e233cb9559a63898f4d8d9bc8954c2c9797e  build-duel/Breakwater/Breakwater.jar' | sha256sum -c -
+          echo 'b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800  build-duel/AISurvivor/AISurvivor.jar' | sha256sum -c -
+          sha256sum build-duel/{AISurvivor/AISurvivor,Breakwater/Breakwater}.jar > build-duel/evidence/participants.sha256
+          ./gradlew --no-daemon clean build
+          ./gradlew -p experiments/Breakwater --no-daemon clean build
+          python3 tools/verify_jar.py build-duel/AISurvivor/AISurvivor.jar AISurvivor/AISurvivor.jar
+          python3 tools/verify_jar.py build-duel/Breakwater/Breakwater.jar experiments/Breakwater/build/bot/Breakwater/Breakwater.jar
+      - uses: actions/setup-java@v4
+        if: steps.register.outputs.active == 'true'
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Single registered headless game
+        if: steps.register.outputs.active == 'true'
+        run: |
+          set -eu
+          root="$PWD/build-duel"
+          out="$root/evidence"
+          export BREAKWATER_SEED=531821 BREAKWATER_METRICS_PATH="$out/breakwater.jsonl" BREAKWATER_MODEL_PATH="$out/breakwater-model.json"
+          export AISURVIVOR_MODE=train AISURVIVOR_SEED=531822 AISURVIVOR_METRICS_PATH="$out/ais.jsonl" AISURVIVOR_MODEL_PATH="$out/ais-model.dat"
+          for file in "$BREAKWATER_METRICS_PATH" "$BREAKWATER_MODEL_PATH" "$AISURVIVOR_METRICS_PATH" "$AISURVIVOR_MODEL_PATH"; do test ! -e "$file"; done
+          runner=$(PYTHONPATH=tools python3 -c 'from pathlib import Path; import benchmark as b; n="robocode-tankroyale-runner-1.4.0.jar"; print(b.download(Path("build-duel"),n,b.ASSETS[n]).resolve())')
+          (git rev-parse HEAD; java -version; sha256sum "$runner" "$JAVA_HOME/lib/modules"; cat /etc/os-release) > "$out/runtime.txt" 2>&1
+          timeout 990 java -cp "$runner" tools/BenchmarkBattle.java 20 900 "$out/battle.json" "$root/Breakwater" "$root/AISurvivor" > "$out/runner.log" 2>&1
+          cat "$out/battle.json"
+          test "$(wc -l < "$out/breakwater.jsonl")" -eq 20
+          test "$(wc -l < "$out/ais.jsonl")" -eq 20
+          test -s "$out/ais-model.dat" && test -s "$out/breakwater-model.json"
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.register.outputs.active == 'true'
+        with:
+          name: breakwater-ais-g01
+          path: build-duel/evidence
+          retention-days: 30

@@ -1,0 +1,20 @@
+--- a/experiments/Aegis/src/Aegis.java (frozen 0.1.0)
++++ b/experiments/Aegis/src/Aegis.java (dev-only dodge-all screen, never registered)
+@@ -19,7 +19,7 @@
+     static final double REPLAY = 10, OFFSET_WEIGHT = 0.5, SEED_AMPLITUDE = 50, SEED_WEIGHT = 1;
+     static final int SEED_PERIOD = 22;
+     static final int RELOAD = 12, SEARCH_LEAD = 10;
+-    static final double DODGE_CLEARANCE = 26, DODGE_WEIGHT = 60; static final int GOOD_COVERAGE = 5;
++    static final double DODGE_CLEARANCE = 28, DODGE_WEIGHT = 200; static final int GOOD_COVERAGE = 5;
+     static final double FAST_SPEED = 8, FAST_WEIGHT = 40, LOCK = 1000;
+     private int lastFireTurn = 16;
+ 
+@@ -315,7 +315,7 @@
+                 shot.rx = ref[0]; shot.ry = ref[1];
+                 double[] e0 = enemyHistory.get(t - 2);
+                 if (e0 != null) { double cv = classicSpeed(e0[4], enemySpeed); shot.predictedSource(e0[0] + Math.cos(Math.toRadians(enemyHeading)) * cv, e0[1] + Math.sin(Math.toRadians(enemyHeading)) * cv); }
+-                shots.add(shot); detected++; lastEnemyPower = power; lastFireTurn = t;
++                shot.dodge = true; shots.add(shot); detected++; lastEnemyPower = power; lastFireTurn = t;
+                 emit("fire", t, "power", power, "ox", ex, "oy", ey, "tx", shot.tx, "ty", shot.ty, "psx", shot.psx, "psy", shot.psy);
+             }
+         }

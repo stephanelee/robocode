@@ -2,7 +2,9 @@
 
 The execution commit is `c1fd38adab41bad51d707c84edbaba4d22c74d45`. [Protocol and results](../../docs/improvements/meridian-hit-angles.md) · [game IDs](games.json) · [runtime manifest](profile.json) · [independent pre-execution review](https://github.com/stephanelee/robocode/pull/79#pullrequestreview-5760714347) · [registered execution](https://github.com/stephanelee/robocode/actions/runs/41735907101).
 
-The fresh control was built from the already-verified v1 bundle on PR #77. All four runnable assets are extracted from its immutable Git commit. The candidate uses the committed 0.2.0 JAR after a clean Java 17 parity check. The [workflow](../../.github/workflows/meridian-hit-angles.yml) contains the runner commands, private staging paths and exact profile check. The OS build and Python interpreter come from the [measured preflight](https://github.com/stephanelee/robocode/actions/runs/41735518958). The runner and both arms use the same verified environment after the switch to Java 25.
+The fresh control was built from the already-verified v1 bundle on PR #77. All four runnable assets are extracted from its immutable Git commit. The candidate uses the committed 0.2.0 JAR after a clean Java 17 parity check. The [archived workflow](source/meridian-hit-angles.yml) contains the runner commands, private staging paths and exact profile check. The OS build and Python interpreter come from the [measured preflight](https://github.com/stephanelee/robocode/actions/runs/41735518958). The runner and both arms use the same verified environment after the switch to Java 25.
+
+The completed v1 and v2 acquisition launchers are retired from active Actions; their exact executed copies remain in the evidence archives. Ordinary Java 17 build/test/JAR-parity CI remains enabled. The protocol describes historical execution, not authorization for another run. The original v1 observer is also preserved at [its archived source](../meridian-v1/source/MeridianBattle.java); the shared observer at `../meridian-v1/MeridianBattle.java` retains the exact v2-executed port extension.
 
 From the repository root, verify the retained screen without playing another game:
 
