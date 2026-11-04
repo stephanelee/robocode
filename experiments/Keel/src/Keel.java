@@ -119,7 +119,6 @@ public final class Keel extends Bot {
         double my = getEnergy();
         // Energy-conserving fire: token shots keep gun data flowing while the opponent spends its energy.
         double p = d < 200 ? 2.5 : my - eEnergy > LEAD ? BASE_POWER : 0.1;
-        if (eEnergy < 20 && my - eEnergy > 25) p = Math.max(p, 1.95); // finisher: weak opponent, large lead
         if (my < 30) p = Math.min(p, 0.4 + my / 30);
         if (my < 8) p = Math.min(p, my / 8);
         double kill = eEnergy <= 4 ? eEnergy / 4 : (eEnergy + 2) / 6;

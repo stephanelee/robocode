@@ -9,7 +9,7 @@ import java.util.List;
 final class Surfer {
     static final int BINS = 47;
     static final double FLAT = 2.0;    // context flattener weight relative to the hit-profile mass of 3
-    static final double DESIRED = 520;
+    static final double DESIRED = 650;
 
     static final class Wave {
         final int t;                // detection turn = engine fire turn
