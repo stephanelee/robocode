@@ -1,8 +1,8 @@
-# Frozen Keel�Prism descriptive60-round comparison
+# Frozen Keel-Prism descriptive60-round comparison
 
 [Protocol and administrative history](../../docs/improvements/keel-prism-v1.md), [issue109](https://github.com/stephanelee/robocode/issues/109), [PR110](https://github.com/stephanelee/robocode/pull/110).
 
-Keel official score4221 vs Prism3394; official first places47 vs13 (ties are possible). Equal-game Keel mean score share56.2926886419%;4/6 game shares above50%, range37.1681�74.3007%. This is one descriptive six-game cold-process head-to-head on local Windows/Java17, not a tier gate, general superiority claim, confirmation or pooled Ubuntu result. Keel shots3642/hits504 (13.8386%); Prism4394/408 (9.2854%). Official bullet damage978 vs2698; shot energy2018.1967 vs6479.4818. Event hit damage and official credited bullet damage differ because official credit caps damage; retain both. These bundled results do not isolate a causal feature. Both private skip totals are zero, sourced from Keel markers/Prism cumulative telemetry, not observer events.
+Keel official score4221 vs Prism3394; official first places47 vs13 (ties are possible). Equal-game Keel mean score share56.2926886419%;4/6 game shares above50%, range37.1681-74.3007%. This is one descriptive six-game cold-process head-to-head on local Windows/Java17, not a tier gate, general superiority claim, confirmation or pooled Ubuntu result. Keel shots3642/hits504 (13.8386%); Prism4394/408 (9.2854%). Official bullet damage978 vs2698; shot energy2018.1967 vs6479.4818. Event hit damage and official credited bullet damage differ because official credit caps damage; retain both. These bundled results do not isolate a causal feature. Both private skip totals are zero, sourced from Keel markers/Prism cumulative telemetry, not observer events.
 
 ## Immutable phases
 
