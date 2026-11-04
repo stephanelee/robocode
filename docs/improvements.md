@@ -10,7 +10,7 @@ The user selected confirmed Keel0.1.0 at `24fb9a5f02065c0bf0b146b8387c2a9d8a2723
 
 | Experiment | Budget and decision | Evidence |
 |---|---|---|
-| KeelHelm stopped-heading forecast / [issue107](https://github.com/stephanelee/robocode/issues/107) | **Prospectively registered;0games.**120roundscreen vs fresh Keel controls, conditional300freshconfirmation; no candidate source or improvement claim yet. Independent protocol review pending. | [Protocol](improvements/keel-helm-v1.md), [registry/status](../benchmarks/keel-helm-v1/README.md) |
+| KeelHelm stopped-heading forecast / [PR108](https://github.com/stephanelee/robocode/pull/108), [issue107](https://github.com/stephanelee/robocode/issues/107) | **Prepared;0games.**120roundscreen vs fresh Keel controls, conditional300freshconfirmation. Isolated candidate15Java17tests/788entryparity and independent exact rebuild passed; harness21puretests/sourcecorrections passed. Exacthead/CI and same-worker runtime review pending; no improvement claim. | [Protocol](improvements/keel-helm-v1.md), [registry/status](../benchmarks/keel-helm-v1/README.md) |
 
 ## Meridian standalone duel
 

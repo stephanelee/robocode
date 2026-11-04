@@ -1,0 +1,53 @@
+{
+  "scope": "Before any KeelHelm outcomes; pure synthetic integrity tests and read-only existing historical recordings only",
+  "checkedAtUTC": "2026-11-04T16:54:26.349910+00:00",
+  "pythonExecutable": "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/bin/python3.15",
+  "pythonExecutableSHA256": "cd353074fb2780e9ed5bdaf2ed6aeab5bd9fc0c883041ea2228da4b653d97903",
+  "pythonVersion": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "commands": [
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "benchmarks/keel-helm-v1/independent-analysis",
+      "-p",
+      "test_audit.py",
+      "-v"
+    ],
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "benchmarks/keel-helm-v1/independent-analysis/audit.py",
+      "verify-historical",
+      "--root",
+      "benchmarks/keel-v1/raw-confirmation",
+      "--output",
+      "benchmarks/keel-helm-v1/independent-analysis/verification/historical-keel-confirmation.json"
+    ]
+  ],
+  "syntheticTestsPassed": 12,
+  "historicalGames": 6,
+  "historicalRounds": 120,
+  "historicalMismatches": [],
+  "newGames": 0,
+  "newPhysicsCalls": 0,
+  "notExecuted": [
+    "candidate/harness reducer imports",
+    "bot or server launch",
+    "opponent process",
+    "runtime collection",
+    "remote stage dispatch",
+    "receipt mutation",
+    "publication or commit"
+  ],
+  "auditorSHA256": "1a1c8e3de7a6f05e8b2cac987665d3b0ce7d3c9772e502b427df2dd615f1984a",
+  "testSHA256": "53c749cec02aee43f11b9a0aebe50746082869cc1e4d3aff1f26fdb625530a1f"
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "narrow pre-receipt/per-child live authority, full prepared-game binding, owned process group teardown; pure fixtures only",
+  "testsPassed": 21,
+  "finalLog": "/private/tmp/keel-helm-harness-integrity-tests-final.log",
+  "finalLogSHA256": "4bfa686208a58c3c2da9f2f7d16a70cfd52950ba13b5efefff812048e9368163",
+  "priorLogsPreserved": [
+    "/private/tmp/keel-helm-harness-tests-final.log",
+    "/private/tmp/keel-helm-harness-integrity-tests-01.log",
+    "/private/tmp/keel-helm-harness-integrity-tests-02.log",
+    "/private/tmp/keel-helm-harness-integrity-tests-03.log",
+    "/private/tmp/keel-helm-harness-integrity-tests-04.log"
+  ],
+  "earlierCheckFailures": "01: old fail-first-invalid fixture needed new authority hook mocked;02: pure temp fixture symlink root normalized; no live/runtime cases involved. Both corrected in fixtures; original logs retained.",
+  "files": {
+    "tools/keel_helm_experiment.py": "873501cf08e1afbaa8e5dfb326d52f097624a3c52ffdc6b632f2f724e1ee62dd",
+    "tools/test_keel_helm_experiment.py": "0b90cf136916bf3c824e27aa4a90d3496448f977ba9712194a0b9debee3e3f3f",
+    "tools/keel_helm_harness.md": "9c57e6f989413cc44375a6ccc0e9318cb2ed3b301973c37bc1e97aa16e004bc6"
+  },
+  "notExecuted": [
+    "freeze generation",
+    "runtime collection/preparation",
+    "live API",
+    "receipt mutation",
+    "game/server/runner",
+    "hosted dispatch",
+    "commit/publication"
+  ]
+}

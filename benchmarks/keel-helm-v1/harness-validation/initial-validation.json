@@ -1,0 +1,42 @@
+{
+  "scope": "source-only harness implementation; no runtime preparation/profile collection/dispatch/games",
+  "tests": {
+    "command": "python3 -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v",
+    "passed": 12,
+    "log": "/private/tmp/keel-helm-harness-tests-final.log",
+    "logSHA256": "33a684eb4dc5690b7ef5104a1e59d550b515fe8b9b3a8e42f70cb2b16c4346d5"
+  },
+  "java": {
+    "compiler": "/opt/homebrew/opt/openjdk@17/bin/javac",
+    "version": "17.0.21.0.3",
+    "command": [
+      "javac",
+      "--release",
+      "17",
+      "-cp",
+      "/private/tmp/robocode-meridian-peak/.benchmark-cache/robocode-tankroyale-runner-1.4.0.jar",
+      "-d",
+      "/private/tmp/keel-helm-harness-compile17",
+      "tools/KeelHelmBattle.java"
+    ],
+    "result": "compile only PASS; no main/server execution"
+  },
+  "files": {
+    "tools/KeelHelmBattle.java": "f745412be54dbe49c664f229166d2e4a319b2dde158c48dcb8f3128265aa95aa",
+    "tools/keel_helm_experiment.py": "a1cf64e65bc26a9da65bf0f3fe12f6093e342e39ea158becd263e33433f57faa",
+    "tools/keel_helm_python_proof.py": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c",
+    "tools/test_keel_helm_experiment.py": "f1a93b0d0776704ba665baf8879b3a0e1094833eb40803646f26e7b7b718e96d",
+    "tools/keel_helm_harness.md": "edb2389326842e5130fac298a33589c504ffcdf621c3bd461241edc92022860e",
+    ".github/workflows/keel-helm-v1.yml": "24f209f6d241147ff5ac02e7745e46562d5392ca0c6aff7966d8710b807bbf7a"
+  },
+  "notExecuted": [
+    "source freeze generation",
+    "capture-build runtime metadata",
+    "prepare/provenance collection",
+    "approval poll",
+    "receipt mutations",
+    "game child/runner/server",
+    "hosted jobs",
+    "publication/commit"
+  ]
+}
