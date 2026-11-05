@@ -15,21 +15,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import keel_brace_image_probe as probe
 
 ROOT = Path(__file__).resolve().parent.parent
-POLICY_PATH = 'benchmarks/keel-brace-v1/runtime-identity-amendment.json'
-DOCUMENT_PATH = 'docs/improvements/keel-brace-runtime-identity-amendment.md'
-POLICY_SHA = '7429753f1d72c888718bd8965a674c7d7f18003f7f9edf3dee309bbb30976edf'
-DOCUMENT_SHA = '85229f18285ce4dabbd076d5f8e56d0a6ec93174c5ab98bfac56ff6553dabb84'
-POLICY_ID = 'keel-brace-qualified-native-observations-v1'
-NATIVE = dict(image='ubuntu-26.04', version='20261025.179.1',
-    includedSoftwareURL='https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md',
-    imageReleaseURL='https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179')
-ENVIRONMENT = dict(ImageOS='ubuntu26', ImageVersion='20261026.180.1')
+POLICY_PATH = 'benchmarks/keel-brace-v1/runtime-identity-amendment-v2.json'
+DOCUMENT_PATH = 'docs/improvements/keel-brace-runtime-identity-amendment-v2.md'
+POLICY_SHA = '542e890888793ee03c44d74a034ea0d4db8c55b9b9ada13022b5153f2b2b26d1'
+DOCUMENT_SHA = '7ecf1c4186c23ebe9adbbce03f2c6a71132b104faf0aa3bcf8fde0a94bc19f33'
+POLICY_ID = 'keel-brace-qualified-native-observations-v2'
+EFFECTIVE_FREEZE_PATH = 'benchmarks/keel-brace-v1/freeze-v2.json'
+JOINT_CASES = [{'caseID': 'native-20261025.179.1_env-20261026.180.1', 'native': {'image': 'ubuntu-26.04', 'version': '20261025.179.1', 'includedSoftwareURL': 'https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md', 'imageReleaseURL': 'https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179'}, 'environment': {'ImageOS': 'ubuntu26', 'ImageVersion': '20261026.180.1'}}, {'caseID': 'native-20261101.186.1_env-20261101.186.1', 'native': {'image': 'ubuntu-26.04', 'version': '20261101.186.1', 'includedSoftwareURL': 'https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md', 'imageReleaseURL': 'https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186'}, 'environment': {'ImageOS': 'ubuntu26', 'ImageVersion': '20261101.186.1'}}]
+CASE_A, CASE_B = [c['caseID'] for c in JOINT_CASES]
+# Explicit historical Case A constants retained for pure fixtures only; admission
+# always matches all four observations and an explicit literal caseID.
+NATIVE, ENVIRONMENT = JOINT_CASES[0]['native'], JOINT_CASES[0]['environment']
 STABLE_RAW = ('sourcePath','resolvedPath','size','wholeSHA256','mode','uid','gid')
 SNAPSHOT_KEYS = {'schemaVersion','policyID','policySHA256','stage','phase','runId','runAttempt','headSHA',
     'workspace','bootId','architecture','kernel','kernelVersion','logicalJobName','collectorSourceSHA256',
-    'snapshotManifestSHA256','reportSHA256','stable'}
+    'snapshotManifestSHA256','reportSHA256','stable','caseID'}
 REVIEW_KEYS = {'schemaVersion','policyID','policySHA256','beforeToolsSnapshotSHA256','preparedSnapshotSHA256',
-    'preparedWrapperSHA256','primaryPregameAuthority','earlyHeaderEvidence','finalExternalReconciliationRequired'}
+    'preparedWrapperSHA256','primaryPregameAuthority','earlyHeaderEvidence','finalExternalReconciliationRequired','caseID'}
 EARLY_KEYS = {'status','endpoint','runId','runAttempt','jobId','headSHA','observedAtUTC','httpStatus',
     'responseBytes','responseSHA256','responseFile','scope','runAccessVerified','jobsAccessVerified',
     'artifactAccessVerified','jobInProgress','nativeClaim'}
@@ -70,11 +72,41 @@ def write(path, value):
 
 def policy():
     if sha(read(ROOT/POLICY_PATH))!=POLICY_SHA or sha(read(ROOT/DOCUMENT_PATH))!=DOCUMENT_SHA:
-        raise ValueError('Published runtime amendment bytes changed')
+        raise ValueError('Published v2 runtime amendment bytes changed')
     p=load(ROOT/POLICY_PATH)
-    if p['policyID']!=POLICY_ID or p['requiredNativeClaim']!=NATIVE or p['requiredSeparateEnvironmentClaim']!=ENVIRONMENT:
-        raise ValueError('Published runtime policy tuple changed')
+    if p['policyID']!=POLICY_ID or p['allowedJointCases']!=JOINT_CASES:
+        raise ValueError('Published exact joint-case runtime policy changed')
+    inherited=p['inheritsUnchangedV1Contract']
+    for path,expected in [(inherited['document'],inherited['documentSHA256']),
+            (inherited['policy'],inherited['policySHA256']),
+            (p['sourceFreezeTransition']['oldRepositoryFreezePath'],p['sourceFreezeTransition']['oldRepositoryFreezeSHA256'])]:
+        if sha(read(ROOT/path))!=expected:raise ValueError('Historical v1 methodology/freeze bytes changed')
     return p
+
+
+def case_by_id(case_id):
+    found=[c for c in JOINT_CASES if type(case_id) is str and c['caseID']==case_id]
+    if len(found)!=1:raise ValueError('Unknown literal joint caseID')
+    return found[0]
+
+
+def joint_case(claims):
+    if set(claims)!={'imagedataNative','setupInfoNative','processEnvironment','etcEnvironment'}:
+        raise ValueError('All four independent observation objects required')
+    found=[c for c in JOINT_CASES if all(claims[k]==c['native'] for k in ('imagedataNative','setupInfoNative'))
+        and all(claims[k]==c['environment'] for k in ('processEnvironment','etcEnvironment'))]
+    if len(found)!=1:raise ValueError('No single complete allowed joint case; source mixing/unknown tuple')
+    return found[0]
+
+
+def effective_origin():
+    data=read(ROOT/EFFECTIVE_FREEZE_PATH)
+    freeze=decode(data)
+    if (type(freeze.get('schemaVersion')) is not int or freeze['schemaVersion']!=1
+            or freeze.get('effectiveFreezePath')!=EFFECTIVE_FREEZE_PATH or freeze.get('qualifiedImagePolicyID')!=POLICY_ID
+            or freeze.get('qualifiedImagePolicySHA256')!=POLICY_SHA):
+        raise ValueError('Wrong effective v2 source freeze origin/policy')
+    return dict(effectiveFreezePath=EFFECTIVE_FREEZE_PATH,effectiveFreezeSHA256=sha(data))
 
 
 def integer(value, minimum=0):
@@ -175,12 +207,12 @@ def verify_capture(directory):
             mode=opened['mode'],uid=opened['uid'],gid=opened['gid'])
         if name in ('imagedata','setup_info_0'):
             parsed=probe.parse_image_json(data)
-            if parsed['errors'] or parsed['runnerImageRecords'][0]['unrecognizedLines'] or parsed['claim']!=NATIVE:raise ValueError('Unknown native claim '+name)
+            if parsed['errors'] or parsed['runnerImageRecords'][0]['unrecognizedLines']:raise ValueError('Unknown native claim '+name)
             claims['imagedataNative' if name=='imagedata' else 'setupInfoNative']=parsed['claim']
         elif name=='etc_environment':
             parsed=probe.parse_environment_file(data)
             value={k:v['value'] for k,v in parsed['claims'].items() if v['present']}
-            if parsed['errors'] or value!=ENVIRONMENT:raise ValueError('Wrong separate etc environment')
+            if parsed['errors'] or set(value)!={'ImageOS','ImageVersion'} or any(not v for v in value.values()):raise ValueError('Wrong separate etc environment')
             claims['etcEnvironment']=value
         if name in ('imagedata','setup_info_0','etc_environment'):
             actual_parsed=load(safe(directory,row['parsedArtifact']['artifactPath']))
@@ -195,11 +227,12 @@ def verify_capture(directory):
     if type(status.get('diagnosticErrorCount')) is not int or status['diagnosticErrorCount']!=optional_errors:
         raise ValueError('Collector global error count inconsistent with sole optional LSB exception')
     process=report['processImageEnvironment']
-    if set(process)!=set(ENVIRONMENT) or any(process[k].get('present') is not True or process[k].get('value')!=v for k,v in ENVIRONMENT.items()):
+    if set(process)!={'ImageOS','ImageVersion'} or any(process[k].get('present') is not True or not isinstance(process[k].get('value'),str) or not process[k]['value'] for k in process):
         raise ValueError('Wrong separate process environment')
-    claims['processEnvironment']=dict(ENVIRONMENT)
+    claims['processEnvironment']={k:process[k]['value'] for k in process}
+    case=joint_case(claims)
     if report['platform']['architecture']!='x86_64' or report['platform']['system']!='Linux':raise ValueError('Wrong worker platform')
-    return dict(rawSources=raw,claims=claims,runnerRoot=root,setupInfoPath=str(Path(root)/'.setup_info'),
+    return dict(caseID=case['caseID'],rawSources=raw,claims=claims,runnerRoot=root,setupInfoPath=str(Path(root)/'.setup_info'),
         bootId=boot,architecture=report['platform']['architecture'],kernel=report['platform']['kernel'],
         kernelVersion=report['platform']['kernelVersion'],collectorSourceSHA256=report['collectorSource']['sha256'])
 
@@ -217,7 +250,7 @@ def snapshot(base,stage,phase):
     stable=verify_capture(captured)
     if time.monotonic()-start>120:raise ValueError('Total capture/validation deadline')
     stable['sourceIdentity']=context
-    value=dict(schemaVersion=1,policyID=POLICY_ID,policySHA256=POLICY_SHA,phase=phase,**context,
+    value=dict(schemaVersion=1,policyID=POLICY_ID,policySHA256=POLICY_SHA,caseID=stable['caseID'],phase=phase,**context,
         bootId=stable['bootId'],architecture=stable['architecture'],kernel=stable['kernel'],kernelVersion=stable['kernelVersion'],
         collectorSourceSHA256=stable['collectorSourceSHA256'],snapshotManifestSHA256=sha(read(captured/'capture-status.json')),
         reportSHA256=sha(read(captured/'report.json')),stable=stable)
@@ -237,7 +270,7 @@ def original(base,phase):
     stable=verify_capture(captured)
     if value['phase'] != phase or value['stage'] not in ('screen','confirmation'):
         raise ValueError('Snapshot phase/stage mismatch')
-    for key in ('bootId','architecture','kernel','kernelVersion','collectorSourceSHA256'):
+    for key in ('caseID','bootId','architecture','kernel','kernelVersion','collectorSourceSHA256'):
         if value[key] != stable[key]:raise ValueError('Snapshot top-level/derived stable mismatch')
     if (not re.fullmatch('[a-f0-9]{40}',value['headSHA']) or not isinstance(value['workspace'],str)
             or not Path(value['workspace']).is_absolute() or value['logicalJobName']!='registered-stage'):
@@ -303,7 +336,7 @@ def profile(base):
     if (len(active)!=1 or active[0].get('id')!=wrapper['preparedNumericJobId']
             or active[0].get('run_id')!=a['runId'] or active[0].get('run_attempt')!=1 or active[0].get('head_sha')!=a['headSHA']):
         raise ValueError('Prepared wrapper does not match actual numeric jobs API')
-    return dict(policyID=POLICY_ID,policySHA256=POLICY_SHA,beforeToolsSnapshotSHA256=wrapper['beforeToolsSnapshotSHA256'],
+    return dict(policyID=POLICY_ID,policySHA256=POLICY_SHA,caseID=b['caseID'],**effective_origin(),beforeToolsSnapshotSHA256=wrapper['beforeToolsSnapshotSHA256'],
         preparedSnapshotSHA256=wrapper['preparedSnapshotSHA256'],preparedWrapperSHA256=sha(read(base/'prepared-wrapper.json')),
         preparedNumericJobId=wrapper['preparedNumericJobId'],stable=b['stable'])
 
@@ -314,8 +347,9 @@ def live(base,stage,output):
     return current
 
 
-def parse_provider_header(raw):
+def parse_provider_header(raw,case_id):
     """Only original provider startup, before the first named workflow step."""
+    native=case_by_id(case_id)['native']
     text=raw.decode('utf-8-sig');lines=[]
     for line in text.splitlines():
         line=re.sub(r'^\d{4}-\d\d-\d\dT[0-9:.]+Z ', '',line)
@@ -334,7 +368,7 @@ def parse_provider_header(raw):
     end=next((i for i in range(start+1,limit) if lines[i]=='##[endgroup]'),None)
     if end is None:raise ValueError('Truncated provider Runner Image group')
     parsed=probe.parse_image_detail('\n'.join(lines[start+1:end]))
-    if parsed['errors'] or parsed['unrecognizedLines'] or parsed['claim']!=NATIVE:
+    if parsed['errors'] or parsed['unrecognizedLines'] or parsed['claim']!=native:
         raise ValueError('Provider startup conflicts/malformed qualified tuple')
     return parsed['claim']
 
@@ -345,6 +379,8 @@ def review(value,anchor,ident):
         if value[key]!=anchor[key]:raise ValueError('Image review does not bind actual immutable snapshots')
     if type(value['schemaVersion']) is not int or value['schemaVersion']!=1 or value['primaryPregameAuthority']!='native-only-qualified-observation' or value['finalExternalReconciliationRequired'] is not True:
         raise ValueError('Qualified native boundary/final reconciliation not acknowledged')
+    if value['caseID']!=anchor['caseID']:raise ValueError('Runtime image review changed frozen joint case')
+    native=case_by_id(anchor['caseID'])['native']
     early=value['earlyHeaderEvidence']
     if not isinstance(early,dict) or set(early)!=EARLY_KEYS:raise ValueError('Exact early provider evidence required')
     for key in ('runId','runAttempt','jobId','httpStatus'):integer(early[key],1)
@@ -358,7 +394,7 @@ def review(value,anchor,ident):
     observed=dt.datetime.fromisoformat(early['observedAtUTC'].replace('Z','+00:00'))
     if observed.utcoffset()!=dt.timedelta(0):raise ValueError('Early observation requires explicit UTC')
     if early['status']=='available-matched':
-        if early['httpStatus']!=200 or early['scope']!='complete-startup-header' or early['nativeClaim']!=NATIVE:
+        if early['httpStatus']!=200 or early['scope']!='complete-startup-header' or early['nativeClaim']!=native:
             raise ValueError('Available provider evidence must match native tuple')
     elif early['status']=='unavailable-404-deferred':
         if early['httpStatus']!=404 or early['scope']!='actual-job-log-request' or early['jobInProgress'] is not True or early['nativeClaim'] is not None:
@@ -369,7 +405,7 @@ def review(value,anchor,ident):
 
 FINAL_KEYS = {'schemaVersion','status','policyID','policySHA256','runId','runAttempt','jobId','headSHA',
     'beforeToolsSnapshotSHA256','preparedSnapshotSHA256','preparedWrapperSHA256','nativeClaim','runAPI','jobsAPI',
-    'jobLog','completedAtUTC','reviewerTask'}
+    'jobLog','completedAtUTC','reviewerTask','caseID'}
 
 
 def timestamp(value):
@@ -394,7 +430,9 @@ def final_reconciliation(value,anchor,ident,read_ref,current_run,current_jobs,ca
     if anchor['policyID']!=POLICY_ID or anchor['policySHA256']!=POLICY_SHA:
         raise ValueError('Final screen uses wrong qualified-runtime policy')
     for key in ('schemaVersion','runId','runAttempt','jobId'):integer(value[key],1)
-    if value['schemaVersion']!=1 or value['status']!='PASS' or value['nativeClaim']!=NATIVE:
+    if value['caseID']!=anchor['caseID']:raise ValueError('Final reconciliation changed frozen joint case')
+    native=case_by_id(anchor['caseID'])['native']
+    if value['schemaVersion']!=1 or value['status']!='PASS' or value['nativeClaim']!=native:
         raise ValueError('Final provider provenance incomplete')
     for key in ('policyID','policySHA256','beforeToolsSnapshotSHA256','preparedSnapshotSHA256','preparedWrapperSHA256'):
         if value[key]!=anchor[key]:raise ValueError('Final review does not bind original image snapshots')
@@ -431,7 +469,7 @@ def final_reconciliation(value,anchor,ident,read_ref,current_run,current_jobs,ca
         raise ValueError('Final provider completion binding changed')
     setup=[s for s in job['steps'] if s.get('name')=='Set up job']
     if len(setup)!=1 or setup[0].get('conclusion')!='success':raise ValueError('Original startup step missing')
-    log=evidence['jobLog'];parse_provider_header(log)
+    log=evidence['jobLog'];parse_provider_header(log,anchor['caseID'])
     raw_lines=log.decode('utf-8-sig').splitlines()
     starts=[line.split(' ',1)[0] for line in raw_lines if line.endswith(' ##[group]Runner Image')]
     if not starts or not within_api_step(starts[0],starts[0],setup[0]):

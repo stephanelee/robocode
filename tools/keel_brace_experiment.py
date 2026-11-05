@@ -241,7 +241,10 @@ def source_assets():
         'tools/test_keel_brace_image_identity.py', 'tools/keel_brace_image_probe.py',
         'docs/improvements/keel-brace-runtime-identity-amendment.md',
         'benchmarks/keel-brace-v1/runtime-identity-amendment.json',
-        'benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json', 'tools/keel_brace_harness.md', '.github/workflows/keel-brace-v1.yml',
+        'benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json',
+        'benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface-v2.json',
+        'docs/improvements/keel-brace-runtime-identity-amendment-v2.md',
+        'benchmarks/keel-brace-v1/runtime-identity-amendment-v2.json', 'benchmarks/keel-brace-v1/freeze.json', 'tools/keel_brace_harness.md', '.github/workflows/keel-brace-v1.yml',
         '.github/workflows/keel-brace-build.yml', '.github/workflows/ci.yml',
         'tools/opponents/strong-melee.lock.json', 'tools/opponents/retcon.lock.json',
         'docs/improvements/keel-brace-v1.md', 'benchmarks/keel-brace-v1/games.json',
@@ -254,6 +257,8 @@ def source_assets():
         raise ValueError('Independent outcome reducer must exist before source freeze')
     paths += [p for p in analysis.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     fixture = REG / 'image-probe-evidence-41940635533'
+    failure_fixture = REG / 'preparation-failure-41947040130'
+    paths += [failure_fixture / 'screen-evidence-13378498977.zip', failure_fixture / 'job126981711205.log']
     paths += [fixture / 'job.log'] + [p for p in (fixture / 'original-members').rglob('*') if p.is_file()]
     paths += [p for p in (ROOT / 'gradle').rglob('*') if p.is_file()]
     return {p.relative_to(ROOT).as_posix(): benchmark.digest(p) for p in sorted(set(paths))}
@@ -268,13 +273,13 @@ def validate_baseline():
 
 def freeze():
     image_identity.policy()
-    target = REG / 'freeze.json'
+    target = REG / 'freeze-v2.json'
     if target.exists():
         raise FileExistsError('Source freeze is write-once')
     validate_baseline()
     validate_registration()
     stage_plan('screen')
-    save(target, dict(schemaVersion=1, protocol='keel-brace-v1', assets=source_assets(),
+    save(target, dict(schemaVersion=1, protocol='keel-brace-v1', effectiveFreezePath=image_identity.EFFECTIVE_FREEZE_PATH, assets=source_assets(),
         historicalAllowedImages=sorted(IMAGES), qualifiedImagePolicyID=image_identity.POLICY_ID,
         qualifiedImagePolicySHA256=image_identity.POLICY_SHA, javaBuild='17.0.21+9', javaBattle='25.0.5+8', python='3.13.17',
         screenRounds=120, confirmationRounds=300, approvalKeys=sorted(APPROVAL_KEYS),
@@ -283,7 +288,12 @@ def freeze():
 
 
 def verify_freeze():
-    frozen = load(REG / 'freeze.json')
+    frozen = load(REG / 'freeze-v2.json')
+    if (type(frozen.get('schemaVersion')) is not int or frozen['schemaVersion'] != 1
+            or frozen.get('effectiveFreezePath') != image_identity.EFFECTIVE_FREEZE_PATH
+            or frozen.get('qualifiedImagePolicyID') != image_identity.POLICY_ID
+            or frozen.get('qualifiedImagePolicySHA256') != image_identity.POLICY_SHA):
+        raise ValueError('Wrong effective v2 freeze origin/policy')
     if frozen['assets'] != source_assets():
         raise ValueError('Source/JAR/command/criteria freeze changed')
     validate_baseline()
@@ -316,7 +326,7 @@ def capture_build():
             ['python', 'tools/verify_jar.py', 'experiments/Keel/Keel.jar', 'experiments/Keel/build/bot/Keel/Keel.jar'],
             ['./gradlew', '-p', 'experiments/KeelBrace', '--no-daemon', 'clean', 'build'],
             ['python', 'tools/verify_jar.py', 'experiments/KeelBrace/KeelBrace.jar', 'experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar'],
-            ['python', '-I', '-B', '-S', '-m', 'unittest', 'discover', '-s', 'tools', '-p', 'test_keel_brace_experiment.py', '-v']]))
+            ['python', '-I', '-B', '-S', '-m', 'unittest', 'discover', '-s', 'tools', '-p', 'test_keel_brace*.py', '-v']]))
 
 
 
@@ -401,10 +411,10 @@ def image_evidence():
 
 
 def identity():
-    image_evidence()
+    early = image_evidence()
     if os.environ.get('GITHUB_REPOSITORY') != REPOSITORY or os.environ.get('GITHUB_RUN_ATTEMPT') != '1':
         raise ValueError('Hosted repository/run_attempt1 required')
-    if platform.machine() != 'x86_64' or {k: os.environ.get(k) for k in image_identity.ENVIRONMENT} != image_identity.ENVIRONMENT:
+    if platform.machine() != 'x86_64' or {k: os.environ.get(k) for k in ('ImageOS','ImageVersion')} != image_identity.case_by_id(early['caseID'])['environment']:
         raise ValueError('Unregistered architecture/image')
     os_release = Path('/etc/os-release').read_text()
     if 'VERSION_ID="26.04"' not in os_release:
@@ -622,7 +632,9 @@ def prepare(stage):
                  'storage-admissions/before-preparation.json', 'prepared-storage.json'):
         (provenance / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(out / name, provenance / name)
-    shutil.copy2(REG / 'freeze.json', provenance / 'freeze.json')
+    shutil.copy2(REG / 'freeze-v2.json', provenance / 'freeze.json')
+    save(provenance / 'effective-freeze-origin.json', dict(schemaVersion=1, policyID=image_identity.POLICY_ID,
+        policySHA256=image_identity.POLICY_SHA, **image_identity.effective_origin()))
     shutil.copy2(ROOT / 'build/keel-brace-build.log', provenance / 'build.log')
     shutil.copy2(ROOT / 'build/keel-brace-build.json', provenance / 'build.json')
     save(provenance / 'manifest.json', files(provenance))
@@ -636,7 +648,7 @@ def expected_approval(stage, out, artifact):
     return dict(schemaVersion=1, verdict='CLEAR', repository=REPOSITORY, issue=ISSUE, stage=stage,
         headSHA=ident['headSHA'], runId=ident['runId'], runAttempt=1, bootId=ident['bootId'], workspace=ident['workspace'],
         artifactId=artifact['id'], artifactDigestSHA256=artifact['digest'].removeprefix('sha256:'),
-        profileSHA256=benchmark.digest(out / 'profile.json'), freezeSHA256=benchmark.digest(REG / 'freeze.json'),
+        profileSHA256=benchmark.digest(out / 'profile.json'), freezeSHA256=benchmark.digest(REG / 'freeze-v2.json'),
         gamesSHA256=benchmark.digest(REG / 'games.json'), participantManifestSHA256=benchmark.digest(out / 'participant-manifest.json'),
         opponentManifestSHA256=benchmark.digest(out / 'opponent-manifest.json'), commandsSHA256=benchmark.digest(out / 'commands.json'),
         reviewerTask=assignment['reviewerTask'],
@@ -800,7 +812,7 @@ def revalidate_image_worker(stage, out, profile):
     snapshot_file = out / 'image-identity-revalidations' / current['phase'] / 'snapshot.json'
     if runtime_metadata(out) != profile:
         raise ValueError('Prepared installed graph changed before authority revalidation')
-    return dict(snapshotFile=snapshot_file.relative_to(out).as_posix(), snapshotSHA256=benchmark.digest(snapshot_file),
+    return dict(caseID=current['caseID'], snapshotFile=snapshot_file.relative_to(out).as_posix(), snapshotSHA256=benchmark.digest(snapshot_file),
         preparedSnapshotSHA256=profile['imageIdentity']['preparedSnapshotSHA256'],
         runtimeProfileSHA256=benchmark.digest(out / 'profile.json'))
 
@@ -1436,7 +1448,7 @@ def verify_custody(custody, retained, source_head, decision_sha):
                 'decisionMember', 'freezeMember', 'gameRecordingMembers', 'sourceBindings'}
     if (not isinstance(custody, dict) or set(custody) != required or type(custody['schemaVersion']) is not int
             or custody['schemaVersion'] != 1 or custody['headSHA'] != source_head
-            or custody['sourceFreezeSHA256'] != benchmark.digest(REG / 'freeze.json')):
+            or custody['sourceFreezeSHA256'] != benchmark.digest(REG / 'freeze-v2.json')):
         raise ValueError('Wrong custody manifest schema/head/freeze')
     original = custody['originalZIP']
     if set(original) != {'artifactId', 'bytes', 'sha256', 'parts'}:
@@ -1491,7 +1503,7 @@ def verify_custody(custody, retained, source_head, decision_sha):
             or frozen_member not in members or members[frozen_member]['sha256'] != custody['sourceFreezeSHA256']
             or custody['decisionMember'] != stage_prefix + 'decision.json'):
         raise ValueError('Original stage/freeze/decision path binding differs')
-    assets = load(REG / 'freeze.json')['assets'];bindings = custody['sourceBindings']
+    assets = load(REG / 'freeze-v2.json')['assets'];bindings = custody['sourceBindings']
     if not isinstance(bindings, dict) or set(bindings) != set(assets):
         raise ValueError('Source bindings do not exactly cover the embedded freeze')
     for relative, digest in assets.items():
@@ -1530,6 +1542,15 @@ def verify_final_screen_provenance(report, gate, custody, receipt, run, jobs):
             raise ValueError('Original screen image profile is not receipt/approval bound')
         profile = strict_json(profile_raw)
         anchor = profile['imageIdentity']
+        origin = strict_json(archive.read(prefix + 'provenance/effective-freeze-origin.json'))
+        expected_origin = dict(schemaVersion=1, policyID=image_identity.POLICY_ID, policySHA256=image_identity.POLICY_SHA,
+            effectiveFreezePath=image_identity.EFFECTIVE_FREEZE_PATH, effectiveFreezeSHA256=benchmark.digest(REG / 'freeze-v2.json'))
+        if (not isinstance(origin, dict) or set(origin) != set(expected_origin)
+                or type(origin.get('schemaVersion')) is not int or origin['schemaVersion'] != 1
+                or origin != expected_origin or any(anchor[k] != expected_origin[k] for k in ('effectiveFreezePath','effectiveFreezeSHA256'))):
+            raise ValueError('Original screen does not bind effective v2 freeze origin')
+        if sha(archive.read(custody['freezeMember'])) != expected_origin['effectiveFreezeSHA256']:
+            raise ValueError('Logical original freeze capsule differs from repository v2 freeze')
         original_identity = profile['identity']
         if (original_identity['runId'] != gate['screenRunId'] or original_identity['headSHA'] != report['headSHA']
                 or original_identity['runAttempt'] != 1 or original_identity['bootId'] != receipt['approval']['bootId']
@@ -1552,7 +1573,7 @@ def verify_final_screen_provenance(report, gate, custody, receipt, run, jobs):
             snapshot = snapshots[phase]
             if sha(capture) != snapshot['reportSHA256']:
                 raise ValueError('Original snapshot capture report SHA differs')
-            if any(snapshot[k] != original_identity[k] for k in ('runId','runAttempt','headSHA','bootId','workspace')):
+            if snapshot['caseID'] != anchor['caseID'] or any(snapshot[k] != original_identity[k] for k in ('runId','runAttempt','headSHA','bootId','workspace')):
                 raise ValueError('Original image capture belongs to other receipt worker')
             data = strict_json(capture)
             windows[step] = (data['utcStart'], data['utcEnd'])
@@ -1573,7 +1594,7 @@ def verify_confirmation_gate(out):
         raise ValueError('Missing exact reviewed screen evidence gate')
     if any(type(gate[k]) is not int for k in ('screenRunId', 'independentOutcomeReviewCommentId')):
         raise ValueError('Noninteger original screen/review identity')
-    if gate['sourceFreezeSHA256'] != benchmark.digest(REG / 'freeze.json'):
+    if gate['sourceFreezeSHA256'] != benchmark.digest(REG / 'freeze-v2.json'):
         raise ValueError('Candidate/source freeze differs from passing screen')
     retained = gate['retainedEvidenceFiles']
     if not isinstance(retained, dict) or not retained:

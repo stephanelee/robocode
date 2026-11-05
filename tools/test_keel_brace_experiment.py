@@ -200,7 +200,7 @@ class LiveAuthority(unittest.TestCase):
             workflow_run=dict(id=9,head_sha='a'*40))
         k.save(self.out/'profile.json', {'identity':self.ident,'imageIdentity':image_anchor()})
         k.save(self.out/'participant-manifest.json',{});k.save(self.out/'opponent-manifest.json',{})
-        k.save(self.reg/'freeze.json',{});k.save(self.reg/'games.json',{})
+        k.save(self.reg/'freeze-v2.json',{});k.save(self.reg/'games.json',{})
         k.save(self.out/'dispatch-assignment.json',self.assignment)
         k.save(self.out/'dispatch-assignment-comment.json',self.dispatch)
         self.prepared = dict(game={'id':'s01'},command=['java','pinned-main'],cwd='/work',
@@ -225,7 +225,7 @@ class LiveAuthority(unittest.TestCase):
         self.remote_tag=None
         for patch in [mock.patch.object(k,'api',side_effect=self.api),mock.patch.object(k,'comments',side_effect=lambda:list(self.current.values())),
                       mock.patch.object(k,'identity',return_value=self.ident),
-                      mock.patch.object(k,'revalidate_image_worker',return_value=dict(snapshotFile='synthetic',snapshotSHA256='f'*64,preparedSnapshotSHA256='2'*64,runtimeProfileSHA256='e'*64))]:
+                      mock.patch.object(k,'revalidate_image_worker',return_value=dict(snapshotFile='synthetic',snapshotSHA256='f'*64,caseID=k.image_identity.CASE_A,preparedSnapshotSHA256='2'*64,runtimeProfileSHA256='e'*64))]:
             patch.start();self.addCleanup(patch.stop)
 
     def comment(self, ident, body, timestamp):
@@ -510,9 +510,9 @@ class VirtualCustody(unittest.TestCase):
         for p in self.patch:p.start();self.addCleanup(p.stop)
         self.source=b'fixture-source-only\n';self.source_hash=k.sha(self.source)
         self.source_git=hashlib.sha1(b'blob '+str(len(self.source)).encode()+b'\0'+self.source).hexdigest()
-        self.freeze=dict(assets={'tools/fake.py':self.source_hash});k.save(self.reg/'freeze.json',self.freeze)
+        self.freeze=dict(assets={'tools/fake.py':self.source_hash});k.save(self.reg/'freeze-v2.json',self.freeze)
         self.prefix='build/keel-brace/screen/';self.decision=getattr(self,'decision_bytes',b'{"decision":"fixture-not-a-game"}\n')
-        payloads={self.prefix+'decision.json':self.decision,self.prefix+'provenance/freeze.json':(self.reg/'freeze.json').read_bytes(),
+        payloads={self.prefix+'decision.json':self.decision,self.prefix+'provenance/freeze.json':(self.reg/'freeze-v2.json').read_bytes(),
             self.prefix+'provenance/source/tools/fake.py':self.source,self.prefix+'unrelated-same-bytes.py':self.source}
         self.recordings={g['id']:self.prefix+'games/'+g['id']+'/raw.battle.gz' for g in self.plan}
         payloads.update({p:('synthetic-recording-'+g).encode() for g,p in self.recordings.items()})
@@ -529,7 +529,7 @@ class VirtualCustody(unittest.TestCase):
         for i,(offset,b) in enumerate([(0,raw[:cut]),(cut,raw[cut:])]):
             relative='kept/part-'+str(i)+'.bin';p=self.root/relative;p.parent.mkdir(exist_ok=True);p.write_bytes(b)
             meta=k.stream_identity(io.BytesIO(b),len(b));parts.append(dict(path=relative,offset=offset,**meta));self.retained[relative]=meta['sha256']
-        self.custody=dict(schemaVersion=1,headSHA='a'*40,sourceFreezeSHA256=k.benchmark.digest(self.reg/'freeze.json'),
+        self.custody=dict(schemaVersion=1,headSHA='a'*40,sourceFreezeSHA256=k.benchmark.digest(self.reg/'freeze-v2.json'),
             originalZIP=dict(artifactId=30,bytes=len(raw),sha256=k.sha(raw),parts=parts),members=members,
             decisionMember=self.prefix+'decision.json',freezeMember=self.prefix+'provenance/freeze.json',
             gameRecordingMembers=self.recordings,sourceBindings={'tools/fake.py':dict(member=self.prefix+'provenance/source/tools/fake.py',
@@ -587,7 +587,7 @@ class ConditionalGate(VirtualCustody):
         direct='kept/decision.json';manifest='kept/custody.json'
         (self.root/direct).write_bytes(self.decision);k.save(self.root/manifest,self.custody)
         self.retained[direct]=k.sha(self.decision);self.retained[manifest]=k.benchmark.digest(self.root/manifest)
-        self.gate=dict(schemaVersion=1,sourceFreezeSHA256=k.benchmark.digest(self.reg/'freeze.json'),screenRunId=5,
+        self.gate=dict(schemaVersion=1,sourceFreezeSHA256=k.benchmark.digest(self.reg/'freeze-v2.json'),screenRunId=5,
             receiptTagSHA='e'*40,decisionFile=direct,decisionSHA256=k.sha(self.decision),retainedEvidenceFiles=self.retained,
             custodyManifestFile=manifest,independentOutcomeReviewCommentId=8)
         k.save(self.reg/'screen-evidence.json',self.gate)
