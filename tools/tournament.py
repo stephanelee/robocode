@@ -137,7 +137,7 @@ def collect_recording(directory, output):
             pass
     with files[0].open('rb') as stream:
         sha = hashlib.file_digest(stream, 'sha256').hexdigest()
-    return dict(path=str(files[0].relative_to(output)), sha256=sha, sizeBytes=files[0].stat().st_size)
+    return dict(path=files[0].relative_to(output).as_posix(), sha256=sha, sizeBytes=files[0].stat().st_size)
 
 def main(args):
     R = args.source.resolve()

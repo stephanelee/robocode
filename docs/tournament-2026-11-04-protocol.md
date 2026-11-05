@@ -1,6 +1,6 @@
 # Robocode Elimination Cup — prospective protocol
 
-Roster frozen from stephanelee/robocode master 1 f 6 e 6 a 38582838 fe 891330 a 0 b 3 e 7 a 7 d 9 f 1668279: AISurvivor 1.2.1, Aegis 0.1.0, Breakwater 0.3.0, DiamondChallenger 0.6.1, Keel 0.1.0, KeelHelm 0.1.0, Meridian 0.6.0, Prism 0.2.0. Guests: pinned Retcon 0.2.0 and Diamond Port 1.8.28; expanded with Adaptive Prime 1.0 and official 1.4.0 release samples Walls, SpinBot and RamFire 1.0.
+Roster frozen from stephanelee/robocode master `1f6e6a38582838fe891330a0b3e7a7d9f1668279`: AISurvivor 1.2.1, Aegis 0.1.0, Breakwater 0.3.0, DiamondChallenger 0.6.1, Keel 0.1.0, KeelHelm 0.1.0, Meridian 0.6.0, Prism 0.2.0. Guests: pinned Retcon 0.2.0 and Diamond Port 1.8.28; expanded with Adaptive Prime 1.0 and official 1.4.0 release samples Walls, SpinBot and RamFire 1.0.
 
 This is a descriptive tournament, with no gameplay changes, tuning, promotion or hypothesized improvement. Run locally on minimind, never GitHub Actions. Java 17 source build/tests and committed-JAR content parity precede JDK 25 battles. Tank Royale runner/server 1.4.0 and existing source locks apply. Native Python guests use an isolated macOS environment; record its actual Python/packages rather than claiming the Linux wheel runtime.
 

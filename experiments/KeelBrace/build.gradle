@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.robocode.experiments'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Test-only immutable comparator: execute its actual callbacks, never launch it.
+    testImplementation files('../Keel/Keel.jar')
+}
+
+sourceSets {
+    main.java.srcDirs = ['src']
+    test.java.srcDirs = ['test']
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 17 }
+tasks.register('prepareTestDescriptors', Copy) {
+    from('bot') { include 'KeelBrace.json' }
+    from('../Keel/bot') { include 'Keel.json' }
+    into layout.buildDirectory.dir('test-fixture-descriptors')
+}
+test {
+    dependsOn tasks.named('prepareTestDescriptors')
+    workingDir layout.buildDirectory.dir('test-fixture-descriptors').get().asFile
+    systemProperty 'keel.baseline.jar', file('../Keel/Keel.jar').absolutePath
+    useJUnitPlatform()
+    testLogging { events 'passed', 'skipped', 'failed' }
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+jar {
+    archiveFileName = 'KeelBrace.jar'
+    destinationDirectory = layout.buildDirectory.dir('bot/KeelBrace')
+    manifest { attributes 'Main-Class': 'KeelBrace' }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register('prepareBot', Copy) {
+    dependsOn jar
+    from 'bot'
+    into layout.buildDirectory.dir('bot/KeelBrace')
+}
+assemble.dependsOn tasks.named('prepareBot')

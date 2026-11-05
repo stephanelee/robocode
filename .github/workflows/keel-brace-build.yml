@@ -1,0 +1,98 @@
+name: KeelBrace zero-game Java 17 build
+on:
+  pull_request:
+    paths:
+      - 'experiments/KeelBrace/**'
+      - '.github/workflows/keel-brace-build.yml'
+      - 'tools/verify_jar.py'
+      - 'tools/keel_brace*.py'
+      - 'tools/test_keel_brace*.py'
+      - 'benchmarks/keel-brace-v1/freeze.json'
+      - 'benchmarks/keel-brace-v1/freeze-v2.json'
+      - 'benchmarks/keel-brace-v1/independent-analysis/**'
+      - 'benchmarks/keel-brace-v1/image-probe-validation/**'
+permissions:
+  contents: read
+jobs:
+  build:
+    name: KeelBrace Java 17 bootstrap (zero games)
+    if: github.head_ref == 'codex/keel-brace-v1'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Build and test twice on the exact Java 17 runtime; launch no bots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/keel-brace-bootstrap
+          {
+            set -x
+            java -version
+            javac -version
+            ./gradlew --version
+            git rev-parse HEAD
+            if test -f experiments/KeelBrace/KeelBrace.jar; then
+              cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar
+            fi
+            ./gradlew -p experiments/KeelBrace --no-daemon clean build
+            cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar
+            ./gradlew -p experiments/KeelBrace --no-daemon clean build
+            cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar
+            python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+            cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+            if test -f build/keel-brace-bootstrap/KeelBrace-committed.jar; then
+              python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar
+            fi
+            sha256sum build/keel-brace-bootstrap/*.jar
+          } 2>&1 | tee build/keel-brace-bootstrap/build.log
+      - name: Validate new controller and independent audit fixtures on pinned Python (zero games)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -f tools/test_keel_brace_experiment.py; then
+            python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v 2>&1 | tee build/keel-brace-bootstrap/controller-tests.log
+          fi
+          if test -f benchmarks/keel-brace-v1/independent-analysis/test_audit.py; then
+            python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-brace-bootstrap/independent-audit-tests.log
+          fi
+          if test -f benchmarks/keel-brace-v1/image-probe-validation/test_image_probe.py; then
+            python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/image-probe-validation -p test_image_probe.py -v 2>&1 | tee build/keel-brace-bootstrap/image-probe-tests.log
+          fi
+      - name: Preserve source, runtime, JAR and test provenance even on a failed build
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p build/keel-brace-bootstrap
+          python - <<'PYTHON'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path('.')
+          out = root / 'build/keel-brace-bootstrap'
+          files = subprocess.check_output(['git', 'ls-files', '-z', 'experiments/KeelBrace', 'experiments/Keel/Keel.jar', 'experiments/Keel/bot/Keel.json', 'benchmarks/keel-brace-v1/baseline.json', 'benchmarks/keel-brace-v1/registration.json', 'benchmarks/keel-brace-v1/runtime-pins.json', '.github/workflows/keel-brace-build.yml', 'tools/verify_jar.py']).decode().split('\0')
+          hashes = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in files if p and pathlib.Path(p).is_file()}
+          jars = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.glob('*.jar')}
+          proof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'guestImageOSClaim': os.environ.get('ImageOS'), 'guestImageVersionClaim': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}
+          (out/'provenance.json').write_text(json.dumps(proof, indent=2)+'\n')
+          PYTHON
+      - name: Upload actual bootstrap outputs and original semantic test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-brace-zero-game-build-${{ github.run_id }}
+          path: |
+            build/keel-brace-bootstrap/
+            experiments/KeelBrace/build/test-results/
+            experiments/KeelBrace/build/reports/tests/
+          if-no-files-found: error
+          retention-days: 90

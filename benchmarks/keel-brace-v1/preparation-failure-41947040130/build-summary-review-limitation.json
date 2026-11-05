@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-05T01:11:48.896364+00:00",
+  "scope": "Before-dispatch source observation; no actual runtime admitted",
+  "headSHA": "4cac60d7c689c33881b3b16d493d891fa13a7d0a",
+  "finding": "capture_build().commands[-1] is a stale hardcoded narrow test_keel_brace_experiment.py summary while actual frozen workflow executes quoted test_keel_brace*.py. The array already omits cp/restore/version commands and is not an execution trace.",
+  "runtimeReviewRequirement": "Preserve and inspect exact frozen workflow and SHA-bound raw build.log/provider outputs as authoritative. Require actual broad suite73pass, Java17 source builds/test/parity before Java25 setup/preparation. Explicitly qualify stale selected summary; do not claim it is exact captured execution.",
+  "impact": "No change to actually executed workflow or exact prepared game commands.json. Whole-source reviewer assesses nonblocking with explicit qualification; no tests waived and no canonical/historical claims changed."
+}

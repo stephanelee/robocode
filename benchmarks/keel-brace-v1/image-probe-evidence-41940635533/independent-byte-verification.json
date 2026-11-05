@@ -1,0 +1,353 @@
+{
+  "errors": [],
+  "phases": {
+    "before-tools": {
+      "indexFilesVerified": 12,
+      "collectorSHA256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94",
+      "bootId": "5cad7169-95ec-4b8a-9e88-7b4a1a0493ce",
+      "utcStart": "2026-11-05T00:20:52.437762+00:00",
+      "utcEnd": "2026-11-05T00:20:52.442373+00:00",
+      "durationNs": 4587693,
+      "captures": {
+        "boot_id": {
+          "path": "/proc/sys/kernel/random/boot_id",
+          "sha256": "3dde0a782ba27bbe51d6694918a815af32297190f88295eadd2440bee1ca7e6d",
+          "bytes": 37
+        },
+        "etc_environment": {
+          "path": "/etc/environment",
+          "sha256": "ce4fb62ae47ff50c623bddda77c371111e43e0e7424a723cf0d88b1907817eb9",
+          "bytes": 2243
+        },
+        "etc_lsb_release": {
+          "path": "/etc/lsb-release",
+          "sha256": "77b958705ba7401d2ad5706c7bb0c4e9d999975ee8e5d667507529b199b5f2c3",
+          "bytes": 107
+        },
+        "etc_os_release": {
+          "path": "/etc/os-release",
+          "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+          "bytes": 410
+        },
+        "imagedata": {
+          "path": "/imagegeneration/imagedata.json",
+          "sha256": "6153275ed304a83a64222eee33acd6512a0493912bb780eea54ff6a2004d9a97",
+          "bytes": 398
+        },
+        "setup_info_0": {
+          "path": "/home/runner/actions-runner/cached/2.338.2/.setup_info",
+          "sha256": "c7495c43bd92de56f1c17d7c7e00d9f9d114c181ecfbea56172abf1dd44ba921",
+          "bytes": 751
+        },
+        "usr_lib_os_release": {
+          "path": "/usr/lib/os-release",
+          "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+          "bytes": 410
+        }
+      },
+      "runnerDiscovery": {
+        "errors": [],
+        "matches": [
+          {
+            "comm": "Runner.Listener",
+            "commPath": "/proc/2010/comm",
+            "commRawASCII": "Runner.Listener\n",
+            "commSHA256": "56b8632935088ab8437db2b95bce70a5277509868db616b1e1e4ec9c23e5213c",
+            "commStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 14309,
+              "mode": 33188,
+              "modeOctal": "0o644",
+              "mtimeNs": 1793838052439523963,
+              "regular": true,
+              "size": 0,
+              "uid": 1001
+            },
+            "errors": [],
+            "exePath": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Listener",
+            "exeReadlink": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Listener",
+            "exeReadlinkSHA256": "faa6b06c3fb648096867838b930b060a7f9a576b72ee3879353fdff5f15457c2",
+            "exeSymlinkStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 16445,
+              "mode": 41471,
+              "modeOctal": "0o777",
+              "mtimeNs": 1793838049373472926,
+              "regular": false,
+              "size": 0,
+              "uid": 1001
+            },
+            "pid": 2010,
+            "runnerRoot": "/home/runner/actions-runner/cached/2.338.2",
+            "setupInfoPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info"
+          },
+          {
+            "comm": "Runner.Worker",
+            "commPath": "/proc/2031/comm",
+            "commRawASCII": "Runner.Worker\n",
+            "commSHA256": "dfe9e0658ee1f1a94d97aec5428e575180b711eb01761ccbd9242fff293c244a",
+            "commStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 14312,
+              "mode": 33188,
+              "modeOctal": "0o644",
+              "mtimeNs": 1793838052439523963,
+              "regular": true,
+              "size": 0,
+              "uid": 1001
+            },
+            "errors": [],
+            "exePath": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Worker",
+            "exeReadlink": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Worker",
+            "exeReadlinkSHA256": "1d56296bf55999d9eb6b638c7f2dcd6df38b9a5ba1fa779f1e666b2492bf558b",
+            "exeSymlinkStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 15642,
+              "mode": 41471,
+              "modeOctal": "0o777",
+              "mtimeNs": 1793838050902498270,
+              "regular": false,
+              "size": 0,
+              "uid": 1001
+            },
+            "pid": 2031,
+            "runnerRoot": "/home/runner/actions-runner/cached/2.338.2",
+            "setupInfoPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info"
+          }
+        ],
+        "nonmatchingCount": 162,
+        "procRoot": "/proc",
+        "roots": [
+          "/home/runner/actions-runner/cached/2.338.2"
+        ],
+        "scannedEntries": 164,
+        "truncated": false
+      }
+    },
+    "after-tools": {
+      "indexFilesVerified": 12,
+      "collectorSHA256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94",
+      "bootId": "5cad7169-95ec-4b8a-9e88-7b4a1a0493ce",
+      "utcStart": "2026-11-05T00:20:52.905740+00:00",
+      "utcEnd": "2026-11-05T00:20:52.910071+00:00",
+      "durationNs": 4309403,
+      "captures": {
+        "boot_id": {
+          "path": "/proc/sys/kernel/random/boot_id",
+          "sha256": "3dde0a782ba27bbe51d6694918a815af32297190f88295eadd2440bee1ca7e6d",
+          "bytes": 37
+        },
+        "etc_environment": {
+          "path": "/etc/environment",
+          "sha256": "ce4fb62ae47ff50c623bddda77c371111e43e0e7424a723cf0d88b1907817eb9",
+          "bytes": 2243
+        },
+        "etc_lsb_release": {
+          "path": "/etc/lsb-release",
+          "sha256": "77b958705ba7401d2ad5706c7bb0c4e9d999975ee8e5d667507529b199b5f2c3",
+          "bytes": 107
+        },
+        "etc_os_release": {
+          "path": "/etc/os-release",
+          "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+          "bytes": 410
+        },
+        "imagedata": {
+          "path": "/imagegeneration/imagedata.json",
+          "sha256": "6153275ed304a83a64222eee33acd6512a0493912bb780eea54ff6a2004d9a97",
+          "bytes": 398
+        },
+        "setup_info_0": {
+          "path": "/home/runner/actions-runner/cached/2.338.2/.setup_info",
+          "sha256": "c7495c43bd92de56f1c17d7c7e00d9f9d114c181ecfbea56172abf1dd44ba921",
+          "bytes": 751
+        },
+        "usr_lib_os_release": {
+          "path": "/usr/lib/os-release",
+          "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+          "bytes": 410
+        }
+      },
+      "runnerDiscovery": {
+        "errors": [],
+        "matches": [
+          {
+            "comm": "Runner.Listener",
+            "commPath": "/proc/2010/comm",
+            "commRawASCII": "Runner.Listener\n",
+            "commSHA256": "56b8632935088ab8437db2b95bce70a5277509868db616b1e1e4ec9c23e5213c",
+            "commStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 14309,
+              "mode": 33188,
+              "modeOctal": "0o644",
+              "mtimeNs": 1793838052439523963,
+              "regular": true,
+              "size": 0,
+              "uid": 1001
+            },
+            "errors": [],
+            "exePath": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Listener",
+            "exeReadlink": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Listener",
+            "exeReadlinkSHA256": "faa6b06c3fb648096867838b930b060a7f9a576b72ee3879353fdff5f15457c2",
+            "exeSymlinkStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 16445,
+              "mode": 41471,
+              "modeOctal": "0o777",
+              "mtimeNs": 1793838049373472926,
+              "regular": false,
+              "size": 0,
+              "uid": 1001
+            },
+            "pid": 2010,
+            "runnerRoot": "/home/runner/actions-runner/cached/2.338.2",
+            "setupInfoPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info"
+          },
+          {
+            "comm": "Runner.Worker",
+            "commPath": "/proc/2031/comm",
+            "commRawASCII": "Runner.Worker\n",
+            "commSHA256": "dfe9e0658ee1f1a94d97aec5428e575180b711eb01761ccbd9242fff293c244a",
+            "commStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 14312,
+              "mode": 33188,
+              "modeOctal": "0o644",
+              "mtimeNs": 1793838052439523963,
+              "regular": true,
+              "size": 0,
+              "uid": 1001
+            },
+            "errors": [],
+            "exePath": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Worker",
+            "exeReadlink": "/home/runner/actions-runner/cached/2.338.2/bin/Runner.Worker",
+            "exeReadlinkSHA256": "1d56296bf55999d9eb6b638c7f2dcd6df38b9a5ba1fa779f1e666b2492bf558b",
+            "exeSymlinkStat": {
+              "device": 25,
+              "gid": 1001,
+              "inode": 15642,
+              "mode": 41471,
+              "modeOctal": "0o777",
+              "mtimeNs": 1793838050902498270,
+              "regular": false,
+              "size": 0,
+              "uid": 1001
+            },
+            "pid": 2031,
+            "runnerRoot": "/home/runner/actions-runner/cached/2.338.2",
+            "setupInfoPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info"
+          }
+        ],
+        "nonmatchingCount": 162,
+        "procRoot": "/proc",
+        "roots": [
+          "/home/runner/actions-runner/cached/2.338.2"
+        ],
+        "scannedEntries": 164,
+        "truncated": false
+      }
+    }
+  },
+  "allMetadataRawBytesUnchanged": true,
+  "run": {
+    "id": 41940635533,
+    "head_sha": "1fd0e78bf36e8021657ca32240d66137731bfc77",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-05T00:20:47Z",
+    "updated_at": "2026-11-05T00:20:57Z",
+    "run_started_at": "2026-11-05T00:20:47Z",
+    "event": "pull_request"
+  },
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-05T00:20:51Z",
+      "completed_at": "2026-11-05T00:20:52Z"
+    },
+    {
+      "name": "Capture before checkout or tool setup",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-05T00:20:52Z",
+      "completed_at": "2026-11-05T00:20:52Z"
+    },
+    {
+      "name": "Apply the same Java setup version used by bootstrap",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-05T00:20:52Z",
+      "completed_at": "2026-11-05T00:20:52Z"
+    },
+    {
+      "name": "Apply the same Python setup version used by bootstrap",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-05T00:20:52Z",
+      "completed_at": "2026-11-05T00:20:52Z"
+    },
+    {
+      "name": "Capture after Java and Python setup attempts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-05T00:20:52Z",
+      "completed_at": "2026-11-05T00:20:52Z"
+    },
+    {
+      "name": "Upload original observations even on diagnostic errors",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-05T00:20:52Z",
+      "completed_at": "2026-11-05T00:20:54Z"
+    },
+    {
+      "name": "Report collection errors without deciding image admission",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-05T00:20:54Z",
+      "completed_at": "2026-11-05T00:20:54Z"
+    },
+    {
+      "name": "Post Apply the same Python setup version used by bootstrap",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-05T00:20:54Z",
+      "completed_at": "2026-11-05T00:20:54Z"
+    },
+    {
+      "name": "Post Apply the same Java setup version used by bootstrap",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-05T00:20:54Z",
+      "completed_at": "2026-11-05T00:20:54Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-05T00:20:54Z",
+      "completed_at": "2026-11-05T00:20:54Z"
+    }
+  ]
+}

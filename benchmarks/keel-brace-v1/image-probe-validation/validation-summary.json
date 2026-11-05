@@ -1,0 +1,32 @@
+{
+  "purpose": "pure fake-file/parser/proc-discovery/inline-sync tests; no actual probe capture, no process/network/game/server/Java/Gradle start",
+  "uniqueTests": 21,
+  "result": "PASS",
+  "runtime": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "benchmarks/keel-brace-v1/image-probe-validation",
+    "-p",
+    "test_image_probe.py",
+    "-v"
+  ],
+  "preservedEarlierFailure": {
+    "file": "pure-tests-attempt-1.log",
+    "observed": "4failures/1error from fixture noncanonical macOS /var alias, NOT a metadata capture result",
+    "fix": "Fixture temporary roots resolved with Path.resolve(); production allowlisted-path semantics unchanged",
+    "subsequent": "20testsPASSattempt2;final21addsfullymocked two-source conflict/custody test"
+  },
+  "operationalCollector": "tools/keel_brace_image_probe.py",
+  "collectorSHA256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94",
+  "workflowSHA256": "0680c78000a8a3425384764fc8d5e5da412ce2a2f1b4a54154fb594412bf720e",
+  "phaseCount": 2,
+  "diagnosticQuestion": "Already-inherited image metadata versus mutations after the same setup-java/setup-python versions as bootstrap; not runtime acceptance",
+  "payloadBytesPerPhaseCap": 5210112,
+  "wholeArtifactCapBytes": 10485760,
+  "zipOverheadReserveBytes": 65536,
+  "sourceSnapshotExecuted": false
+}

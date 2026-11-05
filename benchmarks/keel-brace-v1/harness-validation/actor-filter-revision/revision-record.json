@@ -1,0 +1,26 @@
+{
+  "command": "python3 -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v",
+  "runtime": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "before": {
+    "tests": 51,
+    "errors": 2,
+    "failures": 1
+  },
+  "after": {
+    "tests": 51,
+    "result": "PASS"
+  },
+  "changedFiles": {
+    "tools/keel_brace_experiment.py": {
+      "bytes": 97150,
+      "sha256": "9348f3055605f236543fbb29aa7ddf1a058166b57f6703c4797ae3b93a4b9071"
+    },
+    "tools/test_keel_brace_experiment.py": {
+      "bytes": 47806,
+      "sha256": "8f9dece2e2660cf53bd98c97c52d4ac5d243463d194b3c00d77ea3be90940d25"
+    }
+  },
+  "limitations": "Pure synthetic fixtures only. No processes/games/preparation/source freeze or Git mutations. Unconditional image_evidence hold unchanged."
+}

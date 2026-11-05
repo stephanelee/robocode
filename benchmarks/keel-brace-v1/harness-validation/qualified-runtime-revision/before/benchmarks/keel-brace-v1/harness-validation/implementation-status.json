@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "task": "/root/brace_harness_impl",
+  "status": "PURE IMPLEMENTATION READY FOR REVIEW; operational image authority collector unresolved and all freeze/preparation/games ON HOLD",
+  "files": {
+    "tools/keel_brace_experiment.py": {
+      "bytes": 97150,
+      "sha256": "9348f3055605f236543fbb29aa7ddf1a058166b57f6703c4797ae3b93a4b9071"
+    },
+    "tools/KeelBraceBattle.java": {
+      "bytes": 3086,
+      "sha256": "ffa0edb60703e057b2908c40aac8c0c0666d00ca48419c346a8ea73c27572a3f"
+    },
+    "tools/keel_brace_python_proof.py": {
+      "bytes": 8674,
+      "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
+    },
+    "tools/test_keel_brace_experiment.py": {
+      "bytes": 47806,
+      "sha256": "8f9dece2e2660cf53bd98c97c52d4ac5d243463d194b3c00d77ea3be90940d25"
+    },
+    "tools/keel_brace_harness.md": {
+      "bytes": 12560,
+      "sha256": "cf739dceedf9f2bac50cffed707ac1382127e6e228aa4e6c7daf3ef3236e932e"
+    },
+    ".github/workflows/keel-brace-v1.yml": {
+      "bytes": 5842,
+      "sha256": "75ef80d4133d8e731462c65f8e561448920f1d3a489c8c612563a8f727d89b21"
+    }
+  },
+  "localRuntime": {
+    "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+  },
+  "pureTests": {
+    "command": "python3 -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v",
+    "count": 51,
+    "result": "PASS",
+    "log": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/after-fix-tests.log"
+  },
+  "workflowValidation": {
+    "command": "ruby -ryaml -e YAML.load_file(...)[jobs]",
+    "result": "Syntax parsed; sole registered-stage runner ubuntu-26.04, timeout340minutes"
+  },
+  "interface": "benchmarks/keel-brace-v1/harness-validation/data-interface.json",
+  "nonActions": [
+    "No freeze",
+    "No preparation",
+    "No Java/server/Retcon/bot/game",
+    "No labels/receipt/ref mutation or commit/push",
+    "No protocol/registry/pin/baseline/AIS changes",
+    "No candidate JAR hash invented"
+  ],
+  "imageBlocker": {
+    "environmentClaim": "20261026.180.1",
+    "rawProviderHeaderClaim": "20261025.179.1",
+    "source": "Root independently inspected bootstrap and prior Helm raw logs; zero-game actual metadata authority/schema review pending",
+    "enforcement": "identity calls unconditional image_evidence failure; pure image_consensus rejects environment-only, conflicting and unapproved claims without widening IMAGES"
+  },
+  "revisionEvidence": {
+    "reason": "Independent P2: filter unassigned actors before strict authority JSON parsing",
+    "beforeManifest": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/before-manifest.json",
+    "before47TestLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/before/benchmarks/keel-brace-v1/harness-validation/final-pure-tests-image-hold.log",
+    "newFixtureFailLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/before-fix-tests.log",
+    "newFixturePassLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/after-fix-tests.log"
+  }
+}

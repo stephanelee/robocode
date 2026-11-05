@@ -1,0 +1,19 @@
+.................................................E...............
+======================================================================
+ERROR: test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims (test_audit.QualifiedRuntimePrimitiveTests.test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-brace/benchmarks/keel-brace-v1/independent-analysis/test_audit.py", line 583, in test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims
+    log=image_log('20261025.179.1');self.assertEqual(audit.qualified_provider_header(log.encode()),audit.QUALIFIED_NATIVE)
+                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-brace/benchmarks/keel-brace-v1/independent-analysis/audit.py", line 926, in qualified_provider_header
+    check(boundary and active is None and len(groups)==len(systems)==1,'Complete unambiguous startup image/OS scope required')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-brace/benchmarks/keel-brace-v1/independent-analysis/audit.py", line 55, in check
+    raise ValueError(message)
+ValueError: Complete unambiguous startup image/OS scope required
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.283s
+
+FAILED (errors=1)

@@ -1,0 +1,104 @@
+name: KeelHelm v1 registered same-worker duel
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+concurrency:
+  group: keel-helm-v1-registered
+  cancel-in-progress: false
+jobs:
+  registered-stage:
+    name: registered-stage
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/keel-improvement-baseline' && github.run_attempt == 1 &&
+      (github.event.label.name == 'run-keel-helm-v1-screen' || github.event.label.name == 'run-keel-helm-v1-confirmation') &&
+      contains(github.event.pull_request.body, format('KEEL-HELM-SOURCE-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 340
+    permissions:
+      contents: write
+      actions: read
+      issues: read
+    env:
+      STAGE: ${{ github.event.label.name == 'run-keel-helm-v1-screen' && 'screen' || 'confirmation' }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PULL_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Build source, semantic tests and all committed JAR parity on Java17 first
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p build
+          {
+            java -version
+            cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar"
+            ./gradlew --no-daemon clean build
+            python tools/verify_jar.py "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+            cp "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+            ./gradlew -p experiments/Keel --no-daemon clean build
+            python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+            ./gradlew -p experiments/KeelHelm --no-daemon clean build
+            python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar
+            python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v
+          } 2>&1 | tee "$RUNNER_TEMP/keel-helm-build.log"
+          mkdir -p build
+          cp "$RUNNER_TEMP/keel-helm-build.log" build/keel-helm-build.log
+          python -I -B -S tools/keel_helm_experiment.py capture-build
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Prepare exact sources/runtime/commands on this worker (zero games)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B -S tools/keel_helm_experiment.py prepare "$STAGE"
+      - name: Finalize immutable zero-game provenance before independent review
+        id: provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-helm-v1-${{ env.STAGE }}-provenance-${{ github.run_id }}
+          path: build/keel-helm/${{ env.STAGE }}/provenance/
+          if-no-files-found: error
+          retention-days: 90
+          include-hidden-files: true
+      - name: Wait at most30minutes for actively assigned independent reviewer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROVENANCE_ID: ${{ steps.provenance.outputs.artifact-id }}
+          PROVENANCE_DIGEST: ${{ steps.provenance.outputs.artifact-digest }}
+        run: python -I -B -S tools/keel_helm_experiment.py approve "$STAGE" --artifact-id "$PROVENANCE_ID" --artifact-digest "$PROVENANCE_DIGEST"
+      - name: Rehash same worker, atomically consume sole receipt and run fixed population
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B -S tools/keel_helm_experiment.py run "$STAGE"
+      - name: Preserve every failure, partial budget, unplayed ID and raw result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-helm-v1-${{ env.STAGE }}-evidence-${{ github.run_id }}
+          path: |
+            build/keel-helm/
+            build/keel-helm-build.json
+            build/keel-helm-build.log
+            ${{ runner.temp }}/keel-helm-build.log
+            experiments/Keel/build/reports/tests/
+            experiments/KeelHelm/build/reports/tests/
+            build/reports/tests/
+          if-no-files-found: warn
+          retention-days: 90
+          include-hidden-files: true

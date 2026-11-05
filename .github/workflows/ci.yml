@@ -46,6 +46,14 @@ jobs:
           ./gradlew -p experiments/KeelHelm --no-daemon clean build
           python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar
           python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v
+      - name: Test isolated KeelBrace semantics and committed JAR (after bootstrap)
+        if: hashFiles('experiments/KeelBrace/KeelBrace.jar') != ''
+        run: |
+          ./gradlew -p experiments/KeelBrace --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelBrace/KeelBrace.jar experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar
+      - name: Test registered Brace harness fixtures (no games)
+        if: hashFiles('tools/test_keel_brace_experiment.py') != ''
+        run: python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v
       - name: Build Meridian, test its physics and compare the committed JAR
         run: |
           ./gradlew -p experiments/Meridian --no-daemon clean build
@@ -65,6 +73,7 @@ jobs:
             experiments/DiamondChallenger/build/reports/tests/
             experiments/Keel/build/reports/tests/
             experiments/KeelHelm/build/reports/tests/
+            experiments/KeelBrace/build/reports/tests/
             experiments/Prism/build/reports/tests/
           if-no-files-found: ignore
       - name: Upload runnable bot
