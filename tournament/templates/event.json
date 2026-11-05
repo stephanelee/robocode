@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": null,
+  "title": null,
+  "status": "draft",
+  "sourceCommit": null,
+  "host": "minimind",
+  "execution": {
+    "githubActions": false,
+    "buildJavaMajor": 17,
+    "battleJavaMajor": 25,
+    "minimumFreeGiB": 2,
+    "recordingsRequired": true,
+    "coldStartEveryGame": true,
+    "practiceDrawSeed": null,
+    "botSeed": null,
+    "playoffLotteryDomain": null
+  },
+  "entrantPolicy": {
+    "mainRepositoryBots": "List and freeze all selected main-repository bots, including experimental entries, before play",
+    "guests": [],
+    "entryManifest": null,
+    "sharedInputsManifest": null
+  },
+  "format": {
+    "practiceGamesPerBot": 2,
+    "swissRounds": 4,
+    "playoffQualifiers": 8,
+    "playoffs": "double-elimination",
+    "gamesPerPairing": 2,
+    "roundsPerGame": 20,
+    "reverseLaunchOrder": true,
+    "pairingPoints": {"win": 3, "draw": 1, "loss": 0},
+    "playoffTieBreaks": ["combined score", "round first places", "one extra 20-round game", "registered SHA256 draw"]
+  },
+  "site": {
+    "projectId": null,
+    "baseUrlEnvironment": "TOURNAMENT_SITE_URL",
+    "audience": "public",
+    "robots": "noindex,nofollow"
+  },
+  "paths": {
+    "evidence": "benchmarks/{event_id}",
+    "privateArtifacts": "local-evidence/{event_id}",
+    "siteOutput": "tournament-sites/{event_id}/dist"
+  },
+  "authorization": {"latestAuthorizedStage": null},
+  "readiness": "Scaffold only. Freeze entrants, runtime, seeds and a reviewed event-specific runner before play."
+}

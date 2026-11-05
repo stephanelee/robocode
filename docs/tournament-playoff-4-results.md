@@ -73,4 +73,17 @@ controls. Large files use lossless hash-verified 4 MB pieces.
 
 [Protocol](tournament-playoff-4-protocol.md), [running guide](tournament-running.md),
 [PR #120](https://github.com/stephanelee/robocode/pull/120),
-[public results/replays](https://robocode-elimination-cup.stephane-lee.chatgpt.site/matches.html?stage=playoff-4).
+[website link configuration](../tournament/README.md).
+
+
+Final replay publication: Site version 38 offers all four valid wave-4 games and
+sixteen public movies / 320 battle rounds in total. All 38 private valid-game
+movies remain hash-verified; the corrupt voided attempt is preserved separately.
+The public catalog totals 161,612,861 movie bytes. Source/video hashes, final
+scores, chapters, codec/frame/duration checks and multipart reconstruction pass.
+The archival flags now pass independent real cached-media cases, including
+lower-bracket-only and Swiss-only archival. The reproducible check is
+`tools/check_tournament_archival_flags.py` (requires retained private evidence).
+The [tournament hub](../tournament/README.md) now records this event and provides
+a separate draft/configuration workflow for another event, with an externally
+configured website base URL. No new tournament was initialized or launched.

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "tournament-2026-11-04",
+  "title": "Robocode Elimination Cup",
+  "status": "wave-4-complete-awaiting-authorization",
+  "sourceCommit": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
+  "host": "minimind",
+  "execution": {
+    "githubActions": false,
+    "buildJavaMajor": 17,
+    "battleJavaMajor": 25,
+    "minimumFreeGiB": 2,
+    "recordingsRequired": true,
+    "coldStartEveryGame": true,
+    "practiceDrawSeed": 202611040,
+    "botSeed": 20261104,
+    "playoffLotteryDomain": "minimind-playoff-20261105"
+  },
+  "entrantPolicy": {
+    "mainRepositoryBots": "List and freeze all selected main-repository bots, including experimental entries, before play",
+    "guests": [
+      "Retcon",
+      "Diamond Port",
+      "Adaptive Prime"
+    ],
+    "entryManifest": "tournament/events/2026-11-04/entrant-pins.json",
+    "sharedInputsManifest": "tournament/events/2026-11-04/shared-inputs.json"
+  },
+  "format": {
+    "practiceGamesPerBot": 2,
+    "swissRounds": 4,
+    "playoffQualifiers": 8,
+    "playoffs": "double-elimination",
+    "gamesPerPairing": 2,
+    "roundsPerGame": 20,
+    "reverseLaunchOrder": true,
+    "pairingPoints": {
+      "win": 3,
+      "draw": 1,
+      "loss": 0
+    },
+    "playoffTieBreaks": [
+      "combined score",
+      "round first places",
+      "one extra 20-round game",
+      "registered SHA256 draw"
+    ]
+  },
+  "site": {
+    "projectId": "appgprj_6aebc5f5d66481918d8012edc6d355a8",
+    "baseUrlEnvironment": "TOURNAMENT_SITE_URL",
+    "audience": "public",
+    "robots": "noindex,nofollow"
+  },
+  "paths": {
+    "evidence": "benchmarks/tournament-2026-11-04",
+    "privateArtifacts": "local-evidence/tournament-2026-11-04",
+    "siteOutput": "tournament-site/dist",
+    "officialResults": "benchmarks/tournament-2026-11-04/official-results.json"
+  },
+  "authorization": {
+    "latestAuthorizedStage": "playoff-4"
+  },
+  "readiness": "Existing event: stop after wave 4. Another user instruction is required before wave 5.",
+  "results": {
+    "validatedGames": 94,
+    "competitiveRounds": 1880,
+    "excludedSoloRounds": 20,
+    "voidedRounds": 20,
+    "knownPhysicalRounds": 1920,
+    "latestStage": "playoff-4",
+    "nextStage": "playoff-5",
+    "nextMatch": {
+      "id": "L6",
+      "a": "Keel",
+      "b": "Diamond Port",
+      "status": "not-started"
+    },
+    "remaining": [
+      {
+        "name": "KeelHelm",
+        "losses": 0
+      },
+      {
+        "name": "Keel",
+        "losses": 1
+      },
+      {
+        "name": "Diamond Port",
+        "losses": 1
+      }
+    ]
+  },
+  "replays": {
+    "validPrivateMovies": 38,
+    "publicGames": 16,
+    "archivedSwissRound": 4,
+    "archivedLowerBeforeWave": 4,
+    "voidedOriginalReplay": "corrupted; retained privately; excluded from match score"
+  }
+}

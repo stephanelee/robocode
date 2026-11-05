@@ -130,3 +130,4 @@ java -jar AISurvivor.jar
 
 Metrics include actual fired bullets and bullet hits, hit rate, damage dealt/taken, wall and bot collisions, skipped turns, outcome, accumulated reward, mode, seed, and checkpoint status. The benchmark runner can combine these records with official scores and placements.
 
+[Tournament hub](tournament/README.md) — current invitational records and a reusable starter for another event.
