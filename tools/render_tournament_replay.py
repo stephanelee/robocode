@@ -11,7 +11,7 @@ import subprocess
 import time
 from PIL import Image, ImageDraw, ImageFont
 
-W, H, FPS, TURNS_PER_SECOND = 1280, 800, 20, 240
+W, H, FPS, TURNS_PER_SECOND = 1280, 800, 20, 60
 BG, PANEL, LINE, INK, MUTED = '#091522', '#10243a', '#2b425f', '#eef5ff', '#a3b6cf'
 COLORS = ['#75bcff', '#f6c27b']
 FONT_ROOT = Path('/System/Library/Fonts/Supplemental')
@@ -32,6 +32,8 @@ def timestamp(seconds):
 
 
 def main(args):
+    global TURNS_PER_SECOND
+    TURNS_PER_SECOND = args.turns_per_second
     if args.output.exists():
         raise ValueError('Never overwrite a published video; choose a new output filename')
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -134,7 +136,7 @@ def main(args):
         return image
 
     temporary = args.output.with_name(args.output.stem+'.partial.mp4')
-    command = ['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','veryfast','-crf','25','-maxrate','450k','-bufsize','900k','-threads','2','-g',str(FPS*2),'-pix_fmt','yuv420p','-tag:v','avc1','-movflags','+faststart',str(temporary)]
+    command = ['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','veryfast','-crf','25','-maxrate','130k','-bufsize','520k','-threads','2','-g',str(FPS*2),'-pix_fmt','yuv420p','-tag:v','avc1','-movflags','+faststart',str(temporary)]
     frames = 0
     chapters = []
     last = {'roundNumber':1,'turnNumber':0,'botStates':[],'bulletStates':[]}
@@ -214,6 +216,7 @@ if __name__=='__main__':
     parser.add_argument('--recording',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--official',type=Path)
+    parser.add_argument('--turns-per-second',type=int,choices=[20,40,60,120,240],default=60)
     parser.add_argument('--swiss-round',type=int,default=4)
     parser.add_argument('--game',type=int,choices=[1,2],default=1)
     main(parser.parse_args())
