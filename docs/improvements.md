@@ -354,3 +354,7 @@ Zero games/rounds. Reproduce PATH launcher comm mismatch offline, then validate 
 ## 2026-11-05 — KeelHelm next 2: radar-revisit
 
 Decision reject: melee 35.31% → 29.84% (-5.48pp), policy exposure 1209. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1390 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-2-radar-revisit-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next 3: shot-obstruction
+
+Decision reject: melee 32.25% → 28.84% (-3.41pp), policy exposure 19. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1650 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-3-shot-obstruction-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.

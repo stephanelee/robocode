@@ -50,7 +50,7 @@ Source head: 0d0da85900c75d940384479baa2b6b81e0bb1489. Feature JAR SHA256: 6ffb1
 
 Project accounting after this complete stage: **1130 completed physical rounds plus three historical partial rounds**. This new program adds exactly 260 complete rounds; invalid historical attempts stay separate.
 
-All recordings, staged bots, source/JAR/model snapshots, telemetry, resources, invocation/cleanup, validation logs and independent auditor sources are retained outside Git in robocode-keelhelm-followups/next/stage-1/full-artifacts.tar.gz. SHA256 93853a2e8077a650616205b8f4b1aef823bf15dae301aa75213ae6ea9b73046a.
+All recordings, staged bots, source/JAR snapshots and any emitted model files, telemetry, resources, invocation/cleanup, validation logs and independent auditor sources are retained outside Git in robocode-keelhelm-followups/next/stage-1/full-artifacts.tar.gz. SHA256 93853a2e8077a650616205b8f4b1aef823bf15dae301aa75213ae6ea9b73046a.
 
 [Scores](../../benchmarks/keelhelm-next/stage-1/results.json), [independent audit](../../benchmarks/keelhelm-next/stage-1/independent-audit.json), [provenance](../../benchmarks/keelhelm-next/stage-1/provenance.json), [resources](../../benchmarks/keelhelm-next/stage-1/resource-summary.json), [archive proof](../../benchmarks/keelhelm-next/stage-1/artifact-proof.json).
 
