@@ -314,3 +314,7 @@ artifacts retained. Public source, notes and reusable tournament foundation upda
 ## 2026-11-05 — KeelHelm melee v1: invalid lifecycle
 
 Consumed 40 physical rounds in two games; one valid control, one candidate with missing round-start telemetry and uncleared melee state. A preceding staging failure launched zero games. Reject the improvement claim; stop v1 with fourteen games unplayed. Preserve all recordings, source/JAR/runtime hashes, failed setup and callback reproduction. Register v2 separately; no pooling or resume. [Protocol](improvements/keelhelm-melee-v1-protocol.md), [measured failure/raw evidence](improvements/keelhelm-melee-v1-invalid.md), [PR #124](https://github.com/stephanelee/robocode/pull/124).
+
+## 2026-11-05 — KeelHelm melee 0.2.1: measured cohort improvement
+
+Accept for the bounded frozen top-four cohort: mean melee share 13.19% → 26.98% (+13.79 pp), first places 7/80 → 27/80. Retcon 92.92% vs 94.40% (-1.48 pp); Walls 95.02% vs 94.50%; SpinBot 100% both. All gates and independent raw audit pass; zero own skips, maximum logged loop 7 ms. Exactly 16 fresh games / 220 rounds, separate from invalid v1 with 40 rounds (260 project physical rounds total). Candidate/control/opponent/source/JAR/runtime hashes, all recordings, raw artifacts and failures retained. Production AIS parity passes; existing arm64 golden-test limitation disclosed. [Protocol](improvements/keelhelm-melee-v2-protocol.md), [measured report/raw evidence](improvements/keelhelm-melee-v2-results.md), [PR #124](https://github.com/stephanelee/robocode/pull/124).

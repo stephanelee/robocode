@@ -11,7 +11,7 @@ The candidate's onRoundStarted called getEnemyCount before the first tick. The p
 
 The only valid control game is descriptive, not a baseline mean or evidence of candidate improvement. No comparison gates passed and no v1 improvement is claimed. The separate [v2 lifecycle protocol](keelhelm-melee-v2-protocol.md) prospectively registers the API-lifecycle repair and a completely fresh comparison; no v1 game is pooled.
 
-Source/protocol: b20caea (candidate gameplay unchanged from85830f6), frozen v1 registration SHA256 3ed83354c2eb4c5867c54351aa5d79ad9a56aaba31714544fb0f6a41253f446e. Earlier zero-game setup freeze:5083df55da3227fd634b32991a319e69822e5fc3a34eea219d4366039388870d. Candidate/control source and JAR bytes, original protocols/harnesses, runtime manifests, isolated bot copies, recordings, official results, telemetry, staging failure, lifecycle reproduction and independent audit are retained privately. The final source/runtime audit verified all7,005 registered hashes before v2 edits.
+Source/protocol: b20caea (candidate gameplay unchanged from 85830f6), frozen v1 registration SHA256 3ed83354c2eb4c5867c54351aa5d79ad9a56aaba31714544fb0f6a41253f446e. Earlier zero-game setup freeze: 5083df55da3227fd634b32991a319e69822e5fc3a34eea219d4366039388870d. Candidate/control source and JAR bytes, original protocols/harnesses, runtime manifests, isolated bot copies, recordings, official results, telemetry, staging failure, lifecycle reproduction and independent audit are retained privately. The final source/runtime audit verified all 7,005 registered hashes before v2 edits.
 
 Private evidence directories on minimind:
 

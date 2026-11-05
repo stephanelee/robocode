@@ -7,3 +7,5 @@ The melee module keeps opponents separate and does not train duel waves from mix
 The completed tournament uses the frozen 0.1.0 bundle; historical results remain unchanged. The 0.2.1 benchmark and decision are documented separately in docs/improvements/keelhelm-melee-v2-protocol.md and issue #123. Contract fixtures alone establish no competitive strength.
 
 Build/test with Java 17: ./gradlew -p experiments/KeelHelm clean build. Run the generated build/bot/KeelHelm bundle or committed JAR with bot/ launch files. Optional telemetry: KEEL_HELM_METRICS; initial-side seed: KEEL_HELM_SEED.
+
+Measured top-four melee comparison: score share 13.19% → 26.98%, first places 7/80 → 27/80; Retcon/sample guards pass. See [full report](../../docs/improvements/keelhelm-melee-v2-results.md). The earlier 0.2.0 lifecycle failure is retained separately. This limited cohort result establishes no general-strength claim.
