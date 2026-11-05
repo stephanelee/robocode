@@ -111,7 +111,7 @@ All 14 Round 4 games are available through the game selector. **Play all Round 4
 
 The player defaults to **0.25×**, equivalent to 15 simulation turns/second for these 60-turn/second files. The 0.125× option slows it further to 7.5 turns/second. Other choices are 0.5×, 1×, 2× and 4×. The selected speed persists across game transitions. The original faster movies and raw recordings are retained. Downloaded MP4s play at their encoded speed unless adjusted in the external player.
 
-Each movie loads on demand into a browser Blob so seeking does not depend on the host’s byte-range support. Only the selected game is fetched; changing games cancels an unfinished load and releases the previous Blob. Play-all attempts to start the next game automatically. Browsers that require a fresh gesture show **Tap to play replay** and retain the sequence. Browser playback/layout QA is unavailable in the current Work settings; JavaScript syntax and player state transitions were checked without a browser.
+Each movie loads on demand into a browser Blob so seeking does not depend on the host’s byte-range support. Only the selected game is fetched; changing games cancels an unfinished load and releases the previous Blob. Play-all attempts to start the next game automatically. Browsers that require a fresh gesture show **Tap to play replay** and retain the sequence. Initial checks used JavaScript syntax and player state transitions. Subsequent browser QA at 320/390/768/1280px verified the mobile layout and public playback, including a multipart large movie, chapter seeking and 0.125× speed.
 
 To reproduce the playlist, iterate each pairing's `games` in `benchmarks/tournament-2026-11-04/swiss-4.json`. For each game, render its `recording.path` beneath that benchmark directory and pass its `directory/battle.json` as `--official`, `--game` as 1 or 2, and `--swiss-round 4`. Use a distinct output filename per game. The local JSON report supplies the source/video SHA256s, final scores, duration and round chapter timestamps. Public `data.json` lists these movies in `videos`; `video` retains the first movie for compatibility. Each entry supplies `title`, `label`, `mp4`, `poster`, `chaptersFile`, `chapters`, `sizeBytes` and `turnsPerSecond`.
 
@@ -155,3 +155,23 @@ Use the existing video/provenance directory for this edition. The tool scans the
 Each catalog entry identifies its `stage`, `matchA`, `matchB` and `game`, so replay buttons appear beside the matching result. Previous/next and **Play all this round** stay inside the selected round. Every game from Swiss 4 onward has 20 battle-round chapters, live energy and official cumulative scores. The player retains the 0.25× default and 0.125× slower option. Raw recordings and private models/logs remain local; only approved rendered MP4/poster/chapter assets enter the public Site.
 
 The renderer supports stage labels for playoffs, game 3 for an authorized tie-break, and draw endings. New outputs use immutable names. Existing public movies are never overwritten. A conflicting or partially rendered output requires an explicit new `--edition` rather than a silent retry/overwrite. The batch tool verifies raw/video hashes, official final scores, chapters 1–20, H.264/yuv420p metadata, frame counts, duration and a 24 MiB per-asset ceiling. It lowers the encoder bitrate for long movies. A changed Site data timestamp aborts the final catalog write; rerun to incorporate newer results without clobbering them. Verification is retained in the private `replay-catalog-verification.json`.
+
+
+### Lossless replay transport and storage limits
+
+Movies larger than 8,000,000 bytes are served as 4,000,000-byte binary pieces.
+The catalog supplies `parts` (URL, byte count, SHA256), the original `fileName`
+and full-movie `sha256`; `mp4` is null for those entries. The player downloads
+pieces on demand, checks size and SHA256 when WebCrypto is available, and joins
+them into the exact original MP4 Blob. The download link becomes available after
+loading. This preserves quality, timing and chapters. The other movies retain a
+direct MP4 URL. Duplicate full movies are omitted from public assets only; all
+original rendered movies and raw recordings stay in private evidence.
+
+The Site accepts at most 256 MiB per deployment archive. If later waves exceed
+that budget, the user authorized archiving Round 4 public videos. Add
+`--omit-swiss4` to the same catalog command for that and subsequent publications.
+It removes only verified derived public copies and marks the stage archived;
+the private movies, catalog and raw recordings remain retained. It does not
+remove scores, change results or run games. Keep the flag on future catalog runs
+to avoid republishing archived movies. Never delete recordings to make build room.

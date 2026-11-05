@@ -247,3 +247,22 @@ Presentation update only; **zero new battles**. Fourteen videos cover the existi
 ## 2026-11-05 — opening double-elimination playoffs
 
 Opening wave only completed on minimind: **8 games / 160 rounds**, zero tie-break games/failures. Upper winners: KeelHelm, Adaptive Prime, Keel, Diamond Port. AISurvivor, Breakwater, Meridian and Prism retain their lower-bracket chance; nobody is eliminated. Accept validated descriptive event scores; no gameplay promotion or strength claim. All eight recordings and official outputs pass coverage/hash checks. Overall:78 valid games/1,560 rounds plus20retained excluded startup rounds(1,580knownphysical). Sources/JARs/runtime pins unchanged. Twenty tests and independent pre-play review pass. Full artifacts/recordings retained locally; public exports are score-only. [Prospective protocol](tournament-playoffs-2026-11-05.md), [measured report/raw-evidence paths](tournament-playoff-1-results.md), [public multi-page Site](https://robocode-elimination-cup.stephane-lee.chatgpt.site/matches.html), [PR #120](https://github.com/stephanelee/robocode/pull/120). Browser layout/playback remains unverified. No later playoff wave started.
+
+## 2026-11-05 — second playoff wave, all replays and mobile review
+
+**8 original games / 160 rounds**, zero tie-break games/reruns; one validator stop resolved by an independently reviewed original-score ruling. KeelHelm and Keel advance unbeaten; Breakwater and Prism survive the lower bracket. AISurvivor and Meridian are eliminated at two losses. Accept descriptive event results; no gameplay promotion or strength claim. Overall86games/1,720rounds plus20retained excluded startup rounds(1,740knownphysical). All30recorded games from Swiss4 onward have verified video/chapter assets; no raw frames/models/logs published. Source/JAR/runtime pins unchanged,20tests pass. Mobile browser checks at320/390px, tablet768 and desktop1280 verify layout, inline replay placement,44px targets and0.25/0.125 playback. [Prospective protocol](tournament-playoff-2-protocol.md), [ruling](tournament-playoff-2-ruling.md), [measured report/raw evidence](tournament-playoff-2-results.md), [PR#120](https://github.com/stephanelee/robocode/pull/120). No wave3 started.
+
+## 2026-11-05 — third playoff wave and replay storage
+
+**4 original games / 80 rounds**, no extra tie games or completed-game reruns.
+Diamond Port and Prism advance; Breakwater and Adaptive Prime are eliminated at
+two losses. One zero-round ENOSPC startup was preserved and narrowly recovered
+after independent review; no game was discarded. Accept descriptive tournament
+results; no gameplay promotion or strength claim. Overall90games/1,800rounds plus
+20excluded startup rounds(1,820knownphysical). All34recordedgames have verified
+private videos;20playoffreplays remain public after user-authorized Round4 public
+archival to fit hosting. Raw recordings and alloriginalmovies retained. Frozen
+inputs unchanged; independent audit passes. [Prospective protocol](tournament-playoff-3-protocol.md),
+[startup ruling](tournament-playoff-3-startup-recovery.md),
+[measured report/raw evidence](tournament-playoff-3-results.md),
+[PR #120](https://github.com/stephanelee/robocode/pull/120). No wave4 started.

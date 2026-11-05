@@ -20,7 +20,7 @@ function matchCard(pair,stage){
  const gameRows=(games.length?games:[{game:1,status:'scheduled'},{game:2,status:'scheduled'}]).map(g=>{
   const index=videoIndex(stage,pair,g.game),a=resultFor(g,pair.a)?.totalScore,b=resultFor(g,pair.b)?.totalScore;
   const score=g.status==='complete'?`<span class="game-score"><span class="${a>b?'score-leading':''}">${a.toLocaleString('en-US')}</span> : <span class="${b>a?'score-leading':''}">${b.toLocaleString('en-US')}</span></span>`:`<span class="game-pending">${esc(g.status)}</span>`;
-  const replay=index>=0?`<button class="replay-mini" data-replay="${index}" aria-label="Watch ${esc(pair.a)} versus ${esc(pair.b)}, game ${g.game}" aria-pressed="${index===selectedReplay}">▶ Replay</button>`:`<small class="recording-note">${g.status==='complete'?(stage.startsWith('playoff-')?'Recording retained':'No video'):''}</small>`;
+  const replay=index>=0?`<button class="replay-mini" data-replay="${index}" aria-label="Watch ${esc(pair.a)} versus ${esc(pair.b)}, game ${g.game}" aria-pressed="${index===selectedReplay}">▶ Replay</button>`:`<small class="recording-note">${g.status==='complete'?(D.replayPolicy?.archivedStages?.includes(stage)?'Video archived · recording retained':stage.startsWith('playoff-')?'Recording retained':'No video'):''}</small>`;
   return `<div class="result-game-row"><span>GAME ${g.game}</span>${score}${replay}</div>`;
  }).join('');
  const resolution=pair.resolution&&complete?`<p class="resolution-note">Decided by ${esc({'combined-score':'combined official score','round-first-places':'round first places','extra-game-score':'extra game score','registered-draw-of-lots':'registered draw of lots'}[pair.resolution]||pair.resolution)}.</p>`:'';
@@ -50,14 +50,41 @@ function renderMatches(){
 }
 function guestText(text){let value=esc(text);for(const bot of D.profiles.filter(b=>b.kind==='Guest'))value=value.split(esc(bot.name)).join('<span class="guest-name">'+esc(bot.name)+'</span>');return value}
 function updatePlayAll(){const button=$('#playall');button.textContent=playAllReplays?'Stop after this game':'Play all this round';button.setAttribute('aria-label','Play all '+stageLabel(activeStage)+' replays');button.setAttribute('aria-pressed',String(playAllReplays))}
+function downloadReplay(url,signal,onProgress){
+ if(typeof XMLHttpRequest==='undefined')return fetch(url,{signal}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.blob()});
+ return new Promise((resolve,reject)=>{
+  const xhr=new XMLHttpRequest(),abort=()=>xhr.abort(),cleanup=()=>signal.removeEventListener('abort',abort);
+  if(signal.aborted){const error=Error('Download cancelled');error.name='AbortError';reject(error);return}
+  xhr.open('GET',url,true);xhr.responseType='blob';xhr.timeout=180000;
+  xhr.onprogress=e=>onProgress(e.loaded,e.lengthComputable?e.total:0);
+  xhr.onload=()=>{cleanup();if(xhr.status>=200&&xhr.status<300)resolve(xhr.response);else reject(Error('HTTP '+xhr.status))};
+  xhr.onerror=()=>{cleanup();reject(Error('Video transfer failed'))};xhr.ontimeout=()=>{cleanup();reject(Error('Video transfer timed out'))};
+  xhr.onabort=()=>{cleanup();const error=Error('Download cancelled');error.name='AbortError';reject(error)};
+  signal.addEventListener('abort',abort,{once:true});xhr.send();
+ });
+}
+async function downloadReplayMedia(item,signal,onProgress){
+ if(!item.parts?.length)return downloadReplay(item.mp4,signal,onProgress);
+ const pieces=[];let completed=0;
+ for(const part of item.parts){
+  const blob=await downloadReplay(part.url,signal,loaded=>onProgress(completed+loaded,item.sizeBytes));
+  if(blob.size!==part.sizeBytes)throw Error('Video part size differs');
+  if(part.sha256&&globalThis.crypto?.subtle){const digest=await crypto.subtle.digest('SHA-256',await blob.arrayBuffer());const actual=[...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');if(actual!==part.sha256)throw Error('Video part integrity check failed')}
+  if(signal.aborted){const error=Error('Download cancelled');error.name='AbortError';throw error}
+  pieces.push(blob);completed+=blob.size;
+ }
+ if(completed!==item.sizeBytes)throw Error('Video length differs');
+ return new Blob(pieces,{type:'video/mp4'});
+}
+function configureReplayDownload(item,v){const link=$('#videodownload');link.download=item.fileName||(item.mp4||'replay.mp4').split('/').pop();const url=v.dataset.objectUrl||item.mp4;if(url){link.href=url;link.textContent='Download this MP4 ↗';link.onclick=null}else{link.href='#replay';link.textContent='Load replay to enable download';link.onclick=e=>{e.preventDefault();loadReplay()}}}
 async function loadReplay(){
  const item=replayItems()[selectedReplay],v=$('#replayvideo'),button=$('#loadreplay');if(!item||!v)return;
  const requestId=++replayLoadId;
  try{
-  if(!v.dataset.objectUrl){replayAbort?.abort();replayAbort=new AbortController();button.disabled=true;button.textContent='Loading replay…';const response=await fetch(item.mp4,{signal:replayAbort.signal});if(!response.ok)throw Error(response.status);const blob=await response.blob();if(requestId!==replayLoadId)return;v.dataset.objectUrl=URL.createObjectURL(blob);v.src=v.dataset.objectUrl;v.load()}
+  if(!v.dataset.objectUrl){replayAbort?.abort();replayAbort=new AbortController();button.disabled=true;button.textContent='Loading replay…';const blob=await downloadReplayMedia(item,replayAbort.signal,(loaded,total)=>{if(requestId===replayLoadId)button.textContent='Loading replay · '+Math.min(100,Math.round(loaded/(total||item.sizeBytes)*100))+'%'});if(requestId!==replayLoadId)return;v.dataset.objectUrl=URL.createObjectURL(blob);v.src=v.dataset.objectUrl;v.load();configureReplayDownload(item,v)}
   if(requestId!==replayLoadId)return;v.playbackRate=Number($('#playbackspeed').value);button.disabled=false;button.textContent='Play replay';
   try{await v.play();if(requestId===replayLoadId)button.hidden=true}catch(e){if(requestId===replayLoadId){button.hidden=false;button.textContent='Tap to play replay'}}
- }catch(e){if(requestId===replayLoadId&&e.name!=='AbortError'){button.disabled=false;button.hidden=false;button.textContent='Retry video load'}}
+ }catch(e){if(requestId===replayLoadId&&e.name!=='AbortError'){button.disabled=false;button.hidden=false;button.textContent='Retry video load';button.dataset.loadError=e.message;console.warn('Replay download failed',e.name,e.message)}}
 }
 function chooseReplay(index,autoplay=false){
  const list=replayItems();if(!Number.isInteger(index)||index<0||index>=list.length)return;
@@ -67,9 +94,9 @@ function chooseReplay(index,autoplay=false){
 function renderVideo(){
  const list=replayItems(),item=selectedReplay===null?null:list[selectedReplay];$('#replay').hidden=!item;$('#watch-placeholder').hidden=!!item;if(!item)return;
  const v=$('#replayvideo'),source=$('#replaysource'),button=$('#loadreplay');
- if(v.dataset.source!==item.mp4){++replayLoadId;replayAbort?.abort();v.pause();if(v.dataset.objectUrl)URL.revokeObjectURL(v.dataset.objectUrl);v.removeAttribute('src');source.removeAttribute('src');v.dataset.objectUrl='';v.dataset.source=item.mp4;v.poster=item.poster;$('#replaychapters').src=item.chaptersFile;button.hidden=false;button.disabled=false;button.textContent='Play replay · '+Math.ceil(item.sizeBytes/1000000)+' MB';v.load()}
+ const sourceKey=item.sha256||item.mp4;if(v.dataset.source!==sourceKey){++replayLoadId;replayAbort?.abort();v.pause();if(v.dataset.objectUrl)URL.revokeObjectURL(v.dataset.objectUrl);v.removeAttribute('src');source.removeAttribute('src');v.dataset.objectUrl='';v.dataset.source=sourceKey;v.poster=item.poster;$('#replaychapters').src=item.chaptersFile;button.hidden=false;button.disabled=false;button.dataset.loadError='';button.textContent='Play replay · '+Math.ceil(item.sizeBytes/1000000)+' MB';v.load()}
  button.onclick=loadReplay;v.onplaying=()=>{button.hidden=true};$('#playbackspeed').onchange=e=>{v.playbackRate=Number(e.target.value)};
- $('#videotitle').innerHTML=guestText(item.title);$('#videolabel').textContent=item.label;$('#videodownload').href=item.mp4;
+ $('#videotitle').innerHTML=guestText(item.title);$('#videolabel').textContent=item.label;configureReplayDownload(item,v);
  $('#roundjump').innerHTML='<option value="">Battle round…</option>'+item.chapters.map(c=>`<option value="${c.startSeconds}">Round ${String(c.round).padStart(2,'0')}</option>`).join('');$('#roundjump').disabled=v.readyState<1;
  v.onloadedmetadata=()=>{$('#roundjump').disabled=false;v.playbackRate=Number($('#playbackspeed').value)};
  $('#roundjump').onchange=e=>{if(e.target.value==='')return;v.currentTime=Number(e.target.value);e.target.value=''};

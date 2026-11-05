@@ -61,11 +61,30 @@ def main(args):
     existing = data.get('videos', [])
     renderer = Path(__file__).with_name('render_tournament_replay.py')
 
+    def split_for_transfer(movie, expected_sha):
+        if movie.stat().st_size <= args.chunk_bytes*2:
+            return []
+        result=[];whole=hashlib.sha256()
+        with movie.open('rb') as stream:
+            number=0
+            while content:=stream.read(args.chunk_bytes):
+                whole.update(content);number+=1
+                name=movie.stem+f'.part{number:02d}.bin'
+                target=args.site/'videos'/name
+                expected=hashlib.sha256(content).hexdigest()
+                if target.exists():
+                    if sha(target)!=expected:raise ValueError('Existing video part differs: '+name)
+                else:
+                    with target.open('xb') as output:output.write(content)
+                result.append(dict(url='videos/'+name,sizeBytes=len(content),sha256=expected))
+        if whole.hexdigest()!=expected_sha:raise ValueError('Transfer pieces differ from original video')
+        return result
+
     def render(item):
         stage, pair_number, pair, game = item
         title = f'{pair["a"]} vs {pair["b"]} · Game {game["game"]}'
         prior = next((v for v in existing if (v.get('stage') == stage and v.get('matchA') == pair['a'] and v.get('matchB') == pair['b'] and v.get('game') == game['game']) or (stage == 'swiss-4' and v['title'] == title)), None)
-        name = Path(prior['mp4']).stem if prior else f'{stage}-p{pair_number:02d}-g{game["game"]}-slow-{args.edition}'
+        name = Path(prior.get('fileName') or prior['mp4']).stem if prior else f'{stage}-p{pair_number:02d}-g{game["game"]}-slow-{args.edition}'
         if not re.fullmatch(r'[a-zA-Z0-9-]+', name):
             raise ValueError('Unsafe media basename')
         movie = args.media_dir/(name+'.mp4')
@@ -103,7 +122,9 @@ def main(args):
             raise ValueError('Unexpected video encoding: '+name)
         if int(stream['nb_frames']) != report['frames'] or abs(float(probe['format']['duration'])-report['durationSeconds']) > .1:
             raise ValueError('Video frame/duration metadata differs: '+name)
-        for extension in ['.mp4','.webp','.vtt']:
+        (args.site/'videos').mkdir(parents=True,exist_ok=True)
+        pieces=split_for_transfer(movie, report['videoSHA256'])
+        for extension in (['.webp','.vtt'] if pieces else ['.mp4','.webp','.vtt']):
             local = movie.with_suffix(extension)
             target = args.site/'videos'/local.name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -118,22 +139,60 @@ def main(args):
                      mp4='videos/'+movie.name, poster='videos/'+movie.with_suffix('.webp').name,
                      chaptersFile='videos/'+movie.with_suffix('.vtt').name, chapters=report['chapters'],
                      sizeBytes=report['videoSizeBytes'], turnsPerSecond=report['turnsPerSecond'])
+        entry['fileName']=movie.name
+        if pieces:
+            entry['parts']=pieces;entry['mp4']=None
+            duplicate=args.site/'videos'/movie.name
+            if duplicate.exists():
+                if duplicate.resolve()==movie.resolve() or sha(duplicate)!=report['videoSHA256']:raise ValueError('Refusing to remove an unverified duplicate')
+                duplicate.unlink()
+        entry['sha256']=report['videoSHA256']
         proof = dict(stage=stage, game=game['directory'], sourceSHA256=report['sourceSHA256'],
                      videoSHA256=report['videoSHA256'], sizeBytes=report['videoSizeBytes'],
                      durationSeconds=report['durationSeconds'], chaptersVerified=20,
                      codecVerified=True, finalScores=report['finalScores'])
+        if pieces:proof['parts']=pieces
         print('Verified '+game['directory'], flush=True)
         return entry, proof
 
+    selected_jobs = jobs(args.output)
+    if args.omit_swiss4:
+        selected_jobs = [item for item in selected_jobs if item[0] != 'swiss-4']
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        rendered = list(pool.map(render, jobs(args.output)))
+        rendered = list(pool.map(render, selected_jobs))
     if json.loads(data_path.read_text())['updated'] != original_updated:
         raise ValueError('Site data changed during rendering; rerun to merge into the newer snapshot')
     entries, verification = zip(*rendered)
     data['videos'] = list(entries)
     data['video'] = entries[0]
     data['replayPolicy'] = dict(fromStage='swiss-4', gamesAvailable=len(entries),
-                                battleRoundsAvailable=20*len(entries), defaultPlaybackRate=.25)
+                                battleRoundsAvailable=20*len(entries), defaultPlaybackRate=.25, maxTransferPartBytes=args.chunk_bytes)
+    if args.omit_swiss4:
+        # Remove only verified, reproducible public copies. Private movies and raw
+        # recordings remain intact; an unrelated file or symlink blocks cleanup.
+        archived = [v for v in existing if v.get('stage') == 'swiss-4']
+        removals = []
+        for entry in archived:
+            for url in [entry.get('mp4'), entry['poster'], entry['chaptersFile']]:
+                if url:
+                    target = args.site/url
+                    original = args.media_dir/Path(url).name
+                    if target.exists():
+                        if target.is_symlink() or target.resolve() == original.resolve() or sha(target) != sha(original):
+                            raise ValueError('Refusing to remove an unverified public copy: '+url)
+                        removals.append(target)
+            for part in entry.get('parts', []):
+                target = args.site/part['url']
+                if target.exists():
+                    if target.is_symlink() or sha(target) != part['sha256']:
+                        raise ValueError('Refusing to remove an unverified public part')
+                    removals.append(target)
+        archive = args.media_dir/'swiss-4-public-catalog-archived.json'
+        if archived and not archive.exists():
+            save(archive, archived)
+        for target in removals:
+            target.unlink()
+        data['replayPolicy']['archivedStages'] = ['swiss-4']
     data['updated'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
     save(data_path, data)
     proof = dict(gamesVerified=len(entries), battleRoundsVerified=20*len(entries), newBattles=0,
@@ -149,4 +208,6 @@ if __name__ == '__main__':
     parser.add_argument('--site', type=Path, required=True, help='Initialized public static directory')
     parser.add_argument('--workers', type=int, choices=[1,2], default=2)
     parser.add_argument('--edition', default='v1', help='Immutable filename edition for new renders')
+    parser.add_argument('--omit-swiss4', action='store_true', help='Archive Round 4 public videos to make room; keep private movies and recordings')
+    parser.add_argument('--chunk-bytes',type=int,choices=[4_000_000],default=4_000_000,help='Lossless transport piece size for movies larger than8MB')
     main(parser.parse_args())
