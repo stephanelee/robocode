@@ -69,13 +69,39 @@ python3 tournament/scripts/manage.py site-url --stage playoff-6
 ```
 
 There are **42 verified private movies** for valid recorded games. The live site
-has **20 replays**, including both grand-final and both lower-final games. The user authorized
-archiving the fourteen Swiss-4 and eight older lower-bracket public videos for
+has **16 championship replays**, including both grand-final games. The user authorized
+archiving the fourteen Swiss-4 and twelve older lower-bracket public videos for
 space; their original movies, recordings and scores remain retained. The voided
 original has a corrupt replay; its replacement movie uses the new valid recording.
 The player retains live energy/official scores, twenty chapters and 0.25×/0.125×
 controls. Large MP4s use hash-verified pieces with no quality change.
 
-For this event, keep `--omit-swiss4 --archive-lower-before-wave 4` when rebuilding
+For this event, keep `--omit-swiss4 --archive-lower-before-wave 6` when rebuilding
 the public catalog. For another event, review archival policy and choose its own
 output/media directories. [Create a separate draft](../../new-event.md).
+
+
+## Post-tournament top-four melee
+
+Two separate four-bot exhibition games / forty rounds were played after the
+championship. Game2 reversed the launch order. Combined official scores:
+
+| Rank | Bot | Exhibition score |
+| --- | --- | --- |
+| 1 | Diamond Port | 9,187 |
+| 2 | Prism | 7,975 |
+| 3 | Keel | 3,952 |
+| 4 | KeelHelm | 2,828 |
+
+[Exhibition report](../../../docs/tournament-post-melee-results.md) and
+[score-only data](../../../benchmarks/tournament-2026-11-04/post-tournament-melee.json).
+KeelHelm remains championship winner; championship counts and standings are
+unchanged. The exhibition adds40physicalrounds separately (2,040total including
+both activities). Two four-bot movies are public on the separate exhibition page,
+in addition to sixteen championship replays. All44valid original movies remain
+private. Four more older lower-bracket public movies were archived under the
+existing user permission to fit the hosting limit; their originals remain.
+
+Resolve the exhibition address without embedding a hostname:
+
+    python3 tournament/scripts/manage.py site-url --stage exhibition

@@ -3,7 +3,7 @@ import json,subprocess,tempfile,sys,shutil
 root=Path.cwd();base=root/'benchmarks/tournament-2026-11-04';media=root/'local-evidence/tournament-2026-11-04/video';data=json.load(open(root/'tournament-site/dist/data.json'))
 allvideos={}
 for v in data['videos']+json.load(open(media/'swiss-4-public-catalog-archived.json'))+json.load(open(media/'lower-before-wave4-public-catalog-archived.json')):
- if v['stage']!='playoff-4':allvideos[(v['stage'],v['matchA'],v['matchB'],v['game'])]=v
+ if v['stage'] in ('swiss-4','playoff-1','playoff-2','playoff-3'):allvideos[(v['stage'],v['matchA'],v['matchB'],v['game'])]=v
 assert len(allvideos)==34
 results=[]
 with tempfile.TemporaryDirectory(prefix='tournament-archival-check-',dir='/private/tmp') as temp:

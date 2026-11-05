@@ -60,6 +60,7 @@ class EventStarterTests(unittest.TestCase):
         self.assertEqual('https://example.test/cup/index.html', manage.site_url(config, environment=environment))
         self.assertEqual('https://example.test/cup/matches.html?stage=playoff-4',
                          manage.site_url(config, 'playoff-4', environment))
+        self.assertEqual('https://example.test/cup/exhibition.html', manage.site_url(config, 'exhibition', environment))
         with self.assertRaises(ValueError):
             manage.site_url(config, environment={})
 
