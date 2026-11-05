@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "tournament-2026-11-04",
   "title": "Robocode Elimination Cup",
-  "status": "grand-final-running",
+  "status": "complete",
   "sourceCommit": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
   "host": "minimind",
   "execution": {
@@ -61,37 +61,30 @@
   "authorization": {
     "latestAuthorizedStage": "playoff-6"
   },
-  "readiness": "Grand final authorized, with reset only if Diamond Port wins G1. No new event started.",
+  "readiness": "Tournament complete. No reset required. A new event needs a separate draft and user authorization.",
   "results": {
-    "validatedGames": 96,
-    "competitiveRounds": 1920,
+    "validatedGames": 98,
+    "competitiveRounds": 1960,
     "excludedSoloRounds": 20,
     "voidedRounds": 20,
-    "knownPhysicalRounds": 1960,
-    "latestStage": "playoff-5",
-    "nextStage": "playoff-6",
-    "nextMatch": {
-      "id": "G1",
-      "a": "KeelHelm",
-      "b": "Diamond Port",
-      "status": "running"
-    },
+    "knownPhysicalRounds": 2000,
+    "latestStage": "playoff-6",
+    "nextStage": null,
+    "nextMatch": null,
     "remaining": [
       {
         "name": "KeelHelm",
         "losses": 0
-      },
-      {
-        "name": "Diamond Port",
-        "losses": 1
       }
-    ]
+    ],
+    "champion": "KeelHelm"
   },
   "replays": {
-    "validPrivateMovies": 40,
-    "publicGames": 18,
+    "validPrivateMovies": 42,
+    "publicGames": 20,
     "archivedSwissRound": 4,
     "archivedLowerBeforeWave": 4,
-    "voidedOriginalReplay": "corrupted; retained privately; excluded from match score"
+    "voidedOriginalReplay": "corrupted; retained privately; excluded from match score",
+    "status": "published"
   }
 }

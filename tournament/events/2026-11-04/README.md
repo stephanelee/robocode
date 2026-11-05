@@ -1,17 +1,19 @@
-# Robocode Elimination Cup — current event
+# Robocode Elimination Cup — completed event
 
-**The lower final is complete; the grand final is underway.** Diamond Port advances
-to face unbeaten KeelHelm. The user authorized the registered reset only if Diamond
-Port wins G1. No new tournament has started.
+**KeelHelm is champion**, finishing the double-elimination playoffs with four
+pairing wins and zero losses. Diamond Port is runner-up after its second loss.
+The registered reset was not required and no wave-7 game started.
 
-| Latest match | Combined valid score | Outcome |
+| Final match | Combined valid score | Outcome |
 | --- | --- | --- |
-| Diamond Port vs Keel | 2,642–2,621 | Diamond Port advances; Keel is eliminated |
+| Grand final: KeelHelm vs Diamond Port | 3,175–1,861 | KeelHelm is champion |
+| Lower final: Diamond Port vs Keel | 2,642–2,621 | Diamond Port advanced; Keel was eliminated |
 
-Totals through the lower final: **96 validated games / 1,920 competitive rounds**.
-Preserve twenty earlier excluded solo startup rounds and twenty user-voided wave-4
-rounds separately: **1,960 known physical rounds**. Only the valid replacement of
-the earlier corrupt-recording game counts.
+Final totals: **98 validated games / 1,960 valid rounds**, including unranked
+practice. Preserve twenty earlier excluded solo startup rounds and twenty
+user-voided wave-4 rounds separately: **2,000 known physical rounds**.
+Only the valid replacement of the earlier corrupt-recording game counts.
+The tournament is complete; another event requires a separate draft.
 
 ## Rules and entrants
 
@@ -43,7 +45,8 @@ All games ran on minimind, not GitHub Actions.
   [wave 2](../../../docs/tournament-playoff-2-results.md),
   [wave 3](../../../docs/tournament-playoff-3-results.md),
   [wave 4](../../../docs/tournament-playoff-4-results.md),
-  [lower final](../../../docs/tournament-playoff-5-results.md).
+  [lower final](../../../docs/tournament-playoff-5-results.md),
+  [grand final](../../../docs/tournament-grand-final-results.md).
 - Exceptional rulings: [wave-2 telemetry](../../../docs/tournament-playoff-2-ruling.md),
   [wave-3 zero-game startup](../../../docs/tournament-playoff-3-startup-recovery.md),
   [wave-4 explicit void/replacement](../../../docs/tournament-playoff-4-void-ruling.md).
@@ -65,8 +68,8 @@ then supplied through `TOURNAMENT_SITE_URL`; it is not hard-coded in this folder
 python3 tournament/scripts/manage.py site-url --stage playoff-6
 ```
 
-There are **40 verified private movies** for valid recorded games. The live site
-has **18 replays**, including all four valid wave-4 games and both lower-final games. The user authorized
+There are **42 verified private movies** for valid recorded games. The live site
+has **20 replays**, including both grand-final and both lower-final games. The user authorized
 archiving the fourteen Swiss-4 and eight older lower-bracket public videos for
 space; their original movies, recordings and scores remain retained. The voided
 original has a corrupt replay; its replacement movie uses the new valid recording.
