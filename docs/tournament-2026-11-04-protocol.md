@@ -28,6 +28,10 @@ The initial practice invocation staged DiamondChallenger under folder`bot`, so i
 
 User authorized round2 after round1 completed. Freeze14unchanged bots,2x20games/pair and3/1/0points. Compute a rematch-free perfect matching over current standings, minimizing lexicographically the sum of point differences, then sum of rank-index differences, then the ordered rank-index pair tuple. Ranking uses cumulativeSwisspoints, opponents current totalpoints, then mean pairing score share. The exact dynamic-programming matching uses all14bots once, has totalpointgap3(minimum possible with seven3-point and seven0-point bots), and totalrankgap9. Record full input standings and pairings before games in swiss-2-prospective-draw.json. Practice opponents do not count as Swiss rematches. No tuning, extra training, or bot/model carryover. User also requests a PR for runner/code and running instructions; raw game artifacts remain local.
 
-## Execution and publication
+## Swiss round 3 prospective amendment
 
-Practice and Swiss rounds1–2are complete. [Score-only report](tournament-2026-11-04-results.md) and [running instructions](tournament-running.md) are public. Full game artifacts remain local; only official score arrays/file hashes are included in this PR. Playoff execution is not yet automated.
+User authorized round 3 after round 2 completed. Keep all 14 frozen entries and two cold 20-round games per pairing. Use the same exact rematch-free matching: total point gap, then rank-index gap, then deterministic pair tuple. Cumulative points/Buchholz/mean pairing share determine the input order. Record the draw before any game. The independently reviewed input freeze now also covers imported Python launch/validation helpers and opponent lock files, in addition to home inputs, shared sample libraries, Java harness, cached API and Java/Python runtimes. These are orchestration integrity guards; bot gameplay, parameters, model-reset policy and battle settings remain unchanged.
+
+## Recording amendment before future stages
+
+User requested visual replay recording after Swiss round3’s final game had started. No running/completed game is restarted or retroactively represented as recorded. Enable official observer .battle.gz recording by default for subsequent stages, preserving bot sources,20roundgames,100000microsecondturntimeout and900seconddeadline. Use a separately hashed recording harness, retain local files and SHA256s, and report recording overhead as a runtime change. Public exports continue to contain score results only.

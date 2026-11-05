@@ -35,7 +35,7 @@ python3 tools/prepare_tournament.py \
   --python "$CUP_PYTHON/bin/python"
 ```
 
-Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It also writes prepared input snapshots. Every stage compares entry bytes, shared sample libraries, the battle harness, imported Python helpers and opponent locks, cached Retcon API and Java/Python runtime snapshots against preparation and the immutable first-stage inputs; a change stops before any game and never overwrites the original manifest. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
+Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It also writes prepared input snapshots. Every stage compares entry bytes, shared sample libraries, the battle harness, cached Retcon API and Java/Python runtime snapshots against preparation and the immutable first-stage inputs; a change stops before any game and never overwrites the original manifest. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
 
 On this Mac, five AISurvivor exact replay tests differed at tiny floating-point values; 83 tests passed and one was skipped. The first observed gun-turn value was `2.0869864576583836` versus `2.086986457658327`. The underlying platform/JDK cause has not been independently established. A normal preparation stops on that failure. `--allow-known-macos-replay-differences` acknowledges only the exact five recorded test cases/signature on macOS ARM64 and retains their failures. It never labels the tests as passed, permits unrelated failures, or relaxes JAR parity. All seven experimental bot build/test suites passed in the recorded run.
 
@@ -77,4 +77,12 @@ python3 -m py_compile tools/tournament.py tools/prepare_tournament.py
 python3 -m http.server 8766 --directory website
 ```
 
-The ten unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+The twelve unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion recording integrity and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+
+## Replay recordings for future games
+
+At the user’s request, future stages record by default through the new `tools/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official1.4.0API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
+
+Each completed game retains `pNN-gN/recordings/game-*.battle.gz`, with byte size and SHA256 in its private game record. The wrapper checks gzip integrity. In the Tank Royale desktop GUI, select **Battle → Replay from File** and open that file. These are replay data files, not videos. Full record-frame semantics and visual playback must be verified on an actual recorded game; no extra battle was run merely to test recording. The already completed practice and Swiss rounds1–3 did not record visual replays and are not rerun.
+
+`--no-recordings` explicitly preserves the earlier behavior. A continuation must keep the same recording policy as its original stage. Recording harness source gets an immutable input snapshot; new preparations also pin it. Recordings remain local with the full game artifacts and are excluded from public score exports.

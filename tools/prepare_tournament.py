@@ -118,6 +118,7 @@ def main(args):
     bases.update({name: source / 'samples' / name for name in tournament.NAMES[-3:]})
     tournament.save(output / 'prepared-entry-manifests.json', tournament.collect_entry_manifests(source, bases))
     tournament.save(output / 'prepared-shared-inputs.json', tournament.collect_shared_inputs(source, args.java25.absolute(), args.python.absolute()))
+    tournament.save(output / 'prepared-recording-harness.json', tournament.recording_harness_inputs(Path(tournament.__file__).resolve().with_name('TournamentBattle.java')))
     provenance = dict(mainCommit=actual, java17=version17, java25=version25, python=runtime, platform=platform.platform(), machine=platform.machine(), host=platform.node(), assets=benchmark.ASSETS, retcon=retcon_provenance, pythonGuests=dict(commit=lock['commit'], sourceSHA256=lock['sourceSHA256'], opponents=lock['opponents']), builds=builds)
     (output / 'builds.json').write_text(json.dumps(builds, indent=2) + '\n')
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
