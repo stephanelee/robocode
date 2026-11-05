@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "tournament-2026-11-04",
   "title": "Robocode Elimination Cup",
-  "status": "wave-4-complete-awaiting-authorization",
+  "status": "grand-final-running",
   "sourceCommit": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
   "host": "minimind",
   "execution": {
@@ -59,31 +59,27 @@
     "officialResults": "benchmarks/tournament-2026-11-04/official-results.json"
   },
   "authorization": {
-    "latestAuthorizedStage": "playoff-4"
+    "latestAuthorizedStage": "playoff-6"
   },
-  "readiness": "Existing event: stop after wave 4. Another user instruction is required before wave 5.",
+  "readiness": "Grand final authorized, with reset only if Diamond Port wins G1. No new event started.",
   "results": {
-    "validatedGames": 94,
-    "competitiveRounds": 1880,
+    "validatedGames": 96,
+    "competitiveRounds": 1920,
     "excludedSoloRounds": 20,
     "voidedRounds": 20,
-    "knownPhysicalRounds": 1920,
-    "latestStage": "playoff-4",
-    "nextStage": "playoff-5",
+    "knownPhysicalRounds": 1960,
+    "latestStage": "playoff-5",
+    "nextStage": "playoff-6",
     "nextMatch": {
-      "id": "L6",
-      "a": "Keel",
+      "id": "G1",
+      "a": "KeelHelm",
       "b": "Diamond Port",
-      "status": "not-started"
+      "status": "running"
     },
     "remaining": [
       {
         "name": "KeelHelm",
         "losses": 0
-      },
-      {
-        "name": "Keel",
-        "losses": 1
       },
       {
         "name": "Diamond Port",
@@ -92,8 +88,8 @@
     ]
   },
   "replays": {
-    "validPrivateMovies": 38,
-    "publicGames": 16,
+    "validPrivateMovies": 40,
+    "publicGames": 18,
     "archivedSwissRound": 4,
     "archivedLowerBeforeWave": 4,
     "voidedOriginalReplay": "corrupted; retained privately; excluded from match score"
