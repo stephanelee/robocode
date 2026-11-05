@@ -15,7 +15,7 @@ ROOT=core.ROOT
 BASELINE_JAR='19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b'
 NAMES={1:'adaptive-gun',2:'accuracy-power',3:'target-selection',4:'predicted-risk'}
 
-def schedule(stage):
+def schedule(stage,serial=False):
     games=core.schedule()
     diamond=[]
     for slot in range(2):
@@ -23,7 +23,7 @@ def schedule(stage):
             diamond.append(dict(id=f'diamond-{slot+1}-{arm}',arm=arm,scenario='Diamond Port',rounds=10,
                 seed=2026110600+stage*100+30+slot,order=['KeelHelm','Diamond Port'] if slot==0 else ['Diamond Port','KeelHelm']))
     games[8:8]=diamond
-    for i,g in enumerate(games):g['seed']=2026110600+stage*100+i//2
+    for i,g in enumerate(games):g['seed']=(2026110900 if serial else 2026110600)+stage*100+i//2
     assert len(games)==20 and sum(g['rounds'] for g in games)==260
     return games
 
@@ -59,6 +59,9 @@ def prepare(args):
     output=args.evidence.resolve();output.mkdir(parents=True,exist_ok=True)
     if (output/'freeze.json').exists() or (output/'registration.json').exists():raise ValueError('Never replace registration')
     bit=1<<(args.stage-1);candidate_mask=args.control_mask|bit
+    serial=args.load_plan=='serial-continuation'
+    if serial and (args.concurrency!=1 or args.stage<2):raise ValueError('Serial continuation is stages2/3/4 with one game per wave')
+    if not serial and args.concurrency!=2:raise ValueError('Original registration requires parallel2')
     if args.control_mask&bit:raise ValueError('New bit already enabled')
     if args.control_mask<0 or args.control_mask&~(bit-1):raise ValueError('Control mask contains untested later bits')
     previous=None
@@ -67,8 +70,12 @@ def prepare(args):
     else:
         if args.previous_audit is None:raise ValueError('Previous independent outcome audit required')
         previous=json.loads(args.previous_audit.read_text())
+        if previous['experimentStatus']!='complete' or previous['decision'] not in ('accept','reject'):
+            raise ValueError('An invalid stopped predecessor cannot open another stage')
         if previous['stage']!=args.stage-1 or previous['nextAcceptedMask']!=args.control_mask:
             raise ValueError('Previous independently accepted mask differs')
+        if serial and args.stage>2 and previous.get('concurrency')!=1:
+            raise ValueError('Later continuation stages require a complete serial predecessor')
     control=args.control_project.resolve();candidate=ROOT/'experiments/KeelHelm'
     feature_jar=core.sha(candidate/'KeelHelm.jar')
     feature_manifest={str(p.relative_to(candidate)):core.sha(p) for p in core.files(candidate)}
@@ -83,6 +90,7 @@ def prepare(args):
     for name,src in [('control-source',control),('candidate-source',candidate)]:
         shutil.copytree(src,output/name,ignore=shutil.ignore_patterns('build','.gradle','__pycache__'))
     registration=dict(stage=args.stage,name=NAMES[args.stage],newBit=bit,controlMask=args.control_mask,
+        concurrency=args.concurrency,loadPlan=args.load_plan,
         candidateMask=candidate_mask,controlJarSHA256=expected,candidateJarSHA256=core.sha(candidate/'KeelHelm.jar'),
         featureJarSHA256=feature_jar,featureProjectManifestSHA256=feature_manifest_sha,
         previousAuditSHA256=core.sha(args.previous_audit) if args.previous_audit else None)
@@ -90,10 +98,11 @@ def prepare(args):
     extra=[Path(__file__),ROOT/'tools/keelhelm_resources.py',ROOT/'tools/test_keelhelm_followups.py',
         ROOT/'experiments/KeelHelm/test/MeleeGunTest.java',ROOT/'docs/improvements/keelhelm-melee-followups-protocol.md',
         output/'registration.json']
+    if serial:extra.append(ROOT/'docs/improvements/keelhelm-followups-serial-protocol.md')
     if args.previous_audit:
         shutil.copy2(args.previous_audit,output/'previous-outcome-review.json');extra.append(output/'previous-outcome-review.json')
     freeze=core.collect(args.source.resolve(),output,args.pins.resolve(),args.java.absolute(),args.python.absolute(),
-        control_jar_sha=expected,schedule_rows=schedule(args.stage),extra_paths=extra)
+        control_jar_sha=expected,schedule_rows=schedule(args.stage,serial),extra_paths=extra)
     freeze['stageConfig']=registration;core.save(output/'freeze.json',freeze)
     for game in freeze['schedule']:
         run=output/'staging-preflight'/game['id'];run.mkdir(parents=True)
@@ -152,22 +161,27 @@ def run(args):
     if freeze['source']!=str(args.source.resolve()) or freeze['evidence']!=str(output):raise ValueError('Execution path changed')
     result=output/'results.json'
     if result.exists():raise ValueError('No resume or replacement')
+    width=freeze['stageConfig'].get('concurrency',2)
+    if width not in (1,2):raise ValueError('Unregistered concurrency')
+    if freeze['stageConfig'].get('loadPlan')=='serial-continuation' and width!=1:raise ValueError('Serial freeze requires one game')
     report=dict(status='running',stageConfig=freeze['stageConfig'],freezeSHA256=core.sha(path),plannedGames=20,plannedRounds=260,games=[],waves=[])
     core.save(result,report)
     try:
-        for index in range(0,20,2):
+        for index in range(0,20,width):
             core.verify_inputs(freeze)
+            waited=False
             while True:
                 admission=resources.read_resources();admission['diskFreeBytes']=shutil.disk_usage(output).free
                 with (output/'admission.jsonl').open('a') as log:log.write(json.dumps(admission)+'\n')
                 if admission['availablePercent']>=35 and admission['diskFreeBytes']>=2*1024**3:break
-                print('WAIT resource admission '+str(admission['availablePercent'])+'%',flush=True);time.sleep(10)
-            wave=index//2+1;monitor=resources.Monitor(output/f'wave-{wave}-resources.jsonl');monitor.start()
+                waited=True;print('WAIT resource admission '+str(admission['availablePercent'])+'%',flush=True);time.sleep(10)
+            if waited:core.verify_inputs(freeze)
+            wave=index//width+1;monitor=resources.Monitor(output/f'wave-{wave}-resources.jsonl');monitor.start()
             try:
-                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-                    futures=[pool.submit(play,g,freeze,output,monitor) for g in freeze['schedule'][index:index+2]]
+                with concurrent.futures.ThreadPoolExecutor(max_workers=width) as pool:
+                    futures=[pool.submit(play,g,freeze,output,monitor) for g in freeze['schedule'][index:index+width]]
                     rows=[]
-                    for game,future in zip(freeze['schedule'][index:index+2],futures):
+                    for game,future in zip(freeze['schedule'][index:index+width],futures):
                         try:rows.append(future.result())
                         except BaseException as error:rows.append(dict(**game,status='setup-failed',error=repr(error)))
             finally:monitor.close()
@@ -184,6 +198,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True)
     p.add_argument('--prepare',action='store_true');p.add_argument('--stage',type=int,choices=range(1,5));p.add_argument('--control-mask',type=int)
     p.add_argument('--control-project',type=Path);p.add_argument('--previous-audit',type=Path)
+    p.add_argument('--concurrency',type=int,choices=(1,2),default=2)
+    p.add_argument('--load-plan',choices=('original-parallel','serial-continuation'),default='original-parallel')
     for name in ('pins','java','python'):p.add_argument('--'+name,type=Path)
     p.add_argument('--approval-sha');a=p.parse_args()
     if a.prepare:

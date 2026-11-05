@@ -4,12 +4,26 @@ from unittest.mock import patch
 from pathlib import Path
 import tempfile
 import io
+from types import SimpleNamespace
 import keelhelm_melee as core
 from fractions import Fraction
 import keelhelm_followups as f
 import keelhelm_resources as resources
 
 class Contracts(unittest.TestCase):
+    def test_invalid_predecessor_cannot_prepare_the_next_serial_stage(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);previous=root/'invalid.json';previous.write_text(json.dumps(dict(stage=2,experimentStatus='invalid',decision='invalid-evidence-no-improvement-claim',nextAcceptedMask=0)))
+            args=SimpleNamespace(evidence=root/'new-stage',stage=3,control_mask=0,concurrency=1,load_plan='serial-continuation',previous_audit=previous)
+            with patch.object(core,'collect') as collect,self.assertRaisesRegex(ValueError,'invalid stopped predecessor'):
+                f.prepare(args)
+            collect.assert_not_called()
+    def test_serial_schedule_is_fresh_balanced_and_unchanged_in_budget(self):
+        serial=f.schedule(2,True);parallel=f.schedule(2)
+        self.assertEqual((20,260),(len(serial),sum(g['rounds'] for g in serial)))
+        self.assertNotEqual(serial[0]['seed'],parallel[0]['seed'])
+        self.assertEqual(2026111100,serial[0]['seed'])
+        for i in range(0,20,2):self.assertEqual(serial[i]['seed'],serial[i+1]['seed'])
     def test_group_inspection_failure_still_terminates_and_reaps_known_child(self):
         class Process:
             pid=12345;returncode=None;terminated=False;waited=False
