@@ -1,0 +1,128 @@
+{
+  "reviewedAt": "2026-11-05T23:32:37.734593+00:00",
+  "reviewer": "Independent raw/standings audit; acquisition reducer not imported",
+  "freezeSHA256": "d705724f6a35d9dc612736a9addf93ded44c661363144858fad9a3a82e1b331c",
+  "experimentStatus": "complete",
+  "decision": "valid-descriptive-snapshot",
+  "completeGamesAudited": 4,
+  "completedRoundsAudited": 80,
+  "games": [
+    {
+      "game": "melee-1",
+      "recordingSHA256": "f498e83e0b0803fc05c3367e7017cb84c69bb6b13525273312d5a9d499e0f494",
+      "officialSHA256": "defb211b7d930872299472d2546daaf990ab560de94a9048eea75a33df505d5d",
+      "roundsVerified": 20,
+      "observedTicks": 44364,
+      "maximumLoggedLoopMs": 5,
+      "ownSkips": 0
+    },
+    {
+      "game": "melee-2",
+      "recordingSHA256": "6c5475b8fb4d9ec033fa5a61e959ac7c4451cf6dbc6283d5fe43a951a3c7543f",
+      "officialSHA256": "db3dc0df9322839a598cfb2829f84b49b7eab29a2ca29396960fb738e9040114",
+      "roundsVerified": 20,
+      "observedTicks": 41631,
+      "maximumLoggedLoopMs": 4,
+      "ownSkips": 0
+    },
+    {
+      "game": "melee-3",
+      "recordingSHA256": "4ece61b601bb9aec0922a0dc88e18eb4b63848c47bb31cf4b8443fb19c98e77e",
+      "officialSHA256": "414e85b219ad878189c35dae4ba16693ef1db54d3b0cb7735ada1402f05830de",
+      "roundsVerified": 20,
+      "observedTicks": 43072,
+      "maximumLoggedLoopMs": 3,
+      "ownSkips": 0
+    },
+    {
+      "game": "melee-4",
+      "recordingSHA256": "64e3d64d2398db28d6dcad62d667c917eacc525ec11f1dfa60abf6548aa67fde",
+      "officialSHA256": "6fee29eecf39db12e01be5f27f3dd991859fe4d43a2da790c96238fb44477292",
+      "roundsVerified": 20,
+      "observedTicks": 43976,
+      "maximumLoggedLoopMs": 4,
+      "ownSkips": 0
+    }
+  ],
+  "errors": [],
+  "frozenInputFiles": 7014,
+  "changedFrozenFiles": [],
+  "stagedInputCopiesVerified": 112,
+  "resources": [
+    {
+      "game": "melee-1",
+      "samples": 48,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0,
+      "verifiedCleanup": true
+    },
+    {
+      "game": "melee-2",
+      "samples": 49,
+      "minimumAvailablePercent": 59,
+      "swapoutDelta": 0,
+      "verifiedCleanup": true
+    },
+    {
+      "game": "melee-3",
+      "samples": 38,
+      "minimumAvailablePercent": 58,
+      "swapoutDelta": 0,
+      "verifiedCleanup": true
+    },
+    {
+      "game": "melee-4",
+      "samples": 41,
+      "minimumAvailablePercent": 58,
+      "swapoutDelta": 0,
+      "verifiedCleanup": true
+    }
+  ],
+  "standings": [
+    {
+      "name": "Diamond Port",
+      "version": "1.8.28",
+      "totalScore": 14969,
+      "survival": 7500,
+      "bulletDamage": 5958,
+      "firstPlaces": 32,
+      "meanScoreShare": 0.32725104429610824,
+      "meanScoreShareExact": "3200315604765691/9779390044879224"
+    },
+    {
+      "name": "Prism",
+      "version": "0.2.0",
+      "totalScore": 14598,
+      "survival": 7000,
+      "bulletDamage": 6778,
+      "firstPlaces": 16,
+      "meanScoreShare": 0.3190558270443961,
+      "meanScoreShareExact": "3120171378758675/9779390044879224"
+    },
+    {
+      "name": "KeelHelm",
+      "version": "0.2.1",
+      "totalScore": 13378,
+      "survival": 7950,
+      "bulletDamage": 4103,
+      "firstPlaces": 29,
+      "meanScoreShare": 0.29239787095532066,
+      "meanScoreShareExact": "953157609454781/3259796681626408"
+    },
+    {
+      "name": "Keel",
+      "version": "0.1.0",
+      "totalScore": 2806,
+      "survival": 1550,
+      "bulletDamage": 1083,
+      "firstPlaces": 3,
+      "meanScoreShare": 0.061295257704174946,
+      "meanScoreShareExact": "199810077663505/3259796681626408"
+    }
+  ],
+  "entrantVersion": "0.2.1",
+  "entrantJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "publishedMain": "255f3230e4854a1db00e0aa214030db5f7c28f2d",
+  "competitivePromotion": false,
+  "limitations": "Four cold games with uncontrolled engine starts; no pooled historical comparison, causal improvement, significance, general-strength or reliability claim."
+}

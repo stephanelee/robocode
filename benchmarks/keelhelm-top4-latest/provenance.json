@@ -1,0 +1,141 @@
+{
+  "publishedMain": "255f3230e4854a1db00e0aa214030db5f7c28f2d",
+  "acquisitionSourceHead": "de49528ccc302b721bc7376a0f9e21f0f0d17443",
+  "benchmark": {
+    "name": "latest-published-top4",
+    "games": 4,
+    "rounds": 80,
+    "concurrency": 1,
+    "featureMask": 0,
+    "entrantJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+    "publishedMain": "255f3230e4854a1db00e0aa214030db5f7c28f2d"
+  },
+  "freezeSHA256": "d705724f6a35d9dc612736a9addf93ded44c661363144858fad9a3a82e1b331c",
+  "frozenInputFiles": 7014,
+  "runtime": {
+    "host": "minimind",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "botPython": {
+      "version": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.2.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.2.2"
+        ],
+        [
+          "pycountry",
+          "24.6.1"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "15.0.1"
+        ]
+      ]
+    }
+  },
+  "schedule": [
+    {
+      "id": "melee-1",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112100,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "melee-2",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112101,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "melee-3",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112102,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "melee-4",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112103,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    }
+  ],
+  "helperSHA256": {
+    "tools/keelhelm_melee.py": "02231b9d14ca2a41a39157b9e2995fa43b68a7a40c829bb9eb16f37d385b0792",
+    "tools/keelhelm_resources.py": "13bb218910aed868bb79a2ad3e8b3bcfe32d6d8ad078ec0d263b5f8924e4e16c",
+    "tools/keelhelm_top4.py": "c56a2ff31258cab6ed9f7a41a154a3e2c91b569015fa194cd0fdddfefa6aec59",
+    "tools/test_keelhelm_melee.py": "8458c3a8c75e1691172b884c2b07de9d5e0fbf4b285a8978609947c1ba9484c5",
+    "tools/test_keelhelm_top4.py": "30acdccf0b526a8e5e5892b290eff91137bba8c28e824d35b44c874fb4d83269",
+    "tournament/scripts/TournamentBattle.java": "13336dc71373893a8342279ce5db65972cfac9fffd20f7bb619aabe9cf8e5c2e"
+  },
+  "opponentSource": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
+  "diamondPortSource": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf",
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "exactSourceAndExecutionSnapshotsRetained": true,
+  "publication": "Exact original Git commit/tree/author/timestamps preserved through GitHub Git API after Git push service error"
+}
