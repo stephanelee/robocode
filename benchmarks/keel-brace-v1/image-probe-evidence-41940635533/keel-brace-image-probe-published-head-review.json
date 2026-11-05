@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "reviewerTask": "/root/runner_image_provenance_audit",
+  "reviewedAtUTC": "2026-11-05T00:20:01.657803+00:00",
+  "decision": "PASS-PROBE-ONLY-PUBLISHED-HEAD",
+  "headSHA": "1fd0e78bf36e8021657ca32240d66137731bfc77",
+  "treeSHA": "91a7c6ec9bb5231259c7b6d046465b904e9b6ec6",
+  "repository": "stephanelee/robocode",
+  "pullNumber": 115,
+  "branch": "codex/keel-brace-v1",
+  "registrationComment": 6645660227,
+  "priorSourceReviewSHA256": "5758cc377ef97a7bc0decec9bf1346b3aeecf591ed4c765fb4fe6d39ced98514",
+  "sourceCollectorSHA256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94",
+  "workflowSHA256": "0680c78000a8a3425384764fc8d5e5da412ce2a2f1b4a54154fb594412bf720e",
+  "contractSHA256": "72aa345cfb83ba1db133cb341fa482be1f151fd4c0f71f489307a23496ef25d9",
+  "findings": [
+    "Actual published commit/tree and current PR head/repository/branch match expected values.",
+    "All three actual published source/workflow/contract byte counts and SHA256 match frozen independent source PASS.",
+    "Prospective registration comment is unchanged since creation 2026-11-05T00:01:43Z; registration precedes diagnostic dispatch.",
+    "Current PR snapshot has no diagnostic label or source token; root alone may add exact probe-only token and apply diagnostic label ONCE after this PASS.",
+    "Local prior independent 21 pure fixture tests PASS applies to identical published collector/workflow bytes; no hosted evidence supplied or claimed."
+  ],
+  "limits": [
+    "Probe-only one attempt1, <=10minutes, ubuntu-26.04, before-tools/after-tools, zero games.",
+    "No runtime/image compliance, gameplay, benchmark source, source-freeze, receipt, merge or future policy approval.",
+    "No canonical image mapping or retrospective Helm acceptance.",
+    "No dispatch or implementation mutation by independent reviewer.",
+    "After completion independently preserve and review original artifact ZIP/API/full provider logs/source bindings and separate metadata claims."
+  ],
+  "files": [
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/.github__workflows__keel-brace-image-probe.yml",
+      "bytes": 31148,
+      "sha256": "0680c78000a8a3425384764fc8d5e5da412ce2a2f1b4a54154fb594412bf720e"
+    },
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/commit.json",
+      "bytes": 1161997,
+      "sha256": "53a66a48d3415cadbf548bf5de5838c03a9f30734c8662e8df7f770f49be3260"
+    },
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/docs__improvements__keel-brace-image-identity-probe.md",
+      "bytes": 4111,
+      "sha256": "72aa345cfb83ba1db133cb341fa482be1f151fd4c0f71f489307a23496ef25d9"
+    },
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/pr115.json",
+      "bytes": 17759,
+      "sha256": "5e73603cd096709697f5ade1f3d43110cb156e0c8d6da9c092bfafce37751cd3"
+    },
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/registration.json",
+      "bytes": 5378,
+      "sha256": "eea5038039aea9d977caae6e2b0200f43a94182589b11db15a6e9b6419a762be"
+    },
+    {
+      "path": "/private/tmp/keel-brace-probe-published-head-1fd0e78/tools__keel_brace_image_probe.py",
+      "bytes": 23237,
+      "sha256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94"
+    }
+  ]
+}

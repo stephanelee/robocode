@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "policyID": "keel-brace-qualified-native-observations-v1",
+  "status": "PROPOSAL: effective only after exact published registration and independent PASS, then source/enforcement review and actual stage approval; no permission by itself",
+  "repository": "stephanelee/robocode",
+  "issue": 114,
+  "amendmentDocument": "docs/improvements/keel-brace-runtime-identity-amendment.md",
+  "futureStages": [
+    "screen",
+    "confirmation"
+  ],
+  "historicalBindings": {
+    "originalProtocolSHA256": "cd1ec9f5bba78b47f487dc829b59d99ed52953266f15c1c3b5407186b2ad20a8",
+    "originalRuntimePinsSHA256": "2b7b946b633ffc972bb34d98b91eeb1df897b775ea204d075ff8ae8a0a42f9e5",
+    "originalGamesSHA256": "9526d1a75d7ee99ac3d52e5affbf2487823b696c3d9b1e0f0497b1d42d65b3a3",
+    "supersedesOnly": "Future Brace image-revision authority/interpretation; old runtime.allowedImageVersions and original text remain historical, not alternate/fallback admission rules",
+    "oldHelmImageCompliance": "UNPROVEN; no rescue or rerun"
+  },
+  "noChanges": [
+    "candidate/control",
+    "gameplay intervention",
+    "score/timing/exposure gates",
+    "game registry/seeds/ports/order",
+    "120screen+conditional300confirmation rounds",
+    "attempt/receipt/no-replacement rules",
+    "Java17 before Java25",
+    "Python/opponent/wheel/native/source/JAR/command pins",
+    "AISurvivor"
+  ],
+  "identityModel": "Qualified observed operational tuple, NOT canonical VM/build revision or immutable attestation",
+  "primaryPregameNativeAuthority": "actual same-worker discovered runner .setup_info",
+  "requiredNativeClaim": {
+    "image": "ubuntu-26.04",
+    "version": "20261025.179.1",
+    "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+    "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179"
+  },
+  "requiredSeparateEnvironmentClaim": {
+    "ImageOS": "ubuntu26",
+    "ImageVersion": "20261026.180.1"
+  },
+  "requiredClaimSources": {
+    "native": [
+      "/imagegeneration/imagedata.json",
+      "<unique observed runner root>/.setup_info"
+    ],
+    "environment": [
+      "process ImageOS/ImageVersion only",
+      "/etc/environment literal ImageOS/ImageVersion"
+    ]
+  },
+  "forbiddenIdentityOperations": [
+    "header-to-env fallback",
+    "env-to-native fallback",
+    "version/date/URL translation",
+    "majority vote",
+    "canonical-image claim",
+    "global probe whole-file/boot/path hash pin",
+    "score-dependent profile acceptance"
+  ],
+  "runnerDiscovery": {
+    "procOnly": [
+      "comm",
+      "exe"
+    ],
+    "matchingComm": [
+      "Runner.Worker",
+      "Runner.Listener"
+    ],
+    "requiredExecutableLayout": "observed bin/Runner.Worker or bin/Runner.Listener matching comm",
+    "uniqueRootRequired": true,
+    "guessedHomePathsAllowed": false,
+    "credentialsConfigCmdlineFullProcessEnvironmentAllowed": false,
+    "errorsOrTruncationAllowed": false
+  },
+  "capturePlan": {
+    "checkoutBeforeBeforeToolsAllowed": true,
+    "collectorMustMatchExactReviewedCheckoutAndFrozenSourceBytes": true,
+    "stockCollectorInterpreter": "/usr/bin/python3",
+    "snapshots": [
+      "before-tools-before-any-Java/Python-setup-or-preparation",
+      "prepared-after-build/tool-setup-and-preparation-before-artifact-finalization"
+    ],
+    "additionalRawSources": [
+      "/etc/os-release",
+      "/usr/lib/os-release",
+      "/proc/sys/kernel/random/boot_id",
+      "optional /etc/lsb-release"
+    ],
+    "allRequiredRawAndParsersCompleteAndErrorFree": true,
+    "optionalLSBAbsentOnlyException": true,
+    "nativeParser": "strict source-backed group/detail array; exactly one Runner Image; four unique exact literal claim fields",
+    "environmentParser": "strict literal assignments; required names once/present/nonempty; no eval/expansion",
+    "exportExecutedCollectorBytes": true
+  },
+  "snapshotDataContract": {
+    "requiredIdentityFields": [
+      "policyID",
+      "policySHA256",
+      "stage",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "workspace",
+      "bootId",
+      "architecture",
+      "collectorSourceSHA256",
+      "snapshotManifestSHA256",
+      "logicalJobName"
+    ],
+    "requiredPerRawSourceFields": [
+      "sourcePath",
+      "resolvedPath",
+      "wholeSHA256",
+      "capturedBytes",
+      "sourceBytesComplete",
+      "mode",
+      "uid",
+      "gid",
+      "size",
+      "mtimeNs",
+      "readUTC",
+      "readDurationNs",
+      "errors"
+    ],
+    "requiredSeparateClaimObjects": [
+      "imagedataNative",
+      "setupInfoNative",
+      "processEnvironment",
+      "etcEnvironment"
+    ],
+    "capturedMetadataIsImmutableAttestation": false,
+    "jobIdentityBinding": {
+      "earlyNumericJobIdClaimAllowed": false,
+      "earlyLogicalJobSource": "GITHUB_JOB",
+      "preparedWrapperMustBindActualNumericJobIdFromJobsAPI": true,
+      "independentRunHeadAttemptLogicalJobAndStepUTCReconciliationRequired": true,
+      "editOrBackfillOriginalEarlySnapshotAllowed": false
+    },
+    "scalarTypes": {
+      "schemaVersion/runId/runAttempt/preparedNumericJobId/capturedBytes/size/mode/uid/gid": "strict integer, not boolean; nonnegative",
+      "SHA256Fields": "64 lowercase hexadecimal characters",
+      "policyID/stage/headSHA/workspace/bootId/architecture/logicalJobName/pathFields": "nonempty strings in specified roles; stage screen or confirmation; actual observed values not invented",
+      "requiredCompleteFlags": "literal true",
+      "requiredErrors": "empty arrays",
+      "claimFields": "exact literal strings pinned in this policy"
+    }
+  },
+  "stageFreezeAndRevalidation": {
+    "sameBootRunHeadWorkspaceRequired": true,
+    "beforeToolsAndPreparedStableDataMustMatch": true,
+    "stableRawEqualityFields": [
+      "sourcePath",
+      "resolvedPath",
+      "size",
+      "wholeSHA256",
+      "mode",
+      "uid",
+      "gid"
+    ],
+    "otherStableEquality": [
+      "primaryNativeClaim",
+      "processEnvironmentClaim",
+      "etcEnvironmentClaim",
+      "uniqueRunnerRoot",
+      "setupInfoPath",
+      "bootId",
+      "architecture",
+      "frozen checkout/source/collector"
+    ],
+    "preservedButNotStableEquality": [
+      "readUTC",
+      "readDurationNs",
+      "PID enumeration",
+      "file mtimeNs"
+    ],
+    "mutationDuringReadAllowed": false,
+    "reReadActualSourcesBefore": [
+      "receipt consumption",
+      "every child"
+    ],
+    "overwriteApprovedOriginalsAllowed": false,
+    "retainEveryRevalidation": true,
+    "sameCollectorAndSourceCheckoutRequired": true,
+    "beforeToolsVsPreparedComparisonScope": [
+      "stable image/raw metadata",
+      "boot",
+      "actual source checkout",
+      "executed collector source bytes"
+    ],
+    "installedGraphFirstFrozenAt": "prepared, after registered tool setup/build/preparation",
+    "installedGraphComparedToPreparedBeforeReceiptAndEveryChild": true,
+    "preinstallVsInstalledGraphEqualityRequired": false
+  },
+  "profileBinding": {
+    "newPolicyFileAndCollectorValidatorWorkflowTestsMustBeInSourceFreeze": true,
+    "immutableProfileMustBind": [
+      "policyID",
+      "policySHA256",
+      "beforeTools manifest/hash+raw bytes",
+      "prepared manifest/hash+raw bytes",
+      "all separate exact claim objects",
+      "actual runner-root discovery",
+      "boot/run/head/job/workspace",
+      "full source/JAR/opponent/runtime/native/commands graph"
+    ],
+    "strictApprovalKeyCountUnchanged": 20,
+    "approvalProfileSHA256BindsThisData": true,
+    "acceptedIndependentReportMustBindActualEarlyHeaderEvidence": true
+  },
+  "pregameProviderHeader": {
+    "mustAttemptActualCurrentJobRead": true,
+    "requiredEvidence": [
+      "endpoint",
+      "run/job/head/attempt binding",
+      "UTC",
+      "HTTP status",
+      "response body/error bytes and SHA256",
+      "complete-versus-prefix scope"
+    ],
+    "allowedStatuses": [
+      "available-matched",
+      "unavailable-404-deferred"
+    ],
+    "deferralOnlyIf": "Actual current job still in progress; correct job binding and read access to run/jobs/artifact independently verified; log request HTTP404 retained",
+    "availableCompleteHeaderMustMatchNativeClaim": true,
+    "otherStatusAuthNetworkMalformedContradictionAllowed": false,
+    "anotherJobOrProbeHeaderSubstitutionAllowed": false,
+    "independentReportMustStateNativeOnlyPrimaryAuthorityAndFinalReconciliationPending": true,
+    "pretendExternalCorroborationBeforeGamesAllowed": false
+  },
+  "finalProviderReconciliation": {
+    "required": true,
+    "mustBeIndependent": true,
+    "sameActualCompletedRunAttemptJobHeadRequired": true,
+    "preserveOriginal": [
+      "run API",
+      "jobs API",
+      "complete raw job log",
+      "hashes/sizes/custody"
+    ],
+    "parseScope": "One complete Set up job startup Runner Image group, before first actual workflow step or Complete job name marker; ignore later echoed source/output",
+    "onlyTransportFramingNormalizationAllowed": [
+      "timestamp prefix",
+      "CRLF framing"
+    ],
+    "fourExactClaimStringsMustMatchApprovedNativeTuple": true,
+    "requiredEvenIfEarlyHeaderMatched": true,
+    "untilPass": "PROVENANCE-PENDING; not finally valid; no confirmation/promotion",
+    "missingContradictionAmbiguity": "PROVENANCE-INCOMPLETE; invalid admission for acceptance; no confirmation/promotion/replacement/rerun",
+    "rawDecisionMustRemainUnmodified": true,
+    "writeSeparateReconciliationRecord": true,
+    "screenEvidenceMustIncludeIndependentFinalReconciliationBeforeConfirmation": true,
+    "freshConfirmationNeedsNewCapturesApprovalAndFinalReconciliation": true
+  },
+  "limits": {
+    "metadataFileBytes": 1048576,
+    "twoSnapshotPayloadAndArchiveReserveBytes": 10485760,
+    "processEntriesPerCapture": 512,
+    "matchingProcessesPerCapture": 16,
+    "captureDeadlineSeconds": 120,
+    "prefixTruncationOrAmbiguityAllowedForAdmission": false,
+    "existingStageStorageLimitsUnchanged": true
+  },
+  "diagnosticEvidence": {
+    "runId": 41940635533,
+    "attempt": 1,
+    "artifactId": 13376875968,
+    "ZIPBytes": 33858,
+    "ZIPSHA256": "d7becc8e2819bda17b535f483e244828c463fc453116bfd91f992a95b32e84fc",
+    "providerJobId": 126960225659,
+    "providerLogBytes": 55945,
+    "providerLogSHA256": "cc9a989d1d4d98914dc331354e7aae3f6cfaea3ef51ec537b4ddf9cbf463f1ce",
+    "independentReportSHA256": "1dd550abbba57ff490e782111616d26d51b0b147f12f3ff646a5e192f33e4c1e",
+    "publicResultCommentId": 6646074458,
+    "scope": "zero games; metadata already disagreed before setup and remained unchanged; no canonical revision or old-worker acceptance"
+  }
+}

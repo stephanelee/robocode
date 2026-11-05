@@ -1,0 +1,641 @@
+﻿2026-11-05T00:20:51.2265239Z Current runner version: '2.338.2'
+2026-11-05T00:20:51.2283048Z ##[group]Runner Image Provisioner
+2026-11-05T00:20:51.2283574Z Hosted Compute Agent
+2026-11-05T00:20:51.2284193Z Version: 20261021.618
+2026-11-05T00:20:51.2284560Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T00:20:51.2284960Z Build Date: 2026-10-21T00:45:21Z
+2026-11-05T00:20:51.2285425Z Worker ID: {9e33fc88-57b6-45e2-b524-43603cca88ad}
+2026-11-05T00:20:51.2285819Z Region: centralus
+2026-11-05T00:20:51.2286169Z Cloud: Azure
+2026-11-05T00:20:51.2286515Z ##[endgroup]
+2026-11-05T00:20:51.2287286Z ##[group]Operating System
+2026-11-05T00:20:51.2287719Z Ubuntu
+2026-11-05T00:20:51.2288022Z 26.04.1
+2026-11-05T00:20:51.2288359Z LTS
+2026-11-05T00:20:51.2288672Z ##[endgroup]
+2026-11-05T00:20:51.2288993Z ##[group]Runner Image
+2026-11-05T00:20:51.2289394Z Image: ubuntu-26.04
+2026-11-05T00:20:51.2289721Z Version: 20261025.179.1
+2026-11-05T00:20:51.2290511Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-05T00:20:51.2291355Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-05T00:20:51.2291938Z ##[endgroup]
+2026-11-05T00:20:51.2292586Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T00:20:51.2293770Z Contents: read
+2026-11-05T00:20:51.2294262Z Metadata: read
+2026-11-05T00:20:51.2294659Z ##[endgroup]
+2026-11-05T00:20:51.2296331Z Secret source: Actions
+2026-11-05T00:20:51.2296838Z Cache mode: write
+2026-11-05T00:20:51.2297313Z Prepare workflow directory
+2026-11-05T00:20:51.2639201Z Prepare all required actions
+2026-11-05T00:20:51.2670515Z Getting action download info
+2026-11-05T00:20:51.4902437Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-05T00:20:52.0405108Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-05T00:20:52.1412523Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-05T00:20:52.3213997Z Complete job name: Two snapshots of image metadata (zero games)
+2026-11-05T00:20:52.3644775Z ##[group]Run set -euo pipefail
+2026-11-05T00:20:52.3645854Z [36;1mset -euo pipefail[0m
+2026-11-05T00:20:52.3646148Z [36;1mumask 077[0m
+2026-11-05T00:20:52.3646590Z [36;1mPROBE_ROOT="$RUNNER_TEMP/keel-brace-image-probe-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"[0m
+2026-11-05T00:20:52.3647313Z [36;1mPROBE_COLLECTOR="$RUNNER_TEMP/keel-brace-image-probe-collector-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.py"[0m
+2026-11-05T00:20:52.3647907Z [36;1mtest ! -e "$PROBE_ROOT" && test ! -L "$PROBE_ROOT"[0m
+2026-11-05T00:20:52.3648337Z [36;1mtest ! -e "$PROBE_COLLECTOR" && test ! -L "$PROBE_COLLECTOR"[0m
+2026-11-05T00:20:52.3648726Z [36;1mmkdir -m 700 "$PROBE_ROOT"[0m
+2026-11-05T00:20:52.3649117Z [36;1mcat > "$PROBE_COLLECTOR" <<'__KEEL_BRACE_IMAGE_PROBE_COLLECTOR__'[0m
+2026-11-05T00:20:52.3649522Z [36;1m#!/usr/bin/env python3[0m
+2026-11-05T00:20:52.3650002Z [36;1m"""Bounded, zero-game image-metadata observation. No runtime acceptance or version mapping."""[0m
+2026-11-05T00:20:52.3650537Z [36;1mimport argparse[0m
+2026-11-05T00:20:52.3650809Z [36;1mimport datetime[0m
+2026-11-05T00:20:52.3651074Z [36;1mimport errno[0m
+2026-11-05T00:20:52.3651337Z [36;1mimport hashlib[0m
+2026-11-05T00:20:52.3651600Z [36;1mimport json[0m
+2026-11-05T00:20:52.3651848Z [36;1mimport os[0m
+2026-11-05T00:20:52.3652111Z [36;1mfrom pathlib import Path[0m
+2026-11-05T00:20:52.3652404Z [36;1mimport platform[0m
+2026-11-05T00:20:52.3652668Z [36;1mimport re[0m
+2026-11-05T00:20:52.3652915Z [36;1mimport stat[0m
+2026-11-05T00:20:52.3653166Z [36;1mimport sys[0m
+2026-11-05T00:20:52.3653423Z [36;1mimport time[0m
+2026-11-05T00:20:52.3653668Z [36;1m[0m
+2026-11-05T00:20:52.3653993Z [36;1mFILE_CAP = 1024 * 1024[0m
+2026-11-05T00:20:52.3654283Z [36;1mARTIFACT_CAP = 10 * FILE_CAP[0m
+2026-11-05T00:20:52.3654626Z [36;1mZIP_OVERHEAD_RESERVE = 64 * 1024[0m
+2026-11-05T00:20:52.3655000Z [36;1mPHASE_CAP = (ARTIFACT_CAP - ZIP_OVERHEAD_RESERVE) // 2[0m
+2026-11-05T00:20:52.3655553Z [36;1mRAW_PHASE_CAP = 4 * FILE_CAP[0m
+2026-11-05T00:20:52.3655859Z [36;1mREPORT_RESERVE = FILE_CAP[0m
+2026-11-05T00:20:52.3656161Z [36;1mSTATUS_RESERVE = 16 * 1024[0m
+2026-11-05T00:20:52.3656459Z [36;1mPROC_LIMIT = 512[0m
+2026-11-05T00:20:52.3656796Z [36;1mPROC_COMM_CAP = 128[0m
+2026-11-05T00:20:52.3657080Z [36;1mRUNNER_MATCH_LIMIT = 16[0m
+2026-11-05T00:20:52.3657369Z [36;1mJSON_GROUP_LIMIT = 128[0m
+2026-11-05T00:20:52.3657657Z [36;1mDETAIL_CHAR_CAP = 65536[0m
+2026-11-05T00:20:52.3657945Z [36;1mCOLLECTION_SECONDS = 120[0m
+2026-11-05T00:20:52.3658291Z [36;1mRUNNER_NAMES = {'Runner.Worker', 'Runner.Listener'}[0m
+2026-11-05T00:20:52.3658655Z [36;1mFIXED_FILES = {[0m
+2026-11-05T00:20:52.3658973Z [36;1m    'imagedata': '/imagegeneration/imagedata.json',[0m
+2026-11-05T00:20:52.3659356Z [36;1m    'etc_environment': '/etc/environment',[0m
+2026-11-05T00:20:52.3659712Z [36;1m    'etc_os_release': '/etc/os-release',[0m
+2026-11-05T00:20:52.3660081Z [36;1m    'usr_lib_os_release': '/usr/lib/os-release',[0m
+2026-11-05T00:20:52.3660457Z [36;1m    'etc_lsb_release': '/etc/lsb-release',[0m
+2026-11-05T00:20:52.3660822Z [36;1m    'boot_id': '/proc/sys/kernel/random/boot_id',[0m
+2026-11-05T00:20:52.3661157Z [36;1m}[0m
+2026-11-05T00:20:52.3661554Z [36;1mCONTEXT_KEYS = ('GITHUB_REPOSITORY', 'GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT', 'GITHUB_SHA',[0m
+2026-11-05T00:20:52.3662148Z [36;1m                'GITHUB_REF', 'GITHUB_HEAD_REF', 'GITHUB_WORKFLOW', 'GITHUB_WORKFLOW_REF',[0m
+2026-11-05T00:20:52.3662673Z [36;1m                'GITHUB_WORKFLOW_SHA', 'GITHUB_JOB', 'RUNNER_OS', 'RUNNER_ARCH',[0m
+2026-11-05T00:20:52.3663226Z [36;1m                'KEEL_BRACE_IMAGE_PROBE_HEAD_SHA', 'KEEL_BRACE_IMAGE_PROBE_JAVA_SETUP_OUTCOME',[0m
+2026-11-05T00:20:52.3663726Z [36;1m                'KEEL_BRACE_IMAGE_PROBE_PYTHON_SETUP_OUTCOME')[0m
+2026-11-05T00:20:52.3664154Z [36;1m[0m
+2026-11-05T00:20:52.3664377Z [36;1m[0m
+2026-11-05T00:20:52.3664608Z [36;1mdef sha(data):[0m
+2026-11-05T00:20:52.3665021Z [36;1m    return hashlib.sha256(data).hexdigest()[0m
+2026-11-05T00:20:52.3665345Z [36;1m[0m
+2026-11-05T00:20:52.3665584Z [36;1m[0m
+2026-11-05T00:20:52.3665806Z [36;1mdef utc():[0m
+2026-11-05T00:20:52.3666164Z [36;1m    return datetime.datetime.now(datetime.timezone.utc).isoformat()[0m
+2026-11-05T00:20:52.3666556Z [36;1m[0m
+2026-11-05T00:20:52.3666775Z [36;1m[0m
+2026-11-05T00:20:52.3667017Z [36;1mdef error(operation, path, exc):[0m
+2026-11-05T00:20:52.3667332Z [36;1m    message = str(exc)[0m
+2026-11-05T00:20:52.3667741Z [36;1m    return {'operation': operation, 'path': str(path), 'type': type(exc).__name__,[0m
+2026-11-05T00:20:52.3668276Z [36;1m            'message': message[:512], 'messageWasTruncated': len(message) > 512}[0m
+2026-11-05T00:20:52.3668678Z [36;1m[0m
+2026-11-05T00:20:52.3668902Z [36;1m[0m
+2026-11-05T00:20:52.3669146Z [36;1mdef problem(code, **details):[0m
+2026-11-05T00:20:52.3669464Z [36;1m    return {'code': code, **details}[0m
+2026-11-05T00:20:52.3669774Z [36;1m[0m
+2026-11-05T00:20:52.3669996Z [36;1m[0m
+2026-11-05T00:20:52.3670226Z [36;1mdef stat_record(s):[0m
+2026-11-05T00:20:52.3670643Z [36;1m    return {'mode': s.st_mode, 'modeOctal': oct(stat.S_IMODE(s.st_mode)), 'uid': s.st_uid,[0m
+2026-11-05T00:20:52.3671167Z [36;1m            'gid': s.st_gid, 'size': s.st_size, 'mtimeNs': s.st_mtime_ns,[0m
+2026-11-05T00:20:52.3671658Z [36;1m            'device': s.st_dev, 'inode': s.st_ino, 'regular': stat.S_ISREG(s.st_mode)}[0m
+2026-11-05T00:20:52.3672070Z [36;1m[0m
+2026-11-05T00:20:52.3672290Z [36;1m[0m
+2026-11-05T00:20:52.3672518Z [36;1mclass Artifact:[0m
+2026-11-05T00:20:52.3672971Z [36;1m    """Account for every emitted byte, reserving room for diagnostic report/status."""[0m
+2026-11-05T00:20:52.3673588Z [36;1m    def __init__(self, root):[0m
+2026-11-05T00:20:52.3674052Z [36;1m        self.root = Path(root)[0m
+2026-11-05T00:20:52.3674431Z [36;1m        self.root.mkdir(parents=True, mode=0o700, exist_ok=True)[0m
+2026-11-05T00:20:52.3674953Z [36;1m        if any(self.root.iterdir()):[0m
+2026-11-05T00:20:52.3675409Z [36;1m            raise ValueError('refusing to mix a new capture with existing output files')[0m
+2026-11-05T00:20:52.3675857Z [36;1m        self.bytes = 0[0m
+2026-11-05T00:20:52.3676138Z [36;1m        self.index = {}[0m
+2026-11-05T00:20:52.3676409Z [36;1m[0m
+2026-11-05T00:20:52.3676649Z [36;1m    def room(self, final=False):[0m
+2026-11-05T00:20:52.3677066Z [36;1m        reserve = STATUS_RESERVE if final else REPORT_RESERVE + STATUS_RESERVE[0m
+2026-11-05T00:20:52.3677576Z [36;1m        return max(0, min(FILE_CAP, PHASE_CAP - self.bytes - reserve))[0m
+2026-11-05T00:20:52.3677956Z [36;1m[0m
+2026-11-05T00:20:52.3678221Z [36;1m    def write(self, name, data, final=False):[0m
+2026-11-05T00:20:52.3678624Z [36;1m        if Path(name).is_absolute() or '..' in Path(name).parts:[0m
+2026-11-05T00:20:52.3679039Z [36;1m            raise ValueError('unsafe artifact path')[0m
+2026-11-05T00:20:52.3679397Z [36;1m        limit = self.room(final)[0m
+2026-11-05T00:20:52.3679707Z [36;1m        kept = data[:limit][0m
+2026-11-05T00:20:52.3680041Z [36;1m        complete = len(data) <= limit[0m
+2026-11-05T00:20:52.3680419Z [36;1m        actual_name = name if complete else name + '.prefix'[0m
+2026-11-05T00:20:52.3680811Z [36;1m        target = self.root / actual_name[0m
+2026-11-05T00:20:52.3681187Z [36;1m        target.parent.mkdir(parents=True, exist_ok=True)[0m
+2026-11-05T00:20:52.3681570Z [36;1m        with target.open('xb') as stream:[0m
+2026-11-05T00:20:52.3681900Z [36;1m            stream.write(kept)[0m
+2026-11-05T00:20:52.3682212Z [36;1m        self.bytes += len(kept)[0m
+2026-11-05T00:20:52.3682632Z [36;1m        row = {'artifactPath': actual_name, 'bytes': len(kept), 'sha256': sha(kept),[0m
+2026-11-05T00:20:52.3683115Z [36;1m               'complete': complete, 'suppliedBytes': len(data)}[0m
+2026-11-05T00:20:52.3683500Z [36;1m        self.index[actual_name] = row[0m
+2026-11-05T00:20:52.3683962Z [36;1m        return row[0m
+2026-11-05T00:20:52.3684432Z [36;1m[0m
+2026-11-05T00:20:52.3684732Z [36;1m    def json(self, name, obj, final=False):[0m
+2026-11-05T00:20:52.3685199Z [36;1m        return self.write(name, json.dumps(obj, sort_keys=True, indent=2,[0m
+2026-11-05T00:20:52.3685673Z [36;1m                                         allow_nan=False).encode() + b'\n', final)[0m
+2026-11-05T00:20:52.3686054Z [36;1m[0m
+2026-11-05T00:20:52.3686310Z [36;1m    def status(self, obj):[0m
+2026-11-05T00:20:52.3686784Z [36;1m        data = json.dumps(obj, sort_keys=True, indent=2, allow_nan=False).encode() + b'\n'[0m
+2026-11-05T00:20:52.3687357Z [36;1m        if len(data) > STATUS_RESERVE or self.bytes + len(data) > PHASE_CAP:[0m
+2026-11-05T00:20:52.3687908Z [36;1m            raise ValueError('status/index exceeded its reserved artifact budget')[0m
+2026-11-05T00:20:52.3688392Z [36;1m        target = self.root / 'capture-status.json'[0m
+2026-11-05T00:20:52.3688774Z [36;1m        with target.open('xb') as stream:[0m
+2026-11-05T00:20:52.3689127Z [36;1m            stream.write(data)[0m
+2026-11-05T00:20:52.3689436Z [36;1m        self.bytes += len(data)[0m
+2026-11-05T00:20:52.3689725Z [36;1m[0m
+2026-11-05T00:20:52.3689943Z [36;1m[0m
+2026-11-05T00:20:52.3690250Z [36;1mdef capture_file(path, label, artifact, allowed_resolved):[0m
+2026-11-05T00:20:52.3690776Z [36;1m    """Only a named allowlisted regular metadata file, no arbitrary symlink target."""[0m
+2026-11-05T00:20:52.3691232Z [36;1m    path = Path(path)[0m
+2026-11-05T00:20:52.3691627Z [36;1m    row = {'requestedPath': str(path), 'resolvedPath': None, 'exists': None,[0m
+2026-11-05T00:20:52.3692134Z [36;1m           'errors': [], 'raw': None, 'bytesComplete': False, 'utcStart': utc(),[0m
+2026-11-05T00:20:52.3692579Z [36;1m           'monotonicStartNs': time.monotonic_ns()}[0m
+2026-11-05T00:20:52.3692913Z [36;1m    try:[0m
+2026-11-05T00:20:52.3693154Z [36;1m        try:[0m
+2026-11-05T00:20:52.3693525Z [36;1m            ls = path.lstat()[0m
+2026-11-05T00:20:52.3693979Z [36;1m            row['exists'] = True[0m
+2026-11-05T00:20:52.3694323Z [36;1m            row['lstatBefore'] = stat_record(ls)[0m
+2026-11-05T00:20:52.3694670Z [36;1m        except OSError as exc:[0m
+2026-11-05T00:20:52.3695053Z [36;1m            row['exists'] = False if exc.errno == errno.ENOENT else None[0m
+2026-11-05T00:20:52.3695488Z [36;1m            row['errors'].append(error('lstat', path, exc))[0m
+2026-11-05T00:20:52.3695847Z [36;1m            return row, None[0m
+2026-11-05T00:20:52.3696133Z [36;1m        try:[0m
+2026-11-05T00:20:52.3696431Z [36;1m            resolved = path.resolve(strict=True)[0m
+2026-11-05T00:20:52.3696795Z [36;1m            row['resolvedPath'] = str(resolved)[0m
+2026-11-05T00:20:52.3697161Z [36;1m        except (OSError, RuntimeError) as exc:[0m
+2026-11-05T00:20:52.3697614Z [36;1m            row['errors'].append(error('resolve', path, exc))[0m
+2026-11-05T00:20:52.3698040Z [36;1m            return row, None[0m
+2026-11-05T00:20:52.3698418Z [36;1m        if str(resolved) not in {str(p) for p in allowed_resolved}:[0m
+2026-11-05T00:20:52.3699023Z [36;1m            row['errors'].append(problem('resolvedPathOutsideMetadataAllowlist', resolvedPath=str(resolved)))[0m
+2026-11-05T00:20:52.3699553Z [36;1m            return row, None[0m
+2026-11-05T00:20:52.3699848Z [36;1m        try:[0m
+2026-11-05T00:20:52.3700119Z [36;1m            before = resolved.stat()[0m
+2026-11-05T00:20:52.3700470Z [36;1m            row['statBefore'] = stat_record(before)[0m
+2026-11-05T00:20:52.3700841Z [36;1m            if not stat.S_ISREG(before.st_mode):[0m
+2026-11-05T00:20:52.3701256Z [36;1m                row['errors'].append(problem('notRegularMetadataFile'))[0m
+2026-11-05T00:20:52.3701647Z [36;1m                return row, None[0m
+2026-11-05T00:20:52.3701964Z [36;1m            limit = artifact.room()[0m
+2026-11-05T00:20:52.3702280Z [36;1m            if limit == 0:[0m
+2026-11-05T00:20:52.3702790Z [36;1m                row['errors'].append(problem('artifactBudgetExhaustedBeforeRead'))[0m
+2026-11-05T00:20:52.3703221Z [36;1m                return row, None[0m
+2026-11-05T00:20:52.3703658Z [36;1m            flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_NONBLOCK', 0)[0m
+2026-11-05T00:20:52.3704195Z [36;1m            fd = os.open(str(resolved), flags)[0m
+2026-11-05T00:20:52.3704553Z [36;1m            with os.fdopen(fd, 'rb') as stream:[0m
+2026-11-05T00:20:52.3704914Z [36;1m                opened = os.fstat(stream.fileno())[0m
+2026-11-05T00:20:52.3705287Z [36;1m                row['openedStat'] = stat_record(opened)[0m
+2026-11-05T00:20:52.3705837Z [36;1m                if not stat.S_ISREG(opened.st_mode) or (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):[0m
+2026-11-05T00:20:52.3706437Z [36;1m                    row['errors'].append(problem('metadataChangedBeforeOpen'))[0m
+2026-11-05T00:20:52.3706849Z [36;1m                    return row, None[0m
+2026-11-05T00:20:52.3707295Z [36;1m                data = stream.read(limit + 1)  # one bounded sentinel byte detects a prefix[0m
+2026-11-05T00:20:52.3707750Z [36;1m                after = os.fstat(stream.fileno())[0m
+2026-11-05T00:20:52.3708116Z [36;1m                row['statAfter'] = stat_record(after)[0m
+2026-11-05T00:20:52.3708529Z [36;1m            complete = len(data) <= limit and before.st_size <= limit[0m
+2026-11-05T00:20:52.3708919Z [36;1m            kept = data[:limit][0m
+2026-11-05T00:20:52.3709245Z [36;1m            row['bytesComplete'] = complete[0m
+2026-11-05T00:20:52.3709639Z [36;1m            row['raw'] = artifact.write('raw/' + label + '.bin', kept)[0m
+2026-11-05T00:20:52.3710055Z [36;1m            row['raw']['sourceBytesComplete'] = complete[0m
+2026-11-05T00:20:52.3710569Z [36;1m            row['rawSHA256Scope'] = 'whole-observed-file' if complete else 'captured-prefix-only'[0m
+2026-11-05T00:20:52.3711045Z [36;1m            if not complete:[0m
+2026-11-05T00:20:52.3711623Z [36;1m                row['errors'].append(problem('metadataFileExceedsCaptureLimit', limitBytes=limit,[0m
+2026-11-05T00:20:52.3712206Z [36;1m                                             observedStatSize=before.st_size, prefixBytes=len(kept)))[0m
+2026-11-05T00:20:52.3712828Z [36;1m            if (opened.st_size, opened.st_mtime_ns, opened.st_ino) != (after.st_size, after.st_mtime_ns, after.st_ino):[0m
+2026-11-05T00:20:52.3713423Z [36;1m                row['errors'].append(problem('metadataChangedDuringRead'))[0m
+2026-11-05T00:20:52.3713947Z [36;1m            return row, kept if complete else None[0m
+2026-11-05T00:20:52.3714310Z [36;1m        except (OSError, ValueError) as exc:[0m
+2026-11-05T00:20:52.3714732Z [36;1m            row['errors'].append(error('readOrRetainMetadata', path, exc))[0m
+2026-11-05T00:20:52.3715140Z [36;1m            return row, None[0m
+2026-11-05T00:20:52.3715433Z [36;1m    finally:[0m
+2026-11-05T00:20:52.3715693Z [36;1m        row['utcEnd'] = utc()[0m
+2026-11-05T00:20:52.3716098Z [36;1m        row['durationNs'] = time.monotonic_ns() - row['monotonicStartNs'][0m
+2026-11-05T00:20:52.3716492Z [36;1m[0m
+2026-11-05T00:20:52.3716718Z [36;1m[0m
+2026-11-05T00:20:52.3717055Z [36;1mdef discover_runner_roots(proc_root=Path('/proc'), deadline=None):[0m
+2026-11-05T00:20:52.3717619Z [36;1m    """Read comm; only matching names permit reading exe. Never cmdline/environ/config."""[0m
+2026-11-05T00:20:52.3718216Z [36;1m    result = {'procRoot': str(proc_root), 'scannedEntries': 0, 'nonmatchingCount': 0,[0m
+2026-11-05T00:20:52.3718731Z [36;1m              'matches': [], 'roots': [], 'errors': [], 'truncated': False}[0m
+2026-11-05T00:20:52.3719105Z [36;1m    try:[0m
+2026-11-05T00:20:52.3719560Z [36;1m        entries = sorted((p for p in Path(proc_root).iterdir() if p.name.isdecimal()), key=lambda p: int(p.name))[0m
+2026-11-05T00:20:52.3720076Z [36;1m    except OSError as exc:[0m
+2026-11-05T00:20:52.3720463Z [36;1m        result['errors'].append(error('listProcPids', proc_root, exc))[0m
+2026-11-05T00:20:52.3720866Z [36;1m        return result[0m
+2026-11-05T00:20:52.3721249Z [36;1m    for entry in entries:[0m
+2026-11-05T00:20:52.3721735Z [36;1m        if result['scannedEntries'] >= PROC_LIMIT or (deadline is not None and time.monotonic() >= deadline):[0m
+2026-11-05T00:20:52.3722255Z [36;1m            result['truncated'] = True[0m
+2026-11-05T00:20:52.3722750Z [36;1m            result['errors'].append(problem('processDiscoveryLimitOrDeadline', unscannedAtLeast=1))[0m
+2026-11-05T00:20:52.3723234Z [36;1m            break[0m
+2026-11-05T00:20:52.3723523Z [36;1m        result['scannedEntries'] += 1[0m
+2026-11-05T00:20:52.3723925Z [36;1m        comm_path = entry / 'comm'[0m
+2026-11-05T00:20:52.3724233Z [36;1m        try:[0m
+2026-11-05T00:20:52.3724676Z [36;1m            fd = os.open(str(comm_path), os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_NONBLOCK', 0))[0m
+2026-11-05T00:20:52.3725199Z [36;1m            with os.fdopen(fd, 'rb') as stream:[0m
+2026-11-05T00:20:52.3725573Z [36;1m                comm_stat = os.fstat(stream.fileno())[0m
+2026-11-05T00:20:52.3725954Z [36;1m                if not stat.S_ISREG(comm_stat.st_mode):[0m
+2026-11-05T00:20:52.3726366Z [36;1m                    raise ValueError('comm is not regular proc metadata')[0m
+2026-11-05T00:20:52.3726795Z [36;1m                raw_comm = stream.read(PROC_COMM_CAP + 1)[0m
+2026-11-05T00:20:52.3727167Z [36;1m            if len(raw_comm) > PROC_COMM_CAP:[0m
+2026-11-05T00:20:52.3789297Z [36;1m                raise ValueError('comm exceeds128-byte discovery cap')[0m
+2026-11-05T00:20:52.3789819Z [36;1m            comm = raw_comm.decode('ascii').removesuffix('\n')[0m
+2026-11-05T00:20:52.3790293Z [36;1m        except (OSError, ValueError, UnicodeError) as exc:[0m
+2026-11-05T00:20:52.3790827Z [36;1m            result['errors'].append(error('readProcComm', comm_path, exc))[0m
+2026-11-05T00:20:52.3791288Z [36;1m            continue[0m
+2026-11-05T00:20:52.3791718Z [36;1m        if comm not in RUNNER_NAMES:[0m
+2026-11-05T00:20:52.3792067Z [36;1m            result['nonmatchingCount'] += 1[0m
+2026-11-05T00:20:52.3792411Z [36;1m            continue[0m
+2026-11-05T00:20:52.3792829Z [36;1m        row = {'pid': int(entry.name), 'comm': comm, 'commRawASCII': raw_comm.decode('ascii'),[0m
+2026-11-05T00:20:52.3793354Z [36;1m               'commSHA256': sha(raw_comm), 'commPath': str(comm_path),[0m
+2026-11-05T00:20:52.3793941Z [36;1m               'commStat': stat_record(comm_stat), 'exePath': None, 'runnerRoot': None,[0m
+2026-11-05T00:20:52.3794403Z [36;1m               'setupInfoPath': None, 'errors': []}[0m
+2026-11-05T00:20:52.3794756Z [36;1m        result['matches'].append(row)[0m
+2026-11-05T00:20:52.3795074Z [36;1m        try:[0m
+2026-11-05T00:20:52.3795348Z [36;1m            exe_link = entry / 'exe'[0m
+2026-11-05T00:20:52.3795727Z [36;1m            row['exeSymlinkStat'] = stat_record(exe_link.lstat())[0m
+2026-11-05T00:20:52.3796137Z [36;1m            target_before = os.readlink(exe_link)[0m
+2026-11-05T00:20:52.3796507Z [36;1m            row['exeReadlink'] = target_before[0m
+2026-11-05T00:20:52.3796915Z [36;1m            row['exeReadlinkSHA256'] = sha(os.fsencode(target_before))[0m
+2026-11-05T00:20:52.3797340Z [36;1m            executable = exe_link.resolve(strict=True)[0m
+2026-11-05T00:20:52.3797713Z [36;1m            row['exePath'] = str(executable)[0m
+2026-11-05T00:20:52.3798084Z [36;1m            if os.readlink(exe_link) != target_before:[0m
+2026-11-05T00:20:52.3798594Z [36;1m                raise ValueError('runner executable link changed during discovery; no root inferred')[0m
+2026-11-05T00:20:52.3799246Z [36;1m            # Observed runner apphost must identify the actual bin installation; no home-path guessing.[0m
+2026-11-05T00:20:52.3799823Z [36;1m            if executable.name != comm or executable.parent.name != 'bin':[0m
+2026-11-05T00:20:52.3800442Z [36;1m                raise ValueError('matching comm does not resolve to named runner executable in bin; no root inferred')[0m
+2026-11-05T00:20:52.3801071Z [36;1m            root = executable.parent.parent[0m
+2026-11-05T00:20:52.3801423Z [36;1m            row['runnerRoot'] = str(root)[0m
+2026-11-05T00:20:52.3801807Z [36;1m            row['setupInfoPath'] = str(root / '.setup_info')[0m
+2026-11-05T00:20:52.3802195Z [36;1m            if str(root) not in result['roots']:[0m
+2026-11-05T00:20:52.3802555Z [36;1m                result['roots'].append(str(root))[0m
+2026-11-05T00:20:52.3802943Z [36;1m        except (OSError, ValueError, RuntimeError) as exc:[0m
+2026-11-05T00:20:52.3803465Z [36;1m            row['errors'].append(error('resolveObservedRunnerExecutable', entry / 'exe', exc))[0m
+2026-11-05T00:20:52.3804186Z [36;1m        if len(result['matches']) >= RUNNER_MATCH_LIMIT:[0m
+2026-11-05T00:20:52.3804553Z [36;1m            result['truncated'] = True[0m
+2026-11-05T00:20:52.3805042Z [36;1m            result['errors'].append(problem('runnerMatchLimitReached', limit=RUNNER_MATCH_LIMIT))[0m
+2026-11-05T00:20:52.3805511Z [36;1m            break[0m
+2026-11-05T00:20:52.3805792Z [36;1m    if not result['roots']:[0m
+2026-11-05T00:20:52.3806230Z [36;1m        result['errors'].append(problem('runnerRootNotDiscovered', setupInfoPath=None))[0m
+2026-11-05T00:20:52.3806681Z [36;1m    return result[0m
+2026-11-05T00:20:52.3806946Z [36;1m[0m
+2026-11-05T00:20:52.3807167Z [36;1m[0m
+2026-11-05T00:20:52.3807406Z [36;1mdef unique_json_pairs(pairs):[0m
+2026-11-05T00:20:52.3807703Z [36;1m    obj = {}[0m
+2026-11-05T00:20:52.3807968Z [36;1m    for key, value in pairs:[0m
+2026-11-05T00:20:52.3808266Z [36;1m        if key in obj:[0m
+2026-11-05T00:20:52.3808637Z [36;1m            raise ValueError('duplicate JSON key (raw bytes retained)')[0m
+2026-11-05T00:20:52.3809031Z [36;1m        obj[key] = value[0m
+2026-11-05T00:20:52.3809311Z [36;1m    return obj[0m
+2026-11-05T00:20:52.3809559Z [36;1m[0m
+2026-11-05T00:20:52.3809778Z [36;1m[0m
+2026-11-05T00:20:52.3810019Z [36;1mdef parse_image_detail(detail):[0m
+2026-11-05T00:20:52.3810587Z [36;1m    expected = {'Image': 'image', 'Version': 'version', 'Included Software': 'includedSoftwareURL',[0m
+2026-11-05T00:20:52.3811095Z [36;1m                'Image Release': 'imageReleaseURL'}[0m
+2026-11-05T00:20:52.3811568Z [36;1m    result = {'detail': detail, 'fieldOccurrences': {v: [] for v in expected.values()},[0m
+2026-11-05T00:20:52.3812087Z [36;1m              'unrecognizedLines': [], 'claim': None, 'errors': []}[0m
+2026-11-05T00:20:52.3812480Z [36;1m    if len(detail) > DETAIL_CHAR_CAP:[0m
+2026-11-05T00:20:52.3812802Z [36;1m        result['detail'] = None[0m
+2026-11-05T00:20:52.3813157Z [36;1m        result['detailPrefix'] = detail[:DETAIL_CHAR_CAP][0m
+2026-11-05T00:20:52.3813547Z [36;1m        result['detailCharacters'] = len(detail)[0m
+2026-11-05T00:20:52.3814366Z [36;1m        result['errors'].append(problem('runnerImageDetailExceedsParsedLimit', fullDetail='retained in original raw JSON'))[0m
+2026-11-05T00:20:52.3814945Z [36;1m        return result[0m
+2026-11-05T00:20:52.3815285Z [36;1m    for line in detail.replace('\r\n', '\n').split('\n'):[0m
+2026-11-05T00:20:52.3815644Z [36;1m        if not line:[0m
+2026-11-05T00:20:52.3815915Z [36;1m            continue[0m
+2026-11-05T00:20:52.3816228Z [36;1m        key, separator, value = line.partition(':')[0m
+2026-11-05T00:20:52.3816585Z [36;1m        if key not in expected:[0m
+2026-11-05T00:20:52.3816922Z [36;1m            result['unrecognizedLines'].append(line)[0m
+2026-11-05T00:20:52.3817263Z [36;1m            continue[0m
+2026-11-05T00:20:52.3817542Z [36;1m        name = expected[key][0m
+2026-11-05T00:20:52.3817980Z [36;1m        occurrence = {'rawLine': line, 'value': value[1:] if value.startswith(' ') else value}[0m
+2026-11-05T00:20:52.3818488Z [36;1m        result['fieldOccurrences'][name].append(occurrence)[0m
+2026-11-05T00:20:52.3818973Z [36;1m        if not separator or not value.startswith(' ') or not occurrence['value']:[0m
+2026-11-05T00:20:52.3819554Z [36;1m            result['errors'].append(problem('malformedRunnerImageDetailField', field=name))[0m
+2026-11-05T00:20:52.3820178Z [36;1m    for name, occurrences in result['fieldOccurrences'].items():[0m
+2026-11-05T00:20:52.3820579Z [36;1m        if len(occurrences) != 1:[0m
+2026-11-05T00:20:52.3821160Z [36;1m            result['errors'].append(problem('missingOrAmbiguousRunnerImageDetailField', field=name, count=len(occurrences)))[0m
+2026-11-05T00:20:52.3821734Z [36;1m    if not result['errors']:[0m
+2026-11-05T00:20:52.3822208Z [36;1m        result['claim'] = {name: values[0]['value'] for name, values in result['fieldOccurrences'].items()}[0m
+2026-11-05T00:20:52.3822687Z [36;1m    return result[0m
+2026-11-05T00:20:52.3822947Z [36;1m[0m
+2026-11-05T00:20:52.3823163Z [36;1m[0m
+2026-11-05T00:20:52.3823397Z [36;1mdef parse_image_json(data):[0m
+2026-11-05T00:20:52.3823882Z [36;1m    result = {'format': 'array-of-group-detail-records', 'groupCount': None,[0m
+2026-11-05T00:20:52.3824451Z [36;1m              'runnerImageCount': None, 'runnerImageRecords': [], 'claim': None, 'errors': [],[0m
+2026-11-05T00:20:52.3825029Z [36;1m              'encoding': 'UTF-8-BOM' if data.startswith(b'\xef\xbb\xbf') else 'UTF-8'}[0m
+2026-11-05T00:20:52.3825447Z [36;1m    try:[0m
+2026-11-05T00:20:52.3825828Z [36;1m        obj = json.loads(data.decode('utf-8-sig'), object_pairs_hook=unique_json_pairs,[0m
+2026-11-05T00:20:52.3826422Z [36;1m                         parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite JSON constant')))[0m
+2026-11-05T00:20:52.3826918Z [36;1m    except (UnicodeError, ValueError) as exc:[0m
+2026-11-05T00:20:52.3827397Z [36;1m        result['errors'].append(error('parseImageJSON', 'retained raw metadata', exc))[0m
+2026-11-05T00:20:52.3827839Z [36;1m        return result[0m
+2026-11-05T00:20:52.3828130Z [36;1m    if not isinstance(obj, list):[0m
+2026-11-05T00:20:52.3828548Z [36;1m        result['errors'].append(problem('imageJSONMustBeGroupDetailArray'))[0m
+2026-11-05T00:20:52.3829046Z [36;1m        return result[0m
+2026-11-05T00:20:52.3829362Z [36;1m    result['groupCount'] = len(obj)[0m
+2026-11-05T00:20:52.3829693Z [36;1m    if len(obj) > JSON_GROUP_LIMIT:[0m
+2026-11-05T00:20:52.3830174Z [36;1m        result['errors'].append(problem('imageJSONGroupLimitExceeded', limit=JSON_GROUP_LIMIT))[0m
+2026-11-05T00:20:52.3830651Z [36;1m        return result[0m
+2026-11-05T00:20:52.3830949Z [36;1m    for index, entry in enumerate(obj):[0m
+2026-11-05T00:20:52.3831288Z [36;1m        if not isinstance(entry, dict):[0m
+2026-11-05T00:20:52.3831734Z [36;1m            result['errors'].append(problem('malformedImageGroupRecord', index=index))[0m
+2026-11-05T00:20:52.3832166Z [36;1m            continue[0m
+2026-11-05T00:20:52.3832437Z [36;1m        fields = {}[0m
+2026-11-05T00:20:52.3832727Z [36;1m        for key in ('group', 'detail'):[0m
+2026-11-05T00:20:52.3833095Z [36;1m            variants = [k for k in entry if k.lower() == key][0m
+2026-11-05T00:20:52.3833628Z [36;1m            if len(variants) != 1 or not isinstance(entry.get(variants[0]) if variants else None, str):[0m
+2026-11-05T00:20:52.3834360Z [36;1m                result['errors'].append(problem('missingOrAmbiguousGroupDetailKey', index=index, key=key))[0m
+2026-11-05T00:20:52.3834847Z [36;1m            else:[0m
+2026-11-05T00:20:52.3835140Z [36;1m                fields[key] = entry[variants[0]][0m
+2026-11-05T00:20:52.3835472Z [36;1m        if len(fields) != 2:[0m
+2026-11-05T00:20:52.3835767Z [36;1m            continue[0m
+2026-11-05T00:20:52.3836064Z [36;1m        if fields['group'] == 'Runner Image':[0m
+2026-11-05T00:20:52.3836437Z [36;1m            parsed = parse_image_detail(fields['detail'])[0m
+2026-11-05T00:20:52.3836964Z [36;1m            result['runnerImageRecords'].append({'index': index, 'group': fields['group'], **parsed})[0m
+2026-11-05T00:20:52.3837472Z [36;1m            result['errors'].extend(parsed['errors'])[0m
+2026-11-05T00:20:52.3837900Z [36;1m    result['runnerImageCount'] = len(result['runnerImageRecords'])[0m
+2026-11-05T00:20:52.3838400Z [36;1m    if result['runnerImageCount'] != 1:[0m
+2026-11-05T00:20:52.3838934Z [36;1m        result['errors'].append(problem('runnerImageGroupMustBeUnique', count=result['runnerImageCount']))[0m
+2026-11-05T00:20:52.3839452Z [36;1m    if not result['errors']:[0m
+2026-11-05T00:20:52.3839828Z [36;1m        result['claim'] = result['runnerImageRecords'][0]['claim'][0m
+2026-11-05T00:20:52.3840211Z [36;1m    return result[0m
+2026-11-05T00:20:52.3840469Z [36;1m[0m
+2026-11-05T00:20:52.3840680Z [36;1m[0m
+2026-11-05T00:20:52.3840925Z [36;1mdef parse_environment_file(data):[0m
+2026-11-05T00:20:52.3841301Z [36;1m    result = {'matchingLines': [], 'claims': {}, 'errors': []}[0m
+2026-11-05T00:20:52.3841660Z [36;1m    try:[0m
+2026-11-05T00:20:52.3841917Z [36;1m        text = data.decode('utf-8')[0m
+2026-11-05T00:20:52.3842245Z [36;1m    except UnicodeError as exc:[0m
+2026-11-05T00:20:52.3842687Z [36;1m        result['errors'].append(error('decodeEtcEnvironment', '/etc/environment', exc))[0m
+2026-11-05T00:20:52.3843146Z [36;1m        return result[0m
+2026-11-05T00:20:52.3843483Z [36;1m    for number, line in enumerate(text.splitlines(), 1):[0m
+2026-11-05T00:20:52.3844141Z [36;1m        found = re.match(r'^[ \t]*(?:export[ \t]+)?(ImageOS|ImageVersion)(?=[ \t=]|$)', line)[0m
+2026-11-05T00:20:52.3844588Z [36;1m        if not found:[0m
+2026-11-05T00:20:52.3844862Z [36;1m            continue[0m
+2026-11-05T00:20:52.3845136Z [36;1m        name = found.group(1)[0m
+2026-11-05T00:20:52.3845617Z [36;1m        row = {'line': number, 'rawLine': line, 'name': name, 'value': None, 'errors': []}[0m
+2026-11-05T00:20:52.3846167Z [36;1m        result['matchingLines'].append(row)[0m
+2026-11-05T00:20:52.3846619Z [36;1m        assignment = re.fullmatch(r'[ \t]*(ImageOS|ImageVersion)=([^\r\n]*)', line)[0m
+2026-11-05T00:20:52.3847041Z [36;1m        if not assignment:[0m
+2026-11-05T00:20:52.3847454Z [36;1m            row['errors'].append(problem('unsupportedOrMalformedImageAssignment'))[0m
+2026-11-05T00:20:52.3847975Z [36;1m        else:[0m
+2026-11-05T00:20:52.3848248Z [36;1m            value = assignment.group(2)[0m
+2026-11-05T00:20:52.3848584Z [36;1m            if value.startswith(('"', "'")):[0m
+2026-11-05T00:20:52.3848906Z [36;1m                quote = value[0][0m
+2026-11-05T00:20:52.3849407Z [36;1m                if len(value) < 2 or value[-1] != quote or quote in value[1:-1] or any(c in value[1:-1] for c in ('\\', '$', '`')):[0m
+2026-11-05T00:20:52.3850108Z [36;1m                    row['errors'].append(problem('ambiguousOrExpandableQuotedImageValue'))[0m
+2026-11-05T00:20:52.3850540Z [36;1m                else:[0m
+2026-11-05T00:20:52.3850835Z [36;1m                    row['value'] = value[1:-1][0m
+2026-11-05T00:20:52.3851225Z [36;1m            elif any(c.isspace() or c in '$`\\\"\'' for c in value):[0m
+2026-11-05T00:20:52.3851731Z [36;1m                row['errors'].append(problem('ambiguousOrExpandableUnquotedImageValue'))[0m
+2026-11-05T00:20:52.3852172Z [36;1m            else:[0m
+2026-11-05T00:20:52.3852579Z [36;1m                row['value'] = value  # literal only; empty stays empty; never source/eval/expand.[0m
+2026-11-05T00:20:52.3853052Z [36;1m        result['errors'].extend(row['errors'])[0m
+2026-11-05T00:20:52.3853410Z [36;1m    for name in ('ImageOS', 'ImageVersion'):[0m
+2026-11-05T00:20:52.3853953Z [36;1m        rows = [r for r in result['matchingLines'] if r['name'] == name][0m
+2026-11-05T00:20:52.3854385Z [36;1m        if len(rows) == 1 and not rows[0]['errors']:[0m
+2026-11-05T00:20:52.3854826Z [36;1m            result['claims'][name] = {'present': True, 'value': rows[0]['value']}[0m
+2026-11-05T00:20:52.3855222Z [36;1m        else:[0m
+2026-11-05T00:20:52.3855559Z [36;1m            result['claims'][name] = {'present': bool(rows), 'value': None}[0m
+2026-11-05T00:20:52.3856160Z [36;1m            result['errors'].append(problem('missingOrAmbiguousImageAssignment', name=name, count=len(rows)))[0m
+2026-11-05T00:20:52.3856674Z [36;1m    return result[0m
+2026-11-05T00:20:52.3857062Z [36;1m[0m
+2026-11-05T00:20:52.3857276Z [36;1m[0m
+2026-11-05T00:20:52.3857530Z [36;1mdef process_environment_claims(environ):[0m
+2026-11-05T00:20:52.3858055Z [36;1m    return {key: {'present': key in environ, 'value': environ.get(key)} for key in ('ImageOS', 'ImageVersion')}[0m
+2026-11-05T00:20:52.3858540Z [36;1m[0m
+2026-11-05T00:20:52.3858760Z [36;1m[0m
+2026-11-05T00:20:52.3859030Z [36;1mdef collect(output_dir, phase, environ=None):[0m
+2026-11-05T00:20:52.3859412Z [36;1m    if phase not in ('before-tools', 'after-tools'):[0m
+2026-11-05T00:20:52.3859793Z [36;1m        raise ValueError('unknown probe phase')[0m
+2026-11-05T00:20:52.3860143Z [36;1m    if Path(output_dir).name != phase:[0m
+2026-11-05T00:20:52.3860563Z [36;1m        raise ValueError('output directory must identify the exact phase')[0m
+2026-11-05T00:20:52.3861028Z [36;1m    environ = os.environ if environ is None else environ[0m
+2026-11-05T00:20:52.3861438Z [36;1m    start_utc, start_ns = utc(), time.monotonic_ns()[0m
+2026-11-05T00:20:52.3861833Z [36;1m    deadline = time.monotonic() + COLLECTION_SECONDS[0m
+2026-11-05T00:20:52.3862203Z [36;1m    artifact = Artifact(output_dir)[0m
+2026-11-05T00:20:52.3862641Z [36;1m    report = {'schemaVersion': 1, 'purpose': 'zero-game-image-identity-diagnostic',[0m
+2026-11-05T00:20:52.3863225Z [36;1m              'notImmutableAttestation': True, 'noRuntimeAcceptance': True, 'phase': phase,[0m
+2026-11-05T00:20:52.3863876Z [36;1m              'competitiveGames': 0, 'utcStart': start_utc, 'monotonicStartNs': start_ns,[0m
+2026-11-05T00:20:52.3864371Z [36;1m              'context': {k: environ.get(k) for k in CONTEXT_KEYS},[0m
+2026-11-05T00:20:52.3864839Z [36;1m              'processImageEnvironment': process_environment_claims(environ),[0m
+2026-11-05T00:20:52.3865375Z [36;1m              'collectorPython': {'version': sys.version, 'executable': sys.executable},[0m
+2026-11-05T00:20:52.3866039Z [36;1m              'platform': {'architecture': platform.machine(), 'kernel': platform.release(),[0m
+2026-11-05T00:20:52.3866602Z [36;1m                           'kernelVersion': platform.version(), 'system': platform.system()},[0m
+2026-11-05T00:20:52.3867183Z [36;1m              'collectorPID': os.getpid(), 'collectorUID': os.getuid(), 'collectorGID': os.getgid(),[0m
+2026-11-05T00:20:52.3867891Z [36;1m              'limits': {'eachFileBytes': FILE_CAP, 'wholeTwoPhaseArtifactBytes': ARTIFACT_CAP, 'phasePayloadBytes': PHASE_CAP,[0m
+2026-11-05T00:20:52.3868640Z [36;1m                         'rawPhaseBytesUpperBound': RAW_PHASE_CAP, 'ZIPOverheadReserveBytes': ZIP_OVERHEAD_RESERVE,[0m
+2026-11-05T00:20:52.3869248Z [36;1m                         'procEntries': PROC_LIMIT, 'runnerMatches': RUNNER_MATCH_LIMIT,[0m
+2026-11-05T00:20:52.3869711Z [36;1m                         'collectionSeconds': COLLECTION_SECONDS},[0m
+2026-11-05T00:20:52.3870086Z [36;1m              'captures': {}, 'errors': []}[0m
+2026-11-05T00:20:52.3870395Z [36;1m    try:[0m
+2026-11-05T00:20:52.3870675Z [36;1m        with Path(__file__).open('rb') as stream:[0m
+2026-11-05T00:20:52.3871031Z [36;1m            code = stream.read(FILE_CAP + 1)[0m
+2026-11-05T00:20:52.3871450Z [36;1m        report['collectorSource'] = artifact.write('collector.py', code)[0m
+2026-11-05T00:20:52.3871894Z [36;1m        if not report['collectorSource']['complete']:[0m
+2026-11-05T00:20:52.3872368Z [36;1m            report['errors'].append(problem('collectorSourceExceededCaptureLimit'))[0m
+2026-11-05T00:20:52.3872803Z [36;1m    except OSError as exc:[0m
+2026-11-05T00:20:52.3873222Z [36;1m        report['errors'].append(error('retainExecutedCollectorCode', __file__, exc))[0m
+2026-11-05T00:20:52.3873718Z [36;1m    discovery = discover_runner_roots(deadline=deadline)[0m
+2026-11-05T00:20:52.3874171Z [36;1m    report['runnerDiscovery'] = discovery[0m
+2026-11-05T00:20:52.3874503Z [36;1m    paths = dict(FIXED_FILES)[0m
+2026-11-05T00:20:52.3874846Z [36;1m    for index, root in enumerate(discovery['roots']):[0m
+2026-11-05T00:20:52.3875369Z [36;1m        paths['setup_info_' + str(index)] = str(Path(root) / '.setup_info')[0m
+2026-11-05T00:20:52.3875942Z [36;1m    allowed = set(FIXED_FILES.values()) | {p for k, p in paths.items() if k.startswith('setup_info_')}[0m
+2026-11-05T00:20:52.3876429Z [36;1m    for label, path in paths.items():[0m
+2026-11-05T00:20:52.3876768Z [36;1m        if time.monotonic() >= deadline:[0m
+2026-11-05T00:20:52.3877293Z [36;1m            report['captures'][label] = {'requestedPath': path, 'errors': [problem('collectionDeadlineBeforeRead')]}[0m
+2026-11-05T00:20:52.3877799Z [36;1m            continue[0m
+2026-11-05T00:20:52.3878170Z [36;1m        observation, data = capture_file(path, label, artifact, allowed)[0m
+2026-11-05T00:20:52.3878608Z [36;1m        report['captures'][label] = observation[0m
+2026-11-05T00:20:52.3879070Z [36;1m        if data is not None and (label == 'imagedata' or label.startswith('setup_info_')):[0m
+2026-11-05T00:20:52.3879532Z [36;1m            parsed = parse_image_json(data)[0m
+2026-11-05T00:20:52.3879917Z [36;1m        elif data is not None and label == 'etc_environment':[0m
+2026-11-05T00:20:52.3880312Z [36;1m            parsed = parse_environment_file(data)[0m
+2026-11-05T00:20:52.3880638Z [36;1m        else:[0m
+2026-11-05T00:20:52.3880896Z [36;1m            parsed = None[0m
+2026-11-05T00:20:52.3881218Z [36;1m        if label == 'boot_id' and data is not None:[0m
+2026-11-05T00:20:52.3881551Z [36;1m            try:[0m
+2026-11-05T00:20:52.3881878Z [36;1m                observation['literalASCII'] = data.decode('ascii')[0m
+2026-11-05T00:20:52.3882263Z [36;1m            except UnicodeError as exc:[0m
+2026-11-05T00:20:52.3882693Z [36;1m                observation['errors'].append(error('decodeBootIdASCII', path, exc))[0m
+2026-11-05T00:20:52.3883116Z [36;1m        if parsed is not None:[0m
+2026-11-05T00:20:52.3883501Z [36;1m            retained = artifact.json('parsed/' + label + '.json', parsed)[0m
+2026-11-05T00:20:52.3884088Z [36;1m            observation['parsedArtifact'] = retained[0m
+2026-11-05T00:20:52.3884475Z [36;1m            observation['parseErrors'] = parsed['errors'][0m
+2026-11-05T00:20:52.3885020Z [36;1m            observation['parsedClaims'] = parsed.get('claim') if 'claim' in parsed else parsed.get('claims')[0m
+2026-11-05T00:20:52.3885527Z [36;1m            if not retained['complete']:[0m
+2026-11-05T00:20:52.3885996Z [36;1m                observation['errors'].append(problem('parsedMetadataExceededArtifactBudget'))[0m
+2026-11-05T00:20:52.3886453Z [36;1m    report['utcEnd'] = utc()[0m
+2026-11-05T00:20:52.3886813Z [36;1m    report['durationNs'] = time.monotonic_ns() - start_ns[0m
+2026-11-05T00:20:52.3887227Z [36;1m    report['rawArtifactIndex'] = dict(artifact.index)[0m
+2026-11-05T00:20:52.3887783Z [36;1m    errors = len(report['errors']) + len(discovery['errors']) + sum(len(p['errors']) for p in discovery['matches'])[0m
+2026-11-05T00:20:52.3888479Z [36;1m    errors += sum(len(v.get('errors', [])) + len(v.get('parseErrors', [])) for v in report['captures'].values())[0m
+2026-11-05T00:20:52.3889061Z [36;1m    retained_report = artifact.json('report.json', report, final=True)[0m
+2026-11-05T00:20:52.3889641Z [36;1m    artifact.status({'schemaVersion': 1, 'purpose': report['purpose'], 'noRuntimeAcceptance': True,[0m
+2026-11-05T00:20:52.3890203Z [36;1m                     'notImmutableAttestation': True, 'competitiveGames': 0,[0m
+2026-11-05T00:20:52.3890686Z [36;1m                     'diagnosticErrorCount': errors, 'report': retained_report,[0m
+2026-11-05T00:20:52.3891398Z [36;1m                     'retainedBytesBeforeStatus': artifact.bytes, 'maximumWholeArtifactBytes': ARTIFACT_CAP, 'maximumPhasePayloadBytes': PHASE_CAP,[0m
+2026-11-05T00:20:52.3892028Z [36;1m                     'phase': phase,[0m
+2026-11-05T00:20:52.3892358Z [36;1m                     'files': artifact.index,[0m
+2026-11-05T00:20:52.3893024Z [36;1m                     'note': 'Separate sources are observations only. No version mapping, fallback, allowlist decision or runtime approval.'})[0m
+2026-11-05T00:20:52.3893676Z [36;1m    return 0 if errors == 0 and retained_report['complete'] else 2[0m
+2026-11-05T00:20:52.3894148Z [36;1m[0m
+2026-11-05T00:20:52.3894364Z [36;1m[0m
+2026-11-05T00:20:52.3894585Z [36;1mdef main():[0m
+2026-11-05T00:20:52.3894905Z [36;1m    parser = argparse.ArgumentParser(description=__doc__)[0m
+2026-11-05T00:20:52.3895328Z [36;1m    parser.add_argument('--output-dir', required=True)[0m
+2026-11-05T00:20:52.3895832Z [36;1m    parser.add_argument('--phase', choices=('before-tools', 'after-tools'), required=True)[0m
+2026-11-05T00:20:52.3896299Z [36;1m    args = parser.parse_args()[0m
+2026-11-05T00:20:52.3896588Z [36;1m    try:[0m
+2026-11-05T00:20:52.3896870Z [36;1m        return collect(args.output_dir, args.phase)[0m
+2026-11-05T00:20:52.3897217Z [36;1m    except Exception as exc:[0m
+2026-11-05T00:20:52.3897682Z [36;1m        # The workflow uploads any partial originals even when collection/retention itself fails.[0m
+2026-11-05T00:20:52.3898365Z [36;1m        print(json.dumps({'purpose': 'zero-game-image-identity-diagnostic', 'noRuntimeAcceptance': True,[0m
+2026-11-05T00:20:52.3899097Z [36;1m                          'phase': args.phase, 'fatalCollectorError': type(exc).__name__, 'message': str(exc)[:512]}), file=sys.stderr)[0m
+2026-11-05T00:20:52.3899623Z [36;1m        return 3[0m
+2026-11-05T00:20:52.3899873Z [36;1m[0m
+2026-11-05T00:20:52.3900087Z [36;1m[0m
+2026-11-05T00:20:52.3900314Z [36;1mif __name__ == '__main__':[0m
+2026-11-05T00:20:52.3900605Z [36;1m    raise SystemExit(main())[0m
+2026-11-05T00:20:52.3900914Z [36;1m__KEEL_BRACE_IMAGE_PROBE_COLLECTOR__[0m
+2026-11-05T00:20:52.3901418Z [36;1m/usr/bin/python3 "$PROBE_COLLECTOR" --phase before-tools --output-dir "$PROBE_ROOT/before-tools"[0m
+2026-11-05T00:20:52.3931130Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T00:20:52.3931741Z env:
+2026-11-05T00:20:52.3932066Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:52.3932463Z ##[endgroup]
+2026-11-05T00:20:52.4633609Z ##[group]Run actions/setup-java@v4
+2026-11-05T00:20:52.4634215Z with:
+2026-11-05T00:20:52.4634550Z   distribution: temurin
+2026-11-05T00:20:52.4634894Z   java-version: 17.0.21+9
+2026-11-05T00:20:52.4635155Z   java-package: jdk
+2026-11-05T00:20:52.4635424Z   check-latest: false
+2026-11-05T00:20:52.4635666Z   server-id: github
+2026-11-05T00:20:52.4635914Z   server-username: GITHUB_ACTOR
+2026-11-05T00:20:52.4636206Z   server-password: GITHUB_TOKEN
+2026-11-05T00:20:52.4636483Z   overwrite-settings: true
+2026-11-05T00:20:52.4636752Z   job-status: success
+2026-11-05T00:20:52.4639076Z   token: ***
+2026-11-05T00:20:52.4639309Z env:
+2026-11-05T00:20:52.4639629Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:52.4640040Z ##[endgroup]
+2026-11-05T00:20:52.7005628Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-05T00:20:52.7011905Z ##[group]Installed distributions
+2026-11-05T00:20:52.7157223Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-05T00:20:52.7157592Z Setting Java 17.0.21+9 as the default
+2026-11-05T00:20:52.7165771Z (node:2062) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T00:20:52.7166467Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T00:20:52.7168036Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+2026-11-05T00:20:52.7224494Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-05T00:20:52.7225108Z 
+2026-11-05T00:20:52.7225434Z Java configuration:
+2026-11-05T00:20:52.7225937Z   Distribution: temurin
+2026-11-05T00:20:52.7226384Z   Version: 17.0.21+9
+2026-11-05T00:20:52.7226987Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.7227533Z 
+2026-11-05T00:20:52.7228230Z ##[endgroup]
+2026-11-05T00:20:52.7307078Z Creating settings.xml with server-id: github
+2026-11-05T00:20:52.7307810Z Writing to /home/runner/.m2/settings.xml
+2026-11-05T00:20:52.7464288Z ##[group]Run actions/setup-python@v5
+2026-11-05T00:20:52.7464898Z with:
+2026-11-05T00:20:52.7465284Z   python-version: 3.13.17
+2026-11-05T00:20:52.7465727Z   check-latest: false
+2026-11-05T00:20:52.7469677Z   token: ***
+2026-11-05T00:20:52.7470083Z   update-environment: true
+2026-11-05T00:20:52.7470548Z   allow-prereleases: false
+2026-11-05T00:20:52.7470991Z   freethreaded: false
+2026-11-05T00:20:52.7471404Z env:
+2026-11-05T00:20:52.7471968Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:52.7472859Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.7473612Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.7474307Z ##[endgroup]
+2026-11-05T00:20:52.8346225Z ##[group]Installed versions
+2026-11-05T00:20:52.8390659Z (node:2074) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T00:20:52.8392022Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T00:20:52.8392793Z Successfully set up CPython (3.13.17)
+2026-11-05T00:20:52.8393647Z ##[endgroup]
+2026-11-05T00:20:52.8539248Z ##[group]Run set -euo pipefail
+2026-11-05T00:20:52.8539629Z [36;1mset -euo pipefail[0m
+2026-11-05T00:20:52.8540122Z [36;1mPROBE_ROOT="$RUNNER_TEMP/keel-brace-image-probe-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"[0m
+2026-11-05T00:20:52.8540898Z [36;1mPROBE_COLLECTOR="$RUNNER_TEMP/keel-brace-image-probe-collector-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.py"[0m
+2026-11-05T00:20:52.8541689Z [36;1m/usr/bin/python3 "$PROBE_COLLECTOR" --phase after-tools --output-dir "$PROBE_ROOT/after-tools"[0m
+2026-11-05T00:20:52.8640741Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T00:20:52.8641287Z env:
+2026-11-05T00:20:52.8641865Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:52.8642409Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.8642964Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.8643523Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.8644139Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T00:20:52.8644620Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.8645147Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.8645590Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.8646036Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T00:20:52.8646473Z   KEEL_BRACE_IMAGE_PROBE_JAVA_SETUP_OUTCOME: success
+2026-11-05T00:20:52.8646878Z   KEEL_BRACE_IMAGE_PROBE_PYTHON_SETUP_OUTCOME: success
+2026-11-05T00:20:52.8647249Z ##[endgroup]
+2026-11-05T00:20:52.9228081Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T00:20:52.9228427Z with:
+2026-11-05T00:20:52.9228686Z   name: keel-brace-image-probe-41940635533
+2026-11-05T00:20:52.9229123Z   path: /home/runner/work/_temp/keel-brace-image-probe-41940635533-1/
+2026-11-05T00:20:52.9229536Z   if-no-files-found: error
+2026-11-05T00:20:52.9229821Z   include-hidden-files: true
+2026-11-05T00:20:52.9230105Z   retention-days: 90
+2026-11-05T00:20:52.9230364Z   compression-level: 6
+2026-11-05T00:20:52.9230631Z   overwrite: false
+2026-11-05T00:20:52.9230880Z env:
+2026-11-05T00:20:52.9231212Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:52.9231726Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.9232247Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:52.9232733Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.9233233Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T00:20:52.9233690Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.9234292Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.9234714Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:52.9235143Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T00:20:52.9235527Z ##[endgroup]
+2026-11-05T00:20:53.0291860Z (node:2084) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T00:20:53.0292651Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T00:20:53.0357234Z With the provided path, there will be 26 files uploaded
+2026-11-05T00:20:53.0358468Z Artifact name is valid!
+2026-11-05T00:20:53.0359065Z Root directory input is valid!
+2026-11-05T00:20:53.3051310Z Beginning upload of artifact content to blob storage
+2026-11-05T00:20:53.3342540Z (node:2084) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T00:20:53.5147649Z Uploaded bytes 33858
+2026-11-05T00:20:53.5573932Z Finished uploading artifact content to blob storage!
+2026-11-05T00:20:53.5575370Z SHA256 digest of uploaded artifact zip is d7becc8e2819bda17b535f483e244828c463fc453116bfd91f992a95b32e84fc
+2026-11-05T00:20:53.5576518Z Finalizing artifact upload
+2026-11-05T00:20:54.0424880Z Artifact keel-brace-image-probe-41940635533.zip successfully finalized. Artifact ID 13376875968
+2026-11-05T00:20:54.0427034Z Artifact keel-brace-image-probe-41940635533 has been successfully uploaded! Final size is 33858 bytes. Artifact ID is 13376875968
+2026-11-05T00:20:54.0429427Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41940635533/artifacts/13376875968
+2026-11-05T00:20:54.0585691Z ##[group]Run test "$PROBE_BEFORE_OUTCOME" = success && test "$PROBE_AFTER_OUTCOME" = success && test "$PROBE_JAVA_OUTCOME" = success && test "$PROBE_PYTHON_OUTCOME" = success
+2026-11-05T00:20:54.0588693Z [36;1mtest "$PROBE_BEFORE_OUTCOME" = success && test "$PROBE_AFTER_OUTCOME" = success && test "$PROBE_JAVA_OUTCOME" = success && test "$PROBE_PYTHON_OUTCOME" = success[0m
+2026-11-05T00:20:54.0616661Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T00:20:54.0617644Z env:
+2026-11-05T00:20:54.0618540Z   KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: 1fd0e78bf36e8021657ca32240d66137731bfc77
+2026-11-05T00:20:54.0619943Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:54.0621358Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T00:20:54.0622675Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:54.0624103Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T00:20:54.0625398Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:54.0626541Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:54.0627693Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T00:20:54.0628863Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T00:20:54.0629875Z   PROBE_BEFORE_OUTCOME: success
+2026-11-05T00:20:54.0630650Z   PROBE_AFTER_OUTCOME: success
+2026-11-05T00:20:54.0631410Z   PROBE_JAVA_OUTCOME: success
+2026-11-05T00:20:54.0632171Z   PROBE_PYTHON_OUTCOME: success
+2026-11-05T00:20:54.0632922Z ##[endgroup]
+2026-11-05T00:20:54.0814584Z Post job cleanup.
+2026-11-05T00:20:54.1619287Z (node:2098) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T00:20:54.1621505Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T00:20:54.1816782Z Post job cleanup.
+2026-11-05T00:20:54.2798626Z (node:2106) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T00:20:54.2801295Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T00:20:54.2951003Z Cleaning up orphan processes
+2026-11-05T00:20:54.3295083Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

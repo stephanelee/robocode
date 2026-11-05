@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "decision": "REJECT-ACTUAL-RUNTIME-ADMISSION-ZERO-GAMES",
+  "reviewerTask": "/root/runner_image_provenance_audit",
+  "runId": 41947040130,
+  "runAttempt": 1,
+  "jobId": 126981711205,
+  "headSHA": "4cac60d7c689c33881b3b16d493d891fa13a7d0a",
+  "freezeSHA256": "fcbba3ae64ecbeb63daa76fb74d11c038f0392278b132bfc8976f135d8cfc686",
+  "collectorPayloadFilesVerified": 12,
+  "collectorErrorCount": 0,
+  "collectorSourceSHA256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94",
+  "collectorPython": {
+    "executable": "/usr/bin/python3",
+    "version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]"
+  },
+  "utcStart": "2026-11-05T01:14:09.876295+00:00",
+  "utcEnd": "2026-11-05T01:14:09.883184+00:00",
+  "bootId": "5828f09f-f54a-4e5e-9801-4a24e339270b",
+  "processImageEnvironment": {
+    "ImageOS": {
+      "present": true,
+      "value": "ubuntu26"
+    },
+    "ImageVersion": {
+      "present": true,
+      "value": "20261101.186.1"
+    }
+  },
+  "nativeImagedataClaim": {
+    "image": "ubuntu-26.04",
+    "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186",
+    "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+    "version": "20261101.186.1"
+  },
+  "nativeSetupInfoClaim": {
+    "image": "ubuntu-26.04",
+    "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186",
+    "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+    "version": "20261101.186.1"
+  },
+  "etcEnvironmentClaim": {
+    "ImageOS": {
+      "present": true,
+      "value": "ubuntu26"
+    },
+    "ImageVersion": {
+      "present": true,
+      "value": "20261101.186.1"
+    }
+  },
+  "rawMetadata": {
+    "boot_id": {
+      "requestedPath": "/proc/sys/kernel/random/boot_id",
+      "resolvedPath": "/proc/sys/kernel/random/boot_id",
+      "raw": {
+        "artifactPath": "raw/boot_id.bin",
+        "bytes": 37,
+        "complete": true,
+        "sha256": "dbeb91e07198814ca94c74c61c9e820b6c04153ecb73c93149bff101be35f6db",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 37
+      },
+      "errors": [],
+      "parseErrors": null
+    },
+    "etc_environment": {
+      "requestedPath": "/etc/environment",
+      "resolvedPath": "/etc/environment",
+      "raw": {
+        "artifactPath": "raw/etc_environment.bin",
+        "bytes": 2243,
+        "complete": true,
+        "sha256": "089624f9d6e0fef527ef4694ed6ca806ca9f82db9e3330e50df1a3b1353ce06c",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 2243
+      },
+      "errors": [],
+      "parseErrors": []
+    },
+    "etc_lsb_release": {
+      "requestedPath": "/etc/lsb-release",
+      "resolvedPath": "/etc/lsb-release",
+      "raw": {
+        "artifactPath": "raw/etc_lsb_release.bin",
+        "bytes": 107,
+        "complete": true,
+        "sha256": "77b958705ba7401d2ad5706c7bb0c4e9d999975ee8e5d667507529b199b5f2c3",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 107
+      },
+      "errors": [],
+      "parseErrors": null
+    },
+    "etc_os_release": {
+      "requestedPath": "/etc/os-release",
+      "resolvedPath": "/usr/lib/os-release",
+      "raw": {
+        "artifactPath": "raw/etc_os_release.bin",
+        "bytes": 410,
+        "complete": true,
+        "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 410
+      },
+      "errors": [],
+      "parseErrors": null
+    },
+    "imagedata": {
+      "requestedPath": "/imagegeneration/imagedata.json",
+      "resolvedPath": "/imagegeneration/imagedata.json",
+      "raw": {
+        "artifactPath": "raw/imagedata.bin",
+        "bytes": 398,
+        "complete": true,
+        "sha256": "d3c3192ac67dbaaa228fb058eb81420f39d4de8be14f1307073fe4dbb38e0ba1",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 398
+      },
+      "errors": [],
+      "parseErrors": []
+    },
+    "setup_info_0": {
+      "requestedPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info",
+      "resolvedPath": "/home/runner/actions-runner/cached/2.338.2/.setup_info",
+      "raw": {
+        "artifactPath": "raw/setup_info_0.bin",
+        "bytes": 745,
+        "complete": true,
+        "sha256": "16177cd918e269697b3f084ab2d73b0524ddd30448278b353969122f2e67c285",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 745
+      },
+      "errors": [],
+      "parseErrors": []
+    },
+    "usr_lib_os_release": {
+      "requestedPath": "/usr/lib/os-release",
+      "resolvedPath": "/usr/lib/os-release",
+      "raw": {
+        "artifactPath": "raw/usr_lib_os_release.bin",
+        "bytes": 410,
+        "complete": true,
+        "sha256": "cf72627ff81aef345d0a9f3807eb80f1035e0f80fe2932d12d94efc02fd68104",
+        "sourceBytesComplete": true,
+        "suppliedBytes": 410
+      },
+      "errors": [],
+      "parseErrors": null
+    }
+  },
+  "allBuildPreparationApprovalAndGameStepsSkipped": true,
+  "noPreparedSnapshotOrProvenanceArtifact": true,
+  "approvalPosted": false,
+  "gameReceiptHTTP404Retained": true,
+  "physicalGames": 0,
+  "physicalRounds": 0,
+  "rootCause": "Correct fail-closed rejection of unregistered consistent20261101.186.1 tuple; not a collector/parser malfunction",
+  "providerRequestTimingScope": "Completed failure evidence only; no pregame early request or approval deadline existed"
+}

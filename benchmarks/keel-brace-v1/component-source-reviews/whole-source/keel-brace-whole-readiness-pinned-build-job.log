@@ -1,0 +1,860 @@
+﻿2026-11-05T00:59:56.1866404Z Current runner version: '2.338.2'
+2026-11-05T00:59:56.1890556Z ##[group]Runner Image Provisioner
+2026-11-05T00:59:56.1891499Z Hosted Compute Agent
+2026-11-05T00:59:56.1892144Z Version: 20261021.618
+2026-11-05T00:59:56.1892848Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T00:59:56.1893592Z Build Date: 2026-10-21T00:45:21Z
+2026-11-05T00:59:56.1894317Z Worker ID: {3d862877-7c6f-4068-87ad-bdad9d7ef0ae}
+2026-11-05T00:59:56.1895108Z Region: centralus
+2026-11-05T00:59:56.1895881Z Cloud: Azure
+2026-11-05T00:59:56.1896691Z ##[endgroup]
+2026-11-05T00:59:56.1898657Z ##[group]Operating System
+2026-11-05T00:59:56.1899369Z Ubuntu
+2026-11-05T00:59:56.1899983Z 26.04.1
+2026-11-05T00:59:56.1900506Z LTS
+2026-11-05T00:59:56.1901151Z ##[endgroup]
+2026-11-05T00:59:56.1901740Z ##[group]Runner Image
+2026-11-05T00:59:56.1902366Z Image: ubuntu-26.04
+2026-11-05T00:59:56.1902997Z Version: 20261025.179.1
+2026-11-05T00:59:56.1904253Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-05T00:59:56.1906317Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-05T00:59:56.1907459Z ##[endgroup]
+2026-11-05T00:59:56.1908692Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T00:59:56.1910800Z Contents: read
+2026-11-05T00:59:56.1911519Z Metadata: read
+2026-11-05T00:59:56.1912119Z ##[endgroup]
+2026-11-05T00:59:56.1914206Z Secret source: Actions
+2026-11-05T00:59:56.1915196Z Cache mode: write
+2026-11-05T00:59:56.1916737Z Prepare workflow directory
+2026-11-05T00:59:56.2254998Z Prepare all required actions
+2026-11-05T00:59:56.2304219Z Getting action download info
+2026-11-05T00:59:56.5020562Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-05T00:59:56.6073390Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-05T00:59:57.0224175Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-11-05T00:59:57.6803732Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-05T00:59:57.7364646Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-05T00:59:57.9760387Z Complete job name: KeelBrace Java 17 bootstrap (zero games)
+2026-11-05T00:59:58.0908084Z ##[group]Run actions/checkout@v4
+2026-11-05T00:59:58.0909421Z with:
+2026-11-05T00:59:58.0910332Z   ref: 241ebb629ab6212c87aa3f4d749f2d163fe03491
+2026-11-05T00:59:58.0911475Z   persist-credentials: false
+2026-11-05T00:59:58.0912480Z   repository: stephanelee/robocode
+2026-11-05T00:59:58.0920296Z   token: ***
+2026-11-05T00:59:58.0921134Z   ssh-strict: true
+2026-11-05T00:59:58.0921972Z   ssh-user: git
+2026-11-05T00:59:58.0922786Z   clean: true
+2026-11-05T00:59:58.0923662Z   sparse-checkout-cone-mode: true
+2026-11-05T00:59:58.0924674Z   fetch-depth: 1
+2026-11-05T00:59:58.0925524Z   fetch-tags: false
+2026-11-05T00:59:58.0926532Z   show-progress: true
+2026-11-05T00:59:58.0927416Z   lfs: false
+2026-11-05T00:59:58.0928227Z   submodules: false
+2026-11-05T00:59:58.0929110Z   set-safe-directory: true
+2026-11-05T00:59:58.0930081Z   allow-unsafe-pr-checkout: false
+2026-11-05T00:59:58.0931356Z ##[endgroup]
+2026-11-05T00:59:58.4075071Z Syncing repository: stephanelee/robocode
+2026-11-05T00:59:58.4079352Z ##[group]Getting Git version info
+2026-11-05T00:59:58.4080684Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-05T00:59:58.4082600Z [command]/usr/bin/git version
+2026-11-05T00:59:58.4109356Z git version 2.56.0
+2026-11-05T00:59:58.4136453Z ##[endgroup]
+2026-11-05T00:59:58.4151778Z Temporarily overriding HOME='/home/runner/work/_temp/edefc7e9-016a-45e3-a33a-24003b24df32' before making global git config changes
+2026-11-05T00:59:58.4156098Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T00:59:58.4159225Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T00:59:58.4228565Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-05T00:59:58.4232296Z ##[group]Initializing the repository
+2026-11-05T00:59:58.4236907Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-05T00:59:58.4345528Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-05T00:59:58.4348722Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-05T00:59:58.4350733Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-05T00:59:58.4352390Z hint: call:
+2026-11-05T00:59:58.4353471Z hint:
+2026-11-05T00:59:58.4354745Z hint: 	git config --global init.defaultBranch <name>
+2026-11-05T00:59:58.4356386Z hint:
+2026-11-05T00:59:58.4357799Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-05T00:59:58.4359768Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-05T00:59:58.4361398Z hint:
+2026-11-05T00:59:58.4362531Z hint: 	git branch -m <name>
+2026-11-05T00:59:58.4363739Z hint:
+2026-11-05T00:59:58.4365214Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-05T00:59:58.4381051Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-05T00:59:58.4394399Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-05T00:59:58.4461455Z ##[endgroup]
+2026-11-05T00:59:58.4463463Z ##[group]Disabling automatic garbage collection
+2026-11-05T00:59:58.4465026Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-05T00:59:58.4521900Z ##[endgroup]
+2026-11-05T00:59:58.4524476Z ##[group]Setting up auth
+2026-11-05T00:59:58.4527445Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T00:59:58.4561824Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T00:59:58.5060623Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T00:59:58.5096753Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T00:59:58.5366380Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T00:59:58.5401528Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T00:59:58.5666851Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-05T00:59:58.5708303Z ##[endgroup]
+2026-11-05T00:59:58.5711096Z ##[group]Fetching the repository
+2026-11-05T00:59:58.5719764Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 241ebb629ab6212c87aa3f4d749f2d163fe03491
+2026-11-05T01:00:09.4686634Z From https://github.com/stephanelee/robocode
+2026-11-05T01:00:09.4687391Z  * branch            241ebb629ab6212c87aa3f4d749f2d163fe03491 -> FETCH_HEAD
+2026-11-05T01:00:09.4691801Z ##[endgroup]
+2026-11-05T01:00:09.4692496Z ##[group]Determining the checkout info
+2026-11-05T01:00:09.4694939Z ##[endgroup]
+2026-11-05T01:00:09.4701336Z [command]/usr/bin/git sparse-checkout disable
+2026-11-05T01:00:09.4751227Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-05T01:00:09.4787706Z ##[group]Checking out the ref
+2026-11-05T01:00:09.4791123Z [command]/usr/bin/git checkout --progress --force 241ebb629ab6212c87aa3f4d749f2d163fe03491
+2026-11-05T01:00:10.5013133Z Updating files:  53% (3257/6132)
+2026-11-05T01:00:10.6009646Z Updating files:  54% (3312/6132)
+2026-11-05T01:00:10.6305343Z Updating files:  55% (3373/6132)
+2026-11-05T01:00:10.7360791Z Updating files:  56% (3434/6132)
+2026-11-05T01:00:10.7503324Z Updating files:  57% (3496/6132)
+2026-11-05T01:00:10.7725102Z Updating files:  58% (3557/6132)
+2026-11-05T01:00:10.8245594Z Updating files:  59% (3618/6132)
+2026-11-05T01:00:11.0249078Z Updating files:  60% (3680/6132)
+2026-11-05T01:00:11.0292792Z Updating files:  61% (3741/6132)
+2026-11-05T01:00:11.0329017Z Updating files:  62% (3802/6132)
+2026-11-05T01:00:11.0479776Z Updating files:  63% (3864/6132)
+2026-11-05T01:00:11.0618047Z Updating files:  64% (3925/6132)
+2026-11-05T01:00:11.0744778Z Updating files:  65% (3986/6132)
+2026-11-05T01:00:11.0781539Z Updating files:  66% (4048/6132)
+2026-11-05T01:00:11.0817517Z Updating files:  67% (4109/6132)
+2026-11-05T01:00:11.0870021Z Updating files:  68% (4170/6132)
+2026-11-05T01:00:11.0918039Z Updating files:  69% (4232/6132)
+2026-11-05T01:00:11.0960537Z Updating files:  70% (4293/6132)
+2026-11-05T01:00:11.1003186Z Updating files:  71% (4354/6132)
+2026-11-05T01:00:11.1046242Z Updating files:  72% (4416/6132)
+2026-11-05T01:00:11.1087379Z Updating files:  73% (4477/6132)
+2026-11-05T01:00:11.1128760Z Updating files:  74% (4538/6132)
+2026-11-05T01:00:11.1173016Z Updating files:  75% (4599/6132)
+2026-11-05T01:00:11.1211631Z Updating files:  76% (4661/6132)
+2026-11-05T01:00:11.1255162Z Updating files:  77% (4722/6132)
+2026-11-05T01:00:11.1292337Z Updating files:  78% (4783/6132)
+2026-11-05T01:00:11.1330769Z Updating files:  79% (4845/6132)
+2026-11-05T01:00:11.1369360Z Updating files:  80% (4906/6132)
+2026-11-05T01:00:11.1407817Z Updating files:  81% (4967/6132)
+2026-11-05T01:00:11.1443149Z Updating files:  82% (5029/6132)
+2026-11-05T01:00:11.1476687Z Updating files:  83% (5090/6132)
+2026-11-05T01:00:11.1521587Z Updating files:  84% (5151/6132)
+2026-11-05T01:00:11.1566852Z Updating files:  85% (5213/6132)
+2026-11-05T01:00:11.1628964Z Updating files:  86% (5274/6132)
+2026-11-05T01:00:11.1735544Z Updating files:  87% (5335/6132)
+2026-11-05T01:00:11.1773379Z Updating files:  88% (5397/6132)
+2026-11-05T01:00:11.1835365Z Updating files:  89% (5458/6132)
+2026-11-05T01:00:11.1872734Z Updating files:  90% (5519/6132)
+2026-11-05T01:00:11.1900781Z Updating files:  91% (5581/6132)
+2026-11-05T01:00:11.1944963Z Updating files:  92% (5642/6132)
+2026-11-05T01:00:11.2072452Z Updating files:  93% (5703/6132)
+2026-11-05T01:00:11.2121504Z Updating files:  94% (5765/6132)
+2026-11-05T01:00:11.2204214Z Updating files:  95% (5826/6132)
+2026-11-05T01:00:11.2242882Z Updating files:  96% (5887/6132)
+2026-11-05T01:00:11.2282085Z Updating files:  97% (5949/6132)
+2026-11-05T01:00:11.2320095Z Updating files:  98% (6010/6132)
+2026-11-05T01:00:11.2351329Z Updating files:  99% (6071/6132)
+2026-11-05T01:00:11.2351766Z Updating files: 100% (6132/6132)
+2026-11-05T01:00:11.2352048Z Updating files: 100% (6132/6132), done.
+2026-11-05T01:00:11.2435867Z Note: switching to '241ebb629ab6212c87aa3f4d749f2d163fe03491'.
+2026-11-05T01:00:11.2436469Z 
+2026-11-05T01:00:11.2436744Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-05T01:00:11.2437496Z changes and commit them, and you can discard any commits you make in this
+2026-11-05T01:00:11.2438119Z state without impacting any branches by switching back to a branch.
+2026-11-05T01:00:11.2438598Z 
+2026-11-05T01:00:11.2438844Z If you want to create a new branch to retain commits you create, you may
+2026-11-05T01:00:11.2439408Z do so (now or later) by using -c with the switch command. Example:
+2026-11-05T01:00:11.2439723Z 
+2026-11-05T01:00:11.2439857Z   git switch -c <new-branch-name>
+2026-11-05T01:00:11.2440075Z 
+2026-11-05T01:00:11.2440197Z Or undo this operation with:
+2026-11-05T01:00:11.2440395Z 
+2026-11-05T01:00:11.2440496Z   git switch -
+2026-11-05T01:00:11.2440648Z 
+2026-11-05T01:00:11.2440905Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-05T01:00:11.2441282Z 
+2026-11-05T01:00:11.2441650Z HEAD is now at 241ebb6 Implement reviewed Brace runtime identity and integrate preserved Facet evidence
+2026-11-05T01:00:11.2633247Z ##[endgroup]
+2026-11-05T01:00:11.2684683Z [command]/usr/bin/git log -1 --format=%H
+2026-11-05T01:00:11.2712252Z 241ebb629ab6212c87aa3f4d749f2d163fe03491
+2026-11-05T01:00:11.2723099Z ##[group]Removing auth
+2026-11-05T01:00:11.2727476Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T01:00:11.2760002Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T01:00:11.3042444Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T01:00:11.3066499Z http.https://github.com/.extraheader
+2026-11-05T01:00:11.3076977Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-05T01:00:11.3108963Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T01:00:11.3383798Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T01:00:11.3417098Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T01:00:11.3687031Z ##[endgroup]
+2026-11-05T01:00:11.3967468Z ##[group]Run actions/setup-java@v4
+2026-11-05T01:00:11.3967863Z with:
+2026-11-05T01:00:11.3968067Z   distribution: temurin
+2026-11-05T01:00:11.3968296Z   java-version: 17.0.21+9
+2026-11-05T01:00:11.3968523Z   java-package: jdk
+2026-11-05T01:00:11.3968734Z   check-latest: false
+2026-11-05T01:00:11.3968940Z   server-id: github
+2026-11-05T01:00:11.3969144Z   server-username: GITHUB_ACTOR
+2026-11-05T01:00:11.3969392Z   server-password: GITHUB_TOKEN
+2026-11-05T01:00:11.3969650Z   overwrite-settings: true
+2026-11-05T01:00:11.3969880Z   job-status: success
+2026-11-05T01:00:11.3972125Z   token: ***
+2026-11-05T01:00:11.3972336Z ##[endgroup]
+2026-11-05T01:00:11.5733783Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-05T01:00:11.5756366Z ##[group]Installed distributions
+2026-11-05T01:00:11.5782434Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-05T01:00:11.5782970Z Setting Java 17.0.21+9 as the default
+2026-11-05T01:00:11.5793243Z (node:2533) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T01:00:11.5794121Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T01:00:11.5797526Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+2026-11-05T01:00:11.5874011Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-05T01:00:11.5874406Z 
+2026-11-05T01:00:11.5874572Z Java configuration:
+2026-11-05T01:00:11.5874991Z   Distribution: temurin
+2026-11-05T01:00:11.5875399Z   Version: 17.0.21+9
+2026-11-05T01:00:11.5876196Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:11.5876697Z 
+2026-11-05T01:00:11.5877169Z ##[endgroup]
+2026-11-05T01:00:11.5894327Z Creating settings.xml with server-id: github
+2026-11-05T01:00:11.5922097Z Writing to /home/runner/.m2/settings.xml
+2026-11-05T01:00:11.6316842Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-11-05T01:00:11.6317176Z with:
+2026-11-05T01:00:11.6317378Z   cache-disabled: false
+2026-11-05T01:00:11.6317605Z   cache-read-only: true
+2026-11-05T01:00:11.6317826Z   cache-write-only: false
+2026-11-05T01:00:11.6318071Z   cache-overwrite-existing: false
+2026-11-05T01:00:11.6318334Z   cache-cleanup: on-success
+2026-11-05T01:00:11.6318621Z   gradle-home-cache-includes: caches
+notifications
+
+2026-11-05T01:00:11.6318933Z   add-job-summary: always
+2026-11-05T01:00:11.6319180Z   add-job-summary-as-pr-comment: never
+2026-11-05T01:00:11.6319453Z   dependency-graph: disabled
+2026-11-05T01:00:11.6319749Z   dependency-graph-report-dir: dependency-graph-reports
+2026-11-05T01:00:11.6320102Z   dependency-graph-continue-on-failure: true
+2026-11-05T01:00:11.6320394Z   build-scan-publish: false
+2026-11-05T01:00:11.6320840Z   validate-wrappers: true
+2026-11-05T01:00:11.6321094Z   allow-snapshot-wrappers: false
+2026-11-05T01:00:11.6321598Z   gradle-home-cache-strict-match: false
+2026-11-05T01:00:11.6321880Z   workflow-job-context: null
+2026-11-05T01:00:11.6324181Z   github-token: ***
+2026-11-05T01:00:11.6324390Z env:
+2026-11-05T01:00:11.6324671Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:11.6325287Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:11.6325658Z ##[endgroup]
+2026-11-05T01:00:12.0990988Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-11-05T01:00:12.0995209Z ##[group]Restore Gradle state from cache
+2026-11-05T01:00:12.2589656Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build[b8a35c2f917259958c9abe8f2ff1b5ff]-f34805e3d915c089917a30b997cd1665160fa241
+2026-11-05T01:00:12.6579114Z Received 683749 of 683749 (100.0%), 2.3 MBs/sec
+2026-11-05T01:00:12.6581270Z Cache Size: ~1 MB (683749 B)
+2026-11-05T01:00:12.6615303Z [command]/usr/bin/tar -xf /home/runner/work/_temp/cf43b3a3-9de8-4b09-a485-41d0324fa409/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T01:00:12.6820862Z Cache restored successfully
+2026-11-05T01:00:12.6826036Z Restored cache entry with key gradle-home-v1|Linux-X64|build[acf2c8cfc04fd073c8c0a713b2ef59e5]-03073859d4b5aaad43c0754af7990ab6942e7796 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 581ms
+2026-11-05T01:00:12.8120126Z Cache hit for: gradle-instrumented-jars-v1-ad53542f429a2830ddce55c745bae61c
+2026-11-05T01:00:12.8125958Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+2026-11-05T01:00:12.8201769Z Cache hit for: gradle-groovy-dsl-v1-9cbdbbe5cabe6d7c70e812a44c1ccb8f
+2026-11-05T01:00:12.8347928Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+2026-11-05T01:00:13.1988322Z Received 154872 of 154872 (100.0%), 0.6 MBs/sec
+2026-11-05T01:00:13.1989107Z Cache Size: ~0 MB (154872 B)
+2026-11-05T01:00:13.2007085Z [command]/usr/bin/tar -xf /home/runner/work/_temp/9c50e0b2-2a81-4a61-bcf5-3abed4695f6d/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T01:00:13.2221912Z Cache restored successfully
+2026-11-05T01:00:13.2224455Z Restored cache entry with key gradle-instrumented-jars-v1-ad53542f429a2830ddce55c745bae61c to /home/runner/.gradle/caches/jars-*/*/ in 539ms
+2026-11-05T01:00:13.2773040Z Received 284255 of 284255 (100.0%), 0.9 MBs/sec
+2026-11-05T01:00:13.2774285Z Cache Size: ~0 MB (284255 B)
+2026-11-05T01:00:13.2795199Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5b3712ec-ce99-4a19-a407-b4a96acfc8f6/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T01:00:13.3356561Z Cache restored successfully
+2026-11-05T01:00:13.3358976Z Restored cache entry with key gradle-groovy-dsl-v1-9cbdbbe5cabe6d7c70e812a44c1ccb8f to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 651ms
+2026-11-05T01:00:13.5091058Z Received 6690088 of 6690088 (100.0%), 11.5 MBs/sec
+2026-11-05T01:00:13.5092062Z Cache Size: ~6 MB (6690088 B)
+2026-11-05T01:00:13.5130163Z [command]/usr/bin/tar -xf /home/runner/work/_temp/40aa351d-b818-4092-9c2d-e0ff98c0ee69/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T01:00:13.5409811Z Cache restored successfully
+2026-11-05T01:00:13.5420515Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 858ms
+2026-11-05T01:00:13.9916812Z Received 92274688 of 136693260 (67.5%), 87.8 MBs/sec
+2026-11-05T01:00:14.4044524Z Received 136693260 of 136693260 (100.0%), 92.1 MBs/sec
+2026-11-05T01:00:14.4047644Z Cache Size: ~130 MB (136693260 B)
+2026-11-05T01:00:14.4180381Z [command]/usr/bin/tar -xf /home/runner/work/_temp/521ee7dd-0735-4201-842c-adb5fef7ba21/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T01:00:14.6382898Z Cache restored successfully
+2026-11-05T01:00:14.6444341Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 1961ms
+2026-11-05T01:00:14.6524540Z ##[endgroup]
+2026-11-05T01:00:14.7983897Z ##[group]All Gradle Wrapper jars are valid
+2026-11-05T01:00:14.7985206Z ✓ Found known Gradle Wrapper JAR files:
+2026-11-05T01:00:14.7986884Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 benchmarks/keel-helm-v1/confirmation-evidence-41889609469/frozen-source/gradle/wrapper/gradle-wrapper.jar
+2026-11-05T01:00:14.7988712Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+2026-11-05T01:00:14.7989989Z ##[endgroup]
+2026-11-05T01:00:14.8214421Z ##[group]Run actions/setup-python@v5
+2026-11-05T01:00:14.8214747Z with:
+2026-11-05T01:00:14.8214976Z   python-version: 3.13.17
+2026-11-05T01:00:14.8215232Z   check-latest: false
+2026-11-05T01:00:14.8217773Z   token: ***
+2026-11-05T01:00:14.8218019Z   update-environment: true
+2026-11-05T01:00:14.8218293Z   allow-prereleases: false
+2026-11-05T01:00:14.8218550Z   freethreaded: false
+2026-11-05T01:00:14.8218785Z env:
+2026-11-05T01:00:14.8219111Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:14.8219635Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:14.8220082Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T01:00:14.8220419Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T01:00:14.8220731Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T01:00:14.8221047Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T01:00:14.8221534Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T01:00:14.8222042Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T01:00:14.8222400Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T01:00:14.8222704Z ##[endgroup]
+2026-11-05T01:00:14.9546353Z ##[group]Installed versions
+2026-11-05T01:00:14.9594443Z (node:2618) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T01:00:14.9595265Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T01:00:14.9596335Z Successfully set up CPython (3.13.17)
+2026-11-05T01:00:14.9597536Z ##[endgroup]
+2026-11-05T01:00:14.9751277Z ##[group]Run set -euo pipefail
+2026-11-05T01:00:14.9751702Z [36;1mset -euo pipefail[0m
+2026-11-05T01:00:14.9752035Z [36;1mmkdir -p build/keel-brace-bootstrap[0m
+2026-11-05T01:00:14.9752366Z [36;1m{[0m
+2026-11-05T01:00:14.9752588Z [36;1m  set -x[0m
+2026-11-05T01:00:14.9752825Z [36;1m  java -version[0m
+2026-11-05T01:00:14.9753075Z [36;1m  javac -version[0m
+2026-11-05T01:00:14.9753329Z [36;1m  ./gradlew --version[0m
+2026-11-05T01:00:14.9753604Z [36;1m  git rev-parse HEAD[0m
+2026-11-05T01:00:14.9753958Z [36;1m  if test -f experiments/KeelBrace/KeelBrace.jar; then[0m
+2026-11-05T01:00:14.9754581Z [36;1m    cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar[0m
+2026-11-05T01:00:14.9755090Z [36;1m  fi[0m
+2026-11-05T01:00:14.9755415Z [36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build[0m
+2026-11-05T01:00:14.9756477Z [36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar[0m
+2026-11-05T01:00:14.9757166Z [36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build[0m
+2026-11-05T01:00:14.9757790Z [36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-05T01:00:14.9758622Z [36;1m  python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-05T01:00:14.9759416Z [36;1m  cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-05T01:00:14.9760241Z [36;1m  if test -f build/keel-brace-bootstrap/KeelBrace-committed.jar; then[0m
+2026-11-05T01:00:14.9760960Z [36;1m    python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-05T01:00:14.9761545Z [36;1m  fi[0m
+2026-11-05T01:00:14.9761819Z [36;1m  sha256sum build/keel-brace-bootstrap/*.jar[0m
+2026-11-05T01:00:14.9762220Z [36;1m} 2>&1 | tee build/keel-brace-bootstrap/build.log[0m
+2026-11-05T01:00:14.9810972Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T01:00:14.9811352Z env:
+2026-11-05T01:00:14.9811686Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:14.9812222Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:14.9812688Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T01:00:14.9813016Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T01:00:14.9813331Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T01:00:14.9813767Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T01:00:14.9814563Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T01:00:14.9815410Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T01:00:14.9816260Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T01:00:14.9816872Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:14.9817646Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T01:00:14.9818368Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:14.9819043Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:14.9819730Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:14.9820403Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T01:00:14.9820992Z ##[endgroup]
+2026-11-05T01:00:14.9984640Z + java -version
+2026-11-05T01:00:15.0214700Z openjdk version "17.0.21" 2026-10-20
+2026-11-05T01:00:15.0216081Z OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+2026-11-05T01:00:15.0216998Z OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
+2026-11-05T01:00:15.0275426Z + javac -version
+2026-11-05T01:00:15.1972211Z javac 17.0.21
+2026-11-05T01:00:15.2124939Z + ./gradlew --version
+2026-11-05T01:00:15.9341926Z 
+2026-11-05T01:00:15.9359663Z ------------------------------------------------------------
+2026-11-05T01:00:15.9365187Z Gradle 8.14.3
+2026-11-05T01:00:15.9365926Z ------------------------------------------------------------
+2026-11-05T01:00:15.9366362Z 
+2026-11-05T01:00:15.9366563Z Build time:    2025-07-04 13:15:44 UTC
+2026-11-05T01:00:15.9366974Z Revision:      e5ee1df3d88b8ca3a8074787a94f373e3090e1db
+2026-11-05T01:00:15.9367226Z 
+2026-11-05T01:00:15.9367326Z Kotlin:        2.0.21
+2026-11-05T01:00:15.9367570Z Groovy:        3.0.24
+2026-11-05T01:00:15.9368257Z Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+2026-11-05T01:00:15.9368916Z Launcher JVM:  17.0.21 (Eclipse Adoptium 17.0.21+9)
+2026-11-05T01:00:15.9369723Z Daemon JVM:    /usr/lib/jvm/temurin-17-jdk-amd64 (no JDK specified, using current Java home)
+2026-11-05T01:00:15.9370501Z OS:            Linux 7.0.0-1017-azure amd64
+2026-11-05T01:00:15.9370843Z 
+2026-11-05T01:00:15.9563280Z + git rev-parse HEAD
+2026-11-05T01:00:15.9580370Z 241ebb629ab6212c87aa3f4d749f2d163fe03491
+2026-11-05T01:00:15.9583019Z + test -f experiments/KeelBrace/KeelBrace.jar
+2026-11-05T01:00:15.9583911Z + cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar
+2026-11-05T01:00:15.9612139Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+2026-11-05T01:00:16.6812979Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-05T01:00:17.7804928Z Daemon will be stopped at the end of the build 
+2026-11-05T01:00:22.6907058Z > Task :clean UP-TO-DATE
+2026-11-05T01:00:23.7827195Z > Task :compileJava
+2026-11-05T01:00:23.8827079Z > Task :processResources NO-SOURCE
+2026-11-05T01:00:23.8846285Z > Task :classes
+2026-11-05T01:00:24.1806903Z > Task :jar
+2026-11-05T01:00:24.1830026Z > Task :prepareBot
+2026-11-05T01:00:24.1838111Z > Task :assemble
+2026-11-05T01:00:24.7821512Z > Task :compileTestJava
+2026-11-05T01:00:24.8807754Z > Task :prepareTestDescriptors
+2026-11-05T01:00:24.8812339Z > Task :processTestResources NO-SOURCE
+2026-11-05T01:00:24.8813026Z > Task :testClasses
+2026-11-05T01:00:25.8802941Z 
+2026-11-05T01:00:25.8846178Z > Task :test
+2026-11-05T01:00:25.8871622Z 
+2026-11-05T01:00:25.8895072Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+2026-11-05T01:00:25.8896296Z 
+2026-11-05T01:00:25.8897026Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+2026-11-05T01:00:25.8897950Z 
+2026-11-05T01:00:25.8898822Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+2026-11-05T01:00:25.8899824Z 
+2026-11-05T01:00:25.8900533Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+2026-11-05T01:00:25.8901515Z 
+2026-11-05T01:00:25.8902116Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+2026-11-05T01:00:25.8917992Z 
+2026-11-05T01:00:25.8918790Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+2026-11-05T01:00:25.8919537Z 
+2026-11-05T01:00:25.8920215Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+2026-11-05T01:00:25.8920942Z 
+2026-11-05T01:00:25.8921611Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+2026-11-05T01:00:25.8922333Z 
+2026-11-05T01:00:25.8922962Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+2026-11-05T01:00:25.8923660Z 
+2026-11-05T01:00:25.8924367Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+2026-11-05T01:00:25.8925185Z 
+2026-11-05T01:00:25.8925965Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+2026-11-05T01:00:25.8926661Z 
+2026-11-05T01:00:25.8927153Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+2026-11-05T01:00:25.8927801Z 
+2026-11-05T01:00:25.8928604Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+2026-11-05T01:00:25.8929264Z 
+2026-11-05T01:00:25.8929741Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+2026-11-05T01:00:25.8930378Z 
+2026-11-05T01:00:25.8930876Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+2026-11-05T01:00:25.8931422Z 
+2026-11-05T01:00:25.8931768Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+2026-11-05T01:00:25.8932394Z 
+2026-11-05T01:00:25.8933027Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+2026-11-05T01:00:25.8933869Z 
+2026-11-05T01:00:25.8934402Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+2026-11-05T01:00:25.8935159Z 
+2026-11-05T01:00:25.8935603Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+2026-11-05T01:00:25.8936469Z 
+2026-11-05T01:00:25.8936995Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+2026-11-05T01:00:25.8937692Z 
+2026-11-05T01:00:25.8938117Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+2026-11-05T01:00:25.8938661Z 
+2026-11-05T01:00:25.8939040Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+2026-11-05T01:00:25.8939585Z 
+2026-11-05T01:00:25.8939914Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+2026-11-05T01:00:25.8940411Z 
+2026-11-05T01:00:25.8940862Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+2026-11-05T01:00:25.8941486Z 
+2026-11-05T01:00:25.8942147Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+2026-11-05T01:00:25.8942658Z 
+2026-11-05T01:00:25.8943211Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+2026-11-05T01:00:25.8944018Z 
+2026-11-05T01:00:25.8944576Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+2026-11-05T01:00:25.8945305Z 
+2026-11-05T01:00:25.8945925Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+2026-11-05T01:00:25.8946539Z 
+2026-11-05T01:00:25.8947124Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+2026-11-05T01:00:25.8947886Z 
+2026-11-05T01:00:25.8948370Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+2026-11-05T01:00:25.8949058Z 
+2026-11-05T01:00:25.8949237Z > Task :check
+2026-11-05T01:00:25.8949644Z > Task :build
+2026-11-05T01:00:25.9569709Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793840419463.json
+2026-11-05T01:00:25.9572496Z 
+2026-11-05T01:00:25.9572998Z BUILD SUCCESSFUL in 9s
+2026-11-05T01:00:25.9573706Z 7 actionable tasks: 6 executed, 1 up-to-date
+2026-11-05T01:00:26.0702191Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar
+2026-11-05T01:00:26.0721804Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+2026-11-05T01:00:26.7551589Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-05T01:00:27.8540401Z Daemon will be stopped at the end of the build 
+2026-11-05T01:00:31.5547392Z > Task :clean
+2026-11-05T01:00:32.4537786Z > Task :compileJava
+2026-11-05T01:00:32.5546813Z > Task :processResources NO-SOURCE
+2026-11-05T01:00:32.5606446Z > Task :classes
+2026-11-05T01:00:32.8543548Z > Task :jar
+2026-11-05T01:00:32.9546956Z > Task :prepareBot
+2026-11-05T01:00:32.9596300Z > Task :assemble
+2026-11-05T01:00:33.3541122Z > Task :compileTestJava
+2026-11-05T01:00:33.3556818Z > Task :prepareTestDescriptors
+2026-11-05T01:00:33.3557412Z > Task :processTestResources NO-SOURCE
+2026-11-05T01:00:33.3557945Z > Task :testClasses
+2026-11-05T01:00:34.3536281Z 
+2026-11-05T01:00:34.3538052Z > Task :test
+2026-11-05T01:00:34.3538350Z 
+2026-11-05T01:00:34.3563770Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+2026-11-05T01:00:34.3569715Z 
+2026-11-05T01:00:34.3570485Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+2026-11-05T01:00:34.3571389Z 
+2026-11-05T01:00:34.3572198Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+2026-11-05T01:00:34.3573165Z 
+2026-11-05T01:00:34.3573875Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+2026-11-05T01:00:34.3574754Z 
+2026-11-05T01:00:34.3575292Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+2026-11-05T01:00:34.3576290Z 
+2026-11-05T01:00:34.3577281Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+2026-11-05T01:00:34.3578114Z 
+2026-11-05T01:00:34.3578714Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+2026-11-05T01:00:34.3579494Z 
+2026-11-05T01:00:34.3580289Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+2026-11-05T01:00:34.3581200Z 
+2026-11-05T01:00:34.3581777Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+2026-11-05T01:00:34.3582516Z 
+2026-11-05T01:00:34.3583177Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+2026-11-05T01:00:34.3584040Z 
+2026-11-05T01:00:34.3584693Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+2026-11-05T01:00:34.3585550Z 
+2026-11-05T01:00:34.3586454Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+2026-11-05T01:00:34.3587587Z 
+2026-11-05T01:00:34.3588235Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+2026-11-05T01:00:34.3589052Z 
+2026-11-05T01:00:34.3589685Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+2026-11-05T01:00:34.3590498Z 
+2026-11-05T01:00:34.3591235Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+2026-11-05T01:00:34.3592078Z 
+2026-11-05T01:00:34.3592808Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+2026-11-05T01:00:34.3593722Z 
+2026-11-05T01:00:34.3618658Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+2026-11-05T01:00:34.3619521Z 
+2026-11-05T01:00:34.3620064Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+2026-11-05T01:00:34.3620770Z 
+2026-11-05T01:00:34.3621185Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+2026-11-05T01:00:34.3621780Z 
+2026-11-05T01:00:34.3622268Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+2026-11-05T01:00:34.3622937Z 
+2026-11-05T01:00:34.3623324Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+2026-11-05T01:00:34.3623874Z 
+2026-11-05T01:00:34.3624276Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+2026-11-05T01:00:34.3624841Z 
+2026-11-05T01:00:34.3625161Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+2026-11-05T01:00:34.3625631Z 
+2026-11-05T01:00:34.3626303Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+2026-11-05T01:00:34.3626902Z 
+2026-11-05T01:00:34.3627298Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+2026-11-05T01:00:34.3627798Z 
+2026-11-05T01:00:34.3628379Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+2026-11-05T01:00:34.3629098Z 
+2026-11-05T01:00:34.3629897Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+2026-11-05T01:00:34.3630615Z 
+2026-11-05T01:00:34.3631201Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+2026-11-05T01:00:34.3631864Z 
+2026-11-05T01:00:34.3643355Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+2026-11-05T01:00:34.3649815Z 
+2026-11-05T01:00:34.3652149Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+2026-11-05T01:00:34.3653067Z 
+2026-11-05T01:00:34.3653240Z > Task :check
+2026-11-05T01:00:34.3653622Z > Task :build
+2026-11-05T01:00:34.3654487Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793840429465.json
+2026-11-05T01:00:34.3655300Z 
+2026-11-05T01:00:34.3655477Z BUILD SUCCESSFUL in 8s
+2026-11-05T01:00:34.3656187Z 7 actionable tasks: 7 executed
+2026-11-05T01:00:34.5019310Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.5040026Z + python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.6424861Z Verified 790 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-05T01:00:34.6478610Z + cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.6495352Z + test -f build/keel-brace-bootstrap/KeelBrace-committed.jar
+2026-11-05T01:00:34.6496795Z + python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.7348329Z Verified 790 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-05T01:00:34.7399970Z + sha256sum build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.7430732Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace-committed.jar
+2026-11-05T01:00:34.7437326Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace-first.jar
+2026-11-05T01:00:34.7443609Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-05T01:00:34.7492265Z ##[group]Run set -euo pipefail
+2026-11-05T01:00:34.7492633Z [36;1mset -euo pipefail[0m
+2026-11-05T01:00:34.7492985Z [36;1mif test -f tools/test_keel_brace_experiment.py; then[0m
+2026-11-05T01:00:34.7493679Z [36;1m  python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v 2>&1 | tee build/keel-brace-bootstrap/controller-tests.log[0m
+2026-11-05T01:00:34.7494270Z [36;1mfi[0m
+2026-11-05T01:00:34.7494659Z [36;1mif test -f benchmarks/keel-brace-v1/independent-analysis/test_audit.py; then[0m
+2026-11-05T01:00:34.7495597Z [36;1m  python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-brace-bootstrap/independent-audit-tests.log[0m
+2026-11-05T01:00:34.7496789Z [36;1mfi[0m
+2026-11-05T01:00:34.7497191Z [36;1mif test -f benchmarks/keel-brace-v1/image-probe-validation/test_image_probe.py; then[0m
+2026-11-05T01:00:34.7498157Z [36;1m  python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/image-probe-validation -p test_image_probe.py -v 2>&1 | tee build/keel-brace-bootstrap/image-probe-tests.log[0m
+2026-11-05T01:00:34.7498901Z [36;1mfi[0m
+2026-11-05T01:00:34.7528607Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T01:00:34.7528971Z env:
+2026-11-05T01:00:34.7529303Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:34.7529828Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:34.7530276Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T01:00:34.7530601Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T01:00:34.7530910Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T01:00:34.7531225Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T01:00:34.7531688Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T01:00:34.7532187Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T01:00:34.7532538Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T01:00:34.7532898Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:34.7533350Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T01:00:34.7533798Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:34.7534207Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:34.7534619Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:34.7535025Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T01:00:34.7535376Z ##[endgroup]
+2026-11-05T01:00:35.1469774Z test_actual_expected_payload_has_exact20keys (test_keel_brace_experiment.Approval.test_actual_expected_payload_has_exact20keys) ... ok
+2026-11-05T01:00:35.1472274Z test_duplicate_json_key_nonfinite_and_trailing_text_rejected (test_keel_brace_experiment.Approval.test_duplicate_json_key_nonfinite_and_trailing_text_rejected) ... ok
+2026-11-05T01:00:35.1474668Z test_exact20key_bound_approval (test_keel_brace_experiment.Approval.test_exact20key_bound_approval) ... ok
+2026-11-05T01:00:35.1479240Z test_report_and_separate_agent_provenance_are_mandatory (test_keel_brace_experiment.Approval.test_report_and_separate_agent_provenance_are_mandatory) ... ok
+2026-11-05T01:00:35.1484550Z test_stale_wrong_identity_author_extra_keys_and_bool_fail (test_keel_brace_experiment.Approval.test_stale_wrong_identity_author_extra_keys_and_bool_fail) ... ok
+2026-11-05T01:00:35.1487471Z test_authorized_malformed_authority_still_fails_closed (test_keel_brace_experiment.AuthorityActorFiltering.test_authorized_malformed_authority_still_fails_closed) ... ok
+2026-11-05T01:00:35.1489742Z test_foreign_malformed_approval_is_ignored (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_approval_is_ignored) ... ok
+2026-11-05T01:00:35.1492593Z test_foreign_malformed_dispatch_is_ignored_before_parse (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_dispatch_is_ignored_before_parse) ... ok
+2026-11-05T01:00:35.1495047Z test_foreign_malformed_report_does_not_poison_valid_report (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_report_does_not_poison_valid_report) ... ok
+2026-11-05T01:00:35.1634745Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.ConditionalGate.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+2026-11-05T01:00:35.1776132Z test_full_confirmation_gate_accepts_lossless_virtual_custody (test_keel_brace_experiment.ConditionalGate.test_full_confirmation_gate_accepts_lossless_virtual_custody) ... ok
+2026-11-05T01:00:35.1864829Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.ConditionalGate.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+2026-11-05T01:00:35.1926528Z test_inconclusive_original_screen_never_opens_confirmation (test_keel_brace_experiment.ConditionalGate.test_inconclusive_original_screen_never_opens_confirmation) ... ok
+2026-11-05T01:00:35.2581815Z test_no_success_without_original_export_and_independent_postcompletion_review (test_keel_brace_experiment.ConditionalGate.test_no_success_without_original_export_and_independent_postcompletion_review) ... ok
+2026-11-05T01:00:35.2770518Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.ConditionalGate.test_recording_path_game_binding_cannot_be_reused) ... ok
+2026-11-05T01:00:35.3177049Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.ConditionalGate.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+2026-11-05T01:00:35.3305951Z test_unreconciled_screen_never_opens_confirmation (test_keel_brace_experiment.ConditionalGate.test_unreconciled_screen_never_opens_confirmation) ... ok
+2026-11-05T01:00:35.3323955Z test_complete_screen_and_confirmation_progress (test_keel_brace_experiment.Decision.test_complete_screen_and_confirmation_progress) ... ok
+2026-11-05T01:00:35.3346273Z test_exact_percentage_boundaries_and_strict_majorities (test_keel_brace_experiment.Decision.test_exact_percentage_boundaries_and_strict_majorities) ... ok
+2026-11-05T01:00:35.3352198Z test_no_favorable_subset_or_incomplete_budget (test_keel_brace_experiment.Decision.test_no_favorable_subset_or_incomplete_budget) ... ok
+2026-11-05T01:00:35.3394403Z test_first_invalid_game_stops_and_retains_partial_physical_budget (test_keel_brace_experiment.FailClosedStage.test_first_invalid_game_stops_and_retains_partial_physical_budget) ... {"decision": "invalid", "physicalRounds": 1, "unplayedIDs": ["s02"]}
+2026-11-05T01:00:35.3400270Z ok
+2026-11-05T01:00:35.3402570Z test_consistent_unapproved_image_does_not_expand_allowlist (test_keel_brace_experiment.ImageProvenanceHold.test_consistent_unapproved_image_does_not_expand_allowlist) ... ok
+2026-11-05T01:00:35.3404868Z test_environment_alone_never_establishes_allowed_image (test_keel_brace_experiment.ImageProvenanceHold.test_environment_alone_never_establishes_allowed_image) ... ok
+2026-11-05T01:00:35.3407454Z test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed (test_keel_brace_experiment.ImageProvenanceHold.test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed) ... ok
+2026-11-05T01:00:35.3416512Z test_real_identity_still_fails_closed_without_actual_stage_snapshots (test_keel_brace_experiment.ImageProvenanceHold.test_real_identity_still_fails_closed_without_actual_stage_snapshots) ... ok
+2026-11-05T01:00:35.3534176Z test_artifact_and_current_head_mismatch_fail (test_keel_brace_experiment.LiveAuthority.test_artifact_and_current_head_mismatch_fail) ... ok
+2026-11-05T01:00:35.3580948Z test_changed_prepared_command_cannot_redefine_local_approved_manifest (test_keel_brace_experiment.LiveAuthority.test_changed_prepared_command_cannot_redefine_local_approved_manifest) ... ok
+2026-11-05T01:00:35.3730390Z test_deleted_edited_wrong_author_and_timestamp_comments_fail (test_keel_brace_experiment.LiveAuthority.test_deleted_edited_wrong_author_and_timestamp_comments_fail) ... ok
+2026-11-05T01:00:35.4063399Z test_local_profile_approval_anchor_and_command_mutations_fail (test_keel_brace_experiment.LiveAuthority.test_local_profile_approval_anchor_and_command_mutations_fail) ... ok
+2026-11-05T01:00:35.4191752Z test_mutated_receipt_authority_chain_fails (test_keel_brace_experiment.LiveAuthority.test_mutated_receipt_authority_chain_fails) ... ok
+2026-11-05T01:00:35.4335693Z test_revoked_duplicate_approval_and_changed_assignment_fail (test_keel_brace_experiment.LiveAuthority.test_revoked_duplicate_approval_and_changed_assignment_fail) ... ok
+2026-11-05T01:00:35.4470690Z test_unchanged_current_authority_and_receipt_chain_pass (test_keel_brace_experiment.LiveAuthority.test_unchanged_current_authority_and_receipt_chain_pass) ... ok
+2026-11-05T01:00:35.4476304Z test_all_missing_duplicate_skip_and_boundary_records_fail_closed (test_keel_brace_experiment.Markers.test_all_missing_duplicate_skip_and_boundary_records_fail_closed) ... ok
+2026-11-05T01:00:35.4478395Z test_complete_integer_timing_and_candidate_exposure (test_keel_brace_experiment.Markers.test_complete_integer_timing_and_candidate_exposure) ... ok
+2026-11-05T01:00:35.4487802Z test_counters_overflow_bad_chain_and_baseline_leak_fail (test_keel_brace_experiment.NewBraceGuards.test_counters_overflow_bad_chain_and_baseline_leak_fail) ... ok
+2026-11-05T01:00:35.4512105Z test_exact_negative_diamond_guards_and_retcon_positive_boundary (test_keel_brace_experiment.NewBraceGuards.test_exact_negative_diamond_guards_and_retcon_positive_boundary) ... ok
+2026-11-05T01:00:35.4541362Z test_export_original_api_is_external_and_raw_decision_unchanged (test_keel_brace_experiment.NewBraceGuards.test_export_original_api_is_external_and_raw_decision_unchanged) ... ok
+2026-11-05T01:00:35.4560133Z test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering (test_keel_brace_experiment.NewBraceGuards.test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering) ... ok
+2026-11-05T01:00:35.4568572Z test_missing_upload_retains_incomplete_custody_without_new_games (test_keel_brace_experiment.NewBraceGuards.test_missing_upload_retains_incomplete_custody_without_new_games) ... ok
+2026-11-05T01:00:35.4571264Z test_prospective_storage_timestamp_size_and_real_evidence_guards (test_keel_brace_experiment.NewBraceGuards.test_prospective_storage_timestamp_size_and_real_evidence_guards) ... ok
+2026-11-05T01:00:35.4580761Z test_retcon_ceiling_cannot_relax_positive_gain (test_keel_brace_experiment.NewBraceGuards.test_retcon_ceiling_cannot_relax_positive_gain) ... ok
+2026-11-05T01:00:35.4583219Z test_runtime_report_unknown_keys_or_edit_are_not_authority (test_keel_brace_experiment.NewBraceGuards.test_runtime_report_unknown_keys_or_edit_are_not_authority) ... ok
+2026-11-05T01:00:35.4614449Z test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact (test_keel_brace_experiment.NewBraceGuards.test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact) ... ok
+2026-11-05T01:00:35.4619777Z test_exited_parent_still_signals_live_owned_process_group (test_keel_brace_experiment.OwnedTeardown.test_exited_parent_still_signals_live_owned_process_group) ... ok
+2026-11-05T01:00:35.4626023Z test_owned_descendants_are_killed_after_bounded_term_drain (test_keel_brace_experiment.OwnedTeardown.test_owned_descendants_are_killed_after_bounded_term_drain) ... ok
+2026-11-05T01:00:35.4653513Z test_official_counts_and_partial_physical_budget (test_keel_brace_experiment.Recording.test_official_counts_and_partial_physical_budget) ... ok
+2026-11-05T01:00:35.4681451Z test_private_contact_counter_is_only_an_upper_bounded_callback_count (test_keel_brace_experiment.RemainingBoundaries.test_private_contact_counter_is_only_an_upper_bounded_callback_count) ... ok
+2026-11-05T01:00:35.4690103Z test_teardown_respects_remaining_hard_deadline_and_retains_reap_error (test_keel_brace_experiment.RemainingBoundaries.test_teardown_respects_remaining_hard_deadline_and_retains_reap_error) ... ok
+2026-11-05T01:00:35.4798896Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.VirtualCustody.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+2026-11-05T01:00:35.4863759Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.VirtualCustody.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+2026-11-05T01:00:35.5041753Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.VirtualCustody.test_recording_path_game_binding_cannot_be_reused) ... ok
+2026-11-05T01:00:35.5431074Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.VirtualCustody.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+2026-11-05T01:00:35.5890982Z test_actual_own_snapshot_wrapper_graph_identity (test_keel_brace_image_identity.Anchors.test_actual_own_snapshot_wrapper_graph_identity) ... ok
+2026-11-05T01:00:35.6211198Z test_all_snapshot_phases_invoke_exact_stock_collector_bounded (test_keel_brace_image_identity.Anchors.test_all_snapshot_phases_invoke_exact_stock_collector_bounded) ... ok
+2026-11-05T01:00:35.6546133Z test_read_time_pid_and_mtime_are_preserved_not_stable_equality (test_keel_brace_image_identity.Anchors.test_read_time_pid_and_mtime_are_preserved_not_stable_equality) ... ok
+2026-11-05T01:00:35.7019756Z test_snapshot_phase_context_and_top_level_disagreement_fail (test_keel_brace_image_identity.Anchors.test_snapshot_phase_context_and_top_level_disagreement_fail) ... ok
+2026-11-05T01:00:35.7822214Z test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail (test_keel_brace_image_identity.Anchors.test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail) ... ok
+2026-11-05T01:00:35.7829806Z test_only_exact_actual_job_404_deferral_or_matched_header (test_keel_brace_image_identity.Authority.test_only_exact_actual_job_404_deferral_or_matched_header) ... ok
+2026-11-05T01:00:35.7831894Z test_qualification_and_all_snapshot_bindings_mandatory (test_keel_brace_image_identity.Authority.test_qualification_and_all_snapshot_bindings_mandatory) ... ok
+2026-11-05T01:00:35.7973113Z test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable (test_keel_brace_image_identity.Captures.test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable) ... ok
+2026-11-05T01:00:35.8180235Z test_mutation_errors_truncation_discovery_and_parse_faults_rejected (test_keel_brace_image_identity.Captures.test_mutation_errors_truncation_discovery_and_parse_faults_rejected) ... ok
+2026-11-05T01:00:35.8237859Z test_original_observations_remain_distinct_and_noncanonical (test_keel_brace_image_identity.Captures.test_original_observations_remain_distinct_and_noncanonical) ... ok
+2026-11-05T01:00:35.8277066Z test_raw_prefix_or_unknown_native_tuple_rejected (test_keel_brace_image_identity.Captures.test_raw_prefix_or_unknown_native_tuple_rejected) ... ok
+2026-11-05T01:00:35.8344365Z test_rehashed_parsed_artifact_cannot_disagree_with_actual_raw (test_keel_brace_image_identity.Captures.test_rehashed_parsed_artifact_cannot_disagree_with_actual_raw) ... ok
+2026-11-05T01:00:35.8449517Z test_stat_size_spoof_and_missing_index_rejected_even_resealed (test_keel_brace_image_identity.Captures.test_stat_size_spoof_and_missing_index_rejected_even_resealed) ... ok
+2026-11-05T01:00:35.8533102Z test_confirmation_requires_receipt_bound_original_profile_and_final_raw_provider (test_keel_brace_image_identity.ControllerIntegration.test_confirmation_requires_receipt_bound_original_profile_and_final_raw_provider) ... ok
+2026-11-05T01:00:35.8549944Z test_receipt_child_revalidation_binds_actual_capture_and_prepared_graph (test_keel_brace_image_identity.ControllerIntegration.test_receipt_child_revalidation_binds_actual_capture_and_prepared_graph) ... ok
+2026-11-05T01:00:35.8559600Z test_runtime_image_review_cannot_be_missing_or_after_approval (test_keel_brace_image_identity.ControllerIntegration.test_runtime_image_review_cannot_be_missing_or_after_approval) ... ok
+2026-11-05T01:00:35.8587265Z test_final_provider_exact_original_and_current_job_bindings (test_keel_brace_image_identity.Provider.test_final_provider_exact_original_and_current_job_bindings) ... ok
+2026-11-05T01:00:35.8591994Z test_missing_full_final_provider_original_cannot_be_waived (test_keel_brace_image_identity.Provider.test_missing_full_final_provider_original_cannot_be_waived) ... ok
+2026-11-05T01:00:35.8604843Z test_naked_header_or_missing_real_startup_boundary_rejected (test_keel_brace_image_identity.Provider.test_naked_header_or_missing_real_startup_boundary_rejected) ... ok
+2026-11-05T01:00:35.8607256Z test_provider_second_resolution_has_exact_recorded_second_interval (test_keel_brace_image_identity.Provider.test_provider_second_resolution_has_exact_recorded_second_interval) ... ok
+2026-11-05T01:00:35.8652635Z test_real_original_full_provider_log_not_echoed_workflow (test_keel_brace_image_identity.Provider.test_real_original_full_provider_log_not_echoed_workflow) ... ok
+2026-11-05T01:00:35.8653697Z 
+2026-11-05T01:00:35.8654005Z ----------------------------------------------------------------------
+2026-11-05T01:00:35.8654584Z Ran 73 tests in 0.719s
+2026-11-05T01:00:35.8654816Z 
+2026-11-05T01:00:35.8654947Z OK
+2026-11-05T01:00:36.0688209Z test_actual_child_overrun_or_failed_teardown_cannot_pass (test_audit.ActualChildTimingTests.test_actual_child_overrun_or_failed_teardown_cannot_pass) ... ok
+2026-11-05T01:00:36.0750196Z test_in_between_work_does_not_redefine_child_limit (test_audit.ActualChildTimingTests.test_in_between_work_does_not_redefine_child_limit) ... ok
+2026-11-05T01:00:36.0768102Z test_exact_zip_members_and_corrupt_extraction (test_audit.ArchiveTests.test_exact_zip_members_and_corrupt_extraction) ... ok
+2026-11-05T01:00:36.0773088Z test_unsafe_or_duplicate_members_rejected (test_audit.ArchiveTests.test_unsafe_or_duplicate_members_rejected) ... ok
+2026-11-05T01:00:36.0802796Z test_actual_dispute_shape_and_unapproved_agreement_fail_closed (test_audit.AuthoritativeImageTests.test_actual_dispute_shape_and_unapproved_agreement_fail_closed) ... ok
+2026-11-05T01:00:36.0816692Z test_agreeing_allowed_header_fixture_only (test_audit.AuthoritativeImageTests.test_agreeing_allowed_header_fixture_only) ... ok
+2026-11-05T01:00:36.0847188Z test_collector_digest_and_job_identity_tamper_fail (test_audit.AuthoritativeImageTests.test_collector_digest_and_job_identity_tamper_fail) ... ok
+2026-11-05T01:00:36.0849339Z test_missing_duplicate_and_later_env_cannot_rescue_header (test_audit.AuthoritativeImageTests.test_missing_duplicate_and_later_env_cannot_rescue_header) ... ok
+2026-11-05T01:00:36.0857581Z test_missing_authority_and_storage_are_not_acceptance (test_audit.AuthorityFailClosedTests.test_missing_authority_and_storage_are_not_acceptance) ... ok
+2026-11-05T01:00:36.0859043Z test_strict_body_parser_duplicate_nonfinite_and_typed_json (test_audit.AuthorityFailClosedTests.test_strict_body_parser_duplicate_nonfinite_and_typed_json) ... ok
+2026-11-05T01:00:36.0860230Z test_timestamp_offset_required (test_audit.AuthorityFailClosedTests.test_timestamp_offset_required) ... ok
+2026-11-05T01:00:36.0930043Z test_complete_original_live_authority_and_current_provider (test_audit.AuthorityPositiveTests.test_complete_original_live_authority_and_current_provider) ... ok
+2026-11-05T01:00:36.0991320Z test_normalized_pin_keeps_full_api_and_exact_stable_fields (test_audit.AuthorityPositiveTests.test_normalized_pin_keeps_full_api_and_exact_stable_fields) ... ok
+2026-11-05T01:00:36.1358535Z test_pin_mutations_and_current_provider_stable_identity_fail (test_audit.AuthorityPositiveTests.test_pin_mutations_and_current_provider_stable_identity_fail) ... ok
+2026-11-05T01:00:36.1482106Z test_provider_replay_and_live_edited_timestamp_fail (test_audit.AuthorityPositiveTests.test_provider_replay_and_live_edited_timestamp_fail) ... ok
+2026-11-05T01:00:36.1774111Z test_wrong_issue_account_dispatch_order_and_revocation_fail (test_audit.AuthorityPositiveTests.test_wrong_issue_account_dispatch_order_and_revocation_fail) ... ok
+2026-11-05T01:00:36.1792873Z test_corrupt_gzip_and_duplicate_json_keys (test_audit.BraceCounterTests.test_corrupt_gzip_and_duplicate_json_keys) ... ok
+2026-11-05T01:00:36.1854385Z test_counter_cap_negative_duplicate_noninteger (test_audit.BraceCounterTests.test_counter_cap_negative_duplicate_noninteger) ... ok
+2026-11-05T01:00:36.1896437Z test_counter_chain_overflow_fault_and_official_contact_bound (test_audit.BraceCounterTests.test_counter_chain_overflow_fault_and_official_contact_bound) ... ok
+2026-11-05T01:00:36.1920850Z test_duplicate_start_missing_end_and_baseline_na (test_audit.BraceCounterTests.test_duplicate_start_missing_end_and_baseline_na) ... ok
+2026-11-05T01:00:36.1942884Z test_raw_contact_corrob_and_no_private_eligibility_invention (test_audit.BraceCounterTests.test_raw_contact_corrob_and_no_private_eligibility_invention) ... ok
+2026-11-05T01:00:36.1954031Z test_ties_preserve_official_firstplaces (test_audit.BraceCounterTests.test_ties_preserve_official_firstplaces) ... ok
+2026-11-05T01:00:36.1961965Z test_confirmation_minus2_exact_then_below (test_audit.BraceGateTests.test_confirmation_minus2_exact_then_below) ... ok
+2026-11-05T01:00:36.1965576Z test_equal_game_not_pooled_score_arithmetic (test_audit.BraceGateTests.test_equal_game_not_pooled_score_arithmetic) ... ok
+2026-11-05T01:00:36.1972470Z test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond (test_audit.BraceGateTests.test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond) ... ok
+2026-11-05T01:00:36.1979520Z test_inconclusive_precedes_score_rejection_but_not_integrity (test_audit.BraceGateTests.test_inconclusive_precedes_score_rejection_but_not_integrity) ... ok
+2026-11-05T01:00:36.1988749Z test_retcon_exact_plus1_below_boundary_and_ceiling (test_audit.BraceGateTests.test_retcon_exact_plus1_below_boundary_and_ceiling) ... ok
+2026-11-05T01:00:36.1992016Z test_strict_half_and_win_count_boundaries (test_audit.BraceGateTests.test_strict_half_and_win_count_boundaries) ... ok
+2026-11-05T01:00:36.2289431Z test_complete_raw_scores_never_waive_last_child_failure (test_audit.CanonicalDecisionTests.test_complete_raw_scores_never_waive_last_child_failure) ... ok
+2026-11-05T01:00:36.2934669Z test_decision_population_budget_and_metric_mutations_fail (test_audit.CanonicalDecisionTests.test_decision_population_budget_and_metric_mutations_fail) ... ok
+2026-11-05T01:00:36.4363236Z test_full_stage_cannot_pass_after_canonical_last_child_failure (test_audit.CanonicalDecisionTests.test_full_stage_cannot_pass_after_canonical_last_child_failure) ... ok
+2026-11-05T01:00:36.4527082Z test_positive_complete_original_screen_and_confirmation (test_audit.CanonicalDecisionTests.test_positive_complete_original_screen_and_confirmation) ... ok
+2026-11-05T01:00:36.4545080Z test_cli_preserves_custody_error_without_battle_result (test_audit.CustodyFailureReportingTests.test_cli_preserves_custody_error_without_battle_result) ... ok
+2026-11-05T01:00:36.4604178Z test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain (test_audit.CustodyFailureReportingTests.test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain) ... ok
+2026-11-05T01:00:36.4610476Z test_confirmation_fractional_boundaries (test_audit.GateBoundaryTests.test_confirmation_fractional_boundaries) ... ok
+2026-11-05T01:00:36.4616656Z test_screen_fractional_boundaries (test_audit.GateBoundaryTests.test_screen_fractional_boundaries) ... ok
+2026-11-05T01:00:36.4629807Z test_rounds_cannot_interleave_or_reverse (test_audit.GlobalMarkerOrderTests.test_rounds_cannot_interleave_or_reverse) ... ok
+2026-11-05T01:00:36.4640485Z test_duplicate_endpoint_invalid (test_audit.IntegrityTests.test_duplicate_endpoint_invalid) ... ok
+2026-11-05T01:00:36.4661723Z test_duplicate_stats_and_negative_timing_invalid (test_audit.IntegrityTests.test_duplicate_stats_and_negative_timing_invalid) ... ok
+2026-11-05T01:00:36.4673059Z test_full_metrics_and_exact_ratio (test_audit.IntegrityTests.test_full_metrics_and_exact_ratio) ... ok
+2026-11-05T01:00:36.4683044Z test_incomplete_recording_not_filled (test_audit.IntegrityTests.test_incomplete_recording_not_filled) ... ok
+2026-11-05T01:00:36.4695050Z test_max75_is_rejection_not_rewritten_value (test_audit.IntegrityTests.test_max75_is_rejection_not_rewritten_value) ... ok
+2026-11-05T01:00:36.4704557Z test_missing_tick_retains_physical_lower_bound (test_audit.IntegrityTests.test_missing_tick_retains_physical_lower_bound) ... ok
+2026-11-05T01:00:36.4716070Z test_skip_is_retained (test_audit.IntegrityTests.test_skip_is_retained) ... ok
+2026-11-05T01:00:36.4733162Z test_unknown_participant_and_bullet_invalid (test_audit.IntegrityTests.test_unknown_participant_and_bullet_invalid) ... ok
+2026-11-05T01:00:36.5253771Z test_complete_qualified_tuple_404_and_available_header (test_audit.QualifiedRuntimeIntegrationTests.test_complete_qualified_tuple_404_and_available_header) ... ok
+2026-11-05T01:00:36.6450280Z test_early_actual_bytes_api_status_and_report_deferral_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_early_actual_bytes_api_status_and_report_deferral_mutations) ... ok
+2026-11-05T01:00:36.6801994Z test_exact_optional_lsb_absence_and_other_errors_rejected (test_audit.QualifiedRuntimeIntegrationTests.test_exact_optional_lsb_absence_and_other_errors_rejected) ... ok
+2026-11-05T01:00:36.8315068Z test_final_job_header_source_and_step_order_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_final_job_header_source_and_step_order_mutations) ... ok
+2026-11-05T01:00:36.8622792Z test_missing_final_provider_pending_then_completed_incomplete (test_audit.QualifiedRuntimeIntegrationTests.test_missing_final_provider_pending_then_completed_incomplete) ... ok
+2026-11-05T01:00:36.8624777Z test_provider_step_recorded_second_boundary (test_audit.QualifiedRuntimeIntegrationTests.test_provider_step_recorded_second_boundary) ... ok
+2026-11-05T01:00:37.0951468Z test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected (test_audit.QualifiedRuntimeIntegrationTests.test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected) ... ok
+2026-11-05T01:00:37.2021964Z test_snapshot_boot_source_hash_graph_and_live_binding_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_snapshot_boot_source_hash_graph_and_live_binding_mutations) ... ok
+2026-11-05T01:00:37.2024062Z test_environment_missing_duplicate_expansion_and_nonliteral_fail (test_audit.QualifiedRuntimePrimitiveTests.test_environment_missing_duplicate_expansion_and_nonliteral_fail) ... ok
+2026-11-05T01:00:37.2028212Z test_metadata_caps_and_original_raw_format_required (test_audit.QualifiedRuntimePrimitiveTests.test_metadata_caps_and_original_raw_format_required) ... ok
+2026-11-05T01:00:37.2031901Z test_native_duplicates_aliases_extra_fields_and_unknown_tuple_fail (test_audit.QualifiedRuntimePrimitiveTests.test_native_duplicates_aliases_extra_fields_and_unknown_tuple_fail) ... ok
+2026-11-05T01:00:37.2033692Z test_separate_qualified_native_and_env_observations (test_audit.QualifiedRuntimePrimitiveTests.test_separate_qualified_native_and_env_observations) ... ok
+2026-11-05T01:00:37.2037017Z test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims (test_audit.QualifiedRuntimePrimitiveTests.test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims) ... ok
+2026-11-05T01:00:37.2153433Z test_authorized_target_inconsistent_or_early_fails_closed (test_audit.RevocationPolicyTests.test_authorized_target_inconsistent_or_early_fails_closed) ... ok
+2026-11-05T01:00:37.2219299Z test_current_valid_targeted_revoke_removes_authority (test_audit.RevocationPolicyTests.test_current_valid_targeted_revoke_removes_authority) ... ok
+2026-11-05T01:00:37.2286336Z test_different_approval_target_ignored (test_audit.RevocationPolicyTests.test_different_approval_target_ignored) ... ok
+2026-11-05T01:00:37.2416441Z test_foreign_malformed_and_matching_run_ignored (test_audit.RevocationPolicyTests.test_foreign_malformed_and_matching_run_ignored) ... ok
+2026-11-05T01:00:37.2481660Z test_missing_approval_target_ignored (test_audit.RevocationPolicyTests.test_missing_approval_target_ignored) ... ok
+2026-11-05T01:00:37.2644130Z test_byte_overlimit_stale_preflight_and_original_decision_rewrite (test_audit.StoragePositiveTests.test_byte_overlimit_stale_preflight_and_original_decision_rewrite) ... ok
+2026-11-05T01:00:37.2679316Z test_exact_registered_boundaries_and_separate_companion (test_audit.StoragePositiveTests.test_exact_registered_boundaries_and_separate_companion) ... ok
+2026-11-05T01:00:37.2773619Z test_missing_or_incomplete_companion_never_passes (test_audit.StoragePositiveTests.test_missing_or_incomplete_companion_never_passes) ... ok
+2026-11-05T01:00:37.2781723Z test_corrupt_zip_crc_rejected (test_audit.StreamingArchiveTests.test_corrupt_zip_crc_rejected) ... ok
+2026-11-05T01:00:37.2812819Z test_duplicate_alias_absolute_drive_symlink_and_digest_rejected (test_audit.StreamingArchiveTests.test_duplicate_alias_absolute_drive_symlink_and_digest_rejected) ... ok
+2026-11-05T01:00:37.2828509Z test_streaming_replay_without_materializing_recording (test_audit.StreamingArchiveTests.test_streaming_replay_without_materializing_recording) ... ok
+2026-11-05T01:00:37.2833110Z test_bad_original_digest_rejected (test_audit.UpstreamCustodyTests.test_bad_original_digest_rejected) ... ok
+2026-11-05T01:00:37.2836250Z test_confirmation_without_screen_never_passes (test_audit.UpstreamCustodyTests.test_confirmation_without_screen_never_passes) ... ok
+2026-11-05T01:00:37.2843445Z test_noncontiguous_or_changed_part_rejected (test_audit.UpstreamCustodyTests.test_noncontiguous_or_changed_part_rejected) ... ok
+2026-11-05T01:00:37.2848864Z test_seekable_ranges (test_audit.UpstreamCustodyTests.test_seekable_ranges) ... ok
+2026-11-05T01:00:37.2849587Z 
+2026-11-05T01:00:37.2849808Z ----------------------------------------------------------------------
+2026-11-05T01:00:37.2850246Z Ran 73 tests in 1.247s
+2026-11-05T01:00:37.2850426Z 
+2026-11-05T01:00:37.2850540Z OK
+2026-11-05T01:00:37.5133543Z test_case_alias_ambiguity_never_selects_a_claim (test_image_probe.ImageProbePureTests.test_case_alias_ambiguity_never_selects_a_claim) ... ok
+2026-11-05T01:00:37.5138669Z test_collect_phase_contract_rejects_bad_scope_without_reading_sources (test_image_probe.ImageProbePureTests.test_collect_phase_contract_rejects_bad_scope_without_reading_sources) ... ok
+2026-11-05T01:00:37.5197534Z test_complete_mocked_phase_keeps_conflicts_and_never_grants_runtime_acceptance (test_image_probe.ImageProbePureTests.test_complete_mocked_phase_keeps_conflicts_and_never_grants_runtime_acceptance) ... ok
+2026-11-05T01:00:37.5203078Z test_discovery_failure_cap_and_deadline_are_not_global_absence_claims (test_image_probe.ImageProbePureTests.test_discovery_failure_cap_and_deadline_are_not_global_absence_claims) ... ok
+2026-11-05T01:00:37.5205194Z test_duplicate_json_keys_never_select_a_claim (test_image_probe.ImageProbePureTests.test_duplicate_json_keys_never_select_a_claim) ... ok
+2026-11-05T01:00:37.5207636Z test_environment_duplicates_malformed_and_expansion_have_no_fallback (test_image_probe.ImageProbePureTests.test_environment_duplicates_malformed_and_expansion_have_no_fallback) ... ok
+2026-11-05T01:00:37.5210101Z test_environment_values_are_literal_and_sources_remain_separate (test_image_probe.ImageProbePureTests.test_environment_values_are_literal_and_sources_remain_separate) ... ok
+2026-11-05T01:00:37.5214158Z test_existing_output_cannot_be_mixed_or_paths_escape (test_image_probe.ImageProbePureTests.test_existing_output_cannot_be_mixed_or_paths_escape) ... ok
+2026-11-05T01:00:37.5220289Z test_group_and_detail_limits_keep_diagnostic_state (test_image_probe.ImageProbePureTests.test_group_and_detail_limits_keep_diagnostic_state) ... ok
+2026-11-05T01:00:37.5227032Z test_missing_loop_and_nonregular_path_errors_are_explicit (test_image_probe.ImageProbePureTests.test_missing_loop_and_nonregular_path_errors_are_explicit) ... ok
+2026-11-05T01:00:37.5234885Z test_no_root_guessed_when_executable_layout_is_not_observed (test_image_probe.ImageProbePureTests.test_no_root_guessed_when_executable_layout_is_not_observed) ... ok
+2026-11-05T01:00:37.5244396Z test_only_allowed_resolved_metadata_paths_are_read (test_image_probe.ImageProbePureTests.test_only_allowed_resolved_metadata_paths_are_read) ... ok
+2026-11-05T01:00:37.5280516Z test_oversized_metadata_retains_prefix_not_a_whole_hash_claim (test_image_probe.ImageProbePureTests.test_oversized_metadata_retains_prefix_not_a_whole_hash_claim) ... ok
+2026-11-05T01:00:37.5289332Z test_raw_bytes_stat_and_hash_are_retained_before_any_parse (test_image_probe.ImageProbePureTests.test_raw_bytes_stat_and_hash_are_retained_before_any_parse) ... ok
+2026-11-05T01:00:37.5307026Z test_runner_roots_derive_only_from_named_observed_executables (test_image_probe.ImageProbePureTests.test_runner_roots_derive_only_from_named_observed_executables) ... ok
+2026-11-05T01:00:37.5309130Z test_setup_info_case_binding_and_explicit_utf8_bom (test_image_probe.ImageProbePureTests.test_setup_info_case_binding_and_explicit_utf8_bom) ... ok
+2026-11-05T01:00:37.5310890Z test_source_backed_array_and_full_detail (test_image_probe.ImageProbePureTests.test_source_backed_array_and_full_detail) ... ok
+2026-11-05T01:00:37.5516194Z test_two_phase_payload_and_zip_overhead_budget_are_bounded (test_image_probe.ImageProbePureTests.test_two_phase_payload_and_zip_overhead_budget_are_bounded) ... ok
+2026-11-05T01:00:37.5518385Z test_two_runner_image_groups_or_duplicate_version_are_ambiguous (test_image_probe.ImageProbePureTests.test_two_runner_image_groups_or_duplicate_version_are_ambiguous) ... ok
+2026-11-05T01:00:37.5524562Z test_workflow_inline_source_is_byte_identical_and_order_is_frozen (test_image_probe.ImageProbePureTests.test_workflow_inline_source_is_byte_identical_and_order_is_frozen) ... ok
+2026-11-05T01:00:37.5527085Z test_wrong_shapes_nonfinite_bad_utf8_and_missing_fields_are_reported (test_image_probe.ImageProbePureTests.test_wrong_shapes_nonfinite_bad_utf8_and_missing_fields_are_reported) ... ok
+2026-11-05T01:00:37.5528301Z 
+2026-11-05T01:00:37.5528578Z ----------------------------------------------------------------------
+2026-11-05T01:00:37.5529165Z Ran 21 tests in 0.041s
+2026-11-05T01:00:37.5529405Z 
+2026-11-05T01:00:37.5529544Z OK
+2026-11-05T01:00:37.5714320Z ##[group]Run mkdir -p build/keel-brace-bootstrap
+2026-11-05T01:00:37.5714775Z [36;1mmkdir -p build/keel-brace-bootstrap[0m
+2026-11-05T01:00:37.5715113Z [36;1mpython - <<'PYTHON'[0m
+2026-11-05T01:00:37.5715450Z [36;1mimport hashlib, json, os, pathlib, subprocess[0m
+2026-11-05T01:00:37.5716237Z [36;1mroot = pathlib.Path('.')[0m
+2026-11-05T01:00:37.5716580Z [36;1mout = root / 'build/keel-brace-bootstrap'[0m
+2026-11-05T01:00:37.5718042Z [36;1mfiles = subprocess.check_output(['git', 'ls-files', '-z', 'experiments/KeelBrace', 'experiments/Keel/Keel.jar', 'experiments/Keel/bot/Keel.json', 'benchmarks/keel-brace-v1/baseline.json', 'benchmarks/keel-brace-v1/registration.json', 'benchmarks/keel-brace-v1/runtime-pins.json', '.github/workflows/keel-brace-build.yml', 'tools/verify_jar.py']).decode().split('\0')[0m
+2026-11-05T01:00:37.5719763Z [36;1mhashes = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in files if p and pathlib.Path(p).is_file()}[0m
+2026-11-05T01:00:37.5720655Z [36;1mjars = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.glob('*.jar')}[0m
+2026-11-05T01:00:37.5723632Z [36;1mproof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'guestImageOSClaim': os.environ.get('ImageOS'), 'guestImageVersionClaim': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}[0m
+2026-11-05T01:00:37.5726794Z [36;1m(out/'provenance.json').write_text(json.dumps(proof, indent=2)+'\n')[0m
+2026-11-05T01:00:37.5727208Z [36;1mPYTHON[0m
+2026-11-05T01:00:37.5757138Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-05T01:00:37.5757508Z env:
+2026-11-05T01:00:37.5757838Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:37.5758373Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:37.5758821Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T01:00:37.5759169Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T01:00:37.5759487Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T01:00:37.5759802Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T01:00:37.5760265Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T01:00:37.5760770Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T01:00:37.5761129Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T01:00:37.5761502Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.5761964Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T01:00:37.5762420Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.5762832Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.5763243Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.5763656Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T01:00:37.5764004Z ##[endgroup]
+2026-11-05T01:00:37.6849164Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T01:00:37.6849618Z with:
+2026-11-05T01:00:37.6849880Z   name: keel-brace-zero-game-build-41945398266
+2026-11-05T01:00:37.6850523Z   path: build/keel-brace-bootstrap/
+experiments/KeelBrace/build/test-results/
+experiments/KeelBrace/build/reports/tests/
+
+2026-11-05T01:00:37.6851136Z   if-no-files-found: error
+2026-11-05T01:00:37.6851406Z   retention-days: 90
+2026-11-05T01:00:37.6851650Z   compression-level: 6
+2026-11-05T01:00:37.6851887Z   overwrite: false
+2026-11-05T01:00:37.6852131Z   include-hidden-files: false
+2026-11-05T01:00:37.6852385Z env:
+2026-11-05T01:00:37.6852712Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:37.6853310Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T01:00:37.6853786Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T01:00:37.6854121Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T01:00:37.6854464Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T01:00:37.6854779Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T01:00:37.6855243Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T01:00:37.6855930Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T01:00:37.6856282Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T01:00:37.6856652Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.6857098Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-05T01:00:37.6857546Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.6857950Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.6858358Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-05T01:00:37.6858806Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-05T01:00:37.6859154Z ##[endgroup]
+2026-11-05T01:00:37.8567062Z (node:3052) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T01:00:37.8568404Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T01:00:37.8704046Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-05T01:00:37.8723623Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-05T01:00:37.8729620Z With the provided path, there will be 20 files uploaded
+2026-11-05T01:00:37.8732591Z Artifact name is valid!
+2026-11-05T01:00:37.8733242Z Root directory input is valid!
+2026-11-05T01:00:38.1625111Z Beginning upload of artifact content to blob storage
+2026-11-05T01:00:38.2839222Z (node:3052) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T01:00:38.6846039Z Uploaded bytes 2194796
+2026-11-05T01:00:38.7292409Z Finished uploading artifact content to blob storage!
+2026-11-05T01:00:38.7293376Z SHA256 digest of uploaded artifact zip is 0e2654cc93b41ffe3afec3e26d45f1d67248118da2adf5a67e520e949e6eb3e3
+2026-11-05T01:00:38.7295445Z Finalizing artifact upload
+2026-11-05T01:00:39.1677249Z Artifact keel-brace-zero-game-build-41945398266.zip successfully finalized. Artifact ID 13377468480
+2026-11-05T01:00:39.1678574Z Artifact keel-brace-zero-game-build-41945398266 has been successfully uploaded! Final size is 2194796 bytes. Artifact ID is 13377468480
+2026-11-05T01:00:39.1684080Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41945398266/artifacts/13377468480
+2026-11-05T01:00:39.1883997Z Post job cleanup.
+2026-11-05T01:00:39.3114797Z (node:3064) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T01:00:39.3116390Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T01:00:39.3340428Z Post job cleanup.
+2026-11-05T01:00:39.5951648Z In post-action step
+2026-11-05T01:00:39.5962333Z Cache is read-only: will not save state for use in subsequent builds.
+2026-11-05T01:00:39.5969464Z Generating Job Summary
+2026-11-05T01:00:39.5988054Z Completed post-action step
+2026-11-05T01:00:39.6118960Z Post job cleanup.
+2026-11-05T01:00:39.7551001Z (node:3084) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T01:00:39.7551972Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T01:00:39.7712774Z Post job cleanup.
+2026-11-05T01:00:39.8617645Z [command]/usr/bin/git version
+2026-11-05T01:00:39.8663545Z git version 2.56.0
+2026-11-05T01:00:39.8708066Z Temporarily overriding HOME='/home/runner/work/_temp/73f9bc22-97ef-4def-9159-b04a8c83083b' before making global git config changes
+2026-11-05T01:00:39.8709311Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T01:00:39.8713267Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T01:00:39.8756209Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T01:00:39.8796028Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T01:00:39.9128903Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T01:00:39.9206846Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T01:00:39.9633859Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T01:00:39.9690558Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T01:00:40.0115043Z Cleaning up orphan processes
+2026-11-05T01:00:40.0498607Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

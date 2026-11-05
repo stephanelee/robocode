@@ -1,0 +1,41 @@
+{
+  "owner": "brace_protocol_recovery implementationauthor; artifactverificationNOTindependentsourceorcompetitiveclearance",
+  "singleOriginalZIPDownload": [
+    "gh",
+    "api",
+    "repos/stephanelee/robocode/actions/artifacts/13372474505/zip"
+  ],
+  "providerReceipts": [
+    "artifact-api.json",
+    "run-api.json",
+    "jobs-api.json",
+    "source-commit-api.json",
+    "source-tree-api.json"
+  ],
+  "logRecovery": {
+    "firstAttempt": [
+      "gh",
+      "api",
+      "repos/stephanelee/robocode/actions/jobs/126939637835/logs"
+    ],
+    "notice": "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway",
+    "observedInitialOutputFileBytes": 0,
+    "retry": [
+      "gh",
+      "api",
+      "--allow-escape-sequences",
+      "repos/stephanelee/robocode/actions/jobs/126939637835/logs"
+    ],
+    "retryPurpose": "Saveexactrawlogtofilewithoutdisplayingescapecontent",
+    "completeRawLogBytes": 50413
+  },
+  "actualBuildCommands": [
+    "./gradlew -p experiments/KeelBrace --no-daemon clean build",
+    "cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar",
+    "./gradlew -p experiments/KeelBrace --no-daemon clean build",
+    "cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar",
+    "python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar",
+    "cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar"
+  ],
+  "interpretation": "30unique semantic contracts,tworealexecutions,0games; initialcommittedJARabsent, no legacybinarycopiedascandidate"
+}

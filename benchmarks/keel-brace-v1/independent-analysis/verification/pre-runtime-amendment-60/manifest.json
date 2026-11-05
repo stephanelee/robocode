@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "status": "PREMEASURE INDEPENDENT COMPONENT FREEZE; runtime identity resolution blocked; no execution authorization",
+  "newBraceGames": 0,
+  "newBraceRounds": 0,
+  "tests": 60,
+  "fixturesResult": "PASS",
+  "localPython": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "localExecutable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "pinnedRuntimeExecuted": false,
+  "historicalParserFieldsCompared": 28,
+  "historicalParserMismatches": 0,
+  "sourceBoundary": "No candidate/harness reducer implementation read/imported; plain artifact interface and published protocol only",
+  "imageBlocker": "Authoritative historical Setup Runner Image 20261025.179.1 conflicts with ENV/profile 20261026.180.1 and is not allowlisted. No waiver/new runtime pass.",
+  "commands": [
+    "python3 -B -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py",
+    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-final.json",
+    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-normalized-pin.json",
+    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-canonical.json"
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 14419,
+      "sha256": "dd4728b0e8b1cbb368bd327626c8840e6b55b3071650e89c414f10f4e4cdc5b1"
+    },
+    "audit.py": {
+      "bytes": 90349,
+      "sha256": "ab4b8957df2f1cada0094332fac89faca80fd3fa53e98461b945ee6e127c6c6a"
+    },
+    "test_audit.py": {
+      "bytes": 47620,
+      "sha256": "67d2e9cb2ce0d5c650a970ca4f749bf38f06158a9c6a4464df41c86662094ec9"
+    },
+    "verification/fixtures-attempt1.log": {
+      "bytes": 5094,
+      "sha256": "def0672c7d85aeada51ca44b0570dbeb43d1b94c9e0d00e8e7de9c9b67bdd0a1"
+    },
+    "verification/fixtures-attempt10.log": {
+      "bytes": 147,
+      "sha256": "47ab4664d1f2ddc46fc5a33899505aaf822334acbf5e64cdf65e410b1b59c363"
+    },
+    "verification/fixtures-attempt11.log": {
+      "bytes": 147,
+      "sha256": "2ea895604abb935048328962539a3a8a5397178c805fe2dbc86500027920baa6"
+    },
+    "verification/fixtures-attempt12.log": {
+      "bytes": 149,
+      "sha256": "3695a77e3f8b145950538aabae8702cb6588baf9186781600f8f29fccb12bed4"
+    },
+    "verification/fixtures-attempt13.log": {
+      "bytes": 153,
+      "sha256": "9c4f0183d642467e126cdd4ec5979e09b32a1b290c2d93bd033d22a7adb8548e"
+    },
+    "verification/fixtures-attempt14.log": {
+      "bytes": 154,
+      "sha256": "74b630b36e66cb5475fe492842e0a70fc6bfc1feeea60e7828434f8e50e4ce8a"
+    },
+    "verification/fixtures-attempt15.log": {
+      "bytes": 155,
+      "sha256": "1670f75571f185328c4b8b686e5174ee15becb0065e3dd8203c8aa40b248ae53"
+    },
+    "verification/fixtures-attempt16.log": {
+      "bytes": 158,
+      "sha256": "224dc651b59ba28dcdfb6160e4dff22507fc5aa49335c3c27c69f2437f6cd4a1"
+    },
+    "verification/fixtures-attempt17.log": {
+      "bytes": 159,
+      "sha256": "76c97e372f75c7e3b9f24f864671910bd8094a0d7401ad44c58cc182e257a61a"
+    },
+    "verification/fixtures-attempt18.log": {
+      "bytes": 159,
+      "sha256": "ab4cd2243840025771db272c9979a676797927ab88ca13fea3509ccaa029b11f"
+    },
+    "verification/fixtures-attempt2.log": {
+      "bytes": 3954,
+      "sha256": "378066547f5651a91ff2780105889cb7a246f30a0100e28f1080bc1a705245a1"
+    },
+    "verification/fixtures-attempt3.log": {
+      "bytes": 4892,
+      "sha256": "451bdbeadb6da5b28d0b9bffb5699c3652e978b4607a99e62cbea9f31e9445a0"
+    },
+    "verification/fixtures-attempt4.log": {
+      "bytes": 4892,
+      "sha256": "7c130bcc706d34b7e8425744a6d6a88dbc93b23dba95c22548e79151f0aa3f0c"
+    },
+    "verification/fixtures-attempt5.log": {
+      "bytes": 5242,
+      "sha256": "5cbd3bc310b25aa226afeedbe9452bf7f8e1f47d11eb213cb5790b95f5323c59"
+    },
+    "verification/fixtures-attempt6.log": {
+      "bytes": 5242,
+      "sha256": "5cbd3bc310b25aa226afeedbe9452bf7f8e1f47d11eb213cb5790b95f5323c59"
+    },
+    "verification/fixtures-attempt7.log": {
+      "bytes": 5846,
+      "sha256": "da27c5fb04ab554c08b25c2d2d564e2c8321a319934bbe90297774dfbd68008d"
+    },
+    "verification/fixtures-attempt8.log": {
+      "bytes": 6148,
+      "sha256": "e4671340ce0cf3c692190854bc3b1ac7b88dc1ca9892e64c8163e041d311099e"
+    },
+    "verification/fixtures-attempt9.log": {
+      "bytes": 6148,
+      "sha256": "1f05e4a7f7643b8e9c8fe21d92086412f2033a877ad6337e9581a5809cce1c94"
+    },
+    "verification/historical-baseline-parser-attempt1.json": {
+      "bytes": 1468,
+      "sha256": "e9efc0e2009fb0daaea397675369824109766503931de0936fa11d92ec2dbecb"
+    },
+    "verification/historical-baseline-parser-canonical.json": {
+      "bytes": 1591,
+      "sha256": "f9276840acbdff675f356418961dca183efa85a42020afd982c10fe2c587a7bf"
+    },
+    "verification/historical-baseline-parser-final.json": {
+      "bytes": 1591,
+      "sha256": "f17388a569ff48afdaf764a23db0abb754f27d8dd80a299cb79dcf4475d42075"
+    },
+    "verification/historical-baseline-parser-normalized-pin.json": {
+      "bytes": 1591,
+      "sha256": "df7367ab46e3ee499f7095090a6197afa90ae5f8691b42d3fa1e368140df5b85"
+    },
+    "verification/historical-baseline-parser.json": {
+      "bytes": 1591,
+      "sha256": "600d0d6927d5235b1f67840c4ecd7707677b6a719ca9b0267ee80a1e43d51947"
+    },
+    "verification/historical-runner-conflict-attempt1.json": {
+      "bytes": 1106,
+      "sha256": "3a20ad79e2d47573cbb903645277edde25bb8ddb8017084a505c79de106c3be4"
+    },
+    "verification/historical-runner-conflict.json": {
+      "bytes": 852,
+      "sha256": "2a16cb4b52ede759854a3d4ed42818d5209fa4f83bbf3312041023127b0cdbb2"
+    },
+    "verification/pre-canonical-reconcile-55/README.md": {
+      "bytes": 13351,
+      "sha256": "795c4d4a5792ab448aeb2985f9b3da8620c02605f65878cfebe1f619bf5bd36d"
+    },
+    "verification/pre-canonical-reconcile-55/audit.py": {
+      "bytes": 83587,
+      "sha256": "dcadf21f5c9579a33f009f37397ac07abf94ee9df1ba6c05ca9f4835d0a3fa56"
+    },
+    "verification/pre-canonical-reconcile-55/fixtures.log": {
+      "bytes": 154,
+      "sha256": "74b630b36e66cb5475fe492842e0a70fc6bfc1feeea60e7828434f8e50e4ce8a"
+    },
+    "verification/pre-canonical-reconcile-55/manifest.json": {
+      "bytes": 6614,
+      "sha256": "e144decdff1deb9e5fb198c36ce407ef984ce847cc2a2ebf3433d86d3c3a5272"
+    },
+    "verification/pre-canonical-reconcile-55/test_audit.py": {
+      "bytes": 40014,
+      "sha256": "5b629491261625732c9037c85bbf4daf70007fbc27d3a03d135dc113ba300264"
+    },
+    "verification/pre-normalized-pin-48/README.md": {
+      "bytes": 12525,
+      "sha256": "7b28722bbe6576054d58ace41a99efdd79db6e371138b6eeb2ac312eb696d98f"
+    },
+    "verification/pre-normalized-pin-48/audit.py": {
+      "bytes": 81822,
+      "sha256": "960dea34e1c8f097e5416c8bd20be5290367dccc1549b0e8995dd637b9c05978"
+    },
+    "verification/pre-normalized-pin-48/fixtures.log": {
+      "bytes": 147,
+      "sha256": "2ea895604abb935048328962539a3a8a5397178c805fe2dbc86500027920baa6"
+    },
+    "verification/pre-normalized-pin-48/manifest.json": {
+      "bytes": 4618,
+      "sha256": "40b826516730bdee0b69ca46e9da3a09e80969c96ed71ca10ad6b082df799a0b"
+    },
+    "verification/pre-normalized-pin-48/test_audit.py": {
+      "bytes": 35697,
+      "sha256": "5a7f29fdba2b2e1f5750a9fe84cbe52f9289ea4dd59056f381179508efd17ebd"
+    },
+    "verification/replay_historical_baseline.py": {
+      "bytes": 2465,
+      "sha256": "b170c7e32b47d4a46b66d57258a71c889f721e783a63df8d2769c96d54ed0212"
+    },
+    "verification/runtime.json": {
+      "bytes": 540,
+      "sha256": "5dadff17bdcf174922fe5877f9aaa210c28cf9dfa3b6992dde35be37cbbeb0a5"
+    }
+  },
+  "repair": "Exact normalized authority/revocation audit plus original canonical acquisition/decision reconciliation on current and upstream stages; global marker chronology; prior48 and55 states retained"
+}

@@ -1,0 +1,97 @@
+{
+  "reviewerTask": "/root/brace_independent_protocol_review",
+  "recordedAtUTC": "2026-11-05T03:04:19.180486+00:00",
+  "analysisPython": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "analysisExecutable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+  "analysisPlatform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "cwd": "/private/tmp/robocode-keel-brace",
+  "scope": "Offline audit runtime only; actual battle runtime remains immutable archived profile/Java17-before25/pinnedPython3.13.17, not this localPython3.15.1",
+  "commands": [
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "benchmarks/keel-brace-v1/independent-analysis/audit.py",
+      "verify-archive",
+      "--zip",
+      "/private/tmp/keel-brace-v2-screen-runtime-review/original-provenance-13380953306.zip",
+      "--sha256",
+      "58d7c7cca4a1404b8d94ace2a381c094159a271c3e368ca85da03335776a7adf",
+      "--output",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/pregame-original-archive-audit.json"
+    ],
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/manual_raw_crosscheck.py",
+      "--zip",
+      "/private/tmp/keel-brace-screen-41951522797-final-evidence/original-artifact-13383827989.zip",
+      "--prefix",
+      "robocode/robocode/build/keel-brace/screen/",
+      "--registry",
+      "benchmarks/keel-brace-v1/games.json",
+      "--output",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/manual-raw-results.json"
+    ],
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "benchmarks/keel-brace-v1/independent-analysis/audit.py",
+      "audit-stage",
+      "--evidence-zip",
+      "/private/tmp/keel-brace-screen-41951522797-final-evidence/original-artifact-13383827989.zip",
+      "--prefix",
+      "robocode/robocode/build/keel-brace/screen/",
+      "--zip-sha256",
+      "3eb14b072617c3b64d364988c9db8d224cb47e4160214bd14d6e6ef629ca02d8",
+      "--custody-zip",
+      "/private/tmp/keel-brace-screen-41951522797-final-evidence/original-artifact-13383922872.zip",
+      "--custody-sha256",
+      "ffcee88194c9599be4930058853481c85ee0ee91dd5d96d02f396b6343ef89db",
+      "--provider-evidence",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/provider",
+      "--source-root",
+      "/private/tmp/robocode-keel-brace",
+      "--stage",
+      "screen",
+      "--head",
+      "e659647b3ae6366008ef666bf338ea3ee446ee71",
+      "--run",
+      "41951522797",
+      "--output",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/frozen-independent-audit.json"
+    ],
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/provenance_path_selection.py"
+    ],
+    [
+      "python3",
+      "-I",
+      "-B",
+      "-S",
+      "/private/tmp/keel-brace-screen-41951522797-outcome/independent_final_metadata.py"
+    ],
+    [
+      "gh",
+      "api",
+      "repos/stephanelee/robocode/actions/workflows/407548059/runs?per_page=100"
+    ]
+  ],
+  "readOnlyGitHubConnectorRequests": [
+    "actualrun41951522797",
+    "actualjobs41951522797",
+    "actualcomments6647642341/6647660422/6647448110",
+    "actualreceiptref+annotatedtag",
+    "actualwholejob126996333991logs"
+  ],
+  "originalArtifactDownloadOwner": "/root/benchmark_packaging; streamed shared originals, no duplicate download"
+}

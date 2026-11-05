@@ -1,0 +1,29 @@
+{
+  "filesVerified": 62,
+  "hashes": {
+    "audit.py": "53f026d481101a1b06ce95a8485ed65763c22f3c848710072972f844c1929aa4",
+    "test_audit.py": "b3d983c14a87a31477d923bd7f101de3065285a4b4c2b74ce8c2522a3c8337e5",
+    "README.md": "8345c27e202b812bdab6f03cbc002e16ebf1dc566de94f9746873b266c189e9a",
+    "manifest.json": "b3a936dec060a86369b29050ce41bea74b650489dfa20f005d613f69a5baf0f4"
+  },
+  "retainedPriorFunctionsUnchanged": [
+    "markers",
+    "comment_identity",
+    "targeted_revocation",
+    "canonical_gate_checks",
+    "reconcile_canonical"
+  ],
+  "reviewerReproducerFixes": {
+    "fractionalBoundary": "PASS",
+    "wrongProviderName": "REJECTED",
+    "failures": [
+      "ValueError: Final numeric provider job reconciles exact logical job name"
+    ]
+  },
+  "tests": 73,
+  "testLogSHA256": "5d89d7a7ec3bbb156032f7bb68e1c24a94557cd67f10e6a0af0aa85170e1ca5b",
+  "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "newGames": 0,
+  "newRounds": 0
+}

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "status": "SEMANTICS_AND_REBUILD_PASS_WITH_UNRESOLVED_RUNNER_IMAGE_PROVENANCE_DISCREPANCY",
+  "competitiveGames": 0,
+  "noGameRuntimeClearance": true,
+  "runId": 41934557748,
+  "runAttempt": 1,
+  "jobId": 126939637835,
+  "sourceCommit": "c5a4c3f97e11358656dcf6821529e9917c757bf5",
+  "sourceTree": "5246d311b1413bf0584e130dce9d88c778960917",
+  "originalArtifact": {
+    "id": 13372474505,
+    "bytes": 1463862,
+    "SHA256": "71b036d63fe40bf0e83d10f907ca9f09720b3998f6aa3846c78d68d749bebeb6",
+    "originalMembers": 16
+  },
+  "candidateJAR": {
+    "path": "experiments/KeelBrace/KeelBrace.jar",
+    "bytes": 872696,
+    "SHA256": "8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9",
+    "regularEntries": 790,
+    "totalZIPEntries": 826,
+    "firstAndSecondWholeBytesEqual": true,
+    "entryParity": "790matchingregularentries; timestamps/order ignored byoriginalverify_jar then cmp verifieswholebytes"
+  },
+  "tests": {
+    "uniqueTests": 30,
+    "executions": 60,
+    "eachUniqueExecutedTwice": true,
+    "suites": [
+      {
+        "file": "original-members/experiments/KeelBrace/build/test-results/test/TEST-KeelBraceChronologyTest.xml",
+        "name": "KeelBraceChronologyTest",
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testNames": [
+          "staleRamIsCountedButNeverAppliedToFutureScan()",
+          "followingRealPointSixShotIsNotCanceledByPreviousRam()",
+          "lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot()",
+          "missingScanDiscardsItsRamAndDoesNotLeakToLaterInference()",
+          "everyAggregateIsCheckedAndBounded()",
+          "ramAndPostScanBulletEffectsStayOnDifferentEpochs()",
+          "bothRammingAttributionsHaveSameCorrection()",
+          "newerRamTurnReplacesAnUnconsumedOlderBucket()",
+          "ramAndMinimumShotPreserveActualPower()",
+          "eligibleCounterPrecedesMissingOwnHistoryWaveSubgate()",
+          "roundResetClearsBucketCountersAndOriginalBulletMap()",
+          "duplicateAndStaleScansCannotConsumeOrCountAgain()",
+          "wallHeuristicAndNoRamWaveFeaturesRemainOriginal()",
+          "firstScanRamIsDiscardedWithoutDelayedCorrection()",
+          "postScanBulletDamageAndBonusStillBelongToNextScan()",
+          "ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary()",
+          "checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection()",
+          "multipleLegitimateBulletCorrectionsAndOneRamSumOnce()",
+          "ramAndMediumShotPreserveActualPower()",
+          "ramAndMaximumShotRecoverOriginalOutOfRangeWave()"
+        ]
+      },
+      {
+        "file": "original-members/experiments/KeelBrace/build/test-results/test/TEST-KeelBraceInheritedContractTest.xml",
+        "name": "KeelBraceInheritedContractTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "testNames": [
+          "wallRoomShrinksNearWalls()",
+          "speedLawMatchesPinnedServer()",
+          "hitsShiftDanger()",
+          "densityIsNormalizedAndCoversAll()",
+          "knnReturnsClosest()",
+          "halfWidthIsTangentAngleWhenAnnulusContainsBot()",
+          "shadowBlocksOnlyWhereOurBulletCrossesTheWave()",
+          "wallStopsBotAndZeroesSpeed()",
+          "stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit()",
+          "stationaryDangerMatchesFootprintWidth()"
+        ]
+      }
+    ],
+    "XMLScope": "final second clean build XML retained; first and second executions independently visible in fulloriginal build log"
+  },
+  "sourceInputs": {
+    "count": 27,
+    "SHA256andPublishedGitBlobMatches": true
+  },
+  "runtime": {
+    "reportedJava": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+    "reportedPython": "Python 3.13.17",
+    "providerLabels": [
+      "ubuntu-26.04"
+    ],
+    "providerOS": "Ubuntu26.04.1x64",
+    "artifactProvenanceImageVersion": "20261026.180.1",
+    "rawProviderJobHeaderImageVersion": "20261025.179.1",
+    "discrepancy": "Originalrecordsdisagree. Rawproviderheaderimage20261025.179.1isoutsideprotocolallowlist; no gameplayruntimeadmission or allowed-imagePASS is claimed."
+  },
+  "limits": [
+    "InitialcommittedJARwasabsent; first-to-secondcleanbuildparityisNOTinitialsource/committedJARparity. SubsequentpublishedexactheadCI mustcomparethe actual retainedcommittedJAR against source.",
+    "Bootstrapbuilt/testedcandidateonly; itdidnotperformproductionAISororiginalKeelsourcebuildparity. Thosechecksremainrequiredbeforegames.",
+    "Runtimeproofcontainsversion/contextstringsandbuildsource/JARhashes,notfullJDK/Pythonbinaryfingerprints; actualregistered SAME-WORKER runtimeclearance remainsmandatory.",
+    "Homebrewavailabilityprobe remainshistoricalNOTapinnedbuildpass. No competitive result or mechanism-strength evidence follows frompurefixtures."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "purpose": "zero-game pure semantic build; no competitive outcome or runtime clearance",
+  "headSHA": "c5a4c3f97e11358656dcf6821529e9917c757bf5",
+  "runId": 41934557748,
+  "runAttempt": 1,
+  "runnerOS": "Linux",
+  "imageOS": "ubuntu26",
+  "imageVersion": "20261026.180.1",
+  "javaHome": "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64",
+  "javaVersion": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+  "pythonVersion": "Python 3.13.17",
+  "sourceFilesSHA256": {
+    ".github/workflows/keel-brace-build.yml": "bb1029c77b1a02a96afb54d42e1afb08c79580ea003d6b4b1cb0177f1a9e8e8d",
+    "benchmarks/keel-brace-v1/baseline.json": "cf85147dbf2f9b4ae41495011f20a0850b5349cd86fff4133889ecaade77a623",
+    "benchmarks/keel-brace-v1/registration.json": "c74be75b858374c65902013cda7d978fbc1fce66c6632524581394867c5b8453",
+    "benchmarks/keel-brace-v1/runtime-pins.json": "2b7b946b633ffc972bb34d98b91eeb1df897b775ea204d075ff8ae8a0a42f9e5",
+    "experiments/Keel/Keel.jar": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f",
+    "experiments/Keel/bot/Keel.json": "7d9848306ac51bb5faf6ff576a2df22c481f73ed647e65be674bdbed35d3cd64",
+    "experiments/KeelBrace/README.md": "130da3799c44ca195f0d711bef027eac28ce754f58e94ea400fe76716adaf4fb",
+    "experiments/KeelBrace/bot/KeelBrace.cmd": "93e4dd6966218a9ee5c55c3e465bb4333bca4fdfe4005cdffe4896ca79a2ab9f",
+    "experiments/KeelBrace/bot/KeelBrace.json": "4f7eb69ac189c33dc2cc042eccdec4e404db02576d581e868e988c6e655c6374",
+    "experiments/KeelBrace/bot/KeelBrace.sh": "b5cee7d2143f9b629b2c46561b348bec3ffbe26e912f69497a900918b663c525",
+    "experiments/KeelBrace/build.gradle": "1e589a3d60049ecd4da8652766779d8d88c55fb3dc9ad124b3a9f678d1de044b",
+    "experiments/KeelBrace/settings.gradle": "60683b7890383233c727c7241d60b7f8fa69e8ecffa18882226225d439c34f17",
+    "experiments/KeelBrace/src/Gun.java": "c74859db10e1e25ff9810dc9f6eb9b7f8b797bc6ca09fa77911ba9aa0b984577",
+    "experiments/KeelBrace/src/KeelBrace.java": "b3e1e86898a42247b6b7d919f87ab27b2c6e1695da2c58b1914dc962cb498a03",
+    "experiments/KeelBrace/src/Knn.java": "2ef9c7d4a76ea2ebd6c0fe67917522c767d4e459d20c3868c491de1fb2a6b7d0",
+    "experiments/KeelBrace/src/Phys.java": "bbd689faf2ebec5f514b94803d93870515873ad727f358d8cf07a4d43ba057c0",
+    "experiments/KeelBrace/src/RamLedger.java": "602bbc6a98b434afbe593a2e2593b7ee6a6c72a3c11aad6d2f08051ac87c136b",
+    "experiments/KeelBrace/src/Surfer.java": "302a4735b78701b8e0f527f35fb4ea3629f129b1bc7c2d26154776cdba2843df",
+    "experiments/KeelBrace/src/Track.java": "ce44845889bd5db587596beaa5d54e6313d01b5b310d092f256858656fd5782d",
+    "experiments/KeelBrace/test/KeelBraceChronologyTest.java": "d64726775fb2cc9138acfeed35be0a91573016e47910a551ea239901fda34f95",
+    "experiments/KeelBrace/test/KeelBraceInheritedContractTest.java": "92732812b9b46c32350abd5782f4d7e4234d8b8f5147d8da71401b49e01a4bd5",
+    "experiments/KeelBrace/validation/source-only/baseline-and-production-invariance.json": "00c4a11d06a21535055623c1f7ad56dcc84669c4c85fa0bfba22b2fda3070fb3",
+    "experiments/KeelBrace/validation/source-only/inspection-attempts.json": "8f3179b909ef6ce03cc97e6b3ffce1ecf28f48eff8ddbb822f1db34dae484c40",
+    "experiments/KeelBrace/validation/source-only/original-main-to-candidate.patch": "a8a9c4495da460f31f899a8b98150112ed7cb78a9d7d57bf412ddc02d1e0936f",
+    "experiments/KeelBrace/validation/source-only/runtime-probe.json": "e9a40e83edaa30b69c6d3b2332e9acab0e2df213a4fb6bd6d1b25c4e1c115083",
+    "experiments/KeelBrace/validation/source-only/source-package-manifest.json": "eae91f626c92244683dd0c8a50c51ac0403ae4b610275e2fdc9cb522200dbe62",
+    "tools/verify_jar.py": "a4665744388c00fe69fbeedbb450b0fc4e73c6f4d1711b2309badb1afb864870"
+  },
+  "jars": {
+    "KeelBrace-first.jar": {
+      "bytes": 872696,
+      "sha256": "8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9"
+    },
+    "KeelBrace.jar": {
+      "bytes": 872696,
+      "sha256": "8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9"
+    }
+  },
+  "firstCommittedJarPresent": false
+}

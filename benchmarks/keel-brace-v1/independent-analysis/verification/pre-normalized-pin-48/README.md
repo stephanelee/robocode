@@ -1,0 +1,67 @@
+# KeelBrace independent outcome audit (prepared before results)
+
+This is a standalone, standard-library-only observer/custody audit. It never starts a bot, server, Java source launcher, engine fixture or match. It imports neither candidate code nor any benchmark/controller reducer. The raw observer decoder is derived from the earlier **independent** KeelHelm audit, SHA256 `1a1c8e3de7a6f05e8b2cac987665d3b0ce7d3c9772e502b427df2dd615f1984a`; the new protocol gates, five-counter parser, authority/storage checks and streaming original-ZIP transport were fixed prospectively for issue114/PR115.
+
+**Current limitation: runtime-image provenance is unresolved.** The original Helm job header reports image `20261025.179.1` while its archived ENV/profile declares allowed `20261026.180.1`. The raw scores and relative rejection do not resolve that conflict. This module requires the independently collected original Setup-job header and fails closed on missing, ambiguous, unapproved or conflicting identity. ENV alone, synthetic fixtures, majority voting or a parser test is never runtime clearance. Root has stopped new stage admission pending a separate official image-source investigation and prospectively reviewed pre-execution capture/resolution. No allowlist or competitive gate is relaxed here, and no new runtime pass is claimed.
+
+## Inputs and results
+
+[Protocol](../../../docs/improvements/keel-brace-v1.md), [registry](../games.json), [pins](../runtime-pins.json). The exact protocol/registry/pin hashes are asserted by the audit; original Keel and production AIS hashes are checked against the immutable baseline manifest. Candidate source/JAR identities are read from the later actual source freeze, never invented now. The executing independent `audit.py` bytes must themselves match that frozen source.
+
+`audit-stage` accepts either the original stage directory or an original provider ZIP with its exact provider SHA256. Read-only `ZipPath` streams original compressed recordings and small metadata without expanding another full copy. Full acceptance additionally requires the **separate** custody-validation ZIP/digest and externally collected provider API evidence. It cannot be established from selected recordings or the provider job's success alone.
+
+Example after actual completion (replace identifiers with real independently observed values):
+
+```sh
+python -I -B -S benchmarks/keel-brace-v1/independent-analysis/audit.py audit-stage \
+  --evidence-zip /preserved/original.zip --zip-sha256 ACTUAL_ORIGINAL_PROVIDER_SHA256 \
+  --prefix ACTUAL_STAGE_MEMBER_PREFIX \
+  --custody-zip /preserved/custody-validation.zip --custody-sha256 ACTUAL_COMPANION_PROVIDER_SHA256 \
+  --provider-evidence /preserved/provider --source-root /checkout/of/exact/frozen/head \
+  --stage screen --head ACTUAL_EXECUTED_HEAD --run ACTUAL_RUN_ID --output /preserved/independent-audit.json
+```
+
+The original ZIP and every whole member are streamed for size, SHA256, Git-blob SHA, CRC and metadata verification. No equivalent re-ZIP or recomputed canonical decision is substituted. Traversal, alias paths, duplicate/encrypted/nonregular members and byte/CRC mismatches fail closed. The original 2GiB cap is checked; companion custody is verified separately and never pretends to contain its own final API.
+
+Exit zero means the requested preservation check passed, or all implemented stage checks passed. Any other stage disposition exits nonzero. **Nonzero is not permission to repeat battles.** Inspect the JSON: `rawDisposition` preserves score/exposure classification separately from custody/provenance completeness. `INVALID/INCOMPLETE` takes priority for raw integrity/timing faults. With valid data, zero stage-local candidate Retcon eligible-scan exposure is `INCONCLUSIVE` even if score gates fail; with positive exposure, a score gate failure is `REJECT`. Missing/contradictory authority, runtime image, storage or companion proof yields `PROVENANCE-INCOMPLETE`, never automatic acceptance. A parser/custody exception is recorded as `AUDIT-CUSTODY-INCOMPLETE`, not an invented invalid battle. `PASS` is a finite registered engineering result, not general strength, causal proof or an automatic promotion/merge.
+
+## Agreed artifact interface (data only)
+
+The stage root retains the complete original `profile.json` (or `provenance/profile.json`), `freeze.json`, `commands.json`, participant/opponent manifests, `python-runtime.json`, build log, original `approval.json` and API comments, `accepted-authority.json`, permanent `receipt.json`, raw `decision.json`, and for each exact registered ID:
+
+- `games/<id>/`: one whole original `.battle.gz`, complete `markers.txt`, original prepared-game/attempt/teardown records and actual AIS TRAIN files where registered. Normal teardown additionally records `hardDeadlineRespected,hardLimitSeconds:1800,runStopReserveSeconds:16,endUTC,elapsedMonotonicSeconds`; failures retain status/error. The audit checks actual finite monotonic child duration and serial/provider bounds, without counting unrelated later reduction or hashing as child runtime.
+- `approval-revalidations/before-receipt.json` and `before-<id>.json`: original current-comment/artifact/PR/receipt API records. These retain the existing **`checkedAtUTC`** authority timestamp.
+- `storage-admissions/before-preparation.json`, `before-receipt.json`, `before-<id>.json`: exact fields `schemaVersion,phase,observedAtUTC,volume,freeBytes,minimumFreeBytes,stageOutputBytes,stageOutputLimitBytes`. Minimum free20GiB at preparation,8GiB at receipt/child; stage-output cap4GiB.
+- `storage-monitor.json`: `schemaVersion,firstObservedAtUTC,lastObservedAtUTC,observations,maximumStageOutputBytes,limitBytes,limitExceeded`.
+- Dispatch `assignmentToolRecord.storagePreflight`: exact `host,volume,observedAtUTC,freeBytes,toolEvidence`; actual custody sample must be >=8GiB and <=60minutes before workflow creation.
+
+The independent provider collector supplies these files **outside** the original immutable ZIP:
+
+- `run.json`, `jobs.json`, `workflow-runs.json` for the actual registered workflow, including final completed steps, attempts and source head.
+- `receipt-ref.json`, `receipt-tag.json`, and `comments/<accepted-numeric-ID>.json` for all three original accepted comments. Current body/author/creation/update identities are compared to immutable originals.
+- `evidence-artifact.json`: actual final original-evidence artifact API. `custody-artifact.json`: actual separate custody-validation artifact API. Both ZIPs' real bytes/digests are independently checked.
+- `job.log`: the complete original decoded **registered job** log, collected from GitHub. `job-log-api.json`: exact `schemaVersion,jobId,runId,headSHA,logSHA256,sourceURL,retrievedAtUTC,collectorTask,toolEvidence`. Preserve the true API/CLI/tool provenance; never fabricate an endpoint/collector identity. Source URL is permanent, without signed-query secrets. The parser isolates the original Setup-job `Runner Image` and `Operating System` groups, never the Provisioner version or later shell output. The source-of-truth/pre-execution resolution remains the separate open investigation described above.
+
+The separate companion artifact `keel-brace-v1-<stage>-custody-validation-<runid>` contains the original evidence-artifact API and `export-validation.json` pair under its actual exported `finalprovider` prefix (or equivalent common upload root). Exactly one unambiguous pair is accepted. Export-validation exact fields are `schemaVersion,stage,status,observedAtUTC,originalZIPMaximumBytes,rawDecisionSHA256,artifact`, with optional error only for failure. It must report valid, preserve the original raw decision SHA, bind the original API and be ordered after original finalization. The final job must complete successfully including post-export validation. No original decision rewrite or self-referential companion API is accepted.
+
+## Independent calculations and limits
+
+Official scores, official first-place counts (including ties), per-round endpoints/contiguous ticks, uncapped event damage, shots/hits/energy/power mix, contacts, firing rates and game-level variation come directly from observer data. Exact `Fraction` comparisons implement the fixed equal-game score gates; no round/history pooling or contact-based filtering. The registered five round-local counters require integer/nonnegative/cap/inequality consistency; a `diagnosticOverflow` marker invalidates acquisition. Raw delivered ram events cannot exceed recorded own contact opportunities, but equality is not required because terminal callback delivery may be incomplete. Eligible correction counters are source/runtime-bound aggregate activation, not independently reconstructed private callbacks or isolated score causality. Only the current stage's candidate Retcon `eligibleRamCorrectedScans` sum can meet its exposure gate.
+
+The audit checks archived source/JAR/input/command identities and exact accepted authority, live revalidation copies, current independent API snapshots, recorded disk samples/output monitor, permanent receipts, attempt/cold-state declarations and recorded monotonic child bounds and provider job/serial timing corroboration. It does not remotely rehash unexported live JDK/Python/native files, attest an agent's independence from a shared GitHub login alone, guarantee unobserved between-sample disk peaks, infer geometric engine seats from BotEntry order, or observe Diamond private skipped turns. Actual separate-agent/tool provenance and frozen controller/runtime source wiring still require independent human/agent review before any stage or final promotion. Timing integers retain the original run-loop scope and are not full callback/system latency guarantees.
+
+## Validation evidence and freeze
+
+Run pure synthetic checks with:
+
+```sh
+python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py -v
+```
+
+All tests are opaque observer/API/custody fixtures, not engine simulations or matches. The active suite has48 unique tests. Retained earlier logs show40 executions in the first suite (including10 inherited duplicate executions), then30 unique,36,38 and42/44 as new authority/storage/image and direct child-timing cases were added. No failed competitive candidate is retried. Local execution runtime is recorded and is **not** the pinned battle runtime; pinned CPython3.13.17 CI and independent source review remain required before freeze/admission.
+
+`verification/replay_historical_baseline.py` optionally compares one immutable old original-Keel baseline recording to the earlier independent audit. It validates parser format only, with **zero new Brace rounds**, no model/parameter decisions and no new statistical or strength claim. The historical runner-header contradiction record is a negative provenance diagnostic, not runtime approval or an allowlist amendment. No candidate/harness code is imported/read by this audit author.
+
+`manifest.json` binds component bytes, commands, logs and local runtime before any Brace outcome. It is a prepared audit-component checkpoint, **not source/runtime clearance**. Root must settle and independently review the authoritative pre-execution image-resolution contract before a first benchmark; conflicting sources cannot be waived by this component.
+
+Confirmation also requires an independent upstream screen custody/raw replay. `provider-evidence/screen/` supplies original `run.json`, `jobs.json`, `job.log`, `job-log-api.json`, `receipt-ref.json`, `receipt-tag.json`, `outcome-comment.json`, and `evidence-artifact.json`. The registered nine-key screen gate and custody manifest must cover every retained original ZIP range/member, exact freeze/commit/path/source binding, all fourteen distinct original recordings, and the unrewritten raw decision. The reader seeks across verified <=2MiB parts in bounded memory; it creates no duplicate full ZIP. It independently recomputes all raw screen score/timing/exposure gates and checks completed provider authority, original receipt, image identity, and the post-completion separate SCREEN-PASS review. Missing proof fails closed. Pure range seek/corruption/missing-screen fixtures do not prove a full actual confirmation custody chain; that audit is performed only when real original evidence exists. Independent published review supplies upstream source-policy/runtime judgment; the original collector/reviewer task provenance still needs actual tool corroboration. No new competitive results exist.
