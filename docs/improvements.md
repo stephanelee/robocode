@@ -322,3 +322,7 @@ Accept for the bounded frozen top-four cohort: mean melee share 13.19% → 26.98
 ## 2026-11-05 — KeelHelm follow-up1: adaptive-gun
 
 Decision reject: melee 34.26% -> 30.75% (-3.51pp). Exactly20 games/260rounds; positive policy exposure3718; all evidence/resource guards valid. Other guard outcomes, source/JAR/runtime pins and retained raw artifacts are in the [full report](improvements/keelhelm-followup-1-adaptive-gun-results.md). [Protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No tuning or pooling; next accepted mask0.
+
+## 2026-11-05 — KeelHelm power initial attempt: invalid parallel timing
+
+Original study stopped: unchanged control skipped Round13 turns1/2/3; sibling finished20 rounds. Spend32completed physical rounds plus one partial(107ticks); no promotion, replacement, resume or pooling. Stages3/4unplayed. Resource guards passed; no cause established. CleanupEPERM recorded, no orphan processes found. Follow-up accounting292complete+1partial, project552complete+1partial including prior260. [Report/raw evidence](improvements/keelhelm-followup-2-original-invalid.md), [protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).

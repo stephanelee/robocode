@@ -3,14 +3,47 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 import tempfile
+import io
+import keelhelm_melee as core
 from fractions import Fraction
 import keelhelm_followups as f
 import keelhelm_resources as resources
 
 class Contracts(unittest.TestCase):
+    def test_group_inspection_failure_still_terminates_and_reaps_known_child(self):
+        class Process:
+            pid=12345;returncode=None;terminated=False;waited=False
+            def poll(self):return self.returncode
+            def terminate(self):self.terminated=True;self.returncode=-15
+            def kill(self):self.returncode=-9
+            def wait(self,timeout):self.waited=True;return self.returncode
+        process=Process()
+        with tempfile.TemporaryDirectory() as folder:
+            run=Path(folder);(run/'helm-metrics.txt').write_text('13 skip 1\n')
+            with patch.object(core.subprocess,'Popen',return_value=process),patch.object(core,'owned_group_live',side_effect=PermissionError('ps denied')):
+                with self.assertRaisesRegex(ValueError,'Own skipped turn'):core.execute(['unused'],{},run)
+            cleanup=json.loads((run/'cleanup.json').read_text())
+        self.assertTrue(process.terminated);self.assertTrue(process.waited)
+        self.assertFalse(cleanup['verified']);self.assertIn('ps denied',cleanup['validationError'])
+    def test_signal_permission_error_does_not_mask_primary_skipped_turn(self):
+        class Process:
+            pid=12345;returncode=None
+            def poll(self):return self.returncode
+            def terminate(self):self.returncode=-15
+            def kill(self):self.returncode=-9
+            def wait(self,timeout):return self.returncode
+        process=Process();calls=[]
+        def live(group):
+            calls.append(group);return [process.pid] if len(calls)==1 else []
+        with tempfile.TemporaryDirectory() as folder:
+            run=Path(folder);(run/'helm-metrics.txt').write_text('13 skip 1\n')
+            with patch.object(core.subprocess,'Popen',return_value=process),patch.object(core,'owned_group_live',side_effect=live),patch.object(core.os,'killpg',side_effect=PermissionError(1,'Operation not permitted')):
+                with self.assertRaisesRegex(ValueError,'Own skipped turn'):core.execute(['unused'],{},run)
+            cleanup=json.loads((run/'cleanup.json').read_text())
+            self.assertTrue(cleanup['verified']);self.assertEqual([],cleanup['remainingPids']);self.assertEqual(1,len(cleanup['signalErrors']))
     def test_setup_failure_is_retained_as_a_failed_slot(self):
         game=f.schedule(1)[0];freeze={'stageConfig':{'controlMask':0,'candidateMask':1}}
-        with tempfile.TemporaryDirectory() as folder,patch.object(f,'_play',side_effect=OSError('staging failed')):
+        with tempfile.TemporaryDirectory() as folder,patch.object(f,'_play',side_effect=OSError('staging failed')),patch('sys.stdout',new_callable=io.StringIO):
             result=f.play(game,freeze,Path(folder),None)
         self.assertEqual('setup-failed',result['status']);self.assertEqual(game['id'],result['id'])
     def test_paging_gate_uses_elapsed_time_and_three_consecutive_breaches(self):

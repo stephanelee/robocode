@@ -169,8 +169,49 @@ def telemetry(path, rounds):
             raise ValueError('Own timing/coverage guard failed')
     return rows
 
+def owned_group_live(pgid):
+    rows=subprocess.check_output(['/bin/ps','-axo','pid=,pgid=,stat='],text=True,timeout=3).splitlines()
+    return [int(pid) for pid,group,state in (line.split() for line in rows)
+            if int(group)==pgid and not state.startswith('Z')]
+
+def cleanup_owned(process):
+    """Retain signal failures, boundedly drain only our session, and verify rather than assume teardown."""
+    result=dict(processGroup=process.pid,signalErrors=[],remainingPids=[],verified=False)
+    try:
+        for sig,drain in ((signal.SIGTERM,10),(signal.SIGKILL,5)):
+            if not owned_group_live(process.pid):break
+            try:os.killpg(process.pid,sig)
+            except ProcessLookupError:pass
+            except OSError as error:
+                result['signalErrors'].append(dict(signal=int(sig),error=repr(error)))
+                # A direct Popen child is unambiguously ours even if group signalling was denied.
+                if process.poll() is None:
+                    try:process.terminate() if sig==signal.SIGTERM else process.kill()
+                    except OSError as fallback:result['signalErrors'].append(dict(directChild=True,error=repr(fallback)))
+            deadline=time.monotonic()+drain
+            while owned_group_live(process.pid) and time.monotonic()<deadline:time.sleep(.1)
+        try:process.wait(timeout=3)
+        except subprocess.TimeoutExpired:result['parentReapTimeout']=True
+        result['remainingPids']=owned_group_live(process.pid)
+        result['parentReturnCode']=process.poll()
+        result['verified']=not result['remainingPids'] and process.poll() is not None
+    except BaseException as error:
+        result['validationError']=repr(error)
+        # Enumeration can fail independently of our direct child handle. Always drain that child.
+        for method in (process.terminate,process.kill):
+            try:
+                if process.poll() is None:method()
+            except OSError as fallback:result['signalErrors'].append(dict(directChild=True,error=repr(fallback)))
+            try:process.wait(timeout=3);break
+            except subprocess.TimeoutExpired:continue
+            except BaseException as reap:result['parentReapError']=repr(reap)
+        result['parentReturnCode']=process.poll()
+        # Group absence was not established; reaping the parent alone cannot verify the group.
+        result['verified']=False
+    return result
+
 def execute(command, env, run, process_callback=None):
-    cleanup = {}; start = time.monotonic()
+    start = time.monotonic();primary=None
     with (run/'runner.log').open('x') as log:
         process = subprocess.Popen(command,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         try:
@@ -181,14 +222,15 @@ def execute(command, env, run, process_callback=None):
                 if metrics.exists() and re.search(r'^\d+ skip ',metrics.read_text(),re.M): raise ValueError('Own skipped turn')
                 time.sleep(.25)
             if process.returncode: raise ValueError('Battle process failed: '+str(process.returncode))
+        except BaseException as error:primary=error;raise
         finally:
-            # Signal only the owned session, even if its Java root exited before a bot child.
-            for sig in (signal.SIGTERM,signal.SIGKILL):
-                try: os.killpg(process.pid,sig); cleanup[str(sig)] = True
-                except ProcessLookupError: cleanup[str(sig)] = False
-                if sig == signal.SIGTERM: time.sleep(.5)
-            try: process.wait(timeout=10)
-            finally: save(run/'cleanup.json',cleanup)
+            cleanup=cleanup_owned(process)
+            try:
+                save(run/'cleanup.json',cleanup)
+                if not cleanup['verified']:raise RuntimeError('Owned teardown could not be verified: '+repr(cleanup))
+            except BaseException as error:
+                if primary is not None:primary.add_note('Additional teardown issue: '+repr(error))
+                else:raise
 
 def summary(games):
     result = {}; exact = {}
