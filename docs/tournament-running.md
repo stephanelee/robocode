@@ -175,3 +175,18 @@ It removes only verified derived public copies and marks the stage archived;
 the private movies, catalog and raw recordings remain retained. It does not
 remove scores, change results or run games. Keep the flag on future catalog runs
 to avoid republishing archived movies. Never delete recordings to make build room.
+
+The user also authorized archiving older lower-bracket public videos for space.
+Use `--omit-swiss4 --archive-lower-before-wave 4` for the current edition: it keeps
+upper-bracket videos and the newest wave, while archiving only L-prefixed matches
+from earlier waves. The catalog records exact `archivedGames`; result rows state
+“Video archived · recording retained.” Original movies/recordings stay local.
+Keep these flags on later catalog runs unless restoring archived live videos is
+explicitly desired. The private archived catalog records the removed assets.
+
+For recovery launches, check free space and execute the runner within the same
+Python process; a failed shell preflight followed by another command can fall
+through. Require at least 2 GiB, then `os.execv(sys.executable, [sys.executable,
+"tools/tournament.py", ...])` only after the assertion passes. The Wave 4 void
+ruling documents the authorized single replacement; it is not a general rerun
+policy. Preserve invalid engine games separately in physical-budget accounting.

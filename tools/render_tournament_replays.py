@@ -156,7 +156,14 @@ def main(args):
         return entry, proof
 
     selected_jobs = jobs(args.output)
-    if args.omit_swiss4:
+    older_lower = {(stage, pair['a'], pair['b'], game['game'])
+                   for stage, _, pair, game in selected_jobs
+                   if stage.startswith('playoff-')
+                   and int(stage.split('-')[1]) < args.archive_lower_before_wave
+                   and pair.get('matchId', '').startswith('L')}
+    selected_jobs = [item for item in selected_jobs
+                     if (item[0], item[2]['a'], item[2]['b'], item[3]['game']) not in older_lower]
+    if args.omit_swiss4 or older_lower:
         selected_jobs = [item for item in selected_jobs if item[0] != 'swiss-4']
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         rendered = list(pool.map(render, selected_jobs))
@@ -170,7 +177,8 @@ def main(args):
     if args.omit_swiss4:
         # Remove only verified, reproducible public copies. Private movies and raw
         # recordings remain intact; an unrelated file or symlink blocks cleanup.
-        archived = [v for v in existing if v.get('stage') == 'swiss-4']
+        archived = [v for v in existing if (args.omit_swiss4 and v.get('stage') == 'swiss-4')
+                    or (v.get('stage'), v.get('matchA'), v.get('matchB'), v.get('game')) in older_lower]
         removals = []
         for entry in archived:
             for url in [entry.get('mp4'), entry['poster'], entry['chaptersFile']]:
@@ -187,12 +195,15 @@ def main(args):
                     if target.is_symlink() or sha(target) != part['sha256']:
                         raise ValueError('Refusing to remove an unverified public part')
                     removals.append(target)
-        archive = args.media_dir/'swiss-4-public-catalog-archived.json'
+        archive = args.media_dir/(f'lower-before-wave{args.archive_lower_before_wave}-public-catalog-archived.json'
+                                  if older_lower else 'swiss-4-public-catalog-archived.json')
         if archived and not archive.exists():
             save(archive, archived)
         for target in removals:
             target.unlink()
-        data['replayPolicy']['archivedStages'] = ['swiss-4']
+        data['replayPolicy']['archivedStages'] = ['swiss-4'] if args.omit_swiss4 else []
+        data['replayPolicy']['archivedGames'] = [dict(stage=s, matchA=a, matchB=b, game=g)
+                                                for s,a,b,g in sorted(older_lower)]
     data['updated'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
     save(data_path, data)
     proof = dict(gamesVerified=len(entries), battleRoundsVerified=20*len(entries), newBattles=0,
@@ -209,5 +220,7 @@ if __name__ == '__main__':
     parser.add_argument('--workers', type=int, choices=[1,2], default=2)
     parser.add_argument('--edition', default='v1', help='Immutable filename edition for new renders')
     parser.add_argument('--omit-swiss4', action='store_true', help='Archive Round 4 public videos to make room; keep private movies and recordings')
+    parser.add_argument('--archive-lower-before-wave', type=int, choices=range(0,9), default=0,
+                        help='Archive only lower-bracket public videos from earlier waves; preserve all private evidence')
     parser.add_argument('--chunk-bytes',type=int,choices=[4_000_000],default=4_000_000,help='Lossless transport piece size for movies larger than8MB')
     main(parser.parse_args())
