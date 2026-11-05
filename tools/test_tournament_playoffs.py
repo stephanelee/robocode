@@ -32,6 +32,11 @@ class PlayoffTest(unittest.TestCase):
         self.assertEqual(len(games), index['validatedGames'])
         self.assertEqual(sum(g['official']['numberOfRounds'] for g in games), index['validatedRounds'])
         self.assertEqual(len(games), len(index['officialFileSHA256']))
+        self.assertEqual(index['validatedRounds'] + index['invalidSoloRoundsExcluded']
+                         + index.get('voidedEngineRoundsExcluded', 0),
+                         index['knownCompletedPhysicalRounds'])
+        for voided in index.get('voidedGames', []):
+            self.assertNotIn(voided['officialSHA256'], index['officialFileSHA256'].values())
         for stage in index['stages']:
             for pair_number, pair in enumerate(stage['draw'], 1):
                 for game in pair['games']:

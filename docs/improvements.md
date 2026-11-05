@@ -266,3 +266,21 @@ inputs unchanged; independent audit passes. [Prospective protocol](tournament-pl
 [startup ruling](tournament-playoff-3-startup-recovery.md),
 [measured report/raw evidence](tournament-playoff-3-results.md),
 [PR #120](https://github.com/stephanelee/robocode/pull/120). No wave4 started.
+
+## 2026-11-05 — fourth playoff wave, explicit void and replacement
+
+Four valid games / eighty competitive rounds completed on minimind. KeelHelm
+wins U7 2,833–2,564; Diamond Port wins L5 3,904–1,325. Prism receives its second
+loss and is eliminated. Keel retains one loss; no wave 5 starts. Accept validated
+descriptive scores; no gameplay promotion or strength claim. One original
+20-round game with a corrupted recording was explicitly voided by the user and
+replaced once after user-authorized npm download-cache cleanup. Its score is
+excluded and all original files remain preserved. Physical wave budget five
+engine games / one hundred rounds; overall94validgames/1,880rounds plus20earlier
+excludedsolo and20voidedrounds =1,920knownphysical. Frozen inputs unchanged;
+21tests pass, independent raw/CRC/coverage/final-score audit passes. Older8lower
+bracket live videos archived under user authorization; private originals kept.
+[Prospective protocol](tournament-playoff-4-protocol.md),
+[explicit void ruling](tournament-playoff-4-void-ruling.md),
+[measured report/raw evidence](tournament-playoff-4-results.md),
+[PR #120](https://github.com/stephanelee/robocode/pull/120).
