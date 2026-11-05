@@ -17,6 +17,8 @@ jobs:
           python-version: '3.12'
       - name: Offline movement and swept-corridor fixtures
         run: python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v
+      - name: Offline relocated tournament fixtures (no games or publication)
+        run: python -m unittest discover -s tournament/scripts -p 'test_*.py' -v
       - name: Legal-scan schema and leakage fixtures
         run: python -m unittest discover -s tools -p test_legal_scan_dataset.py -v
       - name: Synthetic label preparation only (no collection or training)
