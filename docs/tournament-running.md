@@ -81,10 +81,28 @@ The twelve unit tests cover draw coverage, rematch exclusion, minimum point-gap 
 
 ## Replay recordings for future games
 
-At the user’s request, future stages record by default through the new `tools/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official1.4.0API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
+At the user’s request, future stages record by default through the new `tools/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official 1.4.0 API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
 
-Each completed game retains `pNN-gN/recordings/game-*.battle.gz`, with byte size and SHA256 in its private game record. The wrapper checks gzip integrity. In the Tank Royale desktop GUI, select **Battle → Replay from File** and open that file. These are replay data files, not videos. Full record-frame semantics and visual playback must be verified on an actual recorded game; no extra battle was run merely to test recording. The already completed practice and Swiss rounds1–3 did not record visual replays and are not rerun.
+Each completed game retains `pNN-gN/recordings/game-*.battle.gz`, with byte size and SHA256 in its private game record. The wrapper checks gzip integrity. In the Tank Royale desktop GUI, select **Battle → Replay from File** and open that file. These are replay data files, not videos. Full record-frame semantics and visual playback must be verified on an actual recorded game; no extra battle was run merely to test recording. The already completed practice and Swiss rounds 1–3 did not record visual replays and are not rerun.
 
 `--no-recordings` explicitly preserves the earlier behavior. A continuation must keep the same recording policy as its original stage. Recording harness source gets an immutable input snapshot; new preparations also pin it. Recordings remain local with the full game artifacts and are excluded from public score exports.
 
 Older prepared editions lacking `prepared-recording-harness.json` must retain `--no-recordings` or use a fresh preparation to adopt recording. The current event predates those prepared files and uses its independently reviewed legacy snapshot path. Browser layout QA is unavailable in the current Work settings; the profile table was checked against the supplied mobile screenshot and JavaScript syntax.
+
+## Render a replay as a shareable video
+
+Keep video dependencies separate from the frozen bot Python environment. Install FFmpeg from its official distribution or Homebrew and use a separate Python venv:
+
+```sh
+python3.12 -m venv /private/tmp/robocode-video-python
+/private/tmp/robocode-video-python/bin/pip install -r tools/tournament-video-requirements.txt
+/private/tmp/robocode-video-python/bin/python tools/render_tournament_replay.py \
+  --recording /absolute/path/to/game.battle.gz \
+  --official /absolute/path/to/battle.json \
+  --swiss-round 4 --game 1 \
+  --output /absolute/path/to/new-replay.mp4
+```
+
+The renderer starts no battles. It produces a silent H.264/yuv420p MP4, a poster, a chapter VTT and a local provenance JSON. It samples recorded positions at 240 turns/second for accelerated playback, preserves all 20 rounds and checks final scores against the official result when supplied. Recorded round-end arrays are already cumulative; it replaces the score totals rather than summing them. Energy bars follow each rendered frame. This is a data-rendered replay rather than a GUI screen capture. It refuses to overwrite a completed output.
+
+The published player loads the 13 MBmovie on demand into a browser Blob so mobile seeking does not depend on the host’s byte-range support. It provides round-jump controls and a direct MP4 download. Only a rendered video explicitly approved by the user was published; raw .battle.gz files and other private game artifacts remain local. The initial video is Swiss round 4/game 1, covering 20 rounds in 5:42.7. All 14 recordings from round 4 passed gzip and game/round-boundary checks; desktop GUI playback was not inspected. Video frames and codec metadata were inspected.
