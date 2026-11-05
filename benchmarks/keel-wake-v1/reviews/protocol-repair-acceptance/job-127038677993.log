@@ -1,0 +1,692 @@
+﻿2026-11-05T03:56:03.5004750Z Current runner version: '2.338.2'
+2026-11-05T03:56:03.5024636Z ##[group]Runner Image Provisioner
+2026-11-05T03:56:03.5025338Z Hosted Compute Agent
+2026-11-05T03:56:03.5025887Z Version: 20261021.618
+2026-11-05T03:56:03.5026411Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T03:56:03.5027256Z Build Date: 2026-10-21T00:45:21Z
+2026-11-05T03:56:03.5027819Z Worker ID: {c33e99c4-7afd-4489-b3fc-6f815659b1a6}
+2026-11-05T03:56:03.5028421Z Region: westcentralus
+2026-11-05T03:56:03.5028921Z Cloud: Azure
+2026-11-05T03:56:03.5029362Z ##[endgroup]
+2026-11-05T03:56:03.5030700Z ##[group]Operating System
+2026-11-05T03:56:03.5031284Z Ubuntu
+2026-11-05T03:56:03.5031743Z 26.04.1
+2026-11-05T03:56:03.5032191Z LTS
+2026-11-05T03:56:03.5032621Z ##[endgroup]
+2026-11-05T03:56:03.5033081Z ##[group]Runner Image
+2026-11-05T03:56:03.5033640Z Image: ubuntu-26.04
+2026-11-05T03:56:03.5034135Z Version: 20261025.179.1
+2026-11-05T03:56:03.5035189Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-05T03:56:03.5036387Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-05T03:56:03.5037461Z ##[endgroup]
+2026-11-05T03:56:03.5038355Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T03:56:03.5039898Z Contents: read
+2026-11-05T03:56:03.5040380Z Metadata: read
+2026-11-05T03:56:03.5040890Z ##[endgroup]
+2026-11-05T03:56:03.5042577Z Secret source: Actions
+2026-11-05T03:56:03.5043381Z Cache mode: write
+2026-11-05T03:56:03.5043936Z Prepare workflow directory
+2026-11-05T03:56:03.5337655Z Prepare all required actions
+2026-11-05T03:56:03.5376208Z Getting action download info
+2026-11-05T03:56:03.8620133Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-05T03:56:03.9552508Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-05T03:56:04.0610359Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-05T03:56:04.2869166Z Complete job name: fixtures
+2026-11-05T03:56:04.3597333Z ##[group]Run actions/checkout@v4
+2026-11-05T03:56:04.3598093Z with:
+2026-11-05T03:56:04.3598492Z   repository: stephanelee/robocode
+2026-11-05T03:56:04.3601884Z   token: ***
+2026-11-05T03:56:04.3602273Z   ssh-strict: true
+2026-11-05T03:56:04.3602660Z   ssh-user: git
+2026-11-05T03:56:04.3603053Z   persist-credentials: true
+2026-11-05T03:56:04.3603478Z   clean: true
+2026-11-05T03:56:04.3603875Z   sparse-checkout-cone-mode: true
+2026-11-05T03:56:04.3604343Z   fetch-depth: 1
+2026-11-05T03:56:04.3604731Z   fetch-tags: false
+2026-11-05T03:56:04.3605145Z   show-progress: true
+2026-11-05T03:56:04.3605553Z   lfs: false
+2026-11-05T03:56:04.3605923Z   submodules: false
+2026-11-05T03:56:04.3606318Z   set-safe-directory: true
+2026-11-05T03:56:04.3606756Z   allow-unsafe-pr-checkout: false
+2026-11-05T03:56:04.3607598Z ##[endgroup]
+2026-11-05T03:56:04.5461276Z Syncing repository: stephanelee/robocode
+2026-11-05T03:56:04.5463548Z ##[group]Getting Git version info
+2026-11-05T03:56:04.5464266Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-05T03:56:04.5465486Z [command]/usr/bin/git version
+2026-11-05T03:56:04.5504146Z git version 2.56.0
+2026-11-05T03:56:04.5530291Z ##[endgroup]
+2026-11-05T03:56:04.5542829Z Temporarily overriding HOME='/home/runner/work/_temp/2aa1354c-8d50-4658-ba09-b857366cb84b' before making global git config changes
+2026-11-05T03:56:04.5545136Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:56:04.5547966Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:56:04.5629764Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-05T03:56:04.5631701Z ##[group]Initializing the repository
+2026-11-05T03:56:04.5633108Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-05T03:56:04.5725571Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-05T03:56:04.5730835Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-05T03:56:04.5732785Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-05T03:56:04.5734269Z hint: call:
+2026-11-05T03:56:04.5735110Z hint:
+2026-11-05T03:56:04.5736072Z hint: 	git config --global init.defaultBranch <name>
+2026-11-05T03:56:04.5737381Z hint:
+2026-11-05T03:56:04.5738467Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-05T03:56:04.5740618Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-05T03:56:04.5741945Z hint:
+2026-11-05T03:56:04.5742753Z hint: 	git branch -m <name>
+2026-11-05T03:56:04.5745131Z hint:
+2026-11-05T03:56:04.5747321Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-05T03:56:04.5749466Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-05T03:56:04.5752689Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-05T03:56:04.5811053Z ##[endgroup]
+2026-11-05T03:56:04.5812614Z ##[group]Disabling automatic garbage collection
+2026-11-05T03:56:04.5818410Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-05T03:56:04.5858825Z ##[endgroup]
+2026-11-05T03:56:04.5860696Z ##[group]Setting up auth
+2026-11-05T03:56:04.5865172Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:56:04.5895754Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:56:04.6335012Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:56:04.6365652Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:56:04.6600441Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:56:04.6631567Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:56:04.6871847Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-05T03:56:04.6973452Z ##[endgroup]
+2026-11-05T03:56:04.6974231Z ##[group]Fetching the repository
+2026-11-05T03:56:04.6975494Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2359d443aa95f122d22122de716817275c9ab672:refs/remotes/pull/119/merge
+2026-11-05T03:56:45.2404498Z From https://github.com/stephanelee/robocode
+2026-11-05T03:56:45.2405278Z  * [new ref]         2359d443aa95f122d22122de716817275c9ab672 -> pull/119/merge
+2026-11-05T03:56:45.2408701Z ##[endgroup]
+2026-11-05T03:56:45.2409141Z ##[group]Determining the checkout info
+2026-11-05T03:56:45.2409804Z ##[endgroup]
+2026-11-05T03:56:45.2415007Z [command]/usr/bin/git sparse-checkout disable
+2026-11-05T03:56:45.2453185Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-05T03:56:45.2495739Z ##[group]Checking out the ref
+2026-11-05T03:56:45.2499182Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/119/merge
+2026-11-05T03:56:46.3471646Z Updating files:  57% (3834/6720)
+2026-11-05T03:56:46.4020305Z Updating files:  58% (3898/6720)
+2026-11-05T03:56:46.4577753Z Updating files:  59% (3965/6720)
+2026-11-05T03:56:46.4792054Z Updating files:  60% (4032/6720)
+2026-11-05T03:56:46.4983251Z Updating files:  61% (4100/6720)
+2026-11-05T03:56:46.6838842Z Updating files:  62% (4167/6720)
+2026-11-05T03:56:46.7102294Z Updating files:  63% (4234/6720)
+2026-11-05T03:56:46.7140191Z Updating files:  64% (4301/6720)
+2026-11-05T03:56:46.7173315Z Updating files:  65% (4368/6720)
+2026-11-05T03:56:46.7328697Z Updating files:  66% (4436/6720)
+2026-11-05T03:56:46.7460655Z Updating files:  67% (4503/6720)
+2026-11-05T03:56:46.7529022Z Updating files:  68% (4570/6720)
+2026-11-05T03:56:46.7562147Z Updating files:  69% (4637/6720)
+2026-11-05T03:56:46.7592371Z Updating files:  70% (4704/6720)
+2026-11-05T03:56:46.7642600Z Updating files:  71% (4772/6720)
+2026-11-05T03:56:46.7677333Z Updating files:  72% (4839/6720)
+2026-11-05T03:56:46.7712768Z Updating files:  73% (4906/6720)
+2026-11-05T03:56:46.7748777Z Updating files:  74% (4973/6720)
+2026-11-05T03:56:46.7783771Z Updating files:  75% (5040/6720)
+2026-11-05T03:56:46.7819428Z Updating files:  76% (5108/6720)
+2026-11-05T03:56:46.7854458Z Updating files:  77% (5175/6720)
+2026-11-05T03:56:46.7886305Z Updating files:  78% (5242/6720)
+2026-11-05T03:56:46.7923049Z Updating files:  79% (5309/6720)
+2026-11-05T03:56:46.7954300Z Updating files:  80% (5376/6720)
+2026-11-05T03:56:46.7988064Z Updating files:  81% (5444/6720)
+2026-11-05T03:56:46.8018883Z Updating files:  82% (5511/6720)
+2026-11-05T03:56:46.8048387Z Updating files:  83% (5578/6720)
+2026-11-05T03:56:46.8077155Z Updating files:  84% (5645/6720)
+2026-11-05T03:56:46.8111312Z Updating files:  85% (5712/6720)
+2026-11-05T03:56:46.8153452Z Updating files:  86% (5780/6720)
+2026-11-05T03:56:46.8206356Z Updating files:  87% (5847/6720)
+2026-11-05T03:56:46.8295385Z Updating files:  88% (5914/6720)
+2026-11-05T03:56:46.8327974Z Updating files:  89% (5981/6720)
+2026-11-05T03:56:46.8381574Z Updating files:  90% (6048/6720)
+2026-11-05T03:56:46.8410382Z Updating files:  91% (6116/6720)
+2026-11-05T03:56:46.8437253Z Updating files:  92% (6183/6720)
+2026-11-05T03:56:46.8485318Z Updating files:  93% (6250/6720)
+2026-11-05T03:56:46.8587512Z Updating files:  94% (6317/6720)
+2026-11-05T03:56:46.8664478Z Updating files:  95% (6384/6720)
+2026-11-05T03:56:46.8698985Z Updating files:  96% (6452/6720)
+2026-11-05T03:56:46.8731231Z Updating files:  97% (6519/6720)
+2026-11-05T03:56:46.8764289Z Updating files:  98% (6586/6720)
+2026-11-05T03:56:46.8790515Z Updating files:  99% (6653/6720)
+2026-11-05T03:56:46.8790917Z Updating files: 100% (6720/6720)
+2026-11-05T03:56:46.8791610Z Updating files: 100% (6720/6720), done.
+2026-11-05T03:56:46.8865356Z Note: switching to 'refs/remotes/pull/119/merge'.
+2026-11-05T03:56:46.8865827Z 
+2026-11-05T03:56:46.8866096Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-05T03:56:46.8866691Z changes and commit them, and you can discard any commits you make in this
+2026-11-05T03:56:46.8867310Z state without impacting any branches by switching back to a branch.
+2026-11-05T03:56:46.8867528Z 
+2026-11-05T03:56:46.8867685Z If you want to create a new branch to retain commits you create, you may
+2026-11-05T03:56:46.8868056Z do so (now or later) by using -c with the switch command. Example:
+2026-11-05T03:56:46.8868265Z 
+2026-11-05T03:56:46.8868367Z   git switch -c <new-branch-name>
+2026-11-05T03:56:46.8868517Z 
+2026-11-05T03:56:46.8868603Z Or undo this operation with:
+2026-11-05T03:56:46.8868739Z 
+2026-11-05T03:56:46.8868816Z   git switch -
+2026-11-05T03:56:46.8868940Z 
+2026-11-05T03:56:46.8869113Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-05T03:56:46.8869358Z 
+2026-11-05T03:56:46.8869649Z HEAD is now at 2359d44 Merge dc91a48e698a838be8d5db6db8f49dfae50bfc6c into 32ced345c67446ca0e1364e4a5bb624b87fef4ed
+2026-11-05T03:56:46.9037961Z ##[endgroup]
+2026-11-05T03:56:46.9107772Z [command]/usr/bin/git log -1 --format=%H
+2026-11-05T03:56:46.9124218Z 2359d443aa95f122d22122de716817275c9ab672
+2026-11-05T03:56:46.9361658Z ##[group]Run actions/setup-python@v5
+2026-11-05T03:56:46.9361927Z with:
+2026-11-05T03:56:46.9362115Z   python-version: 3.12
+2026-11-05T03:56:46.9362315Z   check-latest: false
+2026-11-05T03:56:46.9364289Z   token: ***
+2026-11-05T03:56:46.9364474Z   update-environment: true
+2026-11-05T03:56:46.9364684Z   allow-prereleases: false
+2026-11-05T03:56:46.9364877Z   freethreaded: false
+2026-11-05T03:56:46.9365073Z ##[endgroup]
+2026-11-05T03:56:47.0478810Z ##[group]Installed versions
+2026-11-05T03:56:47.0567233Z (node:2239) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:56:47.0568004Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:56:47.0568478Z Successfully set up CPython (3.12.15)
+2026-11-05T03:56:47.0569065Z ##[endgroup]
+2026-11-05T03:56:47.0720509Z ##[group]Run python -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v
+2026-11-05T03:56:47.0721050Z [36;1mpython -m unittest discover -s tools -p test_dual_aim_diagnostic.py -v[0m
+2026-11-05T03:56:47.0771588Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:56:47.0771814Z env:
+2026-11-05T03:56:47.0772049Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.0772506Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:56:47.0772897Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.0773204Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.0773589Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.0774048Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:56:47.0774441Z ##[endgroup]
+2026-11-05T03:56:47.2680250Z test_corner_positions_remain_in_bounds_for_legal_commands (test_dual_aim_diagnostic.MovementFixtures.test_corner_positions_remain_in_bounds_for_legal_commands) ... ok
+2026-11-05T03:56:47.2681788Z test_engine_second_constraint_pass_at_reverse_corner (test_dual_aim_diagnostic.MovementFixtures.test_engine_second_constraint_pass_at_reverse_corner) ... ok
+2026-11-05T03:56:47.2683191Z test_first_wall_contact_not_independent_coordinate_clamp (test_dual_aim_diagnostic.MovementFixtures.test_first_wall_contact_not_independent_coordinate_clamp) ... ok
+2026-11-05T03:56:47.2684499Z test_linear_retcon_iteration_not_headon_time (test_dual_aim_diagnostic.MovementFixtures.test_linear_retcon_iteration_not_headon_time) ... ok
+2026-11-05T03:56:47.2685786Z test_move_before_turn_and_new_speed_turn_limit (test_dual_aim_diagnostic.MovementFixtures.test_move_before_turn_and_new_speed_turn_limit) ... ok
+2026-11-05T03:56:47.2687209Z test_reaction_delay_preserves_pending_motion (test_dual_aim_diagnostic.MovementFixtures.test_reaction_delay_preserves_pending_motion) ... ok
+2026-11-05T03:56:47.2688475Z test_server_speed_regressions (test_dual_aim_diagnostic.MovementFixtures.test_server_speed_regressions) ... ok
+2026-11-05T03:56:47.2732349Z test_analytic_distance_matches_dense_independent_segment_oracle (test_dual_aim_diagnostic.SweptCorridorFixtures.test_analytic_distance_matches_dense_independent_segment_oracle) ... ok
+2026-11-05T03:56:47.2733957Z test_creation_turn_sweep_is_advanced_not_origin_segment (test_dual_aim_diagnostic.SweptCorridorFixtures.test_creation_turn_sweep_is_advanced_not_origin_segment) ... ok
+2026-11-05T03:56:47.2735307Z test_interval_interior_and_wraparound (test_dual_aim_diagnostic.SweptCorridorFixtures.test_interval_interior_and_wraparound) ... ok
+2026-11-05T03:56:47.2736553Z test_segment_crossing_is_hit_when_endpoints_miss (test_dual_aim_diagnostic.SweptCorridorFixtures.test_segment_crossing_is_hit_when_endpoints_miss) ... ok
+2026-11-05T03:56:47.2756757Z test_versioned_withheld_cases_are_disjoint (test_dual_aim_diagnostic.SweptCorridorFixtures.test_versioned_withheld_cases_are_disjoint) ... ok
+2026-11-05T03:56:47.2758196Z test_wider_corridor_cannot_increase_clearance (test_dual_aim_diagnostic.SweptCorridorFixtures.test_wider_corridor_cannot_increase_clearance) ... ok
+2026-11-05T03:56:47.2758879Z 
+2026-11-05T03:56:47.2759066Z ----------------------------------------------------------------------
+2026-11-05T03:56:47.2759461Z Ran 13 tests in 0.067s
+2026-11-05T03:56:47.2759618Z 
+2026-11-05T03:56:47.2759721Z OK
+2026-11-05T03:56:47.2865972Z ##[group]Run python -m unittest discover -s tools -p test_legal_scan_dataset.py -v
+2026-11-05T03:56:47.2866444Z [36;1mpython -m unittest discover -s tools -p test_legal_scan_dataset.py -v[0m
+2026-11-05T03:56:47.2895503Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:56:47.2895863Z env:
+2026-11-05T03:56:47.2896111Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.2896467Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:56:47.2896960Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.2897279Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.2897583Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.2897891Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:56:47.2898154Z ##[endgroup]
+2026-11-05T03:56:47.3499765Z test_conflicting_cached_scan_and_duplicate_record_rejected (test_legal_scan_dataset.LabelFixtures.test_conflicting_cached_scan_and_duplicate_record_rejected) ... ok
+2026-11-05T03:56:47.3501620Z test_exact_fresh_future_only_no_interpolation (test_legal_scan_dataset.LabelFixtures.test_exact_fresh_future_only_no_interpolation) ... ok
+2026-11-05T03:56:47.3503786Z test_future_and_same_turn_intents_rejected (test_legal_scan_dataset.LabelFixtures.test_future_and_same_turn_intents_rejected) ... ok
+2026-11-05T03:56:47.3505374Z test_future_own_shot_and_conflicting_identity_rejected (test_legal_scan_dataset.LabelFixtures.test_future_own_shot_and_conflicting_identity_rejected) ... ok
+2026-11-05T03:56:47.3507263Z test_future_scan_values_do_not_enter_history (test_legal_scan_dataset.LabelFixtures.test_future_scan_values_do_not_enter_history) ... ok
+2026-11-05T03:56:47.3508858Z test_missing_turn_and_scan_masks_are_explicit (test_legal_scan_dataset.LabelFixtures.test_missing_turn_and_scan_masks_are_explicit) ... ok
+2026-11-05T03:56:47.3510585Z test_no_labels_across_game_round_or_target (test_legal_scan_dataset.LabelFixtures.test_no_labels_across_game_round_or_target) ... ok
+2026-11-05T03:56:47.3511775Z test_optional_state_fields_preserve_unknown_not_zero (test_legal_scan_dataset.LabelFixtures.test_optional_state_fields_preserve_unknown_not_zero) ... ok
+2026-11-05T03:56:47.3515585Z test_order_invariance_and_independent_feature_objects (test_legal_scan_dataset.LabelFixtures.test_order_invariance_and_independent_feature_objects) ... ok
+2026-11-05T03:56:47.3516945Z test_requested_fire_is_not_confirmed_fire (test_legal_scan_dataset.LabelFixtures.test_requested_fire_is_not_confirmed_fire) ... ok
+2026-11-05T03:56:47.3518070Z test_cached_scan_time_cannot_regress (test_legal_scan_dataset.SplitAndValidationFixtures.test_cached_scan_time_cannot_regress) ... ok
+2026-11-05T03:56:47.4259630Z test_cli_partitions_before_any_model_fit_and_preserves_outputs (test_legal_scan_dataset.SplitAndValidationFixtures.test_cli_partitions_before_any_model_fit_and_preserves_outputs) ... ok
+2026-11-05T03:56:47.4261488Z test_duplicate_game_or_acquisition_cannot_cross_splits (test_legal_scan_dataset.SplitAndValidationFixtures.test_duplicate_game_or_acquisition_cannot_cross_splits) ... ok
+2026-11-05T03:56:47.4277857Z test_entire_game_assigned_before_windows (test_legal_scan_dataset.SplitAndValidationFixtures.test_entire_game_assigned_before_windows) ... ok
+2026-11-05T03:56:47.4279291Z test_future_scan_nonfinite_bool_duplicate_json_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_future_scan_nonfinite_bool_duplicate_json_rejected) ... ok
+2026-11-05T03:56:47.4280663Z test_invalid_window_and_horizon_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_invalid_window_and_horizon_rejected) ... ok
+2026-11-05T03:56:47.4281509Z test_private_unknown_fields_are_not_silently_features (test_legal_scan_dataset.SplitAndValidationFixtures.test_private_unknown_fields_are_not_silently_features) ... ok
+2026-11-05T03:56:47.4282705Z test_same_tick_own_snapshot_consistency_and_arena_bounds (test_legal_scan_dataset.SplitAndValidationFixtures.test_same_tick_own_snapshot_consistency_and_arena_bounds) ... ok
+2026-11-05T03:56:47.4283609Z test_undeclared_game_and_injected_split_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_undeclared_game_and_injected_split_rejected) ... ok
+2026-11-05T03:56:47.4284067Z 
+2026-11-05T03:56:47.4284354Z ----------------------------------------------------------------------
+2026-11-05T03:56:47.4284648Z Ran 19 tests in 0.078s
+2026-11-05T03:56:47.4284767Z 
+2026-11-05T03:56:47.4284846Z OK
+2026-11-05T03:56:47.4387094Z ##[group]Run python tools/legal_scan_dataset.py --manifest tools/fixtures/legal-scan/synthetic-manifest.json --events tools/fixtures/legal-scan/synthetic-events.jsonl --output legal-scan-synthetic
+2026-11-05T03:56:47.4388198Z [36;1mpython tools/legal_scan_dataset.py --manifest tools/fixtures/legal-scan/synthetic-manifest.json --events tools/fixtures/legal-scan/synthetic-events.jsonl --output legal-scan-synthetic[0m
+2026-11-05T03:56:47.4388839Z [36;1mpython - <<'PY'[0m
+2026-11-05T03:56:47.4389032Z [36;1mimport json[0m
+2026-11-05T03:56:47.4389225Z [36;1mfrom pathlib import Path[0m
+2026-11-05T03:56:47.4389544Z [36;1mresult = json.loads(Path('legal-scan-synthetic/dataset.json').read_text())[0m
+2026-11-05T03:56:47.4389904Z [36;1massert result['inputRecords'] == 6[0m
+2026-11-05T03:56:47.4390240Z [36;1massert result['counts']['train'] == {'examples': 9, 'observedLabels': 1}[0m
+2026-11-05T03:56:47.4390664Z [36;1massert result['counts']['dev'] == {'examples': 6, 'observedLabels': 1}[0m
+2026-11-05T03:56:47.4391047Z [36;1massert result['gameInputRecords'] == {'A': 3, 'B': 3, 'C': 0, 'D': 0}[0m
+2026-11-05T03:56:47.4391448Z [36;1mprint('Synthetic example: 15 horizon rows, 2 fresh labels, zero real games')[0m
+2026-11-05T03:56:47.4391764Z [36;1mPY[0m
+2026-11-05T03:56:47.4420463Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:56:47.4420677Z env:
+2026-11-05T03:56:47.4420910Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.4421277Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:56:47.4421654Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.4422020Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.4422318Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.4422632Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:56:47.4422899Z ##[endgroup]
+2026-11-05T03:56:47.4790730Z {
+2026-11-05T03:56:47.4790965Z   "train": {
+2026-11-05T03:56:47.4791147Z     "examples": 9,
+2026-11-05T03:56:47.4791351Z     "observedLabels": 1
+2026-11-05T03:56:47.4791547Z   },
+2026-11-05T03:56:47.4791703Z   "dev": {
+2026-11-05T03:56:47.4791865Z     "examples": 6,
+2026-11-05T03:56:47.4792046Z     "observedLabels": 1
+2026-11-05T03:56:47.4792233Z   },
+2026-11-05T03:56:47.4792388Z   "withheld": {
+2026-11-05T03:56:47.4792580Z     "examples": 0,
+2026-11-05T03:56:47.4792755Z     "observedLabels": 0
+2026-11-05T03:56:47.4792933Z   },
+2026-11-05T03:56:47.4793080Z   "transfer": {
+2026-11-05T03:56:47.4793255Z     "examples": 0,
+2026-11-05T03:56:47.4793434Z     "observedLabels": 0
+2026-11-05T03:56:47.4793611Z   }
+2026-11-05T03:56:47.4793762Z }
+2026-11-05T03:56:47.5017593Z Synthetic example: 15 horizon rows, 2 fresh labels, zero real games
+2026-11-05T03:56:47.5098388Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T03:56:47.5098626Z with:
+2026-11-05T03:56:47.5098810Z   name: legal-scan-synthetic
+2026-11-05T03:56:47.5099023Z   path: legal-scan-synthetic/
+2026-11-05T03:56:47.5099229Z   if-no-files-found: error
+2026-11-05T03:56:47.5099427Z   compression-level: 6
+2026-11-05T03:56:47.5099616Z   overwrite: false
+2026-11-05T03:56:47.5099796Z   include-hidden-files: false
+2026-11-05T03:56:47.5099982Z env:
+2026-11-05T03:56:47.5100192Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.5100530Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:56:47.5100865Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.5101175Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.5101481Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:47.5101785Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:56:47.5102241Z ##[endgroup]
+2026-11-05T03:56:47.6405109Z (node:2256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:56:47.6406049Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:56:47.6558656Z With the provided path, there will be 5 files uploaded
+2026-11-05T03:56:47.6563627Z Artifact name is valid!
+2026-11-05T03:56:47.6563977Z Root directory input is valid!
+2026-11-05T03:56:47.9970601Z Beginning upload of artifact content to blob storage
+2026-11-05T03:56:48.0201508Z (node:2256) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T03:56:48.2230807Z Uploaded bytes 2241
+2026-11-05T03:56:48.2824133Z Finished uploading artifact content to blob storage!
+2026-11-05T03:56:48.2824942Z SHA256 digest of uploaded artifact zip is df6a8283b2d1596a7a6acb5685e7d4f9f99f5c68e112621c08aaa55b094dcd22
+2026-11-05T03:56:48.2826762Z Finalizing artifact upload
+2026-11-05T03:56:48.7299815Z Artifact legal-scan-synthetic.zip successfully finalized. Artifact ID 13387406027
+2026-11-05T03:56:48.7300707Z Artifact legal-scan-synthetic has been successfully uploaded! Final size is 2241 bytes. Artifact ID is 13387406027
+2026-11-05T03:56:48.7305057Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41964633846/artifacts/13387406027
+2026-11-05T03:56:48.7424108Z ##[group]Run python tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json
+2026-11-05T03:56:48.7424790Z [36;1mpython tools/dual_aim_diagnostic.py --suite development --output component-evidence/development.json[0m
+2026-11-05T03:56:48.7425366Z [36;1mpython tools/dual_aim_diagnostic.py --suite withheld --output component-evidence/withheld.json[0m
+2026-11-05T03:56:48.7452173Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:56:48.7452402Z env:
+2026-11-05T03:56:48.7452652Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:48.7453017Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:56:48.7453366Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:48.7453691Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:48.7454008Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:56:48.7454350Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:56:48.7454624Z ##[endgroup]
+2026-11-05T03:57:18.4119107Z [
+2026-11-05T03:57:18.4119454Z   {
+2026-11-05T03:57:18.4119733Z     "profile": "fresh-alignment",
+2026-11-05T03:57:18.4120035Z     "delay": 0,
+2026-11-05T03:57:18.4120311Z     "states": 816,
+2026-11-05T03:57:18.4120566Z     "baselineSafe": 167,
+2026-11-05T03:57:18.4120858Z     "proposedSafe": 686,
+2026-11-05T03:57:18.4121140Z     "noCertifiedCommand": 130,
+2026-11-05T03:57:18.4121435Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4121770Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4122100Z     "proposedForecastRmse20": 73.387271,
+2026-11-05T03:57:18.4122444Z     "wallContactChosen": 645
+2026-11-05T03:57:18.4122705Z   },
+2026-11-05T03:57:18.4122906Z   {
+2026-11-05T03:57:18.4123136Z     "profile": "fresh-alignment",
+2026-11-05T03:57:18.4123416Z     "delay": 1,
+2026-11-05T03:57:18.4123659Z     "states": 816,
+2026-11-05T03:57:18.4123899Z     "baselineSafe": 167,
+2026-11-05T03:57:18.4124174Z     "proposedSafe": 663,
+2026-11-05T03:57:18.4124438Z     "noCertifiedCommand": 153,
+2026-11-05T03:57:18.4124770Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4125097Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4125460Z     "proposedForecastRmse20": 65.152847,
+2026-11-05T03:57:18.4125704Z     "wallContactChosen": 657
+2026-11-05T03:57:18.4125909Z   },
+2026-11-05T03:57:18.4126066Z   {
+2026-11-05T03:57:18.4126239Z     "profile": "fresh-alignment",
+2026-11-05T03:57:18.4126448Z     "delay": 3,
+2026-11-05T03:57:18.4127111Z     "states": 816,
+2026-11-05T03:57:18.4127303Z     "baselineSafe": 167,
+2026-11-05T03:57:18.4127505Z     "proposedSafe": 630,
+2026-11-05T03:57:18.4127703Z     "noCertifiedCommand": 186,
+2026-11-05T03:57:18.4127919Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4128153Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4128391Z     "proposedForecastRmse20": 55.388735,
+2026-11-05T03:57:18.4128613Z     "wallContactChosen": 620
+2026-11-05T03:57:18.4128808Z   },
+2026-11-05T03:57:18.4128968Z   {
+2026-11-05T03:57:18.4129144Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:18.4129348Z     "delay": 0,
+2026-11-05T03:57:18.4129515Z     "states": 816,
+2026-11-05T03:57:18.4129697Z     "baselineSafe": 130,
+2026-11-05T03:57:18.4129896Z     "proposedSafe": 618,
+2026-11-05T03:57:18.4130092Z     "noCertifiedCommand": 198,
+2026-11-05T03:57:18.4130299Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4130510Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4130754Z     "proposedForecastRmse20": 66.654748,
+2026-11-05T03:57:18.4130986Z     "wallContactChosen": 655
+2026-11-05T03:57:18.4131182Z   },
+2026-11-05T03:57:18.4131333Z   {
+2026-11-05T03:57:18.4131509Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:18.4131715Z     "delay": 1,
+2026-11-05T03:57:18.4131888Z     "states": 816,
+2026-11-05T03:57:18.4132066Z     "baselineSafe": 130,
+2026-11-05T03:57:18.4132264Z     "proposedSafe": 606,
+2026-11-05T03:57:18.4132464Z     "noCertifiedCommand": 210,
+2026-11-05T03:57:18.4132941Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4133165Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4133399Z     "proposedForecastRmse20": 61.551321,
+2026-11-05T03:57:18.4133632Z     "wallContactChosen": 674
+2026-11-05T03:57:18.4133825Z   },
+2026-11-05T03:57:18.4133977Z   {
+2026-11-05T03:57:18.4134144Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:18.4134349Z     "delay": 3,
+2026-11-05T03:57:18.4134518Z     "states": 816,
+2026-11-05T03:57:18.4134696Z     "baselineSafe": 130,
+2026-11-05T03:57:18.4134894Z     "proposedSafe": 552,
+2026-11-05T03:57:18.4135087Z     "noCertifiedCommand": 264,
+2026-11-05T03:57:18.4135300Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4135514Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4135742Z     "proposedForecastRmse20": 51.717956,
+2026-11-05T03:57:18.4135961Z     "wallContactChosen": 658
+2026-11-05T03:57:18.4136152Z   },
+2026-11-05T03:57:18.4136303Z   {
+2026-11-05T03:57:18.4136479Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:18.4136684Z     "delay": 0,
+2026-11-05T03:57:18.4137042Z     "states": 816,
+2026-11-05T03:57:18.4137224Z     "baselineSafe": 47,
+2026-11-05T03:57:18.4137417Z     "proposedSafe": 285,
+2026-11-05T03:57:18.4137613Z     "noCertifiedCommand": 531,
+2026-11-05T03:57:18.4137820Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4138035Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4138261Z     "proposedForecastRmse20": 52.113705,
+2026-11-05T03:57:18.4138480Z     "wallContactChosen": 707
+2026-11-05T03:57:18.4138675Z   },
+2026-11-05T03:57:18.4138830Z   {
+2026-11-05T03:57:18.4138993Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:18.4139194Z     "delay": 1,
+2026-11-05T03:57:18.4139362Z     "states": 816,
+2026-11-05T03:57:18.4139561Z     "baselineSafe": 47,
+2026-11-05T03:57:18.4139747Z     "proposedSafe": 212,
+2026-11-05T03:57:18.4139938Z     "noCertifiedCommand": 604,
+2026-11-05T03:57:18.4140140Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4140359Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4140587Z     "proposedForecastRmse20": 50.298851,
+2026-11-05T03:57:18.4140812Z     "wallContactChosen": 698
+2026-11-05T03:57:18.4141008Z   },
+2026-11-05T03:57:18.4141170Z   {
+2026-11-05T03:57:18.4141335Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:18.4141538Z     "delay": 3,
+2026-11-05T03:57:18.4141705Z     "states": 816,
+2026-11-05T03:57:18.4141888Z     "baselineSafe": 47,
+2026-11-05T03:57:18.4142075Z     "proposedSafe": 103,
+2026-11-05T03:57:18.4142271Z     "noCertifiedCommand": 713,
+2026-11-05T03:57:18.4142601Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4142820Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4143047Z     "proposedForecastRmse20": 40.698382,
+2026-11-05T03:57:18.4143267Z     "wallContactChosen": 724
+2026-11-05T03:57:18.4143453Z   },
+2026-11-05T03:57:18.4143601Z   {
+2026-11-05T03:57:18.4143776Z     "profile": "unknown-heading",
+2026-11-05T03:57:18.4143977Z     "delay": 0,
+2026-11-05T03:57:18.4144141Z     "states": 816,
+2026-11-05T03:57:18.4144322Z     "baselineSafe": 0,
+2026-11-05T03:57:18.4144515Z     "proposedSafe": 0,
+2026-11-05T03:57:18.4144705Z     "noCertifiedCommand": 816,
+2026-11-05T03:57:18.4144915Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4145132Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4145363Z     "proposedForecastRmse20": 30.155127,
+2026-11-05T03:57:18.4145583Z     "wallContactChosen": 810
+2026-11-05T03:57:18.4145770Z   },
+2026-11-05T03:57:18.4145920Z   {
+2026-11-05T03:57:18.4146085Z     "profile": "unknown-heading",
+2026-11-05T03:57:18.4146290Z     "delay": 1,
+2026-11-05T03:57:18.4146455Z     "states": 816,
+2026-11-05T03:57:18.4146626Z     "baselineSafe": 0,
+2026-11-05T03:57:18.4146945Z     "proposedSafe": 0,
+2026-11-05T03:57:18.4147157Z     "noCertifiedCommand": 816,
+2026-11-05T03:57:18.4147368Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4147653Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4147889Z     "proposedForecastRmse20": 33.314803,
+2026-11-05T03:57:18.4148250Z     "wallContactChosen": 782
+2026-11-05T03:57:18.4148453Z   },
+2026-11-05T03:57:18.4148617Z   {
+2026-11-05T03:57:18.4148790Z     "profile": "unknown-heading",
+2026-11-05T03:57:18.4148997Z     "delay": 3,
+2026-11-05T03:57:18.4149168Z     "states": 816,
+2026-11-05T03:57:18.4149348Z     "baselineSafe": 0,
+2026-11-05T03:57:18.4149545Z     "proposedSafe": 0,
+2026-11-05T03:57:18.4149735Z     "noCertifiedCommand": 816,
+2026-11-05T03:57:18.4149948Z     "baselineWallContact": 816,
+2026-11-05T03:57:18.4150171Z     "baselineForecastRmse20": 29.448904,
+2026-11-05T03:57:18.4150410Z     "proposedForecastRmse20": 31.823187,
+2026-11-05T03:57:18.4150635Z     "wallContactChosen": 794
+2026-11-05T03:57:18.4150828Z   }
+2026-11-05T03:57:18.4150984Z ]
+2026-11-05T03:57:21.6967456Z [
+2026-11-05T03:57:21.6967797Z   {
+2026-11-05T03:57:21.6968057Z     "profile": "fresh-alignment",
+2026-11-05T03:57:21.6968408Z     "delay": 0,
+2026-11-05T03:57:21.6968628Z     "states": 90,
+2026-11-05T03:57:21.6968816Z     "baselineSafe": 29,
+2026-11-05T03:57:21.6969057Z     "proposedSafe": 76,
+2026-11-05T03:57:21.6969401Z     "noCertifiedCommand": 14,
+2026-11-05T03:57:21.6969694Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6970019Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6970377Z     "proposedForecastRmse20": 70.890198,
+2026-11-05T03:57:21.6970722Z     "wallContactChosen": 71
+2026-11-05T03:57:21.6971011Z   },
+2026-11-05T03:57:21.6971226Z   {
+2026-11-05T03:57:21.6971533Z     "profile": "fresh-alignment",
+2026-11-05T03:57:21.6971861Z     "delay": 1,
+2026-11-05T03:57:21.6972106Z     "states": 90,
+2026-11-05T03:57:21.6972367Z     "baselineSafe": 29,
+2026-11-05T03:57:21.6972645Z     "proposedSafe": 70,
+2026-11-05T03:57:21.6972942Z     "noCertifiedCommand": 20,
+2026-11-05T03:57:21.6973261Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6973490Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6973718Z     "proposedForecastRmse20": 63.345446,
+2026-11-05T03:57:21.6973949Z     "wallContactChosen": 67
+2026-11-05T03:57:21.6974140Z   },
+2026-11-05T03:57:21.6974289Z   {
+2026-11-05T03:57:21.6974456Z     "profile": "fresh-alignment",
+2026-11-05T03:57:21.6974678Z     "delay": 3,
+2026-11-05T03:57:21.6974853Z     "states": 90,
+2026-11-05T03:57:21.6975033Z     "baselineSafe": 29,
+2026-11-05T03:57:21.6975222Z     "proposedSafe": 64,
+2026-11-05T03:57:21.6975418Z     "noCertifiedCommand": 26,
+2026-11-05T03:57:21.6975636Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6975854Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6976302Z     "proposedForecastRmse20": 56.336563,
+2026-11-05T03:57:21.6976522Z     "wallContactChosen": 66
+2026-11-05T03:57:21.6976721Z   },
+2026-11-05T03:57:21.6977038Z   {
+2026-11-05T03:57:21.6977249Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:21.6977461Z     "delay": 0,
+2026-11-05T03:57:21.6977647Z     "states": 90,
+2026-11-05T03:57:21.6977826Z     "baselineSafe": 22,
+2026-11-05T03:57:21.6978014Z     "proposedSafe": 56,
+2026-11-05T03:57:21.6978205Z     "noCertifiedCommand": 34,
+2026-11-05T03:57:21.6978424Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6978642Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6978875Z     "proposedForecastRmse20": 62.287891,
+2026-11-05T03:57:21.6979100Z     "wallContactChosen": 72
+2026-11-05T03:57:21.6979286Z   },
+2026-11-05T03:57:21.6979442Z   {
+2026-11-05T03:57:21.6979608Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:21.6979806Z     "delay": 1,
+2026-11-05T03:57:21.6979970Z     "states": 90,
+2026-11-05T03:57:21.6980149Z     "baselineSafe": 22,
+2026-11-05T03:57:21.6980336Z     "proposedSafe": 54,
+2026-11-05T03:57:21.6980526Z     "noCertifiedCommand": 36,
+2026-11-05T03:57:21.6980730Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6980937Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6981171Z     "proposedForecastRmse20": 57.45025,
+2026-11-05T03:57:21.6981396Z     "wallContactChosen": 71
+2026-11-05T03:57:21.6981584Z   },
+2026-11-05T03:57:21.6981731Z   {
+2026-11-05T03:57:21.6981895Z     "profile": "age2-extra5deg",
+2026-11-05T03:57:21.6982245Z     "delay": 3,
+2026-11-05T03:57:21.6982425Z     "states": 90,
+2026-11-05T03:57:21.6982603Z     "baselineSafe": 22,
+2026-11-05T03:57:21.6982803Z     "proposedSafe": 50,
+2026-11-05T03:57:21.6982996Z     "noCertifiedCommand": 40,
+2026-11-05T03:57:21.6983207Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6983425Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6983655Z     "proposedForecastRmse20": 49.790587,
+2026-11-05T03:57:21.6983892Z     "wallContactChosen": 70
+2026-11-05T03:57:21.6984091Z   },
+2026-11-05T03:57:21.6984245Z   {
+2026-11-05T03:57:21.6984413Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:21.6984623Z     "delay": 0,
+2026-11-05T03:57:21.6984792Z     "states": 90,
+2026-11-05T03:57:21.6984965Z     "baselineSafe": 2,
+2026-11-05T03:57:21.6985146Z     "proposedSafe": 3,
+2026-11-05T03:57:21.6985343Z     "noCertifiedCommand": 87,
+2026-11-05T03:57:21.6985548Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6985764Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6985992Z     "proposedForecastRmse20": 41.876069,
+2026-11-05T03:57:21.6986210Z     "wallContactChosen": 75
+2026-11-05T03:57:21.6986403Z   },
+2026-11-05T03:57:21.6986553Z   {
+2026-11-05T03:57:21.6986714Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:21.6987077Z     "delay": 1,
+2026-11-05T03:57:21.6987248Z     "states": 90,
+2026-11-05T03:57:21.6987420Z     "baselineSafe": 2,
+2026-11-05T03:57:21.6987602Z     "proposedSafe": 5,
+2026-11-05T03:57:21.6987799Z     "noCertifiedCommand": 85,
+2026-11-05T03:57:21.6988017Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6988226Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6988456Z     "proposedForecastRmse20": 36.094041,
+2026-11-05T03:57:21.6988678Z     "wallContactChosen": 79
+2026-11-05T03:57:21.6988897Z   },
+2026-11-05T03:57:21.6989044Z   {
+2026-11-05T03:57:21.6989208Z     "profile": "age5-extra15deg",
+2026-11-05T03:57:21.6989407Z     "delay": 3,
+2026-11-05T03:57:21.6989573Z     "states": 90,
+2026-11-05T03:57:21.6989754Z     "baselineSafe": 2,
+2026-11-05T03:57:21.6989943Z     "proposedSafe": 4,
+2026-11-05T03:57:21.6990135Z     "noCertifiedCommand": 86,
+2026-11-05T03:57:21.6990340Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6990554Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6990781Z     "proposedForecastRmse20": 38.354858,
+2026-11-05T03:57:21.6991002Z     "wallContactChosen": 79
+2026-11-05T03:57:21.6991188Z   },
+2026-11-05T03:57:21.6991351Z   {
+2026-11-05T03:57:21.6991515Z     "profile": "unknown-heading",
+2026-11-05T03:57:21.6991841Z     "delay": 0,
+2026-11-05T03:57:21.6992006Z     "states": 90,
+2026-11-05T03:57:21.6992185Z     "baselineSafe": 0,
+2026-11-05T03:57:21.6992363Z     "proposedSafe": 0,
+2026-11-05T03:57:21.6992548Z     "noCertifiedCommand": 90,
+2026-11-05T03:57:21.6992750Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6992958Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6993190Z     "proposedForecastRmse20": 39.602124,
+2026-11-05T03:57:21.6993416Z     "wallContactChosen": 77
+2026-11-05T03:57:21.6993599Z   },
+2026-11-05T03:57:21.6993747Z   {
+2026-11-05T03:57:21.6993915Z     "profile": "unknown-heading",
+2026-11-05T03:57:21.6994112Z     "delay": 1,
+2026-11-05T03:57:21.6994281Z     "states": 90,
+2026-11-05T03:57:21.6994448Z     "baselineSafe": 0,
+2026-11-05T03:57:21.6994636Z     "proposedSafe": 0,
+2026-11-05T03:57:21.6994822Z     "noCertifiedCommand": 90,
+2026-11-05T03:57:21.6995021Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6995225Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6995451Z     "proposedForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6995675Z     "wallContactChosen": 81
+2026-11-05T03:57:21.6995855Z   },
+2026-11-05T03:57:21.6996001Z   {
+2026-11-05T03:57:21.6996158Z     "profile": "unknown-heading",
+2026-11-05T03:57:21.6996361Z     "delay": 3,
+2026-11-05T03:57:21.6996526Z     "states": 90,
+2026-11-05T03:57:21.6996703Z     "baselineSafe": 0,
+2026-11-05T03:57:21.6997081Z     "proposedSafe": 0,
+2026-11-05T03:57:21.6997405Z     "noCertifiedCommand": 90,
+2026-11-05T03:57:21.6997611Z     "baselineWallContact": 81,
+2026-11-05T03:57:21.6997826Z     "baselineForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6998058Z     "proposedForecastRmse20": 36.435451,
+2026-11-05T03:57:21.6998278Z     "wallContactChosen": 81
+2026-11-05T03:57:21.6998474Z   }
+2026-11-05T03:57:21.6998629Z ]
+2026-11-05T03:57:21.7298720Z ##[group]Run python - <<'PY'
+2026-11-05T03:57:21.7299105Z [36;1mpython - <<'PY'[0m
+2026-11-05T03:57:21.7299398Z [36;1mimport json[0m
+2026-11-05T03:57:21.7299705Z [36;1mfrom pathlib import Path[0m
+2026-11-05T03:57:21.7300224Z [36;1mexpected = json.loads(Path('benchmarks/dual-aim-v2/summary.json').read_text())[0m
+2026-11-05T03:57:21.7300757Z [36;1mfor suite in ('development', 'withheld'):[0m
+2026-11-05T03:57:21.7301220Z [36;1m    actual = json.loads(Path(f'component-evidence/{suite}.json').read_text())[0m
+2026-11-05T03:57:21.7301762Z [36;1m    rows = actual.pop('rows')[0m
+2026-11-05T03:57:21.7302215Z [36;1m    assert len(rows) == (9792 if suite == 'development' else 1080)[0m
+2026-11-05T03:57:21.7302892Z [36;1m    assert actual == expected[suite], f'{suite} evidence differs from recorded summary'[0m
+2026-11-05T03:57:21.7303557Z [36;1m    print(f'{suite}: {len(rows)} rows reproduce the frozen result')[0m
+2026-11-05T03:57:21.7303999Z [36;1mPY[0m
+2026-11-05T03:57:21.7333984Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:57:21.7334205Z env:
+2026-11-05T03:57:21.7334442Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.7334812Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:57:21.7335161Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.7335473Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.7335781Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.7336090Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:57:21.7336356Z ##[endgroup]
+2026-11-05T03:57:21.9183491Z development: 9792 rows reproduce the frozen result
+2026-11-05T03:57:21.9183866Z withheld: 1080 rows reproduce the frozen result
+2026-11-05T03:57:21.9661046Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T03:57:21.9661377Z with:
+2026-11-05T03:57:21.9661590Z   name: dual-aim-v2-raw
+2026-11-05T03:57:21.9661904Z   path: component-evidence/
+2026-11-05T03:57:21.9662177Z   if-no-files-found: error
+2026-11-05T03:57:21.9662430Z   compression-level: 6
+2026-11-05T03:57:21.9662670Z   overwrite: false
+2026-11-05T03:57:21.9663112Z   include-hidden-files: false
+2026-11-05T03:57:21.9663373Z env:
+2026-11-05T03:57:21.9663699Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.9664245Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:57:21.9664785Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.9665275Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.9665754Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:57:21.9666242Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:57:21.9666699Z ##[endgroup]
+2026-11-05T03:57:22.0952314Z (node:2281) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:57:22.0952893Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:57:22.0995157Z With the provided path, there will be 2 files uploaded
+2026-11-05T03:57:22.0999857Z Artifact name is valid!
+2026-11-05T03:57:22.1000536Z Root directory input is valid!
+2026-11-05T03:57:22.4430548Z Beginning upload of artifact content to blob storage
+2026-11-05T03:57:22.5612843Z (node:2281) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T03:57:22.9070109Z Uploaded bytes 152815
+2026-11-05T03:57:22.9640448Z Finished uploading artifact content to blob storage!
+2026-11-05T03:57:22.9641274Z SHA256 digest of uploaded artifact zip is 92bafbd50b1ad8faae1fa0c5dd689caebdd38aed37308746ab079955a35ad801
+2026-11-05T03:57:22.9641946Z Finalizing artifact upload
+2026-11-05T03:57:23.4162763Z Artifact dual-aim-v2-raw.zip successfully finalized. Artifact ID 13386648562
+2026-11-05T03:57:23.4163724Z Artifact dual-aim-v2-raw has been successfully uploaded! Final size is 152815 bytes. Artifact ID is 13386648562
+2026-11-05T03:57:23.4169502Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41964633846/artifacts/13386648562
+2026-11-05T03:57:23.4338274Z Post job cleanup.
+2026-11-05T03:57:23.5306041Z (node:2293) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:57:23.5306761Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:57:23.5457749Z Post job cleanup.
+2026-11-05T03:57:23.6188986Z [command]/usr/bin/git version
+2026-11-05T03:57:23.6226719Z git version 2.56.0
+2026-11-05T03:57:23.6258964Z Temporarily overriding HOME='/home/runner/work/_temp/70fae1b7-1cb4-418f-a5d5-e0779c4cc2b1' before making global git config changes
+2026-11-05T03:57:23.6260067Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:57:23.6262864Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:57:23.6296923Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:57:23.6335545Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:57:23.6597311Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:57:23.6619782Z http.https://github.com/.extraheader
+2026-11-05T03:57:23.6629012Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-05T03:57:23.6660580Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:57:23.6926597Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:57:23.6959451Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:57:23.7384389Z Cleaning up orphan processes
+2026-11-05T03:57:23.7671540Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
