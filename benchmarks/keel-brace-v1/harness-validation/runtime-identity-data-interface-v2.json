@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 2,
+  "status": "PREMEASUREMENT V2 DATA CONTRACT; exact published methodology PASS6647063000, no runtime/game authority",
+  "base": "Original provenance/image-identity/; original worker .benchmark-cache/keel-brace-image-identity/<stage>/ copied unchanged into provenance",
+  "snapshotPaths": {
+    "beforeTools": "before-tools/snapshot.json",
+    "prepared": "prepared/snapshot.json",
+    "collectorBeforeTools": "before-tools/collector/before-tools/",
+    "collectorPrepared": "prepared/collector/after-tools/"
+  },
+  "snapshotExactKeys": [
+    "schemaVersion",
+    "policyID",
+    "policySHA256",
+    "stage",
+    "phase",
+    "runId",
+    "runAttempt",
+    "headSHA",
+    "workspace",
+    "bootId",
+    "architecture",
+    "kernel",
+    "kernelVersion",
+    "logicalJobName",
+    "collectorSourceSHA256",
+    "snapshotManifestSHA256",
+    "reportSHA256",
+    "stable",
+    "caseID"
+  ],
+  "snapshotManifestSHA256": "SHA256 of collector capture-status.json",
+  "reportSHA256": "SHA256 of collector report.json",
+  "stableExactKeys": [
+    "rawSources",
+    "claims",
+    "runnerRoot",
+    "setupInfoPath",
+    "bootId",
+    "architecture",
+    "kernel",
+    "kernelVersion",
+    "collectorSourceSHA256",
+    "sourceIdentity",
+    "caseID"
+  ],
+  "sourceIdentityExactKeys": [
+    "stage",
+    "runId",
+    "runAttempt",
+    "headSHA",
+    "workspace",
+    "logicalJobName"
+  ],
+  "stableRawSourcesKeys": [
+    "imagedata",
+    "etc_environment",
+    "etc_os_release",
+    "usr_lib_os_release",
+    "etc_lsb_release",
+    "boot_id",
+    "setup_info_0"
+  ],
+  "stableRawSourceExactKeys": [
+    "sourcePath",
+    "resolvedPath",
+    "size",
+    "wholeSHA256",
+    "mode",
+    "uid",
+    "gid"
+  ],
+  "optionalLSBAbsentExactKeys": [
+    "sourcePath",
+    "absent"
+  ],
+  "claimsExactKeys": [
+    "imagedataNative",
+    "setupInfoNative",
+    "processEnvironment",
+    "etcEnvironment"
+  ],
+  "nativeOriginalExample": "Case A and B original unmodified data in frozen historical fixture directories, matched as complete joint observations only",
+  "collectorInterface": "Unmodified tools/keel_brace_image_probe.py source in frozen source inventory. Original report.json/capture-status.json/raw/<label>.bin/parsed/<label>.json/collector.py retained exactly, with discovery and stat/read/error records. No collector filename/schema changes.",
+  "rawSourceRequiredEvidence": "report.captures[label] requestedPath,resolvedPath,exists,errors,raw,bytesComplete,utcStart,utcEnd,durationNs,lstatBefore,statBefore,openedStat,statAfter. raw has artifactPath,bytes,sha256,complete,suppliedBytes,sourceBytesComplete; parsedArtifact and parsedClaims/parseErrors for parsed files. Missing optional LSB allowed only one FileNotFoundError at lstat.",
+  "discoveryEvidence": "report.runnerDiscovery: procRoot,scannedEntries,nonmatchingCount,matches,roots,errors,truncated. matches include pid,comm,commRawASCII,commSHA256,commPath,commStat,exeSymlinkStat,exeReadlink,exeReadlinkSHA256,exePath,runnerRoot,setupInfoPath,errors. Exactly one root; 1..15 matches; <=512 entries; all errors empty/nontruncated.",
+  "preparedWrapperFile": "prepared-wrapper.json",
+  "preparedWrapperExactKeys": [
+    "schemaVersion",
+    "policyID",
+    "policySHA256",
+    "runId",
+    "runAttempt",
+    "headSHA",
+    "logicalJobName",
+    "preparedNumericJobId",
+    "beforeToolsSnapshotFile",
+    "beforeToolsSnapshotSHA256",
+    "preparedSnapshotFile",
+    "preparedSnapshotSHA256",
+    "jobsAPIFile",
+    "jobsAPISHA256"
+  ],
+  "preparedJobsAPIFile": "prepared-jobs-api.json",
+  "profileImageIdentityExactKeys": [
+    "policyID",
+    "policySHA256",
+    "beforeToolsSnapshotSHA256",
+    "preparedSnapshotSHA256",
+    "preparedWrapperSHA256",
+    "preparedNumericJobId",
+    "stable",
+    "caseID",
+    "effectiveFreezePath",
+    "effectiveFreezeSHA256"
+  ],
+  "runtimeReviewNestedLocation": "KEEL_BRACE_RUNTIME_REVIEW_V1.agentToolProvenance.imageIdentityReview",
+  "runtimeReviewExactKeys": [
+    "schemaVersion",
+    "policyID",
+    "policySHA256",
+    "beforeToolsSnapshotSHA256",
+    "preparedSnapshotSHA256",
+    "preparedWrapperSHA256",
+    "primaryPregameAuthority",
+    "earlyHeaderEvidence",
+    "finalExternalReconciliationRequired",
+    "caseID"
+  ],
+  "primaryPregameAuthority": "native-only-qualified-observation",
+  "finalExternalReconciliationRequired": true,
+  "earlyHeaderExactKeys": [
+    "status",
+    "endpoint",
+    "runId",
+    "runAttempt",
+    "jobId",
+    "headSHA",
+    "observedAtUTC",
+    "httpStatus",
+    "responseBytes",
+    "responseSHA256",
+    "responseFile",
+    "scope",
+    "runAccessVerified",
+    "jobsAccessVerified",
+    "artifactAccessVerified",
+    "jobInProgress",
+    "nativeClaim"
+  ],
+  "earlyResponseFile": "early-header-response.bin, original response bytes externally retained by independent runtime reviewer with original run/jobs/artifact API access records; immutable report binds full bytes hash and length",
+  "earlyEndpoint": "https://api.github.com/repos/stephanelee/robocode/actions/jobs/<actual jobId>/logs",
+  "earlyAlternatives": [
+    {
+      "status": "available-matched",
+      "httpStatus": 200,
+      "scope": "complete-startup-header",
+      "nativeClaim": "Exact complete four-field native object of the frozen stage caseID"
+    },
+    {
+      "status": "unavailable-404-deferred",
+      "httpStatus": 404,
+      "scope": "actual-job-log-request",
+      "jobInProgress": true,
+      "nativeClaim": null
+    }
+  ],
+  "liveRevalidation": "Original stage image-identity-revalidations/revalidation-<monotonic ns>/snapshot.json and collector/after-tools/*; full stable comparison against immutable original prepared. Fresh timestamps/PID enumeration/mtime preserved but not equality fields.",
+  "finalReconciliationLocation": "KEEL_BRACE_OUTCOME_REVIEW_V1.agentToolProvenance.imageIdentityReconciliation; also separate independent reconciliation JSON/evidence (never rawdecision rewrite)",
+  "finalReconciliationExactKeys": [
+    "schemaVersion",
+    "status",
+    "policyID",
+    "policySHA256",
+    "runId",
+    "runAttempt",
+    "jobId",
+    "headSHA",
+    "beforeToolsSnapshotSHA256",
+    "preparedSnapshotSHA256",
+    "preparedWrapperSHA256",
+    "nativeClaim",
+    "runAPI",
+    "jobsAPI",
+    "jobLog",
+    "completedAtUTC",
+    "reviewerTask",
+    "caseID"
+  ],
+  "finalReconciliationStatus": "PASS only after all fixed provider identity/order/scope/tuple checks; otherwise PROVENANCE-PENDING/PROVENANCE-INCOMPLETE and no acceptance",
+  "finalEvidenceRefExactKeys": [
+    "path",
+    "bytes",
+    "sha256"
+  ],
+  "finalEvidenceRefPaths": "Original full run/jobs API JSON and complete unmodified raw provider job log; retained upstream screen refs must be in gate.retainedEvidenceFiles hash map. Path relative to repository for screen gate, evidence root for standalone audit.",
+  "finalBindings": "Actual numeric job matches prepared wrapper; original run/jobs attempt1/head/job completed success, full startup header exactly one prior to first real workflow step. Current remote provider API rechecked. Native tuple matches immutable prepared snapshots. All final snapshot/wrapper hashes must match original ZIP provenance/profile. Final actual provider header must match the ORIGINAL reviewed screen caseID; current/future confirmation worker case/environment is irrelevant.",
+  "screenGateChange": "Nine top-level screen gate keys unchanged; add final provider evidence refs to retainedEvidenceFiles; independent outcome report includes imageIdentityReconciliation in existing agentToolProvenance. No unconditional upstream eligible decision without reconciliation.",
+  "profileLocation": "profile.json['imageIdentity']",
+  "authorityRevalidationBinding": {
+    "field": "imageIdentityRevalidation",
+    "exactKeys": [
+      "snapshotFile",
+      "snapshotSHA256",
+      "preparedSnapshotSHA256",
+      "runtimeProfileSHA256",
+      "caseID"
+    ],
+    "snapshotFile": "stage-root-relative image-identity-revalidations/revalidation-<ns>/snapshot.json",
+    "runtimeProfileSHA256": "SHA256 original profile.json after actual current full runtime_metadata equality check"
+  },
+  "standaloneExternalFiles": [
+    "provider/early/early-header-response.bin",
+    "provider/early/run.json",
+    "provider/early/jobs.json",
+    "provider/early/artifact.json",
+    "provider/reconciliation.json"
+  ],
+  "optionalLSBGlobalErrorCount": "report.errors remains []; capture-level sole missing LSB error contributes status.diagnosticErrorCount=1; otherwise0. Exact exception only.",
+  "providerUTCSemantics": "Second-resolution API completed_at represents its recorded second: capture/header end must be strictly before completed_at+1 second. Fractional API timestamps use exact inclusive bound. Original strings retained, no arbitrary clock skew slack.",
+  "effectivePolicyID": "keel-brace-qualified-native-observations-v2",
+  "allowedJointCases": [
+    {
+      "caseID": "native-20261025.179.1_env-20261026.180.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261025.179.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261026.180.1"
+      }
+    },
+    {
+      "caseID": "native-20261101.186.1_env-20261101.186.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261101.186.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261101.186.1"
+      }
+    }
+  ],
+  "freezeOrigin": {
+    "repositoryPath": "benchmarks/keel-brace-v1/freeze-v2.json",
+    "logicalExport": "provenance/freeze.json",
+    "newFreezeRootField": "effectiveFreezePath",
+    "profileLocation": "profile.json['imageIdentity']",
+    "profileFields": [
+      "effectiveFreezePath",
+      "effectiveFreezeSHA256"
+    ],
+    "capsuleOriginFile": "provenance/effective-freeze-origin.json",
+    "capsuleOriginExactKeys": [
+      "schemaVersion",
+      "policyID",
+      "policySHA256",
+      "effectiveFreezePath",
+      "effectiveFreezeSHA256"
+    ],
+    "newFreezeSelfHashInOwnBytesAllowed": false,
+    "sourceFreezeSHA256Meaning": "Actual SHA256 of immutable repository freeze-v2.json; existing20-key approval.freezeSHA256 and9-key gate.sourceFreezeSHA256 now bind this effective v2 file; original logical exported freeze.json contains exact v2 bytes",
+    "oldRepositoryFreezeSHA256": "fcbba3ae64ecbeb63daa76fb74d11c038f0392278b132bfc8976f135d8cfc686"
+  },
+  "caseIDSemantics": "Exact literal allowed caseID in snapshots/stable/profile/each authority image revalidation/nested image runtime review/final reconciliation. Every raw claim from both native and both environment sources must match SAME case. Stage never switches; fresh confirmation may independently freeze a different listed case. No extra caseID added to unchanged outer20/4/10/9 schemas; prepared wrapper remains same exact key set, binding case-bearing snapshot hashes.",
+  "upstreamV2FreezeOrigin": "Read original ZIP provenance/effective-freeze-origin.json and receipt-bound profile.imageIdentity effectiveFreezePath/effectiveFreezeSHA256; compare exact exported provenance/freeze.json SHA and actual repository freeze-v2.json. Old freeze.json preserved unchanged as historical source asset.",
+  "recordSchemaVersions": {
+    "snapshot": 1,
+    "preparedWrapper": 1,
+    "runtimeReview": 1,
+    "finalReconciliation": 1,
+    "effectiveFreezeOrigin": 1,
+    "policyJSON": 2,
+    "DATAContract": 2
+  }
+}

@@ -1,0 +1,850 @@
+registered-stage	Set up job	﻿2026-11-04T17:09:22.8242935Z Current runner version: '2.338.2'
+registered-stage	Set up job	2026-11-04T17:09:22.8265320Z ##[group]Runner Image Provisioner
+registered-stage	Set up job	2026-11-04T17:09:22.8266327Z Hosted Compute Agent
+registered-stage	Set up job	2026-11-04T17:09:22.8266791Z Version: 20261021.618
+registered-stage	Set up job	2026-11-04T17:09:22.8267267Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+registered-stage	Set up job	2026-11-04T17:09:22.8267899Z Build Date: 2026-10-21T00:45:21Z
+registered-stage	Set up job	2026-11-04T17:09:22.8268434Z Worker ID: {42e3aec6-7d62-4bc4-aff6-f0d31bfa314d}
+registered-stage	Set up job	2026-11-04T17:09:22.8269267Z Region: centralus
+registered-stage	Set up job	2026-11-04T17:09:22.8269711Z Cloud: Azure
+registered-stage	Set up job	2026-11-04T17:09:22.8270118Z ##[endgroup]
+registered-stage	Set up job	2026-11-04T17:09:22.8271408Z ##[group]Operating System
+registered-stage	Set up job	2026-11-04T17:09:22.8271975Z Ubuntu
+registered-stage	Set up job	2026-11-04T17:09:22.8272504Z 26.04.1
+registered-stage	Set up job	2026-11-04T17:09:22.8272994Z LTS
+registered-stage	Set up job	2026-11-04T17:09:22.8273457Z ##[endgroup]
+registered-stage	Set up job	2026-11-04T17:09:22.8274021Z ##[group]Runner Image
+registered-stage	Set up job	2026-11-04T17:09:22.8274573Z Image: ubuntu-26.04
+registered-stage	Set up job	2026-11-04T17:09:22.8275060Z Version: 20261025.179.1
+registered-stage	Set up job	2026-11-04T17:09:22.8275893Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+registered-stage	Set up job	2026-11-04T17:09:22.8277272Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+registered-stage	Set up job	2026-11-04T17:09:22.8278058Z ##[endgroup]
+registered-stage	Set up job	2026-11-04T17:09:22.8279262Z ##[group]GITHUB_TOKEN Permissions
+registered-stage	Set up job	2026-11-04T17:09:22.8281503Z Actions: read
+registered-stage	Set up job	2026-11-04T17:09:22.8282080Z Contents: write
+registered-stage	Set up job	2026-11-04T17:09:22.8282545Z Issues: read
+registered-stage	Set up job	2026-11-04T17:09:22.8283051Z Metadata: read
+registered-stage	Set up job	2026-11-04T17:09:22.8283569Z ##[endgroup]
+registered-stage	Set up job	2026-11-04T17:09:22.8285351Z Secret source: Actions
+registered-stage	Set up job	2026-11-04T17:09:22.8286181Z Cache mode: write
+registered-stage	Set up job	2026-11-04T17:09:22.8287035Z Prepare workflow directory
+registered-stage	Set up job	2026-11-04T17:09:22.8745687Z Prepare all required actions
+registered-stage	Set up job	2026-11-04T17:09:22.8787499Z Getting action download info
+registered-stage	Set up job	2026-11-04T17:09:23.1475457Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+registered-stage	Set up job	2026-11-04T17:09:23.2756147Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+registered-stage	Set up job	2026-11-04T17:09:23.8047836Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+registered-stage	Set up job	2026-11-04T17:09:24.8838267Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+registered-stage	Set up job	2026-11-04T17:09:24.9570193Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+registered-stage	Set up job	2026-11-04T17:09:25.2061595Z Complete job name: registered-stage
+registered-stage	Run actions/checkout@v4	﻿2026-11-04T17:09:25.2780697Z ##[group]Run actions/checkout@v4
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2781798Z with:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2782641Z   ref: 368b49a9bae42a0cefd4fd9aa033a6bd576e566d
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2783678Z   fetch-depth: 0
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2784429Z   persist-credentials: false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2785343Z   repository: stephanelee/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2791329Z   token: ***
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2792089Z   ssh-strict: true
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2792838Z   ssh-user: git
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2793575Z   clean: true
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2794351Z   sparse-checkout-cone-mode: true
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2795249Z   fetch-tags: false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2796003Z   show-progress: true
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2796765Z   lfs: false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2797477Z   submodules: false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2798244Z   set-safe-directory: true
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2799351Z   allow-unsafe-pr-checkout: false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2800432Z env:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2801154Z   STAGE: screen
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2801907Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2802801Z   PULL_NUMBER: 108
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.2803574Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5141957Z Syncing repository: stephanelee/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5145291Z ##[group]Getting Git version info
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5146748Z Working directory is '/home/runner/work/robocode/robocode'
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5149311Z [command]/usr/bin/git version
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5150464Z git version 2.56.0
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5159282Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5170109Z Temporarily overriding HOME='/home/runner/work/_temp/48e33a8d-cede-419d-93ad-01d96c91c4e0' before making global git config changes
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5173725Z Adding repository directory to the temporary git global config as a safe directory
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5176396Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5243974Z Deleting the contents of '/home/runner/work/robocode/robocode'
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5247403Z ##[group]Initializing the repository
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5250545Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5392169Z hint: Using 'master' as the name for the initial branch. This default branch name
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5393965Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5395572Z hint: to use in all of your new repositories, which will suppress this warning,
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5396800Z hint: call:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5397637Z hint:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5398569Z hint: 	git config --global init.defaultBranch <name>
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5399830Z hint:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5400822Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5402542Z hint: 'development'. The just-created branch can be renamed via this command:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5404065Z hint:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5404807Z hint: 	git branch -m <name>
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5405824Z hint:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5407022Z hint: Disable this message with "git config set advice.defaultBranchName false"
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5413002Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5420689Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5458443Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5460098Z ##[group]Disabling automatic garbage collection
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5462449Z [command]/usr/bin/git config --local gc.auto 0
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5489275Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5490831Z ##[group]Setting up auth
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5494915Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5522840Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5900007Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.5926118Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6098411Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6122160Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6293391Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6326762Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6328154Z ##[group]Fetching the repository
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:25.6336258Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8135481Z From https://github.com/stephanelee/robocode
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8141353Z  * [new branch]      benchmark/keel-prism-descriptive -> origin/benchmark/keel-prism-descriptive
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8142144Z  * [new branch]      claude/aa-calibration   -> origin/claude/aa-calibration
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8142993Z  * [new branch]      claude/aim-corridor     -> origin/claude/aim-corridor
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8143592Z  * [new branch]      claude/aim-corridor-v2  -> origin/claude/aim-corridor-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8144326Z  * [new branch]      claude/duel-surf        -> origin/claude/duel-surf
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8145105Z  * [new branch]      claude/foundations      -> origin/claude/foundations
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8146110Z  * [new branch]      claude/keel-v1          -> origin/claude/keel-v1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8146876Z  * [new branch]      claude/keel-v2-dev      -> origin/claude/keel-v2-dev
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8147610Z  * [new branch]      claude/melee-coherent   -> origin/claude/melee-coherent
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8148341Z  * [new branch]      claude/replay-harness   -> origin/claude/replay-harness
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8149209Z  * [new branch]      claude/wall-search      -> origin/claude/wall-search
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8149999Z  * [new branch]      codex/api-1.4.0         -> origin/codex/api-1.4.0
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8150827Z  * [new branch]      codex/battle-benchmarks -> origin/codex/battle-benchmarks
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8151616Z  * [new branch]      codex/ci-bootstrap      -> origin/codex/ci-bootstrap
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8152331Z  * [new branch]      codex/coherent-duel     -> origin/codex/coherent-duel
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8152938Z  * [new branch]      codex/coherent-duel-v2  -> origin/codex/coherent-duel-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8153732Z  * [new branch]      codex/collector-compat-wrapper -> origin/codex/collector-compat-wrapper
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8154449Z  * [new branch]      codex/containment-v2    -> origin/codex/containment-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8155094Z  * [new branch]      codex/core-correctness  -> origin/codex/core-correctness
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8155914Z  * [new branch]      codex/current-runnable-jar -> origin/codex/current-runnable-jar
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8156737Z  * [new branch]      codex/default-duel-policy -> origin/codex/default-duel-policy
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8157283Z  * [new branch]      codex/diamond-stop-contract24 -> origin/codex/diamond-stop-contract24
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8157847Z  * [new branch]      codex/final-default-confirmation -> origin/codex/final-default-confirmation
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8158473Z  * [new branch]      codex/final-default-confirmation-redo -> origin/codex/final-default-confirmation-redo
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8159267Z  * [new branch]      codex/fire-alignment    -> origin/codex/fire-alignment
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8159779Z  * [new branch]      codex/foundation-scan-lag -> origin/codex/foundation-scan-lag
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8160314Z  * [new branch]      codex/improve-cycle2-walls -> origin/codex/improve-cycle2-walls
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8160893Z  * [new branch]      codex/improve-cycle3-gf-confidence -> origin/codex/improve-cycle3-gf-confidence
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8161742Z  * [new branch]      codex/improve-steering-cycle1 -> origin/codex/improve-steering-cycle1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8162811Z  * [new branch]      codex/keel-improvement-baseline -> origin/codex/keel-improvement-baseline
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8163712Z  * [new branch]      codex/learning-modes-persistence -> origin/codex/learning-modes-persistence
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8164392Z  * [new branch]      codex/legal-motion-recorder -> origin/codex/legal-motion-recorder
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8164942Z  * [new branch]      codex/melee-baseline    -> origin/codex/melee-baseline
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8165423Z  * [new branch]      codex/meridian-aim      -> origin/codex/meridian-aim
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8165901Z  * [new branch]      codex/meridian-duel     -> origin/codex/meridian-duel
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8166431Z  * [new branch]      codex/meridian-economy  -> origin/codex/meridian-economy
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8166958Z  * [new branch]      codex/meridian-held-plan-90 -> origin/codex/meridian-held-plan-90
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8167725Z  * [new branch]      codex/meridian-held-plan-execution -> origin/codex/meridian-held-plan-execution
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8168473Z  * [new branch]      codex/meridian-hit-angles -> origin/codex/meridian-hit-angles
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8169604Z  * [new branch]      codex/meridian-motion-memory -> origin/codex/meridian-motion-memory
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8170159Z  * [new branch]      codex/meridian-peak-v1  -> origin/codex/meridian-peak-v1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8170686Z  * [new branch]      codex/meridian-prior    -> origin/codex/meridian-prior
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8171198Z  * [new branch]      codex/meridian-wave-support -> origin/codex/meridian-wave-support
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8171958Z  * [new branch]      codex/mixed-population-v4 -> origin/codex/mixed-population-v4
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8172697Z  * [new branch]      codex/mixed-training-audit -> origin/codex/mixed-training-audit
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8173614Z  * [new branch]      codex/nonlinear-containment-v5 -> origin/codex/nonlinear-containment-v5
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8174338Z  * [new branch]      codex/nonlinear-gain-v5 -> origin/codex/nonlinear-gain-v5
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8174963Z  * [new branch]      codex/own-wave-context  -> origin/codex/own-wave-context
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8175758Z  * [new branch]      codex/own-wave-context-diagnostic -> origin/codex/own-wave-context-diagnostic
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8176705Z  * [new branch]      codex/pin-ubuntu-26.04  -> origin/codex/pin-ubuntu-26.04
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8177240Z  * [new branch]      codex/retcon-benchmarks -> origin/codex/retcon-benchmarks
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8177792Z  * [new branch]      codex/retcon-observability -> origin/codex/retcon-observability
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8178365Z  * [new branch]      codex/retcon-strategy-plan -> origin/codex/retcon-strategy-plan
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8179724Z  * [new branch]      codex/strong-melee-baseline -> origin/codex/strong-melee-baseline
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8180192Z  * [new branch]      codex/targeting-seam    -> origin/codex/targeting-seam
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8180615Z  * [new branch]      dismond-specs           -> origin/dismond-specs
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8181168Z  * [new branch]      docs/aisurvivor-description -> origin/docs/aisurvivor-description
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8181763Z  * [new branch]      docs/breakwater-findings -> origin/docs/breakwater-findings
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8182276Z  * [new branch]      docs/challenger-defense-trace -> origin/docs/challenger-defense-trace
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8182831Z  * [new branch]      docs/diamond-challenger-direction -> origin/docs/diamond-challenger-direction
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8183469Z  * [new branch]      docs/pinned-opponent-analysis -> origin/docs/pinned-opponent-analysis
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8183991Z  * [new branch]      docs/retcon-component-experiments -> origin/docs/retcon-component-experiments
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8184486Z  * [new branch]      docs/retcon-opponent-analysis -> origin/docs/retcon-opponent-analysis
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8185057Z  * [new branch]      evidence/keel-v1-run-keel-v1-confirm-41831109687 -> origin/evidence/keel-v1-run-keel-v1-confirm-41831109687
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8186058Z  * [new branch]      evidence/keel-v1-run-keel-v1-screen-41792449000 -> origin/evidence/keel-v1-run-keel-v1-screen-41792449000
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8186783Z  * [new branch]      experiment/advanced-python-duels -> origin/experiment/advanced-python-duels
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8187373Z  * [new branch]      experiment/aegis-dodge-v2 -> origin/experiment/aegis-dodge-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8187799Z  * [new branch]      experiment/aegis-shield-v1 -> origin/experiment/aegis-shield-v1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8188213Z  * [new branch]      experiment/aegis-v2-dev -> origin/experiment/aegis-v2-dev
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8188677Z  * [new branch]      experiment/breakwater-envelope-v3 -> origin/experiment/breakwater-envelope-v3
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8189442Z  * [new branch]      experiment/breakwater-mobile-v2 -> origin/experiment/breakwater-mobile-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8190002Z  * [new branch]      experiment/diamond-breakwater-v1 -> origin/experiment/diamond-breakwater-v1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8190523Z  * [new branch]      experiment/diamond-challenger-build -> origin/experiment/diamond-challenger-build
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8191082Z  * [new branch]      experiment/diamond-context-v2 -> origin/experiment/diamond-context-v2
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8191751Z  * [new branch]      experiment/diamond-diagnostic-v5 -> origin/experiment/diamond-diagnostic-v5
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8192262Z  * [new branch]      experiment/diamond-guarded-ray-v6 -> origin/experiment/diamond-guarded-ray-v6
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8192841Z  * [new branch]      experiment/diamond-outgoing-context-v7 -> origin/experiment/diamond-outgoing-context-v7
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8193485Z  * [new branch]      experiment/diamond-wave-horizon-v4 -> origin/experiment/diamond-wave-horizon-v4
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8193953Z  * [new branch]      experiment/diamond-wave-v3 -> origin/experiment/diamond-wave-v3
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8194448Z  * [new branch]      facet/independent-v1-20261104-01a1a639 -> origin/facet/independent-v1-20261104-01a1a639
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8194976Z  * [new branch]      fix/challenger-completion-wait -> origin/fix/challenger-completion-wait
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8195449Z  * [new branch]      fix/challenger-round-lifecycle -> origin/fix/challenger-round-lifecycle
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8195901Z  * [new branch]      fix/engine-trace-fire-cost -> origin/fix/engine-trace-fire-cost
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8196344Z  * [new branch]      improve/adaptive-duel-danger -> origin/improve/adaptive-duel-danger
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8196816Z  * [new branch]      improve/ais-breakwater-movement -> origin/improve/ais-breakwater-movement
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8197275Z  * [new branch]      improve/blended-duel-danger -> origin/improve/blended-duel-danger
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8197657Z  * [new branch]      master                  -> origin/master
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8198017Z  * [new branch]      prism/independent-v1    -> origin/prism/independent-v1
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8198458Z  * [new branch]      research/frozen-duel-confirmation -> origin/research/frozen-duel-confirmation
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8199220Z  * [new branch]      test/dual-aim-component-diagnostic -> origin/test/dual-aim-component-diagnostic
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8199753Z  * [new branch]      tools/legal-scan-forecast-dataset -> origin/tools/legal-scan-forecast-dataset
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8200287Z  * [new tag]         experiment-receipts/meridian-gp60-issue90 -> experiment-receipts/meridian-gp60-issue90
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8200854Z  * [new tag]         experiment-receipts/meridian-peak-v1-screen -> experiment-receipts/meridian-peak-v1-screen
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8201519Z  * [new tag]         keel-prism-remaining50-v1-77b8a5c3114641c1-8c045f80d37a3076 -> keel-prism-remaining50-v1-77b8a5c3114641c1-8c045f80d37a3076
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8202224Z  * [new tag]         keel-prism-utf8-v1-77b8a5c3114641c1-8c045f80d37a3076 -> keel-prism-utf8-v1-77b8a5c3114641c1-8c045f80d37a3076
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8202916Z  * [new tag]         keel-prism-v1-77b8a5c3114641c1-8c045f80d37a3076 -> keel-prism-v1-77b8a5c3114641c1-8c045f80d37a3076
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8203535Z  * [new tag]         prism-screen-v1-8c045f80d37a3076 -> prism-screen-v1-8c045f80d37a3076
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8204906Z [command]/usr/bin/git rev-parse --verify --quiet 368b49a9bae42a0cefd4fd9aa033a6bd576e566d^{object}
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8205313Z 368b49a9bae42a0cefd4fd9aa033a6bd576e566d
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8206063Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8206454Z ##[group]Determining the checkout info
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8206838Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8207085Z [command]/usr/bin/git sparse-checkout disable
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8232751Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8284222Z ##[group]Checking out the ref
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:42.8287105Z [command]/usr/bin/git checkout --progress --force 368b49a9bae42a0cefd4fd9aa033a6bd576e566d
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3158184Z Note: switching to '368b49a9bae42a0cefd4fd9aa033a6bd576e566d'.
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3158510Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3158688Z You are in 'detached HEAD' state. You can look around, make experimental
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3159278Z changes and commit them, and you can discard any commits you make in this
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3159612Z state without impacting any branches by switching back to a branch.
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3159814Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3159955Z If you want to create a new branch to retain commits you create, you may
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3160292Z do so (now or later) by using -c with the switch command. Example:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3160497Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3160600Z   git switch -c <new-branch-name>
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3160865Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3161331Z Or undo this operation with:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3161470Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3161550Z   git switch -
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3161655Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3161814Z Turn off this advice by setting config variable advice.detachedHead to false
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3162050Z 
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3162283Z HEAD is now at 368b49a Merge published Prism evidence while preserving frozen KeelHelm execution assets
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3207855Z ##[endgroup]
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3250476Z [command]/usr/bin/git log -1 --format=%H
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3270661Z 368b49a9bae42a0cefd4fd9aa033a6bd576e566d
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3279650Z ##[group]Removing auth
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3283524Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3307019Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3502310Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3517813Z http.https://github.com/.extraheader
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3522802Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3546953Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3739848Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3746038Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+registered-stage	Run actions/checkout@v4	2026-11-04T17:09:43.3922744Z ##[endgroup]
+registered-stage	Run actions/setup-java@v4	﻿2026-11-04T17:09:43.4123408Z ##[group]Run actions/setup-java@v4
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4123627Z with:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4123798Z   distribution: temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4123984Z   java-version: 17.0.21+9
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4124194Z   java-package: jdk
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4124363Z   check-latest: false
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4124529Z   server-id: github
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4124703Z   server-username: GITHUB_ACTOR
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4124908Z   server-password: GITHUB_TOKEN
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4125091Z   overwrite-settings: true
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4125264Z   job-status: success
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4126856Z   token: ***
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4127003Z env:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4127143Z   STAGE: screen
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4127309Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4127492Z   PULL_NUMBER: 108
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.4127644Z ##[endgroup]
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5394280Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5400604Z ##[group]Installed distributions
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5539641Z Resolved Java 17.0.21+9 from tool-cache
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5540043Z Setting Java 17.0.21+9 as the default
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5546158Z (node:2333) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5546686Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5548237Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5616762Z Writing to /home/runner/.m2/toolchains.xml
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5617175Z 
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5617520Z Java configuration:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5617810Z   Distribution: temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5618090Z   Version: 17.0.21+9
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5618439Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5618916Z 
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5619294Z ##[endgroup]
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5635477Z Creating settings.xml with server-id: github
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:09:43.5648016Z Writing to /home/runner/.m2/settings.xml
+registered-stage	Run gradle/actions/setup-gradle@v4	﻿2026-11-04T17:09:43.5870698Z ##[group]Run gradle/actions/setup-gradle@v4
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5871235Z with:
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5871856Z   cache-disabled: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5872240Z   cache-read-only: true
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5872630Z   cache-write-only: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5873039Z   cache-overwrite-existing: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5873429Z   cache-cleanup: on-success
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5873870Z   gradle-home-cache-includes: caches
+registered-stage	Run gradle/actions/setup-gradle@v4	notifications
+registered-stage	Run gradle/actions/setup-gradle@v4	
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5874369Z   add-job-summary: always
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5874772Z   add-job-summary-as-pr-comment: never
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5875197Z   dependency-graph: disabled
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5875620Z   dependency-graph-report-dir: dependency-graph-reports
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5876100Z   dependency-graph-continue-on-failure: true
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5876511Z   build-scan-publish: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5876853Z   validate-wrappers: true
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5877200Z   allow-snapshot-wrappers: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5877515Z   gradle-home-cache-strict-match: false
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5877830Z   workflow-job-context: null
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5880061Z   github-token: ***
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5880374Z env:
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5880591Z   STAGE: screen
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5880822Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5881151Z   PULL_NUMBER: 108
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5881533Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5882103Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:43.5882507Z ##[endgroup]
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:45.4690795Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:45.4693426Z ##[group]Restore Gradle state from cache
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:45.6364111Z Cache hit for restore-key: gradle-home-v1|Linux-X64|retcon[1e2246ee903281f5a7368a542b6c1026]-d76c508cc0f575b2191fe66a3eb61fd1f64ba498
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.0804733Z Received 650037 of 650037 (100.0%), 2.0 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.0805571Z Cache Size: ~1 MB (650037 B)
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.0833043Z [command]/usr/bin/tar -xf /home/runner/work/_temp/aaccfd19-a7c6-424e-a96c-24733dc742c7/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.0936454Z Cache restored successfully
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.0940352Z Restored cache entry with key gradle-home-v1|Linux-X64|registered-stage[db5abc3a8fa2075bbc99862d51265329]-e40ddc61a9c482e01e3a7a568430a8974194bbcb to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 623ms
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.2158019Z Cache hit for: gradle-instrumented-jars-v1-866046f1c6fef1b0b127a45cbf2bd84e
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.2224773Z Cache hit for: gradle-groovy-dsl-v1-6f791edefd4bd4d62b5cfc15694c9f78
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.2255485Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.2727369Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6530519Z Received 130723 of 130723 (100.0%), 0.4 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6530981Z Cache Size: ~0 MB (130723 B)
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6547543Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0dbbe2ed-d839-4325-84af-916273836d4f/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6578041Z Received 233505 of 233505 (100.0%), 0.8 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6578589Z Cache Size: ~0 MB (233505 B)
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6600691Z [command]/usr/bin/tar -xf /home/runner/work/_temp/433fbe40-773f-4333-b8dc-41fa7a01e198/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6641373Z Cache restored successfully
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6643126Z Restored cache entry with key gradle-instrumented-jars-v1-866046f1c6fef1b0b127a45cbf2bd84e to /home/runner/.gradle/caches/jars-*/*/ in 570ms
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6785066Z Cache restored successfully
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:46.6786603Z Restored cache entry with key gradle-groovy-dsl-v1-6f791edefd4bd4d62b5cfc15694c9f78 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 583ms
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.0636277Z Received 6690088 of 6690088 (100.0%), 9.8 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.0637799Z Cache Size: ~6 MB (6690088 B)
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.0750261Z [command]/usr/bin/tar -xf /home/runner/work/_temp/e2cb5cc3-dd8e-41f7-9e2e-3e47e9f2bf52/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.0896414Z Cache restored successfully
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.0900097Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 995ms
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.3979525Z Received 88080384 of 136693260 (64.4%), 84.0 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.8209025Z Received 136693260 of 136693260 (100.0%), 91.6 MBs/sec
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.8211222Z Cache Size: ~130 MB (136693260 B)
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.8340655Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c0375441-2136-49c7-9166-da5c5bd40fbf/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.9619341Z Cache restored successfully
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.9661442Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 1871ms
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:47.9711167Z ##[endgroup]
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:48.0429420Z ##[group]All Gradle Wrapper jars are valid
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:48.0430275Z ✓ Found known Gradle Wrapper JAR files:
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:48.0430688Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+registered-stage	Run gradle/actions/setup-gradle@v4	2026-11-04T17:09:48.0431183Z ##[endgroup]
+registered-stage	Run actions/setup-python@v5	﻿2026-11-04T17:09:48.0572953Z ##[group]Run actions/setup-python@v5
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0573335Z with:
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0573574Z   python-version: 3.13.17
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0573909Z   check-latest: false
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0575741Z   token: ***
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0576076Z   update-environment: true
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0576372Z   allow-prereleases: false
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0576695Z   freethreaded: false
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0576998Z env:
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0577276Z   STAGE: screen
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0577568Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0577910Z   PULL_NUMBER: 108
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0578281Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0578940Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0579382Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0579702Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0580022Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0580454Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0580861Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0581322Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0581640Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.0581969Z ##[endgroup]
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.1526937Z ##[group]Installed versions
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.1560291Z (node:2419) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.1561105Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.1561782Z Successfully set up CPython (3.13.17)
+registered-stage	Run actions/setup-python@v5	2026-11-04T17:09:48.1562476Z ##[endgroup]
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	﻿2026-11-04T17:09:48.1662595Z ##[group]Run set -euxo pipefail
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1663035Z ^[[36;1mset -euxo pipefail^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1663399Z ^[[36;1mmkdir -p build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1663691Z ^[[36;1m{^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1663986Z ^[[36;1m  java -version^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1664387Z ^[[36;1m  cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar"^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1664824Z ^[[36;1m  ./gradlew --no-daemon clean build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1665326Z ^[[36;1m  python tools/verify_jar.py "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1665903Z ^[[36;1m  cp "$RUNNER_TEMP/KeelHelm-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1666518Z ^[[36;1m  ./gradlew -p experiments/Keel --no-daemon clean build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1667017Z ^[[36;1m  python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1667525Z ^[[36;1m  ./gradlew -p experiments/KeelHelm --no-daemon clean build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1668115Z ^[[36;1m  python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1668693Z ^[[36;1m  python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1669677Z ^[[36;1m} 2>&1 | tee "$RUNNER_TEMP/keel-helm-build.log"^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1670033Z ^[[36;1mmkdir -p build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1670417Z ^[[36;1mcp "$RUNNER_TEMP/keel-helm-build.log" build/keel-helm-build.log^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.1670835Z ^[[36;1mpython -I -B -S tools/keel_helm_experiment.py capture-build^[[0m
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2049822Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2050280Z env:
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2050536Z   STAGE: screen
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2050878Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2051169Z   PULL_NUMBER: 108
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2051553Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2052005Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2052452Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2052791Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2053123Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2053451Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2053897Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2054316Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2054677Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2055037Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2055478Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2055881Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2056269Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2056660Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2057035Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2057382Z ##[endgroup]
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2682685Z + mkdir -p build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2708600Z + tee /home/runner/work/_temp/keel-helm-build.log
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2727189Z + java -version
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2970654Z openjdk version "17.0.21" 2026-10-20
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2971460Z OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.2972228Z OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.3003991Z + cp AISurvivor/AISurvivor.jar /home/runner/work/_temp/KeelHelm-AISurvivor-committed.jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:48.3024395Z + ./gradlew --no-daemon clean build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:49.7778717Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:51.0781494Z Daemon will be stopped at the end of the build 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:55.7801034Z > Task :clean
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:57.7771464Z > Task :compileJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:57.7772616Z > Task :processResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:57.7773289Z > Task :classes
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:58.0798357Z > Task :jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:58.0811566Z > Task :assemble
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:58.8791774Z > Task :compileTestJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:58.8793275Z > Task :processTestResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:58.8793879Z > Task :testClasses
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:09:59.9772064Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0771614Z > Task :test
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0772699Z > Task :check
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0773624Z > Task :build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0775210Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793812193972.json
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0775822Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0779592Z BUILD SUCCESSFUL in 21s
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.0780575Z 5 actionable tasks: 5 executed
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:10.2072516Z + python tools/verify_jar.py /home/runner/work/_temp/KeelHelm-AISurvivor-committed.jar AISurvivor/AISurvivor.jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:11.7177116Z Verified 822 matching JAR file entries (ZIP timestamps/order ignored).
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:11.7236257Z + cp /home/runner/work/_temp/KeelHelm-AISurvivor-committed.jar AISurvivor/AISurvivor.jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:11.7257388Z + ./gradlew -p experiments/Keel --no-daemon clean build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:12.1770981Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:13.0751130Z Daemon will be stopped at the end of the build 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:16.9746629Z > Task :clean UP-TO-DATE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.7733039Z > Task :compileJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.7734075Z > Task :processResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.7734878Z > Task :classes
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.9786029Z > Task :jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.9786577Z > Task :prepareBot
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:17.9787155Z > Task :assemble
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:18.1746065Z > Task :compileTestJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:18.1747148Z > Task :processTestResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:18.1747904Z > Task :testClasses
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1731845Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1732643Z > Task :test
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1733153Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1737063Z KeelContractTest > wallRoomShrinksNearWalls() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1746758Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1747800Z KeelContractTest > speedLawMatchesPinnedServer() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1748467Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1750568Z KeelContractTest > hitsShiftDanger() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1750966Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1751325Z KeelContractTest > densityIsNormalizedAndCoversAll() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1751719Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1751975Z KeelContractTest > knnReturnsClosest() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1752273Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1752685Z KeelContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1753146Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1753445Z KeelContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1753871Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1754127Z KeelContractTest > wallStopsBotAndZeroesSpeed() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1754487Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1754830Z KeelContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1755281Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1755592Z KeelContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1756049Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1756210Z > Task :check
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1756572Z > Task :build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1757256Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793812214248.json
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1757816Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1758015Z BUILD SUCCESSFUL in 7s
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.1759226Z 6 actionable tasks: 5 executed, 1 up-to-date
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.7323122Z + python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.7906303Z Verified 788 matching JAR file entries (ZIP timestamps/order ignored).
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:19.7956700Z + ./gradlew -p experiments/KeelHelm --no-daemon clean build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:20.3440080Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:21.0429374Z Daemon will be stopped at the end of the build 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:24.7476019Z > Task :clean UP-TO-DATE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.5426412Z > Task :compileJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.5427663Z > Task :processResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.5428217Z > Task :classes
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.8428424Z > Task :jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.8469732Z > Task :prepareBot
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:25.8470612Z > Task :assemble
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.0424493Z > Task :compileTestJava
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.0428399Z > Task :processTestResources NO-SOURCE
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.0429415Z > Task :testClasses
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7422747Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7435901Z > Task :test
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7436610Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7437123Z KeelContractTest > wallRoomShrinksNearWalls() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7437540Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7437901Z KeelContractTest > speedLawMatchesPinnedServer() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7438303Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7438718Z KeelContractTest > hitsShiftDanger() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7454644Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7469677Z KeelContractTest > densityIsNormalizedAndCoversAll() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7470074Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7470209Z KeelContractTest > knnReturnsClosest() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7470434Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7470650Z KeelContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7471003Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7471236Z KeelContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7471511Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7471671Z KeelContractTest > wallStopsBotAndZeroesSpeed() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7471934Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7472164Z KeelContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7472451Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7472648Z KeelContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7473071Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7473450Z StoppedHeadingContractTest > legalWallAndCornerStopsRetainCenterWhileTurning() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7473843Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7474208Z StoppedHeadingContractTest > candidateCountersArePerRoundAndExerciseActualFirstLegLoop() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7476969Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7477455Z StoppedHeadingContractTest > multiTurnStoppedSuffixUsesEmittedTurnForBothSidesAndSpeedSigns() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7477842Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7478105Z StoppedHeadingContractTest > ordinaryMovingCommandStillFollowsOriginalNativeContract() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7478514Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7479123Z StoppedHeadingContractTest > rotatingStopEndpointChangesSubsequentMovingEscapeAsEngineRequires() PASSED
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7479800Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7479920Z > Task :check
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7480220Z > Task :build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7480672Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793812222316.json
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7481032Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7481173Z BUILD SUCCESSFUL in 6s
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.7481545Z 6 actionable tasks: 5 executed, 1 up-to-date
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.8951767Z + python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.9533161Z Verified 788 matching JAR file entries (ZIP timestamps/order ignored).
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:26.9589438Z + python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5316468Z test_actual_expected_payload_has_exact20keys (test_keel_helm_experiment.Approval.test_actual_expected_payload_has_exact20keys) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5317971Z test_duplicate_json_key_nonfinite_and_trailing_text_rejected (test_keel_helm_experiment.Approval.test_duplicate_json_key_nonfinite_and_trailing_text_rejected) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5319399Z test_exact20key_bound_approval (test_keel_helm_experiment.Approval.test_exact20key_bound_approval) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5330391Z test_report_and_separate_agent_provenance_are_mandatory (test_keel_helm_experiment.Approval.test_report_and_separate_agent_provenance_are_mandatory) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5331772Z test_stale_wrong_identity_author_extra_keys_and_bool_fail (test_keel_helm_experiment.Approval.test_stale_wrong_identity_author_extra_keys_and_bool_fail) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5333485Z test_complete_screen_and_confirmation_progress (test_keel_helm_experiment.Decision.test_complete_screen_and_confirmation_progress) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5339264Z test_exact_percentage_boundaries_and_strict_majorities (test_keel_helm_experiment.Decision.test_exact_percentage_boundaries_and_strict_majorities) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5340464Z test_no_favorable_subset_or_incomplete_budget (test_keel_helm_experiment.Decision.test_no_favorable_subset_or_incomplete_budget) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5377428Z test_first_invalid_game_stops_and_retains_partial_physical_budget (test_keel_helm_experiment.FailClosedStage.test_first_invalid_game_stops_and_retains_partial_physical_budget) ... {"decision": "invalid", "physicalRounds": 1, "unplayedIDs": ["s02"]}
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5382680Z ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5466614Z test_artifact_and_current_head_mismatch_fail (test_keel_helm_experiment.LiveAuthority.test_artifact_and_current_head_mismatch_fail) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5491024Z test_changed_prepared_command_cannot_redefine_local_approved_manifest (test_keel_helm_experiment.LiveAuthority.test_changed_prepared_command_cannot_redefine_local_approved_manifest) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5602589Z test_deleted_edited_wrong_author_and_timestamp_comments_fail (test_keel_helm_experiment.LiveAuthority.test_deleted_edited_wrong_author_and_timestamp_comments_fail) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.5855327Z test_local_profile_approval_anchor_and_command_mutations_fail (test_keel_helm_experiment.LiveAuthority.test_local_profile_approval_anchor_and_command_mutations_fail) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6212431Z test_mutated_receipt_authority_chain_fails (test_keel_helm_experiment.LiveAuthority.test_mutated_receipt_authority_chain_fails) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6337046Z test_revoked_duplicate_approval_and_changed_assignment_fail (test_keel_helm_experiment.LiveAuthority.test_revoked_duplicate_approval_and_changed_assignment_fail) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6448291Z test_unchanged_current_authority_and_receipt_chain_pass (test_keel_helm_experiment.LiveAuthority.test_unchanged_current_authority_and_receipt_chain_pass) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6452113Z test_all_missing_duplicate_skip_and_boundary_records_fail_closed (test_keel_helm_experiment.Markers.test_all_missing_duplicate_skip_and_boundary_records_fail_closed) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6453233Z test_complete_integer_timing_and_candidate_exposure (test_keel_helm_experiment.Markers.test_complete_integer_timing_and_candidate_exposure) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6457442Z test_exited_parent_still_signals_live_owned_process_group (test_keel_helm_experiment.OwnedTeardown.test_exited_parent_still_signals_live_owned_process_group) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6461570Z test_owned_descendants_are_killed_after_bounded_term_drain (test_keel_helm_experiment.OwnedTeardown.test_owned_descendants_are_killed_after_bounded_term_drain) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6494479Z test_official_counts_and_partial_physical_budget (test_keel_helm_experiment.Recording.test_official_counts_and_partial_physical_budget) ... ok
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6494936Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6495157Z ----------------------------------------------------------------------
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6495863Z Ran 21 tests in 0.119s
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6496031Z 
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6496127Z OK
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6712818Z + mkdir -p build
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6735662Z + cp /home/runner/work/_temp/keel-helm-build.log build/keel-helm-build.log
+registered-stage	Build source, semantic tests and all committed JAR parity on Java17 first	2026-11-04T17:10:30.6747433Z + python -I -B -S tools/keel_helm_experiment.py capture-build
+registered-stage	Run actions/setup-java@v4	﻿2026-11-04T17:10:41.8606193Z ##[group]Run actions/setup-java@v4
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8606536Z with:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8606830Z   distribution: temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8607147Z   java-version: 25.0.5+8
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8607467Z   java-package: jdk
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8607750Z   check-latest: false
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8608013Z   server-id: github
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8608450Z   server-username: GITHUB_ACTOR
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8608945Z   server-password: GITHUB_TOKEN
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8609260Z   overwrite-settings: true
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8609610Z   job-status: success
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8611413Z   token: ***
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8611705Z env:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8611939Z   STAGE: screen
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8612283Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8612593Z   PULL_NUMBER: 108
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8612969Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8613450Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8614007Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8614402Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8614775Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8615104Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8615586Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8616050Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8616406Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8616785Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8617248Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8618014Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8618442Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8618970Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8619396Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.8619764Z ##[endgroup]
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9908717Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9910596Z ##[group]Installed distributions
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9939864Z Resolved Java 25.0.5+8 from tool-cache
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9940344Z Setting Java 25.0.5+8 as the default
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9944256Z (node:3008) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9944928Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:41.9947228Z Creating toolchains.xml for JDK version 25.0.5+8 from temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0034204Z Overwriting existing file /home/runner/.m2/toolchains.xml
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0037254Z 
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0037472Z Java configuration:
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0037952Z   Distribution: temurin
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0038377Z   Version: 25.0.5+8
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0038912Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0039209Z 
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0039608Z ##[endgroup]
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0043536Z Creating settings.xml with server-id: github
+registered-stage	Run actions/setup-java@v4	2026-11-04T17:10:42.0056502Z Overwriting existing file /home/runner/.m2/settings.xml
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	﻿2026-11-04T17:10:42.0190916Z ##[group]Run python -I -B -S tools/keel_helm_experiment.py prepare "$STAGE"
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0191520Z ^[[36;1mpython -I -B -S tools/keel_helm_experiment.py prepare "$STAGE"^[[0m
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0210567Z shell: /usr/bin/bash -e {0}
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0210954Z env:
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0211235Z   STAGE: screen
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0211574Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0211899Z   PULL_NUMBER: 108
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0212376Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0212930Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0213346Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0213721Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0214099Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0214472Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0214993Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0215965Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0216288Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0216665Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0217082Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0217541Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0217970Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0218410Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0219024Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0219587Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0221705Z   GH_TOKEN: ***
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:42.0222003Z ##[endgroup]
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2689969Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/ast_serialize-0.13.1-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2749406Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/librt-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2768591Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy-2.4.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2939678Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/mypy_extensions-1.1.0-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2950621Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pathspec-1.1.1-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.2967876Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pip-26.3-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3019925Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pycountry-26.2.16-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3109745Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/pyyaml-6.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3129373Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/robocode_tank_royale-1.3.1-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3147524Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/setuptools-84.2.1-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3198607Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/typing_extensions-4.16.0-py3-none-any.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3211603Z Processing ./.benchmark-cache/keel-helm/strong-python/67b68c22e41c18281a3fce9ef638e3c23a0b47cf/wheels/websockets-17.4-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:52.3335008Z Installing collected packages: websockets, typing-extensions, setuptools, robocode-tank-royale, pyyaml, pycountry, pip, pathspec, mypy-extensions, mypy, librt, ast-serialize
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:53.0663011Z   Attempting uninstall: pip
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:53.0684008Z     Found existing installation: pip 26.2.2
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:53.0869409Z     Uninstalling pip-26.2.2:
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:53.0905772Z       Successfully uninstalled pip-26.2.2
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:54.9637937Z 
+registered-stage	Prepare exact sources/runtime/commands on this worker (zero games)	2026-11-04T17:10:54.9652227Z Successfully installed ast-serialize-0.13.1 librt-0.16.0 mypy-2.4.1 mypy-extensions-1.1.0 pathspec-1.1.1 pip-26.3 pycountry-26.2.16 pyyaml-6.0.3 robocode-tank-royale-1.3.1 setuptools-84.2.1 typing-extensions-4.16.0 websockets-17.4
+registered-stage	Finalize immutable zero-game provenance before independent review	﻿2026-11-04T17:12:32.3163663Z ##[group]Run actions/upload-artifact@v4
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3164057Z with:
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3164521Z   name: keel-helm-v1-screen-provenance-41874753112
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3164908Z   path: build/keel-helm/screen/provenance/
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3165252Z   if-no-files-found: error
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3165630Z   retention-days: 90
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3165928Z   include-hidden-files: true
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3166276Z   compression-level: 6
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3166560Z   overwrite: false
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3166886Z env:
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3167129Z   STAGE: screen
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3167443Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3167772Z   PULL_NUMBER: 108
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3168163Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3168660Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3169373Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3169709Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3170186Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3170582Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3171064Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3171518Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3171926Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3172314Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3172774Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3173224Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3173667Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3174087Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3174497Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3174956Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.3175414Z ##[endgroup]
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.4549303Z (node:3691) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.4550189Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.4727268Z With the provided path, there will be 102 files uploaded
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.4729731Z Artifact name is valid!
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.4730202Z Root directory input is valid!
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:32.8176736Z Beginning upload of artifact content to blob storage
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:33.0331179Z (node:3691) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:33.4883537Z Uploaded bytes 3311004
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:33.5355689Z Finished uploading artifact content to blob storage!
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:33.5356697Z SHA256 digest of uploaded artifact zip is 9aa2f9ed04dabec39d4737d823b7cc66ce5097961641a1bbd220cc1aa102cd04
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:33.5357744Z Finalizing artifact upload
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:34.0612123Z Artifact keel-helm-v1-screen-provenance-41874753112.zip successfully finalized. Artifact ID 13345154116
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:34.0612996Z Artifact keel-helm-v1-screen-provenance-41874753112 has been successfully uploaded! Final size is 3311004 bytes. Artifact ID is 13345154116
+registered-stage	Finalize immutable zero-game provenance before independent review	2026-11-04T17:12:34.0620385Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41874753112/artifacts/13345154116
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	﻿2026-11-04T17:12:34.0763748Z ##[group]Run python -I -B -S tools/keel_helm_experiment.py approve "$STAGE" --artifact-id "$PROVENANCE_ID" --artifact-digest "$PROVENANCE_DIGEST"
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0764656Z ^[[36;1mpython -I -B -S tools/keel_helm_experiment.py approve "$STAGE" --artifact-id "$PROVENANCE_ID" --artifact-digest "$PROVENANCE_DIGEST"^[[0m
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0785133Z shell: /usr/bin/bash -e {0}
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0785475Z env:
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0785804Z   STAGE: screen
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0786242Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0786766Z   PULL_NUMBER: 108
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0787156Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0787700Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0788152Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0788571Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0789123Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0789539Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0790106Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0790634Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0791027Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0791450Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0791936Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0792421Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0792858Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0793298Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0793758Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0794260Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0796746Z   GH_TOKEN: ***
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0797113Z   PROVENANCE_ID: 13345154116
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0797589Z   PROVENANCE_DIGEST: 9aa2f9ed04dabec39d4737d823b7cc66ce5097961641a1bbd220cc1aa102cd04
+registered-stage	Wait at most30minutes for actively assigned independent reviewer	2026-11-04T17:12:34.0798018Z ##[endgroup]
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	﻿2026-11-04T17:20:54.1331344Z ##[group]Run python -I -B -S tools/keel_helm_experiment.py run "$STAGE"
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1331765Z ^[[36;1mpython -I -B -S tools/keel_helm_experiment.py run "$STAGE"^[[0m
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1349916Z shell: /usr/bin/bash -e {0}
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1350169Z env:
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1350344Z   STAGE: screen
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1350539Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1350754Z   PULL_NUMBER: 108
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1351016Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1351387Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1351710Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1351948Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1352187Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1352429Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1352771Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1353173Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1353431Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1353706Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1354030Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1354357Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1354656Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1354952Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1355249Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1355583Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1357453Z   GH_TOKEN: ***
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:20:54.1357650Z ##[endgroup]
+registered-stage	Rehash same worker, atomically consume sole receipt and run fixed population	2026-11-04T17:51:10.1379093Z {"decision": "progress; confirmation open", "physicalRounds": 120, "unplayedIDs": []}
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	﻿2026-11-04T17:51:10.1581036Z ##[group]Run actions/upload-artifact@v4
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1581313Z with:
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1581532Z   name: keel-helm-v1-screen-evidence-41874753112
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1582227Z   path: build/keel-helm/
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	build/keel-helm-build.json
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	build/keel-helm-build.log
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	/home/runner/work/_temp/keel-helm-build.log
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	experiments/Keel/build/reports/tests/
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	experiments/KeelHelm/build/reports/tests/
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	build/reports/tests/
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1583013Z   if-no-files-found: warn
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1583221Z   retention-days: 90
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1583418Z   include-hidden-files: true
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1583637Z   compression-level: 6
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1583840Z   overwrite: false
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1584022Z env:
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1584197Z   STAGE: screen
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1584397Z   PYTHONDONTWRITEBYTECODE: 1
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1584613Z   PULL_NUMBER: 108
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1584880Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1585263Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1585637Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1585890Z   GRADLE_USER_HOME: /home/runner/.gradle
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1586133Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1586384Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1586732Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1587104Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1587361Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1587633Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1587967Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1588307Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1588616Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1589210Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1589554Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1589913Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.1590223Z ##[endgroup]
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.2791530Z (node:7073) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.2792118Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.4555523Z Multiple search paths detected. Calculating the least common ancestor of all paths
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.4557366Z The least common ancestor is /home/runner/work. This will be the root directory of the artifact
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.4557855Z With the provided path, there will be 1349 files uploaded
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.4561812Z Artifact name is valid!
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.4562288Z Root directory input is valid!
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:10.8020388Z Beginning upload of artifact content to blob storage
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:11.0563771Z (node:7073) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:11.6003623Z Uploaded bytes 8388608
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:11.7941814Z Uploaded bytes 16777216
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:11.8572850Z Uploaded bytes 25165824
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.0429718Z Uploaded bytes 33554432
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.1107114Z Uploaded bytes 41943040
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.2454262Z Uploaded bytes 50331648
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.4934173Z Uploaded bytes 58720256
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.6543923Z Uploaded bytes 67108864
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:12.8842227Z Uploaded bytes 75497472
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:13.0785759Z Uploaded bytes 83886080
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:13.3587293Z Uploaded bytes 92274688
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:13.5961369Z Uploaded bytes 100663296
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.1196069Z Uploaded bytes 109051904
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.4424091Z Uploaded bytes 117440512
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.5299076Z Uploaded bytes 117899908
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.5816444Z Finished uploading artifact content to blob storage!
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.5818422Z SHA256 digest of uploaded artifact zip is 8c49b360f4a442b3f241734ce0e4b662faabb8e44bd986da2a080cc7cbbbc14b
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:14.5819650Z Finalizing artifact upload
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:15.0506946Z Artifact keel-helm-v1-screen-evidence-41874753112.zip successfully finalized. Artifact ID 13349356945
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:15.0507796Z Artifact keel-helm-v1-screen-evidence-41874753112 has been successfully uploaded! Final size is 117899908 bytes. Artifact ID is 13349356945
+registered-stage	Preserve every failure, partial budget, unplayed ID and raw result	2026-11-04T17:51:15.0512566Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41874753112/artifacts/13349356945
+registered-stage	Post Run actions/setup-java@v4	﻿2026-11-04T17:51:15.0729553Z Post job cleanup.
+registered-stage	Post Run actions/setup-java@v4	2026-11-04T17:51:15.1691113Z (node:7086) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Post Run actions/setup-java@v4	2026-11-04T17:51:15.1691716Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Post Run actions/setup-python@v5	﻿2026-11-04T17:51:15.1820792Z Post job cleanup.
+registered-stage	Post Run actions/setup-python@v5	2026-11-04T17:51:15.2657353Z (node:7094) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Post Run actions/setup-python@v5	2026-11-04T17:51:15.2658011Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Post Run gradle/actions/setup-gradle@v4	﻿2026-11-04T17:51:15.2836794Z Post job cleanup.
+registered-stage	Post Run gradle/actions/setup-gradle@v4	2026-11-04T17:51:15.4498335Z In post-action step
+registered-stage	Post Run gradle/actions/setup-gradle@v4	2026-11-04T17:51:15.4505343Z Cache is read-only: will not save state for use in subsequent builds.
+registered-stage	Post Run gradle/actions/setup-gradle@v4	2026-11-04T17:51:15.4509647Z Generating Job Summary
+registered-stage	Post Run gradle/actions/setup-gradle@v4	2026-11-04T17:51:15.4522179Z Completed post-action step
+registered-stage	Post Run actions/setup-java@v4	﻿2026-11-04T17:51:15.4648391Z Post job cleanup.
+registered-stage	Post Run actions/setup-java@v4	2026-11-04T17:51:15.5673417Z (node:7114) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+registered-stage	Post Run actions/setup-java@v4	2026-11-04T17:51:15.5674031Z (Use `node --trace-deprecation ...` to show where the warning was created)
+registered-stage	Post Run actions/checkout@v4	﻿2026-11-04T17:51:15.5835214Z Post job cleanup.
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6517007Z [command]/usr/bin/git version
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6552615Z git version 2.56.0
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6581064Z Temporarily overriding HOME='/home/runner/work/_temp/b81e0928-ae74-4754-a554-47244a2dd413' before making global git config changes
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6581732Z Adding repository directory to the temporary git global config as a safe directory
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6585205Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6616740Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6654385Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6852580Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.6886456Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.7078551Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+registered-stage	Post Run actions/checkout@v4	2026-11-04T17:51:15.7139878Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+registered-stage	Complete job	﻿2026-11-04T17:51:15.7412651Z Cleaning up orphan processes
+registered-stage	Complete job	2026-11-04T17:51:15.7604228Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

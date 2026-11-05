@@ -1,0 +1,13 @@
+{
+  "attempts": [
+    {
+      "command": "unqualified jar tf experiments/Keel/Keel.jar (read-only SDK signature inspection)",
+      "result": "failed: unable to locate a Java Runtime; no compilation or candidate artifact created"
+    },
+    {
+      "command": "Python read-only SDK class-file descriptor inspection, initial parser",
+      "result": "failed parser offset: struct.error while reading attributes; corrected interface-count offset before successful inspection; no source/build/runtime mutation"
+    }
+  ],
+  "limitations": "Static inspection errors are not fixture/build/competitive outcomes. Successful SDK signatures were read from the original SHA-pinned Keel.jar without executing a JVM."
+}

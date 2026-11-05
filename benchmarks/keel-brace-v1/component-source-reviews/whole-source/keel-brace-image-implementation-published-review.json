@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "decision": "PASS-PUBLISHED-IMAGE-SOURCE-ONLY",
+  "reviewerTask": "/root/runner_image_provenance_audit",
+  "observedAtUTC": "2026-11-05T01:00:56.424759+00:00",
+  "headSHA": "241ebb629ab6212c87aa3f4d749f2d163fe03491",
+  "treeSHA": "7a3e7e4b245d728f857350830a294c1fd2c3401d",
+  "priorSourceReviewSHA256": "f1b89ca8212ff76f19128ba2b87de7c51caab8474f3aea6bfe59d76a48dcbb71",
+  "publishedManifestSHA256": "d0ea434e8ce798a4d400b2e700c032838f822d7bf4791c00f98a09400fd555b0",
+  "manifestFilesMatched": 9,
+  "otherHistoricalAndMethodologyFilesMatched": 6,
+  "sourceFiles": [
+    {
+      "path": "tools/keel_brace_experiment.py",
+      "bytes": 103556,
+      "sha256": "a1f6eedaf9a329b5a8c17f9be472a768a0506741fbc155f5734e2cf14bf7399e"
+    },
+    {
+      "path": "tools/KeelBraceBattle.java",
+      "bytes": 3086,
+      "sha256": "ffa0edb60703e057b2908c40aac8c0c0666d00ca48419c346a8ea73c27572a3f"
+    },
+    {
+      "path": "tools/keel_brace_python_proof.py",
+      "bytes": 8674,
+      "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
+    },
+    {
+      "path": "tools/test_keel_brace_experiment.py",
+      "bytes": 48820,
+      "sha256": "fc52dd91de8a8ed4a85d65096a7c066869698b4bc9145f5d4723a74d3b25d5b4"
+    },
+    {
+      "path": "tools/keel_brace_harness.md",
+      "bytes": 16750,
+      "sha256": "df6f175b521c8923687627ffeee5700a568c3c1c5f88eba91c1e07f6c81fe6b2"
+    },
+    {
+      "path": ".github/workflows/keel-brace-v1.yml",
+      "bytes": 6238,
+      "sha256": "6e053e291be88360abb907e7066da3de23154332618dc334ee29eb0e4f97ce2d"
+    },
+    {
+      "path": "tools/keel_brace_image_identity.py",
+      "bytes": 30173,
+      "sha256": "e80c662b37c1d8fd418fbaf2492c45d95c295e8347b4a32f6d3fda898ed0a118"
+    },
+    {
+      "path": "tools/test_keel_brace_image_identity.py",
+      "bytes": 22435,
+      "sha256": "a7eb1ab5c5c95265937d4c4aaf9234dac48e98b5723f06137a82b23081dcd2e2"
+    },
+    {
+      "path": "benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json",
+      "bytes": 9045,
+      "sha256": "080d03c8d69eb2815a5c11920296a74952f2367dffc0749213167ba0a3adaec7"
+    },
+    {
+      "path": "tools/keel_brace_image_probe.py",
+      "bytes": 23237,
+      "sha256": "520a6b5aace934939464338b45ad07f01c95d81648e29bd2e2393a5897c7ca94"
+    },
+    {
+      "path": "docs/improvements/keel-brace-runtime-identity-amendment.md",
+      "bytes": 10784,
+      "sha256": "85229f18285ce4dabbd076d5f8e56d0a6ec93174c5ab98bfac56ff6553dabb84"
+    },
+    {
+      "path": "benchmarks/keel-brace-v1/runtime-identity-amendment.json",
+      "bytes": 10621,
+      "sha256": "7429753f1d72c888718bd8965a674c7d7f18003f7f9edf3dee309bbb30976edf"
+    },
+    {
+      "path": "docs/improvements/keel-brace-v1.md",
+      "bytes": 27205,
+      "sha256": "cd1ec9f5bba78b47f487dc829b59d99ed52953266f15c1c3b5407186b2ad20a8"
+    },
+    {
+      "path": "benchmarks/keel-brace-v1/runtime-pins.json",
+      "bytes": 4044,
+      "sha256": "2b7b946b633ffc972bb34d98b91eeb1df897b775ea204d075ff8ae8a0a42f9e5"
+    },
+    {
+      "path": "benchmarks/keel-brace-v1/games.json",
+      "bytes": 11411,
+      "sha256": "9526d1a75d7ee99ac3d52e5affbf2487823b696c3d9b1e0f0497b1d42d65b3a3"
+    }
+  ],
+  "findings": [
+    "Current actual published PR head/repository/branch/tree exactly match expected implementation.",
+    "Actual GitHub contents bytes of all9 manifest fields exactly equal independently tested frozen local source.",
+    "Collector/published-methodology/original-protocol/runtime-pins/game registry unchanged.",
+    "freeze.json absent at this head (provider404 retained).",
+    "No actual runtime profile has been reviewed or approved."
+  ],
+  "scope": "Published qualified-image implementation source checkpoint only; wholegraph/source-freeze, required hosted CI and final exact-head review remain separate. No source token, label, dispatch, runtime/game receipt, merge, canonical VM claim or historical rescue."
+}

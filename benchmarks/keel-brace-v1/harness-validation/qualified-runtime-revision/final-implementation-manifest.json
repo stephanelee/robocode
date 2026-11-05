@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "tools/keel_brace_experiment.py": {
+      "bytes": 103556,
+      "sha256": "a1f6eedaf9a329b5a8c17f9be472a768a0506741fbc155f5734e2cf14bf7399e"
+    },
+    "tools/KeelBraceBattle.java": {
+      "bytes": 3086,
+      "sha256": "ffa0edb60703e057b2908c40aac8c0c0666d00ca48419c346a8ea73c27572a3f"
+    },
+    "tools/keel_brace_python_proof.py": {
+      "bytes": 8674,
+      "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
+    },
+    "tools/test_keel_brace_experiment.py": {
+      "bytes": 48820,
+      "sha256": "fc52dd91de8a8ed4a85d65096a7c066869698b4bc9145f5d4723a74d3b25d5b4"
+    },
+    "tools/keel_brace_harness.md": {
+      "bytes": 16750,
+      "sha256": "df6f175b521c8923687627ffeee5700a568c3c1c5f88eba91c1e07f6c81fe6b2"
+    },
+    ".github/workflows/keel-brace-v1.yml": {
+      "bytes": 6238,
+      "sha256": "6e053e291be88360abb907e7066da3de23154332618dc334ee29eb0e4f97ce2d"
+    },
+    "tools/keel_brace_image_identity.py": {
+      "bytes": 30173,
+      "sha256": "e80c662b37c1d8fd418fbaf2492c45d95c295e8347b4a32f6d3fda898ed0a118"
+    },
+    "tools/test_keel_brace_image_identity.py": {
+      "bytes": 22435,
+      "sha256": "a7eb1ab5c5c95265937d4c4aaf9234dac48e98b5723f06137a82b23081dcd2e2"
+    },
+    "benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json": {
+      "bytes": 9045,
+      "sha256": "080d03c8d69eb2815a5c11920296a74952f2367dffc0749213167ba0a3adaec7"
+    }
+  },
+  "tests": {
+    "command": "python3 -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v",
+    "count": 73,
+    "result": "PASS",
+    "log": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/final-pure-tests-second-resolution.log"
+  },
+  "localRuntime": {
+    "version": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": "Pure fixtures/mock process starts and historical raw metadata/logs only. No current capture, preparation, source freeze, Java/server/game, dispatch, receipts, Git mutation or competitive result."
+}
