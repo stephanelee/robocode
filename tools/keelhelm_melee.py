@@ -204,6 +204,26 @@ def summary(games):
                  **{n:exact[n,'candidate']-exact[n,'control']>=-Fraction(1,20) for n in ('Retcon','Walls','SpinBot')})
     return dict(scenarios=result,gates=gates,decision='accept-measured-melee-improvement' if all(gates.values()) else 'reject-improvement-claim')
 
+def stage_bots(game, source, evidence, freeze, run):
+    botdirs=[]; identities=[]
+    for name in game['order']:
+        if name == 'KeelHelm':
+            project = ROOT/'experiments/KeelHelm' if game['arm']=='candidate' else evidence/'control-source'
+            base=project/'bot'; folder=name
+        else:
+            base=Path(freeze['bases'][name]); folder=name if name in ('Keel','Prism') else base.name
+        dst=run/'bots'/folder; shutil.copytree(base,dst)
+        if name in ('KeelHelm','Keel','Prism'):
+            jar=project/'KeelHelm.jar' if name=='KeelHelm' else source/f'experiments/{name}/{name}.jar'
+            shutil.copy2(jar,dst/jar.name)
+        for sh in dst.glob('*.sh'): sh.chmod(0o755)
+        d=json.loads(next(dst.glob('*.json')).read_text());identities.append((d['name'],d['version']));botdirs.append(str(dst))
+    if game['scenario']=='melee':
+        shutil.copytree(source/'guest-source/bots/bot_core',run/'bots/bot_core')
+        shutil.copy2(source/'guest-source/LICENSE',run/'bots/LICENSE.shared-Apache-2.0')
+    if game['scenario'] in ('Walls','SpinBot'): shutil.copytree(source/'samples/lib',run/'bots/lib')
+    return botdirs, identities
+
 def main(args):
     source, evidence = args.source.resolve(), args.evidence.resolve()
     freeze_path = evidence/'freeze.json'
@@ -214,6 +234,12 @@ def main(args):
     freeze = json.loads(freeze_path.read_text()); verify_inputs(freeze)
     if freeze['source'] != str(source) or freeze['evidence'] != str(evidence): raise ValueError('Frozen execution paths differ')
     java, python = Path(freeze['java']), Path(freeze['python'])
+    if args.stage_only:
+        for game in freeze['schedule']:
+            run=evidence/'staging-preflight'/game['id'];run.mkdir(parents=True)
+            dirs,identities=stage_bots(game,source,evidence,freeze,run)
+            if len(set(dirs)) != len(game['order']) or len(identities) != len(game['order']): raise ValueError('Staging collision')
+        print('ALL 16 ROSTERS STAGED; ZERO GAMES LAUNCHED');return
     result_path = evidence/'results.json'
     if result_path.exists(): raise ValueError('Never resume or replace an attempted comparison')
     report = dict(status='running',freezeSHA256=sha(freeze_path),plannedGames=16,plannedRounds=220,games=[])
@@ -223,23 +249,7 @@ def main(args):
             verify_inputs(freeze)
             if shutil.disk_usage(evidence).free < 2*1024**3: raise ValueError('Insufficient disk; no new child')
             run = evidence/'games'/game['id']; run.mkdir(parents=True)
-            botdirs=[]; identities=[]
-            for name in game['order']:
-                if name == 'KeelHelm':
-                    project = ROOT/'experiments/KeelHelm' if game['arm']=='candidate' else evidence/'control-source'
-                    base=project/'bot'; folder=name
-                else:
-                    base=Path(freeze['bases'][name]); folder=base.name
-                dst=run/'bots'/folder; shutil.copytree(base,dst)
-                if name in ('KeelHelm','Keel','Prism'):
-                    jar=project/'KeelHelm.jar' if name=='KeelHelm' else source/f'experiments/{name}/{name}.jar'
-                    shutil.copy2(jar,dst/jar.name)
-                for sh in dst.glob('*.sh'): sh.chmod(0o755)
-                d=json.loads(next(dst.glob('*.json')).read_text());identities.append((d['name'],d['version']));botdirs.append(str(dst))
-            if game['scenario']=='melee':
-                shutil.copytree(source/'guest-source/bots/bot_core',run/'bots/bot_core')
-                shutil.copy2(source/'guest-source/LICENSE',run/'bots/LICENSE.shared-Apache-2.0')
-            if game['scenario'] in ('Walls','SpinBot'): shutil.copytree(source/'samples/lib',run/'bots/lib')
+            botdirs,identities=stage_bots(game,source,evidence,freeze,run)
             home=run/'home';home.mkdir()
             env={k:os.environ[k] for k in ('TMPDIR','LANG','LC_ALL','TZ') if k in os.environ}
             env.update(HOME=str(home),JAVA_HOME=str(java.parent.parent),PATH=str(java.parent)+':/usr/bin:/bin:/opt/homebrew/bin',
@@ -275,6 +285,7 @@ if __name__=='__main__':
     p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True)
     p.add_argument('--pins',type=Path);p.add_argument('--java',type=Path);p.add_argument('--python',type=Path)
     p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha')
+    p.add_argument('--stage-only',action='store_true')
     args=p.parse_args()
     if args.prepare and any(v is None for v in (args.pins,args.java,args.python)):
         p.error('--prepare requires --pins, --java and --python')
