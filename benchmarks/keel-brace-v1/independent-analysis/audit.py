@@ -95,6 +95,7 @@ def markers(path, rounds, candidate):
               f'Round {r} needs exactly one start/stats/end')
         check(row['start'][0][0] < row['stats'][0][0] < row['end'][0][0],
               f'Round {r} marker order differs')
+        if r>1:check(records[r-1]['end'][0][0]<row['start'][0][0],f'Round {r} starts before preceding round end')
         raw = row['stats'][0][1]
         timing = re.findall(r'(?:^| )maxMs=([^ ]+)', raw)
         check(len(timing) == 1 and re.fullmatch(r'0|[1-9][0-9]*', timing[0]) is not None,
@@ -419,6 +420,59 @@ def verify_exported_provenance(evidence, source_root, stage, expected_head, expe
             'scope': 'Archived identities/exported source and receipt bindings only. Live system files, API freshness, remote tag/run cardinality and process start/admission timing require independent API/log evidence review.'}
 
 
+def canonical_gate_checks(stage, rows, raw):
+    groups=raw['groups'];c=raw['checks']
+    out=dict(allGamesValid=all(r['valid'] for r in rows),zeroBothArmSkips=all(r['skips']==0 for r in rows),bothArmTiming=all(r['maxMs']<75 for r in rows),candidateCountersValid=True,candidateRetconEligibleRamExposure=raw['exposurePass'],diamondAbove50=c['candidateDiamondMeanAboveHalf'],diamondGamesAbove50=groups['candidate/diamond']['gamesAboveHalf']>=(2 if stage=='screen' else 4),retconAtLeast90=c['candidateRetconMeanAtLeast90Percent'],retconDeltaAtLeast1pp=c['retconDeltaAtLeast1pp'])
+    if stage=='screen':
+        out.update(diamondDeltaAtLeastMinus3pp=c['diamondDeltaAtLeastMinus3pp'],diamondWinsAtLeast16=c['diamondWinsAtLeast16'],retconWinsAtLeast16=c['retconWinsAtLeast16'])
+        for name in ('walls','ais'):out[name+'Within5pp']=c[name+'DeltaAtLeastMinus5pp'];out[name+'WinsAtLeast4']=c[name+'WinsAtLeast4']
+    else:out.update(diamondDeltaAtLeastMinus2pp=c['diamondDeltaAtLeastMinus2pp'],diamondWinsAbove60=c['diamondWinsMoreThan60'],retconWinsAtLeast24=c['retconWinsAtLeast24'])
+    return out
+
+
+def reconcile_canonical(evidence, stage, head, population, rows, raw, complete):
+    """Never waive producer acquisition failures because observer scores look complete."""
+    failures=[];checked=[];declared=None
+    def same(a,b,label):
+        if type(b) is float:check(type(a) in (int,float) and type(a) is not bool and math.isfinite(a) and math.isclose(a,b,rel_tol=1e-12,abs_tol=1e-12),label)
+        else:check(type(a) is type(b) and a==b,label)
+    try:
+        declared=read_json(evidence/'decision.json')
+        check(declared['stage']==stage and declared['headSHA']==head,'Canonical exact stage/head')
+        check(complete and raw is not None,'Full independently valid population required for canonical acceptance')
+        check('integrityFailure' not in declared and 'infrastructureError' not in declared,'Canonical integrity/infrastructure failure precludes acceptance')
+        for name in ('failure-prepare.json','failure-approve.json','failure-run.json'):check(not (evidence/name).exists(),'Retained stage acquisition failure '+name)
+        check(declared['unplayedIDs']==[],'Canonical no unplayed IDs')
+        check([r['id'] for r in declared['games']]==[g['id'] for g in population],'Canonical exact ordered population no duplicate/omission')
+        budget=sum(g['rounds'] for g in population)
+        for key in ('observedPhysicalRounds','completedPhysicalRounds'):check(type(declared[key]) is int and declared[key]==budget,'Canonical exact full physical budget '+key)
+        fields=['ownScore','totalScore','wins',*COUNTS,'turns','hitRate','enemyHitRate','firingPer1000Turns','powerMix','enemyPowerMix','skips','maxMs','exposure','recordingSHA256']
+        for registered,independent,original in zip(population,rows,declared['games']):
+            check(all(type(original[k]) is type(v) and original[k]==v for k,v in registered.items()),'Canonical exact registered game identity '+registered['id'])
+            check(original['status']=='valid' and not original.get('error') and not original.get('partialRecordingError'),'Canonical acquisition status valid '+registered['id'])
+            check(not (evidence/'games'/registered['id']/'failure.json').exists(),'Retained game acquisition failure '+registered['id'])
+            for key in fields:same(original[key],independent[key],'Canonical independent game metric '+registered['id']+':'+key)
+            same(original['share'],independent['share'],'Canonical game score share')
+            ids=list(range(1,registered['rounds']+1))
+            for key in ('observedPhysicalRoundIDs','completedPhysicalRoundIDs'):check(original[key]==ids and all(type(n) is int for n in original[key]),'Canonical full round population '+key)
+            for key in ('observedPhysicalRounds','completedPhysicalRounds'):check(type(original[key]) is int and original[key]==registered['rounds'],'Canonical game round budget '+key)
+            check(len(original['perRound'])==len(independent['perRound']),'Canonical complete per-round metrics')
+            for a,b in zip(original['perRound'],independent['perRound']):
+                for key in ('round','turns','ownScore','totalScore','share','win',*COUNTS,'maxMs','exposure'):same(a[key],b[key],'Canonical independent per-round metric '+key)
+        expected_checks=canonical_gate_checks(stage,rows,raw)
+        check(set(declared['checks'])==set(expected_checks) and all(type(declared['checks'][k]) is bool and declared['checks'][k]==v for k,v in expected_checks.items()),'Canonical all registered independent gates match')
+        for key,wanted in [('diamondMean',raw['groups']['candidate/diamond']['mean']['decimal']),('diamondDelta',raw['diamondDifference']['decimal']),('retconMean',raw['groups']['candidate/retcon']['mean']['decimal']),('retconDelta',raw['retconDifference']['decimal'])]:same(declared[key],wanted,'Canonical exact game-weighted metric '+key)
+        same(declared['candidateRetconEligibleRamScans'],raw['candidateRetconEligibleRamCorrectedScans'],'Canonical stage-local Retcon exposure')
+        wanted_sd={k:v['sampleSDPercentagePoints']/100 if v['sampleSDPercentagePoints'] is not None else None for k,v in raw['groups'].items() if k.rsplit('/',1)[1] in ('diamond','retcon')}
+        check(set(declared['betweenGameShareSD'])==set(wanted_sd),'Canonical complete variation groups')
+        for key,value in wanted_sd.items():same(declared['betweenGameShareSD'][key],value,'Canonical game variation '+key)
+        expected='inconclusive' if not raw['exposurePass'] else ('progress; confirmation open' if stage=='screen' else 'confirmed') if raw['allPass'] else 'reject' if stage=='screen' else 'not confirmed'
+        check(declared['decision']==expected,'Canonical decision reconciles independent full raw gates')
+        checked.append('Original canonical decision agrees with independent raw population/budgets/metrics/gates and has no retained acquisition failure')
+    except (KeyError,TypeError,ValueError,OSError) as exc:failures.append(type(exc).__name__+': '+str(exc))
+    return dict(checked=checked,failures=failures,canonicalDecision=declared.get('decision') if isinstance(declared,dict) else None,**{'pass':not failures})
+
+
 def audit_stage(evidence, source_root, stage, expected_head, expected_run, provider_evidence=None, transport=None):
     plan_path = source_root / 'benchmarks/keel-brace-v1/games.json'
     check(digest(plan_path)==GAMES_SHA256,'Source-root registry differs from prospectively published immutable bytes')
@@ -474,8 +528,9 @@ def audit_stage(evidence, source_root, stage, expected_head, expected_run, provi
     storage = audit_storage(evidence, stage, expected_run, provider_evidence, transport)
     runner_image = audit_runner_image(evidence, expected_head, expected_run, provider_evidence)
     upstream_screen = audit_upstream_screen(source_root, stage, provider_evidence)
+    canonical=reconcile_canonical(evidence,stage,expected_head,population,rows,raw,complete)
     raw_disposition = raw['rawDisposition'] if complete else 'INVALID/INCOMPLETE'
-    decision = raw_disposition if raw_disposition == 'INVALID/INCOMPLETE' else 'PROVENANCE-INCOMPLETE' if not provenance['pass'] or not authority['pass'] or not storage['pass'] or not runner_image['pass'] or not upstream_screen['pass'] else raw_disposition
+    decision = 'INVALID/INCOMPLETE' if not canonical['pass'] else raw_disposition if raw_disposition == 'INVALID/INCOMPLETE' else 'PROVENANCE-INCOMPLETE' if not provenance['pass'] or not authority['pass'] or not storage['pass'] or not runner_image['pass'] or not upstream_screen['pass'] else raw_disposition
     return {'schemaVersion': 1, 'stage': stage, 'independentReducer': True, 'gamesSHA256': digest(plan_path),
             'expectedHead': expected_head, 'expectedRun': expected_run, 'registeredGames': len(population),
             'registeredRoundBudget': sum(g['rounds'] for g in population), 'validGames': rows,
@@ -483,7 +538,7 @@ def audit_stage(evidence, source_root, stage, expected_head, expected_run, provi
             'observedPhysicalRoundCountLowerBound': sum(len(r.get('observedPhysicalRoundIds', [])) for r in rows + partial),
             'completeRawPopulation': complete, 'rawGates': raw, 'provenance': provenance, 'authority':authority, 'storage':storage, 'runnerImage':runner_image, 'upstreamScreen':upstream_screen,
             'observedTimingOrSkipFailures': {r['game']['id']:r['partialMarkerObservation'] for r in rows+partial if r.get('partialMarkerObservation',{}).get('skips') or r.get('partialMarkerObservation',{}).get('reportedTimingViolations')},
-            'rawDisposition':raw_disposition, 'decision':decision,
+            'rawDisposition':raw_disposition, 'decision':decision, 'canonicalReconciliation':canonical,
             'limits': ['No source/JAR/model/approval changes are authorized by this audit.',
                        'Do not pool historical games, screen or confirmation.',
                        'Round learning is correlated; equal-weight cold games are the comparison units.',
@@ -627,13 +682,29 @@ def timestamp(value):
 
 
 def comment_identity(comment):
-    return {k:comment[k] for k in ('id','body','created_at','updated_at')} | {'login':comment['user']['login'],'userId':comment['user']['id']}
+    return {k:comment[k] for k in ('id','node_id','url','issue_url','html_url','created_at','updated_at','body')} | {'author':{k:comment['user'][k] for k in ('id','login','type')},'bodySHA256':hashlib.sha256(comment['body'].encode('utf-8')).hexdigest()}
 
 
 def comment_payload(comment,prefix):
     check(comment['user']['login']=='stephanelee' and comment['user']['id']==30698997,'Wrong approval account')
     check(comment['body'].startswith(prefix+'\n'),'Wrong comment prefix')
     return json_data(comment['body'][len(prefix)+1:])
+
+
+def targeted_revocation(comment, approval, accepted_comment):
+    """Only assigned-account, accepted-approval-target revocations remove authority."""
+    if not comment.get('body','').startswith('KEEL_BRACE_RUNTIME_REVOCATION_V1\n'):return False
+    user=comment.get('user',{})
+    if user.get('login')!='stephanelee' or user.get('id')!=30698997:return False
+    revoke=json_data(comment['body'].split('\n',1)[1])
+    check(type(revoke) is dict,'Assigned-account revocation must be JSON object')
+    if revoke.get('approvalCommentId')!=accepted_comment['id']:return False
+    check(set(revoke)=={'schemaVersion','verdict','repository','issue','stage','headSHA','runId','runAttempt','bootId','artifactId','reviewerTask','approvalCommentId','reason'},'Targeted revocation exact13 keys')
+    check(all(type(revoke[k]) is int for k in ('schemaVersion','issue','runId','runAttempt','artifactId','approvalCommentId')),'Targeted revocation integer identities')
+    check(revoke['schemaVersion']==1 and revoke['verdict']=='REVOKE' and revoke['approvalCommentId']==accepted_comment['id'],'Targeted revocation schema/verdict/approval')
+    check(all(revoke[k]==approval[k] for k in ('repository','issue','stage','headSHA','runId','runAttempt','bootId','artifactId','reviewerTask')),'Targeted revocation exact accepted worker/reviewer')
+    check(type(revoke['reason']) is str and bool(revoke['reason'].strip()) and timestamp(comment['created_at'])>timestamp(accepted_comment['created_at']),'Targeted revocation reason and later provider timestamp')
+    return True
 
 
 def audit_authority(evidence, source_root, stage, expected_head, expected_run, provider=None):
@@ -653,7 +724,7 @@ def audit_authority(evidence, source_root, stage, expected_head, expected_run, p
         require(approval['verdict']=='CLEAR' and approval['repository']=='stephanelee/robocode' and approval['stage']==stage and approval['headSHA']==expected_head and approval['runId']==expected_run,'approval exact registered authority identity')
         comments=authority['comments'];accepted={}
         for file,prefix in [('approval-comment.json','KEEL_BRACE_RUNTIME_APPROVAL_V1'),('review-report-comment.json','KEEL_BRACE_RUNTIME_REVIEW_V1'),('dispatch-assignment-comment.json','KEEL_BRACE_DISPATCH_ASSIGNMENT_V1')]:
-            original=read_json(evidence/file);require(comments[file]==original,'retained original API '+file)
+            original=read_json(evidence/file);require(comments[file]==comment_identity(original),'exact normalized accepted comment pin '+file)
             require(authority['originalAcceptedCopiesSHA256'][file]==digest(evidence/file),'accepted original bytes '+file)
             accepted[file]=(original,comment_payload(original,prefix))
         ac,a=accepted['approval-comment.json'];rc,report=accepted['review-report-comment.json'];dc,dispatch=accepted['dispatch-assignment-comment.json']
@@ -694,9 +765,7 @@ def audit_authority(evidence, source_root, stage, expected_head, expected_run, p
             require(len(v['scannedComments'])<=2000,'bounded comment scan '+phase)
             require(all(any(comment_identity(x)==comment_identity(c) for x in v['scannedComments']) for c,_ in accepted.values()),'accepted originals included in full comment scan '+phase)
             for c in v['scannedComments']:
-                if c['body'].startswith('KEEL_BRACE_RUNTIME_REVOCATION_V1\n'):
-                    revoke=json_data(c['body'].split('\n',1)[1])
-                    if all(revoke.get(k)==approval[k] for k in ('runId','headSHA','stage')):require(False,'runtime revocation present '+phase)
+                if targeted_revocation(c,approval,ac):require(False,'authorized exact-target runtime revocation present '+phase)
             if phase!='before-receipt':
                 require(v['currentReceiptRef']['object']['sha']==tag['sha'] and v['currentReceiptTag']==tag,'unchanged permanent remote receipt '+phase)
                 game=next(g for g in population if 'before-'+g['id']==phase);folder=evidence/'games'/game['id']
@@ -901,6 +970,7 @@ def audit_upstream_screen(source_root, stage, provider=None):
             row=reduce_game(store.root()/member,evidence/'games'/game['id']/'markers.txt',game['participantName'],game['opponentName'],game['opponentVersion'],game['rounds'],game['bot']=='candidate',game['participantVersion'])
             check(row['valid'],'Upstream full raw recording invalid '+game['id']);check(original_rows[game['id']]['recordingSHA256']==row['recordingSHA256'],'Original decision whole recording SHA '+game['id']);row['game']=game;rows.append(row)
         raw=stage_gates('screen',rows);check(raw['allPass'],'Upstream independently replayed full screen does not PASS')
+        canonical=reconcile_canonical(evidence,'screen',m['headSHA'],plan,rows,raw,True);check(canonical['pass'],'Upstream canonical acquisition/metrics disagree with full independent raw replay')
         check(provider is not None,'External upstream provider originals required');prior=evidence_path(provider)/'screen'
         run=read_json(prior/'run.json');jobs=read_json(prior/'jobs.json');artifact=read_json(prior/'evidence-artifact.json')
         check(run['id']==gate['screenRunId'] and run['head_sha']==m['headSHA'] and run['run_attempt']==1 and run['status']=='completed' and run['conclusion']=='success','Upstream original completed successful run')
@@ -914,7 +984,7 @@ def audit_upstream_screen(source_root, stage, provider=None):
         check(set(review)=={'verdict','stage','sourceFreezeSHA256','runId','headSHA','decisionSHA256','reviewerTask','agentToolProvenance'},'Upstream exact outcome keys')
         check(review['verdict']=='SCREEN-PASS' and review['stage']=='screen' and review['sourceFreezeSHA256']==gate['sourceFreezeSHA256'] and review['runId']==run['id'] and review['headSHA']==m['headSHA'] and review['decisionSHA256']==gate['decisionSHA256'],'Independent upstream outcome exact identity')
         dispatch=json_data(read_json(evidence/'receipt.json')['payload']['dispatchAssignment']['body'].split('\n',1)[1])
-        check(bool(review['reviewerTask']) and review['agentToolProvenance']['reviewerTask']==review['reviewerTask'] and review['reviewerTask'] not in dispatch['implementationTasks'] and timestamp(comment['created_at'])>=timestamp(run['updated_at']),'Post-completion separate reviewer/tool task provenance recorded')
+        check(type(review['reviewerTask']) is str and bool(review['reviewerTask']) and type(review['agentToolProvenance']) is dict and bool(review['agentToolProvenance']) and review['agentToolProvenance']['reviewerTask']==review['reviewerTask'] and review['reviewerTask'] not in dispatch['implementationTasks'] and comment['updated_at']==comment['created_at'] and timestamp(comment['created_at'])>max(timestamp(j['completed_at']) for j in jobs['jobs']),'Unedited strictly post-completion separate reviewer/tool task provenance recorded')
         checked.append('All original upstream ZIP ranges/members/source bindings, raw screen gates, provider run/receipt/image and published independent outcome matched')
     except (KeyError,TypeError,ValueError,OSError,zipfile.BadZipFile,EOFError,zlib.error) as exc:failures.append(type(exc).__name__+': '+str(exc))
     finally:

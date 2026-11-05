@@ -67,6 +67,16 @@ class IntegrityTests(unittest.TestCase):
         r=self.reduce(fixture()[:3]);self.assertFalse(r['valid']);self.assertEqual(r['observedPhysicalRoundIds'],[1]);self.assertEqual(r['observedRoundEndpointIds'],[])
 
 
+class GlobalMarkerOrderTests(unittest.TestCase):
+    def test_rounds_cannot_interleave_or_reverse(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp)/'markers.txt'
+            for text in ['1 start\n2 start\n1 stats maxMs=1\n1 end\n2 stats maxMs=1\n2 end\n','2 start\n2 stats maxMs=1\n2 end\n1 start\n1 stats maxMs=1\n1 end\n']:
+                p.write_text(text)
+                with self.assertRaises(ValueError):audit.markers(p,2,False)
+            p.write_text('1 start\n1 stats maxMs=1\n1 end\n2 start\n2 stats maxMs=1\n2 end\n');self.assertEqual(len(audit.markers(p,2,False)),2)
+
+
 class GateBoundaryTests(unittest.TestCase):
     def groups(self, stage):
         rows=[]
@@ -266,7 +276,7 @@ def authority_fixture(root, approval_overrides=None):
     at=lambda m:f'2026-11-04T00:{m:02d}:00Z'
     reviewer='/independent';record=dict(reviewerTask=reviewer,activeBeforeDispatch=True,tool='recorded independent assignment')
     dispatch=dict(schemaVersion=1,repository='stephanelee/robocode',issue=114,stage='screen',headSHA=head,reviewerTask=reviewer,reviewerAccount='stephanelee',implementationTasks=['/implementation'],assignmentToolRecord=record,assignmentToolRecordSHA256=hashlib.sha256(audit.canonical(record)).hexdigest())
-    def comment(cid,prefix,payload,minute):return dict(id=cid,body=prefix+'\n'+json.dumps(payload),created_at=at(minute),updated_at=at(minute),user=dict(login='stephanelee',id=30698997))
+    def comment(cid,prefix,payload,minute):return dict(id=cid,node_id='IC_'+str(cid),url='https://api.github.com/repos/stephanelee/robocode/issues/comments/'+str(cid),issue_url='https://api.github.com/repos/stephanelee/robocode/issues/114',html_url='https://github.com/stephanelee/robocode/issues/114#issuecomment-'+str(cid),body=prefix+'\n'+json.dumps(payload),created_at=at(minute),updated_at=at(minute),user=dict(login='stephanelee',id=30698997,type='User'),author_association='OWNER',reactions={'total_count':0})
     dc=comment(1,'KEEL_BRACE_DISPATCH_ASSIGNMENT_V1',dispatch,0)
     approval={k:'a'*64 for k in audit.APPROVAL_KEYS};approval.update(schemaVersion=1,verdict='CLEAR',repository='stephanelee/robocode',issue=114,stage='screen',headSHA=head,runId=runid,runAttempt=1,bootId='synthetic-boot',workspace='/synthetic',artifactId=99,reviewerTask=reviewer,dispatchAssignmentSHA256=hashlib.sha256(dc['body'].encode()).hexdigest())
     if approval_overrides:approval.update(approval_overrides)
@@ -275,7 +285,7 @@ def authority_fixture(root, approval_overrides=None):
     rc=comment(2,'KEEL_BRACE_RUNTIME_REVIEW_V1',report,4);ac=comment(3,'KEEL_BRACE_RUNTIME_APPROVAL_V1',approval,5)
     comments={'approval-comment.json':ac,'review-report-comment.json':rc,'dispatch-assignment-comment.json':dc}
     for n,c in comments.items():dump(evidence/n,c);dump(provider/'comments'/(str(c['id'])+'.json'),c)
-    authority=dict(schemaVersion=1,approvalPayload=approval,approvalPayloadSHA256=payload_hash,comments=comments,originalAcceptedCopiesSHA256={n:audit.digest(evidence/n) for n in comments})
+    authority=dict(schemaVersion=1,approvalPayload=approval,approvalPayloadSHA256=payload_hash,comments={name:audit.comment_identity(c) for name,c in comments.items()},originalAcceptedCopiesSHA256={n:audit.digest(evidence/n) for n in comments})
     dump(evidence/'accepted-authority.json',authority);dump(evidence/'approval.json',approval)
     artifact=dict(id=99,digest='sha256:'+approval['artifactDigestSHA256'],updated_at=at(3),workflow_run=dict(id=runid,head_sha=head));dump(evidence/'artifact.json',artifact)
     payload=dict(acceptedAuthority=authority,acceptedAuthoritySHA256=hashlib.sha256(audit.canonical(authority)).hexdigest());tag=dict(sha='b'*40,object=dict(sha=head,type='commit'),message=json.dumps(payload))
@@ -299,6 +309,27 @@ class AuthorityPositiveTests(unittest.TestCase):
             self.assertTrue(result['pass'],result)
             self.assertFalse(audit.audit_authority(e,s,'screen',h,r,None)['pass'])
 
+    def test_normalized_pin_keeps_full_api_and_exact_stable_fields(self):
+        with tempfile.TemporaryDirectory() as t:
+            e,s,p,h,r=authority_fixture(Path(t));authority=json.loads((e/'accepted-authority.json').read_text());original=json.loads((e/'approval-comment.json').read_text());pin=authority['comments']['approval-comment.json']
+            self.assertNotEqual(pin,original);self.assertEqual(set(pin),{'id','node_id','url','issue_url','html_url','created_at','updated_at','body','author','bodySHA256'})
+            self.assertEqual(pin['author'],{'id':30698997,'login':'stephanelee','type':'User'})
+            self.assertEqual(pin['bodySHA256'],hashlib.sha256(original['body'].encode('utf-8')).hexdigest())
+            self.assertTrue(audit.audit_authority(e,s,'screen',h,r,p)['pass'])
+    def test_pin_mutations_and_current_provider_stable_identity_fail(self):
+        for mutation in ['bodyhash','unknown','author','node','providerurl','originalbytes']:
+            with tempfile.TemporaryDirectory() as t:
+                e,s,p,h,r=authority_fixture(Path(t));f=e/'accepted-authority.json';d=json.loads(f.read_text());pin=d['comments']['approval-comment.json']
+                if mutation=='bodyhash':pin['bodySHA256']='0'*64
+                elif mutation=='unknown':pin['extra']=True
+                elif mutation=='author':pin['author']['type']='Bot'
+                elif mutation=='node':pin['node_id']='wrong'
+                elif mutation=='providerurl':
+                    f=p/'comments/3.json';d=json.loads(f.read_text());d['url']='https://api.github.com/wrong'
+                else:
+                    f=e/'approval-comment.json';d=json.loads(f.read_text());d['reactions']['total_count']=1
+                dump(f,d);self.assertFalse(audit.audit_authority(e,s,'screen',h,r,p)['pass'],mutation)
+
     def test_provider_replay_and_live_edited_timestamp_fail(self):
         with tempfile.TemporaryDirectory() as t:
             e,s,p,h,r=authority_fixture(Path(t));f=p/'workflow-runs.json';d=json.loads(f.read_text());d['workflow_runs']*=2;dump(f,d)
@@ -312,7 +343,7 @@ class AuthorityPositiveTests(unittest.TestCase):
             e,s,p,h,r=authority_fixture(Path(t));f=p/'run.json';d=json.loads(f.read_text());d['created_at']='2026-11-03T23:00:00Z';dump(f,d)
             self.assertFalse(audit.audit_authority(e,s,'screen',h,r,p)['pass'])
         with tempfile.TemporaryDirectory() as t:
-            e,s,p,h,r=authority_fixture(Path(t));f=e/'approval-revalidations/before-brace-s01.json';d=json.loads(f.read_text());d['scannedComments'].append(dict(body='KEEL_BRACE_RUNTIME_REVOCATION_V1\n'+json.dumps(dict(runId=r,headSHA=h,stage='screen'))));dump(f,d)
+            e,s,p,h,r=authority_fixture(Path(t));f=e/'approval-revalidations/before-brace-s01.json';d=json.loads(f.read_text());d['scannedComments'].append(dict(user=dict(login='stephanelee',id=30698997),body='KEEL_BRACE_RUNTIME_REVOCATION_V1\n'+json.dumps(dict(runId=r,headSHA=h,stage='screen',approvalCommentId=3))));dump(f,d)
             self.assertFalse(audit.audit_authority(e,s,'screen',h,r,p)['pass'])
         for field,value in [('issue',107),('schemaVersion',True),('verdict','REJECT')]:
             with tempfile.TemporaryDirectory() as t:
@@ -335,6 +366,29 @@ def storage_fixture(root):
     dump(c/'export-validation.json',dict(schemaVersion=1,stage='screen',status='valid',observedAtUTC=at(8),originalZIPMaximumBytes=2*1024**3,rawDecisionSHA256=audit.digest(e/'decision.json'),artifact=original))
     transport=dict(originalZIPBytes=123,originalZIPSHA256='a'*64,custodyZIPBytes=124,custodyZIPSHA256='b'*64,custodyRoot=c)
     return e,p,transport
+
+
+class RevocationPolicyTests(unittest.TestCase):
+    def check_case(self,which):
+        with tempfile.TemporaryDirectory() as t:
+            e,s,p,h,r=authority_fixture(Path(t));approval=json.loads((e/'approval.json').read_text());accepted=json.loads((e/'approval-comment.json').read_text())
+            rev={k:approval[k] for k in ('repository','issue','stage','headSHA','runId','runAttempt','bootId','artifactId','reviewerTask')};rev.update(schemaVersion=1,verdict='REVOKE',approvalCommentId=3,reason='Synthetic targeted revocation')
+            comment=dict(user=dict(login='stephanelee',id=30698997),created_at='2026-11-04T00:06:30Z')
+            if which.startswith('foreign'):comment['user']=dict(login='unrelated',id=1)
+            if which=='wrong-target':rev['approvalCommentId']=99
+            if which=='missing-target':rev.pop('approvalCommentId')
+            if which=='authorized-bad':rev['bootId']='wrong-worker'
+            if which=='authorized-early':comment['created_at']=accepted['created_at']
+            comment['body']='KEEL_BRACE_RUNTIME_REVOCATION_V1\n'+('malformed' if which=='foreign-malformed' else json.dumps(rev))
+            f=e/'approval-revalidations/before-brace-s01.json';d=json.loads(f.read_text());d['scannedComments'].append(comment);dump(f,d)
+            return audit.audit_authority(e,s,'screen',h,r,p)
+    def test_foreign_malformed_and_matching_run_ignored(self):
+        for case in ['foreign-malformed','foreign-matching']:self.assertTrue(self.check_case(case)['pass'],case)
+    def test_different_approval_target_ignored(self):self.assertTrue(self.check_case('wrong-target')['pass'])
+    def test_missing_approval_target_ignored(self):self.assertTrue(self.check_case('missing-target')['pass'])
+    def test_authorized_target_inconsistent_or_early_fails_closed(self):
+        for case in ['authorized-bad','authorized-early']:self.assertFalse(self.check_case(case)['pass'],case)
+    def test_current_valid_targeted_revoke_removes_authority(self):self.assertFalse(self.check_case('valid')['pass'])
 
 
 class StoragePositiveTests(unittest.TestCase):
@@ -442,6 +496,67 @@ class ActualChildTimingTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as t:
                 e,s,p,h,r=authority_fixture(Path(t));f=e/'games/brace-s01/teardown.json';d=json.loads(f.read_text());d.update(change);dump(f,d)
                 self.assertFalse(audit.audit_authority(e,s,'screen',h,r,p)['pass'])
+
+class CanonicalDecisionTests(unittest.TestCase):
+    def stage(self,root,stage='screen'):
+        import copy
+        rows=GateBoundaryTests().groups(stage);population=[]
+        for n,row in enumerate(rows):
+            game=dict(id=f'synthetic-{n}',stage=stage,bot=row['game']['bot'],opponent=row['game']['opponent'],rounds=row['game']['rounds'],seed=n,port=33000+n);row['game']=game;population.append(game)
+            row.update(valid=True,share=row['ownScore']/row['totalScore'],skips=0,maxMs=1,turns=100,recordingSHA256='a'*64,hitRate=.5,enemyHitRate=.25,firingPer1000Turns=10.0,powerMix={'1':1},enemyPowerMix={'1':1})
+            row.update({k:1 for k in audit.COUNTS});row['perRound']=[dict(round=r,turns=10,ownScore=5,totalScore=10,share=.5,win=1,maxMs=1,exposure=row['exposure'],**{k:1 for k in audit.COUNTS}) for r in range(1,game['rounds']+1)]
+        raw=audit.stage_gates(stage,rows);self.assertTrue(raw['allPass']);games=[]
+        for row in rows:
+            g=dict(row['game'],status='valid',**{k:copy.deepcopy(v) for k,v in row.items() if k not in ('game','valid','timingPass')});g.update(observedPhysicalRoundIDs=list(range(1,g['rounds']+1)),completedPhysicalRoundIDs=list(range(1,g['rounds']+1)),observedPhysicalRounds=g['rounds'],completedPhysicalRounds=g['rounds'],partialRecordingError=None);games.append(g)
+        decision=dict(stage=stage,headSHA='a'*40,games=games,unplayedIDs=[],decision='progress; confirmation open' if stage=='screen' else 'confirmed',observedPhysicalRounds=sum(g['rounds'] for g in population),completedPhysicalRounds=sum(g['rounds'] for g in population),checks=audit.canonical_gate_checks(stage,rows,raw),diamondMean=raw['groups']['candidate/diamond']['mean']['decimal'],diamondDelta=raw['diamondDifference']['decimal'],retconMean=raw['groups']['candidate/retcon']['mean']['decimal'],retconDelta=raw['retconDifference']['decimal'],candidateRetconEligibleRamScans=raw['candidateRetconEligibleRamCorrectedScans'],betweenGameShareSD={k:v['sampleSDPercentagePoints']/100 if v['sampleSDPercentagePoints'] is not None else None for k,v in raw['groups'].items() if k.rsplit('/',1)[1] in ('diamond','retcon')})
+        dump(root/'decision.json',decision);return population,rows,raw,decision
+    def test_positive_complete_original_screen_and_confirmation(self):
+        for stage in ('screen','confirmation'):
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);p,r,g,d=self.stage(root,stage);result=audit.reconcile_canonical(root,stage,'a'*40,p,r,g,True);self.assertTrue(result['pass'],result)
+    def test_complete_raw_scores_never_waive_last_child_failure(self):
+        for failure in ('invalid','gamefailure','phasefailure','integrity','infrastructure'):
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);p,r,g,d=self.stage(root)
+                if failure=='invalid':d['decision']='invalid';d['games'][-1]['status']='invalid';d['games'][-1]['error']='child exited nonzero after full recording'
+                elif failure=='gamefailure':dump(root/'games'/p[-1]['id']/'failure.json',dict(status='invalid',error='last child nonzero'))
+                elif failure=='phasefailure':dump(root/'failure-run.json',dict(error='acquisition failure'))
+                elif failure=='integrity':d['integrityFailure']='child failed'
+                else:d['infrastructureError']='worker failed'
+                dump(root/'decision.json',d);self.assertTrue(g['allPass']);self.assertFalse(audit.reconcile_canonical(root,'screen','a'*40,p,r,g,True)['pass'],failure)
+    def test_full_stage_cannot_pass_after_canonical_last_child_failure(self):
+        from unittest import mock
+        import copy
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);e=root/'evidence';source=root/'source';p,rows,raw,declared=self.stage(e,'confirmation')
+            for game,row,original in zip(p,rows,declared['games']):
+                extra=dict(participantName='KeelBrace' if game['bot']=='candidate' else 'Keel',participantVersion='0.1.0',opponentName='Diamond Port' if game['opponent']=='diamond' else 'Retcon',opponentVersion='1.8.28' if game['opponent']=='diamond' else '0.1.0')
+                game.update(extra);original.update(extra);d=e/'games'/game['id'];d.mkdir(parents=True);(d/'opaque-mocked.battle.gz').write_bytes(b'pure mock transport; never decoded')
+            dump(source/'benchmarks/keel-brace-v1/games.json',{'confirmation':p});dump(e/'decision.json',declared)
+            real_digest=audit.digest
+            def fake_digest(path):return audit.GAMES_SHA256 if str(path).endswith('games.json') else real_digest(path)
+            with mock.patch.object(audit,'digest',side_effect=fake_digest),mock.patch.object(audit,'reduce_game',side_effect=lambda *a:copy.deepcopy(rows[int(Path(str(a[0])).parent.name.split('-')[-1])])),mock.patch.object(audit,'verify_exported_provenance',return_value={'pass':True}),mock.patch.object(audit,'audit_authority',return_value={'pass':True}),mock.patch.object(audit,'audit_storage',return_value={'pass':True}),mock.patch.object(audit,'audit_runner_image',return_value={'pass':True}),mock.patch.object(audit,'audit_upstream_screen',return_value={'pass':True}):
+                self.assertEqual(audit.audit_stage(e,source,'confirmation','a'*40,7)['decision'],'PASS')
+                declared['decision']='invalid';declared['games'][-1]['status']='invalid';declared['games'][-1]['error']='nonzero exit after final full recording';dump(e/'decision.json',declared);dump(e/'games'/p[-1]['id']/'failure.json',declared['games'][-1])
+                result=audit.audit_stage(e,source,'confirmation','a'*40,7);self.assertEqual(result['rawDisposition'],'PASS');self.assertEqual(result['decision'],'INVALID/INCOMPLETE')
+
+    def test_decision_population_budget_and_metric_mutations_fail(self):
+        for mutation in ('head','ids','budget','unplayed','gate','score','round','mean','variation','exposure','pending'):
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);p,r,g,d=self.stage(root)
+                if mutation=='head':d['headSHA']='b'*40
+                elif mutation=='ids':d['games'].reverse()
+                elif mutation=='budget':d['completedPhysicalRounds']-=1
+                elif mutation=='unplayed':d['unplayedIDs']=[p[-1]['id']]
+                elif mutation=='gate':d['checks']['retconDeltaAtLeast1pp']=False
+                elif mutation=='score':d['games'][0]['ownScore']+=1
+                elif mutation=='round':d['games'][0]['perRound'][0]['win']=0
+                elif mutation=='mean':d['diamondMean']+=.01
+                elif mutation=='variation':d['betweenGameShareSD']['candidate/diamond']=.1
+                elif mutation=='exposure':d['candidateRetconEligibleRamScans']=0
+                else:d['decision']='pending'
+                dump(root/'decision.json',d);self.assertFalse(audit.reconcile_canonical(root,'screen','a'*40,p,r,g,True)['pass'],mutation)
+
 
 class UpstreamCustodyTests(unittest.TestCase):
     def parts(self,root,data=b'original ZIP range bytes'):

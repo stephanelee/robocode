@@ -1,0 +1,826 @@
+KeelBrace Java 17 bootstrap (zero games)	Set up job	﻿2026-11-05T00:19:10.4411876Z Current runner version: '2.338.2'
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4447620Z ##[group]Runner Image Provisioner
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4448919Z Hosted Compute Agent
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4450032Z Version: 20261028.624
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4451132Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4452729Z Build Date: 2026-10-28T21:51:42Z
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4454015Z Worker ID: {357215e8-e680-4344-90f3-bbdea00a22f1}
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4455384Z Region: eastus2
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4456346Z Cloud: Azure
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4457364Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4460242Z ##[group]Operating System
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4461358Z Ubuntu
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4462676Z 26.04.1
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4463569Z LTS
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4464548Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4465599Z ##[group]Runner Image
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4466704Z Image: ubuntu-26.04
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4467850Z Version: 20261101.186.1
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4469689Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4472971Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4474905Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4476838Z ##[group]GITHUB_TOKEN Permissions
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4479883Z Contents: read
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4480898Z Metadata: read
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4482106Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4485233Z Secret source: Actions
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4486943Z Cache mode: write
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4488420Z Prepare workflow directory
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.4996205Z Prepare all required actions
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.5071161Z Getting action download info
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.7567640Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:10.8798824Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:11.1280723Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:11.5760909Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:11.6314007Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+KeelBrace Java 17 bootstrap (zero games)	Set up job	2026-11-05T00:19:11.9123751Z Complete job name: KeelBrace Java 17 bootstrap (zero games)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	﻿2026-11-05T00:19:12.0169127Z ##[group]Run actions/checkout@v4
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0170066Z with:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0170541Z   ref: 1fd0e78bf36e8021657ca32240d66137731bfc77
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0171153Z   persist-credentials: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0171849Z   repository: stephanelee/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0175486Z   token: ***
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0175921Z   ssh-strict: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0176363Z   ssh-user: git
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0176780Z   clean: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0177225Z   sparse-checkout-cone-mode: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0177753Z   fetch-depth: 1
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0178186Z   fetch-tags: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0178634Z   show-progress: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0179102Z   lfs: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0179516Z   submodules: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0179971Z   set-safe-directory: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0180480Z   allow-unsafe-pr-checkout: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.0181269Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.2975506Z Syncing repository: stephanelee/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.2978649Z ##[group]Getting Git version info
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.2980511Z Working directory is '/home/runner/work/robocode/robocode'
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.2983302Z [command]/usr/bin/git version
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.2984463Z git version 2.56.0
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3005012Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3022062Z Temporarily overriding HOME='/home/runner/work/_temp/f9e0ae8d-0144-42f5-9e04-26d3d05c5569' before making global git config changes
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3026476Z Adding repository directory to the temporary git global config as a safe directory
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3029812Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3099165Z Deleting the contents of '/home/runner/work/robocode/robocode'
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3105857Z ##[group]Initializing the repository
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3110668Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3235188Z hint: Using 'master' as the name for the initial branch. This default branch name
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3238344Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3240792Z hint: to use in all of your new repositories, which will suppress this warning,
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3243101Z hint: call:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3244350Z hint:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3245714Z hint: 	git config --global init.defaultBranch <name>
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3247740Z hint:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3249951Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3253140Z hint: 'development'. The just-created branch can be renamed via this command:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3256192Z hint:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3257796Z hint: 	git branch -m <name>
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3259264Z hint:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3261015Z hint: Disable this message with "git config set advice.defaultBranchName false"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3264382Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3269202Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3330769Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3333158Z ##[group]Disabling automatic garbage collection
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3344887Z [command]/usr/bin/git config --local gc.auto 0
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3373337Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3375540Z ##[group]Setting up auth
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3380475Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3422966Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3896873Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.3938737Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4270104Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4311323Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4615690Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4662997Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4665810Z ##[group]Fetching the repository
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:12.4677623Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 1fd0e78bf36e8021657ca32240d66137731bfc77
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3230333Z From https://github.com/stephanelee/robocode
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3231948Z  * branch            1fd0e78bf36e8021657ca32240d66137731bfc77 -> FETCH_HEAD
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3236193Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3237170Z ##[group]Determining the checkout info
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3239304Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3247195Z [command]/usr/bin/git sparse-checkout disable
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3303525Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3332070Z ##[group]Checking out the ref
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:21.3335455Z [command]/usr/bin/git checkout --progress --force 1fd0e78bf36e8021657ca32240d66137731bfc77
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5326664Z Updating files:  62% (3327/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5480150Z Updating files:  63% (3375/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5516055Z Updating files:  64% (3429/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5597494Z Updating files:  65% (3483/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5740678Z Updating files:  66% (3536/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5876596Z Updating files:  67% (3590/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5954730Z Updating files:  68% (3643/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.5986012Z Updating files:  69% (3697/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6020377Z Updating files:  70% (3750/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6056945Z Updating files:  71% (3804/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6109287Z Updating files:  72% (3858/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6146772Z Updating files:  73% (3911/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6183725Z Updating files:  74% (3965/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6221827Z Updating files:  75% (4018/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6258228Z Updating files:  76% (4072/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6294550Z Updating files:  77% (4125/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6331428Z Updating files:  78% (4179/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6369914Z Updating files:  79% (4233/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6402986Z Updating files:  80% (4286/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6437239Z Updating files:  81% (4340/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6477243Z Updating files:  82% (4393/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6508753Z Updating files:  83% (4447/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6540917Z Updating files:  84% (4500/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6576246Z Updating files:  85% (4554/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6609319Z Updating files:  86% (4608/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6641201Z Updating files:  87% (4661/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6672063Z Updating files:  88% (4715/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6709006Z Updating files:  89% (4768/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6750646Z Updating files:  90% (4822/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6824267Z Updating files:  91% (4875/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6893933Z Updating files:  92% (4929/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.6988001Z Updating files:  93% (4983/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7074637Z Updating files:  94% (5036/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7112070Z Updating files:  95% (5090/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7145827Z Updating files:  96% (5143/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7180516Z Updating files:  97% (5197/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7212487Z Updating files:  98% (5250/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7239567Z Updating files:  99% (5304/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7240416Z Updating files: 100% (5357/5357)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7241038Z Updating files: 100% (5357/5357), done.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7320463Z Note: switching to '1fd0e78bf36e8021657ca32240d66137731bfc77'.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7321192Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7322009Z You are in 'detached HEAD' state. You can look around, make experimental
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7323438Z changes and commit them, and you can discard any commits you make in this
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7324479Z state without impacting any branches by switching back to a branch.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7325126Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7325567Z If you want to create a new branch to retain commits you create, you may
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7326445Z do so (now or later) by using -c with the switch command. Example:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7326931Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7327119Z   git switch -c <new-branch-name>
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7327434Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7327612Z Or undo this operation with:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7327892Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7328073Z   git switch -
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7328281Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7328665Z Turn off this advice by setting config variable advice.detachedHead to false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7329226Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7329728Z HEAD is now at 1fd0e78 Preserve Brace build evidence and add reviewed zero-game image diagnostic
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7498491Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7556686Z [command]/usr/bin/git log -1 --format=%H
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7585659Z 1fd0e78bf36e8021657ca32240d66137731bfc77
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7595551Z ##[group]Removing auth
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7599581Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7632254Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7921986Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7946823Z http.https://github.com/.extraheader
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7955570Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.7989612Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.8274108Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.8308812Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+KeelBrace Java 17 bootstrap (zero games)	Run actions/checkout@v4	2026-11-05T00:19:22.8592866Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	﻿2026-11-05T00:19:22.8919324Z ##[group]Run actions/setup-java@v4
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8919628Z with:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8919835Z   distribution: temurin
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8920063Z   java-version: 17.0.21+9
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8920287Z   java-package: jdk
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8920496Z   check-latest: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8920728Z   server-id: github
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8920933Z   server-username: GITHUB_ACTOR
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8921182Z   server-password: GITHUB_TOKEN
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8921426Z   overwrite-settings: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8921837Z   job-status: success
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8924183Z   token: ***
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:22.8924402Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0708386Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0716277Z ##[group]Installed distributions
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0746543Z Resolved Java 17.0.21+9 from tool-cache
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0747016Z Setting Java 17.0.21+9 as the default
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0758278Z (node:2515) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0759631Z (Use `node --trace-deprecation ...` to show where the warning was created)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0763066Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0838561Z Writing to /home/runner/.m2/toolchains.xml
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0838982Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0839161Z Java configuration:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0839574Z   Distribution: temurin
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0840116Z   Version: 17.0.21+9
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0840694Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0841210Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0841925Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0860485Z Creating settings.xml with server-id: github
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-java@v4	2026-11-05T00:19:23.0899702Z Writing to /home/runner/.m2/settings.xml
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	﻿2026-11-05T00:19:23.1271930Z ##[group]Run gradle/actions/setup-gradle@v4
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1272383Z with:
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1272595Z   cache-disabled: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1272829Z   cache-read-only: true
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1273055Z   cache-write-only: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1273310Z   cache-overwrite-existing: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1273571Z   cache-cleanup: on-success
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1273868Z   gradle-home-cache-includes: caches
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	notifications
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1274186Z   add-job-summary: always
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1274430Z   add-job-summary-as-pr-comment: never
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1274709Z   dependency-graph: disabled
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1275003Z   dependency-graph-report-dir: dependency-graph-reports
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1275359Z   dependency-graph-continue-on-failure: true
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1275654Z   build-scan-publish: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1275887Z   validate-wrappers: true
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1276254Z   allow-snapshot-wrappers: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1276544Z   gradle-home-cache-strict-match: false
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1276877Z   workflow-job-context: null
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1279225Z   github-token: ***
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1279437Z env:
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1279736Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1280221Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:23.1280592Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:24.9062967Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:24.9063810Z ##[group]Restore Gradle state from cache
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:24.9965451Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build[b8a35c2f917259958c9abe8f2ff1b5ff]-f34805e3d915c089917a30b997cd1665160fa241
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.1563858Z Received 683749 of 683749 (100.0%), 5.7 MBs/sec
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.1565942Z Cache Size: ~1 MB (683749 B)
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.1592599Z [command]/usr/bin/tar -xf /home/runner/work/_temp/29fe2a0b-4002-4721-b037-73a0081df95f/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.1773569Z Cache restored successfully
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.1778487Z Restored cache entry with key gradle-home-v1|Linux-X64|build[acf2c8cfc04fd073c8c0a713b2ef59e5]-605385e89b3a5e6e63c560a04b213c3ce07b1502 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 270ms
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.2447411Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.2474145Z Cache hit for: gradle-groovy-dsl-v1-9cbdbbe5cabe6d7c70e812a44c1ccb8f
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.2528344Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.2546296Z Cache hit for: gradle-instrumented-jars-v1-ad53542f429a2830ddce55c745bae61c
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.3522502Z Received 154872 of 154872 (100.0%), 2.9 MBs/sec
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.3523495Z Cache Size: ~0 MB (154872 B)
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.3544504Z [command]/usr/bin/tar -xf /home/runner/work/_temp/af6ccf5c-d6c8-4369-8744-07cc67ea98f7/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.3821537Z Cache restored successfully
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.3823368Z Restored cache entry with key gradle-instrumented-jars-v1-ad53542f429a2830ddce55c745bae61c to /home/runner/.gradle/caches/jars-*/*/ in 204ms
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.4616753Z Received 284255 of 284255 (100.0%), 1.5 MBs/sec
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.4617841Z Cache Size: ~0 MB (284255 B)
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.5222195Z [command]/usr/bin/tar -xf /home/runner/work/_temp/12127321-46cc-405c-b101-ae95244386db/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.6269646Z Cache restored successfully
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.6326925Z Restored cache entry with key gradle-groovy-dsl-v1-9cbdbbe5cabe6d7c70e812a44c1ccb8f to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 453ms
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.6433369Z Received 6690088 of 6690088 (100.0%), 18.4 MBs/sec
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.6434053Z Cache Size: ~6 MB (6690088 B)
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.6452658Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7abc56ff-9bd7-4ac6-a159-9d8afc607fa7/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.7076190Z Cache restored successfully
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:25.7223123Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 542ms
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.0431334Z Received 136693260 of 136693260 (100.0%), 170.4 MBs/sec
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.0432206Z Cache Size: ~130 MB (136693260 B)
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.0451854Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7fe73dc3-3c29-43c8-a029-1efa49cb90f5/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.2573782Z Cache restored successfully
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.2630444Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 1084ms
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.2702185Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.4103400Z ##[group]All Gradle Wrapper jars are valid
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.4104590Z ✓ Found known Gradle Wrapper JAR files:
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.4105654Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 benchmarks/keel-helm-v1/confirmation-evidence-41889609469/frozen-source/gradle/wrapper/gradle-wrapper.jar
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.4107255Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+KeelBrace Java 17 bootstrap (zero games)	Run gradle/actions/setup-gradle@v4	2026-11-05T00:19:26.4108113Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	﻿2026-11-05T00:19:26.4353034Z ##[group]Run actions/setup-python@v5
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4353378Z with:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4353614Z   python-version: 3.13.17
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4353878Z   check-latest: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4356159Z   token: ***
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4356395Z   update-environment: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4356668Z   allow-prereleases: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4356930Z   freethreaded: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4357171Z env:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4357493Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4358010Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4358464Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4358805Z   GRADLE_USER_HOME: /home/runner/.gradle
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4359126Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4359467Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4359935Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4360466Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4360812Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.4361105Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.5722785Z ##[group]Installed versions
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.5741560Z Version 3.13.17 was not found in the local cache
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.5869837Z (node:2602) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:26.5870644Z (Use `node --trace-deprecation ...` to show where the warning was created)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:27.1639450Z Version 3.13.17 is available for downloading
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:27.1641481Z Download from "https://github.com/actions/python-versions/releases/download/3.13.17-39711892467/python-3.13.17-linux-26.04-x64.tar.gz"
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:27.8102822Z Extract downloaded archive
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:27.8250367Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/f2e40de8-9972-48d6-a99d-45317f4247f5 -f /home/runner/work/_temp/983494fb-6bcd-4060-999c-00947dc098c3
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.1695337Z Execute installation script
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.1863238Z Check if Python hostedtoolcache folder exist...
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.1865198Z Create Python 3.13.17 folder
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.1890880Z Copy Python binaries to hostedtoolcache folder
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.6747799Z Create additional symlinks (Required for the UsePythonVersion Azure Pipelines task and the setup-python GitHub Action)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:29.6853862Z Upgrading pip...
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.2227948Z Collecting pip
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.3463083Z Downloading pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.3893653Z Downloading pip-26.3-py3-none-any.whl (2.0 MB)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.5825455Z ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 16.7 MB/s  0:00:00
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.5826013Z 
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.6708229Z Installing collected packages: pip
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.6708914Z Attempting uninstall: pip
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.6737487Z Found existing installation: pip 26.2.2
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.7071319Z Uninstalling pip-26.2.2:
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:33.7128204Z Successfully uninstalled pip-26.2.2
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:34.6846948Z Successfully installed pip-26.3
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:34.7617610Z Create complete file
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:34.7677789Z Successfully set up CPython (3.13.17)
+KeelBrace Java 17 bootstrap (zero games)	Run actions/setup-python@v5	2026-11-05T00:19:34.7678538Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	﻿2026-11-05T00:19:34.7877073Z ##[group]Run set -euo pipefail
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7877533Z ^[[36;1mset -euo pipefail^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7877871Z ^[[36;1mmkdir -p build/keel-brace-bootstrap^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7878199Z ^[[36;1m{^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7878407Z ^[[36;1m  set -x^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7878647Z ^[[36;1m  java -version^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7878898Z ^[[36;1m  javac -version^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7879161Z ^[[36;1m  ./gradlew --version^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7879652Z ^[[36;1m  git rev-parse HEAD^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7880003Z ^[[36;1m  if test -f experiments/KeelBrace/KeelBrace.jar; then^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7880598Z ^[[36;1m    cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7881099Z ^[[36;1m  fi^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7881418Z ^[[36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7882342Z ^[[36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7883050Z ^[[36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7883686Z ^[[36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7884543Z ^[[36;1m  python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7885382Z ^[[36;1m  cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7886024Z ^[[36;1m  if test -f build/keel-brace-bootstrap/KeelBrace-committed.jar; then^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7886768Z ^[[36;1m    python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7887372Z ^[[36;1m  fi^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7887643Z ^[[36;1m  sha256sum build/keel-brace-bootstrap/*.jar^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7888036Z ^[[36;1m} 2>&1 | tee build/keel-brace-bootstrap/build.log^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7945157Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7945553Z env:
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7945891Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7946442Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7946918Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7947273Z   GRADLE_USER_HOME: /home/runner/.gradle
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7947590Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7947913Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7948380Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7948880Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7949243Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7949621Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7950082Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7950548Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7950959Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7951374Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7952091Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.7952480Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.8133814Z + java -version
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.8419115Z openjdk version "17.0.21" 2026-10-20
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.8419632Z OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.8420171Z OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:34.8465629Z + javac -version
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:35.8106893Z javac 17.0.21
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:35.8296672Z + ./gradlew --version
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1324699Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1327490Z ------------------------------------------------------------
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1328846Z Gradle 8.14.3
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1329906Z ------------------------------------------------------------
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1330509Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1332404Z Build time:    2025-07-04 13:15:44 UTC
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1334361Z Revision:      e5ee1df3d88b8ca3a8074787a94f373e3090e1db
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1334935Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1335273Z Kotlin:        2.0.21
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1336444Z Groovy:        3.0.24
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1344117Z Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1345097Z Launcher JVM:  17.0.21 (Eclipse Adoptium 17.0.21+9)
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1345993Z Daemon JVM:    /usr/lib/jvm/temurin-17-jdk-amd64 (no JDK specified, using current Java home)
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1347047Z OS:            Linux 7.0.0-1019-azure amd64
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1347411Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1457992Z + git rev-parse HEAD
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1474810Z 1fd0e78bf36e8021657ca32240d66137731bfc77
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1477432Z + test -f experiments/KeelBrace/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1478070Z + cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.1496897Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:37.9364453Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:39.6349799Z Daemon will be stopped at the end of the build 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:46.1372759Z > Task :clean UP-TO-DATE
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:47.9352651Z > Task :compileJava
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:47.9357928Z > Task :processResources NO-SOURCE
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:47.9358789Z > Task :classes
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:48.2363526Z > Task :jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:48.3402102Z > Task :prepareBot
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:48.3432237Z > Task :assemble
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:49.0377201Z > Task :compileTestJava
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:49.0378081Z > Task :prepareTestDescriptors
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:49.0402348Z > Task :processTestResources NO-SOURCE
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:49.0412389Z > Task :testClasses
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2348163Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2372645Z > Task :test
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2373146Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2384727Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2385596Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2386381Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2387318Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2388109Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2389109Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2389872Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2390851Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2391432Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2392440Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2393142Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2394070Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2394712Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2398778Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2399561Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2401081Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2401895Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2402713Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2403420Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2404340Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2405022Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2405914Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2406593Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2407450Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2408105Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2409321Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2409979Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2410853Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2411544Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2412707Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2413542Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2414923Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2415641Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2416300Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2416731Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2417251Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2417605Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2418044Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2418431Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2418988Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2419326Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2419771Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2420107Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2420539Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2420931Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2421322Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2421940Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2422716Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2423084Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2423580Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2423978Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2424393Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2424682Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2425071Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2425305Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2425648Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2425970Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2426399Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2426670Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2427042Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2427138Z > Task :check
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2427349Z > Task :build
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2427854Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793837982630.json
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2428324Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2428429Z BUILD SUCCESSFUL in 13s
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.2428716Z 7 actionable tasks: 6 executed, 1 up-to-date
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.4103366Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:50.4123289Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:51.0985052Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:52.0972350Z Daemon will be stopped at the end of the build 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:56.1993478Z > Task :clean
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.2976899Z > Task :compileJava
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.2992807Z > Task :processResources NO-SOURCE
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.2993587Z > Task :classes
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.6969112Z > Task :jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.7014846Z > Task :prepareBot
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:57.7018590Z > Task :assemble
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:58.1974159Z > Task :compileTestJava
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:58.1982631Z > Task :prepareTestDescriptors
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:58.1983609Z > Task :processTestResources NO-SOURCE
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:58.1984407Z > Task :testClasses
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1932302Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1944552Z > Task :test
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1944843Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1945346Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1946359Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1946938Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1947391Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1947752Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1948209Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1948526Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1949143Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1949547Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1992551Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1993418Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1994486Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.1995201Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2016237Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2017561Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2018856Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2019647Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2020748Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2021515Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2022682Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2023399Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2024366Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2025048Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2025924Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2026585Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2027452Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2028174Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2029049Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2029797Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2030694Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2031483Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2032614Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2033447Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2034476Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2035188Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2036124Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2036723Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2037551Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2038223Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2039103Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2039671Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2040444Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2041031Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2041970Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2042474Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2043162Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2043771Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2044635Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2045163Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2045860Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2046576Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2047497Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2048207Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2049105Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2049829Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2050736Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2051492Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2052669Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2053348Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2054220Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2054829Z > Task :check
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2055397Z > Task :build
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2056458Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793837993846.json
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2057496Z 
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2057846Z BUILD SUCCESSFUL in 8s
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.2058474Z 7 actionable tasks: 7 executed
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.3113380Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.3132963Z + python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.3981061Z Verified 790 matching JAR file entries (ZIP timestamps/order ignored).
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4029878Z + cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4047096Z + test -f build/keel-brace-bootstrap/KeelBrace-committed.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4048380Z + python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4885508Z Verified 790 matching JAR file entries (ZIP timestamps/order ignored).
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4940170Z + sha256sum build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4972692Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace-committed.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4978922Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace-first.jar
+KeelBrace Java 17 bootstrap (zero games)	Build and test twice on the exact Java 17 runtime; launch no bots	2026-11-05T00:19:59.4985504Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace.jar
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	﻿2026-11-05T00:19:59.5033934Z ##[group]Run set -euo pipefail
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5034325Z ^[[36;1mset -euo pipefail^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5034680Z ^[[36;1mif test -f tools/test_keel_brace_experiment.py; then^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5035424Z ^[[36;1m  python -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v 2>&1 | tee build/keel-brace-bootstrap/controller-tests.log^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5036062Z ^[[36;1mfi^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5036444Z ^[[36;1mif test -f benchmarks/keel-brace-v1/independent-analysis/test_audit.py; then^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5037362Z ^[[36;1m  python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-brace-bootstrap/independent-audit-tests.log^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5038124Z ^[[36;1mfi^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5038515Z ^[[36;1mif test -f benchmarks/keel-brace-v1/image-probe-validation/test_image_probe.py; then^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5039458Z ^[[36;1m  python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/image-probe-validation -p test_image_probe.py -v 2>&1 | tee build/keel-brace-bootstrap/image-probe-tests.log^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5040257Z ^[[36;1mfi^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5089204Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5089582Z env:
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5089915Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5090449Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5090902Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5091232Z   GRADLE_USER_HOME: /home/runner/.gradle
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5091556Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5092079Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5092557Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5093075Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5093429Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5093811Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5094270Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5094717Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5095138Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5095549Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5095988Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.5096334Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7879071Z test_actual_expected_payload_has_exact20keys (test_keel_brace_experiment.Approval.test_actual_expected_payload_has_exact20keys) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7880958Z test_duplicate_json_key_nonfinite_and_trailing_text_rejected (test_keel_brace_experiment.Approval.test_duplicate_json_key_nonfinite_and_trailing_text_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7883133Z test_exact20key_bound_approval (test_keel_brace_experiment.Approval.test_exact20key_bound_approval) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7886259Z test_report_and_separate_agent_provenance_are_mandatory (test_keel_brace_experiment.Approval.test_report_and_separate_agent_provenance_are_mandatory) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7890466Z test_stale_wrong_identity_author_extra_keys_and_bool_fail (test_keel_brace_experiment.Approval.test_stale_wrong_identity_author_extra_keys_and_bool_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7893075Z test_authorized_malformed_authority_still_fails_closed (test_keel_brace_experiment.AuthorityActorFiltering.test_authorized_malformed_authority_still_fails_closed) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7894425Z test_foreign_malformed_approval_is_ignored (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_approval_is_ignored) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7895847Z test_foreign_malformed_dispatch_is_ignored_before_parse (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_dispatch_is_ignored_before_parse) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.7898300Z test_foreign_malformed_report_does_not_poison_valid_report (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_report_does_not_poison_valid_report) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.8032332Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.ConditionalGate.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.8166972Z test_full_confirmation_gate_accepts_lossless_virtual_custody (test_keel_brace_experiment.ConditionalGate.test_full_confirmation_gate_accepts_lossless_virtual_custody) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.8247144Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.ConditionalGate.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.8307314Z test_inconclusive_original_screen_never_opens_confirmation (test_keel_brace_experiment.ConditionalGate.test_inconclusive_original_screen_never_opens_confirmation) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.8963523Z test_no_success_without_original_export_and_independent_postcompletion_review (test_keel_brace_experiment.ConditionalGate.test_no_success_without_original_export_and_independent_postcompletion_review) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9148889Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.ConditionalGate.test_recording_path_game_binding_cannot_be_reused) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9548069Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.ConditionalGate.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9566078Z test_complete_screen_and_confirmation_progress (test_keel_brace_experiment.Decision.test_complete_screen_and_confirmation_progress) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9587063Z test_exact_percentage_boundaries_and_strict_majorities (test_keel_brace_experiment.Decision.test_exact_percentage_boundaries_and_strict_majorities) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9592945Z test_no_favorable_subset_or_incomplete_budget (test_keel_brace_experiment.Decision.test_no_favorable_subset_or_incomplete_budget) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9641989Z test_first_invalid_game_stops_and_retains_partial_physical_budget (test_keel_brace_experiment.FailClosedStage.test_first_invalid_game_stops_and_retains_partial_physical_budget) ... {"decision": "invalid", "physicalRounds": 1, "unplayedIDs": ["s02"]}
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9648405Z ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9650088Z test_consistent_unapproved_image_does_not_expand_allowlist (test_keel_brace_experiment.ImageProvenanceHold.test_consistent_unapproved_image_does_not_expand_allowlist) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9652652Z test_environment_alone_never_establishes_allowed_image (test_keel_brace_experiment.ImageProvenanceHold.test_environment_alone_never_establishes_allowed_image) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9655204Z test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed (test_keel_brace_experiment.ImageProvenanceHold.test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9657111Z test_real_identity_is_blocked_until_authority_schema_review (test_keel_brace_experiment.ImageProvenanceHold.test_real_identity_is_blocked_until_authority_schema_review) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9766816Z test_artifact_and_current_head_mismatch_fail (test_keel_brace_experiment.LiveAuthority.test_artifact_and_current_head_mismatch_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9812792Z test_changed_prepared_command_cannot_redefine_local_approved_manifest (test_keel_brace_experiment.LiveAuthority.test_changed_prepared_command_cannot_redefine_local_approved_manifest) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:19:59.9955571Z test_deleted_edited_wrong_author_and_timestamp_comments_fail (test_keel_brace_experiment.LiveAuthority.test_deleted_edited_wrong_author_and_timestamp_comments_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0238584Z test_local_profile_approval_anchor_and_command_mutations_fail (test_keel_brace_experiment.LiveAuthority.test_local_profile_approval_anchor_and_command_mutations_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0362023Z test_mutated_receipt_authority_chain_fails (test_keel_brace_experiment.LiveAuthority.test_mutated_receipt_authority_chain_fails) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0504124Z test_revoked_duplicate_approval_and_changed_assignment_fail (test_keel_brace_experiment.LiveAuthority.test_revoked_duplicate_approval_and_changed_assignment_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0632218Z test_unchanged_current_authority_and_receipt_chain_pass (test_keel_brace_experiment.LiveAuthority.test_unchanged_current_authority_and_receipt_chain_pass) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0637971Z test_all_missing_duplicate_skip_and_boundary_records_fail_closed (test_keel_brace_experiment.Markers.test_all_missing_duplicate_skip_and_boundary_records_fail_closed) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0640213Z test_complete_integer_timing_and_candidate_exposure (test_keel_brace_experiment.Markers.test_complete_integer_timing_and_candidate_exposure) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0647435Z test_counters_overflow_bad_chain_and_baseline_leak_fail (test_keel_brace_experiment.NewBraceGuards.test_counters_overflow_bad_chain_and_baseline_leak_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0674319Z test_exact_negative_diamond_guards_and_retcon_positive_boundary (test_keel_brace_experiment.NewBraceGuards.test_exact_negative_diamond_guards_and_retcon_positive_boundary) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0700612Z test_export_original_api_is_external_and_raw_decision_unchanged (test_keel_brace_experiment.NewBraceGuards.test_export_original_api_is_external_and_raw_decision_unchanged) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0719621Z test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering (test_keel_brace_experiment.NewBraceGuards.test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0728414Z test_missing_upload_retains_incomplete_custody_without_new_games (test_keel_brace_experiment.NewBraceGuards.test_missing_upload_retains_incomplete_custody_without_new_games) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0730872Z test_prospective_storage_timestamp_size_and_real_evidence_guards (test_keel_brace_experiment.NewBraceGuards.test_prospective_storage_timestamp_size_and_real_evidence_guards) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0740161Z test_retcon_ceiling_cannot_relax_positive_gain (test_keel_brace_experiment.NewBraceGuards.test_retcon_ceiling_cannot_relax_positive_gain) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0742048Z test_runtime_report_unknown_keys_or_edit_are_not_authority (test_keel_brace_experiment.NewBraceGuards.test_runtime_report_unknown_keys_or_edit_are_not_authority) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0774208Z test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact (test_keel_brace_experiment.NewBraceGuards.test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0779411Z test_exited_parent_still_signals_live_owned_process_group (test_keel_brace_experiment.OwnedTeardown.test_exited_parent_still_signals_live_owned_process_group) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0810779Z test_owned_descendants_are_killed_after_bounded_term_drain (test_keel_brace_experiment.OwnedTeardown.test_owned_descendants_are_killed_after_bounded_term_drain) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0838139Z test_official_counts_and_partial_physical_budget (test_keel_brace_experiment.Recording.test_official_counts_and_partial_physical_budget) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0866760Z test_private_contact_counter_is_only_an_upper_bounded_callback_count (test_keel_brace_experiment.RemainingBoundaries.test_private_contact_counter_is_only_an_upper_bounded_callback_count) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0874346Z test_teardown_respects_remaining_hard_deadline_and_retains_reap_error (test_keel_brace_experiment.RemainingBoundaries.test_teardown_respects_remaining_hard_deadline_and_retains_reap_error) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.0976258Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.VirtualCustody.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1040686Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.VirtualCustody.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1213975Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.VirtualCustody.test_recording_path_game_binding_cannot_be_reused) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1599273Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.VirtualCustody.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1600335Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1600802Z ----------------------------------------------------------------------
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1601352Z Ran 51 tests in 0.373s
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1601867Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.1602068Z OK
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3464686Z test_actual_child_overrun_or_failed_teardown_cannot_pass (test_audit.ActualChildTimingTests.test_actual_child_overrun_or_failed_teardown_cannot_pass) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3525470Z test_in_between_work_does_not_redefine_child_limit (test_audit.ActualChildTimingTests.test_in_between_work_does_not_redefine_child_limit) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3543570Z test_exact_zip_members_and_corrupt_extraction (test_audit.ArchiveTests.test_exact_zip_members_and_corrupt_extraction) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3548808Z test_unsafe_or_duplicate_members_rejected (test_audit.ArchiveTests.test_unsafe_or_duplicate_members_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3577918Z test_actual_dispute_shape_and_unapproved_agreement_fail_closed (test_audit.AuthoritativeImageTests.test_actual_dispute_shape_and_unapproved_agreement_fail_closed) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3594451Z test_agreeing_allowed_header_fixture_only (test_audit.AuthoritativeImageTests.test_agreeing_allowed_header_fixture_only) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3625539Z test_collector_digest_and_job_identity_tamper_fail (test_audit.AuthoritativeImageTests.test_collector_digest_and_job_identity_tamper_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3627588Z test_missing_duplicate_and_later_env_cannot_rescue_header (test_audit.AuthoritativeImageTests.test_missing_duplicate_and_later_env_cannot_rescue_header) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3633828Z test_missing_authority_and_storage_are_not_acceptance (test_audit.AuthorityFailClosedTests.test_missing_authority_and_storage_are_not_acceptance) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3635323Z test_strict_body_parser_duplicate_nonfinite_and_typed_json (test_audit.AuthorityFailClosedTests.test_strict_body_parser_duplicate_nonfinite_and_typed_json) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3636574Z test_timestamp_offset_required (test_audit.AuthorityFailClosedTests.test_timestamp_offset_required) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3704096Z test_complete_original_live_authority_and_current_provider (test_audit.AuthorityPositiveTests.test_complete_original_live_authority_and_current_provider) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.3819178Z test_provider_replay_and_live_edited_timestamp_fail (test_audit.AuthorityPositiveTests.test_provider_replay_and_live_edited_timestamp_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4095388Z test_wrong_issue_account_dispatch_order_and_revocation_fail (test_audit.AuthorityPositiveTests.test_wrong_issue_account_dispatch_order_and_revocation_fail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4114638Z test_corrupt_gzip_and_duplicate_json_keys (test_audit.BraceCounterTests.test_corrupt_gzip_and_duplicate_json_keys) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4174221Z test_counter_cap_negative_duplicate_noninteger (test_audit.BraceCounterTests.test_counter_cap_negative_duplicate_noninteger) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4215140Z test_counter_chain_overflow_fault_and_official_contact_bound (test_audit.BraceCounterTests.test_counter_chain_overflow_fault_and_official_contact_bound) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4239649Z test_duplicate_start_missing_end_and_baseline_na (test_audit.BraceCounterTests.test_duplicate_start_missing_end_and_baseline_na) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4261138Z test_raw_contact_corrob_and_no_private_eligibility_invention (test_audit.BraceCounterTests.test_raw_contact_corrob_and_no_private_eligibility_invention) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4272378Z test_ties_preserve_official_firstplaces (test_audit.BraceCounterTests.test_ties_preserve_official_firstplaces) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4280624Z test_confirmation_minus2_exact_then_below (test_audit.BraceGateTests.test_confirmation_minus2_exact_then_below) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4284854Z test_equal_game_not_pooled_score_arithmetic (test_audit.BraceGateTests.test_equal_game_not_pooled_score_arithmetic) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4291214Z test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond (test_audit.BraceGateTests.test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4298066Z test_inconclusive_precedes_score_rejection_but_not_integrity (test_audit.BraceGateTests.test_inconclusive_precedes_score_rejection_but_not_integrity) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4307235Z test_retcon_exact_plus1_below_boundary_and_ceiling (test_audit.BraceGateTests.test_retcon_exact_plus1_below_boundary_and_ceiling) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.4310703Z test_strict_half_and_win_count_boundaries (test_audit.BraceGateTests.test_strict_half_and_win_count_boundaries) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5423256Z test_cli_preserves_custody_error_without_battle_result (test_audit.CustodyFailureReportingTests.test_cli_preserves_custody_error_without_battle_result) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5480440Z test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain (test_audit.CustodyFailureReportingTests.test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5486432Z test_confirmation_fractional_boundaries (test_audit.GateBoundaryTests.test_confirmation_fractional_boundaries) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5493444Z test_screen_fractional_boundaries (test_audit.GateBoundaryTests.test_screen_fractional_boundaries) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5503930Z test_duplicate_endpoint_invalid (test_audit.IntegrityTests.test_duplicate_endpoint_invalid) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5525659Z test_duplicate_stats_and_negative_timing_invalid (test_audit.IntegrityTests.test_duplicate_stats_and_negative_timing_invalid) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5537215Z test_full_metrics_and_exact_ratio (test_audit.IntegrityTests.test_full_metrics_and_exact_ratio) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5547325Z test_incomplete_recording_not_filled (test_audit.IntegrityTests.test_incomplete_recording_not_filled) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5558797Z test_max75_is_rejection_not_rewritten_value (test_audit.IntegrityTests.test_max75_is_rejection_not_rewritten_value) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5568401Z test_missing_tick_retains_physical_lower_bound (test_audit.IntegrityTests.test_missing_tick_retains_physical_lower_bound) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5579608Z test_skip_is_retained (test_audit.IntegrityTests.test_skip_is_retained) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5596603Z test_unknown_participant_and_bullet_invalid (test_audit.IntegrityTests.test_unknown_participant_and_bullet_invalid) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5759473Z test_byte_overlimit_stale_preflight_and_original_decision_rewrite (test_audit.StoragePositiveTests.test_byte_overlimit_stale_preflight_and_original_decision_rewrite) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5793438Z test_exact_registered_boundaries_and_separate_companion (test_audit.StoragePositiveTests.test_exact_registered_boundaries_and_separate_companion) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5886718Z test_missing_or_incomplete_companion_never_passes (test_audit.StoragePositiveTests.test_missing_or_incomplete_companion_never_passes) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5894908Z test_corrupt_zip_crc_rejected (test_audit.StreamingArchiveTests.test_corrupt_zip_crc_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5928545Z test_duplicate_alias_absolute_drive_symlink_and_digest_rejected (test_audit.StreamingArchiveTests.test_duplicate_alias_absolute_drive_symlink_and_digest_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5943203Z test_streaming_replay_without_materializing_recording (test_audit.StreamingArchiveTests.test_streaming_replay_without_materializing_recording) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5947838Z test_bad_original_digest_rejected (test_audit.UpstreamCustodyTests.test_bad_original_digest_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5950667Z test_confirmation_without_screen_never_passes (test_audit.UpstreamCustodyTests.test_confirmation_without_screen_never_passes) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5957863Z test_noncontiguous_or_changed_part_rejected (test_audit.UpstreamCustodyTests.test_noncontiguous_or_changed_part_rejected) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5963107Z test_seekable_ranges (test_audit.UpstreamCustodyTests.test_seekable_ranges) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5963721Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5964026Z ----------------------------------------------------------------------
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5964491Z Ran 48 tests in 0.281s
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5964760Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.5964926Z OK
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8182471Z test_case_alias_ambiguity_never_selects_a_claim (test_image_probe.ImageProbePureTests.test_case_alias_ambiguity_never_selects_a_claim) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8187029Z test_collect_phase_contract_rejects_bad_scope_without_reading_sources (test_image_probe.ImageProbePureTests.test_collect_phase_contract_rejects_bad_scope_without_reading_sources) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8245168Z test_complete_mocked_phase_keeps_conflicts_and_never_grants_runtime_acceptance (test_image_probe.ImageProbePureTests.test_complete_mocked_phase_keeps_conflicts_and_never_grants_runtime_acceptance) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8249887Z test_discovery_failure_cap_and_deadline_are_not_global_absence_claims (test_image_probe.ImageProbePureTests.test_discovery_failure_cap_and_deadline_are_not_global_absence_claims) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8252314Z test_duplicate_json_keys_never_select_a_claim (test_image_probe.ImageProbePureTests.test_duplicate_json_keys_never_select_a_claim) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8254584Z test_environment_duplicates_malformed_and_expansion_have_no_fallback (test_image_probe.ImageProbePureTests.test_environment_duplicates_malformed_and_expansion_have_no_fallback) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8256878Z test_environment_values_are_literal_and_sources_remain_separate (test_image_probe.ImageProbePureTests.test_environment_values_are_literal_and_sources_remain_separate) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8259019Z test_existing_output_cannot_be_mixed_or_paths_escape (test_image_probe.ImageProbePureTests.test_existing_output_cannot_be_mixed_or_paths_escape) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8263354Z test_group_and_detail_limits_keep_diagnostic_state (test_image_probe.ImageProbePureTests.test_group_and_detail_limits_keep_diagnostic_state) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8269200Z test_missing_loop_and_nonregular_path_errors_are_explicit (test_image_probe.ImageProbePureTests.test_missing_loop_and_nonregular_path_errors_are_explicit) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8276875Z test_no_root_guessed_when_executable_layout_is_not_observed (test_image_probe.ImageProbePureTests.test_no_root_guessed_when_executable_layout_is_not_observed) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8285637Z test_only_allowed_resolved_metadata_paths_are_read (test_image_probe.ImageProbePureTests.test_only_allowed_resolved_metadata_paths_are_read) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8321015Z test_oversized_metadata_retains_prefix_not_a_whole_hash_claim (test_image_probe.ImageProbePureTests.test_oversized_metadata_retains_prefix_not_a_whole_hash_claim) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8328894Z test_raw_bytes_stat_and_hash_are_retained_before_any_parse (test_image_probe.ImageProbePureTests.test_raw_bytes_stat_and_hash_are_retained_before_any_parse) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8346068Z test_runner_roots_derive_only_from_named_observed_executables (test_image_probe.ImageProbePureTests.test_runner_roots_derive_only_from_named_observed_executables) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8347654Z test_setup_info_case_binding_and_explicit_utf8_bom (test_image_probe.ImageProbePureTests.test_setup_info_case_binding_and_explicit_utf8_bom) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8348967Z test_source_backed_array_and_full_detail (test_image_probe.ImageProbePureTests.test_source_backed_array_and_full_detail) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8556212Z test_two_phase_payload_and_zip_overhead_budget_are_bounded (test_image_probe.ImageProbePureTests.test_two_phase_payload_and_zip_overhead_budget_are_bounded) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8558718Z test_two_runner_image_groups_or_duplicate_version_are_ambiguous (test_image_probe.ImageProbePureTests.test_two_runner_image_groups_or_duplicate_version_are_ambiguous) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8563231Z test_workflow_inline_source_is_byte_identical_and_order_is_frozen (test_image_probe.ImageProbePureTests.test_workflow_inline_source_is_byte_identical_and_order_is_frozen) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8565497Z test_wrong_shapes_nonfinite_bad_utf8_and_missing_fields_are_reported (test_image_probe.ImageProbePureTests.test_wrong_shapes_nonfinite_bad_utf8_and_missing_fields_are_reported) ... ok
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8566671Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8567107Z ----------------------------------------------------------------------
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8567799Z Ran 21 tests in 0.040s
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8568029Z 
+KeelBrace Java 17 bootstrap (zero games)	Validate new controller and independent audit fixtures on pinned Python (zero games)	2026-11-05T00:20:00.8568143Z OK
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	﻿2026-11-05T00:20:00.8752397Z ##[group]Run mkdir -p build/keel-brace-bootstrap
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8752891Z ^[[36;1mmkdir -p build/keel-brace-bootstrap^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8753231Z ^[[36;1mpython - <<'PYTHON'^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8753551Z ^[[36;1mimport hashlib, json, os, pathlib, subprocess^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8753903Z ^[[36;1mroot = pathlib.Path('.')^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8754232Z ^[[36;1mout = root / 'build/keel-brace-bootstrap'^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8755687Z ^[[36;1mfiles = subprocess.check_output(['git', 'ls-files', '-z', 'experiments/KeelBrace', 'experiments/Keel/Keel.jar', 'experiments/Keel/bot/Keel.json', 'benchmarks/keel-brace-v1/baseline.json', 'benchmarks/keel-brace-v1/registration.json', 'benchmarks/keel-brace-v1/runtime-pins.json', '.github/workflows/keel-brace-build.yml', 'tools/verify_jar.py']).decode().split('\0')^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8757399Z ^[[36;1mhashes = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in files if p and pathlib.Path(p).is_file()}^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8758251Z ^[[36;1mjars = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.glob('*.jar')}^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8761283Z ^[[36;1mproof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'guestImageOSClaim': os.environ.get('ImageOS'), 'guestImageVersionClaim': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8764534Z ^[[36;1m(out/'provenance.json').write_text(json.dumps(proof, indent=2)+'\n')^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8764954Z ^[[36;1mPYTHON^[[0m
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8813754Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8814133Z env:
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8814456Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8814985Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8815454Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8815785Z   GRADLE_USER_HOME: /home/runner/.gradle
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8816097Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8816418Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8816882Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8817389Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8817734Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8818099Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8818560Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8819025Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8819422Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8819831Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8820239Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+KeelBrace Java 17 bootstrap (zero games)	Preserve source, runtime, JAR and test provenance even on a failed build	2026-11-05T00:20:00.8820593Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	﻿2026-11-05T00:20:00.9876237Z ##[group]Run actions/upload-artifact@v4
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9876593Z with:
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9876856Z   name: keel-brace-zero-game-build-41940424263
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9877519Z   path: build/keel-brace-bootstrap/
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	experiments/KeelBrace/build/test-results/
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	experiments/KeelBrace/build/reports/tests/
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9878125Z   if-no-files-found: error
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9878387Z   retention-days: 90
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9878630Z   compression-level: 6
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9878867Z   overwrite: false
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9879106Z   include-hidden-files: false
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9879359Z env:
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9879682Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9880200Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9880642Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9880968Z   GRADLE_USER_HOME: /home/runner/.gradle
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9881279Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9881784Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9882265Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9882785Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9883135Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9883503Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9883954Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9884411Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9884814Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9885226Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9885652Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:00.9886015Z ##[endgroup]
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1569423Z (node:3081) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1571056Z (Use `node --trace-deprecation ...` to show where the warning was created)
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1747735Z Multiple search paths detected. Calculating the least common ancestor of all paths
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1749604Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1750386Z With the provided path, there will be 20 files uploaded
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1751357Z Artifact name is valid!
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.1752255Z Root directory input is valid!
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.3850693Z Beginning upload of artifact content to blob storage
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.5057343Z (node:3081) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.5893513Z Uploaded bytes 2192955
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.6042242Z Finished uploading artifact content to blob storage!
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.6043608Z SHA256 digest of uploaded artifact zip is 360832e847327c2b77bea8ada15fd5d56fe2e730029fcf8b51b21a849bd4d45b
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:01.6045681Z Finalizing artifact upload
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:02.0196976Z Artifact keel-brace-zero-game-build-41940424263.zip successfully finalized. Artifact ID 13376591503
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:02.0198348Z Artifact keel-brace-zero-game-build-41940424263 has been successfully uploaded! Final size is 2192955 bytes. Artifact ID is 13376591503
+KeelBrace Java 17 bootstrap (zero games)	Upload actual bootstrap outputs and original semantic test reports	2026-11-05T00:20:02.0204111Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41940424263/artifacts/13376591503
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-python@v5	﻿2026-11-05T00:20:02.0414997Z Post job cleanup.
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-python@v5	2026-11-05T00:20:02.1603938Z (node:3097) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-python@v5	2026-11-05T00:20:02.1604837Z (Use `node --trace-deprecation ...` to show where the warning was created)
+KeelBrace Java 17 bootstrap (zero games)	Post Run gradle/actions/setup-gradle@v4	﻿2026-11-05T00:20:02.1789386Z Post job cleanup.
+KeelBrace Java 17 bootstrap (zero games)	Post Run gradle/actions/setup-gradle@v4	2026-11-05T00:20:02.4408666Z In post-action step
+KeelBrace Java 17 bootstrap (zero games)	Post Run gradle/actions/setup-gradle@v4	2026-11-05T00:20:02.4421923Z Cache is read-only: will not save state for use in subsequent builds.
+KeelBrace Java 17 bootstrap (zero games)	Post Run gradle/actions/setup-gradle@v4	2026-11-05T00:20:02.4428727Z Generating Job Summary
+KeelBrace Java 17 bootstrap (zero games)	Post Run gradle/actions/setup-gradle@v4	2026-11-05T00:20:02.4447764Z Completed post-action step
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-java@v4	﻿2026-11-05T00:20:02.4645001Z Post job cleanup.
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-java@v4	2026-11-05T00:20:02.6102234Z (node:3117) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/setup-java@v4	2026-11-05T00:20:02.6103738Z (Use `node --trace-deprecation ...` to show where the warning was created)
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	﻿2026-11-05T00:20:02.6367968Z Post job cleanup.
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7339372Z [command]/usr/bin/git version
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7394221Z git version 2.56.0
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7438996Z Temporarily overriding HOME='/home/runner/work/_temp/bf593c0b-34cf-4e42-819d-92938e8c006b' before making global git config changes
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7440400Z Adding repository directory to the temporary git global config as a safe directory
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7446524Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7494589Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7538303Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7861179Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.7915973Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.8245866Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+KeelBrace Java 17 bootstrap (zero games)	Post Run actions/checkout@v4	2026-11-05T00:20:02.8284916Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+KeelBrace Java 17 bootstrap (zero games)	Complete job	﻿2026-11-05T00:20:02.8738088Z Cleaning up orphan processes
+KeelBrace Java 17 bootstrap (zero games)	Complete job	2026-11-05T00:20:02.9112629Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
