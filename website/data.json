@@ -1,0 +1,232 @@
+{
+  "title": "Robocode Elimination Cup",
+  "status": "Preparation",
+  "updated": "Not started",
+  "sourceCommit": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
+  "host": "minimind",
+  "format": "4 Swiss rounds \u2192 top 8 double elimination",
+  "practiceSeed": 202611040,
+  "profiles": [
+    {
+      "name": "AISurvivor",
+      "version": "1.2.1",
+      "kind": "Home",
+      "tagline": "Hybrid controller",
+      "description": "Combines a duel controller with motion targeting and a DQN fallback for melee. This event tests its 1v1 behavior.",
+      "gun": "Motion-aware targeting",
+      "movement": "Hybrid / DQN",
+      "runtime": "Java 17",
+      "slug": "aisurvivor",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/AISurvivor"
+    },
+    {
+      "name": "Aegis",
+      "version": "0.1.0",
+      "kind": "Experimental",
+      "tagline": "The interceptor",
+      "description": "Infers enemy shots from legal scan energy drops and uses lateral movement with low-power interceptor bullets.",
+      "gun": "Low-power counterfire",
+      "movement": "Lateral shielding",
+      "runtime": "Java 17",
+      "slug": "aegis",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/Aegis"
+    },
+    {
+      "name": "Breakwater",
+      "version": "0.3.0",
+      "kind": "Experimental",
+      "tagline": "Mobile counterfire",
+      "description": "Combines wave-aware orbiting with selective fire based on predicted bullet envelopes.",
+      "gun": "Envelope-based selective fire",
+      "movement": "Wave-aware orbiting",
+      "runtime": "Java 17",
+      "slug": "breakwater",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/Breakwater"
+    },
+    {
+      "name": "DiamondChallenger",
+      "version": "0.6.1",
+      "kind": "Experimental",
+      "tagline": "The wave learner",
+      "description": "An experimental duelist with inferred-wave surfing and bounded context-conditioned wave-passage targeting.",
+      "gun": "Context-conditioned targeting",
+      "movement": "Inferred-wave surfing",
+      "runtime": "Java 17",
+      "slug": "diamondchallenger",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/DiamondChallenger"
+    },
+    {
+      "name": "Keel",
+      "version": "0.1.0",
+      "kind": "Experimental",
+      "tagline": "Precision under pressure",
+      "description": "Models engine movement for precise wave surfing, including instant-stop choices, and uses nearest-neighbor guess-factor guns.",
+      "gun": "KNN guess-factor guns",
+      "movement": "Precise wave surfing",
+      "runtime": "Java 17",
+      "slug": "keel",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/Keel"
+    },
+    {
+      "name": "KeelHelm",
+      "version": "0.1.0",
+      "kind": "Experimental",
+      "tagline": "A different heading",
+      "description": "A Keel fork whose stopped first-wave prediction retains the body rotation requested by its orbit policy.",
+      "gun": "Keel gun family",
+      "movement": "Rotation-aware stopped rollout",
+      "runtime": "Java 17",
+      "slug": "keelhelm",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/KeelHelm"
+    },
+    {
+      "name": "Meridian",
+      "version": "0.6.0",
+      "kind": "Experimental",
+      "tagline": "Time the arrival",
+      "description": "Uses wall-aware orbiting, arrival-time defense and a virtual gun trained from legal scans.",
+      "gun": "Scan-trained virtual gun",
+      "movement": "Arrival-time orbit defense",
+      "runtime": "Java 17",
+      "slug": "meridian",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/Meridian"
+    },
+    {
+      "name": "Prism",
+      "version": "0.2.0",
+      "kind": "Experimental",
+      "tagline": "Multiple perspectives",
+      "description": "An independent experimental bot with contextual nearest-neighbor guns, a virtual selector, decoupled radar and two-wave surfing with bullet shadows.",
+      "gun": "Contextual virtual guns",
+      "movement": "Two-wave surfing / shadows",
+      "runtime": "Java 17",
+      "slug": "prism",
+      "source": "https://github.com/stephanelee/robocode/tree/1f6e6a38582838fe891330a0b3e7a7d9f1668279/experiments/Prism"
+    },
+    {
+      "name": "Retcon",
+      "version": "0.2.0",
+      "kind": "Guest",
+      "tagline": "The hard reference",
+      "description": "A research bot by Flemming N. Larsen combining wave surfing, orbiting and a virtual gun that chooses between linear and head-on aim. Its unchanged source launcher runs with JDK 25.",
+      "gun": "Virtual linear / head-on selector",
+      "movement": "Wave surfing / orbiting",
+      "runtime": "Java 25",
+      "slug": "retcon",
+      "source": "https://github.com/robocode-dev/rumble-bots/tree/28981c7a469ac064194b41001cd7183ec5ecf189"
+    },
+    {
+      "name": "Diamond Port",
+      "version": "1.8.28",
+      "kind": "Guest",
+      "tagline": "The adapted classic",
+      "description": "A native Python Tank Royale adaptation of Voidious\u2019s Diamond. This entry is the pinned port, with its own behavior and runtime.",
+      "gun": "Diamond-family learning gun",
+      "movement": "Diamond-family movement",
+      "runtime": "Python / API 1.3.1",
+      "slug": "diamond-port",
+      "source": "https://github.com/fduch-stranger/robocode-bot/tree/67b68c22e41c18281a3fce9ef638e3c23a0b47cf"
+    },
+    {
+      "name": "Adaptive Prime",
+      "version": "1.0",
+      "kind": "Guest",
+      "tagline": "The adaptive guest",
+      "description": "An adaptive composite bot combining virtual guns, enemy-fire prediction, wave-aware movement, bullet shadows and minimum-risk routing. This guest uses the unchanged pinned native Python source.",
+      "gun": "Virtual-gun system / fire prediction",
+      "movement": "Wave-aware / bullet shadows",
+      "runtime": "Python / API 1.3.1",
+      "slug": "adaptive-prime",
+      "source": "https://github.com/fduch-stranger/robocode-bot/tree/67b68c22e41c18281a3fce9ef638e3c23a0b47cf"
+    },
+    {
+      "name": "Walls",
+      "version": "1.0",
+      "kind": "Official sample",
+      "tagline": "Own the perimeter",
+      "description": "Travels around the outer edge of the arena while keeping its gun facing inward.",
+      "gun": "Inward-facing fire",
+      "movement": "Perimeter movement",
+      "runtime": "Java source",
+      "slug": "walls",
+      "source": "https://github.com/robocode-dev/tank-royale/releases/tag/v1.4.0"
+    },
+    {
+      "name": "SpinBot",
+      "version": "1.0",
+      "kind": "Official sample",
+      "tagline": "Keep it moving",
+      "description": "Moves in circles at a capped speed and fires high-power shots when it detects an opponent.",
+      "gun": "High-power scan fire",
+      "movement": "Continuous circular motion",
+      "runtime": "Java source",
+      "slug": "spinbot",
+      "source": "https://github.com/robocode-dev/tank-royale/releases/tag/v1.4.0"
+    },
+    {
+      "name": "RamFire",
+      "version": "1.0",
+      "kind": "Official sample",
+      "tagline": "Close the distance",
+      "description": "Drives toward opponents to ram them and fires when it makes contact. Official result name: Ram Fire.",
+      "gun": "Contact-triggered fire",
+      "movement": "Direct pursuit / ramming",
+      "runtime": "Java source",
+      "slug": "ramfire",
+      "source": "https://github.com/robocode-dev/tank-royale/releases/tag/v1.4.0"
+    }
+  ],
+  "practice": [
+    {
+      "a": "AISurvivor",
+      "b": "DiamondChallenger",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Walls",
+      "b": "RamFire",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Breakwater",
+      "b": "Aegis",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Adaptive Prime",
+      "b": "SpinBot",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Keel",
+      "b": "Diamond Port",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Retcon",
+      "b": "KeelHelm",
+      "status": "scheduled",
+      "games": []
+    },
+    {
+      "a": "Meridian",
+      "b": "Prism",
+      "status": "scheduled",
+      "games": []
+    }
+  ],
+  "rounds": [],
+  "results": [],
+  "completedGames": 0,
+  "plannedPracticeGames": 14,
+  "notes": [
+    "Practice is unranked.",
+    "This file is a clean template; published event results are on the live Site."
+  ],
+  "standings": []
+}
