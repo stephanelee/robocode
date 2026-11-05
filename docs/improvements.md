@@ -358,3 +358,11 @@ Decision reject: melee 35.31% → 29.84% (-5.48pp), policy exposure 1209. Exactl
 ## 2026-11-05 — KeelHelm next 3: shot-obstruction
 
 Decision reject: melee 32.25% → 28.84% (-3.41pp), policy exposure 19. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1650 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-3-shot-obstruction-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next 4: duel-transfer
+
+Decision reject: melee 32.62% → 25.74% (-6.87pp), policy exposure 5622. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1910 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-4-duel-transfer-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next program complete; accepted default preserved
+
+All four candidates reject under fixed gates. Exactly 80 valid games / 1,040 rounds on minimind, zero own skips, all independent raw/resource/source/cleanup checks pass. Project accounting: 1,910 completed rounds plus 3 historical partial rounds. Restore all 40 normal-project files from accepted published 0.2.1 source/JAR; preserve all 44 measured 0.4 project files separately as evidence outside eligible entrants. Both Java 17 rebuilds exactly match recorded JAR hashes;23 accepted-project and 39 rejected-project tests plus 16 Python checks pass. Packaging/fixtures consumed zero games; prior timing cause remains unresolved. [Final decisions/full reports](improvements/keelhelm-next-summary.md), [post-study validation](../benchmarks/keelhelm-next/post-study-validation.json), [PR126](https://github.com/stephanelee/robocode/pull/126).

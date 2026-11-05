@@ -34,17 +34,6 @@ final class Track {
         latestTurn = Math.max(latestTurn, t);
     }
 
-    int observations() { int n = 0; for (int t : stamp) if (t >= 0) n++; return n; }
-
-    void copyFrom(Track other) {
-        System.arraycopy(other.poses, 0, poses, 0, CAP);
-        System.arraycopy(other.stamp, 0, stamp, 0, CAP);
-        System.arraycopy(other.lastDirChange, 0, lastDirChange, 0, CAP);
-        System.arraycopy(other.lastDecel, 0, lastDecel, 0, CAP);
-        System.arraycopy(other.latDirAt, 0, latDirAt, 0, CAP);
-        latestTurn = other.latestTurn; dirChange = other.dirChange; decel = other.decel; lastSign = other.lastSign;
-    }
-
     Phys.Pose get(int t) {
         if (t < 0) return null;
         int k = t & (CAP - 1);

@@ -50,8 +50,8 @@ def schedule():
                               seed=2026110521+slot, order=['KeelHelm', name]))
     return games
 
-def collect(source, evidence, pins, java, python, *, control_jar_sha=None, schedule_rows=None, extra_paths=()):
-    candidate = ROOT/'experiments/KeelHelm'
+def collect(source, evidence, pins, java, python, *, control_jar_sha=None, schedule_rows=None, extra_paths=(), candidate_project=None):
+    candidate = Path(candidate_project).resolve() if candidate_project is not None else ROOT/'experiments/KeelHelm'
     control = evidence/'control-source'
     paths = files(candidate) + files(control) + [pins/'entry-manifests.json',pins/'shared-inputs.json']
     paths += list(extra_paths) + [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
@@ -104,7 +104,7 @@ def collect(source, evidence, pins, java, python, *, control_jar_sha=None, sched
     if java_version != shared['javaVersion'] or python_runtime != shared['pythonRuntime']:
         raise ValueError('Tournament Java/Python version/package inventory changed')
     identities = {name:json.loads(next(base.glob('*.json')).read_text()) for name, base in bases.items()}
-    return dict(source=str(source),evidence=str(evidence),files={str(p):sha(p) for p in sorted(set(paths))}, bases={n:str(p) for n,p in bases.items()},
+    return dict(candidateProject=str(candidate),source=str(source),evidence=str(evidence),files={str(p):sha(p) for p in sorted(set(paths))}, bases={n:str(p) for n,p in bases.items()},
                 identities={n:{k:v[k] for k in ('name','version')} for n,v in identities.items()},
                 java=str(java), python=str(python), schedule=schedule() if schedule_rows is None else schedule_rows, parent=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT,text=True).strip(),
                 runtime=dict(host=platform.node(), platform=platform.platform(), python=sys.version,
@@ -253,7 +253,7 @@ def stage_bots(game, source, evidence, freeze, run):
     botdirs=[]; identities=[]
     for name in game['order']:
         if name == 'KeelHelm':
-            project = ROOT/'experiments/KeelHelm' if game['arm']=='candidate' else evidence/'control-source'
+            project = Path(freeze.get('candidateProject',str(ROOT/'experiments/KeelHelm'))) if game['arm']=='candidate' else evidence/'control-source'
             base=project/'bot'; folder=name
         else:
             base=Path(freeze['bases'][name]); folder=name if name in ('Keel','Prism') else base.name

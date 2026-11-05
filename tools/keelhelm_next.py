@@ -18,7 +18,7 @@ def prepare(a):
  assert previous['nextAcceptedMask']==a.control_mask
  assert a.control_mask&bit==0
  assert not a.control_mask & 7,'Rejected or invalid earlier policies must stay off'
- control=a.control.resolve();candidate=core.ROOT/'experiments/KeelHelm'
+ control=a.control.resolve();candidate=a.candidate_project.resolve()
  controlsha=core.sha(control/'KeelHelm.jar');assert previous['nextAcceptedJarSHA256']==controlsha
  feature_sha=core.sha(candidate/'KeelHelm.jar')
  manifest={str(p.relative_to(candidate)):core.sha(p)for p in core.files(candidate)}
@@ -33,13 +33,14 @@ def prepare(a):
  config=dict(study='next-serial-v1',featureJarSHA256=feature_sha,featureProjectManifestSHA256=manifest_sha,stage=a.stage,name=name,newBit=bit,controlMask=a.control_mask,candidateMask=a.control_mask|bit,concurrency=1,loadPlan='next-serial',controlJarSHA256=controlsha,candidateJarSHA256=core.sha(candidate/'KeelHelm.jar'),previousAuditSHA256=core.sha(a.previous_audit))
  core.save(out/'registration.json',config)
  extras=[Path(__file__),Path(legacy.__file__),core.ROOT/'tools/keelhelm_resources.py',core.ROOT/'docs/improvements/keelhelm-next-protocol.md',core.ROOT/'docs/improvements/keelhelm-next-implementations.md',core.ROOT/'tools/test_keelhelm_next.py',out/'registration.json',out/'previous-outcome-review.json',a.timing_audit,core.ROOT/'docs/improvements/keelhelm-timing-d2-results.md']
- f=core.collect(a.source.resolve(),out,a.pins.resolve(),a.java.absolute(),a.python.absolute(),control_jar_sha=controlsha,schedule_rows=games,extra_paths=extras);f['stageConfig']=config;core.save(out/'freeze.json',f)
+ f=core.collect(a.source.resolve(),out,a.pins.resolve(),a.java.absolute(),a.python.absolute(),control_jar_sha=controlsha,schedule_rows=games,extra_paths=extras,candidate_project=candidate);f['stageConfig']=config;core.save(out/'freeze.json',f)
  for g in games:
   p=out/'preflight'/g['id'];p.mkdir(parents=True);dirs,ids=core.stage_bots(g,a.source.resolve(),out,f,p);assert len(set(dirs))==len(ids)==len(g['order'])
  print('PREPARED',core.sha(out/'freeze.json'),flush=True)
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha');p.add_argument('--stage',type=int,choices=range(1,5));p.add_argument('--control-mask',type=int,default=0)
  for n in ('control','previous-audit','timing-audit','pins','java','python'):p.add_argument('--'+n,type=Path)
+ p.add_argument('--candidate-project',type=Path,default=core.ROOT/'benchmarks/keelhelm-next/candidate-project')
  a=p.parse_args()
  if a.prepare:prepare(a)
  else:legacy.summary=summary;legacy.run(a)
