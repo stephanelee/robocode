@@ -1,4 +1,5 @@
 import copy
+import gzip
 import json
 from pathlib import Path
 import tempfile
@@ -60,7 +61,7 @@ class TournamentRulesTest(unittest.TestCase):
     def test_public_export_drops_artifacts_and_unexpected_result_fields(self):
         pair = dict(a='Keel', b='Retcon', status='complete', modelPath='private',
                     games=[dict(game=1, participants=['Keel', 'Retcon'], status='complete',
-                                directory='private', retconStats={'private': 'telemetry'},
+                                directory='private', recording={'path':'private replay'}, retconStats={'private': 'telemetry'},
                                 official=dict(numberOfRounds=20, private='secret', results=[dict(name='Keel', totalScore=100, private='secret')]))])
         public = json.dumps(tournament.public_pair(pair))
         for private in ['modelPath', 'directory', 'retconStats', 'private', 'secret']:
@@ -119,6 +120,28 @@ class TournamentRulesTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 tournament.update_site(root, report)
             self.assertEqual(before, path.read_bytes())
+
+    def test_recording_requires_one_valid_gzip_and_records_its_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            recordings = root / 'recordings'
+            recordings.mkdir()
+            replay = recordings / 'game-fixture.battle.gz'
+            with gzip.open(replay, 'wb') as stream:
+                stream.write(b'{"fixture":true}\n')
+            result = tournament.collect_recording(recordings, root)
+            self.assertEqual('recordings/game-fixture.battle.gz', result['path'])
+            self.assertEqual(tournament.digest(replay), result['sha256'])
+            self.assertEqual(replay.stat().st_size, result['sizeBytes'])
+            replay.write_bytes(b'not gzip')
+            with self.assertRaises(OSError):
+                tournament.collect_recording(recordings, root)
+
+    def test_missing_recording_is_explicit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaises(ValueError):
+                tournament.collect_recording(root, root)
 
     def test_known_replay_exception_requires_all_and_only_known_failures(self):
         with tempfile.TemporaryDirectory() as directory:

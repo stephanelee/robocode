@@ -35,7 +35,7 @@ python3 tools/prepare_tournament.py \
   --python "$CUP_PYTHON/bin/python"
 ```
 
-Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It also writes prepared input snapshots. Every stage compares entry bytes, shared sample libraries, the battle harness, imported Python helpers and opponent locks, cached Retcon API and Java/Python runtime snapshots against preparation and the immutable first-stage inputs; a change stops before any game and never overwrites the original manifest. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
+Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It also writes prepared input snapshots. Every stage compares entry bytes, shared sample libraries, the battle harness, cached Retcon API and Java/Python runtime snapshots against preparation and the immutable first-stage inputs; a change stops before any game and never overwrites the original manifest. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
 
 On this Mac, five AISurvivor exact replay tests differed at tiny floating-point values; 83 tests passed and one was skipped. The first observed gun-turn value was `2.0869864576583836` versus `2.086986457658327`. The underlying platform/JDK cause has not been independently established. A normal preparation stops on that failure. `--allow-known-macos-replay-differences` acknowledges only the exact five recorded test cases/signature on macOS ARM64 and retains their failures. It never labels the tests as passed, permits unrelated failures, or relaxes JAR parity. All seven experimental bot build/test suites passed in the recorded run.
 
@@ -77,4 +77,42 @@ python3 -m py_compile tools/tournament.py tools/prepare_tournament.py
 python3 -m http.server 8766 --directory website
 ```
 
-The ten unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+The twelve unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion recording integrity and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+
+## Replay recordings for future games
+
+At the user’s request, future stages record by default through the new `tools/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official 1.4.0 API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
+
+Each completed game retains `pNN-gN/recordings/game-*.battle.gz`, with byte size and SHA256 in its private game record. The wrapper checks gzip integrity. In the Tank Royale desktop GUI, select **Battle → Replay from File** and open that file. These are replay data files, not videos. Full record-frame semantics and visual playback must be verified on an actual recorded game; no extra battle was run merely to test recording. The already completed practice and Swiss rounds 1–3 did not record visual replays and are not rerun.
+
+`--no-recordings` explicitly preserves the earlier behavior. A continuation must keep the same recording policy as its original stage. Recording harness source gets an immutable input snapshot; new preparations also pin it. Recordings remain local with the full game artifacts and are excluded from public score exports.
+
+Older prepared editions lacking `prepared-recording-harness.json` must retain `--no-recordings` or use a fresh preparation to adopt recording. The current event predates those prepared files and uses its independently reviewed legacy snapshot path. Browser layout QA is unavailable in the current Work settings; the profile table was checked against the supplied mobile screenshot and JavaScript syntax.
+
+## Render a replay as a shareable video
+
+Keep video dependencies separate from the frozen bot Python environment. Install FFmpeg from its official distribution or Homebrew and use a separate Python venv:
+
+```sh
+python3.12 -m venv /private/tmp/robocode-video-python
+/private/tmp/robocode-video-python/bin/pip install -r tools/tournament-video-requirements.txt
+/private/tmp/robocode-video-python/bin/python tools/render_tournament_replay.py \
+  --recording /absolute/path/to/game.battle.gz \
+  --official /absolute/path/to/battle.json \
+  --swiss-round 4 --game 1 \
+  --output /absolute/path/to/new-replay.mp4
+```
+
+The renderer starts no battles. It produces a silent H.264/yuv420p MP4, a poster, a chapter VTT and a local provenance JSON. By default it samples recorded positions at 60 simulation turns/second, with 20 video frames/second. `--turns-per-second` accepts 20, 40, 60, 120 or 240. It preserves all 20 rounds and checks final scores against the official result when supplied. Recorded round-end arrays are already cumulative; it replaces the score totals rather than summing them. Energy bars follow each rendered frame. This is a data-rendered replay rather than a GUI screen capture. It refuses to overwrite a completed output.
+
+## Round 4 playlist and slower playback
+
+All 14 Round 4 games are available through the game selector. **Play all Round 4 games** starts at the first game and advances in draw order through all 14 games. Selecting another game stops automatic advancement. **Stop after this game** keeps the current game playing. Round-jump controls and MP4 downloads apply to the selected game.
+
+The player defaults to **0.25×**, equivalent to 15 simulation turns/second for these 60-turn/second files. The 0.125× option slows it further to 7.5 turns/second. Other choices are 0.5×, 1×, 2× and 4×. The selected speed persists across game transitions. The original faster movies and raw recordings are retained. Downloaded MP4s play at their encoded speed unless adjusted in the external player.
+
+Each movie loads on demand into a browser Blob so seeking does not depend on the host’s byte-range support. Only the selected game is fetched; changing games cancels an unfinished load and releases the previous Blob. Play-all attempts to start the next game automatically. Browsers that require a fresh gesture show **Tap to play replay** and retain the sequence. Browser playback/layout QA is unavailable in the current Work settings; JavaScript syntax and player state transitions were checked without a browser.
+
+To reproduce the playlist, iterate each pairing's `games` in `benchmarks/tournament-2026-11-04/swiss-4.json`. For each game, render its `recording.path` beneath that benchmark directory and pass its `directory/battle.json` as `--official`, `--game` as 1 or 2, and `--swiss-round 4`. Use a distinct output filename per game. The local JSON report supplies the source/video SHA256s, final scores, duration and round chapter timestamps. Public `data.json` lists these movies in `videos`; `video` retains the first movie for compatibility. Each entry supplies `title`, `label`, `mp4`, `poster`, `chaptersFile`, `chapters`, `sizeBytes` and `turnsPerSecond`.
+
+Only user-approved rendered videos, posters and chapters are published. Raw `.battle.gz` files, models and private logs remain local. All 14 recordings passed gzip and game/round-boundary checks. Video reports check every final score against its original official result, and codec metadata is checked for each generated MP4. No games were rerun, and no competitive result changed for this presentation update.

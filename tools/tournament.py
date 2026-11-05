@@ -1,7 +1,7 @@
 """Bounded local tournament execution over a frozen, prebuilt source snapshot.
 Official pairing scores are sums over two cold 20-round games. Never reruns a game.
 """
-import argparse, datetime, hashlib, json, os, random, shutil, subprocess, sys, time, platform, zipfile
+import argparse, datetime, hashlib, json, os, random, shutil, subprocess, sys, time, platform, zipfile, gzip
 from functools import lru_cache
 from pathlib import Path
 NAMES = ['AISurvivor', 'Aegis', 'Breakwater', 'DiamondChallenger', 'Keel', 'KeelHelm', 'Meridian', 'Prism', 'Retcon', 'Diamond Port', 'Adaptive Prime', 'Walls', 'SpinBot', 'RamFire']
@@ -124,6 +124,21 @@ def collect_shared_inputs(source, java, python):
     python_runtime = json.loads(subprocess.check_output([str(python), '-c', 'import sys,json,importlib.metadata as m; print(json.dumps(dict(version=sys.version,packages=sorted((d.metadata["Name"],d.version) for d in m.distributions()))))'], text=True))
     return dict(files=files, javaSHA256=digest(java), javaVersion=subprocess.check_output([str(java), '-version'], stderr=subprocess.STDOUT, text=True), pythonSHA256=digest(python), pythonRuntime=python_runtime)
 
+def recording_harness_inputs(harness):
+    return dict(sourceSHA256=digest(harness), policy='Observer recording only; original battle settings and bot sources unchanged')
+
+def collect_recording(directory, output):
+    files = list(directory.glob('*.battle.gz'))
+    if len(files) != 1 or files[0].stat().st_size == 0:
+        raise ValueError('Expected one nonempty .battle.gz recording')
+    # Read to EOF to check gzip framing/CRC without loading the whole replay into RAM.
+    with gzip.open(files[0], 'rb') as stream:
+        while stream.read(1024 * 1024):
+            pass
+    with files[0].open('rb') as stream:
+        sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+    return dict(path=files[0].relative_to(output).as_posix(), sha256=sha, sizeBytes=files[0].stat().st_size)
+
 def main(args):
     R = args.source.resolve()
     O = args.output.resolve()
@@ -166,6 +181,11 @@ def main(args):
     if digest(cache / 'retcon-api' / ('robocode-tankroyale-bot-api-' + dependency['version'] + '.jar')) != dependency['sha256']:
         raise ValueError('Retcon API pin mismatch')
     freeze_manifest(O / 'shared-inputs.json', collect_shared_inputs(R, java, args.python.absolute()), O / 'prepared-shared-inputs.json' if (O / 'prepared-entry-manifests.json').exists() else None)
+    recording_enabled = not args.no_recordings
+    harness = Path(__file__).resolve().with_name('TournamentBattle.java') if recording_enabled else R / 'tools/BenchmarkBattle.java'
+    if recording_enabled:
+        prepared_recording = O / 'prepared-recording-harness.json' if (O / 'prepared-entry-manifests.json').exists() else None
+        freeze_manifest(O / 'recording-harness.json', recording_harness_inputs(harness), prepared_recording)
     number = int(args.stage.split('-')[1]) if args.stage.startswith('swiss-') else 0
     proposed, pairing = (draw(202611040), dict(algorithm='seeded practice draw', seed=202611040)) if not number else swiss_draw(O, number)
     seed = pairing.get('seed')
@@ -183,11 +203,15 @@ def main(args):
                     continue
                 if (O / args.stage / f'p{pi:02d}-g{game}').exists():
                     raise ValueError('Unplayed directory exists; retain and relocate prelaunch staging first')
+        if report.get('recordingsEnabled', False) != recording_enabled:
+            raise ValueError('Continuation must preserve its recording policy; use --no-recordings for an older unrecorded stage')
         report['status'] = 'running'
         report['continuedAt'] = stamp()
     else:
         pairs = proposed
         report = dict(stage=args.stage, status='running', started=stamp(), drawSeed=seed, draw=pairs, plannedGames=14, completedGames=0, completedRounds=0, failures=[], mainCommit='1f6e6a38582838fe891330a0b3e7a7d9f1668279', host=platform.node(), pointsApplied=args.stage != 'practice')
+        report['recordingsEnabled'] = recording_enabled
+        report['harnessSHA256'] = digest(harness)
         report['pairing'] = pairing
         save(O / (args.stage + '-prospective-draw.json'), dict(pairing=pairing, draw=pairs, registeredAt=stamp(), gamesPerPair=2, roundsPerGame=20))
     save(statefile, report)
@@ -247,7 +271,12 @@ def main(args):
             row = dict(game=game, participants=participants, started=stamp(), directory=str(run.relative_to(O)), status='running')
             pair['games'].append(row)
             save(statefile, report)
-            command = [str(java), '-cp', str(runner), str(R / 'tools/BenchmarkBattle.java'), '20', '900', str(run / 'battle.json'), *map(str, dirs)]
+            recording_directory = run / 'recordings'
+            recording_options = []
+            if recording_enabled:
+                recording_directory.mkdir()
+                recording_options = ['-Dtournament.recordingDir=' + str(recording_directory)]
+            command = [str(java), *recording_options, '-cp', str(runner), str(harness), '20', '900', str(run / 'battle.json'), *map(str, dirs)]
             save(run / 'invocation.json', dict(command=command, configuredEnvironment={k: v for k, v in env.items() if k.startswith(PREFIXES) or k in ['RETCON_STATS_DIR', 'RUMBLE_JAVA_CACHE', 'JAVA_HOME']}, started=row['started']))
             print(f"START {args.stage} p{pi:02d} g{game}: {' vs '.join(participants)}", flush=True)
             try:
@@ -258,6 +287,8 @@ def main(args):
                     metrics = [json.loads(l) for l in (run / 'AISurvivor-metrics.jsonl').read_text().splitlines() if l.strip()]
                     benchmark.validate_metrics(metrics, 20, 'train', 20261104, 0)
                 row.update(status='complete', official=data)
+                if recording_enabled:
+                    row['recording'] = collect_recording(recording_directory, O)
                 report['completedGames'] += 1
                 report['completedRounds'] += 20
             except Exception as error:
@@ -344,4 +375,5 @@ if __name__ == '__main__':
     p.add_argument('--site', type=Path)
     p.add_argument('--stage', choices=['practice', 'swiss-1', 'swiss-2', 'swiss-3', 'swiss-4'], required=True)
     p.add_argument('--resume-unplayed', action='store_true')
+    p.add_argument('--no-recordings', action='store_true', help='Explicitly opt out; future games record .battle.gz by default')
     main(p.parse_args())
