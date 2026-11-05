@@ -1,0 +1,76 @@
+{
+  "decision": "void-original-and-authorize-one-replacement",
+  "authorization": "User explicitly selected: Void Game 1 and play a replacement after restoring disk space",
+  "scope": "Only playoff-4/U7/game1",
+  "originalReportSHA256": "4333f3a14a4140773da43dfa714b421ad2359638fa6318703c9afa61865e1ec7",
+  "originalOfficialSHA256": "04e88be98f7ff268240b25fb1915430b888f769346247a40a93e41ff5e4bcb85",
+  "originalRecordingSHA256": "f50ecbd2c25a4df38e0d64429a7ce949fc971033d771c3129f3d4892f45cc8fc",
+  "reason": "Substantive recording corruption; no intact complete game replay",
+  "preservedDirectory": "playoff-4/voided-attempts/p01-g1-recording-corrupt-1",
+  "excludedEngineGames": 1,
+  "excludedEngineRounds": 20,
+  "replacementGamesAuthorized": 1,
+  "replacementLaunchOrder": [
+    "KeelHelm",
+    "Keel"
+  ],
+  "rawFiles": {
+    "runner.log": {
+      "sizeBytes": 602,
+      "sha256": "f7c23ed34704a5d45359a48c4af70b949bdcea4798fa94f80d17a2956c6b5ebd"
+    },
+    "battle.json": {
+      "sizeBytes": 276,
+      "sha256": "04e88be98f7ff268240b25fb1915430b888f769346247a40a93e41ff5e4bcb85"
+    },
+    "invocation.json": {
+      "sizeBytes": 2458,
+      "sha256": "c349bcb2c57e9a88c90ed1756bb33e50e64df65b3a5e95dd80cce4d80fedc745"
+    },
+    "KeelHelm-metrics.jsonl": {
+      "sizeBytes": 3705,
+      "sha256": "e697c0fb7559f6741f85322e3a64cfe3ef2947ede29c2b692e01fb85a75bfb21"
+    },
+    "Keel-metrics.jsonl": {
+      "sizeBytes": 1628,
+      "sha256": "787414f20f19bddae4aa279163e434f5cfcdac6ae4d53e432ffdb32a95747c53"
+    },
+    "recordings/game-2026-11-05-07-07-54.battle.gz": {
+      "sizeBytes": 72866128,
+      "sha256": "f50ecbd2c25a4df38e0d64429a7ce949fc971033d771c3129f3d4892f45cc8fc"
+    },
+    "bots/Keel/Keel.cmd": {
+      "sizeBytes": 81,
+      "sha256": "9ce6798e659189395e9c2a1b4f4fad5f3b732c43fb6cd212f79342c7ad0d6f75"
+    },
+    "bots/Keel/Keel.jar": {
+      "sizeBytes": 869881,
+      "sha256": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f"
+    },
+    "bots/Keel/Keel.json": {
+      "sizeBytes": 252,
+      "sha256": "7d9848306ac51bb5faf6ff576a2df22c481f73ed647e65be674bdbed35d3cd64"
+    },
+    "bots/Keel/Keel.sh": {
+      "sizeBytes": 100,
+      "sha256": "f0ee8684564a9f43b9ddb98f125a36dbf3e69737d5166ef1e9e7f4abe5f5fa25"
+    },
+    "bots/KeelHelm/KeelHelm.cmd": {
+      "sizeBytes": 85,
+      "sha256": "8384adefd1427bc5cc55472959f79c3860005193345310f4b5c315fab2b3db12"
+    },
+    "bots/KeelHelm/KeelHelm.json": {
+      "sizeBytes": 229,
+      "sha256": "0e285d7e804efac154b991d21888a3e248c4164c4d8726098973cb80b5b3dc7c"
+    },
+    "bots/KeelHelm/KeelHelm.jar": {
+      "sizeBytes": 870303,
+      "sha256": "60ef5b1d33c3deb7100d1e66135f311d4b7b6fd5651cd1146effb899b9ea08c2"
+    },
+    "bots/KeelHelm/KeelHelm.sh": {
+      "sizeBytes": 104,
+      "sha256": "95ea8b7ea19d75d5d867e696bdc2a447a11ebbc6cf4950bfb63e7a5e8399a141"
+    }
+  },
+  "voidedAt": "2026-11-05T12:21:55.288357+00:00"
+}

@@ -144,8 +144,8 @@ def main(args):
     O = args.output.resolve()
     O.mkdir(parents=True, exist_ok=True)
     if args.site and (not (args.site / 'data.json').is_file()):
-        raise ValueError('Site export requires an initialized data.json; copy website/ first')
-    sys.path.insert(0, str(R / 'tools'))
+        raise ValueError('Site export requires an initialized data.json; copy tournament/website/ first')
+    sys.path.insert(1, str(R / 'tools'))
     import benchmark, retcon, retcon_stats, strong_melee_opponents
     statefile = O / (args.stage + '.json')
     if statefile.exists() and (not args.resume_unplayed):
@@ -186,8 +186,15 @@ def main(args):
     if recording_enabled:
         prepared_recording = O / 'prepared-recording-harness.json' if (O / 'prepared-entry-manifests.json').exists() else None
         freeze_manifest(O / 'recording-harness.json', recording_harness_inputs(harness), prepared_recording)
-    number = int(args.stage.split('-')[1]) if args.stage.startswith('swiss-') else 0
-    proposed, pairing = (draw(202611040), dict(algorithm='seeded practice draw', seed=202611040)) if not number else swiss_draw(O, number)
+    playoff = args.stage.startswith('playoff-')
+    number = int(args.stage.split('-')[1]) if args.stage.startswith(('swiss-', 'playoff-')) else 0
+    if playoff:
+        import tournament_playoffs
+        if not recording_enabled:
+            raise ValueError('Playoffs require the approved recording policy')
+        proposed, pairing = tournament_playoffs.context(O, number)
+    else:
+        proposed, pairing = (draw(202611040), dict(algorithm='seeded practice draw', seed=202611040)) if not number else swiss_draw(O, number)
     seed = pairing.get('seed')
     if args.resume_unplayed:
         report = json.loads(statefile.read_text())
@@ -195,10 +202,14 @@ def main(args):
         expected = proposed
         if [(p['a'], p['b']) for p in pairs] != [(p['a'], p['b']) for p in expected]:
             raise ValueError('Registered draw differs')
+        if playoff and ([p['matchId'] for p in pairs] != [p['matchId'] for p in expected] or report['pairing'] != pairing):
+            raise ValueError('Registered playoff bracket differs')
         if any((g['status'] != 'complete' for p in pairs for g in p['games'])):
             raise ValueError('Cannot resume an attempted incomplete game')
         for pi, pair in enumerate(pairs, 1):
-            for game in [1, 2]:
+            for game in ([1, 2, 3] if playoff else [1, 2]):
+                if game == 3 and not tournament_playoffs.decision(pair)['needsExtra']:
+                    continue
                 if any((g['game'] == game for g in pair['games'])):
                     continue
                 if (O / args.stage / f'p{pi:02d}-g{game}').exists():
@@ -209,17 +220,30 @@ def main(args):
         report['continuedAt'] = stamp()
     else:
         pairs = proposed
-        report = dict(stage=args.stage, status='running', started=stamp(), drawSeed=seed, draw=pairs, plannedGames=14, completedGames=0, completedRounds=0, failures=[], mainCommit='1f6e6a38582838fe891330a0b3e7a7d9f1668279', host=platform.node(), pointsApplied=args.stage != 'practice')
+        report = dict(stage=args.stage, status='running', started=stamp(), drawSeed=seed, draw=pairs, plannedGames=2*len(pairs), completedGames=0, completedRounds=0, failures=[], mainCommit='1f6e6a38582838fe891330a0b3e7a7d9f1668279', host=platform.node(), pointsApplied=args.stage != 'practice' and not playoff)
         report['recordingsEnabled'] = recording_enabled
         report['harnessSHA256'] = digest(harness)
         report['pairing'] = pairing
+        report['orchestrationSHA256'] = {Path(__file__).name: digest(Path(__file__))}
+        if playoff:
+            report['orchestrationSHA256']['tournament_playoffs.py'] = digest(Path(tournament_playoffs.__file__))
         save(O / (args.stage + '-prospective-draw.json'), dict(pairing=pairing, draw=pairs, registeredAt=stamp(), gamesPerPair=2, roundsPerGame=20))
     save(statefile, report)
     print(json.dumps(dict(stage=args.stage, draw=[(m['a'], m['b']) for m in pairs])), flush=True)
+    if args.register_only:
+        report['status'] = 'scheduled'
+        save(statefile, report)
+        update_site(args.site, report, O)
+        print('STAGE REGISTERED; no games launched', flush=True)
+        return
     for pi, pair in enumerate(pairs, 1):
         if pair['status'] == 'complete':
             continue
-        for game in [1, 2]:
+        for game in ([1, 2, 3] if playoff else [1, 2]):
+            if game == 3:
+                if not tournament_playoffs.decision(pair)['needsExtra']:
+                    break
+                report['plannedGames'] = 2*len(pairs) + sum(any(g['game'] == 3 for g in p['games']) for p in pairs) + 1
             if any((g['game'] == game for g in pair['games'])):
                 continue
             start = time.monotonic()
@@ -306,12 +330,24 @@ def main(args):
             save(statefile, report)
             update_site(args.site, report, O)
             print(f"END p{pi:02d} g{game}: {row['status']} {row['elapsedSeconds']}s", flush=True)
+            if playoff and row['status'] != 'complete':
+                report.update(status='incomplete', finished=stamp())
+                pair['status'] = 'incomplete'
+                save(statefile, report)
+                update_site(args.site, report, O)
+                print('STAGE INCOMPLETE; no automatic rerun or advancement', flush=True)
+                return
         if all((g['status'] == 'complete' for g in pair['games'])):
             scores = {n: sum((next((r['totalScore'] for r in g['official']['results'] if r['name'] == identities[n][0])) for g in pair['games'])) for n in [pair['a'], pair['b']]}
             wins = {n: sum((next((r['firstPlaces'] for r in g['official']['results'] if r['name'] == identities[n][0])) for g in pair['games'])) for n in scores}
             a, b = (pair['a'], pair['b'])
             pair.update(status='complete', scoreA=scores[a], scoreB=scores[b], roundWinsA=wins[a], roundWinsB=wins[b], winner=a if scores[a] > scores[b] else b if scores[b] > scores[a] else None)
-            if args.stage != 'practice':
+            if playoff:
+                resolution = tournament_playoffs.decision(pair)
+                if not resolution['winner']:
+                    raise ValueError('Playoff match has no resolved winner')
+                pair.update({k: v for k, v in resolution.items() if k != 'needsExtra'})
+            elif args.stage != 'practice':
                 pair.update(pointsA=3 if scores[a] > scores[b] else 0 if scores[a] < scores[b] else 1, pointsB=3 if scores[b] > scores[a] else 0 if scores[b] < scores[a] else 1)
         else:
             pair['status'] = 'incomplete'
@@ -324,7 +360,7 @@ def main(args):
     print('STAGE ' + report['status'].upper(), flush=True)
 
 def public_pair(pair):
-    out = {k: v for k, v in pair.items() if k in ['a', 'b', 'status', 'scoreA', 'scoreB', 'roundWinsA', 'roundWinsB', 'winner', 'pointsA', 'pointsB']}
+    out = {k: v for k, v in pair.items() if k in ['a', 'b', 'status', 'scoreA', 'scoreB', 'roundWinsA', 'roundWinsB', 'winner', 'pointsA', 'pointsB', 'matchId', 'resolution', 'lotterySHA256']}
     out['games'] = []
     for game in pair.get('games', []):
         public = {k: v for k, v in game.items() if k in ['game', 'participants', 'status']}
@@ -353,6 +389,20 @@ def update_site(site, report, output=None):
         data['completedGames'] = practice['completedGames']
     if report['stage'] == 'practice':
         data['status'] = 'Practice ' + report['status']
+    elif report['stage'].startswith('playoff-'):
+        import tournament_playoffs
+        if output is None:
+            raise ValueError('Canonical output directory required for playoff exports')
+        number = int(report['stage'].split('-')[1])
+        registration = json.loads((output / 'playoff-registration.json').read_text())
+        rounds = [public_stage(json.loads((output / f'swiss-{i}.json').read_text())) for i in range(1, 5)]
+        data['rounds'] = rounds
+        data['standings'] = swiss_standings(rounds)
+        data['qualified'] = registration['seeds']
+        playoffs = [public_stage(report if i == number else json.loads((output / f'playoff-{i}.json').read_text())) for i in range(1, number+1)]
+        data['playoffs'] = playoffs
+        data['playoffStandings'], data['champion'] = tournament_playoffs.standings(registration['seeds'], playoffs)
+        data['status'] = ('Champion: ' + data['champion']) if data['champion'] else ('Playoff wave ' + str(number) + ' ' + report['status'])
     else:
         number = int(report['stage'].split('-')[1])
         if number > 1 and output is None:
@@ -373,7 +423,8 @@ if __name__ == '__main__':
     p.add_argument('--java', type=Path, required=True)
     p.add_argument('--python', type=Path, required=True)
     p.add_argument('--site', type=Path)
-    p.add_argument('--stage', choices=['practice', 'swiss-1', 'swiss-2', 'swiss-3', 'swiss-4'], required=True)
+    p.add_argument('--stage', choices=['practice', *[f'swiss-{i}' for i in range(1, 5)], *[f'playoff-{i}' for i in range(1, 8)]], required=True)
     p.add_argument('--resume-unplayed', action='store_true')
+    p.add_argument('--register-only', action='store_true', help='Freeze and export this draw without launching games')
     p.add_argument('--no-recordings', action='store_true', help='Explicitly opt out; future games record .battle.gz by default')
     main(p.parse_args())
