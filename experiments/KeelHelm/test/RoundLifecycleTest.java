@@ -21,7 +21,7 @@ class RoundLifecycleTest {
         assertDoesNotThrow(() -> bot.onRoundStarted(new RoundStartedEvent(2)));
         melee.activate();bot.onBulletFired(new BulletFiredEvent(41,new BulletState(2,1,1,0,100,0,null)));
         assertEquals(1,gun.confirmed,"pending shot from previous round cannot be confirmed");
-        assertThrows(IllegalArgumentException.class,()->new KeelHelm(BotInfo.fromFile("bot/KeelHelm.json"),16));
+        assertThrows(IllegalArgumentException.class,()->new KeelHelm(BotInfo.fromFile("bot/KeelHelm.json"),128));
     }
     private static Field field(String name) throws Exception {
         Field f = KeelHelm.class.getDeclaredField(name); f.setAccessible(true); return f;

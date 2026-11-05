@@ -210,13 +210,14 @@ def cleanup_owned(process):
         result['verified']=False
     return result
 
-def execute(command, env, run, process_callback=None):
+def execute(command, env, run, process_callback=None, failure_check=None):
     start = time.monotonic();primary=None
     with (run/'runner.log').open('x') as log:
         process = subprocess.Popen(command,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         try:
             if process_callback is not None: process_callback(process.pid)
             while process.poll() is None:
+                if failure_check is not None: failure_check()
                 if time.monotonic()-start > 960: raise TimeoutError('Game timeout')
                 metrics = run/'helm-metrics.txt'
                 if metrics.exists() and re.search(r'^\d+ skip ',metrics.read_text(),re.M): raise ValueError('Own skipped turn')

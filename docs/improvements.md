@@ -334,3 +334,11 @@ Decision reject: melee 30.78% -> 30.61% (-0.17pp). Exactly20 games/260rounds; po
 ## 2026-11-05 — KeelHelm target-selection: invalid serial timing
 
 Stop the serial continuation: candidate skipped Round 18 turns 1/2/3 with only one engine game running. Two started games consumed 37 completed rounds plus one partial; eighteen stage-3 games and all stage-4 games remain unplayed. Resource guards and verified teardown passed; cause unknown. No promotion, retry or pooling. Serial spend is 297 completed plus one partial; total development accounting is 849 completed plus two partial. All new features remain disabled. [Failure report/raw evidence](improvements/keelhelm-followup-3-serial-invalid.md), [serial protocol](improvements/keelhelm-followups-serial-protocol.md), [PR 126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm timing D1: incomplete capture
+
+One complete20round baseline melee game, zero skips, valid raw recording/resources/cleanup; exit-only JFR0bytes leaves cause undetermined. Initial sandbox admission failure launched zero games; second D1b game unplayed. Reject timing/strength claims; preserve raw failed capture. Project869completed+2partial rounds. Zero-game live-dump fixture validates acquisition only. [Report/raw evidence](improvements/keelhelm-timing-d1-results.md), [prospective D2 protocol](improvements/keelhelm-next-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm timing D2: collector validation stop
+
+One completed round plus partialRound2through757, zero own skips; collector identity validation stopped the diagnostic before live dump. Readable5secondJFR retained: maxGC4.70ms, no captured causal round-start failure. No timing repair/reliability/strength claim. Resource/raw/cleanup audit passes; project870complete+3partial. No diagnostic retry. [Report/raw evidence](improvements/keelhelm-timing-d2-results.md), [prospective protocol](improvements/keelhelm-next-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).

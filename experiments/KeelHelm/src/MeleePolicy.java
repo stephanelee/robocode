@@ -87,6 +87,31 @@ final class MeleePolicy {
         return best;
     }
 
+    double revisitRadar(int turn, Phys.Pose self, double radarHeading, int sweepSign, int enemyCount, Opponent target) {
+        double sweep = 45 * sweepSign;
+        if ((turn & 7) < 6 || target == null || opponents.size() != enemyCount || turn - target.turn > 8) return sweep;
+        for (Opponent o : opponents.values()) if (turn - o.turn > 10) return sweep;
+        double error = Phys.norm(Phys.bearing(self.x(), self.y(), target.x, target.y) - radarHeading);
+        if (Math.abs(error) > 45) return sweep;
+        return Phys.clip(error + (error < 0 ? -15 : 15), -45, 45);
+    }
+
+    boolean obstructed(int turn, Phys.Pose self, Opponent target, double aim, double power, double w, double h) {
+        double speed = Phys.bulletSpeed(power), distance = Phys.distance(self.x(), self.y(), target.x, target.y);
+        int flight = Math.min(120, (int)Math.ceil(distance / speed));
+        for (Opponent o : opponents.values()) {
+            if (o.id == target.id || turn - o.turn > 8) continue;
+            Phys.Pose p = new Phys.Pose(o.x, o.y, o.heading, o.speed);
+            double rate = Phys.clip(o.turnRate, -Phys.maxTurn(o.speed), Phys.maxTurn(o.speed));
+            for (int stale = 0; stale < Math.max(0, turn - o.turn); stale++) p = Phys.step(p, rate, o.speed, w, h);
+            for (int t = 1; t <= flight && t * speed < distance - 18; t++) {
+                p = Phys.step(p, rate, o.speed, w, h);
+                if (Phys.distance(self.x() + t * speed * Phys.cos(aim), self.y() + t * speed * Phys.sin(aim), p.x(), p.y()) <= 18) return true;
+            }
+        }
+        return false;
+    }
+
     static double power(double distance, double ownEnergy, double enemyEnergy) {
         double p = distance < 250 ? 2.2 : distance < 500 ? 1.6 : 1;
         if (ownEnergy < 20) p = Math.min(p, 0.5 + ownEnergy / 20);
