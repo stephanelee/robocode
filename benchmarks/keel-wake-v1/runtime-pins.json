@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "protocol": "keel-wake-v1",
+  "repository": "stephanelee/robocode",
+  "status": "Prospectively published issue118 proposal; exact independent published-text PASS required before implementation; no execution approval",
+  "engine": {
+    "version": "1.4.0",
+    "officialCommit": "c8ad3a8d19a843f6258d6f6f9db7f29229963903",
+    "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "sampleZIP_SHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+    "width": 800,
+    "height": 600,
+    "turnTimeoutMicros": 100000
+  },
+  "runtime": {
+    "runnerLabel": "ubuntu-26.04",
+    "architecture": "x86_64",
+    "buildJava": "Temurin17.0.21+9",
+    "battleJava": "Temurin25.0.5+8-LTS",
+    "python": "CPython3.13.17",
+    "buildBeforeJava25": true,
+    "pythonNativeProofReferenceSHA256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c",
+    "allowedJointImageCases": [
+      {
+        "caseID": "native-20261025.179.1_env-20261026.180.1",
+        "native": {
+          "image": "ubuntu-26.04",
+          "version": "20261025.179.1",
+          "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+          "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179"
+        },
+        "environment": {
+          "ImageOS": "ubuntu26",
+          "ImageVersion": "20261026.180.1"
+        }
+      },
+      {
+        "caseID": "native-20261101.186.1_env-20261101.186.1",
+        "native": {
+          "image": "ubuntu-26.04",
+          "version": "20261101.186.1",
+          "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+          "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186"
+        },
+        "environment": {
+          "ImageOS": "ubuntu26",
+          "ImageVersion": "20261101.186.1"
+        }
+      }
+    ],
+    "imagePolicy": "Exactly one complete joint case; independent setup_info+imagedata native equality and separate processENV+/etc/environment equality, fixed per worker/stage; v2 qualified method, mandatory final provider reconciliation; no canonical VM attestation"
+  },
+  "baseline": {
+    "name": "Keel",
+    "version": "0.1.0",
+    "commit": "24fb9a5f02065c0bf0b146b8387c2a9d8a272373",
+    "sourceTree": "4d76ac190e9d303ce1657cb2c3659961ef72f611",
+    "JAR_SHA256": "77b8a5c3114641c12a94f36c83083d27c419416ee691d725fd19f0284a69db6f"
+  },
+  "candidate": {
+    "name": "KeelWake",
+    "version": "0.1.0",
+    "directory": "experiments/KeelWake",
+    "JAR_SHA256_state": "Unknown until actual reviewed Java17 build; must freeze exact actual source/JAR before first benchmark"
+  },
+  "locks": {
+    "strong-melee.lock.json": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+    "retcon.lock.json": "438b4d08ce1df2e323760529e03a5f66ba26fa5de2767e43416d89003b08104f",
+    "baseline.json": "cf85147dbf2f9b4ae41495011f20a0850b5349cd86fff4133889ecaade77a623",
+    "official-chronology-source-manifest.json": "c36309dff94b73350bb2be74faa0d1612ae0818e05c073b26770add09e45cb3e"
+  },
+  "authority": {
+    "sourceToken": "KEEL-WAKE-SOURCE-CLEARED <full new published head>",
+    "dispatchPrefix": "KEEL_WAKE_DISPATCH_ASSIGNMENT_V1",
+    "reviewPrefix": "KEEL_WAKE_RUNTIME_REVIEW_V1",
+    "approvalPrefix": "KEEL_WAKE_RUNTIME_APPROVAL_V1",
+    "revocationPrefix": "KEEL_WAKE_RUNTIME_REVOCATION_V1",
+    "receipts": {
+      "screen": "refs/tags/experiment-receipts/keel-wake-v1-screen",
+      "confirmation": "refs/tags/experiment-receipts/keel-wake-v1-confirmation"
+    },
+    "approvalKeys": [
+      "schemaVersion",
+      "verdict",
+      "repository",
+      "issue",
+      "stage",
+      "headSHA",
+      "runId",
+      "runAttempt",
+      "bootId",
+      "workspace",
+      "artifactId",
+      "artifactDigestSHA256",
+      "profileSHA256",
+      "freezeSHA256",
+      "gamesSHA256",
+      "participantManifestSHA256",
+      "opponentManifestSHA256",
+      "commandsSHA256",
+      "reviewerTask",
+      "dispatchAssignmentSHA256"
+    ],
+    "authorizedReviewerAccount": "stephanelee",
+    "workflow": ".github/workflows/keel-wake-v1.yml",
+    "labels": {
+      "screen": "run-keel-wake-v1-screen",
+      "confirmation": "run-keel-wake-v1-confirmation"
+    },
+    "dispatchKeys": [
+      "schemaVersion",
+      "repository",
+      "issue",
+      "stage",
+      "headSHA",
+      "reviewerTask",
+      "reviewerAccount",
+      "implementationTasks",
+      "assignmentToolRecord",
+      "assignmentToolRecordSHA256"
+    ],
+    "reportKeys": [
+      "approvalPayloadSHA256",
+      "reviewerTask",
+      "reviewReport",
+      "agentToolProvenance"
+    ],
+    "revocationKeys": [
+      "schemaVersion",
+      "verdict",
+      "repository",
+      "issue",
+      "stage",
+      "headSHA",
+      "runId",
+      "runAttempt",
+      "bootId",
+      "artifactId",
+      "reviewerTask",
+      "approvalCommentId",
+      "reason"
+    ],
+    "issue": 118
+  },
+  "storage": {
+    "auditCustodyMinimumFreeBytes": 8589934592,
+    "hostedMinimumFreeBeforePrepareBytes": 21474836480,
+    "hostedMinimumFreeBeforeChildBytes": 8589934592,
+    "stageOutputMaximumBytes": 4294967296,
+    "finalOriginalArtifactZIPMaximumBytes": 2147483648
+  },
+  "issue": 118,
+  "revalidation": {
+    "maximumCompleteWallSeconds": 180,
+    "requiredTimingFields": [
+      "checkStartedAtUTC",
+      "checkedAtUTC",
+      "elapsedMonotonicSeconds"
+    ],
+    "perIOTimeout": "min(registered subcap, remaining complete180s, remaining job lifetime)",
+    "checkedAtUTCMeaning": "End of complete successful image/input/authority check",
+    "minimumJobRemainingAtCheckEndBeforeChildSeconds": 2100,
+    "historicalResourceTimestampsAreNotFetchObservationTimes": true,
+    "wholeSecondProviderCompletionInterval": "[T,T+1second)",
+    "fractionalProviderTimestamp": "exact at stated precision; inclusive equality only where registered rule permits",
+    "roundingSkewAllowanceSeconds": 0,
+    "overrunAction": "Integrity-invalid, no child/receipt, preserve evidence"
+  }
+}
