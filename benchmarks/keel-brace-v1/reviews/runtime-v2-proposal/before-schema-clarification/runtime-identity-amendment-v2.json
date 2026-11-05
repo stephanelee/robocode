@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "policyID": "keel-brace-qualified-native-observations-v2",
+  "status": "PROPOSAL ONLY: exact published registration and independent methodology PASS, new source/enforcement review, source CI and actual stage approval required before one new preparation; no permission by itself",
+  "repository": "stephanelee/robocode",
+  "issue": 114,
+  "amendmentDocument": "docs/improvements/keel-brace-runtime-identity-amendment-v2.md",
+  "inheritsUnchangedV1Contract": {
+    "document": "docs/improvements/keel-brace-runtime-identity-amendment.md",
+    "documentSHA256": "85229f18285ce4dabbd076d5f8e56d0a6ec93174c5ab98bfac56ff6553dabb84",
+    "policy": "benchmarks/keel-brace-v1/runtime-identity-amendment.json",
+    "policySHA256": "7429753f1d72c888718bd8965a674c7d7f18003f7f9edf3dee309bbb30976edf",
+    "except": "Replace singleton requiredNativeClaim/requiredSeparateEnvironmentClaim with exactly one complete joint case below; effective source freeze version v2. All capture, authority, schema/caps, graph, receipts and final-reconciliation rules unchanged."
+  },
+  "identityModel": "Qualified observed operational tuple, NOT canonical VM/build revision or immutable attestation",
+  "allowedJointCases": [
+    {
+      "caseID": "native-20261025.179.1_env-20261026.180.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261025.179.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261026.180.1"
+      }
+    },
+    {
+      "caseID": "native-20261101.186.1_env-20261101.186.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261101.186.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261101.186.1"
+      }
+    }
+  ],
+  "jointCaseContract": {
+    "exactlyOneCompleteCaseMustMatch": true,
+    "nativeSourcesEachMustEqualCaseNative": [
+      "/imagegeneration/imagedata.json",
+      "<unique observed runner root>/.setup_info"
+    ],
+    "environmentSourcesEachMustEqualCaseEnvironment": [
+      "process ImageOS/ImageVersion only",
+      "/etc/environment literal ImageOS/ImageVersion"
+    ],
+    "caseIDMustBeFrozenIn": [
+      "before-tools snapshot binding",
+      "prepared profile/artifact",
+      "independent approval report",
+      "every pre-receipt/pre-child revalidation",
+      "final provider reconciliation"
+    ],
+    "stageCaseMayChangeAfterBeforeTools": false,
+    "sourceMixingTranslationFallbackMajorityOrUnknownTupleAllowed": false,
+    "actualProviderHeaderMustMatchApprovedCaseNative": true,
+    "beforeToolsUnknownCaseAction": "Fail closed before setup/preparation/receipt/games; retain failure; no automatic worker retry",
+    "futureConfirmationCase": "Each fresh stage independently freezes exactly one allowed case before games; need not use screen worker/case, but may never mix or switch within a stage"
+  },
+  "sourceFreezeTransition": {
+    "oldRepositoryFreezePath": "benchmarks/keel-brace-v1/freeze.json",
+    "oldRepositoryFreezeSHA256": "fcbba3ae64ecbeb63daa76fb74d11c038f0392278b132bfc8976f135d8cfc686",
+    "oldFreezeAndV1FilesMustRemainImmutable": true,
+    "newRepositoryFreezePath": "benchmarks/keel-brace-v1/freeze-v2.json",
+    "exportedLogicalCapsulePathMayRemain": "provenance/freeze.json",
+    "requiredNewFreezeBindings": [
+      "this v2 policy and document",
+      "unchanged exact v1 methodology documents",
+      "actual reviewed implementation/validator/workflow/test bytes",
+      "unchanged candidate/control/opponent/game-registry and numerical protocol pins"
+    ],
+    "v2EffectiveOnlyAfter": "Prospective publication/registration and exact independent PASS, implemented-source/enforcement review and fresh required source CI; actual new stage prepared artifact independently approved before receipt/games",
+    "unusedV1SupersededBeforeAnyGames": true,
+    "oldReceiptResetOrHistoryRewriteAllowed": false,
+    "newPreparationOnly": "One separately authorized new job attempt1; never Actions rerun of failed preparation"
+  },
+  "preservedFailure": {
+    "runId": 41947040130,
+    "attempt": 1,
+    "classification": "zero-game infrastructure admission failure; correct v1 rejection of unregistered new joint tuple",
+    "gameCount": 0,
+    "gameBudgetConsumed": 0,
+    "receiptConsumed": false,
+    "failedEvidenceMustRemainUnmodified": true,
+    "noCompetitiveOutcomeOrAutomaticRetry": true,
+    "finalEvidenceOwner": "independent runner-image provenance auditor; actual original artifact/log/API/custody report must be published and bound before v2 implementation clearance",
+    "evidence": {
+      "jobId": 126981711205,
+      "independentReportBytes": 5797,
+      "independentReportSHA256": "f155d781288da8b2002d067ff487dee8e3d82ba7c6c3519910145cf8c3092182",
+      "manifestSHA256": "2a7739b50881c297e0fa16af041122dca78f9a811f7b361672f7dff84d3556b0",
+      "originalArtifactId": 13378498977,
+      "originalZIPBytes": 19302,
+      "originalZIPSHA256": "d7a0b572d4e4301500a3532c21871cf0a14fdea88f5ccea7850c4b5233ebfe7f",
+      "custodyArtifactId": 13378424188,
+      "custodyZIPBytes": 1748,
+      "custodyZIPSHA256": "cbe853fbe51d28e9241ef6889375e2cfe21d0a1ad971ecc822c038b4ecbb240f",
+      "fullProviderLogBytes": 40234,
+      "fullProviderLogSHA256": "abeef6f7256d2dbf6b5bf02860bb7d4c68d39e74e797184ab745b2c3ad8c99d4"
+    }
+  },
+  "unchangedRequirements": [
+    "candidate/control",
+    "gameplay intervention",
+    "score/timing/exposure gates",
+    "game registry/seeds/ports/order",
+    "120screen+conditional300confirmation rounds",
+    "attempt/receipt/no-replacement rules",
+    "Java17 before Java25",
+    "Python/opponent/wheel/native/source/JAR/command pins",
+    "AISurvivor",
+    "all v1 capture/discovery/parse/raw-byte/caps/schema/job binding rules",
+    "same-worker stable metadata/boot/source graph; installed graph frozen at prepared then revalidated",
+    "strict 20-field approval and immutable actual artifacts/create-only receipts",
+    "actual early live provider fetch: matched or qualified correct-job HTTP404 deferral only",
+    "mandatory independent final completed-job provider header reconciliation before final validity/confirmation/promotion",
+    "PROVENANCE-PENDING until reconciliation; missing or inconsistent final evidence PROVENANCE-INCOMPLETE; no replacements/reruns",
+    "no canonical VM content attestation; old Helm UNPROVEN; no retrospective rescue"
+  ],
+  "noGameplayPermission": true
+}

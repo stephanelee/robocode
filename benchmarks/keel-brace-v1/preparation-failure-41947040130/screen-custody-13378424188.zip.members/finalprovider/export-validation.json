@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "stage": "screen",
+  "status": "incomplete",
+  "observedAtUTC": "2026-11-05T01:14:11.848167+00:00",
+  "originalZIPMaximumBytes": 2147483648,
+  "rawDecisionSHA256": null,
+  "error": "Traceback (most recent call last):\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 1713, in finalize_evidence\n    artifact = artifact_identity(artifact_id, digest, identity())\n                                                      ~~~~~~~~^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 404, in identity\n    image_evidence()\n    ~~~~~~~~~~~~~~^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 397, in image_evidence\n    early = image_identity.original(base, 'before-tools')\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 229, in original\n    base=Path(base);value=load(base/phase/'snapshot.json')\n                          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 60, in load\n    def load(path): return decode(read(path))\n                                  ~~~~^^^^^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 55, in read\n    with Path(path).open('rb') as f: data=f.read(cap+1)\n         ~~~~~~~~~~~~~~~^^^^^^\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 772, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/robocode/robocode/.benchmark-cache/keel-brace-image-identity/screen/before-tools/snapshot.json'\n"
+}

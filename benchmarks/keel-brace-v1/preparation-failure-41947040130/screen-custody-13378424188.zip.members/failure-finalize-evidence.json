@@ -1,0 +1,39 @@
+{
+  "phase": "finalize-evidence",
+  "stage": "screen",
+  "registeredIDs": [
+    "brace-s01",
+    "brace-s02",
+    "brace-s03",
+    "brace-s04",
+    "brace-s05",
+    "brace-s06",
+    "brace-s07",
+    "brace-s08",
+    "brace-s09",
+    "brace-s10",
+    "brace-s11",
+    "brace-s12",
+    "brace-s13",
+    "brace-s14"
+  ],
+  "unplayedIDs": [
+    "brace-s01",
+    "brace-s02",
+    "brace-s03",
+    "brace-s04",
+    "brace-s05",
+    "brace-s06",
+    "brace-s07",
+    "brace-s08",
+    "brace-s09",
+    "brace-s10",
+    "brace-s11",
+    "brace-s12",
+    "brace-s13",
+    "brace-s14"
+  ],
+  "error": "Traceback (most recent call last):\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 1742, in main\n    elif a.command == 'finalize-evidence':finalize_evidence(a.stage, a.artifact_id, a.artifact_digest)\n                                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 1713, in finalize_evidence\n    artifact = artifact_identity(artifact_id, digest, identity())\n                                                      ~~~~~~~~^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 404, in identity\n    image_evidence()\n    ~~~~~~~~~~~~~~^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_experiment.py\", line 397, in image_evidence\n    early = image_identity.original(base, 'before-tools')\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 229, in original\n    base=Path(base);value=load(base/phase/'snapshot.json')\n                          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 60, in load\n    def load(path): return decode(read(path))\n                                  ~~~~^^^^^^\n  File \"/home/runner/work/robocode/robocode/tools/keel_brace_image_identity.py\", line 55, in read\n    with Path(path).open('rb') as f: data=f.read(cap+1)\n         ~~~~~~~~~~~~~~~^^^^^^\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 772, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/robocode/robocode/.benchmark-cache/keel-brace-image-identity/screen/before-tools/snapshot.json'\n",
+  "timeUTC": "2026-11-05T01:14:11.851238+00:00",
+  "noAutomaticRetry": true
+}
