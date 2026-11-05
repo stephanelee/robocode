@@ -16,7 +16,7 @@ def result(a, b, score_a=100, score_b=50, places_a=12, places_b=8, game=1):
 
 def swiss_fixture(output):
     """Use the committed score-only evidence, never require private raw reports."""
-    path = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04/official-results.json'
+    path = Path(__file__).resolve().parents[2] / 'benchmarks/tournament-2026-11-04/official-results.json'
     reports = [r for r in json.loads(path.read_text())['stages'] if r['stage'].startswith('swiss-')]
     if len(reports) != 4:
         raise ValueError('Expected four committed Swiss score reports')
@@ -26,7 +26,7 @@ def swiss_fixture(output):
 
 class PlayoffTest(unittest.TestCase):
     def test_published_evidence_index_matches_stage_coverage(self):
-        path = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04/official-results.json'
+        path = Path(__file__).resolve().parents[2] / 'benchmarks/tournament-2026-11-04/official-results.json'
         index = json.loads(path.read_text())
         games = [g for s in index['stages'] for p in s['draw'] for g in p['games'] if g['status'] == 'complete']
         self.assertEqual(len(games), index['validatedGames'])

@@ -58,7 +58,7 @@ def main(args):
     if 'version "17.' not in version17:
         raise ValueError('The Gradle build requires JDK17')
     output.mkdir(parents=True, exist_ok=True)
-    sys.path.insert(0, str(source / 'tools'))
+    sys.path.insert(1, str(source / 'tools'))
     import benchmark
     import retcon
     lock = json.loads((source / 'tools/opponents/strong-melee.lock.json').read_text())

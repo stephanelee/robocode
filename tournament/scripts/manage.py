@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 from urllib.parse import urlencode, urljoin, urlsplit
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def scaffold(event_id, source_commit, event_root=ROOT / 'events', project_id=None,

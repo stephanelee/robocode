@@ -17,8 +17,8 @@ CUP_SITE=/private/tmp/robocode-cup-website
 git fetch origin 1f6e6a38582838fe891330a0b3e7a7d9f1668279
 git worktree add --detach "$CUP_SOURCE" 1f6e6a38582838fe891330a0b3e7a7d9f1668279
 python3.12 -m venv "$CUP_PYTHON"
-"$CUP_PYTHON/bin/pip" install -r tools/tournament-macos-requirements.txt
-cp -R website "$CUP_SITE"
+"$CUP_PYTHON/bin/pip" install -r tournament/scripts/tournament-macos-requirements.txt
+cp -R tournament/website "$CUP_SITE"
 ```
 
 A full source checkout includes the committed replay and characterization fixtures used by the Java tests. The Python requirements preserve the actual macOS/CPython 3.12 environment used here, including Bot API 1.3.1. They are not the Linux/CPython 3.13 wheel lock; report the actual runtime rather than claiming those environments are interchangeable.
@@ -29,7 +29,7 @@ Set paths to JDK 17 and JDK 25, then prepare the entries. The helper starts no g
 CUP_JAVA17=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
 CUP_JAVA25=/path/to/jdk-25/Contents/Home/bin/java
 
-python3 tools/prepare_tournament.py \
+python3 tournament/scripts/prepare_tournament.py \
   --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
   --java17-home "$CUP_JAVA17" --java25 "$CUP_JAVA25" \
   --python "$CUP_PYTHON/bin/python"
@@ -44,12 +44,12 @@ On this Mac, five AISurvivor exact replay tests differed at tiny floating-point 
 Use the same source, runtime, output and site paths throughout an edition. Games run sequentially with private bot directories, absent model paths and normal within-game learning. Nothing loads a previous game's model. Supported bot seed overrides use `20261104`; arena starts and scheduling remain uncontrolled.
 
 ```sh
-python3 tools/tournament.py \
+python3 tournament/scripts/tournament.py \
   --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
   --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
   --site "$CUP_SITE" --stage practice
 
-python3 tools/tournament.py \
+python3 tournament/scripts/tournament.py \
   --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
   --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
   --site "$CUP_SITE" --stage swiss-1
@@ -72,16 +72,16 @@ A narrowly bounded `--resume-unplayed` option preserves the original draw and co
 ## Checks without battles
 
 ```sh
-python3 -m unittest discover -s tools -p 'test_tournament.py' -v
-python3 -m py_compile tools/tournament.py tools/prepare_tournament.py
-python3 -m http.server 8766 --directory website
+python3 -m unittest discover -s tournament/scripts -p 'test_*.py' -v
+python3 -m py_compile tournament/scripts/tournament.py tournament/scripts/prepare_tournament.py
+python3 -m http.server 8766 --directory tournament/website
 ```
 
-The twelve unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion recording integrity and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+The tournament and starter tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion recording integrity and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
 
 ## Replay recordings for future games
 
-At the user’s request, future stages record by default through the new `tools/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official 1.4.0 API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
+At the user’s request, future stages record by default through the new `tournament/scripts/TournamentBattle.java` adapter. Its battle settings, participant launch behavior and completion barriers match the frozen original harness; the added observer recorder uses the official 1.4.0 API. A private Java system property carries the recording path to the runner, without feeding observer frames or the path to bot processes. Recording overhead is a runtime change and is prospectively documented separately from the unrecorded rounds.
 
 Each completed game retains `pNN-gN/recordings/game-*.battle.gz`, with byte size and SHA256 in its private game record. The wrapper checks gzip integrity. In the Tank Royale desktop GUI, select **Battle → Replay from File** and open that file. These are replay data files, not videos. Full record-frame semantics and visual playback must be verified on an actual recorded game; no extra battle was run merely to test recording. The already completed practice and Swiss rounds 1–3 did not record visual replays and are not rerun.
 
@@ -95,8 +95,8 @@ Keep video dependencies separate from the frozen bot Python environment. Install
 
 ```sh
 python3.12 -m venv /private/tmp/robocode-video-python
-/private/tmp/robocode-video-python/bin/pip install -r tools/tournament-video-requirements.txt
-/private/tmp/robocode-video-python/bin/python tools/render_tournament_replay.py \
+/private/tmp/robocode-video-python/bin/pip install -r tournament/scripts/tournament-video-requirements.txt
+/private/tmp/robocode-video-python/bin/python tournament/scripts/render_tournament_replay.py \
   --recording /absolute/path/to/game.battle.gz \
   --official /absolute/path/to/battle.json \
   --swiss-round 4 --game 1 \
@@ -122,13 +122,13 @@ Only user-approved rendered videos, posters and chapters are published. Raw `.ba
 Use `--stage playoff-1` after all four canonical Swiss reports are complete. The runner freezes their hashes, final seeds and the full bracket in `playoff-registration.json`. It verifies the existing frozen bot/shared inputs and requires recordings. No bot rebuild or new preparation replaces this event’s frozen inputs.
 
 ```sh
-python3 tools/tournament.py \
+python3 tournament/scripts/tournament.py \
   --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
   --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
   --site /absolute/path/to/tournament-site/dist \
   --stage playoff-1 --register-only
 # Publish the registered draw, then execute its still-unplayed games:
-python3 tools/tournament.py \
+python3 tournament/scripts/tournament.py \
   --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
   --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
   --site /absolute/path/to/tournament-site/dist \
@@ -144,7 +144,7 @@ Subsequent `playoff-2` through `playoff-7` stages require separate user authoriz
 After each subsequent recorded stage, run the replay catalog tool in the separate video venv, then publish the Site snapshot using the Sites workflow. This is part of the tournament publication workflow; rendering starts no games. Do not run a new battle to reconstruct an older unrecorded game.
 
 ```sh
-/private/tmp/robocode-video-python/bin/python tools/render_tournament_replays.py \
+/private/tmp/robocode-video-python/bin/python tournament/scripts/render_tournament_replays.py \
   --output "$CUP_OUTPUT" \
   --media-dir /absolute/path/to/private-video-provenance \
   --site /absolute/path/to/tournament-site/dist
@@ -187,6 +187,6 @@ explicitly desired. The private archived catalog records the removed assets.
 For recovery launches, check free space and execute the runner within the same
 Python process; a failed shell preflight followed by another command can fall
 through. Require at least 2 GiB, then `os.execv(sys.executable, [sys.executable,
-"tools/tournament.py", ...])` only after the assertion passes. The Wave 4 void
+"tournament/scripts/tournament.py", ...])` only after the assertion passes. The Wave 4 void
 ruling documents the authorized single replacement; it is not a general rerun
 policy. Preserve invalid engine games separately in physical-budget accounting.

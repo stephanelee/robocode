@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory(prefix='tournament-archival-check-',dir='/priva
  for stage in ('swiss-4','playoff-1','playoff-2','playoff-3'):
   shutil.copy2(base/(stage+'.json'),out/(stage+'.json'));(out/stage).symlink_to(base/stage,target_is_directory=True)
  data['videos']=list(allvideos.values());(site/'data.json').write_text(json.dumps(data))
- command=[sys.executable,str(root/'tools/render_tournament_replays.py'),'--output',str(out),'--media-dir',str(view),'--site',str(site)]
+ command=[sys.executable,str(root/'tournament/scripts/render_tournament_replays.py'),'--output',str(out),'--media-dir',str(view),'--site',str(site)]
  def run(flags,expected,swiss,lower):
   subprocess.run(command+flags,stdout=subprocess.DEVNULL,check=True)
   d=json.load(open(site/'data.json'));videos=d['videos'];assert len(videos)==expected

@@ -83,7 +83,7 @@ The public catalog totals 161,612,861 movie bytes. Source/video hashes, final
 scores, chapters, codec/frame/duration checks and multipart reconstruction pass.
 The archival flags now pass independent real cached-media cases, including
 lower-bracket-only and Swiss-only archival. The reproducible check is
-`tools/check_tournament_archival_flags.py` (requires retained private evidence).
+`tournament/scripts/check_tournament_archival_flags.py` (requires retained private evidence).
 The [tournament hub](../tournament/README.md) now records this event and provides
 a separate draft/configuration workflow for another event, with an externally
 configured website base URL. No new tournament was initialized or launched.

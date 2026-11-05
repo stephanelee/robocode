@@ -62,7 +62,7 @@ then supplied through `TOURNAMENT_SITE_URL`; it is not hard-coded in this folder
 
 ```sh
 # Set TOURNAMENT_SITE_URL from the Sites deployment response.
-python3 tournament/manage.py site-url --stage playoff-4
+python3 tournament/scripts/manage.py site-url --stage playoff-4
 ```
 
 There are **38 verified private movies** for valid recorded games. The live site

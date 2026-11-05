@@ -144,8 +144,8 @@ def main(args):
     O = args.output.resolve()
     O.mkdir(parents=True, exist_ok=True)
     if args.site and (not (args.site / 'data.json').is_file()):
-        raise ValueError('Site export requires an initialized data.json; copy website/ first')
-    sys.path.insert(0, str(R / 'tools'))
+        raise ValueError('Site export requires an initialized data.json; copy tournament/website/ first')
+    sys.path.insert(1, str(R / 'tools'))
     import benchmark, retcon, retcon_stats, strong_melee_opponents
     statefile = O / (args.stage + '.json')
     if statefile.exists() and (not args.resume_unplayed):

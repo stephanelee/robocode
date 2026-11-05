@@ -1,5 +1,7 @@
 # Tournament workspace
 
+[Scripts and tests](scripts/) and the [reusable website template](website/) live here.
+
 This folder records the current invitational and provides a starting point for a
 separate tournament. It does not authorize another stage or event.
 
@@ -15,10 +17,10 @@ folder. The event configuration identifies the hosting project separately.
 
 ```sh
 # Set TOURNAMENT_SITE_URL in your environment from the deployment response.
-python3 tournament/manage.py site-url --stage playoff-4
+python3 tournament/scripts/manage.py site-url --stage playoff-4
 
 # Create a draft in a separate folder; this launches no games.
-python3 tournament/manage.py init next-event --source-commit <full-commit-sha>
+python3 tournament/scripts/manage.py init next-event --source-commit <full-commit-sha>
 ```
 
 Event manifest paths are relative to the repository root.
@@ -31,6 +33,11 @@ explains the required review before a new competition can run.
 Run the documentation/configuration helper checks from the repository root:
 
 ```sh
-python3 -m unittest discover -s tournament -p 'test_*.py'
-PYTHONPATH=tools python3 -m unittest tools/test_tournament.py tools/test_tournament_playoffs.py
+python3 -m unittest discover -s tournament/scripts -p 'test_*.py'
 ```
+
+Historical reports retain their original script paths and evidence hashes. The
+pre-relocation execution scripts remain archived with private event evidence.
+Register the relocated orchestration hashes before any subsequent stage; this
+file move does not rerun games or alter frozen bots. Shared benchmark utilities
+remain in the repository-level tools directory.

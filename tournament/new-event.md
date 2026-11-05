@@ -8,7 +8,7 @@ A new draft is a planning record; generating it does not start or publish an eve
 Choose a new event ID and a full frozen source commit, then run:
 
 ```sh
-python3 tournament/manage.py init next-event --source-commit <full-commit-sha>
+python3 tournament/scripts/manage.py init next-event --source-commit <full-commit-sha>
 ```
 
 An optional `--site-project-id` records an existing hosting project without storing
@@ -30,8 +30,8 @@ current-event pointer unchanged. Do not reuse the old event's output directory.
    and battles, and freeze the Python/shared runtimes. Preserve failed checks and
    runtime provenance. Play on minimind, not GitHub Actions.
 4. Prepare a reviewed event-specific runner and prospective protocol. The existing
-   `tools/tournament.py` has the original roster, report commit and seeds; the
-   bracket lottery domain is also fixed in `tools/tournament_playoffs.py`. Merely
+   `tournament/scripts/tournament.py` has the original roster, report commit and seeds; the
+   bracket lottery domain is also fixed in `tournament/scripts/tournament_playoffs.py`. Merely
    passing a different `--output` or source directory does **not** parameterize all
    of those values. Do not run a new event with stale provenance or silently edit
    the ongoing event's frozen execution helpers.
@@ -45,14 +45,14 @@ runner and website assumptions too; the template is not a general bracket engine
 
 ## Prepare the website
 
-Use the reusable [website source](../website/), initialize the new event's static
+Use the reusable [website source](website/), initialize the new event's static
 output and select or create its hosting project through Sites. Use the returned
 project ID in the event manifest. Supply the deployment's base URL through
 `TOURNAMENT_SITE_URL`; do not put a production hostname into scripts or templates.
 The link helper reads that variable and supports another event manifest:
 
 ```sh
-python3 tournament/manage.py site-url \
+python3 tournament/scripts/manage.py site-url \
   --event tournament/events/next-event/event.json --stage practice
 ```
 
