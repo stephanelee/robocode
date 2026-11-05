@@ -1,0 +1,151 @@
+{
+  "reviewedAt": "2026-11-05T17:45:25.757365+00:00",
+  "reviewer": "Independent audit without importing experiment reducer",
+  "freezeSHA256": "542e0235701a8362cd343de90d0a7596de3ff736dee81f9555d2dc3742186b38",
+  "experimentStatus": "invalid",
+  "completeGamesAudited": 1,
+  "completedRoundsAudited": 20,
+  "games": [
+    {
+      "id": "melee-1-candidate",
+      "rounds": 20,
+      "recordingSHA256": "5ccb0b8eadd5ac9b08dcf0973adf1745d9e70e36bcc13ee8d8bd1a90290c771c",
+      "officialSHA256": "26359f2132020b9e70c7a03f711bc3110a3b4c6243e9cc2a5babe43e4c79e576",
+      "tickCount": 40880,
+      "maxOwnMs": 7,
+      "ownSkippedTurns": 0,
+      "share": 0.26170847219786003,
+      "shareExact": "1492/5701"
+    }
+  ],
+  "errors": [],
+  "freezeFileCount": 7018,
+  "freezeErrors": [],
+  "independentSummary": {},
+  "independentGates": {},
+  "decision": "invalid-evidence-no-improvement-claim",
+  "productionGoldenLimitation": "Five exact-bit golden replay failures and one skip on unchanged arm64 production source; not used to relax experiment gates.",
+  "resourceWaves": [
+    {
+      "wave": 1,
+      "samples": 48,
+      "minimumAvailablePercent": 40,
+      "maximumSwapoutPagesPer2Seconds": 0,
+      "ownedGroups": [
+        "71279",
+        "71280"
+      ]
+    }
+  ],
+  "resourceErrors": [],
+  "stage": 2,
+  "policyChangeExposure": null,
+  "controlMask": 0,
+  "candidateMask": 2,
+  "nextAcceptedMask": 0,
+  "nextAcceptedJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "featureJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+  "featureProjectManifestSHA256": "97162a8339d01277cbb5d017ca13a0844ab5307fa80f030440b54c9b5e5f216e",
+  "successfulResourceAdmissions": 1,
+  "priorProjectPhysicalRounds": 260,
+  "completedFollowupRoundsThisStage": 20,
+  "originalStudyStopped": true,
+  "remainingStagesNotStarted": [
+    3,
+    4
+  ],
+  "unplayedGameIDs": [
+    "melee-2-candidate",
+    "melee-2-control",
+    "melee-3-control",
+    "melee-3-candidate",
+    "melee-4-candidate",
+    "melee-4-control",
+    "diamond-1-control",
+    "diamond-1-candidate",
+    "diamond-2-candidate",
+    "diamond-2-control",
+    "retcon-1-control",
+    "retcon-1-candidate",
+    "retcon-2-candidate",
+    "retcon-2-control",
+    "walls-control",
+    "walls-candidate",
+    "spinbot-candidate",
+    "spinbot-control"
+  ],
+  "attemptedEngineGames": 2,
+  "completedEngineGames": 1,
+  "abortedEngineGames": 1,
+  "completedPhysicalRoundsThisStage": 32,
+  "partialRoundStartsThisStage": 1,
+  "partialRoundDetails": {
+    "game": "melee-1-control",
+    "round": 13,
+    "observedTurns": 107
+  },
+  "completedFollowupRoundsAcrossStages": 292,
+  "partialFollowupRoundsAcrossStages": 1,
+  "completedProjectRoundsIncludingHistorical": 552,
+  "partialProjectRoundsIncludingHistorical": 1,
+  "failedControl": {
+    "recordingSHA256": "1e390b61664ca414c88a156a28830878668535b3b31309db0fb2d0304f2f2b5a",
+    "recordingCRCValid": true,
+    "gameStartedEvents": 1,
+    "roundEndedEvents": 12,
+    "roundEnds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "gameAbortedEvents": 1,
+    "gameEndedEvents": 0,
+    "totalObservedTicks": 22647,
+    "terminalRound": 13,
+    "terminalTurn": 107,
+    "telemetryStartRows": 13,
+    "telemetryStatsRows": 12,
+    "telemetryEndRows": 12,
+    "ownSkips": [
+      {
+        "round": 13,
+        "turn": 1
+      },
+      {
+        "round": 13,
+        "turn": 2
+      },
+      {
+        "round": 13,
+        "turn": 3
+      }
+    ],
+    "observerSkipEventsNotPresent": true,
+    "officialResultAbsent": true
+  },
+  "cleanup": {
+    "cleanupJSONAbsent": true,
+    "reportedError": "PermissionError(1,'Operation not permitted')",
+    "primaryFailure": "Own skipped turns in baseline round13",
+    "masking": "Uncaught os.killpg PermissionError in finally obscured primary exception and skipped cleanup report",
+    "signalPhaseNotProvable": true,
+    "currentOwnedPGIDs": [
+      71279,
+      71280
+    ],
+    "survivingTrackedGroupsAtInspection": 0,
+    "inspection": "Read-only ps filtered to tracked PID/PPID/PGID; no signals sent",
+    "inspectedAt": "2026-11-05T17:47:22.692459+00:00"
+  },
+  "diagnosisLimits": "Resource admission/sampling guards passed (min40%available,zeroSwapouts). No causal CPU/memory/GC attribution established. Candidate sibling score is descriptive only; no promotion or control comparison valid.",
+  "reasonedVerdict": "INVALID stage2; original study stops. Control own skips violate registered guards, recording confirms an aborted partial game; cleanup failure masks the original error. Candidate sibling completes normally. Keep mask0/baseline0.2.1; do not infer candidate improvement or resume/replay within this registration."
+}

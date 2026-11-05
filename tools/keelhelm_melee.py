@@ -50,11 +50,11 @@ def schedule():
                               seed=2026110521+slot, order=['KeelHelm', name]))
     return games
 
-def collect(source, evidence, pins, java, python):
-    candidate = ROOT/'experiments/KeelHelm'
+def collect(source, evidence, pins, java, python, *, control_jar_sha=None, schedule_rows=None, extra_paths=(), candidate_project=None):
+    candidate = Path(candidate_project).resolve() if candidate_project is not None else ROOT/'experiments/KeelHelm'
     control = evidence/'control-source'
     paths = files(candidate) + files(control) + [pins/'entry-manifests.json',pins/'shared-inputs.json']
-    paths += [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
+    paths += list(extra_paths) + [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
               ROOT/'docs/improvements/keelhelm-melee-v1-protocol.md',
               ROOT/'docs/improvements/keelhelm-melee-v2-protocol.md']
     bases = {'Diamond Port': source/'guest-source/bots/ports/diamond-port',
@@ -70,7 +70,7 @@ def collect(source, evidence, pins, java, python):
             entrant += [source/f'experiments/{name}/{name}.jar',source/f'experiments/{name}/build.gradle']
         if {str(p.relative_to(source)):sha(p) for p in entrant} != registered[name]:
             raise ValueError('Tournament opponent pin changed: '+name)
-    if sha(control/'KeelHelm.jar') != sha(source/'experiments/KeelHelm/KeelHelm.jar'):
+    if sha(control/'KeelHelm.jar') != (control_jar_sha or sha(source/'experiments/KeelHelm/KeelHelm.jar')):
         raise ValueError('Control differs from the frozen champion JAR')
     for name, base in bases.items():
         paths += files(base)
@@ -104,9 +104,9 @@ def collect(source, evidence, pins, java, python):
     if java_version != shared['javaVersion'] or python_runtime != shared['pythonRuntime']:
         raise ValueError('Tournament Java/Python version/package inventory changed')
     identities = {name:json.loads(next(base.glob('*.json')).read_text()) for name, base in bases.items()}
-    return dict(source=str(source),evidence=str(evidence),files={str(p):sha(p) for p in sorted(set(paths))}, bases={n:str(p) for n,p in bases.items()},
+    return dict(candidateProject=str(candidate),source=str(source),evidence=str(evidence),files={str(p):sha(p) for p in sorted(set(paths))}, bases={n:str(p) for n,p in bases.items()},
                 identities={n:{k:v[k] for k in ('name','version')} for n,v in identities.items()},
-                java=str(java), python=str(python), schedule=schedule(), parent=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT,text=True).strip(),
+                java=str(java), python=str(python), schedule=schedule() if schedule_rows is None else schedule_rows, parent=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT,text=True).strip(),
                 runtime=dict(host=platform.node(), platform=platform.platform(), python=sys.version,
                     java=java_version, botPython=python_runtime))
 
@@ -169,25 +169,69 @@ def telemetry(path, rounds):
             raise ValueError('Own timing/coverage guard failed')
     return rows
 
-def execute(command, env, run):
-    cleanup = {}; start = time.monotonic()
+def owned_group_live(pgid):
+    rows=subprocess.check_output(['/bin/ps','-axo','pid=,pgid=,stat='],text=True,timeout=3).splitlines()
+    return [int(pid) for pid,group,state in (line.split() for line in rows)
+            if int(group)==pgid and not state.startswith('Z')]
+
+def cleanup_owned(process):
+    """Retain signal failures, boundedly drain only our session, and verify rather than assume teardown."""
+    result=dict(processGroup=process.pid,signalErrors=[],remainingPids=[],verified=False)
+    try:
+        for sig,drain in ((signal.SIGTERM,10),(signal.SIGKILL,5)):
+            if not owned_group_live(process.pid):break
+            try:os.killpg(process.pid,sig)
+            except ProcessLookupError:pass
+            except OSError as error:
+                result['signalErrors'].append(dict(signal=int(sig),error=repr(error)))
+                # A direct Popen child is unambiguously ours even if group signalling was denied.
+                if process.poll() is None:
+                    try:process.terminate() if sig==signal.SIGTERM else process.kill()
+                    except OSError as fallback:result['signalErrors'].append(dict(directChild=True,error=repr(fallback)))
+            deadline=time.monotonic()+drain
+            while owned_group_live(process.pid) and time.monotonic()<deadline:time.sleep(.1)
+        try:process.wait(timeout=3)
+        except subprocess.TimeoutExpired:result['parentReapTimeout']=True
+        result['remainingPids']=owned_group_live(process.pid)
+        result['parentReturnCode']=process.poll()
+        result['verified']=not result['remainingPids'] and process.poll() is not None
+    except BaseException as error:
+        result['validationError']=repr(error)
+        # Enumeration can fail independently of our direct child handle. Always drain that child.
+        for method in (process.terminate,process.kill):
+            try:
+                if process.poll() is None:method()
+            except OSError as fallback:result['signalErrors'].append(dict(directChild=True,error=repr(fallback)))
+            try:process.wait(timeout=3);break
+            except subprocess.TimeoutExpired:continue
+            except BaseException as reap:result['parentReapError']=repr(reap)
+        result['parentReturnCode']=process.poll()
+        # Group absence was not established; reaping the parent alone cannot verify the group.
+        result['verified']=False
+    return result
+
+def execute(command, env, run, process_callback=None, failure_check=None):
+    start = time.monotonic();primary=None
     with (run/'runner.log').open('x') as log:
         process = subprocess.Popen(command,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         try:
+            if process_callback is not None: process_callback(process.pid)
             while process.poll() is None:
+                if failure_check is not None: failure_check()
                 if time.monotonic()-start > 960: raise TimeoutError('Game timeout')
                 metrics = run/'helm-metrics.txt'
                 if metrics.exists() and re.search(r'^\d+ skip ',metrics.read_text(),re.M): raise ValueError('Own skipped turn')
                 time.sleep(.25)
             if process.returncode: raise ValueError('Battle process failed: '+str(process.returncode))
+        except BaseException as error:primary=error;raise
         finally:
-            # Signal only the owned session, even if its Java root exited before a bot child.
-            for sig in (signal.SIGTERM,signal.SIGKILL):
-                try: os.killpg(process.pid,sig); cleanup[str(sig)] = True
-                except ProcessLookupError: cleanup[str(sig)] = False
-                if sig == signal.SIGTERM: time.sleep(.5)
-            try: process.wait(timeout=10)
-            finally: save(run/'cleanup.json',cleanup)
+            cleanup=cleanup_owned(process)
+            try:
+                save(run/'cleanup.json',cleanup)
+                if not cleanup['verified']:raise RuntimeError('Owned teardown could not be verified: '+repr(cleanup))
+            except BaseException as error:
+                if primary is not None:primary.add_note('Additional teardown issue: '+repr(error))
+                else:raise
 
 def summary(games):
     result = {}; exact = {}
@@ -209,7 +253,7 @@ def stage_bots(game, source, evidence, freeze, run):
     botdirs=[]; identities=[]
     for name in game['order']:
         if name == 'KeelHelm':
-            project = ROOT/'experiments/KeelHelm' if game['arm']=='candidate' else evidence/'control-source'
+            project = Path(freeze.get('candidateProject',str(ROOT/'experiments/KeelHelm'))) if game['arm']=='candidate' else evidence/'control-source'
             base=project/'bot'; folder=name
         else:
             base=Path(freeze['bases'][name]); folder=name if name in ('Keel','Prism') else base.name
@@ -219,7 +263,7 @@ def stage_bots(game, source, evidence, freeze, run):
             shutil.copy2(jar,dst/jar.name)
         for sh in dst.glob('*.sh'): sh.chmod(0o755)
         d=json.loads(next(dst.glob('*.json')).read_text());identities.append((d['name'],d['version']));botdirs.append(str(dst))
-    if game['scenario']=='melee':
+    if 'Diamond Port' in game['order']:
         shutil.copytree(source/'guest-source/bots/bot_core',run/'bots/bot_core')
         shutil.copy2(source/'guest-source/LICENSE',run/'bots/LICENSE.shared-Apache-2.0')
     if game['scenario'] in ('Walls','SpinBot'): shutil.copytree(source/'samples/lib',run/'bots/lib')

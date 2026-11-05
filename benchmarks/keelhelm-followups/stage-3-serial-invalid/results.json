@@ -1,0 +1,219 @@
+{
+  "status": "invalid",
+  "stageConfig": {
+    "stage": 3,
+    "name": "target-selection",
+    "newBit": 4,
+    "controlMask": 0,
+    "concurrency": 1,
+    "loadPlan": "serial-continuation",
+    "candidateMask": 4,
+    "controlJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+    "candidateJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+    "featureJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+    "featureProjectManifestSHA256": "97162a8339d01277cbb5d017ca13a0844ab5307fa80f030440b54c9b5e5f216e",
+    "previousAuditSHA256": "6fc47862585bec1d847358e91bc0498c307b3899f662132dda5488f862d81e2d"
+  },
+  "freezeSHA256": "5088186766615ca7bafffce29fc68c65f9a16c598bc88ffddad2402d2fbc00a8",
+  "plannedGames": 20,
+  "plannedRounds": 260,
+  "games": [
+    {
+      "id": "melee-1-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111200,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 4,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 3745,
+            "survival": 1850,
+            "bulletDamage": 1724,
+            "firstPlaces": 3
+          },
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 2,
+            "totalScore": 3575,
+            "survival": 2150,
+            "bulletDamage": 1003,
+            "firstPlaces": 10
+          },
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 3,
+            "totalScore": 3134,
+            "survival": 1650,
+            "bulletDamage": 1155,
+            "firstPlaces": 7
+          },
+          {
+            "id": 1,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 666,
+            "survival": 350,
+            "bulletDamage": 294,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 2,
+        "totalScore": 3575,
+        "survival": 2150,
+        "bulletDamage": 1003,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.3214928057553957,
+      "recording": "games/melee-1-control/recordings/game-2026-11-05-13-44-38.battle.gz",
+      "audit": {
+        "recordingSHA256": "f86bed7df322bd4a44ba09cebeba5e2e77066a6ada4000e0255bbca31896bfdd",
+        "roundTurns": {
+          "1": 2267,
+          "2": 1922,
+          "3": 1481,
+          "4": 1276,
+          "5": 2054,
+          "6": 1698,
+          "7": 1347,
+          "8": 1782,
+          "9": 2068,
+          "10": 2022,
+          "11": 1356,
+          "12": 1706,
+          "13": 1637,
+          "14": 2038,
+          "15": 2342,
+          "16": 1063,
+          "17": 1193,
+          "18": 820,
+          "19": 4118,
+          "20": 1595
+        },
+        "metrics": {
+          "shots": 2201,
+          "bulletHits": 290,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 19799,
+          "duelTicks": 12584
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=95 hitsTaken=4 gun=1 score=0.114/0.137 maxMs=5 stoppedRolloutSteps=149405 headingChangedSteps=21574 secondWaveEvaluations=17452 executedStopNow=150 meleeTurns=995 meleeShots=66 duelTransitions=1",
+        "1 end",
+        "2 start",
+        "2 stats shots=154 hitsTaken=7 gun=1 score=0.061/0.086 maxMs=1 stoppedRolloutSteps=64453 headingChangedSteps=10979 secondWaveEvaluations=9794 executedStopNow=53 meleeTurns=1148 meleeShots=78 duelTransitions=1",
+        "2 end",
+        "3 start",
+        "3 stats shots=229 hitsTaken=7 gun=1 score=0.067/0.081 maxMs=0 stoppedRolloutSteps=55200 headingChangedSteps=8959 secondWaveEvaluations=6566 executedStopNow=100 meleeTurns=990 meleeShots=64 duelTransitions=1",
+        "3 end",
+        "4 start",
+        "4 stats shots=229 hitsTaken=7 gun=1 score=0.067/0.081 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=976 meleeShots=65 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=301 hitsTaken=8 gun=1 score=0.025/0.090 maxMs=0 stoppedRolloutSteps=82900 headingChangedSteps=15339 secondWaveEvaluations=12154 executedStopNow=102 meleeTurns=1116 meleeShots=75 duelTransitions=1",
+        "5 end",
+        "6 start",
+        "6 stats shots=355 hitsTaken=8 gun=1 score=0.085/0.100 maxMs=0 stoppedRolloutSteps=130825 headingChangedSteps=14068 secondWaveEvaluations=10268 executedStopNow=62 meleeTurns=995 meleeShots=67 duelTransitions=1",
+        "6 end",
+        "7 start",
+        "7 stats shots=355 hitsTaken=8 gun=1 score=0.085/0.100 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=834 meleeShots=55 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=416 hitsTaken=9 gun=0 score=0.158/0.113 maxMs=0 stoppedRolloutSteps=87150 headingChangedSteps=12102 secondWaveEvaluations=10658 executedStopNow=90 meleeTurns=1028 meleeShots=69 duelTransitions=1",
+        "8 end",
+        "9 start",
+        "9 stats shots=498 hitsTaken=9 gun=1 score=0.095/0.118 maxMs=0 stoppedRolloutSteps=138211 headingChangedSteps=19795 secondWaveEvaluations=15322 executedStopNow=75 meleeTurns=974 meleeShots=66 duelTransitions=1",
+        "9 end",
+        "10 start",
+        "10 stats shots=574 hitsTaken=20 gun=1 score=0.094/0.104 maxMs=0 stoppedRolloutSteps=85745 headingChangedSteps=15143 secondWaveEvaluations=13311 executedStopNow=110 meleeTurns=1075 meleeShots=72 duelTransitions=1",
+        "10 end",
+        "11 start",
+        "11 stats shots=621 hitsTaken=22 gun=1 score=0.092/0.143 maxMs=0 stoppedRolloutSteps=68465 headingChangedSteps=12675 secondWaveEvaluations=8973 executedStopNow=42 meleeTurns=725 meleeShots=48 duelTransitions=1",
+        "11 end",
+        "12 start",
+        "12 stats shots=661 hitsTaken=29 gun=0 score=0.190/0.070 maxMs=0 stoppedRolloutSteps=47599 headingChangedSteps=8604 secondWaveEvaluations=6783 executedStopNow=41 meleeTurns=1217 meleeShots=85 duelTransitions=1",
+        "12 end",
+        "13 start",
+        "13 stats shots=661 hitsTaken=29 gun=0 score=0.190/0.070 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=845 meleeShots=54 duelTransitions=0",
+        "13 end",
+        "14 start",
+        "14 stats shots=661 hitsTaken=29 gun=0 score=0.190/0.070 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=852 meleeShots=59 duelTransitions=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=756 hitsTaken=39 gun=1 score=0.062/0.097 maxMs=0 stoppedRolloutSteps=104772 headingChangedSteps=19881 secondWaveEvaluations=16540 executedStopNow=113 meleeTurns=1192 meleeShots=81 duelTransitions=1",
+        "15 end",
+        "16 start",
+        "16 stats shots=756 hitsTaken=39 gun=1 score=0.062/0.097 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=698 meleeShots=45 duelTransitions=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=770 hitsTaken=42 gun=1 score=0.047/0.073 maxMs=0 stoppedRolloutSteps=30111 headingChangedSteps=4056 secondWaveEvaluations=2569 executedStopNow=19 meleeTurns=1017 meleeShots=69 duelTransitions=1",
+        "17 end",
+        "18 start",
+        "18 stats shots=770 hitsTaken=42 gun=1 score=0.047/0.073 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=766 meleeShots=51 duelTransitions=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1030 hitsTaken=75 gun=1 score=0.051/0.132 maxMs=0 stoppedRolloutSteps=253071 headingChangedSteps=48127 secondWaveEvaluations=45255 executedStopNow=326 meleeTurns=953 meleeShots=63 duelTransitions=1",
+        "19 end",
+        "20 start",
+        "20 stats shots=1030 hitsTaken=75 gun=1 score=0.051/0.132 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1396 meleeShots=83 duelTransitions=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-1-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111200,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "status": "attempted",
+      "featureMask": 4,
+      "error": "ValueError('Own skipped turn')"
+    }
+  ],
+  "waves": [
+    {
+      "wave": 1,
+      "resourceError": null,
+      "samples": 31
+    },
+    {
+      "wave": 2,
+      "resourceError": null,
+      "samples": 27
+    }
+  ],
+  "error": "ValueError('Wave evidence failure')"
+}

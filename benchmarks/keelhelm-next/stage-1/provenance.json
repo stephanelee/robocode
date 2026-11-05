@@ -1,0 +1,326 @@
+{
+  "sourceHead": "0d0da85900c75d940384479baa2b6b81e0bb1489",
+  "stageConfig": {
+    "study": "next-serial-v1",
+    "featureJarSHA256": "6ffb14abea4013943577af662f66ddd7b1d47a18a6d484a903b11bafbd058aab",
+    "featureProjectManifestSHA256": "164e9560fd8198bdbd087f890fbc4a42ea4f4590b27da25523c275b9fb50eb03",
+    "stage": 1,
+    "name": "predicted-risk",
+    "newBit": 8,
+    "controlMask": 0,
+    "candidateMask": 8,
+    "concurrency": 1,
+    "loadPlan": "next-serial",
+    "controlJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+    "candidateJarSHA256": "6ffb14abea4013943577af662f66ddd7b1d47a18a6d484a903b11bafbd058aab",
+    "previousAuditSHA256": "6fc47862585bec1d847358e91bc0498c307b3899f662132dda5488f862d81e2d"
+  },
+  "freezeSHA256": "25c43e79103f8286f0dfe150a1aa67b2377b10da813824c2d2f97b8264ab0765",
+  "frozenInputCount": 7024,
+  "runtime": {
+    "host": "minimind",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "python": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "botPython": {
+      "version": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.2.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.2.2"
+        ],
+        [
+          "pycountry",
+          "24.6.1"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "15.0.1"
+        ]
+      ]
+    }
+  },
+  "schedule": [
+    {
+      "id": "melee-1-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "melee-1-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "melee-2-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "melee-2-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "melee-3-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "melee-3-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "melee-4-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "melee-4-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026111703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "diamond-1-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026111704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "diamond-1-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026111704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "diamond-2-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026111705,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "diamond-2-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026111705,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "retcon-1-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026111706,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "retcon-1-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026111706,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "retcon-2-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026111707,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "retcon-2-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026111707,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "walls-control",
+      "arm": "control",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026111708,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ]
+    },
+    {
+      "id": "walls-candidate",
+      "arm": "candidate",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026111708,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ]
+    },
+    {
+      "id": "spinbot-candidate",
+      "arm": "candidate",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026111709,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ]
+    },
+    {
+      "id": "spinbot-control",
+      "arm": "control",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026111709,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ]
+    }
+  ],
+  "helperSHA256": {
+    "tools/keelhelm_followups.py": "a3df8ba82defbf8211010e13d611d2df06312dd8c5a06cb9c9dfb1e22fb0521e",
+    "tools/keelhelm_melee.py": "b70e3d603826df7a75d8438c273b122a5bb540dca5a8240c14069f5df6da63c6",
+    "tools/keelhelm_next.py": "d47ee54b42eebc89fc1dc494789aa67e8ad505c61eb2c773d679ccdcb9fcb699",
+    "tools/keelhelm_resources.py": "13bb218910aed868bb79a2ad3e8b3bcfe32d6d8ad078ec0d263b5f8924e4e16c",
+    "tools/test_keelhelm_melee.py": "8458c3a8c75e1691172b884c2b07de9d5e0fbf4b285a8978609947c1ba9484c5",
+    "tools/test_keelhelm_next.py": "7101d86fe3e441abf4eebbc456d42f19fa311f399eb23cbee052ce498ecbbac7"
+  },
+  "fullFreezeRetainedInArchive": true
+}
