@@ -34,7 +34,7 @@ Full opening-wave archive: `local-evidence/tournament-2026-11-04/playoff-1-full-
 
 Executed orchestration hashes: `tournament.py`: `58856360ac83d64ab23a0c841fd3de0eb113504ffa11ef7b839faf63e9bf2304`, `tournament_playoffs.py`: `7b1b58726d713840b822c2727f17385ea3a24eaaae6befe849072e3fdf2740b5`. These matched the registered sources at launch; all earlier entry/shared-input/harness freezes passed. No source/JAR or runtime pins were replaced.
 
-Independent pre-play review approved the seeded draw, tie rules, stop-on-failure behavior and frozen hashes. An exhaustive 32,768-outcome bracket check preserved second chances, prevented reentry after two losses and enforced the grand-final reset. Twenty local tournament tests pass. The earlier test-only missing-numberOfRounds fixture failure was corrected; it consumed no battles.
+Independent pre-play review approved the seeded draw, tie rules, stop-on-failure behavior and frozen hashes. An exhaustive 32,768-outcome bracket check preserved second chances, prevented reentry after two losses and enforced the grand-final reset. Twenty local tournament tests pass. Test-only fixture coverage/location failures were corrected; the tests use committed score-only Swiss evidence and consume no battles.
 
 The public Site now has separate Home, Matches, Bots and Rules pages. Fourteen Swiss Round 4 replay buttons sit beside their game scores, with the player alongside the result cards, slower speed controls and no game-selection dropdown. New playoff recordings are retained locally; no new playoff MP4 is claimed. All four pages passed static link/data checks and nonbrowser render/player-state checks. Browser layout/playback inspection remains unavailable in the current Work settings.
 
