@@ -1,0 +1,21 @@
+# KeelHelm next experiments: timing diagnosis and isolated melee changes
+
+User authorized this new program after the previous serial continuation stopped. Issue 125 / draft PR 126. Do not resume or pool either invalid attempt. Starting accepted control is KeelHelm 0.2.1, JAR 19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b; previous physical development accounting is 849 completed rounds plus two partial rounds.
+
+## Diagnostic D1, prospective budget
+
+First inspect the exact embedded API bytecode and compare lifecycle ordering with bot callbacks. Hypothesis: round-boundary thread termination/dispatch, synchronous callback telemetry, or JVM pauses can delay the first intent despite small measured gameplay-loop time. Do not claim any one cause from a skipped-turn event alone.
+
+Run at most two fresh cold 20-round top-four melee games sequentially on minimind with the accepted 0.2.1 JAR and identical frozen opponents/runtime. Only change acquisition: enable bounded JDK Flight Recorder on the KeelHelm JVM through a staged launcher, maxsize 64 MiB, disk=true, dumponexit=true, settings=profile. Record invocation, source/JAR/launcher/runtime hashes, full recording, own telemetry, resource samples and verified teardown. No score-based selection or competitive claim. This consumes at most 40 rounds; any own skipped turn ends this diagnostic immediately and retains its partial cost. No automatic retry. JFR may perturb timing and a non-reproduction does not prove reliability.
+
+Admission and monitoring remain those of the prior serial protocol: one game at a time, >=35% available memory, >=2 GiB disk; invalidate below20% or normalized Swapouts>128pages/2s for three consecutive samples, missing samples or unverified cleanup. Official turn timeout remains100000 microseconds. Java17 builds/parity; JDK25 gameplay/Retcon. No Actions games, heap/GC/timeout changes.
+
+After D1, independently review observations and record an explicit diagnosis/limitations in docs/improvements.md before any corrected candidate or competitive trial. If a concrete repair is identified, register its exact change and dedicated comparison prospectively; do not silently reinterpret D1 as a strength benchmark.
+
+## Ordered gameplay hypotheses
+
+After diagnostic review, register and freeze each implementation separately, against the last independently accepted candidate. (1) Predicted opponent positions and crossfire avoidance, the existing untested bit8. (2) A bounded target-radar revisit with a maximum age guard for every live opponent. (3) Shot obstruction using legal scan positions and bounded extrapolation. (4) Transfer legal final-opponent tracking into the melee-to-duel transition without cross-opponent contamination or invented waves. Rejected adaptive guns and power stay off; target selection remains disabled after invalid evidence.
+
+Each competitive comparison has20games/260rounds: four20round top-four melee games per arm; two10round duels per arm against each Diamond Port and Retcon; one5round duel per arm against each Walls and SpinBot. Cold process per game, rotated launch order, alternating arms, fixed bot-side seeds registered before games (not paired engine starts). Every candidate needs positive action exposure. Primary exact-ratio gates: equal-game melee mean>=20%, gain>=2pp, each1v1 guard>=control−5pp. Zero own skips and every logged loop maxMs<75; loop timer excludes callbacks. Complete all valid planned games without score-driven stopping or tuning. Any invalid game stops that comparison; subsequent work requires a separately documented plan and independent review, no automatic replacement or relaxed validation.
+
+Maximum prospective competitive budget for four changes is80games/1040rounds, plus D1 two games/40rounds. Timing repair, if needed, requires its own prospective budget. Record all physical starts/completed/partial rounds, failed setups, rejected candidates, legal-action exposure, source/JAR/opponent/runtime provenance and raw archive hashes. Keep frozen source and execution tools for every attempt. Independent reviewer validates exact freeze before games and raw evidence/claims after. The implementation agent does not merge. Small-cohort promotion is not proof of general competitive strength.
