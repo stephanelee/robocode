@@ -163,7 +163,7 @@ def main(args):
                    and pair.get('matchId', '').startswith('L')}
     selected_jobs = [item for item in selected_jobs
                      if (item[0], item[2]['a'], item[2]['b'], item[3]['game']) not in older_lower]
-    if args.omit_swiss4 or older_lower:
+    if args.omit_swiss4:
         selected_jobs = [item for item in selected_jobs if item[0] != 'swiss-4']
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         rendered = list(pool.map(render, selected_jobs))
@@ -174,7 +174,7 @@ def main(args):
     data['video'] = entries[0]
     data['replayPolicy'] = dict(fromStage='swiss-4', gamesAvailable=len(entries),
                                 battleRoundsAvailable=20*len(entries), defaultPlaybackRate=.25, maxTransferPartBytes=args.chunk_bytes)
-    if args.omit_swiss4:
+    if args.omit_swiss4 or older_lower:
         # Remove only verified, reproducible public copies. Private movies and raw
         # recordings remain intact; an unrelated file or symlink blocks cleanup.
         archived = [v for v in existing if (args.omit_swiss4 and v.get('stage') == 'swiss-4')
