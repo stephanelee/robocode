@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewerTask": "/root/runner_image_provenance_audit",
+  "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/jobs/126996333991/logs",
+  "command": [
+    "gh",
+    "api",
+    "--include",
+    "--allow-escape-sequences",
+    "repos/stephanelee/robocode/actions/jobs/126996333991/logs"
+  ],
+  "requestStartedAtUTC": "2026-11-05T01:56:45.666137+00:00",
+  "requestCompletedAtUTC": "2026-11-05T01:56:46.234216+00:00",
+  "httpStatus": 404,
+  "exitCode": 1,
+  "responseBytes": 215,
+  "responseSHA256": "4f86d97fb8ed9094856a24a02041a25925f906013d85e09eff6171fc61a61a7a",
+  "responseFile": "early-header-response.bin",
+  "rawHTTPResponseBytes": 674,
+  "rawHTTPResponseSHA256": "594d0de32f4c991cd267b3adeff83bc9cc59d48e95219b6bb34eb847b27795e1",
+  "runId": 41951522797,
+  "runAttempt": 1,
+  "jobId": 126996333991,
+  "headSHA": "e659647b3ae6366008ef666bf338ea3ee446ee71",
+  "jobInProgressFromActualAPI": true,
+  "artifactUpdatedAtUTC": "2026-11-05T01:55:23Z",
+  "accessRequests": [
+    {
+      "file": "run.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/runs/41951522797",
+      "startedAtUTC": "2026-11-05T01:56:44.718144+00:00",
+      "completedAtUTC": "2026-11-05T01:56:45.064212+00:00",
+      "exitCode": 0,
+      "bytes": 12833,
+      "sha256": "3a618e87d3a7910f045f6b4206992e517b9097d3532a65d0e8d95ccc0718ee66"
+    },
+    {
+      "file": "jobs.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/runs/41951522797/jobs",
+      "startedAtUTC": "2026-11-05T01:56:45.064812+00:00",
+      "completedAtUTC": "2026-11-05T01:56:45.414191+00:00",
+      "exitCode": 0,
+      "bytes": 4224,
+      "sha256": "b25070d9a3a7a97e28815b313fd296f61ba9ba1c43837e243f49ca4ded61b8cc"
+    },
+    {
+      "file": "artifact.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/artifacts/13380953306",
+      "startedAtUTC": "2026-11-05T01:56:45.415122+00:00",
+      "completedAtUTC": "2026-11-05T01:56:45.664202+00:00",
+      "exitCode": 0,
+      "bytes": 727,
+      "sha256": "bd83e05c0c5c94614edbf0d1a45a6ce0b0f660ffab638cd0449280aa99ab4ea8"
+    }
+  ],
+  "purpose": "Independent ACTUAL same-job early request after finalized provenance; not another job or probe"
+}
