@@ -111,7 +111,7 @@ def freeze_manifest(path, current, prepared=None):
 
 def collect_shared_inputs(source, java, python):
     cache = source / '.benchmark-cache'
-    paths = [source / 'tools/BenchmarkBattle.java'] + list((source / 'samples/lib').rglob('*')) + list((cache / 'retcon-api').glob('*.jar'))
+    paths = [source / 'tools' / name for name in ['BenchmarkBattle.java', 'benchmark.py', 'retcon.py', 'retcon_stats.py', 'strong_melee_opponents.py', 'verify_jar.py', 'opponents/retcon.lock.json', 'opponents/strong-melee.lock.json']] + list((source / 'samples/lib').rglob('*')) + list((cache / 'retcon-api').glob('*.jar'))
     files = {str(path.relative_to(source)): digest(path) for path in paths if path.is_file()}
     # Verify extracted shared/sample bytes against the already hash-pinned release ZIP.
     with zipfile.ZipFile(cache / 'sample-bots-Java-1.4.0.zip') as archive:
