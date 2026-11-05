@@ -1,0 +1,11 @@
+KeelWake refreshes the density for an already-selected incoming wave when matched danger labels have changed since its cached estimate. The selected waves, aiming, power and movement objective remain otherwise unchanged; production AISurvivor and the original Keel baseline remain unchanged.
+
+Prospective registration: issue #118 and `docs/improvements/keel-wake-v1.md`. Screen: 14 games / 120 rounds against Diamond Port, Retcon and pinned samples with fresh Keel controls. Only a full screen pass permits the registered fresh 18-game / 300-round confirmation. No retries, replacement games, historical controls or competitive result is claimed.
+
+Candidate JAR SHA256: `9dfc691b0e3a1879f568ab0c9897a14fcc6f6e1936d2208ff46d05fe62f3f78f`. The actual first pinned Java17 build passed 29 JUnit tests and two byte-identical builds. Local independent harness/reader review reproduced 76 and 86 tests, including isolated full screen/confirmation evidence fixtures. Source, original build artifact, review snapshots and failures are preserved in candidate validation and `benchmarks/keel-wake-v1/`.
+
+Full reviewed harness/reader source is published at `165d2ca819413881ecd582959924f3b6a6de8c1f`; same-head pinned Python3.13/Java17 CI is running. Final freeze, published-head independent source clearance, local audit-storage gate and fresh worker runtime approval remain pending. Measured Wake budget remains 0 screen / 0 confirmation rounds. No source-clearance or dispatch token is present.
+
+Preparation failure preserved separately: three unintended inherited CI games / three rounds before branch-guard repair, with no Wake/Keel participants. Raw originals and independent audit are retained; the narrow guards now skip those jobs. See `docs/improvements/keel-wake-ci-preparation-results.md` and `docs/improvements.md`.
+
+Hourly monitor remains paused by user instruction. Implementation author does not merge this PR.
