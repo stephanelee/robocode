@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "tankRoyaleVersion": "1.4.0",
+  "sourceCommit": "818ca64a609463b7a2aa5241cce8f9e0bd68b5bf",
+  "seed": 20261102,
+  "suite": "samples",
+  "runtimeJava": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)",
+  "runtimeOS": {
+    "system": "Linux",
+    "release": "7.0.0-1017-azure",
+    "machine": "x86_64",
+    "osRelease": {
+      "NAME": "Ubuntu",
+      "ID": "ubuntu",
+      "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+      "VERSION_ID": "26.04",
+      "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+      "VERSION_CODENAME": "resolute",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "resolute",
+      "LOGO": "ubuntu-logo"
+    }
+  },
+  "opponentProvenance": [],
+  "evaluationScope": "in-roster adaptation; training and evaluation use the same opponent identities",
+  "trainingRounds": 0,
+  "botJarSHA256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+  "assetSHA256": {
+    "robocode-tankroyale-runner-1.4.0.jar": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+    "sample-bots-Java-1.4.0.zip": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2"
+  },
+  "limitations": "Reference experiment, not evidence that learning improves strength. AISurvivor RNG is seeded; opponent randomness, arena starting positions, and engine scheduling are not seeded. Training and evaluation use the same roster, so this is in-roster adaptation rather than held-out generalization. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.",
+  "battles": [
+    {
+      "scenario": "Target",
+      "policy": "untrained",
+      "rounds": 1,
+      "id": 2,
+      "name": "AISurvivor",
+      "version": "1.2.1",
+      "rank": 1,
+      "totalScore": 178,
+      "survival": 50,
+      "bulletDamage": 98,
+      "firstPlaces": 1,
+      "metrics": {
+        "turns": 251,
+        "shotsFired": 15,
+        "bulletHits": 11,
+        "damageDealt": 105.825571,
+        "damageTaken": 0.0,
+        "wallCollisions": 4,
+        "botCollisions": 0,
+        "skippedTurns": 0,
+        "hitRate": 0.7333333333333333,
+        "roundsRecorded": 1,
+        "checkpointLoaded": false
+      },
+      "results": [
+        {
+          "id": 2,
+          "name": "AISurvivor",
+          "version": "1.2.1",
+          "rank": 1,
+          "totalScore": 178,
+          "survival": 50,
+          "bulletDamage": 98,
+          "firstPlaces": 1
+        },
+        {
+          "id": 1,
+          "name": "Target",
+          "version": "1.0",
+          "rank": 2,
+          "totalScore": 0,
+          "survival": 0,
+          "bulletDamage": 0,
+          "firstPlaces": 0
+        }
+      ],
+      "retconStats": {
+        "status": "not-applicable"
+      },
+      "modelSHA256": null
+    }
+  ]
+}

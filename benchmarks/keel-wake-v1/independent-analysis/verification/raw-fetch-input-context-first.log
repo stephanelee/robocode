@@ -1,0 +1,32 @@
+................................................FFF........................
+======================================================================
+FAIL: test_different_approval_target_ignored (test_audit.RevocationPolicyTests.test_different_approval_target_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 320, in test_different_approval_target_ignored
+    def test_different_approval_target_ignored(self):self.assertTrue(self.check_case('wrong-target')['pass'])
+                                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_foreign_malformed_and_matching_run_ignored (test_audit.RevocationPolicyTests.test_foreign_malformed_and_matching_run_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 319, in test_foreign_malformed_and_matching_run_ignored
+    for case in ['foreign-malformed','foreign-matching']:self.assertTrue(self.check_case(case)['pass'],case)
+                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : foreign-malformed
+
+======================================================================
+FAIL: test_missing_approval_target_ignored (test_audit.RevocationPolicyTests.test_missing_approval_target_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 321, in test_missing_approval_target_ignored
+    def test_missing_approval_target_ignored(self):self.assertTrue(self.check_case('missing-target')['pass'])
+                                                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 75 tests in 14.133s
+
+FAILED (failures=3)

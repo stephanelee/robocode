@@ -1,0 +1,16 @@
+{
+  "atUTC": "2026-11-05T05:47:24.678378+00:00",
+  "scope": "No-engine source CLI import check only; localPython3.15.1 not pinnedbenchmarkruntime; no externalAPI/JVM/game call",
+  "command": [
+    "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "-I",
+    "-B",
+    "-S",
+    "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py",
+    "--help"
+  ],
+  "returnCode": 1,
+  "scriptSHA256": "ce5f4961dd580fb40a2a83861d419f9dd8e8038d6cbb47503f09a04175b5a133",
+  "stderrSHA256": "1029717091fa513090b0ea2b287477c3ae6a5c52737d324f8c412d9c53a693dd",
+  "finding": "audit.py imports own phase_order and launcher_compilation without explicitly adding frozen sibling source dir under-I. Existing full_fixture calls main inprocess after normal imports, not a separate isolated CLI interpreter."
+}

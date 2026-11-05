@@ -1,0 +1,198 @@
++ java -version
+openjdk version "17.0.21" 2026-10-20
+OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
++ javac -version
+javac 17.0.21
++ ./gradlew --version
+
+------------------------------------------------------------
+Gradle 8.14.3
+------------------------------------------------------------
+
+Build time:    2025-07-04 13:15:44 UTC
+Revision:      e5ee1df3d88b8ca3a8074787a94f373e3090e1db
+
+Kotlin:        2.0.21
+Groovy:        3.0.24
+Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+Launcher JVM:  17.0.21 (Eclipse Adoptium 17.0.21+9)
+Daemon JVM:    /usr/lib/jvm/temurin-17-jdk-amd64 (no JDK specified, using current Java home)
+OS:            Linux 7.0.0-1019-azure amd64
+
++ git rev-parse HEAD
+165d2ca819413881ecd582959924f3b6a6de8c1f
++ test -f experiments/KeelWake/KeelWake.jar
++ cp experiments/KeelWake/KeelWake.jar build/keel-wake-bootstrap/KeelWake-committed.jar
++ ./gradlew -p experiments/KeelWake --no-daemon clean build
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :jar
+> Task :prepareBot
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test
+
+KeelWakeInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+
+KeelWakeInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+
+KeelWakeInheritedContractTest > hitsShiftDanger() PASSED
+
+KeelWakeInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+
+KeelWakeInheritedContractTest > knnReturnsClosest() PASSED
+
+KeelWakeInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+
+KeelWakeInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+
+KeelWakeInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+
+KeelWakeInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+
+KeelWakeInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+
+KeelWakeRefreshTest > collisionKeepsHalfWeightAndRemovesOnlyMatchedWave() PASSED
+
+KeelWakeRefreshTest > unmatchedCallbacksDoNotInvalidateCache() PASSED
+
+KeelWakeRefreshTest > noLabelMatchesFrozenOriginalProductionPlanExactly() PASSED
+
+KeelWakeRefreshTest > newMatchedHitRefreshesOnlyTwoSelectedWavesAndOriginalRemainsFrozen() PASSED
+
+KeelWakeRefreshTest > labelRefreshUsesWholeUnchangedEstimatorIncludingNewerVisits() PASSED
+
+KeelWakeRefreshTest > labelWithNoSurvivingWaveDoesNotCreateExposure() PASSED
+
+KeelWakeRefreshTest > staleThirdWaveRefreshesWhenLaterSelectedAtSameModelEpoch() PASSED
+
+KeelWakeRefreshTest > equalEtaSelectionRetainsOriginalInsertionTieRule() PASSED
+
+KeelWakeRefreshTest > nextMatchedLabelInvalidatesSelectedCacheAgain() PASSED
+
+KeelWakeRefreshTest > hitKeepsUnitWeight() PASSED
+
+KeelWakeRefreshTest > multipleLabelsCoalesceAndRepeatedPlansReuseOneCache() PASSED
+
+KeelWakeRefreshTest > everyCounterOverflowEmitsExactlyOneFaultAndNeverWraps() PASSED
+
+KeelWakeRefreshTest > refreshPreservesFireFeaturesPhysicsAndShades() PASSED
+
+KeelWakeRefreshTest > capacityEvictionChangesSequenceEvenWhenSizeStaysConstant() PASSED
+
+KeelWakeRefreshTest > newBirthUsesCurrentEpochAndDoesNotFakeExposure() PASSED
+
+KeelWakeRefreshTest > exactCounterLimitIsAllowedBeforeFirstAttemptedExceed() PASSED
+
+KeelWakeRefreshTest > roundClearsWavesAndCountersButPreservesBothModels() PASSED
+
+KeelWakeRefreshTest > passedWaveIsNotRefreshed() PASSED
+
+KeelWakeRefreshTest > visitOnlyChangesDoNotRefreshEvenWhenEstimatorWouldDiffer() PASSED
+
+> Task :check
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793859897894.json
+
+BUILD SUCCESSFUL in 10s
+6 actionable tasks: 5 executed, 1 up-to-date
++ cp experiments/KeelWake/build/bot/KeelWake/KeelWake.jar build/keel-wake-bootstrap/KeelWake-first.jar
++ ./gradlew -p experiments/KeelWake --no-daemon clean build
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :jar
+> Task :prepareBot
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test
+
+KeelWakeInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+
+KeelWakeInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+
+KeelWakeInheritedContractTest > hitsShiftDanger() PASSED
+
+KeelWakeInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+
+KeelWakeInheritedContractTest > knnReturnsClosest() PASSED
+
+KeelWakeInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+
+KeelWakeInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+
+KeelWakeInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+
+KeelWakeInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+
+KeelWakeInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+
+KeelWakeRefreshTest > collisionKeepsHalfWeightAndRemovesOnlyMatchedWave() PASSED
+
+KeelWakeRefreshTest > unmatchedCallbacksDoNotInvalidateCache() PASSED
+
+KeelWakeRefreshTest > noLabelMatchesFrozenOriginalProductionPlanExactly() PASSED
+
+KeelWakeRefreshTest > newMatchedHitRefreshesOnlyTwoSelectedWavesAndOriginalRemainsFrozen() PASSED
+
+KeelWakeRefreshTest > labelRefreshUsesWholeUnchangedEstimatorIncludingNewerVisits() PASSED
+
+KeelWakeRefreshTest > labelWithNoSurvivingWaveDoesNotCreateExposure() PASSED
+
+KeelWakeRefreshTest > staleThirdWaveRefreshesWhenLaterSelectedAtSameModelEpoch() PASSED
+
+KeelWakeRefreshTest > equalEtaSelectionRetainsOriginalInsertionTieRule() PASSED
+
+KeelWakeRefreshTest > nextMatchedLabelInvalidatesSelectedCacheAgain() PASSED
+
+KeelWakeRefreshTest > hitKeepsUnitWeight() PASSED
+
+KeelWakeRefreshTest > multipleLabelsCoalesceAndRepeatedPlansReuseOneCache() PASSED
+
+KeelWakeRefreshTest > everyCounterOverflowEmitsExactlyOneFaultAndNeverWraps() PASSED
+
+KeelWakeRefreshTest > refreshPreservesFireFeaturesPhysicsAndShades() PASSED
+
+KeelWakeRefreshTest > capacityEvictionChangesSequenceEvenWhenSizeStaysConstant() PASSED
+
+KeelWakeRefreshTest > newBirthUsesCurrentEpochAndDoesNotFakeExposure() PASSED
+
+KeelWakeRefreshTest > exactCounterLimitIsAllowedBeforeFirstAttemptedExceed() PASSED
+
+KeelWakeRefreshTest > roundClearsWavesAndCountersButPreservesBothModels() PASSED
+
+KeelWakeRefreshTest > passedWaveIsNotRefreshed() PASSED
+
+KeelWakeRefreshTest > visitOnlyChangesDoNotRefreshEvenWhenEstimatorWouldDiffer() PASSED
+
+> Task :check
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793859908107.json
+
+BUILD SUCCESSFUL in 8s
+6 actionable tasks: 6 executed
++ cp experiments/KeelWake/build/bot/KeelWake/KeelWake.jar build/keel-wake-bootstrap/KeelWake.jar
++ python tools/verify_jar.py build/keel-wake-bootstrap/KeelWake-first.jar build/keel-wake-bootstrap/KeelWake.jar
+Verified 788 matching JAR file entries (ZIP timestamps/order ignored).
++ cmp build/keel-wake-bootstrap/KeelWake-first.jar build/keel-wake-bootstrap/KeelWake.jar
++ test -f build/keel-wake-bootstrap/KeelWake-committed.jar
++ python tools/verify_jar.py build/keel-wake-bootstrap/KeelWake-committed.jar build/keel-wake-bootstrap/KeelWake.jar
+Verified 788 matching JAR file entries (ZIP timestamps/order ignored).
++ sha256sum build/keel-wake-bootstrap/KeelWake-committed.jar build/keel-wake-bootstrap/KeelWake-first.jar build/keel-wake-bootstrap/KeelWake.jar
+9dfc691b0e3a1879f568ab0c9897a14fcc6f6e1936d2208ff46d05fe62f3f78f  build/keel-wake-bootstrap/KeelWake-committed.jar
+9dfc691b0e3a1879f568ab0c9897a14fcc6f6e1936d2208ff46d05fe62f3f78f  build/keel-wake-bootstrap/KeelWake-first.jar
+9dfc691b0e3a1879f568ab0c9897a14fcc6f6e1936d2208ff46d05fe62f3f78f  build/keel-wake-bootstrap/KeelWake.jar

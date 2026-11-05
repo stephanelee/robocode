@@ -1,0 +1,11 @@
+{
+  "atUTC": "2026-11-05T04:53:21.427118+00:00",
+  "scope": "Read-only official SDK source analysis; not an engine test or competitive evidence",
+  "officialCommit": "c8ad3a8d19a843f6258d6f6f9db7f29229963903",
+  "path": "bot-api/java/src/main/java/dev/robocode/tankroyale/botapi/internal/BaseBotInternals.java",
+  "sourceSHA256": "08e98411619752c4b875ee16e88eb370370aca3a15a7d10cb2b3362d15809e35",
+  "normalDispatch": "execute waits for next tick then dispatchEvents on the active bot thread; dispatch rejects other callers while isRunning. Lines396-425,513-524.",
+  "terminalDispatch": "flushFinalTurnEvents runs after stopping the bot loop; lines212-232.",
+  "implication": "Normal model-label callbacks and planning share the existing active bot loop; no new concurrency code added. Terminal/lifecycle behavior remains inherited and actual acquisition still requires complete own markers.",
+  "limitations": "Source pin verified; this note does not claim a new runtime or lifecycle experiment."
+}

@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Java 17 build and tests
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build and test from source
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-checked-in.jar"
+          rm -f AISurvivor/AISurvivor.jar
+          ./gradlew --no-daemon clean build
+      - name: Verify checked-in JAR matches source
+        run: python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar
+      - name: Test final experimental output barrier (no games)
+        run: python -m unittest discover -s tools -p test_challenger_completion.py -v
+      - name: Test isolated Challenger lifecycle and verify its JAR
+        run: |
+          ./gradlew -p experiments/DiamondChallenger --no-daemon clean build
+          python tools/verify_jar.py experiments/DiamondChallenger/DiamondChallenger.jar experiments/DiamondChallenger/build/bot/DiamondChallenger/DiamondChallenger.jar
+      - name: Test isolated Keel experiment and verify its JAR
+        run: |
+          ./gradlew -p experiments/Keel --no-daemon clean build
+          python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+      - name: Test isolated KeelHelm semantics, harness and committed JAR (zero games)
+        run: |
+          ./gradlew -p experiments/KeelHelm --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelHelm/KeelHelm.jar experiments/KeelHelm/build/bot/KeelHelm/KeelHelm.jar
+          python -I -B -S -m unittest discover -s tools -p test_keel_helm_experiment.py -v
+      - name: Test isolated KeelBrace semantics and committed JAR (after bootstrap)
+        if: hashFiles('experiments/KeelBrace/KeelBrace.jar') != ''
+        run: |
+          ./gradlew -p experiments/KeelBrace --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelBrace/KeelBrace.jar experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar
+      - name: Test isolated KeelWake semantics and committed JAR (after bootstrap)
+        if: hashFiles('experiments/KeelWake/KeelWake.jar') != ''
+        run: |
+          ./gradlew -p experiments/KeelWake --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelWake/KeelWake.jar experiments/KeelWake/build/bot/KeelWake/KeelWake.jar
+      - name: Test registered Brace harness fixtures (no games)
+        if: hashFiles('tools/test_keel_brace_experiment.py') != ''
+        run: python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v
+      - name: Build Meridian, test its physics and compare the committed JAR
+        run: |
+          ./gradlew -p experiments/Meridian --no-daemon clean build
+          python tools/verify_jar.py experiments/Meridian/Meridian.jar experiments/Meridian/build/bot/Meridian/Meridian.jar
+      - name: Build Prism, run its engine-trace and semantic tests, and compare the committed JAR
+        run: |
+          ./gradlew -p experiments/Prism --no-daemon clean build
+          python tools/verify_jar.py experiments/Prism/Prism.jar experiments/Prism/build/bot/Prism/Prism.jar
+          (cd tools && python -m unittest test_prism_screen test_prism_screen_evidence -v)
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            build/reports/tests/
+            experiments/DiamondChallenger/build/reports/tests/
+            experiments/Keel/build/reports/tests/
+            experiments/KeelHelm/build/reports/tests/
+            experiments/KeelBrace/build/reports/tests/
+            experiments/Prism/build/reports/tests/
+          if-no-files-found: ignore
+      - name: Upload runnable bot
+        uses: actions/upload-artifact@v4
+        with:
+          name: AISurvivor-java17
+          path: |
+            AISurvivor/AISurvivor.jar
+            AISurvivor/AISurvivor.json
+            AISurvivor/AISurvivor.cmd
+            AISurvivor/AISurvivor.sh
+          if-no-files-found: error

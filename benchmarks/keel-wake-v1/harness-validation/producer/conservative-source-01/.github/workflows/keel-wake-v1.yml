@@ -1,0 +1,136 @@
+name: KeelWake v1 registered same-worker duel
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: read
+concurrency:
+  group: keel-wake-v1-registered
+  cancel-in-progress: false
+jobs:
+  registered-stage:
+    name: registered-stage
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'codex/keel-wake-v1' && github.run_attempt == 1 &&
+      (github.event.label.name == 'run-keel-wake-v1-screen' || github.event.label.name == 'run-keel-wake-v1-confirmation') &&
+      contains(github.event.pull_request.body, format('KEEL-WAKE-SOURCE-CLEARED {0}', github.event.pull_request.head.sha))
+    runs-on: ubuntu-26.04
+    timeout-minutes: 340
+    permissions:
+      contents: write
+      actions: read
+      issues: read
+    env:
+      STAGE: ${{ github.event.label.name == 'run-keel-wake-v1-screen' && 'screen' || 'confirmation' }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      KEEL_WAKE_IMAGE_PROBE_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PULL_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Capture original qualified image observations before tools
+        env:
+          KEEL_WAKE_IMAGE_PROBE_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: /usr/bin/python3 -I -B -S tools/keel_wake_image_identity.py "$STAGE" before-tools
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.21+9'
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.17'
+      - name: Build source, semantic tests and all committed JAR parity on Java17 first
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p build
+          {
+            java -version
+            cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/KeelWake-AISurvivor-committed.jar"
+            ./gradlew --no-daemon clean build
+            python tools/verify_jar.py "$RUNNER_TEMP/KeelWake-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+            cp "$RUNNER_TEMP/KeelWake-AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+            ./gradlew -p experiments/Keel --no-daemon clean build
+            python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
+            ./gradlew -p experiments/KeelWake --no-daemon clean build
+            python tools/verify_jar.py experiments/KeelWake/KeelWake.jar experiments/KeelWake/build/bot/KeelWake/KeelWake.jar
+            python -I -B -S -m unittest discover -s tools -p 'test_keel_wake*.py' -v
+          } 2>&1 | tee "$RUNNER_TEMP/keel-wake-build.log"
+          mkdir -p build
+          cp "$RUNNER_TEMP/keel-wake-build.log" build/keel-wake-build.log
+          python -I -B -S tools/keel_wake_experiment.py capture-build
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.5+8'
+      - name: Prepare exact sources/runtime/commands on this worker (zero games)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B -S tools/keel_wake_experiment.py prepare "$STAGE"
+      - name: Finalize immutable zero-game provenance before independent review
+        id: provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-wake-v1-${{ env.STAGE }}-provenance-${{ github.run_id }}
+          path: build/keel-wake/${{ env.STAGE }}/provenance/
+          if-no-files-found: error
+          retention-days: 90
+          include-hidden-files: true
+      - name: Wait at most30minutes for actively assigned independent reviewer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROVENANCE_ID: ${{ steps.provenance.outputs.artifact-id }}
+          PROVENANCE_DIGEST: ${{ steps.provenance.outputs.artifact-digest }}
+        run: python -I -B -S tools/keel_wake_experiment.py approve "$STAGE" --artifact-id "$PROVENANCE_ID" --artifact-digest "$PROVENANCE_DIGEST"
+      - name: Rehash same worker, atomically consume sole receipt and run fixed population
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I -B -S tools/keel_wake_experiment.py run "$STAGE"
+      - name: Preserve every failure, partial budget, unplayed ID and raw result
+        id: evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-wake-v1-${{ env.STAGE }}-evidence-${{ github.run_id }}
+          path: |
+            build/keel-wake/
+            .benchmark-cache/keel-wake-image-identity/
+            build/keel-wake-build.json
+            build/keel-wake-build.log
+            ${{ runner.temp }}/keel-wake-build.log
+            experiments/Keel/build/reports/tests/
+            experiments/KeelWake/build/reports/tests/
+            build/reports/tests/
+          if-no-files-found: warn
+          retention-days: 90
+          include-hidden-files: true
+
+      - name: Validate finalized original artifact custody
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVIDENCE_ID: ${{ steps.evidence.outputs.artifact-id }}
+          EVIDENCE_DIGEST: ${{ steps.evidence.outputs.artifact-digest }}
+        shell: bash
+        run: |
+          if [[ -n "$EVIDENCE_ID" && -n "$EVIDENCE_DIGEST" ]]; then
+            python -I -B -S tools/keel_wake_experiment.py finalize-evidence "$STAGE" --artifact-id "$EVIDENCE_ID" --artifact-digest "$EVIDENCE_DIGEST"
+          else
+            python -I -B -S tools/keel_wake_experiment.py finalize-evidence "$STAGE"
+          fi
+      - name: Preserve external final-custody companion
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keel-wake-v1-${{ env.STAGE }}-custody-validation-${{ github.run_id }}
+          path: |
+            build/keel-wake/${{ env.STAGE }}/finalprovider/
+            build/keel-wake/${{ env.STAGE }}/failure-finalize-evidence.json
+          if-no-files-found: warn
+          retention-days: 90
+          include-hidden-files: true

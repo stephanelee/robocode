@@ -1,0 +1,240 @@
+{
+  "declaredCommandSHA256": {
+    "before-tools": "60d75d35b200ed072ba6a86499a05facc9d8080f99cfddf37b8fe3b698b519a9",
+    "prepared": "ccd364b652d3bed5e041277644d5cd1879ed92576038ca6cdf95c4cf10f79989"
+  },
+  "limitations": [
+    "No actual Java25 compile/runtime preparation, API, engine or game invoked",
+    "Local pure interpreter is not hosted pinned runtime; full pinned CI still required",
+    "No freeze/index/Git/GitHub publication/receipt/label changes",
+    "Independent decoder/tests separately owned; producer does not import decoder"
+  ],
+  "observedAtUTC": "2026-11-05T05:48:34.238490+00:00",
+  "ownedSource": {
+    ".github/workflows/keel-wake-v1.yml": {
+      "bytes": 6280,
+      "sha256": "aeea428114966b0f88ebd6758d7ae3f8d4e9ec271b4eb117b65dcb4baee03991"
+    },
+    "tools/KeelWakeBattle.java": {
+      "bytes": 3085,
+      "sha256": "857556d8e66045ea44c344432422ddd6fa4be70c6edb29a782755cc9e3b35516"
+    },
+    "tools/keel_wake_experiment.py": {
+      "bytes": 128195,
+      "sha256": "9c452508a663219534daac3f0f579e0c1497b94228d70907867d683a8f5479e3"
+    },
+    "tools/keel_wake_harness.md": {
+      "bytes": 10517,
+      "sha256": "337dccc8f1d2afdc2732e7a241c13c1aa936e41ac7e8f9284ebb8f8aabda1084"
+    },
+    "tools/keel_wake_image_identity.py": {
+      "bytes": 56601,
+      "sha256": "72ed37e021bb9bd9826c9741a49adfc026541b78883b2235f4046a47fe38af50"
+    },
+    "tools/keel_wake_image_probe.py": {
+      "bytes": 23234,
+      "sha256": "4a995e45e9cb3f7cee615efd389bbd3be0eb334ffa02b9a351638658ec7bf6dd"
+    },
+    "tools/keel_wake_python_proof.py": {
+      "bytes": 8674,
+      "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
+    },
+    "tools/test_keel_wake_experiment.py": {
+      "bytes": 24404,
+      "sha256": "7955dd6afdef6855fec910f2e47bb2160118988c37f30f563c8d753508e80332"
+    },
+    "tools/test_keel_wake_image_identity.py": {
+      "bytes": 11486,
+      "sha256": "cb1e5e43d535976de7882561f46b592af1b61bec55a5e0c0cb46cc11298c958d"
+    },
+    "tools/test_keel_wake_phase_order.py": {
+      "bytes": 10510,
+      "sha256": "299020dce9094e0942d3aaaa49af3d3863be84fefd988098ab1d370ee920f059"
+    },
+    "tools/test_keel_wake_regressions.py": {
+      "bytes": 18638,
+      "sha256": "8b034a6e18d32bf56c6f5b2c04e64ac4a990aaf07050f640dda6dd38cca4d36c"
+    }
+  },
+  "preparationEvidence": {
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/.github/workflows/keel-wake-v1.yml": {
+      "bytes": 6197,
+      "sha256": "79e424ffd4926fe2b13a3a706a044534e2a3d50d02f08caea75e97c5ba7c432c"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/KeelWakeBattle.java": {
+      "bytes": 3085,
+      "sha256": "857556d8e66045ea44c344432422ddd6fa4be70c6edb29a782755cc9e3b35516"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/keel_wake_experiment.py": {
+      "bytes": 121122,
+      "sha256": "bcbcd0df64adf5ec1b2c96e3e73063dacc9efb02114c6789f856d6420c85e594"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/keel_wake_harness.md": {
+      "bytes": 7417,
+      "sha256": "7f43f0da52321d9a4b5c1939e49497835c37b41bcc62f27caaaa744642f3b11a"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/keel_wake_image_identity.py": {
+      "bytes": 38762,
+      "sha256": "6057d8c9b9e43b03b425eaf6b890f2b0f81ae466adc7f005b22e3a25bf0de05a"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/keel_wake_image_probe.py": {
+      "bytes": 23234,
+      "sha256": "4a995e45e9cb3f7cee615efd389bbd3be0eb334ffa02b9a351638658ec7bf6dd"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/keel_wake_python_proof.py": {
+      "bytes": 8674,
+      "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/test_keel_wake_experiment.py": {
+      "bytes": 15690,
+      "sha256": "44d0c9e762152322ddb0fe2e398bce2e594197f4e387a9355ab68db3a71d7236"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/conservative-source-01/tools/test_keel_wake_image_identity.py": {
+      "bytes": 10044,
+      "sha256": "3ccfa46fa5adfe3c0e90f4948dd7e60daf1e97f608f1b013eaa538da321cf621"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/fifth-expanded-regression-command.json": {
+      "bytes": 476,
+      "sha256": "222c291a5bb3b508ba8bba9d12633920907648137db0e771bfd3dad2a87dacb6"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/fifth-expanded-regression-test.log": {
+      "bytes": 10982,
+      "sha256": "fc3ec331500f2e9af606c23b946f009f8103cd0533f8e8768036c3376f70cb47"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/final-phase-integration-command.json": {
+      "bytes": 472,
+      "sha256": "32f9cd4c741d41cf5bb5e56615ca15015a1c8e651dc8d178a8f85d6ee4dfeaf7"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/final-phase-integration-test.log": {
+      "bytes": 12767,
+      "sha256": "be958869b3cc7b815c6c3aae3d3ad65eca77a52246da96892d9eaab8640bf50f"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-combined-command.json": {
+      "bytes": 350,
+      "sha256": "0e286db2172ed30a0fb44e412dd3a865eac3c9d6d7e2681aa63169fd8000b532"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-combined-producer-image-test.log": {
+      "bytes": 4944,
+      "sha256": "682bb6025014f806fc878f98fefcfbde4cc1a347571842dfbb70656fdaf62a0b"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-expanded-regression-command.json": {
+      "bytes": 428,
+      "sha256": "778c72922db7e451f5302dfa68a784b33dfd7dd933ce55afc0933484e765c109"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-expanded-regression-test.log": {
+      "bytes": 8011,
+      "sha256": "762ce0bd59de8b62e763113a85147ceedd715e7a1a7ed8efdafcd2498b83dd3c"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-phase-integration-command.json": {
+      "bytes": 472,
+      "sha256": "b25c22e16d68b37529953fa556f34b29b0b0def18c12759d7cfed78035114b1c"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-phase-integration-test.log": {
+      "bytes": 11564,
+      "sha256": "2329771039a42a74364402d80dd5877d6cbe945a139dcd1620167412130b6c16"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-producer-command.json": {
+      "bytes": 354,
+      "sha256": "4335e876b31fc9dcfa7872881e1ffba9724056f0a3af32d422056ca22d2a6c61"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-producer-test.log": {
+      "bytes": 2464,
+      "sha256": "99b91ca363e232476d28fc5ac0f01d27680541e2fafe51a7c3cb4806984f86bc"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/first-syntax-compile.log": {
+      "bytes": 266,
+      "sha256": "87985eb3ff3e8a5cc2f5cd7ead9ed074104f39328962c6b625eed5a270f5e339"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/fourth-expanded-regression-command.json": {
+      "bytes": 466,
+      "sha256": "0d7757c208052e4b85bba40d3cb3d9a7f68e7f707e39b654589a2d4d1e8ef3d7"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/fourth-expanded-regression-test.log": {
+      "bytes": 9277,
+      "sha256": "cf98aa50d311d1e4f89c2ae11cc000565c62c607bcef0ef9a102a130eee30964"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/isolated-producer-help-command.json": {
+      "bytes": 427,
+      "sha256": "538019bf0b728fe11d4f664f48042bdcbbf5a435aad70555b602c30df7db86da"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/isolated-producer-help.log": {
+      "bytes": 560,
+      "sha256": "379112dd77f87d14f2feebf5fb8a278a1d22ff669569a8fa7b1261f3405bc913"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/producer-source-checkpoint-01.json": {
+      "bytes": 1783,
+      "sha256": "18d9e3eccea1ffa0a12417dc695314a65d328a5fc7ef71c2c61be21e63a2b740"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/producer-source-checkpoint-02.json": {
+      "bytes": 2106,
+      "sha256": "0ce84ede627f4b2a1a460d0fb79142c86d83b53a57f88087073c764bddd0916a"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-combined-command.json": {
+      "bytes": 473,
+      "sha256": "14534f18cd4b1d167246257e2933cf8293e71e7f1e3358d16d2f59d578dcfc3c"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-combined-producer-image-test.log": {
+      "bytes": 5502,
+      "sha256": "7e5f189426d57fb9b21353a5aaaf196b2a071ba41a1834f6f9768fa8c4b44767"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-expanded-regression-command.json": {
+      "bytes": 428,
+      "sha256": "94bf396058c8ef8cf209986948523e89188dee05c86a5b31458a87cfd368f4dc"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-expanded-regression-test.log": {
+      "bytes": 8884,
+      "sha256": "ed79acff9c68d6950be2fcbf8a0392a9caaca6bd7b361fa7aadfb8d45ba3853f"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-phase-integration-command.json": {
+      "bytes": 472,
+      "sha256": "8851874949bf5448dce5773461192dfc1d43cde82c13e1392f6175f7c95183c2"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-phase-integration-test.log": {
+      "bytes": 11958,
+      "sha256": "2f068cea08ffe806dd05494a4c1e863d0147191ebc21c0ec786d9a796dc8fba4"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-producer-command.json": {
+      "bytes": 369,
+      "sha256": "11d0ca5a6699d5c663040f6a7199a9f0a064627e21182686a271a8c8d349b58a"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/second-producer-test.log": {
+      "bytes": 3222,
+      "sha256": "269f094eefc06cdcf014e10540634913e41cf9751c2e8d8531c1d48a40f5b49d"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/sixth-expanded-regression-command.json": {
+      "bytes": 455,
+      "sha256": "b5af6fd24eb7dc2919768f7c8e9b39a97c6e1c0667a52aef9ec2a7d050ac8551"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/sixth-expanded-regression-test.log": {
+      "bytes": 10174,
+      "sha256": "470cde50bf1ece5b1b9ec3c74627aad687437792bf9b50511e63029da09338bd"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/third-expanded-regression-command.json": {
+      "bytes": 481,
+      "sha256": "e479556c137ade9ee8fcf1d84eeb6739970cb13bd246497225cf68c8f6b41937"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/third-expanded-regression-test.log": {
+      "bytes": 11177,
+      "sha256": "64b5908fe9f33bb8b6332c41db2c4b859e0fba6f211fcbcc6c23c4c22b5fad87"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/third-phase-integration-command.json": {
+      "bytes": 472,
+      "sha256": "f20ebc7797e099dc3a924ee8fa6f9aa7ba49619d8bd156658f3f9a55c0bf6d6e"
+    },
+    "benchmarks/keel-wake-v1/harness-validation/producer/third-phase-integration-test.log": {
+      "bytes": 12595,
+      "sha256": "3c4a08140e1d6d1b16eef0d5d5b2d0aca875604fd26eb7e3765b259c4d53e052"
+    }
+  },
+  "schemaVersion": 1,
+  "selfExcluded": true,
+  "status": "STOPPED for independent source review; NOT source/runtime/game approval",
+  "syntax": "AST PASS; isolated producer --help PASS",
+  "tests": {
+    "actualPython": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "count": 75,
+    "executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+    "log": "final-phase-integration-test.log",
+    "result": "PASS"
+  }
+}

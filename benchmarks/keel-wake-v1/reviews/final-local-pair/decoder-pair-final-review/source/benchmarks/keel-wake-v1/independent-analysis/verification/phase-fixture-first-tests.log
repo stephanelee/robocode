@@ -1,0 +1,33 @@
+.................................E...................E..............
+======================================================================
+ERROR: test_complete_qualified_tuple_404_and_available_header (test_audit.QualifiedRuntimeIntegrationTests.test_complete_qualified_tuple_404_and_available_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 596, in test_complete_qualified_tuple_404_and_available_header
+    e,p,h,r=qualified_image_fixture(Path(tmp),status);result=audit.audit_runner_image(e,h,r,p,e/'provenance/source');self.assertTrue(result['pass'],result);self.assertEqual(result['status'],'PASS')
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1427, in audit_runner_image
+    phase_order.scoped_markers(response,plan,early_bindings)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/phase_order.py", line 200, in scoped_markers
+    lines=raw_lines(raw);prefixes=[row for row in lines if row[2].startswith(PREFIX)]
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/phase_order.py", line 143, in raw_lines
+    physical=raw.decode('utf-8-sig').split('\n')
+             ^^^^^^^^^^
+AttributeError: 'PosixPath' object has no attribute 'decode'
+
+======================================================================
+ERROR: test_full_mock_confirmation_accepts_b_after_separately_reconciled_a (test_audit.RuntimeV2CaseTests.test_full_mock_confirmation_accepts_b_after_separately_reconciled_a)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 687, in test_full_mock_confirmation_accepts_b_after_separately_reconciled_a
+    result=audit.audit_stage(e,source,'confirmation',hb,rb);self.assertEqual(result['decision'],'UNAUDITED');self.assertEqual(result['runnerImage']['caseID'],audit.QUALIFIED_CASE_B);self.assertEqual(result['upstreamScreen']['caseID'],audit.QUALIFIED_CASE_A)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 581, in audit_stage
+    runner_image['providerFacts'].update(status='UNAUDITED',reviewerTask=None,reviewerIdentityEvidence=None,phaseOrderEvidence=phase_ref)
+                                                                                                                               ^^^^^^^^^
+NameError: name 'phase_ref' is not defined. Did you mean: 'phase_order'?
+
+----------------------------------------------------------------------
+Ran 68 tests in 1.386s
+
+FAILED (errors=2)

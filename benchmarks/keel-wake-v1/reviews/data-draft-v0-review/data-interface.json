@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "status": "PROPOSAL ONLY; source/enforcement review and all actual approvals still required; no execution authority",
+  "workerStorage": {
+    "paths": [
+      "storage-admissions/before-preparation.json",
+      "storage-admissions/before-receipt.json",
+      "storage-admissions/before-<registeredID>.json"
+    ],
+    "keys": [
+      "schemaVersion",
+      "phase",
+      "observedAtUTC",
+      "volume",
+      "freeBytes",
+      "minimumFreeBytes",
+      "stageOutputBytes",
+      "stageOutputLimitBytes"
+    ]
+  },
+  "monitor": {
+    "path": "storage-monitor.json",
+    "keys": [
+      "schemaVersion",
+      "firstObservedAtUTC",
+      "lastObservedAtUTC",
+      "observations",
+      "maximumStageOutputBytes",
+      "limitBytes",
+      "limitExceeded"
+    ]
+  },
+  "controllerStoragePreflight": {
+    "path": "dispatch-assignment.json.assignmentToolRecord.storagePreflight",
+    "keys": [
+      "host",
+      "volume",
+      "observedAtUTC",
+      "freeBytes",
+      "toolEvidence"
+    ]
+  },
+  "authorityRevalidation": {
+    "path": "approval-revalidations/before-<receipt|registeredID>.json",
+    "schemaVersion": 1,
+    "exactKeys": [
+      "schemaVersion",
+      "phase",
+      "checkStartedAtUTC",
+      "checkedAtUTC",
+      "elapsedMonotonicSeconds",
+      "jobDeadlineUTC",
+      "remainingJobSecondsAtEnd",
+      "authorityBindings",
+      "fetchObservations",
+      "imageIdentityRevalidation",
+      "sourceInputsRevalidation"
+    ],
+    "timing": "checkedAtUTC is END of every completed API/image/raw/source/installed graph check; never start",
+    "maximumCompleteSeconds": 180,
+    "perIOTimeout": "min(registered20second HTTP or120second raw subcap, remaining complete180seconds, remaining job time)",
+    "phase": "before-receipt or before-<exact next registered gameID>; no aliases",
+    "timeConstraints": [
+      "preparedEnd<=checkStartedAtUTC<=imageCapture.utcStart<=imageCapture.utcEnd<=checkedAtUTC",
+      "0<=elapsedMonotonicSeconds<=180",
+      "0<=checkedAtUTC-checkStartedAtUTC<=180seconds",
+      "checkedAtUTC<=actual receipt creation for before-receipt, or child launch for game",
+      "remainingJobSecondsAtEnd>=2100 before game admission",
+      "original job deadline never reset"
+    ],
+    "failedCheck": "Retain attempted same envelope with separate error record; never accepted completed revalidation or child permission; no silent missing-field success",
+    "authorityBindingsExactKeys": [
+      "dispatchCommentId",
+      "dispatchBodySHA256",
+      "reviewCommentId",
+      "reviewBodySHA256",
+      "approvalCommentId",
+      "approvalBodySHA256",
+      "artifactId",
+      "artifactDigestSHA256",
+      "acceptedInitialApprovalAtUTC",
+      "receiptTagSHA",
+      "profileSHA256",
+      "freezeSHA256",
+      "gamesSHA256",
+      "commandsSHA256",
+      "participantManifestSHA256",
+      "opponentManifestSHA256"
+    ],
+    "beforeReceiptReceiptValue": "receiptTagSHA null only before successful create-only receipt; game rechecks require original actual receipt SHA",
+    "sourceInputsRevalidationExactKeys": [
+      "preparedProfileSHA256",
+      "preparedFreezeSHA256",
+      "commandsSHA256",
+      "participantManifestSHA256",
+      "opponentManifestSHA256",
+      "installedGraphSHA256",
+      "allInputsMatch",
+      "evidenceFile",
+      "evidenceSHA256"
+    ],
+    "allInputsMatch": "literal true only after actual source/runtime/installed-input bytes compared to immutable prepared; recomputed substituted anchors forbidden",
+    "initialWindow": "acceptedInitialApprovalAtUTC<=original artifact.updated_at+1800seconds; later checks do not reapply initial waiting deadline but must revalidate unchanged authority/source/receipt/current revocations"
+  },
+  "finalExport": {
+    "externalCompanionArtifact": "keel-wake-v1-<stage>-custody-validation-<runId>",
+    "originalArtifactAPI": "finalprovider/evidence-artifact.json",
+    "validation": "finalprovider/export-validation.json",
+    "validationKeys": [
+      "schemaVersion",
+      "stage",
+      "status",
+      "observedAtUTC",
+      "originalZIPMaximumBytes",
+      "rawDecisionSHA256",
+      "artifact",
+      "error"
+    ],
+    "externalAuditRequirement": "Retrieve final run/jobs and API IDs/digests/bytes for BOTH original and companion ZIPs externally. No artifact self-reference; raw decision never rewritten. Missing proof is PROVENANCE-INCOMPLETE/no acceptance.",
+    "validationVariants": {
+      "success": "status COMPLETE; artifact exact object{id,bytes,sha256}; error null",
+      "failure": "status INCOMPLETE; artifact null or actual existing exact object{id,bytes,sha256}; error nonempty string; never successful runtime/game validity"
+    }
+  },
+  "teardown": {
+    "path": "games/<id>/teardown.json",
+    "keys": [
+      "ownedProcessGroup",
+      "termSent",
+      "killSent",
+      "hardDeadlineRespected",
+      "hardLimitSeconds",
+      "runStopReserveSeconds",
+      "endUTC",
+      "elapsedMonotonicSeconds"
+    ],
+    "failureOptionalKeys": [
+      "status",
+      "error",
+      "reapError"
+    ]
+  },
+  "UTC": "Timezone-bearing ISO8601 UTC; storage/export observedAtUTC; authority checkedAtUTC; monitor firstObservedAtUTC/lastObservedAtUTC",
+  "custodyGate": {
+    "path": "benchmarks/keel-wake-v1/screen-evidence.json",
+    "keys": [
+      "schemaVersion",
+      "sourceFreezeSHA256",
+      "screenRunId",
+      "receiptTagSHA",
+      "decisionFile",
+      "decisionSHA256",
+      "retainedEvidenceFiles",
+      "custodyManifestFile",
+      "independentOutcomeReviewCommentId"
+    ],
+    "custodyManifestKeys": [
+      "schemaVersion",
+      "headSHA",
+      "sourceFreezeSHA256",
+      "originalZIP",
+      "members",
+      "decisionMember",
+      "freezeMember",
+      "gameRecordingMembers",
+      "sourceBindings"
+    ],
+    "detail": "See tools/keel_wake_harness.md; contiguous <=2MiB original ZIP ranges plus ALL original members/whole recording/source bindings, no physical expanded-gzip requirement."
+  },
+  "protocol": "keel-wake-v1",
+  "issue": 118,
+  "types": {
+    "allObjects": "Exact declared keys unless a named discriminated variant says otherwise; reject duplicate keys, unknown/missing keys at all interface objects",
+    "integers": "Strict integers rejecting booleans; nonnegative except declared positive identity/size roles",
+    "numbers": "Finite real number rejecting booleans; NaN/Infinity invalid",
+    "sha256": "64 lowercase hex characters",
+    "headAndGitBlob": "40 lowercase hex characters",
+    "stage": [
+      "screen",
+      "confirmation"
+    ],
+    "UTC": "Timezone-aware UTC strings; preserve original precision and raw bytes; timezone omissions invalid",
+    "safePaths": "Relative POSIX paths only; no empty/absolute/../dot/alias/traversal/symlink ambiguity; canonical path binding exact",
+    "canonicalDigest": "Only explicitly canonical JSON payload hashes use UTF8 compact sorted keys; raw files/comments always SHA256 exact original bytes"
+  },
+  "authorities": {
+    "approval": {
+      "prefix": "KEEL_WAKE_RUNTIME_APPROVAL_V1",
+      "exactKeys": [
+        "schemaVersion",
+        "verdict",
+        "repository",
+        "issue",
+        "stage",
+        "headSHA",
+        "runId",
+        "runAttempt",
+        "bootId",
+        "workspace",
+        "artifactId",
+        "artifactDigestSHA256",
+        "profileSHA256",
+        "freezeSHA256",
+        "gamesSHA256",
+        "participantManifestSHA256",
+        "opponentManifestSHA256",
+        "commandsSHA256",
+        "reviewerTask",
+        "dispatchAssignmentSHA256"
+      ]
+    },
+    "dispatch": {
+      "prefix": "KEEL_WAKE_DISPATCH_ASSIGNMENT_V1",
+      "exactKeys": [
+        "schemaVersion",
+        "repository",
+        "issue",
+        "stage",
+        "headSHA",
+        "reviewerTask",
+        "reviewerAccount",
+        "implementationTasks",
+        "assignmentToolRecord",
+        "assignmentToolRecordSHA256"
+      ]
+    },
+    "reasonedReport": {
+      "prefix": "KEEL_WAKE_RUNTIME_REVIEW_V1",
+      "exactKeys": [
+        "approvalPayloadSHA256",
+        "reviewerTask",
+        "reviewReport",
+        "agentToolProvenance"
+      ]
+    },
+    "revocation": {
+      "prefix": "KEEL_WAKE_RUNTIME_REVOCATION_V1",
+      "exactKeys": [
+        "schemaVersion",
+        "verdict",
+        "repository",
+        "issue",
+        "stage",
+        "headSHA",
+        "runId",
+        "runAttempt",
+        "bootId",
+        "artifactId",
+        "reviewerTask",
+        "approvalCommentId",
+        "reason"
+      ]
+    },
+    "screenGate": {
+      "exactKeys": [
+        "schemaVersion",
+        "sourceFreezeSHA256",
+        "screenRunId",
+        "receiptTagSHA",
+        "decisionFile",
+        "decisionSHA256",
+        "retainedEvidenceFiles",
+        "custodyManifestFile",
+        "independentOutcomeReviewCommentId"
+      ]
+    },
+    "binding": "Actual issue118/repository/run/head/stage/boot/artifact/profile/source/commands/current separate reviewer assignment; original20/4/10/9 outer key counts unchanged; prefix newline single strict JSON object no fences/prose"
+  },
+  "canonicalProvenance": {
+    "profile": "provenance/profile.json",
+    "freeze": "provenance/freeze.json",
+    "freezeOrigin": "provenance/effective-freeze-origin.json",
+    "repositoryFreeze": "benchmarks/keel-wake-v1/freeze.json",
+    "compatibilityAliases": {
+      "profile.json": "provenance/profile.json",
+      "freeze.json": "provenance/freeze.json"
+    },
+    "aliasRule": "Absent permitted; if present exact whole-byte equality mandatory; never selected as fallback",
+    "canonicalRequired": true,
+    "noExistencePriorityParentGlobSelection": true,
+    "binding": "Canonical wholebytes must match strict approval profileSHA256/freezeSHA256 and origin source inventory; all readers same explicitly selected profile/capsule",
+    "freezeSelfHashInOwnBytesAllowed": false
+  },
+  "roundCounters": {
+    "participant": "KeelWake0.1.0 only; baseline explicit N/A",
+    "location": "The single existing per-round own stats marker, along with unchanged original stats fields; no second competing counter file is authoritative",
+    "exactAdditionalFieldNames": [
+      "matchedDangerLabels",
+      "refreshEligiblePlans",
+      "refreshedWaves",
+      "densityChangedWaves"
+    ],
+    "eachFieldExactlyOncePerCompletedCandidateRound": true,
+    "valueType": "Strict integer0..1000000, rejecting bool/sign/fraction/NaN/Infinity; wire parser uses canonical unsigned decimal tokens",
+    "normalMarkerMultiplicity": "Exactly one start/stats/end per completed round; no duplicate counter keys or duplicate stats marker",
+    "overflow": "First over-cap increment emits single diagnosticOverflow fault; any such marker invalidates admission, never silent clamp/wrap",
+    "relations": [
+      "0<=densityChangedWaves<=refreshedWaves",
+      "0<=refreshEligiblePlans<=refreshedWaves<=2*refreshEligiblePlans",
+      "matchedDangerLabels==0 implies refreshEligiblePlans==refreshedWaves==densityChangedWaves==0"
+    ],
+    "classificationPrecedence": [
+      "integrity-INVALID for any missing/duplicate/noninteger/out-of-range/inconsistent counters before exposure/score classification",
+      "only complete counter-valid stage with candidate-Diamond sum(densityChangedWaves)==0 is INCONCLUSIVE",
+      "with exposure>0 all fixed score gates decide PASS/REJECT"
+    ],
+    "densityChangeRule": "Max absolute old-new normalized bin difference STRICTLY>1e-12 over all47finite bins; source instrumentation verified, not independently reconstructed private callback trace",
+    "exposureScope": "ALL candidate Diamond games of THIS stage only; no screen/history/other cohort satisfies fresh confirmation",
+    "learningAndEpoch": "Round active waves clear and new waves stamp current hits.seq; no refresh solely from previous-round model state or visits; matched labels update model seq even at capacity"
+  },
+  "fetchObservation": {
+    "location": "Each authorityRevalidation.fetchObservations[]",
+    "maximumRecordsPerRevalidation": 4096,
+    "exactKeys": [
+      "purpose",
+      "method",
+      "endpoint",
+      "requestStartedAtUTC",
+      "responseObservedAtUTC",
+      "elapsedMonotonicSeconds",
+      "httpStatus",
+      "responseFile",
+      "responseBytes",
+      "responseSHA256",
+      "transportComplete",
+      "error"
+    ],
+    "method": "GET only",
+    "purposeEnum": [
+      "current-pr",
+      "dispatch-comment",
+      "runtime-review-comment",
+      "runtime-approval-comment",
+      "artifact",
+      "receipt-ref",
+      "receipt-tag",
+      "revocation-comments-page",
+      "current-run",
+      "current-jobs"
+    ],
+    "timeRules": [
+      "checkStartedAtUTC<=requestStartedAtUTC<=responseObservedAtUTC<=checkedAtUTC",
+      "elapsedMonotonicSeconds finite0..min(20,remaining complete budget at request start)",
+      "original resource created_at/updated_at remain inside raw response; they are historical authority times, not current FETCH time"
+    ],
+    "successfulVariant": "HTTP expected for that purpose, transportComplete true,error null, whole original response ref/digest; no prefix",
+    "failedVariant": "HTTP null or actual error HTTP; transportComplete false/error nonempty; preserve any original prefix exactbytes and mark incomplete; cannot authorize child",
+    "resourceBinding": "Every purpose/endpoints/IDs/author/head/current edit timestamp and digest must match accepted immutable authority plus current revocation scan; receipt ref404 is permitted only BEFORE its atomic creation and never after consumption",
+    "noRepairOrHiddenRetries": true,
+    "boundedness": "Record cap4096; existing<=2000comments,20second HTTP,total180second check and4GiB stage-output limits all apply; truncation/cap/error failclosed, not a partial successful scan"
+  },
+  "actualReviewerIdentity": {
+    "sidecarPath": "provider/reviewer-identity.json",
+    "exactKeys": [
+      "schemaVersion",
+      "repository",
+      "issue",
+      "stage",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "reviewerTask",
+      "implementationTasks",
+      "assignmentCommentId",
+      "assignmentBodySHA256",
+      "assignmentToolRecord",
+      "assignmentToolRecordSHA256",
+      "reviewToolRecord",
+      "reviewToolRecordSHA256"
+    ],
+    "assignmentCommentId": "Actual separately published outcome-review assignment, binds repository/issue118/stage/run/head; never decoder author default",
+    "taskRule": "Explicit actual task from separate tool assignment; must not belong to implementationTasks; cross-check original assignment/tool bytes and review evidence; cannot be fabricated by CLI text alone",
+    "cliContract": "Final audited output requires explicit actual --reviewer-task plus --reviewer-identity-file binding. Without actual identity, machine output must be labeled UNAUDITED, no fictional reviewerTask/PASS identity assertion",
+    "toolDigests": "SHA256 exact retained raw tool evidence bytes or explicitly defined canonical structured tool record; digest convention declared in record, no switch",
+    "finalBinding": "Final image reconciliation and outcome report reviewerTask equal this actual task; final records bind this sidecar path/bytes/SHA; runtime reviewer can differ from final outcome reviewer, each actual assignment independently proved"
+  }
+}

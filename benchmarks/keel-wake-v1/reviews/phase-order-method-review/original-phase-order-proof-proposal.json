@@ -1,0 +1,102 @@
+{
+  "status": "PROPOSAL ONLY; explicit independent DATA/source review before any use; current conservative decoder remains stopped and unchanged",
+  "issue": 118,
+  "protocolAuthority": "Original no-skew ordering allows nonoverlapping time bounds OR exact independently retained event evidence; this defines the latter narrowly, not a new gameplay gate or after-outcome waiver",
+  "proofKinds": [
+    "direct-nonoverlap",
+    "source-backed-causal-phase-order-v1"
+  ],
+  "directNonoverlap": "Capture end <= whole-second API completion T, or exact fractional recorded completion. A capture end in(T,T+1s) is ambiguous without the separately reviewed causal proof; >=T+1s contradicts the recorded completion interval and cannot be rescued by this alternative. Provider receipt UTC is never claimed a lower bound on process exit/step completion.",
+  "immutablePlan": {
+    "path": "provenance/image-identity/phase-order-plan.json",
+    "exactKeys": [
+      "schemaVersion",
+      "kind",
+      "repository",
+      "issue",
+      "stage",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "workflowSource",
+      "collectorSource",
+      "phasePlans"
+    ],
+    "sourceRefExactKeys": [
+      "path",
+      "bytes",
+      "sha256"
+    ],
+    "phasePlanExactKeys": [
+      "phase",
+      "captureStepName",
+      "captureStepNumber",
+      "nextStepName",
+      "nextStepNumber",
+      "foregroundCommandSHA256",
+      "snapshotSHA256",
+      "markerPayload"
+    ],
+    "markerPrefix": "KEEL_WAKE_IMAGE_PHASE_END_V1 ",
+    "markerPayloadExactKeys": [
+      "stage",
+      "phase",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "snapshotSHA256"
+    ],
+    "payload": "Exact canonical compactsorted JSON; phase before-tools/prepared; known actual snapshot wholebytehash; required runAttempt1",
+    "binding": "Plan must be captured before initial approval and wholebytesSHA bound in profile.imageIdentity.phaseOrderPlanSHA256 and nested runtimeReview.imageIdentityReview.phaseOrderPlanSHA256, preserving20/4/10/9 outer counts. Workflow/collector refs equal actual frozen source inventory and exported original source bytes."
+  },
+  "pregameFacts": {
+    "required": "Frozen source demonstrates foreground capture/validation/snapshot write, then exact one marker emission, then foreground process return; no async/background capture. Original jobs API independently fetched shows exact completed-success capture step and later sequential registered next step, correct run/head/job and source workflow. Both actual source snapshots complete and same-worker bindings pass.",
+    "ifLiveLogAvailable": "Retain original full actual log and verify exact unique markers as below; contradictions failclosed",
+    "ifCorrectCurrentLog404": "Explicit source-and-jobs-graph-pending-final-marker status permitted only under SAME already reviewed correct-job HTTP404/native-only deferral, with unchanged independently verified run/jobs/artifact access. Record that provider marker has NOT been observed; no false pregame external proof. Mandatory final log/marker verification before validity. Separate independent exact plan/source review required before accepting this declared limitation.",
+    "notAllowed": "No phase proof from a saved prompt, local thread status, marker emission text alone, receipt UTC as completion lower bound, historical another worker, reordered source/steps or missing independent jobs read"
+  },
+  "finalFacts": {
+    "required": "Actual full completed provider joblog/API originals, correct same actual run/attempt/head/job; exact complete steps and frozen foreground source command chain; for each phase exactly one unescaped full marker message with expected canonical payload/snapshotSHA, emitted within that actual source capture step before sequential next step. Preserve original log bytes/line ordinal/message/timestamp as observations.",
+    "causalConclusion": "Capture/write preceded the source END emission and foreground return; runner executed successful next step sequentially after that capture step. This proves causal phase order, not an invented absolute clock inequality inside an ambiguous recorded second. Exact source/step-graph/marker scope needs independent review.",
+    "missingOrContradictory": "PROVENANCE-INCOMPLETE/no acceptance/confirmation/adoption; preserve physical acquisition and raw scores/no replacements/rerun",
+    "additionalFinalProofExactKeys": [
+      "schemaVersion",
+      "kind",
+      "phaseOrderPlanSHA256",
+      "jobId",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "jobLog",
+      "jobsAPI",
+      "phaseRecords"
+    ],
+    "phaseRecordExactKeys": [
+      "phase",
+      "captureStepName",
+      "captureStepNumber",
+      "nextStepName",
+      "nextStepNumber",
+      "snapshotSHA256",
+      "markerLineOrdinal",
+      "markerMessageSHA256",
+      "observedProviderTimestamp",
+      "causalOrderVerified"
+    ],
+    "finalBinding": "Whole proof ref retained in final reviewer sidecar/report alongside actual independent reviewerTask; no self-cyclic hashes. No automatic fictional decoder author approval."
+  },
+  "pureTests": [
+    "direct floor sufficient",
+    "ambiguous within-second no proof =>INCOMPLETE",
+    "ambiguous with exact source/step/marker causal proof =>qualified phase order only",
+    ">=T+1 definitely late cannot rescued",
+    "wrong/duplicate/missing/echo-only marker",
+    "wrong phase/run/attempt/head/snapshotSHA",
+    "next step absent/reversed/failed",
+    "source workflow/collector/hash differs",
+    "background/asynchronous capture chain not source-reviewed =>invalid",
+    "404 pregame explicit pending vs falsely claimed observed marker",
+    "mandatory final missing marker =>INCOMPLETE even favorable raw scores",
+    "actual provider timestamp receipt delay never reinterpreted as lower completion bound"
+  ]
+}

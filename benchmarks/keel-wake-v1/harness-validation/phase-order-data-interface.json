@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "status": "PREMEASUREMENT IMPLEMENTATION DATA; method review6649916624 permits implementation only, exact final source/enforcement/CI and actual runtime remain unapproved",
+  "methodReviewCommentId": 6649916624,
+  "methodProposalSHA256": "b82f09ba4e9ddbb0035a7171fa3f3bc7233a985104798215ff97c7623f55685e",
+  "planPath": "provenance/image-identity/phase-order-plan.json",
+  "planExactKeys": [
+    "schemaVersion",
+    "kind",
+    "repository",
+    "issue",
+    "stage",
+    "runId",
+    "runAttempt",
+    "headSHA",
+    "workflowSource",
+    "collectorSource",
+    "phasePlans"
+  ],
+  "planKind": "source-backed-causal-phase-order-v1",
+  "phasePlanExactKeys": [
+    "phase",
+    "captureStepName",
+    "captureStepNumber",
+    "nextStepName",
+    "nextStepNumber",
+    "foregroundCommandSHA256",
+    "snapshotSHA256",
+    "markerPayload"
+  ],
+  "phaseMappings": {
+    "before-tools": {
+      "captureNumber": 3,
+      "nextNumber": 4,
+      "nextName": "Set up pinned Java17",
+      "nextUses": "actions/setup-java@v4"
+    },
+    "prepared": {
+      "captureNumber": 9,
+      "nextNumber": 10,
+      "nextName": "Finalize immutable zero-game provenance before independent review",
+      "nextUses": "actions/upload-artifact@v4"
+    }
+  },
+  "sourceRefExactKeys": [
+    "path",
+    "bytes",
+    "sha256"
+  ],
+  "sourceRoles": {
+    "workflowSource": ".github/workflows/keel-wake-v1.yml",
+    "collectorSource": "tools/keel_wake_image_identity.py (the marker EMITTER/helper, not raw collector)",
+    "mandatoryClosure": [
+      "tools/keel_wake_image_probe.py",
+      "tools/keel_wake_experiment.py"
+    ],
+    "rawSnapshotCollectorField": "snapshot.collectorSourceSHA256 remains actual raw probe source; must match frozen tools/keel_wake_image_probe.py, never replaced with emitter hash",
+    "closureBinding": "Actual complete files match immutable freeze.assets/profile.sourceAssets/exported source; actual executed independent phase_order.py/launcher_compilation.py also source-frozen; no source/plan/profile/output selfhash cycles"
+  },
+  "declaredCommandDigest": {
+    "algorithm": "SHA256 UTF8 compact sorted-key JSON {run:<exact DECLARED workflow run scalar>,env:<merged DECLARED job+step env literals>}; job overwritten by step same key, unresolved GitHub expressions retained verbatim as literals",
+    "notActualArgv": true,
+    "actualContext": "Whitelisted actual environment/identity/runtime/prepared command graph separately bound; this digest never claims raw actual argv or reads full process environment",
+    "runScalar": "Strict block run: | supported; indent-stripped literal source body clipped to exactlyONE trailing LF; CRLF/ambiguous folding/aliases or unsupported scalar forms failclosed",
+    "sourceRestrictions": "One ordinary foreground worker job; before-tools exactisolated /usr/bin/python3 -I -B -S image helper, prepared controller chain; workflow background/parallel/continue-error and shell detach/background forbidden",
+    "sourceWorkflowEnv": "Merged job/step scalar values, not secret-expanded process ENV; exact declared strings including unresolved GH expressions"
+  },
+  "marker": {
+    "prefix": "KEEL_WAKE_IMAGE_PHASE_END_V1 ",
+    "payloadExactKeys": [
+      "stage",
+      "phase",
+      "runId",
+      "runAttempt",
+      "headSHA",
+      "snapshotSHA256"
+    ],
+    "messageHash": "SHA256(prefix+compactsorted canonical payload UTF8), NO newline",
+    "lineOrdinal": "1-based ALL physical LF-separated full original provider log lines including blanklines; CRLF treated as transport, terminalLF does not create phantom last line",
+    "scope": "Onlytwo original before-tools/prepared phases; actual source emitsafter capture/validation/snapshotwrite beforeforegroundreturn; live revalidations neveremit thismarker",
+    "nativeLogScope": "Unique matching GHA ##[group]Run source firstline+COMPLETE rendered source echo (only known cyan SGR stripped for echo), then ##[endgroup]; unescaped actualmarker AFTER echoend and BEFORE exactnextsource Run group. Echo-only/quoted/late/duplicates invalid. Annotated original CLI transport may insteadbind exactproviderstepname withactualnextstepsegment. Preserve whole rawbytes and source/API identity."
+  },
+  "pregame": "Immutable plan/profile/nestedreview bound before initialapproval; independently fetched original current run/jobs/artifact identify exact successful capture+next steps. Only actualcorrectinprogress HTTP404 permits explicit source/jobs-graph pending final marker under SAME qualifiedheader deferral. Available200 full currentlog requires markers, no missing/contradictory/truncated/network/auth fallback.",
+  "finalProofPath": "provider/phase-order-proof.json",
+  "finalProofExactKeys": [
+    "schemaVersion",
+    "kind",
+    "phaseOrderPlanSHA256",
+    "jobId",
+    "runId",
+    "runAttempt",
+    "headSHA",
+    "jobLog",
+    "jobsAPI",
+    "phaseRecords"
+  ],
+  "phaseRecordExactKeys": [
+    "phase",
+    "captureStepName",
+    "captureStepNumber",
+    "nextStepName",
+    "nextStepNumber",
+    "snapshotSHA256",
+    "markerLineOrdinal",
+    "markerMessageSHA256",
+    "observedProviderTimestamp",
+    "causalOrderVerified"
+  ],
+  "proofLogicalRefs": "jobLog/jobsAPI refs use logical provider/job.log and provider/jobs.json roles with wholebytes/hash; no rewritten API/log bytes. Actual retained proof ref in finalreconciliation can be repository-relative for upstreamgate.",
+  "proofDerivation": "Pure derive-phase-order CLI may create separately retained machinefacts proof before final audit; no reviewer identity or competitive authority. Main audited reader independently recomputes exact proof and validates actual separately assigned reviewer sidecar. Missing/ambiguous finalproof PROVENANCE-INCOMPLETE, no acceptance/confirmation/adoption/replacement/rerun.",
+  "precision": "Exact Fraction phase UTC arithmetic, retain original strings. Whole-second overlapONLY; >=T+1 invalid; ANY known later-than-fractional completion invalid even.0000000 or100ns differences. Marker UTC raw7+digits observation never lower completion bound."
+}

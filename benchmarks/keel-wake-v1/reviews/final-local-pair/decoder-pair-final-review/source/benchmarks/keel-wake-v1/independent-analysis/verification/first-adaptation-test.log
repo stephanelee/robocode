@@ -1,0 +1,365 @@
+.................E..FFF.FFFEFFFF.FFF...F.F.F.EEEEE.EE..........EEEEE.EE.....F....
+======================================================================
+ERROR: test_counter_cap_negative_duplicate_noninteger (test_audit.BraceCounterTests.test_counter_cap_negative_duplicate_noninteger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 134, in test_counter_cap_negative_duplicate_noninteger
+    self.assertEqual(audit.markers(p,1,True)[1]['exposure']['rawRamEvents'],1_000_000)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'rawRamEvents'
+
+======================================================================
+ERROR: test_strict_half_and_win_count_boundaries (test_audit.BraceGateTests.test_strict_half_and_win_count_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 207, in test_strict_half_and_win_count_boundaries
+    self.assertFalse(g['checks']['candidateDiamondMeanAboveHalf']);self.assertFalse(g['checks']['diamondWinsMoreThan60'])
+                                                                                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'diamondWinsMoreThan60'
+
+======================================================================
+ERROR: test_complete_qualified_tuple_404_and_available_header (test_audit.QualifiedRuntimeIntegrationTests.test_complete_qualified_tuple_404_and_available_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 660, in test_complete_qualified_tuple_404_and_available_header
+    e,p,h,r=qualified_image_fixture(Path(tmp),status);result=audit.audit_runner_image(e,h,r,p,e/'provenance/source');self.assertTrue(result['pass'],result);self.assertEqual(result['status'],'PASS')
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_early_actual_bytes_api_status_and_report_deferral_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_early_actual_bytes_api_status_and_report_deferral_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 668, in test_early_actual_bytes_api_status_and_report_deferral_mutations
+    e,p,h,r=qualified_image_fixture(Path(tmp));f=e/'review-report-comment.json';comment=json.loads(f.read_text());payload=json.loads(comment['body'].split('\n',1)[1]);early=payload['agentToolProvenance']['imageIdentityReview']['earlyHeaderEvidence']
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_exact_optional_lsb_absence_and_other_errors_rejected (test_audit.QualifiedRuntimeIntegrationTests.test_exact_optional_lsb_absence_and_other_errors_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 712, in test_exact_optional_lsb_absence_and_other_errors_rejected
+    e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity/before-tools';c=base/'collector/before-tools';report=json.loads((c/'report.json').read_text());snapshot=json.loads((base/'snapshot.json').read_text());label='etc_lsb_release';record=report['captures'][label];record.update(exists=False,raw=None,bytesComplete=False,resolvedPath=None,errors=[dict(operation='lstat',path='/etc/lsb-release',type=error,message='synthetic missing source',messageWasTruncated=False)]);report['rawArtifactIndex'].pop('raw/'+label+'.bin');status=json.loads((c/'capture-status.json').read_text());status['files'].pop('raw/'+label+'.bin');status['diagnosticErrorCount']=1;dump(c/'capture-status.json',status);snapshot['stable']['rawSources'][label]=dict(sourcePath='/etc/lsb-release',absent=True);self.rebind_snapshot_report(base,report,snapshot);freeze=json.loads((e/'provenance/freeze.json').read_text());expected={k:snapshot[k] for k in audit.IMAGE_SOURCE_KEYS}
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_final_job_header_source_and_step_order_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_final_job_header_source_and_step_order_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 720, in test_final_job_header_source_and_step_order_mutations
+    e,p,h,r=qualified_image_fixture(Path(tmp))
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_missing_final_provider_pending_then_completed_incomplete (test_audit.QualifiedRuntimeIntegrationTests.test_missing_final_provider_pending_then_completed_incomplete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 663, in test_missing_final_provider_pending_then_completed_incomplete
+    e,p,h,r=qualified_image_fixture(Path(tmp));result=audit.audit_runner_image(e,h,r,None,e/'provenance/source');self.assertFalse(result['pass']);self.assertEqual(result['status'],'PROVENANCE-PENDING')
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected (test_audit.QualifiedRuntimeIntegrationTests.test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 692, in test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected
+    e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity/before-tools';report=json.loads((base/'collector/before-tools/report.json').read_text());snapshot=json.loads((base/'snapshot.json').read_text())
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_snapshot_boot_source_hash_graph_and_live_binding_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_snapshot_boot_source_hash_graph_and_live_binding_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 679, in test_snapshot_boot_source_hash_graph_and_live_binding_mutations
+    e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity'
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_actual_failed_v1_case_b_raw_format_only (test_audit.RuntimeV2CaseTests.test_actual_failed_v1_case_b_raw_format_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 789, in test_actual_failed_v1_case_b_raw_format_only
+    root=Path(__file__).resolve().parents[3]/'benchmarks/keel-wake-v1/preparation-failure-41947040130';archive=root/'screen-evidence-13378498977.zip';self.assertEqual(audit.digest(archive),'d7a0b572d4e4301500a3532c21871cf0a14fdea88f5ccea7850c4b5233ebfe7f')
+                                                                                                                                                                       ~~~~~~~~~~~~^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 75, in digest
+    with evidence_path(path).open('rb') as stream:
+         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/pathlib/__init__.py", line 970, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/preparation-failure-41947040130/screen-evidence-13378498977.zip'
+
+======================================================================
+ERROR: test_both_exact_cases_and_fresh_stage_case_independence (test_audit.RuntimeV2CaseTests.test_both_exact_cases_and_fresh_stage_case_independence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 740, in test_both_exact_cases_and_fresh_stage_case_independence
+    e,p,h,r=qualified_image_fixture(root/label,case_id=case,stage=stage);result=self.image_result(e,p,h,r);self.assertTrue(result['pass'],result);self.assertEqual(result['caseID'],case);self.assertEqual(result['finalReconciliation']['caseID'],case)
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_forged_explicit_case_id_rejected_despite_allowed_raw_case (test_audit.RuntimeV2CaseTests.test_forged_explicit_case_id_rejected_despite_allowed_raw_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 761, in test_forged_explicit_case_id_rejected_despite_allowed_raw_case
+    e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity/before-tools';snapshot=json.loads((base/'snapshot.json').read_text());snapshot['caseID']=snapshot['stable']['caseID']=audit.QUALIFIED_CASE_B;dump(base/'snapshot.json',snapshot);freeze=json.loads((e/'provenance/freeze.json').read_text());expected={k:snapshot[k] for k in audit.IMAGE_SOURCE_KEYS}
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_full_mock_confirmation_accepts_b_after_separately_reconciled_a (test_audit.RuntimeV2CaseTests.test_full_mock_confirmation_accepts_b_after_separately_reconciled_a)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 745, in test_full_mock_confirmation_accepts_b_after_separately_reconciled_a
+    root=Path(tmp);ea,pa,ha,ra=qualified_image_fixture(root/'screenA',case_id=audit.QUALIFIED_CASE_A,stage='screen');screen=self.image_result(ea,pa,ha,ra);eb,pb,hb,rb=qualified_image_fixture(root/'confirmationB',case_id=audit.QUALIFIED_CASE_B,stage='confirmation');confirmation=self.image_result(eb,pb,hb,rb);self.assertTrue(screen['pass']);self.assertTrue(confirmation['pass'])
+                               ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_fully_rebound_before_tools_to_other_allowed_case_still_rejects_stage_switch (test_audit.RuntimeV2CaseTests.test_fully_rebound_before_tools_to_other_allowed_case_still_rejects_stage_switch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 766, in test_fully_rebound_before_tools_to_other_allowed_case_still_rejects_stage_switch
+    root=Path(tmp);ea,pa,ha,ra=qualified_image_fixture(root/'A',case_id=audit.QUALIFIED_CASE_A);e,p,h,r=qualified_image_fixture(root/'B',case_id=audit.QUALIFIED_CASE_B);image=e/'provenance/image-identity';shutil.rmtree(image/'before-tools');shutil.copytree(ea/'provenance/image-identity/before-tools',image/'before-tools')
+                               ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_other_allowed_final_provider_case_is_wrong_for_frozen_stage (test_audit.RuntimeV2CaseTests.test_other_allowed_final_provider_case_is_wrong_for_frozen_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 771, in test_other_allowed_final_provider_case_is_wrong_for_frozen_stage
+    e,p,h,r=qualified_image_fixture(Path(tmp));log=(p/'job.log').read_text()
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+ERROR: test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings (test_audit.RuntimeV2CaseTests.test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 779, in test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings
+    e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance'
+            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 599, in qualified_image_fixture
+    for rel,wanted in [('docs/improvements/keel-wake-runtime-identity-amendment.md',audit.V1_AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment.json',audit.V1_AMENDMENT_POLICY_SHA256),('docs/improvements/keel-wake-runtime-identity-amendment-v2.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-wake-v1/runtime-identity-amendment-v2.json',audit.AMENDMENT_POLICY_SHA256),('benchmarks/keel-wake-v1/freeze.json',audit.HISTORICAL_FREEZE_SHA256)]:
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'independent_audit' has no attribute 'V1_AMENDMENT_DOCUMENT_SHA256'
+
+======================================================================
+FAIL: test_raw_contact_corrob_and_no_private_eligibility_invention (test_audit.BraceCounterTests.test_raw_contact_corrob_and_no_private_eligibility_invention)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 145, in test_raw_contact_corrob_and_no_private_eligibility_invention
+    self.assertTrue(r['valid'],r);self.assertEqual(r['exposure']['eligibleRamCorrectedScans'],0)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmp_7rdmxu6/synthetic.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmp_7rdmxu6/markers.txt', 'valid': False, 'recordingSHA256': '77da75b80bc6687812b7fd079ac408afb869eae6dada076b5003f49a11ed9c41', 'markerSHA256': '589cccf34b9ebfc0122725747149903ec1503ec417469813f8b9ec2cefdf2d7a', 'error': "KeyError: 'rawRamEvents'", 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+======================================================================
+FAIL: test_ties_preserve_official_firstplaces (test_audit.BraceCounterTests.test_ties_preserve_official_firstplaces)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 157, in test_ties_preserve_official_firstplaces
+    r=self.reduce(rows);self.assertTrue(r['valid'],r);self.assertEqual(r['wins'],1)
+                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpcig7pzjb/synthetic.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpcig7pzjb/markers.txt', 'valid': False, 'recordingSHA256': 'f8c5b27cc2d5d497349b2caffe514c473ac5f33ffff9420aaab9e8fcbf19d2e2', 'markerSHA256': '7727f8b5fb196891b47fe3c95ab00b86fc64a9efa8bd61548407b0a09b21edaf', 'error': 'ValueError: Round 1 invalid/missing candidate exposure matchedDangerLabels', 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+======================================================================
+FAIL: test_confirmation_minus2_exact_then_below (test_audit.BraceGateTests.test_confirmation_minus2_exact_then_below)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 180, in test_confirmation_minus2_exact_then_below
+    rows=self.groups('confirmation');self.assertTrue(audit.stage_gates('confirmation',rows)['allPass'])
+                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond (test_audit.BraceGateTests.test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 190, in test_exposure_is_stage_local_retcon_not_raw_contacts_or_diamond
+    g=audit.stage_gates('confirmation',rows);self.assertEqual(g['rawDisposition'],'INCONCLUSIVE');self.assertFalse(g['allPass']);self.assertTrue(g['scoreAndTimingPass'])
+                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'INCONCLUSIVE'
+- REJECT
++ INCONCLUSIVE
+
+
+======================================================================
+FAIL: test_inconclusive_precedes_score_rejection_but_not_integrity (test_audit.BraceGateTests.test_inconclusive_precedes_score_rejection_but_not_integrity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 198, in test_inconclusive_precedes_score_rejection_but_not_integrity
+    self.assertEqual(audit.stage_gates('screen',rows)['rawDisposition'],'INCONCLUSIVE')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'INCONCLUSIVE'
+- REJECT
++ INCONCLUSIVE
+
+
+======================================================================
+FAIL: test_retcon_exact_plus1_below_boundary_and_ceiling (test_audit.BraceGateTests.test_retcon_exact_plus1_below_boundary_and_ceiling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 171, in test_retcon_exact_plus1_below_boundary_and_ceiling
+    rows=self.groups('screen');self.assertTrue(audit.stage_gates('screen',rows)['allPass'])
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_complete_raw_scores_never_waive_last_child_failure (test_audit.CanonicalDecisionTests.test_complete_raw_scores_never_waive_last_child_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 520, in test_complete_raw_scores_never_waive_last_child_failure
+    root=Path(tmp);p,r,g,d=self.stage(root)
+                           ~~~~~~~~~~^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 508, in stage
+    raw=audit.stage_gates(stage,rows);self.assertTrue(raw['allPass']);games=[]
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_decision_population_budget_and_metric_mutations_fail (test_audit.CanonicalDecisionTests.test_decision_population_budget_and_metric_mutations_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 546, in test_decision_population_budget_and_metric_mutations_fail
+    root=Path(tmp);p,r,g,d=self.stage(root)
+                           ~~~~~~~~~~^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 508, in stage
+    raw=audit.stage_gates(stage,rows);self.assertTrue(raw['allPass']);games=[]
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_full_stage_cannot_pass_after_canonical_last_child_failure (test_audit.CanonicalDecisionTests.test_full_stage_cannot_pass_after_canonical_last_child_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 531, in test_full_stage_cannot_pass_after_canonical_last_child_failure
+    root=Path(tmp);e=root/'evidence';source=root/'source';p,rows,raw,declared=self.stage(e,'confirmation')
+                                                                              ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 508, in stage
+    raw=audit.stage_gates(stage,rows);self.assertTrue(raw['allPass']);games=[]
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_positive_complete_original_screen_and_confirmation (test_audit.CanonicalDecisionTests.test_positive_complete_original_screen_and_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 516, in test_positive_complete_original_screen_and_confirmation
+    root=Path(tmp);p,r,g,d=self.stage(root,stage);result=audit.reconcile_canonical(root,stage,'a'*40,p,r,g,True);self.assertTrue(result['pass'],result)
+                           ~~~~~~~~~~^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 508, in stage
+    raw=audit.stage_gates(stage,rows);self.assertTrue(raw['allPass']);games=[]
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain (test_audit.CustodyFailureReportingTests.test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 439, in test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain
+    self.assertFalse(result['pass']);self.assertIn('accepted authority exact original approval payload',result['checked']);self.assertIn('new issue114 strict20-key typed approval',result['failures'])
+                                                                                                                           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'new issue114 strict20-key typed approval' not found in ['new issue118 strict20-key typed approval']
+
+======================================================================
+FAIL: test_confirmation_fractional_boundaries (test_audit.GateBoundaryTests.test_confirmation_fractional_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 97, in test_confirmation_fractional_boundaries
+    rows=self.groups('confirmation');self.assertTrue(audit.stage_gates('confirmation',rows)['allPass'])
+                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_screen_fractional_boundaries (test_audit.GateBoundaryTests.test_screen_fractional_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 91, in test_screen_fractional_boundaries
+    rows=self.groups('screen');self.assertTrue(audit.stage_gates('screen',rows)['allPass'])
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_full_metrics_and_exact_ratio (test_audit.IntegrityTests.test_full_metrics_and_exact_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 38, in test_full_metrics_and_exact_ratio
+    r=self.reduce();self.assertTrue(r['valid'],r);self.assertTrue(r['timingPass'])
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpu2hy7bcp/synthetic.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpu2hy7bcp/markers.txt', 'valid': False, 'recordingSHA256': '77da75b80bc6687812b7fd079ac408afb869eae6dada076b5003f49a11ed9c41', 'markerSHA256': '7727f8b5fb196891b47fe3c95ab00b86fc64a9efa8bd61548407b0a09b21edaf', 'error': 'ValueError: Round 1 invalid/missing candidate exposure matchedDangerLabels', 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+======================================================================
+FAIL: test_max75_is_rejection_not_rewritten_value (test_audit.IntegrityTests.test_max75_is_rejection_not_rewritten_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 56, in test_max75_is_rejection_not_rewritten_value
+    r=self.reduce(stats=stats);self.assertTrue(r['valid']);self.assertFalse(r['timingPass']);self.assertEqual(r['maxMs'],75)
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_skip_is_retained (test_audit.IntegrityTests.test_skip_is_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 64, in test_skip_is_retained
+    r=self.reduce(stats=stats);self.assertTrue(r['valid']);self.assertEqual(r['skips'],1);self.assertFalse(r['timingPass'])
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_streaming_replay_without_materializing_recording (test_audit.StreamingArchiveTests.test_streaming_replay_without_materializing_recording)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 228, in test_streaming_replay_without_materializing_recording
+    self.assertTrue(r['valid'],r);self.assertEqual(r['wins'],1)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpsdlb_fe0/z.zip!/stage/raw.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpsdlb_fe0/z.zip!/stage/markers.txt', 'valid': False, 'recordingSHA256': 'f4e8802b25f793546b60a1ebe52914f7e95d605faa6b7ffe86ac2803ac19ccb7', 'markerSHA256': 'bc20d6026ab5929b92eadc63fcbba0fe0342e1ca5fc7834b5722a678968f1d42', 'error': "KeyError: 'rawRamEvents'", 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+----------------------------------------------------------------------
+Ran 81 tests in 0.214s
+
+FAILED (failures=17, errors=16)

@@ -51,6 +51,11 @@ jobs:
         run: |
           ./gradlew -p experiments/KeelBrace --no-daemon clean build
           python tools/verify_jar.py experiments/KeelBrace/KeelBrace.jar experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar
+      - name: Test isolated KeelWake semantics and committed JAR (after bootstrap)
+        if: hashFiles('experiments/KeelWake/KeelWake.jar') != ''
+        run: |
+          ./gradlew -p experiments/KeelWake --no-daemon clean build
+          python tools/verify_jar.py experiments/KeelWake/KeelWake.jar experiments/KeelWake/build/bot/KeelWake/KeelWake.jar
       - name: Test registered Brace harness fixtures (no games)
         if: hashFiles('tools/test_keel_brace_experiment.py') != ''
         run: python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v

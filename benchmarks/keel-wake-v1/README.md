@@ -1,0 +1,5 @@
+# KeelWake v1 registered proposal
+
+Issue118 (created2026-11-05T03:24:19Z), branch codex/keel-wake-v1. Publication registers this prospective proposal; independent exact-published-text PASS is still required BEFORE implementation. No source/JAR, future PR, runtime approval or game permission is invented here. Read identical protocol.md and docs/improvements/keel-wake-v1.md, normative games/runtime/baseline and registration.json. Separate final versioned DATA/source/enforcement/corruption/CI and actual-worker review gates remain mandatory.
+
+The source rationale proposes selected in-flight posterior refresh only, original Keel baseline retained; no Helm/Brace treatment, power/gun redesign, opponent internal/private inputs or AIS change. Prior Brace SCREEN-REJECT and all frozen-reader failures remain preserved. Namespace/coordination read-only snapshots are historical registration inputs and require a fresh check before source freeze; they grant no authority or reusable receipt. The original /private/tmp/keel-wake-draft remains unchanged. manifest.json covers exact bundle file bytes except itself, avoiding a cyclic self-hash.

@@ -1,0 +1,58 @@
+{
+  "reviewerTask": "/root/wake_independent_review",
+  "runId": 41966829221,
+  "artifactId": 13387867563,
+  "headSHA": "5ff1d9e068297da14f96b426fd6bb797af0708f3",
+  "actualJavaVersion": "openjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+  "actualPythonVersion": "Python 3.13.17",
+  "firstCommittedJarPresent": false,
+  "twoBuildsByteIdentical": true,
+  "JARBytes": 871311,
+  "JARSHA256": "9dfc691b0e3a1879f568ab0c9897a14fcc6f6e1936d2208ff46d05fe62f3f78f",
+  "JAREntries": 824,
+  "classMajor": 61,
+  "testSuites": [
+    {
+      "path": "experiments/KeelWake/build/test-results/test/TEST-KeelWakeRefreshTest.xml",
+      "name": "KeelWakeRefreshTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "path": "experiments/KeelWake/build/test-results/test/TEST-KeelWakeInheritedContractTest.xml",
+      "name": "KeelWakeInheritedContractTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "twoBuildSuccessMarkers": 2,
+  "unchangedSharedCompiledClassesMatchOriginalJar": [
+    "Gun$Wave.class",
+    "Gun.class",
+    "Knn$Entry.class",
+    "Knn$Hit.class",
+    "Knn.class",
+    "Phys$Pose.class",
+    "Phys.class",
+    "Track.class"
+  ],
+  "scope": "candidate Java17build/tests/reproducibility only; bootstrap Python selector stillBrace, no Wakeproducer/decoder coverage or game/runtime clearance",
+  "JARRegularEntries": 788,
+  "printedPassesAcrossBothBuilds": {
+    "newProductionContracts": 38,
+    "inheritedContracts": 20
+  },
+  "actualProviderImageGroupLines": [
+    "2026-11-05T04:16:59.1654931Z ##[group]Runner Image",
+    "2026-11-05T04:16:59.1655575Z Image: ubuntu-26.04",
+    "2026-11-05T04:16:59.1656325Z Version: 20261025.179.1",
+    "2026-11-05T04:16:59.1657545Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+    "2026-11-05T04:16:59.1658923Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179",
+    "2026-11-05T04:16:59.1659917Z ##[endgroup]"
+  ],
+  "providerImageScope": "Build runtime observation only; no registered same-worker native/ENV/battle admission"
+}

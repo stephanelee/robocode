@@ -1,0 +1,47 @@
+EE
+======================================================================
+ERROR: test_audit (unittest.loader._FailedTest.test_audit)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 13, in <module>
+    spec.loader.exec_module(audit)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1497
+    a=sub.add_parser(command);a.add_argument('--evidence',type=Path);a.add_argument('--evidence-zip',type=Path);a.add_argument('--prefix',default='');a.add_argument('--zip-sha256');a.add_argument('--custody-zip',type=Path);a.add_argument('--custody-sha256');a.add_argument('--source-root',type=Path,required=True);a.add_argument('--provider-evidence',type=Path);a.add_argument('--stage',choices=['screen','confirmation'],required=True);a.add_argument('--head',required=True);a.add_argument('--run',type=int,required=True);a.add_argument('--output',type=Path,required=True);a.add_argument('--reviewer-task');a.add_argument('--reviewer-identity-file',type=Path)    z=sub.add_parser('verify-archive');z.add_argument('--zip',type=Path,required=True);z.add_argument('--sha256',required=True);z.add_argument('--extracted-root',type=Path);z.add_argument('--output',type=Path,required=True)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+SyntaxError: invalid syntax
+
+
+======================================================================
+ERROR: test_full_reader (unittest.loader._FailedTest.test_full_reader)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_full_reader
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 15, in <module>
+    import evidence_fixture as f
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/evidence_fixture.py", line 15, in <module>
+    import test_audit as t
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 13, in <module>
+    spec.loader.exec_module(audit)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1497
+    a=sub.add_parser(command);a.add_argument('--evidence',type=Path);a.add_argument('--evidence-zip',type=Path);a.add_argument('--prefix',default='');a.add_argument('--zip-sha256');a.add_argument('--custody-zip',type=Path);a.add_argument('--custody-sha256');a.add_argument('--source-root',type=Path,required=True);a.add_argument('--provider-evidence',type=Path);a.add_argument('--stage',choices=['screen','confirmation'],required=True);a.add_argument('--head',required=True);a.add_argument('--run',type=int,required=True);a.add_argument('--output',type=Path,required=True);a.add_argument('--reviewer-task');a.add_argument('--reviewer-identity-file',type=Path)    z=sub.add_parser('verify-archive');z.add_argument('--zip',type=Path,required=True);z.add_argument('--sha256',required=True);z.add_argument('--extracted-root',type=Path);z.add_argument('--output',type=Path,required=True)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^
+SyntaxError: invalid syntax
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (errors=2)
