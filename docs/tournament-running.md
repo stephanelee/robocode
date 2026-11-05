@@ -138,3 +138,20 @@ python3 tools/tournament.py \
 Opening wave is four pairings / eight games / 160 rounds, with at most one extra 20-round tie-break game per pairing. Two-game total scores decide first, round first places second. Only if both tie is game 3 played; its total score decides, or the predeclared SHA256 draw of lots if that game ties. Playoff wins/losses replace Swiss points for advancement. No lower-bracket game starts in this invocation.
 
 Subsequent `playoff-2` through `playoff-7` stages require separate user authorization. Wave 7 is refused unless the lower finalist won G1. A failed/incomplete game stops the playoff wave and remains retained; no automatic rerun, forfeit or advancement. Public exports rebuild the cumulative bracket from canonical completed waves and expose only approved scores/resolutions, never raw replay paths or private telemetry.
+
+## Offer every replay from Round 4 onward
+
+After each subsequent recorded stage, run the replay catalog tool in the separate video venv, then publish the Site snapshot using the Sites workflow. This is part of the tournament publication workflow; rendering starts no games. Do not run a new battle to reconstruct an older unrecorded game.
+
+```sh
+/private/tmp/robocode-video-python/bin/python tools/render_tournament_replays.py \
+  --output "$CUP_OUTPUT" \
+  --media-dir /absolute/path/to/private-video-provenance \
+  --site /absolute/path/to/tournament-site/dist
+```
+
+Use the existing video/provenance directory for this edition. The tool scans the canonical Swiss 4 report and every existing playoff-wave report, including completed games in a partial stage. It requires a recording for every eligible completed game, reuses verified existing movies, renders only missing movies and rebuilds the public catalog in stage/draw/game order. Preserve this catalog step for every later wave before declaring its replay publication complete. The tool never launches or authorizes a tournament stage. Actual hosting publication still uses the approved Sites tools; the script makes no network calls.
+
+Each catalog entry identifies its `stage`, `matchA`, `matchB` and `game`, so replay buttons appear beside the matching result. Previous/next and **Play all this round** stay inside the selected round. Every game from Swiss 4 onward has 20 battle-round chapters, live energy and official cumulative scores. The player retains the 0.25× default and 0.125× slower option. Raw recordings and private models/logs remain local; only approved rendered MP4/poster/chapter assets enter the public Site.
+
+The renderer supports stage labels for playoffs, game 3 for an authorized tie-break, and draw endings. New outputs use immutable names. Existing public movies are never overwritten. A conflicting or partially rendered output requires an explicit new `--edition` rather than a silent retry/overwrite. The batch tool verifies raw/video hashes, official final scores, chapters 1–20, H.264/yuv420p metadata, frame counts, duration and a 24 MiB per-asset ceiling. It lowers the encoder bitrate for long movies. A changed Site data timestamp aborts the final catalog write; rerun to incorporate newer results without clobbering them. Verification is retained in the private `replay-catalog-verification.json`.

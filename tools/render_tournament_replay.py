@@ -34,6 +34,9 @@ def timestamp(seconds):
 def main(args):
     global TURNS_PER_SECOND
     TURNS_PER_SECOND = args.turns_per_second
+    stage_label = args.stage_label or f'Swiss round {args.swiss_round}'
+    if not 20 <= args.max_bitrate_kbps <= 130:
+        raise ValueError('Video bitrate must be between 20 and 130 kbps')
     if args.output.exists():
         raise ValueError('Never overwrite a published video; choose a new output filename')
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -57,7 +60,8 @@ def main(args):
     bold = {n: font(n, True) for n in [18, 22, 28, 36, 46]}
     base = Image.new('RGB', (W, H), BG)
     d = ImageDraw.Draw(base)
-    d.text((32, 22), f'ROBOCODE CUP  /  SWISS ROUND {args.swiss_round}  /  GAME {args.game} OF 2', font=fonts[14], fill='#75bcff')
+    game_label = f'GAME {args.game} OF 2' if args.game < 3 else 'TIE-BREAK GAME 3'
+    d.text((32, 22), f'ROBOCODE CUP  /  {stage_label.upper()}  /  {game_label}', font=fonts[14], fill='#75bcff')
     d.text((32, 49), names[ids[0]] + '  vs  ' + names[ids[1]], font=bold[28], fill=INK)
     d.text((32, 91), 'Recorded replay • all 20 battle rounds • accelerated playback', font=fonts[14], fill=MUTED)
     d.rounded_rectangle((ax-2, ay-2, ax+aw+2, ay+ah+2), radius=7, fill='#0c1c2c', outline=LINE, width=2)
@@ -136,7 +140,7 @@ def main(args):
         return image
 
     temporary = args.output.with_name(args.output.stem+'.partial.mp4')
-    command = ['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','veryfast','-crf','25','-maxrate','130k','-bufsize','520k','-threads','2','-g',str(FPS*2),'-pix_fmt','yuv420p','-tag:v','avc1','-movflags','+faststart',str(temporary)]
+    command = ['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264','-preset','veryfast','-crf','25','-maxrate',f'{args.max_bitrate_kbps}k','-bufsize',f'{args.max_bitrate_kbps*4}k','-threads','2','-g',str(FPS*2),'-pix_fmt','yuv420p','-tag:v','avc1','-movflags','+faststart',str(temporary)]
     frames = 0
     chapters = []
     last = {'roundNumber':1,'turnNumber':0,'botStates':[],'bulletStates':[]}
@@ -163,7 +167,7 @@ def main(args):
                         seen_round = row['roundNumber']
                         chapters.append(dict(round=seen_round,startSeconds=frames/FPS))
                         if seen_round == 1:
-                            opening = frame(row, f'Swiss round {args.swiss_round} · Game {args.game}')
+                            opening = frame(row, f'{stage_label} · Game {args.game}')
                             opening.save(args.output.with_suffix('.webp'), quality=90)
                             write(opening, FPS*2)
                         print(f'Rendering round {seen_round}/20', flush=True)
@@ -186,7 +190,8 @@ def main(args):
             official = json.loads(args.official.read_text())
             assert scores == {b['id']: b['totalScore'] for b in official['results']}
         winner = max(ids, key=lambda identity:scores[identity])
-        write(frame(last, names[winner]+f' wins game {args.game}'), FPS*4)
+        message = f'Game {args.game} ends in a draw' if len(set(scores.values())) == 1 else names[winner]+f' wins game {args.game}'
+        write(frame(last, message), FPS*4)
         process.stdin.close()
         if process.wait() != 0:
             raise RuntimeError('ffmpeg failed')
@@ -207,6 +212,7 @@ def main(args):
     with args.output.open('rb') as stream:
         output_sha = hashlib.file_digest(stream,'sha256').hexdigest()
     report = dict(sourceRecording=args.recording.name,sourceSHA256=source_sha,videoSHA256=output_sha,videoSizeBytes=args.output.stat().st_size,width=W,height=H,fps=FPS,turnsPerSecond=TURNS_PER_SECOND,durationSeconds=duration,frames=frames,rounds=20,finalScores={names[i]:scores[i] for i in ids},chapters=chapters,elapsedRenderSeconds=round(time.monotonic()-start_time,2),note='Data-rendered replay, not a GUI screen recording. Official cumulative scores update at round end; no session IDs or private models are rendered.')
+    report.update(stageLabel=stage_label, game=args.game, maxBitrateKbps=args.max_bitrate_kbps, rendererSHA256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
     args.output.with_suffix('.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2), flush=True)
 
@@ -218,5 +224,7 @@ if __name__=='__main__':
     parser.add_argument('--official',type=Path)
     parser.add_argument('--turns-per-second',type=int,choices=[20,40,60,120,240],default=60)
     parser.add_argument('--swiss-round',type=int,default=4)
-    parser.add_argument('--game',type=int,choices=[1,2],default=1)
+    parser.add_argument('--stage-label',help='Override the stage heading, for example Opening playoffs')
+    parser.add_argument('--max-bitrate-kbps',type=int,default=130,help='20–130 kbps; the batch tool lowers this for longer movies')
+    parser.add_argument('--game',type=int,choices=[1,2,3],default=1)
     main(parser.parse_args())
