@@ -1,9 +1,11 @@
-# KeelHelm 0.1.0
+# KeelHelm 0.2.1
 
-Isolated experimental fork of confirmed Keel0.1.0. The first-wave stopped suffix preserves the body turn requested by the unchanged orbit policy, using the unchanged engine-native Phys.step at target speed0. Its endpoint heading therefore feeds the second-wave escape consistently. The terminal second-wave STOP branch remains unchanged.
+Adds a dedicated melee policy to the KeelHelm duelist: per-ID legal scans, continuous radar coverage, minimum-risk movement, target selection and bounded circular intercept fire. At one remaining opponent it clears transient tracks and waves, then resumes the original duel policy. From-start 1v1 retains the original surfing, learning gun and energy policy.
 
-Only the first-leg stopped rollout changes gameplay. Guns, fire power, learning, motion helpers, options, constants and horizons retain baseline bytes. Candidate-only per-round aggregate exposure counters do not feed decisions. Baseline Keel and production AISurvivor are untouched.
+The melee module keeps opponents separate and does not train duel waves from mixed identities. It searches 64 directions with engine-native prediction, opponent risk, wall clearance and recent-position avoidance. It does not use observer data or opponent internals.
 
-Protocol: docs/improvements/keel-helm-v1.md, issue107 / PR108. Pure semantic tests establish modeled command consistency, not competitive strength. No benchmark result is claimed.
+The completed tournament uses the frozen 0.1.0 bundle; historical results remain unchanged. The 0.2.1 benchmark and decision are documented separately in docs/improvements/keelhelm-melee-v2-protocol.md and issue #123. Contract fixtures alone establish no competitive strength.
 
-Run bundle: KeelHelm.json, KeelHelm.sh / KeelHelm.cmd, KeelHelm.jar. Optional harness variables: KEEL_HELM_METRICS and KEEL_HELM_SEED. All other runtime behavior follows Keel.
+Build/test with Java 17: ./gradlew -p experiments/KeelHelm clean build. Run the generated build/bot/KeelHelm bundle or committed JAR with bot/ launch files. Optional telemetry: KEEL_HELM_METRICS; initial-side seed: KEEL_HELM_SEED.
+
+Measured top-four melee comparison: score share 13.19% → 26.98%, first places 7/80 → 27/80; Retcon/sample guards pass. See [full report](../../docs/improvements/keelhelm-melee-v2-results.md). The earlier 0.2.0 lifecycle failure is retained separately. This limited cohort result establishes no general-strength claim.

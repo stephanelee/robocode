@@ -1,0 +1,113 @@
+{
+  "status": "invalid",
+  "decision": "reject-improvement-claim",
+  "physicalRounds": 40,
+  "unplayedGames": 14,
+  "zeroGameStagingFailure": true,
+  "error": "Telemetry round coverage differs",
+  "freezeSHA256": "3ed83354c2eb4c5867c54351aa5d79ad9a56aaba31714544fb0f6a41253f446e",
+  "games": [
+    {
+      "id": "melee-1-control",
+      "arm": "control",
+      "physicalRounds": 20,
+      "validation": "valid",
+      "officialEngineResult": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 1,
+            "totalScore": 4675,
+            "survival": 2200,
+            "bulletDamage": 1907,
+            "firstPlaces": 12
+          },
+          {
+            "id": 2,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 3926,
+            "survival": 1650,
+            "bulletDamage": 1996,
+            "firstPlaces": 4
+          },
+          {
+            "id": 4,
+            "name": "KeelHelm",
+            "version": "0.1.0",
+            "rank": 3,
+            "totalScore": 1807,
+            "survival": 1200,
+            "bulletDamage": 361,
+            "firstPlaces": 2
+          },
+          {
+            "id": 1,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 1469,
+            "survival": 950,
+            "bulletDamage": 298,
+            "firstPlaces": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "melee-1-candidate",
+      "arm": "candidate",
+      "physicalRounds": 20,
+      "validation": "invalid-lifecycle-telemetry",
+      "officialEngineResult": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 2,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 5132,
+            "survival": 2200,
+            "bulletDamage": 2524,
+            "firstPlaces": 6
+          },
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 4980,
+            "survival": 2550,
+            "bulletDamage": 1824,
+            "firstPlaces": 13
+          },
+          {
+            "id": 4,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 3,
+            "totalScore": 1613,
+            "survival": 1200,
+            "bulletDamage": 264,
+            "firstPlaces": 1
+          },
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.2.0",
+            "rank": 4,
+            "totalScore": 392,
+            "survival": 50,
+            "bulletDamage": 146,
+            "firstPlaces": 0
+          }
+        ]
+      }
+    }
+  ]
+}
