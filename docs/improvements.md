@@ -310,3 +310,18 @@ artifacts retained. Public source, notes and reusable tournament foundation upda
 [Prospective protocol](tournament-grand-final-protocol.md),
 [measured report/raw evidence](tournament-grand-final-results.md),
 [PR #121](https://github.com/stephanelee/robocode/pull/121).
+
+## 2026-11-05 — post-tournament top-four melee
+
+Exactly two four-bot games / forty rounds on minimind, no failures, reruns or extra
+games. Diamond Port 9,187; Prism 7,975; Keel 3,952; KeelHelm 2,828. Accept descriptive
+exhibition results only; no strength-improvement or gameplay-promotion claim.
+Frozen inputs and cold starts preserved. Independent four-identity/CRC/20-round/
+final-score audit passes. Championship stays byte-identical at 98 valid games,
+1,960 valid rounds and KeelHelm champion; exhibition 40 physical rounds are separate.
+Both four-bot movies, original recordings and full archive retained. The website
+provides a separate exhibition page and two replay buttons; older lower-bracket
+public archival follows the user's existing authorization.
+[Protocol](tournament-post-melee-protocol.md),
+[measured report/raw evidence](tournament-post-melee-results.md),
+[PR #122](https://github.com/stephanelee/robocode/pull/122).

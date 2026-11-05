@@ -4,8 +4,8 @@ let selectedReplay=null,playAllReplays=false,replayLoadId=0,replayAbort=null,las
 const page=document.body.dataset.page,$=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sameName=(a,b)=>String(a).replace(/\s/g,'')===String(b).replace(/\s/g,'');
 const waveLabel=n=>({1:'Opening playoffs',2:'Upper semifinals & Lower round 1',3:'Lower round 2',4:'Upper final & Lower round 3',5:'Lower final',6:'Grand final',7:'Grand-final reset'}[n]||'Playoffs');
-const stageLabel=s=>s==='practice'?'Practice':s.startsWith('swiss-')?'Swiss '+s.split('-')[1]:waveLabel(Number(s.split('-')[1]));
-const replayItems=()=>D.videos?.length?D.videos:D.video?[D.video]:[];
+const stageLabel=s=>s==='exhibition'?'Post-tournament melee':s==='practice'?'Practice':s.startsWith('swiss-')?'Swiss '+s.split('-')[1]:waveLabel(Number(s.split('-')[1]));
+const replayItems=()=>[...(D.videos?.length?D.videos:D.video?[D.video]:[]),...(D.exhibition?.videos||[])];
 function replayScope(){return replayItems().flatMap((v,i)=>(v.stage||(v.label?.startsWith('Swiss round 4')?'swiss-4':null))===activeStage?[i]:[])}
 function stages(){return [{stage:'practice',draw:D.practice||[],status:'complete',plannedGames:14,completedGames:D.completedGames||0},...(D.rounds||[]),...(D.playoffs||[])]}
 function latestStage(){return stages().at(-1)}
@@ -29,6 +29,20 @@ function matchCard(pair,stage){
 }
 function swissTable(limit){return '<table><thead><tr><th>Seed</th><th>Bot</th><th>Pts</th><th>Buchholz</th><th>Share</th></tr></thead><tbody>'+(D.standings||[]).slice(0,limit).map((r,i)=>`<tr class="${i<8?'qualified-row':''}"><td>${i+1}</td><td>${botName(r.name)}${i<8?'<small class="seed-tag">TOP 8</small>':''}</td><td>${r.points}</td><td>${r.buchholz}</td><td>${(r.scoreShare*100).toFixed(1)}%</td></tr>`).join('')+'</tbody></table>'}
 function livesTable(){return '<table><thead><tr><th>Seed</th><th>Bot</th><th>Wins</th><th>Losses</th><th>Status</th></tr></thead><tbody>'+(D.playoffStandings||[]).map(r=>`<tr class="${r.eliminated?'eliminated-row':''}"><td>${r.seed}</td><td>${botName(r.name)}</td><td>${r.wins}</td><td>${r.losses} / 2</td><td>${r.name===D.champion?'🏆 Champion':r.eliminated?'Eliminated':r.losses===1?'Lower bracket':'Upper bracket'}</td></tr>`).join('')+'</tbody></table>'}
+
+function meleeTable(rows){return '<table class="melee-score-table"><thead><tr><th aria-label="Rank">#</th><th>Bot</th><th>Score</th><th>1st</th></tr></thead><tbody>'+rows.map(r=>'<tr'+(r.rank===1?' class="melee-leading"':'')+'><td>'+r.rank+'</td><td>'+botName(r.name,false)+'</td><td>'+Number(r.totalScore).toLocaleString('en-US')+'</td><td>'+r.firstPlaces+'</td></tr>').join('')+'</tbody></table>'}
+function addExhibitionLink(){if(!D.exhibition)return;if(page==='home'){const link=document.createElement('a');link.className='feature-match exhibition-feature';link.href='exhibition.html';link.innerHTML='<small>POST-TOURNAMENT EXHIBITION</small><strong>Top-four melee</strong><span>'+D.exhibition.completedGames+' / 2 games verified · Four bots together ↗</span>';$('#featured').append(link)}if(page==='matches'){const link=document.createElement('a');link.href='exhibition.html';link.textContent='Exhibition';$('#stage-tabs').append(link)}}
+function renderExhibition(){
+ activeStage='exhibition';const e=D.exhibition;
+ $('#stage-tabs').innerHTML='<a href="matches.html?stage=playoff-6">Championship</a><a href="exhibition.html" aria-current="page">Exhibition</a>';
+ $('#stage-title').textContent='Top-four melee';$('#stage-progress').textContent=e?e.completedGames+' / 2 GAMES VERIFIED':'NOT STARTED';
+ $('#stage-note').textContent='Two twenty-round games with all four bots together. Scores belong only to this exhibition; KeelHelm remains tournament champion.';
+ $('#matchlist').after($('#replay-room'));
+ $('#matchlist').innerHTML=e?e.games.map(g=>{const i=replayItems().findIndex(v=>v.stage==='exhibition'&&v.game===g.game);const button=i>=0?'<button class="replay-mini" data-replay="'+i+'" aria-label="Watch top-four melee, game '+g.game+'">▶ Replay</button>':'<small>Recording retained</small>';return '<article class="match-card"><div class="match-kicker"><span>GAME '+g.game+' / 20 ROUNDS</span>'+button+'</div>'+(g.status==='complete'?meleeTable(g.official.results):'<p class="melee-pending">'+esc(g.status)+'</p>')+'</article>'}).join(''):'<p class="notice">No exhibition games have been published yet.</p>';
+ $('#melee-standings').innerHTML=e?meleeTable(e.standings)+'<p class="profile-results-note">Combined official score, then round first places. Exact ties share rank. No championship points or eliminations.</p>':'';
+ renderVideo();positionReplayRoom();
+}
+
 function renderHome(){
  const latest=latestStage(),all=stages();$('#homegames').textContent=all.reduce((n,r)=>n+r.completedGames,0);
  $('#featured').innerHTML=latest.draw.map(p=>{const score=sumScores(p);return `<a class="feature-match" href="matches.html?stage=${latest.stage}"><small>${esc(p.matchId||stageLabel(latest.stage))} / ${esc(p.status)}</small><strong>${botName(p.a,false)} <span style="color:#6987a7;font-size:10px">vs</span> ${botName(p.b,false)}</strong><div class="feature-score">${p.games?.some(g=>g.status==='complete')?score[0].toLocaleString('en-US')+' : '+score[1].toLocaleString('en-US'):'— : —'}</div><span class="feature-state">${p.winner?botName(p.winner,false)+' wins ↗':'View the matchup ↗'}</span></a>`}).join('');
@@ -110,7 +124,7 @@ function renderVideo(){
 }
 function render(){
  $('#status').textContent=D.status.toUpperCase();$('#updated').textContent='Snapshot: '+D.updated;
- if(page==='home')renderHome();if(page==='matches')renderMatches();if(page==='bots')roster();
+ if(page==='home')renderHome();if(page==='matches')renderMatches();if(page==='exhibition')renderExhibition();addExhibitionLink();if(page==='bots')roster();
  if($('#profile').open&&profileId)profile(profileId);
 }
 function loadData(){fetch('data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}).then(d=>{if(!D||D.updated!==d.updated){D=d;render()}}).catch(()=>{if(!D){const banner=document.createElement('p');banner.className='notice';banner.textContent='Tournament results could not load. Please refresh to try again.';$('main').prepend(banner)}})}
@@ -118,5 +132,5 @@ if(page==='home'&&location.hash){const target={'#replay':'matches.html?stage=swi
 document.addEventListener('click',e=>{const replay=e.target.closest('[data-replay]');if(replay){playAllReplays=false;chooseReplay(Number(replay.dataset.replay),true)}});
 document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{kind=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));roster()});if($('#search'))$('#search').oninput=e=>{query=e.target.value.toLowerCase();roster()};
 $('#profile').onclose=()=>{profileId=null};$('.close').onclick=()=>$('#profile').close();$('#profile').onclick=e=>{if(e.target===$('#profile'))$('#profile').close()};
-window.matchMedia('(max-width:900px)').addEventListener('change',()=>{if(page==='matches')positionReplayRoom()});
+window.matchMedia('(max-width:900px)').addEventListener('change',()=>{if(page==='matches'||page==='exhibition')positionReplayRoom()});
 loadData();setInterval(()=>{if(!document.hidden)loadData()},15000);
