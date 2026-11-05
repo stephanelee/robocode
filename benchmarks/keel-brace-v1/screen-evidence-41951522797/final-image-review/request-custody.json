@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "reviewerTask": "/root/runner_image_provenance_audit",
+  "scope": "Independent completed actual provider evidence only; no score/decision rewrite",
+  "requests": [
+    {
+      "file": "run.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/runs/41951522797",
+      "command": [
+        "gh",
+        "api",
+        "--include",
+        "--allow-escape-sequences",
+        "repos/stephanelee/robocode/actions/runs/41951522797"
+      ],
+      "startedAtUTC": "2026-11-05T02:53:30.516642+00:00",
+      "completedAtUTC": "2026-11-05T02:53:30.750118+00:00",
+      "httpStatus": 200,
+      "bytes": 12836,
+      "sha256": "832a2109d66d744f8779a306149c336bcc62e0569eb34220158c678c2002f77a",
+      "rawResponseSHA256": "75f31685dbb36402fee8eb9fffc41d1e1241126b9aa6b03dede84f32d6254fdd"
+    },
+    {
+      "file": "jobs.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/runs/41951522797/jobs",
+      "command": [
+        "gh",
+        "api",
+        "--include",
+        "--allow-escape-sequences",
+        "repos/stephanelee/robocode/actions/runs/41951522797/jobs"
+      ],
+      "startedAtUTC": "2026-11-05T02:53:30.750627+00:00",
+      "completedAtUTC": "2026-11-05T02:53:31.095017+00:00",
+      "httpStatus": 200,
+      "bytes": 4807,
+      "sha256": "cc3e398b72c3812fe90d817835bafdd6437caa9086c0071f54154df6ff081ff8",
+      "rawResponseSHA256": "73a5cd23c7f28b7cdeabb079d5e57c4690e2088595644fb78b52be7e3b22e864"
+    },
+    {
+      "file": "source-pr115.json",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/pulls/115",
+      "command": [
+        "gh",
+        "api",
+        "--include",
+        "--allow-escape-sequences",
+        "repos/stephanelee/robocode/pulls/115"
+      ],
+      "startedAtUTC": "2026-11-05T02:53:31.095411+00:00",
+      "completedAtUTC": "2026-11-05T02:53:31.855886+00:00",
+      "httpStatus": 200,
+      "bytes": 18201,
+      "sha256": "fd9e12ebaf5d828f873f496732a0ad85b312b1e2c18cede59f1f2ebb58e8ed97",
+      "rawResponseSHA256": "cfdbf0078ada28f0cb0cbfc2aa98b7ac22b644de3646574172db61575884cae2"
+    },
+    {
+      "file": "job.log",
+      "endpoint": "https://api.github.com/repos/stephanelee/robocode/actions/jobs/126996333991/logs",
+      "command": [
+        "gh",
+        "api",
+        "--include",
+        "--allow-escape-sequences",
+        "repos/stephanelee/robocode/actions/jobs/126996333991/logs"
+      ],
+      "startedAtUTC": "2026-11-05T02:53:31.856438+00:00",
+      "completedAtUTC": "2026-11-05T02:53:32.522801+00:00",
+      "httpStatus": 200,
+      "bytes": 103464,
+      "sha256": "1b6010dc470ae1fade29b88d6eadbba7e90b21474a6b10de30f9c032fe7ae9ea",
+      "rawResponseSHA256": "9101f70c61e69c5a15ad62fed6303716d386185978dc527036c5d156e8dc793f"
+    }
+  ]
+}
