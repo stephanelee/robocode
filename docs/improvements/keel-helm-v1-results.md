@@ -1,5 +1,7 @@
 # KeelHelm v1: screen passed; fresh confirmation rejected
 
+> **Image-provenance qualification:** subsequent independent review found provider headers20261025.179.1 conflicting with ENV-derived profiles20261026.180.1. Compliance with the historical exact-image condition is UNPROVEN; earlier unqualified runtime/admission PASS statements are withdrawn pending this record-correction audit. Raw scores, source/JAR hashes, custody and consumed budgets remain unchanged. KeelHelm is not adopted and is never rerun. [Audit and evidence](../../benchmarks/keel-brace-v1/image-provenance-audit/report.md), [correction issue107](https://github.com/stephanelee/robocode/issues/107#issuecomment-6645373998).
+
 Tracking: [issue107](https://github.com/stephanelee/robocode/issues/107), [PR108](https://github.com/stephanelee/robocode/pull/108). The [prospective protocol](keel-helm-v1.md) and [game registry](../../benchmarks/keel-helm-v1/games.json) are unchanged. The registered screen passed, but the independent fresh confirmation rejected the required Diamond improvement. Keep immutable original Keel0.1.0 as the baseline. The canonical custody archive was independently reviewed and merged in separate PR113. This owner PR retains the isolated implementation and full recovered audit; separate review5777201129 and both required checks passed, then PR108 merged as1f6e6a38582838fe891330a0b3e7a7d9f1668279.
 
 ## Frozen treatment and preparation

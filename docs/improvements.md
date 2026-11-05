@@ -4,11 +4,13 @@
 
 Earlier cycles compare narrow candidates with the previously accepted version. Current work builds one coherent bot before a whole-product benchmark. Keep source commits, JAR hashes, opponent pin, runtime, round budget, AISurvivor seeds, raw telemetry, failures, and the final accept/reject decision. Do not describe short in-roster trials as proof of generalization or competitive superiority.
 
+**Image-provenance correction:** raw provider headers and guest image fields conflict in Helm records; historical exact-image compliance is UNPROVEN. The recorded scores failed its improvement gate, but earlier unqualified runtime-valid claims are withdrawn. Preserve all original records/receipts; no rescue, promotion or rerun. [Independent audit](../benchmarks/keel-brace-v1/image-provenance-audit/report.md), [issue107 correction](https://github.com/stephanelee/robocode/issues/107#issuecomment-6645373998). Brace has0games and runtime admission remains closed.
+
 ## KeelBrace prospective registration
 
 | Experiment | Budget and status | Evidence |
 |---|---|---|
-| KeelBrace same-turn ram-energy correction / [issue114](https://github.com/stephanelee/robocode/issues/114), [PR115](https://github.com/stephanelee/robocode/pull/115) | **Implementation/pure validation;0games/rounds measured.** Published prospective review passed; actual pinned Java17 build/JAR validation pending. Original Keel comparator; primary Retcon gain with Diamond regression guards. Fixed120screen plus conditional300fresh confirmation,420maximum/no replacements. Published-identity review precedes implementation; source/runtime clearance still required. | [Protocol](improvements/keel-brace-v1.md), [registry/pins/review history](../benchmarks/keel-brace-v1/README.md) |
+| KeelBrace same-turn ram-energy correction / [issue114](https://github.com/stephanelee/robocode/issues/114), [PR115](https://github.com/stephanelee/robocode/pull/115) | **Implementation/pure validation;0games/rounds measured.** Published prospective review passed; actual zero-game Temurin17 build passed; image admission remains blocked by conflicting metadata. Original Keel comparator; primary Retcon gain with Diamond regression guards. Fixed120screen plus conditional300fresh confirmation,420maximum/no replacements. Published-identity review precedes implementation; source/runtime clearance still required. | [Protocol](improvements/keel-brace-v1.md), [registry/pins/review history](../benchmarks/keel-brace-v1/README.md) |
 
 ## Keel experimental baseline
 

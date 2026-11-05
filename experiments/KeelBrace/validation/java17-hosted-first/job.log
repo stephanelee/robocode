@@ -1,0 +1,635 @@
+﻿2026-11-04T23:32:52.0390962Z Current runner version: '2.338.2'
+2026-11-04T23:32:52.0415529Z ##[group]Runner Image Provisioner
+2026-11-04T23:32:52.0416539Z Hosted Compute Agent
+2026-11-04T23:32:52.0417080Z Version: 20261021.618
+2026-11-04T23:32:52.0417733Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-04T23:32:52.0418385Z Build Date: 2026-10-21T00:45:21Z
+2026-11-04T23:32:52.0419041Z Worker ID: {65685904-d8e5-4111-a8dd-6a848f305e7c}
+2026-11-04T23:32:52.0419795Z Region: westus3
+2026-11-04T23:32:52.0420294Z Cloud: Azure
+2026-11-04T23:32:52.0420809Z ##[endgroup]
+2026-11-04T23:32:52.0422634Z ##[group]Operating System
+2026-11-04T23:32:52.0423281Z Ubuntu
+2026-11-04T23:32:52.0423820Z 26.04.1
+2026-11-04T23:32:52.0424280Z LTS
+2026-11-04T23:32:52.0425010Z ##[endgroup]
+2026-11-04T23:32:52.0425558Z ##[group]Runner Image
+2026-11-04T23:32:52.0426125Z Image: ubuntu-26.04
+2026-11-04T23:32:52.0426662Z Version: 20261025.179.1
+2026-11-04T23:32:52.0427812Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T23:32:52.0429245Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-04T23:32:52.0430106Z ##[endgroup]
+2026-11-04T23:32:52.0431119Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T23:32:52.0433086Z Contents: read
+2026-11-04T23:32:52.0433697Z Metadata: read
+2026-11-04T23:32:52.0434220Z ##[endgroup]
+2026-11-04T23:32:52.0436487Z Secret source: Actions
+2026-11-04T23:32:52.0437347Z Cache mode: write
+2026-11-04T23:32:52.0437999Z Prepare workflow directory
+2026-11-04T23:32:52.0771804Z Prepare all required actions
+2026-11-04T23:32:52.0821131Z Getting action download info
+2026-11-04T23:32:52.3989858Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T23:32:52.5290792Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-04T23:32:53.2045087Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-11-04T23:32:54.1779752Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-04T23:32:54.2198145Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-04T23:32:54.3898287Z Complete job name: KeelBrace Java 17 bootstrap (zero games)
+2026-11-04T23:32:54.4656415Z ##[group]Run actions/checkout@v4
+2026-11-04T23:32:54.4657183Z with:
+2026-11-04T23:32:54.4657593Z   ref: c5a4c3f97e11358656dcf6821529e9917c757bf5
+2026-11-04T23:32:54.4658046Z   persist-credentials: false
+2026-11-04T23:32:54.4658472Z   repository: stephanelee/robocode
+2026-11-04T23:32:54.4661230Z   token: ***
+2026-11-04T23:32:54.4661589Z   ssh-strict: true
+2026-11-04T23:32:54.4661949Z   ssh-user: git
+2026-11-04T23:32:54.4662281Z   clean: true
+2026-11-04T23:32:54.4662670Z   sparse-checkout-cone-mode: true
+2026-11-04T23:32:54.4663098Z   fetch-depth: 1
+2026-11-04T23:32:54.4663427Z   fetch-tags: false
+2026-11-04T23:32:54.4663803Z   show-progress: true
+2026-11-04T23:32:54.4664167Z   lfs: false
+2026-11-04T23:32:54.4664660Z   submodules: false
+2026-11-04T23:32:54.4665077Z   set-safe-directory: true
+2026-11-04T23:32:54.4665463Z   allow-unsafe-pr-checkout: false
+2026-11-04T23:32:54.4666193Z ##[endgroup]
+2026-11-04T23:32:54.7043964Z Syncing repository: stephanelee/robocode
+2026-11-04T23:32:54.7046908Z ##[group]Getting Git version info
+2026-11-04T23:32:54.7047833Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-04T23:32:54.7049279Z [command]/usr/bin/git version
+2026-11-04T23:32:54.7049986Z git version 2.56.0
+2026-11-04T23:32:54.7052293Z ##[endgroup]
+2026-11-04T23:32:54.7058295Z Temporarily overriding HOME='/home/runner/work/_temp/d5b59880-1733-4887-b42b-beae744cef96' before making global git config changes
+2026-11-04T23:32:54.7060014Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T23:32:54.7061454Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T23:32:54.7125708Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-04T23:32:54.7128103Z ##[group]Initializing the repository
+2026-11-04T23:32:54.7129394Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-04T23:32:54.7208577Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T23:32:54.7209706Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T23:32:54.7210615Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T23:32:54.7211199Z hint: call:
+2026-11-04T23:32:54.7211545Z hint:
+2026-11-04T23:32:54.7211978Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T23:32:54.7212657Z hint:
+2026-11-04T23:32:54.7213091Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T23:32:54.7213743Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T23:32:54.7214564Z hint:
+2026-11-04T23:32:54.7214954Z hint: 	git branch -m <name>
+2026-11-04T23:32:54.7215366Z hint:
+2026-11-04T23:32:54.7215826Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T23:32:54.7220786Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-04T23:32:54.7229953Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-04T23:32:54.7272535Z ##[endgroup]
+2026-11-04T23:32:54.7273708Z ##[group]Disabling automatic garbage collection
+2026-11-04T23:32:54.7275388Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T23:32:54.7302448Z ##[endgroup]
+2026-11-04T23:32:54.7303737Z ##[group]Setting up auth
+2026-11-04T23:32:54.7309623Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T23:32:54.7338447Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T23:32:54.7716845Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T23:32:54.7748456Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T23:32:54.7987923Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T23:32:54.8020348Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T23:32:54.8227658Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T23:32:54.8259815Z ##[endgroup]
+2026-11-04T23:32:54.8260551Z ##[group]Fetching the repository
+2026-11-04T23:32:54.8268955Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin c5a4c3f97e11358656dcf6821529e9917c757bf5
+2026-11-04T23:33:05.5396420Z From https://github.com/stephanelee/robocode
+2026-11-04T23:33:05.5397192Z  * branch            c5a4c3f97e11358656dcf6821529e9917c757bf5 -> FETCH_HEAD
+2026-11-04T23:33:05.5400303Z ##[endgroup]
+2026-11-04T23:33:05.5401026Z ##[group]Determining the checkout info
+2026-11-04T23:33:05.5414332Z ##[endgroup]
+2026-11-04T23:33:05.5415378Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T23:33:05.5465096Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T23:33:05.5489933Z ##[group]Checking out the ref
+2026-11-04T23:33:05.5495619Z [command]/usr/bin/git checkout --progress --force c5a4c3f97e11358656dcf6821529e9917c757bf5
+2026-11-04T23:33:06.5903120Z Updating files:  62% (3270/5242)
+2026-11-04T23:33:06.5923209Z Updating files:  63% (3303/5242)
+2026-11-04T23:33:06.5941747Z Updating files:  64% (3355/5242)
+2026-11-04T23:33:06.6050455Z Updating files:  65% (3408/5242)
+2026-11-04T23:33:06.6155684Z Updating files:  66% (3460/5242)
+2026-11-04T23:33:06.6253211Z Updating files:  67% (3513/5242)
+2026-11-04T23:33:06.6308268Z Updating files:  68% (3565/5242)
+2026-11-04T23:33:06.6331572Z Updating files:  69% (3617/5242)
+2026-11-04T23:33:06.6350488Z Updating files:  70% (3670/5242)
+2026-11-04T23:33:06.6378486Z Updating files:  71% (3722/5242)
+2026-11-04T23:33:06.6414299Z Updating files:  72% (3775/5242)
+2026-11-04T23:33:06.6437111Z Updating files:  73% (3827/5242)
+2026-11-04T23:33:06.6459551Z Updating files:  74% (3880/5242)
+2026-11-04T23:33:06.6482439Z Updating files:  75% (3932/5242)
+2026-11-04T23:33:06.6506149Z Updating files:  76% (3984/5242)
+2026-11-04T23:33:06.6527615Z Updating files:  77% (4037/5242)
+2026-11-04T23:33:06.6550276Z Updating files:  78% (4089/5242)
+2026-11-04T23:33:06.6574918Z Updating files:  79% (4142/5242)
+2026-11-04T23:33:06.6592759Z Updating files:  80% (4194/5242)
+2026-11-04T23:33:06.6612657Z Updating files:  81% (4247/5242)
+2026-11-04T23:33:06.6638945Z Updating files:  82% (4299/5242)
+2026-11-04T23:33:06.6658202Z Updating files:  83% (4351/5242)
+2026-11-04T23:33:06.6676487Z Updating files:  84% (4404/5242)
+2026-11-04T23:33:06.6695244Z Updating files:  85% (4456/5242)
+2026-11-04T23:33:06.6712483Z Updating files:  86% (4509/5242)
+2026-11-04T23:33:06.6728788Z Updating files:  87% (4561/5242)
+2026-11-04T23:33:06.6744312Z Updating files:  88% (4613/5242)
+2026-11-04T23:33:06.6763353Z Updating files:  89% (4666/5242)
+2026-11-04T23:33:06.6795589Z Updating files:  90% (4718/5242)
+2026-11-04T23:33:06.6832333Z Updating files:  91% (4771/5242)
+2026-11-04T23:33:06.6872305Z Updating files:  92% (4823/5242)
+2026-11-04T23:33:06.6892637Z Updating files:  93% (4876/5242)
+2026-11-04T23:33:06.6975549Z Updating files:  94% (4928/5242)
+2026-11-04T23:33:06.6997251Z Updating files:  95% (4980/5242)
+2026-11-04T23:33:06.7021191Z Updating files:  96% (5033/5242)
+2026-11-04T23:33:06.7042995Z Updating files:  97% (5085/5242)
+2026-11-04T23:33:06.7064791Z Updating files:  98% (5138/5242)
+2026-11-04T23:33:06.7082168Z Updating files:  99% (5190/5242)
+2026-11-04T23:33:06.7082656Z Updating files: 100% (5242/5242)
+2026-11-04T23:33:06.7083085Z Updating files: 100% (5242/5242), done.
+2026-11-04T23:33:06.7163700Z Note: switching to 'c5a4c3f97e11358656dcf6821529e9917c757bf5'.
+2026-11-04T23:33:06.7164323Z 
+2026-11-04T23:33:06.7164997Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-04T23:33:06.7165501Z changes and commit them, and you can discard any commits you make in this
+2026-11-04T23:33:06.7165956Z state without impacting any branches by switching back to a branch.
+2026-11-04T23:33:06.7166351Z 
+2026-11-04T23:33:06.7166563Z If you want to create a new branch to retain commits you create, you may
+2026-11-04T23:33:06.7167018Z do so (now or later) by using -c with the switch command. Example:
+2026-11-04T23:33:06.7167279Z 
+2026-11-04T23:33:06.7167389Z   git switch -c <new-branch-name>
+2026-11-04T23:33:06.7167569Z 
+2026-11-04T23:33:06.7167672Z Or undo this operation with:
+2026-11-04T23:33:06.7167834Z 
+2026-11-04T23:33:06.7167932Z   git switch -
+2026-11-04T23:33:06.7168058Z 
+2026-11-04T23:33:06.7168270Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-04T23:33:06.7168558Z 
+2026-11-04T23:33:06.7168830Z HEAD is now at c5a4c3f Implement isolated KeelBrace ram bookkeeping and pinned zero-game build
+2026-11-04T23:33:06.7271468Z ##[endgroup]
+2026-11-04T23:33:06.7320252Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T23:33:06.7341986Z c5a4c3f97e11358656dcf6821529e9917c757bf5
+2026-11-04T23:33:06.7355070Z ##[group]Removing auth
+2026-11-04T23:33:06.7357086Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T23:33:06.7381088Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T23:33:06.7615615Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T23:33:06.7632069Z http.https://github.com/.extraheader
+2026-11-04T23:33:06.7639590Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T23:33:06.7671093Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T23:33:06.7903616Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T23:33:06.7923047Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T23:33:06.8141247Z ##[endgroup]
+2026-11-04T23:33:06.8475626Z ##[group]Run actions/setup-java@v4
+2026-11-04T23:33:06.8475912Z with:
+2026-11-04T23:33:06.8476125Z   distribution: temurin
+2026-11-04T23:33:06.8476360Z   java-version: 17.0.21+9
+2026-11-04T23:33:06.8476586Z   java-package: jdk
+2026-11-04T23:33:06.8476801Z   check-latest: false
+2026-11-04T23:33:06.8477027Z   server-id: github
+2026-11-04T23:33:06.8477250Z   server-username: GITHUB_ACTOR
+2026-11-04T23:33:06.8477514Z   server-password: GITHUB_TOKEN
+2026-11-04T23:33:06.8477762Z   overwrite-settings: true
+2026-11-04T23:33:06.8477998Z   job-status: success
+2026-11-04T23:33:06.8480420Z   token: ***
+2026-11-04T23:33:06.8480641Z ##[endgroup]
+2026-11-04T23:33:07.0132551Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-04T23:33:07.0142026Z ##[group]Installed distributions
+2026-11-04T23:33:07.0161559Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-04T23:33:07.0162167Z Setting Java 17.0.21+9 as the default
+2026-11-04T23:33:07.0170962Z (node:2452) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T23:33:07.0172132Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T23:33:07.0174750Z Creating toolchains.xml for JDK version 17.0.21+9 from temurin
+2026-11-04T23:33:07.0244780Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-04T23:33:07.0245485Z 
+2026-11-04T23:33:07.0245756Z Java configuration:
+2026-11-04T23:33:07.0246069Z   Distribution: temurin
+2026-11-04T23:33:07.0246417Z   Version: 17.0.21+9
+2026-11-04T23:33:07.0246872Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:07.0247296Z 
+2026-11-04T23:33:07.0247782Z ##[endgroup]
+2026-11-04T23:33:07.0264063Z Creating settings.xml with server-id: github
+2026-11-04T23:33:07.0305294Z Writing to /home/runner/.m2/settings.xml
+2026-11-04T23:33:07.0641117Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-11-04T23:33:07.0641635Z with:
+2026-11-04T23:33:07.0641948Z   cache-disabled: false
+2026-11-04T23:33:07.0642269Z   cache-read-only: true
+2026-11-04T23:33:07.0642585Z   cache-write-only: false
+2026-11-04T23:33:07.0642944Z   cache-overwrite-existing: false
+2026-11-04T23:33:07.0643429Z   cache-cleanup: on-success
+2026-11-04T23:33:07.0643914Z   gradle-home-cache-includes: caches
+notifications
+
+2026-11-04T23:33:07.0644587Z   add-job-summary: always
+2026-11-04T23:33:07.0644995Z   add-job-summary-as-pr-comment: never
+2026-11-04T23:33:07.0645292Z   dependency-graph: disabled
+2026-11-04T23:33:07.0645604Z   dependency-graph-report-dir: dependency-graph-reports
+2026-11-04T23:33:07.0645971Z   dependency-graph-continue-on-failure: true
+2026-11-04T23:33:07.0646274Z   build-scan-publish: false
+2026-11-04T23:33:07.0646518Z   validate-wrappers: true
+2026-11-04T23:33:07.0646767Z   allow-snapshot-wrappers: false
+2026-11-04T23:33:07.0647110Z   gradle-home-cache-strict-match: false
+2026-11-04T23:33:07.0647394Z   workflow-job-context: null
+2026-11-04T23:33:07.0649872Z   github-token: ***
+2026-11-04T23:33:07.0650111Z env:
+2026-11-04T23:33:07.0650416Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:07.0650913Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:07.0651295Z ##[endgroup]
+2026-11-04T23:33:07.4780339Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-11-04T23:33:07.4782967Z ##[group]Restore Gradle state from cache
+2026-11-04T23:33:07.7049784Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build[b8a35c2f917259958c9abe8f2ff1b5ff]-1f6e6a38582838fe891330a0b3e7a7d9f1668279
+2026-11-04T23:33:08.5091885Z Received 689267 of 689267 (100.0%), 1.2 MBs/sec
+2026-11-04T23:33:08.5093588Z Cache Size: ~1 MB (689267 B)
+2026-11-04T23:33:08.5128195Z [command]/usr/bin/tar -xf /home/runner/work/_temp/634431a5-fb71-4e99-8f68-090567057a88/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T23:33:08.5271470Z Cache restored successfully
+2026-11-04T23:33:08.5276225Z Restored cache entry with key gradle-home-v1|Linux-X64|build[acf2c8cfc04fd073c8c0a713b2ef59e5]-81d2dde39598fffb5d702a5f2e2e89f4f038391d to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 1048ms
+2026-11-04T23:33:08.7312755Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+2026-11-04T23:33:08.7349979Z Cache hit for: gradle-groovy-dsl-v1-cceb80f9da1f332f4d566d2a551acd0f
+2026-11-04T23:33:08.7381891Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+2026-11-04T23:33:08.7461778Z Cache hit for: gradle-instrumented-jars-v1-8065c31d9d6e25636d9bda200ede6f15
+2026-11-04T23:33:09.0668035Z Received 298243 of 298243 (100.0%), 1.0 MBs/sec
+2026-11-04T23:33:09.0668728Z Cache Size: ~0 MB (298243 B)
+2026-11-04T23:33:09.0686852Z [command]/usr/bin/tar -xf /home/runner/work/_temp/8fe09e60-273d-4702-8fbf-464b5e3b883e/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T23:33:09.1041026Z Cache restored successfully
+2026-11-04T23:33:09.1045657Z Restored cache entry with key gradle-groovy-dsl-v1-cceb80f9da1f332f4d566d2a551acd0f to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 575ms
+2026-11-04T23:33:09.3298418Z Received 153838 of 153838 (100.0%), 0.4 MBs/sec
+2026-11-04T23:33:09.3299061Z Cache Size: ~0 MB (153838 B)
+2026-11-04T23:33:09.3318373Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2ac7c96a-6a10-489a-91ab-4002f75f1643/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T23:33:09.3480116Z Cache restored successfully
+2026-11-04T23:33:09.3481765Z Restored cache entry with key gradle-instrumented-jars-v1-8065c31d9d6e25636d9bda200ede6f15 to /home/runner/.gradle/caches/jars-*/*/ in 820ms
+2026-11-04T23:33:09.6584975Z Received 6690088 of 6690088 (100.0%), 7.4 MBs/sec
+2026-11-04T23:33:09.6586210Z Cache Size: ~6 MB (6690088 B)
+2026-11-04T23:33:09.6684013Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5f13280d-1a18-4142-8927-d617fcdc77af/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T23:33:09.6844900Z Cache restored successfully
+2026-11-04T23:33:09.6849807Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 1156ms
+2026-11-04T23:33:09.9391085Z Received 62914560 of 136693260 (46.0%), 60.1 MBs/sec
+2026-11-04T23:33:10.5016443Z Received 136693260 of 136693260 (100.0%), 83.5 MBs/sec
+2026-11-04T23:33:10.5019151Z Cache Size: ~130 MB (136693260 B)
+2026-11-04T23:33:10.5044139Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d9986e28-cfc9-4dcc-8883-61797b7a9589/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-04T23:33:10.6627426Z Cache restored successfully
+2026-11-04T23:33:10.6671193Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 2138ms
+2026-11-04T23:33:10.6742755Z ##[endgroup]
+2026-11-04T23:33:10.7856406Z ##[group]All Gradle Wrapper jars are valid
+2026-11-04T23:33:10.7857584Z ✓ Found known Gradle Wrapper JAR files:
+2026-11-04T23:33:10.7858827Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 benchmarks/keel-helm-v1/confirmation-evidence-41889609469/frozen-source/gradle/wrapper/gradle-wrapper.jar
+2026-11-04T23:33:10.7860805Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+2026-11-04T23:33:10.7861988Z ##[endgroup]
+2026-11-04T23:33:10.8027810Z ##[group]Run actions/setup-python@v5
+2026-11-04T23:33:10.8028139Z with:
+2026-11-04T23:33:10.8028393Z   python-version: 3.13.17
+2026-11-04T23:33:10.8028668Z   check-latest: false
+2026-11-04T23:33:10.8031084Z   token: ***
+2026-11-04T23:33:10.8031327Z   update-environment: true
+2026-11-04T23:33:10.8031613Z   allow-prereleases: false
+2026-11-04T23:33:10.8031881Z   freethreaded: false
+2026-11-04T23:33:10.8032123Z env:
+2026-11-04T23:33:10.8032452Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:10.8032989Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:10.8033433Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T23:33:10.8033774Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T23:33:10.8034111Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T23:33:10.8034620Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T23:33:10.8035128Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T23:33:10.8035645Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T23:33:10.8036002Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T23:33:10.8036304Z ##[endgroup]
+2026-11-04T23:33:10.9301155Z ##[group]Installed versions
+2026-11-04T23:33:10.9360145Z (node:2540) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T23:33:10.9361486Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T23:33:10.9362271Z Successfully set up CPython (3.13.17)
+2026-11-04T23:33:10.9363307Z ##[endgroup]
+2026-11-04T23:33:10.9499527Z ##[group]Run set -euo pipefail
+2026-11-04T23:33:10.9499998Z [36;1mset -euo pipefail[0m
+2026-11-04T23:33:10.9500391Z [36;1mmkdir -p build/keel-brace-bootstrap[0m
+2026-11-04T23:33:10.9500766Z [36;1m{[0m
+2026-11-04T23:33:10.9500992Z [36;1m  set -x[0m
+2026-11-04T23:33:10.9501235Z [36;1m  java -version[0m
+2026-11-04T23:33:10.9501488Z [36;1m  javac -version[0m
+2026-11-04T23:33:10.9501758Z [36;1m  ./gradlew --version[0m
+2026-11-04T23:33:10.9502040Z [36;1m  git rev-parse HEAD[0m
+2026-11-04T23:33:10.9502399Z [36;1m  if test -f experiments/KeelBrace/KeelBrace.jar; then[0m
+2026-11-04T23:33:10.9502975Z [36;1m    cp experiments/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-committed.jar[0m
+2026-11-04T23:33:10.9503464Z [36;1m  fi[0m
+2026-11-04T23:33:10.9503788Z [36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build[0m
+2026-11-04T23:33:10.9504704Z [36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar[0m
+2026-11-04T23:33:10.9505375Z [36;1m  ./gradlew -p experiments/KeelBrace --no-daemon clean build[0m
+2026-11-04T23:33:10.9505976Z [36;1m  cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-04T23:33:10.9506777Z [36;1m  python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-04T23:33:10.9507551Z [36;1m  cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-04T23:33:10.9508161Z [36;1m  if test -f build/keel-brace-bootstrap/KeelBrace-committed.jar; then[0m
+2026-11-04T23:33:10.9508857Z [36;1m    python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-committed.jar build/keel-brace-bootstrap/KeelBrace.jar[0m
+2026-11-04T23:33:10.9509436Z [36;1m  fi[0m
+2026-11-04T23:33:10.9509716Z [36;1m  sha256sum build/keel-brace-bootstrap/*.jar[0m
+2026-11-04T23:33:10.9510102Z [36;1m} 2>&1 | tee build/keel-brace-bootstrap/build.log[0m
+2026-11-04T23:33:10.9542647Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-04T23:33:10.9543204Z env:
+2026-11-04T23:33:10.9543546Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:10.9544061Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:10.9544751Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T23:33:10.9545105Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T23:33:10.9545440Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T23:33:10.9545774Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T23:33:10.9546251Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T23:33:10.9546763Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T23:33:10.9547110Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T23:33:10.9547483Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:10.9547949Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T23:33:10.9548422Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:10.9548841Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:10.9549252Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:10.9549661Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T23:33:10.9550013Z ##[endgroup]
+2026-11-04T23:33:10.9705041Z + java -version
+2026-11-04T23:33:10.9992595Z openjdk version "17.0.21" 2026-10-20
+2026-11-04T23:33:10.9993514Z OpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)
+2026-11-04T23:33:10.9994606Z OpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)
+2026-11-04T23:33:11.0037793Z + javac -version
+2026-11-04T23:33:11.1542059Z javac 17.0.21
+2026-11-04T23:33:11.1660517Z + ./gradlew --version
+2026-11-04T23:33:11.8107821Z 
+2026-11-04T23:33:11.8109249Z ------------------------------------------------------------
+2026-11-04T23:33:11.8110108Z Gradle 8.14.3
+2026-11-04T23:33:11.8110835Z ------------------------------------------------------------
+2026-11-04T23:33:11.8111331Z 
+2026-11-04T23:33:11.8113526Z Build time:    2025-07-04 13:15:44 UTC
+2026-11-04T23:33:11.8114638Z Revision:      e5ee1df3d88b8ca3a8074787a94f373e3090e1db
+2026-11-04T23:33:11.8115227Z 
+2026-11-04T23:33:11.8115445Z Kotlin:        2.0.21
+2026-11-04T23:33:11.8115938Z Groovy:        3.0.24
+2026-11-04T23:33:11.8116891Z Ant:           Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+2026-11-04T23:33:11.8118141Z Launcher JVM:  17.0.21 (Eclipse Adoptium 17.0.21+9)
+2026-11-04T23:33:11.8120724Z Daemon JVM:    /usr/lib/jvm/temurin-17-jdk-amd64 (no JDK specified, using current Java home)
+2026-11-04T23:33:11.8121704Z OS:            Linux 7.0.0-1017-azure amd64
+2026-11-04T23:33:11.8122111Z 
+2026-11-04T23:33:11.8192143Z + git rev-parse HEAD
+2026-11-04T23:33:11.8205020Z c5a4c3f97e11358656dcf6821529e9917c757bf5
+2026-11-04T23:33:11.8206673Z + test -f experiments/KeelBrace/KeelBrace.jar
+2026-11-04T23:33:11.8207372Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+2026-11-04T23:33:12.5264203Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-04T23:33:13.5254052Z Daemon will be stopped at the end of the build 
+2026-11-04T23:33:18.2287627Z > Task :clean UP-TO-DATE
+2026-11-04T23:33:19.3265893Z > Task :compileJava
+2026-11-04T23:33:19.3266454Z > Task :processResources NO-SOURCE
+2026-11-04T23:33:19.3267034Z > Task :classes
+2026-11-04T23:33:19.7262477Z > Task :jar
+2026-11-04T23:33:19.7272405Z > Task :prepareBot
+2026-11-04T23:33:19.7275339Z > Task :assemble
+2026-11-04T23:33:20.4264033Z > Task :compileTestJava
+2026-11-04T23:33:20.4274626Z > Task :prepareTestDescriptors
+2026-11-04T23:33:20.4295835Z > Task :processTestResources NO-SOURCE
+2026-11-04T23:33:20.4335326Z > Task :testClasses
+2026-11-04T23:33:21.4160911Z 
+2026-11-04T23:33:21.4162202Z > Task :test
+2026-11-04T23:33:21.4162993Z 
+2026-11-04T23:33:21.4163766Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+2026-11-04T23:33:21.4166627Z 
+2026-11-04T23:33:21.4177549Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+2026-11-04T23:33:21.4178765Z 
+2026-11-04T23:33:21.4179643Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+2026-11-04T23:33:21.4184700Z 
+2026-11-04T23:33:21.4199660Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+2026-11-04T23:33:21.4200607Z 
+2026-11-04T23:33:21.4201155Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+2026-11-04T23:33:21.4202065Z 
+2026-11-04T23:33:21.4202822Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+2026-11-04T23:33:21.4204920Z 
+2026-11-04T23:33:21.4205783Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+2026-11-04T23:33:21.4206735Z 
+2026-11-04T23:33:21.4207654Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+2026-11-04T23:33:21.4208559Z 
+2026-11-04T23:33:21.4209169Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+2026-11-04T23:33:21.4209990Z 
+2026-11-04T23:33:21.4210700Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+2026-11-04T23:33:21.4211662Z 
+2026-11-04T23:33:21.4212347Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+2026-11-04T23:33:21.4213323Z 
+2026-11-04T23:33:21.4214012Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+2026-11-04T23:33:21.4215009Z 
+2026-11-04T23:33:21.4215687Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+2026-11-04T23:33:21.4216583Z 
+2026-11-04T23:33:21.4217413Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+2026-11-04T23:33:21.4217998Z 
+2026-11-04T23:33:21.4218371Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+2026-11-04T23:33:21.4218823Z 
+2026-11-04T23:33:21.4219212Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+2026-11-04T23:33:21.4219678Z 
+2026-11-04T23:33:21.4220102Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+2026-11-04T23:33:21.4220649Z 
+2026-11-04T23:33:21.4220996Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+2026-11-04T23:33:21.4221434Z 
+2026-11-04T23:33:21.4221740Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+2026-11-04T23:33:21.4222120Z 
+2026-11-04T23:33:21.4222448Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+2026-11-04T23:33:21.4222866Z 
+2026-11-04T23:33:21.4223181Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+2026-11-04T23:33:21.4223544Z 
+2026-11-04T23:33:21.4223836Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+2026-11-04T23:33:21.4224175Z 
+2026-11-04T23:33:21.4224587Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+2026-11-04T23:33:21.4225197Z 
+2026-11-04T23:33:21.4225555Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+2026-11-04T23:33:21.4225937Z 
+2026-11-04T23:33:21.4226169Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+2026-11-04T23:33:21.4226557Z 
+2026-11-04T23:33:21.4226911Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+2026-11-04T23:33:21.4227351Z 
+2026-11-04T23:33:21.4227680Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+2026-11-04T23:33:21.4228152Z 
+2026-11-04T23:33:21.4228432Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+2026-11-04T23:33:21.4228792Z 
+2026-11-04T23:33:21.4229166Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+2026-11-04T23:33:21.4229655Z 
+2026-11-04T23:33:21.4230114Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+2026-11-04T23:33:21.4230520Z 
+2026-11-04T23:33:21.4230671Z > Task :check
+2026-11-04T23:33:21.4231015Z > Task :build
+2026-11-04T23:33:21.4231648Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793835195097.json
+2026-11-04T23:33:21.4232152Z 
+2026-11-04T23:33:21.4232328Z BUILD SUCCESSFUL in 9s
+2026-11-04T23:33:21.4232716Z 7 actionable tasks: 6 executed, 1 up-to-date
+2026-11-04T23:33:21.5121059Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace-first.jar
+2026-11-04T23:33:21.5146498Z + ./gradlew -p experiments/KeelBrace --no-daemon clean build
+2026-11-04T23:33:22.1502394Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-04T23:33:23.0477443Z Daemon will be stopped at the end of the build 
+2026-11-04T23:33:26.9497658Z > Task :clean
+2026-11-04T23:33:27.9495012Z > Task :compileJava
+2026-11-04T23:33:27.9501400Z > Task :processResources NO-SOURCE
+2026-11-04T23:33:27.9502230Z > Task :classes
+2026-11-04T23:33:28.3473692Z > Task :jar
+2026-11-04T23:33:28.3474281Z > Task :prepareBot
+2026-11-04T23:33:28.3491137Z > Task :assemble
+2026-11-04T23:33:28.7484665Z > Task :compileTestJava
+2026-11-04T23:33:28.7493377Z > Task :prepareTestDescriptors
+2026-11-04T23:33:28.7495543Z > Task :processTestResources NO-SOURCE
+2026-11-04T23:33:28.7497114Z > Task :testClasses
+2026-11-04T23:33:29.6474174Z 
+2026-11-04T23:33:29.6475820Z > Task :test
+2026-11-04T23:33:29.6476592Z 
+2026-11-04T23:33:29.6477344Z KeelBraceChronologyTest > staleRamIsCountedButNeverAppliedToFutureScan() PASSED
+2026-11-04T23:33:29.6478396Z 
+2026-11-04T23:33:29.6479714Z KeelBraceChronologyTest > followingRealPointSixShotIsNotCanceledByPreviousRam() PASSED
+2026-11-04T23:33:29.6480874Z 
+2026-11-04T23:33:29.6481880Z KeelBraceChronologyTest > lateRamCannotRetroactivelyChangeAcceptedScanOrCancelNextShot() PASSED
+2026-11-04T23:33:29.6483080Z 
+2026-11-04T23:33:29.6483836Z KeelBraceChronologyTest > missingScanDiscardsItsRamAndDoesNotLeakToLaterInference() PASSED
+2026-11-04T23:33:29.6503586Z 
+2026-11-04T23:33:29.6504240Z KeelBraceChronologyTest > everyAggregateIsCheckedAndBounded() PASSED
+2026-11-04T23:33:29.6505227Z 
+2026-11-04T23:33:29.6505965Z KeelBraceChronologyTest > ramAndPostScanBulletEffectsStayOnDifferentEpochs() PASSED
+2026-11-04T23:33:29.6506940Z 
+2026-11-04T23:33:29.6507665Z KeelBraceChronologyTest > bothRammingAttributionsHaveSameCorrection() PASSED
+2026-11-04T23:33:29.6508502Z 
+2026-11-04T23:33:29.6509170Z KeelBraceChronologyTest > newerRamTurnReplacesAnUnconsumedOlderBucket() PASSED
+2026-11-04T23:33:29.6510030Z 
+2026-11-04T23:33:29.6510656Z KeelBraceChronologyTest > ramAndMinimumShotPreserveActualPower() PASSED
+2026-11-04T23:33:29.6511530Z 
+2026-11-04T23:33:29.6512308Z KeelBraceChronologyTest > eligibleCounterPrecedesMissingOwnHistoryWaveSubgate() PASSED
+2026-11-04T23:33:29.6513285Z 
+2026-11-04T23:33:29.6513976Z KeelBraceChronologyTest > roundResetClearsBucketCountersAndOriginalBulletMap() PASSED
+2026-11-04T23:33:29.6517394Z 
+2026-11-04T23:33:29.6518263Z KeelBraceChronologyTest > duplicateAndStaleScansCannotConsumeOrCountAgain() PASSED
+2026-11-04T23:33:29.6519244Z 
+2026-11-04T23:33:29.6519950Z KeelBraceChronologyTest > wallHeuristicAndNoRamWaveFeaturesRemainOriginal() PASSED
+2026-11-04T23:33:29.6520798Z 
+2026-11-04T23:33:29.6521512Z KeelBraceChronologyTest > firstScanRamIsDiscardedWithoutDelayedCorrection() PASSED
+2026-11-04T23:33:29.6522365Z 
+2026-11-04T23:33:29.6523036Z KeelBraceChronologyTest > postScanBulletDamageAndBonusStillBelongToNextScan() PASSED
+2026-11-04T23:33:29.6523928Z 
+2026-11-04T23:33:29.6524917Z KeelBraceChronologyTest > ramAloneSuppressesOriginalPhantomAndCountsEligibleBoundary() PASSED
+2026-11-04T23:33:29.6525899Z 
+2026-11-04T23:33:29.6526826Z KeelBraceChronologyTest > checkedCounterOverflowMarksOnceAndNeverControlsPhysicalCorrection() PASSED
+2026-11-04T23:33:29.6528107Z 
+2026-11-04T23:33:29.6528827Z KeelBraceChronologyTest > multipleLegitimateBulletCorrectionsAndOneRamSumOnce() PASSED
+2026-11-04T23:33:29.6529773Z 
+2026-11-04T23:33:29.6530375Z KeelBraceChronologyTest > ramAndMediumShotPreserveActualPower() PASSED
+2026-11-04T23:33:29.6531141Z 
+2026-11-04T23:33:29.6531842Z KeelBraceChronologyTest > ramAndMaximumShotRecoverOriginalOutOfRangeWave() PASSED
+2026-11-04T23:33:29.6532705Z 
+2026-11-04T23:33:29.6533282Z KeelBraceInheritedContractTest > wallRoomShrinksNearWalls() PASSED
+2026-11-04T23:33:29.6534312Z 
+2026-11-04T23:33:29.6546684Z KeelBraceInheritedContractTest > speedLawMatchesPinnedServer() PASSED
+2026-11-04T23:33:29.6547756Z 
+2026-11-04T23:33:29.6548369Z KeelBraceInheritedContractTest > hitsShiftDanger() PASSED
+2026-11-04T23:33:29.6549222Z 
+2026-11-04T23:33:29.6549955Z KeelBraceInheritedContractTest > densityIsNormalizedAndCoversAll() PASSED
+2026-11-04T23:33:29.6550980Z 
+2026-11-04T23:33:29.6551580Z KeelBraceInheritedContractTest > knnReturnsClosest() PASSED
+2026-11-04T23:33:29.6552341Z 
+2026-11-04T23:33:29.6553108Z KeelBraceInheritedContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+2026-11-04T23:33:29.6554087Z 
+2026-11-04T23:33:29.6554974Z KeelBraceInheritedContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+2026-11-04T23:33:29.6555912Z 
+2026-11-04T23:33:29.6556457Z KeelBraceInheritedContractTest > wallStopsBotAndZeroesSpeed() PASSED
+2026-11-04T23:33:29.6557168Z 
+2026-11-04T23:33:29.6557998Z KeelBraceInheritedContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+2026-11-04T23:33:29.6558930Z 
+2026-11-04T23:33:29.6559564Z KeelBraceInheritedContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+2026-11-04T23:33:29.6560425Z 
+2026-11-04T23:33:29.6560730Z > Task :check
+2026-11-04T23:33:29.6561263Z > Task :build
+2026-11-04T23:33:29.7136117Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793835204545.json
+2026-11-04T23:33:29.7155366Z 
+2026-11-04T23:33:29.7156239Z BUILD SUCCESSFUL in 8s
+2026-11-04T23:33:29.8127093Z 7 actionable tasks: 7 executed
+2026-11-04T23:33:29.8127697Z + cp experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-04T23:33:29.8145805Z + python tools/verify_jar.py build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-04T23:33:29.9268292Z Verified 790 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-04T23:33:29.9326937Z + cmp build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-04T23:33:29.9342263Z + test -f build/keel-brace-bootstrap/KeelBrace-committed.jar
+2026-11-04T23:33:29.9343147Z + sha256sum build/keel-brace-bootstrap/KeelBrace-first.jar build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-04T23:33:29.9371793Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace-first.jar
+2026-11-04T23:33:29.9379546Z 8a1f1c3365846b7fb272a5a1885b65fad4f5f6ace29cc770fed04f34287d7eb9  build/keel-brace-bootstrap/KeelBrace.jar
+2026-11-04T23:33:29.9424349Z ##[group]Run mkdir -p build/keel-brace-bootstrap
+2026-11-04T23:33:29.9425022Z [36;1mmkdir -p build/keel-brace-bootstrap[0m
+2026-11-04T23:33:29.9425360Z [36;1mpython - <<'PYTHON'[0m
+2026-11-04T23:33:29.9425692Z [36;1mimport hashlib, json, os, pathlib, subprocess[0m
+2026-11-04T23:33:29.9426040Z [36;1mroot = pathlib.Path('.')[0m
+2026-11-04T23:33:29.9426372Z [36;1mout = root / 'build/keel-brace-bootstrap'[0m
+2026-11-04T23:33:29.9427780Z [36;1mfiles = subprocess.check_output(['git', 'ls-files', '-z', 'experiments/KeelBrace', 'experiments/Keel/Keel.jar', 'experiments/Keel/bot/Keel.json', 'benchmarks/keel-brace-v1/baseline.json', 'benchmarks/keel-brace-v1/registration.json', 'benchmarks/keel-brace-v1/runtime-pins.json', '.github/workflows/keel-brace-build.yml', 'tools/verify_jar.py']).decode().split('\0')[0m
+2026-11-04T23:33:29.9429578Z [36;1mhashes = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in files if p and pathlib.Path(p).is_file()}[0m
+2026-11-04T23:33:29.9430456Z [36;1mjars = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.glob('*.jar')}[0m
+2026-11-04T23:33:29.9433214Z [36;1mproof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'imageOS': os.environ.get('ImageOS'), 'imageVersion': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}[0m
+2026-11-04T23:33:29.9436312Z [36;1m(out/'provenance.json').write_text(json.dumps(proof, indent=2)+'\n')[0m
+2026-11-04T23:33:29.9436736Z [36;1mPYTHON[0m
+2026-11-04T23:33:29.9454805Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-04T23:33:29.9455186Z env:
+2026-11-04T23:33:29.9455522Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:29.9456046Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:29.9456502Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T23:33:29.9456848Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T23:33:29.9457179Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T23:33:29.9457513Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T23:33:29.9457975Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T23:33:29.9458490Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T23:33:29.9458855Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T23:33:29.9459233Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:29.9459687Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T23:33:29.9460137Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:29.9460540Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:29.9460950Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:29.9461372Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T23:33:29.9461730Z ##[endgroup]
+2026-11-04T23:33:30.0407158Z ##[group]Run actions/upload-artifact@v4
+2026-11-04T23:33:30.0407504Z with:
+2026-11-04T23:33:30.0407777Z   name: keel-brace-zero-game-build-41934557748
+2026-11-04T23:33:30.0408406Z   path: build/keel-brace-bootstrap/
+experiments/KeelBrace/build/test-results/
+experiments/KeelBrace/build/reports/tests/
+
+2026-11-04T23:33:30.0408994Z   if-no-files-found: error
+2026-11-04T23:33:30.0409260Z   retention-days: 90
+2026-11-04T23:33:30.0409512Z   compression-level: 6
+2026-11-04T23:33:30.0409760Z   overwrite: false
+2026-11-04T23:33:30.0410013Z   include-hidden-files: false
+2026-11-04T23:33:30.0410278Z env:
+2026-11-04T23:33:30.0410612Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:30.0411132Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-04T23:33:30.0411585Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-04T23:33:30.0411930Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-04T23:33:30.0412287Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-04T23:33:30.0412619Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-04T23:33:30.0413081Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-04T23:33:30.0413590Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-04T23:33:30.0414085Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-04T23:33:30.0414746Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:30.0415208Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib/pkgconfig
+2026-11-04T23:33:30.0415669Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:30.0416082Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:30.0416501Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.17/x64
+2026-11-04T23:33:30.0416926Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.17/x64/lib
+2026-11-04T23:33:30.0417288Z ##[endgroup]
+2026-11-04T23:33:30.2022992Z (node:2969) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T23:33:30.2023871Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T23:33:30.2137325Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T23:33:30.2139843Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-04T23:33:30.2141037Z With the provided path, there will be 16 files uploaded
+2026-11-04T23:33:30.2145154Z Artifact name is valid!
+2026-11-04T23:33:30.2145732Z Root directory input is valid!
+2026-11-04T23:33:30.5798604Z Beginning upload of artifact content to blob storage
+2026-11-04T23:33:30.6667173Z (node:2969) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-04T23:33:31.2025462Z Uploaded bytes 1463862
+2026-11-04T23:33:31.2661310Z Finished uploading artifact content to blob storage!
+2026-11-04T23:33:31.2662596Z SHA256 digest of uploaded artifact zip is 71b036d63fe40bf0e83d10f907ca9f09720b3998f6aa3846c78d68d749bebeb6
+2026-11-04T23:33:31.2665105Z Finalizing artifact upload
+2026-11-04T23:33:31.7322400Z Artifact keel-brace-zero-game-build-41934557748.zip successfully finalized. Artifact ID 13372474505
+2026-11-04T23:33:31.7323866Z Artifact keel-brace-zero-game-build-41934557748 has been successfully uploaded! Final size is 1463862 bytes. Artifact ID is 13372474505
+2026-11-04T23:33:31.7330453Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41934557748/artifacts/13372474505
+2026-11-04T23:33:31.7505322Z Post job cleanup.
+2026-11-04T23:33:31.8681003Z (node:2981) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T23:33:31.8681752Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T23:33:31.8854297Z Post job cleanup.
+2026-11-04T23:33:32.1235910Z In post-action step
+2026-11-04T23:33:32.1246040Z Cache is read-only: will not save state for use in subsequent builds.
+2026-11-04T23:33:32.1251826Z Generating Job Summary
+2026-11-04T23:33:32.1271623Z Completed post-action step
+2026-11-04T23:33:32.1448537Z Post job cleanup.
+2026-11-04T23:33:32.2816777Z (node:3001) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T23:33:32.2818075Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T23:33:32.2974051Z Post job cleanup.
+2026-11-04T23:33:32.3866422Z [command]/usr/bin/git version
+2026-11-04T23:33:32.3905151Z git version 2.56.0
+2026-11-04T23:33:32.3940393Z Temporarily overriding HOME='/home/runner/work/_temp/cf72bc37-36a5-4da1-8993-0cafeffd9ed6' before making global git config changes
+2026-11-04T23:33:32.3941860Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T23:33:32.3945971Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T23:33:32.3983192Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T23:33:32.4015826Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T23:33:32.4281405Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T23:33:32.4316609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T23:33:32.4560229Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T23:33:32.4591583Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T23:33:32.4961360Z Cleaning up orphan processes
+2026-11-04T23:33:32.5273958Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

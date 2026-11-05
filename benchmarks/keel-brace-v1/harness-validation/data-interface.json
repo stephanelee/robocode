@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "premeasure data interface; image authority unresolved, no preparation/runtime approval",
+  "workerStorage": {
+    "paths": [
+      "storage-admissions/before-preparation.json",
+      "storage-admissions/before-receipt.json",
+      "storage-admissions/before-<registeredID>.json"
+    ],
+    "keys": [
+      "schemaVersion",
+      "phase",
+      "observedAtUTC",
+      "volume",
+      "freeBytes",
+      "minimumFreeBytes",
+      "stageOutputBytes",
+      "stageOutputLimitBytes"
+    ]
+  },
+  "monitor": {
+    "path": "storage-monitor.json",
+    "keys": [
+      "schemaVersion",
+      "firstObservedAtUTC",
+      "lastObservedAtUTC",
+      "observations",
+      "maximumStageOutputBytes",
+      "limitBytes",
+      "limitExceeded"
+    ]
+  },
+  "controllerStoragePreflight": {
+    "path": "dispatch-assignment.json.assignmentToolRecord.storagePreflight",
+    "keys": [
+      "host",
+      "volume",
+      "observedAtUTC",
+      "freeBytes",
+      "toolEvidence"
+    ]
+  },
+  "authorityRevalidation": {
+    "path": "approval-revalidations/before-<receipt|registeredID>.json",
+    "timestampKey": "checkedAtUTC"
+  },
+  "finalExport": {
+    "externalCompanionArtifact": "keel-brace-v1-<stage>-custody-validation-<runId>",
+    "originalArtifactAPI": "finalprovider/evidence-artifact.json",
+    "validation": "finalprovider/export-validation.json",
+    "validationKeys": [
+      "schemaVersion",
+      "stage",
+      "status",
+      "observedAtUTC",
+      "originalZIPMaximumBytes",
+      "rawDecisionSHA256",
+      "artifact-on-success",
+      "error-on-failure"
+    ],
+    "externalAuditRequirement": "Retrieve final run/jobs and API IDs/digests/bytes for BOTH original and companion ZIPs externally. No artifact self-reference; raw decision never rewritten. Missing proof is PROVENANCE-INCOMPLETE/no acceptance."
+  },
+  "teardown": {
+    "path": "games/<id>/teardown.json",
+    "keys": [
+      "ownedProcessGroup",
+      "termSent",
+      "killSent",
+      "hardDeadlineRespected",
+      "hardLimitSeconds",
+      "runStopReserveSeconds",
+      "endUTC",
+      "elapsedMonotonicSeconds"
+    ],
+    "failureOptionalKeys": [
+      "status",
+      "error",
+      "reapError"
+    ]
+  },
+  "UTC": "Timezone-bearing ISO8601 UTC; storage/export observedAtUTC; authority checkedAtUTC; monitor firstObservedAtUTC/lastObservedAtUTC",
+  "custodyGate": {
+    "path": "benchmarks/keel-brace-v1/screen-evidence.json",
+    "keys": [
+      "schemaVersion",
+      "sourceFreezeSHA256",
+      "screenRunId",
+      "receiptTagSHA",
+      "decisionFile",
+      "decisionSHA256",
+      "retainedEvidenceFiles",
+      "custodyManifestFile",
+      "independentOutcomeReviewCommentId"
+    ],
+    "custodyManifestKeys": [
+      "schemaVersion",
+      "headSHA",
+      "sourceFreezeSHA256",
+      "originalZIP",
+      "members",
+      "decisionMember",
+      "freezeMember",
+      "gameRecordingMembers",
+      "sourceBindings"
+    ],
+    "detail": "See tools/keel_brace_harness.md; contiguous <=2MiB original ZIP ranges plus ALL original members/whole recording/source bindings, no physical expanded-gzip requirement."
+  }
+}

@@ -1,5 +1,7 @@
 # KeelHelm v1 confirmation: rejected, evidence published from XPS
 
+> **Image-provenance qualification:** subsequent independent review found provider headers20261025.179.1 conflicting with ENV-derived profiles20261026.180.1. Compliance with the historical exact-image condition is UNPROVEN; earlier unqualified runtime/admission PASS statements are withdrawn pending this record-correction audit. Raw scores, source/JAR hashes, custody and consumed budgets remain unchanged. KeelHelm is not adopted and is never rerun. [Audit and evidence](../../benchmarks/keel-brace-v1/image-provenance-audit/report.md), [correction issue107](https://github.com/stephanelee/robocode/issues/107#issuecomment-6645373998).
+
 This records the already completed experiment; it starts no game and changes no bot. [Issue107](https://github.com/stephanelee/robocode/issues/107), [original implementation PR108](https://github.com/stephanelee/robocode/pull/108), [sole confirmation run41889609469](https://github.com/stephanelee/robocode/actions/runs/41889609469).
 
 | Confirmation cohort | Candidate KeelHelm | Original Keel | Prospective disposition |

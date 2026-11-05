@@ -5,6 +5,10 @@ on:
       - 'experiments/KeelBrace/**'
       - '.github/workflows/keel-brace-build.yml'
       - 'tools/verify_jar.py'
+      - 'tools/keel_brace*.py'
+      - 'tools/test_keel_brace*.py'
+      - 'benchmarks/keel-brace-v1/independent-analysis/**'
+      - 'benchmarks/keel-brace-v1/image-probe-validation/**'
 permissions:
   contents: read
 jobs:
@@ -51,6 +55,19 @@ jobs:
             fi
             sha256sum build/keel-brace-bootstrap/*.jar
           } 2>&1 | tee build/keel-brace-bootstrap/build.log
+      - name: Validate new controller and independent audit fixtures on pinned Python (zero games)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -f tools/test_keel_brace_experiment.py; then
+            python -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v 2>&1 | tee build/keel-brace-bootstrap/controller-tests.log
+          fi
+          if test -f benchmarks/keel-brace-v1/independent-analysis/test_audit.py; then
+            python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-brace-bootstrap/independent-audit-tests.log
+          fi
+          if test -f benchmarks/keel-brace-v1/image-probe-validation/test_image_probe.py; then
+            python -I -B -S -m unittest discover -s benchmarks/keel-brace-v1/image-probe-validation -p test_image_probe.py -v 2>&1 | tee build/keel-brace-bootstrap/image-probe-tests.log
+          fi
       - name: Preserve source, runtime, JAR and test provenance even on a failed build
         if: always()
         shell: bash
@@ -63,7 +80,7 @@ jobs:
           files = subprocess.check_output(['git', 'ls-files', '-z', 'experiments/KeelBrace', 'experiments/Keel/Keel.jar', 'experiments/Keel/bot/Keel.json', 'benchmarks/keel-brace-v1/baseline.json', 'benchmarks/keel-brace-v1/registration.json', 'benchmarks/keel-brace-v1/runtime-pins.json', '.github/workflows/keel-brace-build.yml', 'tools/verify_jar.py']).decode().split('\0')
           hashes = {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in files if p and pathlib.Path(p).is_file()}
           jars = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in out.glob('*.jar')}
-          proof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'imageOS': os.environ.get('ImageOS'), 'imageVersion': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}
+          proof = {'schemaVersion': 1, 'purpose': 'zero-game pure semantic build; no competitive outcome or runtime clearance', 'headSHA': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(), 'runId': int(os.environ['GITHUB_RUN_ID']), 'runAttempt': int(os.environ['GITHUB_RUN_ATTEMPT']), 'runnerOS': os.environ.get('RUNNER_OS'), 'guestImageOSClaim': os.environ.get('ImageOS'), 'guestImageVersionClaim': os.environ.get('ImageVersion'), 'javaHome': os.environ.get('JAVA_HOME'), 'javaVersion': subprocess.check_output(['java','-version'], stderr=subprocess.STDOUT, text=True), 'pythonVersion': subprocess.check_output(['python','--version'], text=True).strip(), 'sourceFilesSHA256': hashes, 'jars': jars, 'firstCommittedJarPresent': (out/'KeelBrace-committed.jar').is_file()}
           (out/'provenance.json').write_text(json.dumps(proof, indent=2)+'\n')
           PYTHON
       - name: Upload actual bootstrap outputs and original semantic test reports
