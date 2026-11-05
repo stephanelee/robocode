@@ -132,5 +132,5 @@ if(page==='home'&&location.hash){const target={'#replay':'matches.html?stage=swi
 document.addEventListener('click',e=>{const replay=e.target.closest('[data-replay]');if(replay){playAllReplays=false;chooseReplay(Number(replay.dataset.replay),true)}});
 document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{kind=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));roster()});if($('#search'))$('#search').oninput=e=>{query=e.target.value.toLowerCase();roster()};
 $('#profile').onclose=()=>{profileId=null};$('.close').onclick=()=>$('#profile').close();$('#profile').onclick=e=>{if(e.target===$('#profile'))$('#profile').close()};
-window.matchMedia('(max-width:900px)').addEventListener('change',()=>{if(page==='matches')positionReplayRoom()});
+window.matchMedia('(max-width:900px)').addEventListener('change',()=>{if(page==='matches'||page==='exhibition')positionReplayRoom()});
 loadData();setInterval(()=>{if(!document.hidden)loadData()},15000);

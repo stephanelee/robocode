@@ -63,6 +63,7 @@ load, extra-slow speed survives next-game navigation, round-20 seek works and th
 ## Website and replays
 
 Site version 44 adds a separate exhibition page linked from Home and Matches.
+Version 45 fixes replay placement when resizing between phone and desktop.
 Aligned four-bot tables show each game's scores and the aggregate standings;
 guest names and winners remain highlighted. Replay buttons sit beside the games,
 with all four energy/score rows, correct arena aspect ratio, twenty chapters,
