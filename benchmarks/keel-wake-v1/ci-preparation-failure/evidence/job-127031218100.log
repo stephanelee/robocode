@@ -1,0 +1,1261 @@
+﻿2026-11-05T03:33:05.2121254Z Current runner version: '2.338.2'
+2026-11-05T03:33:05.2150801Z ##[group]Runner Image Provisioner
+2026-11-05T03:33:05.2152392Z Hosted Compute Agent
+2026-11-05T03:33:05.2153414Z Version: 20261021.618
+2026-11-05T03:33:05.2154599Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T03:33:05.2156003Z Build Date: 2026-10-21T00:45:21Z
+2026-11-05T03:33:05.2157203Z Worker ID: {933a20be-ddcf-4e05-a6f8-0d6b5244a68c}
+2026-11-05T03:33:05.2158829Z Region: eastus
+2026-11-05T03:33:05.2159759Z Cloud: Azure
+2026-11-05T03:33:05.2160720Z ##[endgroup]
+2026-11-05T03:33:05.2162944Z ##[group]Operating System
+2026-11-05T03:33:05.2163985Z Ubuntu
+2026-11-05T03:33:05.2164920Z 26.04.1
+2026-11-05T03:33:05.2165790Z LTS
+2026-11-05T03:33:05.2166616Z ##[endgroup]
+2026-11-05T03:33:05.2167657Z ##[group]Runner Image
+2026-11-05T03:33:05.2169024Z Image: ubuntu-26.04
+2026-11-05T03:33:05.2170177Z Version: 20261025.179.1
+2026-11-05T03:33:05.2172528Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-05T03:33:05.2175528Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-11-05T03:33:05.2177322Z ##[endgroup]
+2026-11-05T03:33:05.2179738Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T03:33:05.2182715Z Contents: read
+2026-11-05T03:33:05.2183868Z Metadata: read
+2026-11-05T03:33:05.2185053Z ##[endgroup]
+2026-11-05T03:33:05.2188236Z Secret source: Actions
+2026-11-05T03:33:05.2189975Z Cache mode: write
+2026-11-05T03:33:05.2191739Z Prepare workflow directory
+2026-11-05T03:33:05.2695284Z Prepare all required actions
+2026-11-05T03:33:05.2770578Z Getting action download info
+2026-11-05T03:33:05.4698262Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-05T03:33:05.5858126Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-05T03:33:05.6429909Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-05T03:33:05.8236999Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-11-05T03:33:06.2211094Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-05T03:33:06.4799025Z Complete job name: Retcon 1v1 compatibility
+2026-11-05T03:33:06.5937431Z ##[group]Run actions/checkout@v4
+2026-11-05T03:33:06.5939055Z with:
+2026-11-05T03:33:06.5939911Z   repository: stephanelee/robocode
+2026-11-05T03:33:06.5949281Z   token: ***
+2026-11-05T03:33:06.5950130Z   ssh-strict: true
+2026-11-05T03:33:06.5950976Z   ssh-user: git
+2026-11-05T03:33:06.5951828Z   persist-credentials: true
+2026-11-05T03:33:06.5952763Z   clean: true
+2026-11-05T03:33:06.5953631Z   sparse-checkout-cone-mode: true
+2026-11-05T03:33:06.5954636Z   fetch-depth: 1
+2026-11-05T03:33:06.5955450Z   fetch-tags: false
+2026-11-05T03:33:06.5956298Z   show-progress: true
+2026-11-05T03:33:06.5957182Z   lfs: false
+2026-11-05T03:33:06.5958150Z   submodules: false
+2026-11-05T03:33:06.5959067Z   set-safe-directory: true
+2026-11-05T03:33:06.5960055Z   allow-unsafe-pr-checkout: false
+2026-11-05T03:33:06.5961375Z ##[endgroup]
+2026-11-05T03:33:06.8808094Z Syncing repository: stephanelee/robocode
+2026-11-05T03:33:06.8811430Z ##[group]Getting Git version info
+2026-11-05T03:33:06.8813272Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-05T03:33:06.8815936Z [command]/usr/bin/git version
+2026-11-05T03:33:06.8816937Z git version 2.56.0
+2026-11-05T03:33:06.8840799Z ##[endgroup]
+2026-11-05T03:33:06.8856263Z Temporarily overriding HOME='/home/runner/work/_temp/b129271b-23f9-4459-84da-dc067597557f' before making global git config changes
+2026-11-05T03:33:06.8861214Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:33:06.8865274Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:33:06.8946774Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-05T03:33:06.8951372Z ##[group]Initializing the repository
+2026-11-05T03:33:06.8956337Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-05T03:33:06.9110638Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-05T03:33:06.9113109Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-05T03:33:06.9115405Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-05T03:33:06.9117308Z hint: call:
+2026-11-05T03:33:06.9118526Z hint:
+2026-11-05T03:33:06.9119693Z hint: 	git config --global init.defaultBranch <name>
+2026-11-05T03:33:06.9121299Z hint:
+2026-11-05T03:33:06.9122687Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-05T03:33:06.9126047Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-05T03:33:06.9128413Z hint:
+2026-11-05T03:33:06.9129681Z hint: 	git branch -m <name>
+2026-11-05T03:33:06.9131433Z hint:
+2026-11-05T03:33:06.9133554Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-05T03:33:06.9135760Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-05T03:33:06.9141508Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-05T03:33:06.9191717Z ##[endgroup]
+2026-11-05T03:33:06.9196123Z ##[group]Disabling automatic garbage collection
+2026-11-05T03:33:06.9197462Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-05T03:33:06.9232048Z ##[endgroup]
+2026-11-05T03:33:06.9234164Z ##[group]Setting up auth
+2026-11-05T03:33:06.9239222Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:33:06.9279222Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:33:06.9778567Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:33:06.9822191Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:33:07.0137978Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:33:07.0178016Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:33:07.0452168Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-05T03:33:07.0492575Z ##[endgroup]
+2026-11-05T03:33:07.0494125Z ##[group]Fetching the repository
+2026-11-05T03:33:07.0503979Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +818ca64a609463b7a2aa5241cce8f9e0bd68b5bf:refs/remotes/pull/119/merge
+2026-11-05T03:33:42.3071755Z From https://github.com/stephanelee/robocode
+2026-11-05T03:33:42.3072938Z  * [new ref]         818ca64a609463b7a2aa5241cce8f9e0bd68b5bf -> pull/119/merge
+2026-11-05T03:33:42.3080378Z ##[endgroup]
+2026-11-05T03:33:42.3081145Z ##[group]Determining the checkout info
+2026-11-05T03:33:42.3083255Z ##[endgroup]
+2026-11-05T03:33:42.3089299Z [command]/usr/bin/git sparse-checkout disable
+2026-11-05T03:33:42.3142150Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-05T03:33:42.3182370Z ##[group]Checking out the ref
+2026-11-05T03:33:42.3186074Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/119/merge
+2026-11-05T03:33:43.4596648Z Updating files:  55% (3678/6677)
+2026-11-05T03:33:43.5169826Z Updating files:  56% (3740/6677)
+2026-11-05T03:33:43.6139763Z Updating files:  57% (3806/6677)
+2026-11-05T03:33:43.6433779Z Updating files:  58% (3873/6677)
+2026-11-05T03:33:43.7539610Z Updating files:  59% (3940/6677)
+2026-11-05T03:33:43.7698061Z Updating files:  60% (4007/6677)
+2026-11-05T03:33:43.8020556Z Updating files:  61% (4073/6677)
+2026-11-05T03:33:43.9708952Z Updating files:  62% (4140/6677)
+2026-11-05T03:33:44.0548722Z Updating files:  63% (4207/6677)
+2026-11-05T03:33:44.0594261Z Updating files:  64% (4274/6677)
+2026-11-05T03:33:44.0672004Z Updating files:  65% (4341/6677)
+2026-11-05T03:33:44.0835208Z Updating files:  66% (4407/6677)
+2026-11-05T03:33:44.0986399Z Updating files:  67% (4474/6677)
+2026-11-05T03:33:44.1063918Z Updating files:  68% (4541/6677)
+2026-11-05T03:33:44.1114772Z Updating files:  69% (4608/6677)
+2026-11-05T03:33:44.1174302Z Updating files:  70% (4674/6677)
+2026-11-05T03:33:44.1235905Z Updating files:  71% (4741/6677)
+2026-11-05T03:33:44.1282623Z Updating files:  72% (4808/6677)
+2026-11-05T03:33:44.1328665Z Updating files:  73% (4875/6677)
+2026-11-05T03:33:44.1375045Z Updating files:  74% (4941/6677)
+2026-11-05T03:33:44.1419863Z Updating files:  75% (5008/6677)
+2026-11-05T03:33:44.1468908Z Updating files:  76% (5075/6677)
+2026-11-05T03:33:44.1513394Z Updating files:  77% (5142/6677)
+2026-11-05T03:33:44.1555782Z Updating files:  78% (5209/6677)
+2026-11-05T03:33:44.1603818Z Updating files:  79% (5275/6677)
+2026-11-05T03:33:44.1645992Z Updating files:  80% (5342/6677)
+2026-11-05T03:33:44.1690008Z Updating files:  81% (5409/6677)
+2026-11-05T03:33:44.1730432Z Updating files:  82% (5476/6677)
+2026-11-05T03:33:44.1769608Z Updating files:  83% (5542/6677)
+2026-11-05T03:33:44.1807774Z Updating files:  84% (5609/6677)
+2026-11-05T03:33:44.1855502Z Updating files:  85% (5676/6677)
+2026-11-05T03:33:44.1905781Z Updating files:  86% (5743/6677)
+2026-11-05T03:33:44.1972404Z Updating files:  87% (5809/6677)
+2026-11-05T03:33:44.2080823Z Updating files:  88% (5876/6677)
+2026-11-05T03:33:44.2123215Z Updating files:  89% (5943/6677)
+2026-11-05T03:33:44.2191431Z Updating files:  90% (6010/6677)
+2026-11-05T03:33:44.2227190Z Updating files:  91% (6077/6677)
+2026-11-05T03:33:44.2262005Z Updating files:  92% (6143/6677)
+2026-11-05T03:33:44.2343770Z Updating files:  93% (6210/6677)
+2026-11-05T03:33:44.2482024Z Updating files:  94% (6277/6677)
+2026-11-05T03:33:44.2576124Z Updating files:  95% (6344/6677)
+2026-11-05T03:33:44.2618891Z Updating files:  96% (6410/6677)
+2026-11-05T03:33:44.2661804Z Updating files:  97% (6477/6677)
+2026-11-05T03:33:44.2706350Z Updating files:  98% (6544/6677)
+2026-11-05T03:33:44.2741266Z Updating files:  99% (6611/6677)
+2026-11-05T03:33:44.2742233Z Updating files: 100% (6677/6677)
+2026-11-05T03:33:44.2742968Z Updating files: 100% (6677/6677), done.
+2026-11-05T03:33:44.2863797Z Note: switching to 'refs/remotes/pull/119/merge'.
+2026-11-05T03:33:44.2864253Z 
+2026-11-05T03:33:44.2864614Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-05T03:33:44.2865473Z changes and commit them, and you can discard any commits you make in this
+2026-11-05T03:33:44.2866274Z state without impacting any branches by switching back to a branch.
+2026-11-05T03:33:44.2866740Z 
+2026-11-05T03:33:44.2867055Z If you want to create a new branch to retain commits you create, you may
+2026-11-05T03:33:44.2868212Z do so (now or later) by using -c with the switch command. Example:
+2026-11-05T03:33:44.2868659Z 
+2026-11-05T03:33:44.2868827Z   git switch -c <new-branch-name>
+2026-11-05T03:33:44.2869096Z 
+2026-11-05T03:33:44.2869248Z Or undo this operation with:
+2026-11-05T03:33:44.2869506Z 
+2026-11-05T03:33:44.2869655Z   git switch -
+2026-11-05T03:33:44.2869853Z 
+2026-11-05T03:33:44.2870183Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-05T03:33:44.2870655Z 
+2026-11-05T03:33:44.2871195Z HEAD is now at 818ca64 Merge 48bd8e343b9ef017b35aa9b8103adc2825f87c02 into 3b733e93b1da5ff2d999fb6b3870273d411b2814
+2026-11-05T03:33:44.3073045Z ##[endgroup]
+2026-11-05T03:33:44.3123657Z [command]/usr/bin/git log -1 --format=%H
+2026-11-05T03:33:44.3154819Z 818ca64a609463b7a2aa5241cce8f9e0bd68b5bf
+2026-11-05T03:33:44.3451496Z ##[group]Run actions/setup-python@v5
+2026-11-05T03:33:44.3451810Z with:
+2026-11-05T03:33:44.3452026Z   python-version: 3.12
+2026-11-05T03:33:44.3452457Z   check-latest: false
+2026-11-05T03:33:44.3455034Z   token: ***
+2026-11-05T03:33:44.3455266Z   update-environment: true
+2026-11-05T03:33:44.3455519Z   allow-prereleases: false
+2026-11-05T03:33:44.3455756Z   freethreaded: false
+2026-11-05T03:33:44.3455975Z ##[endgroup]
+2026-11-05T03:33:44.4861088Z ##[group]Installed versions
+2026-11-05T03:33:44.4974000Z (node:2382) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:44.4975313Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:44.4976120Z Successfully set up CPython (3.12.15)
+2026-11-05T03:33:44.4976923Z ##[endgroup]
+2026-11-05T03:33:44.5179108Z ##[group]Run actions/setup-java@v4
+2026-11-05T03:33:44.5179401Z with:
+2026-11-05T03:33:44.5179607Z   distribution: temurin
+2026-11-05T03:33:44.5179839Z   java-version: 17
+2026-11-05T03:33:44.5180047Z   java-package: jdk
+2026-11-05T03:33:44.5180260Z   check-latest: false
+2026-11-05T03:33:44.5180494Z   server-id: github
+2026-11-05T03:33:44.5180706Z   server-username: GITHUB_ACTOR
+2026-11-05T03:33:44.5180955Z   server-password: GITHUB_TOKEN
+2026-11-05T03:33:44.5181204Z   overwrite-settings: true
+2026-11-05T03:33:44.5181437Z   job-status: success
+2026-11-05T03:33:44.5184026Z   token: ***
+2026-11-05T03:33:44.5184227Z env:
+2026-11-05T03:33:44.5184491Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.5184955Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:33:44.5185397Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.5185782Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.5186190Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.5186585Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:33:44.5186909Z ##[endgroup]
+2026-11-05T03:33:44.6975726Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-05T03:33:44.6984572Z ##[group]Installed distributions
+2026-11-05T03:33:44.7141818Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-05T03:33:44.7142340Z Setting Java 17.0.21+9 as the default
+2026-11-05T03:33:44.7153237Z (node:2390) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:44.7154526Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:44.7158148Z Creating toolchains.xml for JDK version 17 from temurin
+2026-11-05T03:33:44.7233887Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-05T03:33:44.7234450Z 
+2026-11-05T03:33:44.7234747Z Java configuration:
+2026-11-05T03:33:44.7235128Z   Distribution: temurin
+2026-11-05T03:33:44.7235467Z   Version: 17.0.21+9
+2026-11-05T03:33:44.7235980Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.7236354Z 
+2026-11-05T03:33:44.7236726Z ##[endgroup]
+2026-11-05T03:33:44.7270869Z Creating settings.xml with server-id: github
+2026-11-05T03:33:44.7295059Z Writing to /home/runner/.m2/settings.xml
+2026-11-05T03:33:44.7620576Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-11-05T03:33:44.7620906Z with:
+2026-11-05T03:33:44.7621114Z   cache-disabled: false
+2026-11-05T03:33:44.7621343Z   cache-read-only: true
+2026-11-05T03:33:44.7621567Z   cache-write-only: false
+2026-11-05T03:33:44.7621817Z   cache-overwrite-existing: false
+2026-11-05T03:33:44.7622081Z   cache-cleanup: on-success
+2026-11-05T03:33:44.7622369Z   gradle-home-cache-includes: caches
+notifications
+
+2026-11-05T03:33:44.7622695Z   add-job-summary: always
+2026-11-05T03:33:44.7622962Z   add-job-summary-as-pr-comment: never
+2026-11-05T03:33:44.7623251Z   dependency-graph: disabled
+2026-11-05T03:33:44.7623560Z   dependency-graph-report-dir: dependency-graph-reports
+2026-11-05T03:33:44.7623921Z   dependency-graph-continue-on-failure: true
+2026-11-05T03:33:44.7624223Z   build-scan-publish: false
+2026-11-05T03:33:44.7624671Z   validate-wrappers: true
+2026-11-05T03:33:44.7624917Z   allow-snapshot-wrappers: false
+2026-11-05T03:33:44.7625249Z   gradle-home-cache-strict-match: false
+2026-11-05T03:33:44.7625538Z   workflow-job-context: null
+2026-11-05T03:33:44.7628334Z   github-token: ***
+2026-11-05T03:33:44.7628560Z env:
+2026-11-05T03:33:44.7628834Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.7629267Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:33:44.7629685Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.7630064Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.7630444Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:44.7630826Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:33:44.7631254Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.7631732Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.7632125Z ##[endgroup]
+2026-11-05T03:33:46.5818905Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-11-05T03:33:46.5820219Z ##[group]Restore Gradle state from cache
+2026-11-05T03:33:46.6646155Z Cache hit for restore-key: gradle-home-v1|Linux-X64|retcon[1e2246ee903281f5a7368a542b6c1026]-3b733e93b1da5ff2d999fb6b3870273d411b2814
+2026-11-05T03:33:46.8349069Z Received 651906 of 651906 (100.0%), 5.5 MBs/sec
+2026-11-05T03:33:46.8350924Z Cache Size: ~1 MB (651906 B)
+2026-11-05T03:33:46.8383879Z [command]/usr/bin/tar -xf /home/runner/work/_temp/2191387a-52dc-4f55-830c-8a9ecf435041/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T03:33:46.8572749Z Cache restored successfully
+2026-11-05T03:33:46.8578547Z Restored cache entry with key gradle-home-v1|Linux-X64|retcon[1e2246ee903281f5a7368a542b6c1026]-818ca64a609463b7a2aa5241cce8f9e0bd68b5bf to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 275ms
+2026-11-05T03:33:46.9161051Z Cache hit for: gradle-groovy-dsl-v1-1f9190549b6f7a0f281cdb3ab1a899c2
+2026-11-05T03:33:46.9219142Z Cache hit for: gradle-instrumented-jars-v1-b2c88a6234900d3c8c8710eb8fda738d
+2026-11-05T03:33:46.9269786Z Cache hit for: gradle-dependencies-v1-8ce696c477d354924ac05bf500271581
+2026-11-05T03:33:46.9338463Z Cache hit for: gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb
+2026-11-05T03:33:46.9763541Z Received 129524 of 129524 (100.0%), 4.4 MBs/sec
+2026-11-05T03:33:46.9764318Z Cache Size: ~0 MB (129524 B)
+2026-11-05T03:33:46.9784885Z [command]/usr/bin/tar -xf /home/runner/work/_temp/80d2c8cd-513d-48b5-8fc6-92c083213304/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T03:33:47.0021183Z Received 221845 of 221845 (100.0%), 3.8 MBs/sec
+2026-11-05T03:33:47.0044049Z Cache Size: ~0 MB (221845 B)
+2026-11-05T03:33:47.0044767Z Cache restored successfully
+2026-11-05T03:33:47.0045950Z Restored cache entry with key gradle-instrumented-jars-v1-b2c88a6234900d3c8c8710eb8fda738d to /home/runner/.gradle/caches/jars-*/*/ in 144ms
+2026-11-05T03:33:47.0191038Z [command]/usr/bin/tar -xf /home/runner/work/_temp/76f5caea-cabd-414f-bec5-28c6ae4458fa/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T03:33:47.0616499Z Cache restored successfully
+2026-11-05T03:33:47.0629317Z Restored cache entry with key gradle-groovy-dsl-v1-1f9190549b6f7a0f281cdb3ab1a899c2 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 203ms
+2026-11-05T03:33:47.1138423Z Received 6690088 of 6690088 (100.0%), 39.9 MBs/sec
+2026-11-05T03:33:47.1139093Z Cache Size: ~6 MB (6690088 B)
+2026-11-05T03:33:47.1184138Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0b94a5f9-33de-4fe5-819b-7b36c279396a/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T03:33:47.1484869Z Cache restored successfully
+2026-11-05T03:33:47.1544169Z Restored cache entry with key gradle-dependencies-v1-8ce696c477d354924ac05bf500271581 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 296ms
+2026-11-05T03:33:47.6875308Z Received 136693260 of 136693260 (100.0%), 184.6 MBs/sec
+2026-11-05T03:33:47.6878148Z Cache Size: ~130 MB (136693260 B)
+2026-11-05T03:33:47.6907470Z [command]/usr/bin/tar -xf /home/runner/work/_temp/82b3f46e-a1f9-410a-ad91-c05c21e7fdd8/cache.tzst -P -C /home/runner/work/robocode/robocode --use-compress-program unzstd
+2026-11-05T03:33:47.9567482Z Cache restored successfully
+2026-11-05T03:33:47.9677006Z Restored cache entry with key gradle-wrapper-zips-v1-5ae5d3da5e8e0c748d04bcdd9bc97bdb to /home/runner/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66 in 1109ms
+2026-11-05T03:33:47.9770149Z ##[endgroup]
+2026-11-05T03:33:48.1382130Z ##[group]All Gradle Wrapper jars are valid
+2026-11-05T03:33:48.1383355Z ✓ Found known Gradle Wrapper JAR files:
+2026-11-05T03:33:48.1384805Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 benchmarks/keel-helm-v1/confirmation-evidence-41889609469/frozen-source/gradle/wrapper/gradle-wrapper.jar
+2026-11-05T03:33:48.1386713Z   7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172 gradle/wrapper/gradle-wrapper.jar
+2026-11-05T03:33:48.1387919Z ##[endgroup]
+2026-11-05T03:33:48.1591872Z ##[group]Run cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-checked-in.jar"
+2026-11-05T03:33:48.1592606Z [36;1mcp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-checked-in.jar"[0m
+2026-11-05T03:33:48.1593127Z [36;1m./gradlew --no-daemon clean build[0m
+2026-11-05T03:33:48.1593683Z [36;1mpython tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-checked-in.jar" AISurvivor/AISurvivor.jar[0m
+2026-11-05T03:33:48.1594294Z [36;1mpython -m unittest discover -s tools -p 'test_*.py' -v[0m
+2026-11-05T03:33:48.1637174Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:33:48.1637478Z env:
+2026-11-05T03:33:48.1637990Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:48.1638503Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:33:48.1639003Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:48.1639432Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:48.1639879Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:33:48.1640305Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:33:48.1640783Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:48.1641311Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:48.1641769Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T03:33:48.1642112Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T03:33:48.1642432Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T03:33:48.1642761Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T03:33:48.1643234Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T03:33:48.1643760Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T03:33:48.1644106Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T03:33:48.1644416Z ##[endgroup]
+2026-11-05T03:33:49.9536729Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-11-05T03:33:51.5531874Z Daemon will be stopped at the end of the build 
+2026-11-05T03:33:58.8568982Z > Task :clean UP-TO-DATE
+2026-11-05T03:34:00.8524256Z > Task :compileJava
+2026-11-05T03:34:00.8525100Z > Task :processResources NO-SOURCE
+2026-11-05T03:34:00.8526342Z > Task :classes
+2026-11-05T03:34:01.2559034Z > Task :jar
+2026-11-05T03:34:01.2559773Z > Task :assemble
+2026-11-05T03:34:02.3525756Z > Task :compileTestJava
+2026-11-05T03:34:02.3550197Z > Task :processTestResources NO-SOURCE
+2026-11-05T03:34:02.3575859Z > Task :testClasses
+2026-11-05T03:34:03.5525836Z OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-05T03:34:19.8548515Z > Task :test
+2026-11-05T03:34:19.8558905Z > Task :check
+2026-11-05T03:34:19.8559504Z > Task :build
+2026-11-05T03:34:19.9541025Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1793849636471.json
+2026-11-05T03:34:19.9561465Z 
+2026-11-05T03:34:19.9562099Z BUILD SUCCESSFUL in 31s
+2026-11-05T03:34:19.9563003Z 5 actionable tasks: 4 executed, 1 up-to-date
+2026-11-05T03:34:20.2198578Z Verified 822 matching JAR file entries (ZIP timestamps/order ignored).
+2026-11-05T03:34:21.6974097Z test_current_gate_pass_rate_is_seeded_and_monotone (test_aa_calibration.AACalibrationTests.test_current_gate_pass_rate_is_seeded_and_monotone) ... ok
+2026-11-05T03:34:21.6975672Z test_required_blocks_matches_normal_power_formula (test_aa_calibration.AACalibrationTests.test_required_blocks_matches_normal_power_formula) ... ok
+2026-11-05T03:34:22.9670260Z test_summary_pairs_blocks_and_pools_arms (test_aa_calibration.AACalibrationTests.test_summary_pairs_blocks_and_pools_arms) ... ok
+2026-11-05T03:34:22.9676714Z test_confirmation_gate_exactly_as_registered (test_aegis_experiment.AegisExperimentTests.test_confirmation_gate_exactly_as_registered) ... ok
+2026-11-05T03:34:22.9678794Z test_pilot_gate_exactly_as_registered (test_aegis_experiment.AegisExperimentTests.test_pilot_gate_exactly_as_registered) ... ok
+2026-11-05T03:34:22.9680109Z test_registered_budgets_and_fresh_disjoint_seeds (test_aegis_experiment.AegisExperimentTests.test_registered_budgets_and_fresh_disjoint_seeds) ... ok
+2026-11-05T03:34:22.9691266Z test_rows_validate_identity_reconciliation_and_skips (test_aegis_experiment.AegisExperimentTests.test_rows_validate_identity_reconciliation_and_skips) ... ok
+2026-11-05T03:34:24.2520483Z test_raw_games_model_reports_and_decision_remain_reproducible (test_ai_motion_evidence.RealMotionPilotEvidenceTests.test_raw_games_model_reports_and_decision_remain_reproducible) ... ok
+2026-11-05T03:34:24.2523614Z test_correctness_primary_reports_tactical_gate_separately (test_aim_corridor_experiment.AimCorridorExperimentTests.test_correctness_primary_reports_tactical_gate_separately) ... ok
+2026-11-05T03:34:24.2526531Z test_mechanism_aggregates_retcon_counters_per_arm (test_aim_corridor_experiment.AimCorridorExperimentTests.test_mechanism_aggregates_retcon_counters_per_arm) ... ok
+2026-11-05T03:34:24.2529162Z test_retention_requires_primary_samples_and_online_veto (test_aim_corridor_experiment.AimCorridorExperimentTests.test_retention_requires_primary_samples_and_online_veto) ... ok
+2026-11-05T03:34:24.2530698Z test_sample_guard_is_inclusive_at_five_points (test_aim_corridor_experiment.AimCorridorExperimentTests.test_sample_guard_is_inclusive_at_five_points) ... ok
+2026-11-05T03:34:24.2532117Z test_sample_guard_requires_complete_rounds_and_no_skips (test_aim_corridor_experiment.AimCorridorExperimentTests.test_sample_guard_requires_complete_rounds_and_no_skips) ... ok
+2026-11-05T03:34:24.2587284Z test_all_retained_file_hashes (test_ais_breakwater_selective_evidence.SelectiveTransferEvidenceTests.test_all_retained_file_hashes) ... ok
+2026-11-05T03:34:24.4991705Z test_frozen_original_payload_models_and_decision_reproduce_without_games (test_ais_breakwater_selective_evidence.SelectiveTransferEvidenceTests.test_frozen_original_payload_models_and_decision_reproduce_without_games) ... ok
+2026-11-05T03:34:24.5003696Z test_baseline_skip_and_self_wall_regression_reject (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_baseline_skip_and_self_wall_regression_reject) ... ok
+2026-11-05T03:34:24.5031729Z test_breakwater_real_endpoint_reconciles_and_preserves_missing_win_flags (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_breakwater_real_endpoint_reconciles_and_preserves_missing_win_flags) ... ok
+2026-11-05T03:34:24.5034913Z test_fixed_budget_fresh_ids_and_unique_own_seeds (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_fixed_budget_fresh_ids_and_unique_own_seeds) ... ok
+2026-11-05T03:34:24.5182384Z test_frozen_opponent_bundle_stages_offline_from_original_verified_bytes (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_frozen_opponent_bundle_stages_offline_from_original_verified_bytes) ... ok
+2026-11-05T03:34:24.5184735Z test_guard_counters_reconcile_without_counting_plan_passes_as_confirmed_shots (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_guard_counters_reconcile_without_counting_plan_passes_as_confirmed_shots) ... ok
+2026-11-05T03:34:24.5186937Z test_movement_activation_matches_executed_default_duel_and_rejects_missing (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_movement_activation_matches_executed_default_duel_and_rejects_missing) ... ok
+2026-11-05T03:34:24.5192245Z test_retcon_absolute_win_guard_rejects_even_with_positive_delta (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_retcon_absolute_win_guard_rejects_even_with_positive_delta) ... ok
+2026-11-05T03:34:24.5220344Z test_screen_and_fresh_confirmation_pass_only_their_whole_populations (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_screen_and_fresh_confirmation_pass_only_their_whole_populations) ... ok
+2026-11-05T03:34:24.5234425Z test_t_lower_bound_uses_game_differences_not_round_counts (test_ais_breakwater_selective_transfer.TransferProtocolTests.test_t_lower_bound_uses_game_differences_not_round_counts) ... ok
+2026-11-05T03:34:24.5245979Z test_baseline_skip_and_self_wall_regression_reject (test_ais_breakwater_transfer.TransferProtocolTests.test_baseline_skip_and_self_wall_regression_reject) ... ok
+2026-11-05T03:34:24.5269066Z test_breakwater_real_endpoint_reconciles_and_preserves_missing_win_flags (test_ais_breakwater_transfer.TransferProtocolTests.test_breakwater_real_endpoint_reconciles_and_preserves_missing_win_flags) ... ok
+2026-11-05T03:34:24.5271602Z test_fixed_budget_fresh_ids_and_unique_own_seeds (test_ais_breakwater_transfer.TransferProtocolTests.test_fixed_budget_fresh_ids_and_unique_own_seeds) ... ok
+2026-11-05T03:34:24.5274154Z test_movement_activation_matches_executed_default_duel_and_rejects_missing (test_ais_breakwater_transfer.TransferProtocolTests.test_movement_activation_matches_executed_default_duel_and_rejects_missing) ... ok
+2026-11-05T03:34:24.5280062Z test_retcon_absolute_win_guard_rejects_even_with_positive_delta (test_ais_breakwater_transfer.TransferProtocolTests.test_retcon_absolute_win_guard_rejects_even_with_positive_delta) ... ok
+2026-11-05T03:34:24.5304334Z test_screen_and_fresh_confirmation_pass_only_their_whole_populations (test_ais_breakwater_transfer.TransferProtocolTests.test_screen_and_fresh_confirmation_pass_only_their_whole_populations) ... ok
+2026-11-05T03:34:24.5318245Z test_t_lower_bound_uses_game_differences_not_round_counts (test_ais_breakwater_transfer.TransferProtocolTests.test_t_lower_bound_uses_game_differences_not_round_counts) ... ok
+2026-11-05T03:34:24.5320377Z test_duplicate_rounds_do_not_pass_count_check (test_benchmark.BenchmarkTests.test_duplicate_rounds_do_not_pass_count_check) ... ok
+2026-11-05T03:34:24.5328275Z test_html_escapes_untrusted_names_and_json_preserves_evidence (test_benchmark.BenchmarkTests.test_html_escapes_untrusted_names_and_json_preserves_evidence) ... ok
+2026-11-05T03:34:24.5348576Z test_isolated_java_sample_retains_sibling_runtime_and_independent_source (test_benchmark.BenchmarkTests.test_isolated_java_sample_retains_sibling_runtime_and_independent_source) ... ok
+2026-11-05T03:34:24.5350962Z test_metrics_aggregate_shots_instead_of_averaging_round_rates (test_benchmark.BenchmarkTests.test_metrics_aggregate_shots_instead_of_averaging_round_rates) ... ok
+2026-11-05T03:34:24.5352961Z test_missing_telemetry_fails_required_gate (test_benchmark.BenchmarkTests.test_missing_telemetry_fails_required_gate) ... ok
+2026-11-05T03:34:24.5354981Z test_nonfinite_negative_and_inconsistent_metrics_are_rejected (test_benchmark.BenchmarkTests.test_nonfinite_negative_and_inconsistent_metrics_are_rejected) ... ok
+2026-11-05T03:34:24.5363845Z test_rejects_archive_traversal_before_extracting_anything (test_benchmark.BenchmarkTests.test_rejects_archive_traversal_before_extracting_anything) ... ok
+2026-11-05T03:34:24.5365903Z test_valid_cold_fixed_train_and_trained_evidence (test_benchmark.BenchmarkTests.test_valid_cold_fixed_train_and_trained_evidence) ... ok
+2026-11-05T03:34:24.5368173Z test_wrong_mode_seed_checkpoint_action_or_schema_is_rejected (test_benchmark.BenchmarkTests.test_wrong_mode_seed_checkpoint_action_or_schema_is_rejected) ... ok
+2026-11-05T03:34:24.5695493Z test_all330_rows_24_cold_models_official_identities_and_native_bytes (test_blended_danger_evidence.BlendedDangerEvidenceTests.test_all330_rows_24_cold_models_official_identities_and_native_bytes) ... ok
+2026-11-05T03:34:24.5790833Z test_preserved_bytes_and_exact_registered_rejection (test_blended_danger_evidence.BlendedDangerEvidenceTests.test_preserved_bytes_and_exact_registered_rejection) ... ok
+2026-11-05T03:34:24.5801206Z test_complete_stages_are60_then_conditional270_and_root_pins (test_blended_danger_experiment.BlendedDangerGateTests.test_complete_stages_are60_then_conditional270_and_root_pins) ... ok
+2026-11-05T03:34:24.5813254Z test_confirm_each_advanced_block_and_retcon_majority_are_binding (test_blended_danger_experiment.BlendedDangerGateTests.test_confirm_each_advanced_block_and_retcon_majority_are_binding) ... ok
+2026-11-05T03:34:24.5825992Z test_relative_safety_and_candidate_only_sample_skips (test_blended_danger_experiment.BlendedDangerGateTests.test_relative_safety_and_candidate_only_sample_skips) ... ok
+2026-11-05T03:34:24.5832543Z test_retcon_absolute_screen_share_and_wins_are_both_strict (test_blended_danger_experiment.BlendedDangerGateTests.test_retcon_absolute_screen_share_and_wins_are_both_strict) ... ok
+2026-11-05T03:34:24.5834739Z test_final_decision_can_omit_online_stage (test_block_experiment.BlockExperimentTests.test_final_decision_can_omit_online_stage) ... ok
+2026-11-05T03:34:24.5841127Z test_noninferiority_rule (test_block_experiment.BlockExperimentTests.test_noninferiority_rule) ... ok
+2026-11-05T03:34:24.5845141Z test_online_non_inferiority (test_block_experiment.BlockExperimentTests.test_online_non_inferiority) ... ok
+2026-11-05T03:34:24.5852774Z test_primary_guards (test_block_experiment.BlockExperimentTests.test_primary_guards) ... ok
+2026-11-05T03:34:24.5858674Z test_primary_requires_gain_and_positive_lower_bound (test_block_experiment.BlockExperimentTests.test_primary_requires_gain_and_positive_lower_bound) ... ok
+2026-11-05T03:34:24.5860601Z test_samples_and_final_decision (test_block_experiment.BlockExperimentTests.test_samples_and_final_decision) ... ok
+2026-11-05T03:34:24.5865117Z test_student_t_bound_is_stricter_than_z (test_block_experiment.BlockExperimentTests.test_student_t_bound_is_stricter_than_z) ... ok
+2026-11-05T03:34:24.5869968Z test_layout_and_strict_gates (test_breakwater_envelope_experiment.EnvelopeTests.test_layout_and_strict_gates) ... ok
+2026-11-05T03:34:24.5881219Z test_legacy_ais_collection_can_be_validated_despite_missing_local_win_flags (test_breakwater_envelope_experiment.EnvelopeTests.test_legacy_ais_collection_can_be_validated_despite_missing_local_win_flags) ... ok
+2026-11-05T03:34:24.5909140Z test_shared_shadow_replay_including_refusal_and_masks (test_breakwater_envelope_experiment.EnvelopeTests.test_shared_shadow_replay_including_refusal_and_masks) ... ok
+2026-11-05T03:34:24.5980924Z test_validate_exact_rows_and_endpoint (test_breakwater_envelope_experiment.EnvelopeTests.test_validate_exact_rows_and_endpoint) ... ok
+2026-11-05T03:34:24.5983199Z test_never_replace_attempt (test_breakwater_experiment.BreakwaterTests.test_never_replace_attempt) ... ok
+2026-11-05T03:34:24.5987986Z test_pilot_and_confirmation_boundaries (test_breakwater_experiment.BreakwaterTests.test_pilot_and_confirmation_boundaries) ... ok
+2026-11-05T03:34:24.6020181Z test_telemetry_endpoint_rounding_and_late_events (test_breakwater_experiment.BreakwaterTests.test_telemetry_endpoint_rounding_and_late_events) ... ok
+2026-11-05T03:34:24.6024665Z test_layout_and_strict_gates (test_breakwater_mobile_experiment.MobileTests.test_layout_and_strict_gates) ... ok
+2026-11-05T03:34:24.6036102Z test_legacy_ais_collection_can_be_validated_despite_missing_local_win_flags (test_breakwater_mobile_experiment.MobileTests.test_legacy_ais_collection_can_be_validated_despite_missing_local_win_flags) ... ok
+2026-11-05T03:34:24.6117208Z test_validate_exact_rows_and_endpoint (test_breakwater_mobile_experiment.MobileTests.test_validate_exact_rows_and_endpoint) ... ok
+2026-11-05T03:34:26.2247292Z test_final_output_barrier_before_runner_close (test_challenger_completion.ChallengerCompletionTests.test_final_output_barrier_before_runner_close) ... ok
+2026-11-05T03:34:26.2250325Z test_actual_hit_ids_are_round_scoped_and_virtual_hits_are_not_actual_hits (test_challenger_diagnostic_analysis.GeometryTests.test_actual_hit_ids_are_round_scoped_and_virtual_hits_are_not_actual_hits) ... ok
+2026-11-05T03:34:26.2252323Z test_body_edge_and_missed_scan_are_not_silently_zero_errors (test_challenger_diagnostic_analysis.GeometryTests.test_body_edge_and_missed_scan_are_not_silently_zero_errors) ... ok
+2026-11-05T03:34:26.2254267Z test_bullet_collision_is_preserved_as_an_explanation_not_an_aiming_miss (test_challenger_diagnostic_analysis.GeometryTests.test_bullet_collision_is_preserved_as_an_explanation_not_an_aiming_miss) ... ok
+2026-11-05T03:34:26.2255814Z test_circle_proxy_containment_is_not_a_finite_bullet_segment_hit (test_challenger_diagnostic_analysis.GeometryTests.test_circle_proxy_containment_is_not_a_finite_bullet_segment_hit) ... ok
+2026-11-05T03:34:26.2257371Z test_confirmed_origin_shift_is_measurable_without_changing_the_prediction (test_challenger_diagnostic_analysis.GeometryTests.test_confirmed_origin_shift_is_measurable_without_changing_the_prediction) ... ok
+2026-11-05T03:34:26.2259748Z test_duplicate_confirmed_shot_identity_is_rejected (test_challenger_diagnostic_analysis.GeometryTests.test_duplicate_confirmed_shot_identity_is_rejected) ... ok
+2026-11-05T03:34:26.2261266Z test_missing_or_truncated_terminal_coverage_cannot_turn_absent_hit_into_miss (test_challenger_diagnostic_analysis.GeometryTests.test_missing_or_truncated_terminal_coverage_cannot_turn_absent_hit_into_miss) ... ok
+2026-11-05T03:34:26.2262917Z test_next_state_join_masks_missing_disabled_and_collision_and_wraps_heading (test_challenger_diagnostic_analysis.GeometryTests.test_next_state_join_masks_missing_disabled_and_collision_and_wraps_heading) ... ok
+2026-11-05T03:34:26.2264394Z test_wrapped_angular_error_does_not_report_358_degrees (test_challenger_diagnostic_analysis.GeometryTests.test_wrapped_angular_error_does_not_report_358_degrees) ... ok
+2026-11-05T03:34:26.2334189Z test_all_five_cold_rounds_endpoint_and_actual_hit_coverage (test_challenger_diagnostic_evidence.DiagnosticEvidenceTests.test_all_five_cold_rounds_endpoint_and_actual_hit_coverage) ... ok
+2026-11-05T03:34:26.3943947Z test_original_bytes_lossless_trace_and_corrected_offline_analysis (test_challenger_diagnostic_evidence.DiagnosticEvidenceTests.test_original_bytes_lossless_trace_and_corrected_offline_analysis) ... ok
+2026-11-05T03:34:26.3953288Z test_cap_and_coverage_are_checked_and_drops_remain_visible (test_challenger_diagnostic_experiment.DiagnosticCaptureTests.test_cap_and_coverage_are_checked_and_drops_remain_visible) ... ok
+2026-11-05T03:34:26.3955044Z test_only_one_fixed_five_round_capture_without_score_gate (test_challenger_diagnostic_experiment.DiagnosticCaptureTests.test_only_one_fixed_five_round_capture_without_score_gate) ... ok
+2026-11-05T03:34:26.4167066Z test_all198_records_18_independent_endpoints_and_official_identities (test_coherent_duel_evidence.CoherentEvidenceTests.test_all198_records_18_independent_endpoints_and_official_identities) ... ok
+2026-11-05T03:34:26.4225253Z test_archived_bytes_original_registration_and_exact_decision (test_coherent_duel_evidence.CoherentEvidenceTests.test_archived_bytes_original_registration_and_exact_decision) ... ok
+2026-11-05T03:34:26.4393614Z test_actual_two_launchers_override_same_inherited_configuration (test_coherent_duel_experiment.CoherentExperimentTests.test_actual_two_launchers_override_same_inherited_configuration) ... ok
+2026-11-05T03:34:26.4402648Z test_all_gates_including_zero_wall_and_self_majority (test_coherent_duel_experiment.CoherentExperimentTests.test_all_gates_including_zero_wall_and_self_majority) ... ok
+2026-11-05T03:34:26.4408608Z test_complete_registered_physical_and_perbot_budget (test_coherent_duel_experiment.CoherentExperimentTests.test_complete_registered_physical_and_perbot_budget) ... ok
+2026-11-05T03:34:26.4458007Z test_launchers_have_separate_model_metrics_seed_and_identity (test_coherent_duel_experiment.CoherentExperimentTests.test_launchers_have_separate_model_metrics_seed_and_identity) ... ok
+2026-11-05T03:34:26.4669132Z test_all198_records_18_distinct_cold_models_and_official_results (test_coherent_duel_v2_evidence.CoherentV2EvidenceTests.test_all198_records_18_distinct_cold_models_and_official_results) ... ok
+2026-11-05T03:34:26.4728939Z test_exact_archived_bytes_registration_activation_and_decision (test_coherent_duel_v2_evidence.CoherentV2EvidenceTests.test_exact_archived_bytes_registration_activation_and_decision) ... ok
+2026-11-05T03:34:26.4860064Z test_actual_two_launchers_override_same_inherited_configuration (test_coherent_duel_v2_experiment.CoherentV2ExperimentTests.test_actual_two_launchers_override_same_inherited_configuration) ... ok
+2026-11-05T03:34:26.4869055Z test_all_gates_including_zero_wall_and_self_majority (test_coherent_duel_v2_experiment.CoherentV2ExperimentTests.test_all_gates_including_zero_wall_and_self_majority) ... ok
+2026-11-05T03:34:26.4874818Z test_complete_registered_physical_and_perbot_budget (test_coherent_duel_v2_experiment.CoherentV2ExperimentTests.test_complete_registered_physical_and_perbot_budget) ... ok
+2026-11-05T03:34:26.4924036Z test_launchers_have_separate_model_metrics_seed_and_identity (test_coherent_duel_v2_experiment.CoherentV2ExperimentTests.test_launchers_have_separate_model_metrics_seed_and_identity) ... ok
+2026-11-05T03:34:26.4931867Z test_shooting_guards_are_strict_and_zero_shots_cannot_promote (test_coherent_duel_v2_experiment.CoherentV2ExperimentTests.test_shooting_guards_are_strict_and_zero_shots_cannot_promote) ... ok
+2026-11-05T03:34:26.4944206Z test_checkpoint_copies_are_separate_and_verified (test_compare.CompareTests.test_checkpoint_copies_are_separate_and_verified) ... ok
+2026-11-05T03:34:26.4945723Z test_early_stop_requires_both_score_loss_and_strong_previous_wins (test_compare.CompareTests.test_early_stop_requires_both_score_loss_and_strong_previous_wins) ... ok
+2026-11-05T03:34:26.4947371Z test_primary_budget_cannot_be_reduced_to_short_diagnostic_rounds (test_compare.CompareTests.test_primary_budget_cannot_be_reduced_to_short_diagnostic_rounds) ... ok
+2026-11-05T03:34:26.4958208Z test_registered_plan_comes_from_exact_commit_blob_not_mutable_working_copy (test_compare.CompareTests.test_registered_plan_comes_from_exact_commit_blob_not_mutable_working_copy) ... ok
+2026-11-05T03:34:26.4964707Z test_retention_requires_all_preregistered_checks (test_compare.CompareTests.test_retention_requires_all_preregistered_checks) ... ok
+2026-11-05T03:34:26.5058322Z seed 1: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.5184612Z seed 2: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.5236129Z seed 3: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.5247434Z Decision: retain; see /tmp/tmpp29gw351/output/comparison.json
+2026-11-05T03:34:26.5267256Z test_run_isolates_seed_arms_alternates_order_and_preserves_source_model (test_compare.CompareTests.test_run_isolates_seed_arms_alternates_order_and_preserves_source_model) ... ok
+2026-11-05T03:34:26.5269676Z test_seed_list_requires_three_unique_valid_java_longs (test_compare.CompareTests.test_seed_list_requires_three_unique_valid_java_longs) ... ok
+2026-11-05T03:34:26.5312218Z test_version_snapshots_detect_mutation_and_reject_changed_configuration (test_compare.CompareTests.test_version_snapshots_detect_mutation_and_reject_changed_configuration) ... ok
+2026-11-05T03:34:26.5314818Z test_wilson_intervals_remain_bounded_for_all_losses_or_wins (test_compare.CompareTests.test_wilson_intervals_remain_bounded_for_all_losses_or_wins) ... ok
+2026-11-05T03:34:26.5340670Z test_durable_raw_evidence_reproduces_rejection_and_reported_metrics (test_compare_evidence.CycleOneEvidenceTests.test_durable_raw_evidence_reproduces_rejection_and_reported_metrics) ... ok
+2026-11-05T03:34:26.5366113Z test_raw_cycle2_evidence_reproduces_rejection_and_exact_plan (test_compare_evidence.CycleTwoEvidenceTests.test_raw_cycle2_evidence_reproduces_rejection_and_exact_plan) ... ok
+2026-11-05T03:34:26.5441696Z seed 1: previous=20.00%, candidate=21.00%
+2026-11-05T03:34:26.5520005Z seed 2: previous=20.00%, candidate=21.00%
+2026-11-05T03:34:26.5561772Z seed 3: previous=20.00%, candidate=21.00%
+2026-11-05T03:34:26.5573839Z Decision: retain; see /tmp/tmpdj5ubdbg/output/comparison.json
+2026-11-05T03:34:26.5594382Z test_both_arms_train_from_fresh_models_and_all_game_scores_enter_the_veto (test_compare_online.OnlineComparisonTests.test_both_arms_train_from_fresh_models_and_all_game_scores_enter_the_veto) ... ok
+2026-11-05T03:34:26.5598326Z test_correctness_category_allows_ties_without_rewriting_tactical_strength_gate (test_compare_online.OnlineComparisonTests.test_correctness_category_allows_ties_without_rewriting_tactical_strength_gate) ... ok
+2026-11-05T03:34:26.5672237Z seed 1: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5710883Z seed 2: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5751607Z seed 3: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5763229Z Decision: reject; see /tmp/tmpp76izgv8/output/comparison.json
+2026-11-05T03:34:26.5778372Z test_correctness_protocol_never_performance_stops_before_all_declared_blocks (test_compare_online.OnlineComparisonTests.test_correctness_protocol_never_performance_stops_before_all_declared_blocks) ... ok
+2026-11-05T03:34:26.5783379Z test_correctness_requires_mean_nonregression_and_two_nonnegative_blocks (test_compare_online.OnlineComparisonTests.test_correctness_requires_mean_nonregression_and_two_nonnegative_blocks) ... ok
+2026-11-05T03:34:26.5857513Z seed 1: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5895146Z seed 2: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5936832Z seed 3: previous=50.00%, candidate=10.00%
+2026-11-05T03:34:26.5948995Z Decision: reject; see /tmp/tmpopkkswps/output/comparison.json
+2026-11-05T03:34:26.5964598Z test_future_tactical_protocol_also_completes_every_declared_block (test_compare_online.OnlineComparisonTests.test_future_tactical_protocol_also_completes_every_declared_block) ... ok
+2026-11-05T03:34:26.6028706Z test_incorrect_online_model_counter_stops_and_retains_failure_evidence (test_compare_online.OnlineComparisonTests.test_incorrect_online_model_counter_stops_and_retains_failure_evidence) ... ok
+2026-11-05T03:34:26.6040446Z test_online_protocol_forbids_imported_or_shared_pretraining_models (test_compare_online.OnlineComparisonTests.test_online_protocol_forbids_imported_or_shared_pretraining_models) ... ok
+2026-11-05T03:34:26.6043346Z test_online_telemetry_requires_fresh_loaded_flags_and_each_round_counter (test_compare_online.OnlineComparisonTests.test_online_telemetry_requires_fresh_loaded_flags_and_each_round_counter) ... ok
+2026-11-05T03:34:26.6055270Z test_online_veto_cannot_be_relabelled_a_short_diagnostic (test_compare_online.OnlineComparisonTests.test_online_veto_cannot_be_relabelled_a_short_diagnostic) ... ok
+2026-11-05T03:34:26.6065719Z test_checkpoint_header_rejects_legacy_truncation_and_wrong_dimensions (test_compare_training.SharedTrainingTests.test_checkpoint_header_rejects_legacy_truncation_and_wrong_dimensions) ... ok
+2026-11-05T03:34:26.6123665Z seed 1: incumbent training complete (20 rounds), model=09829b1551be2b073657ab90d09dea914c18f79da5543cb0e6d52e98308bb0f9
+2026-11-05T03:34:26.6163534Z test_evaluation_model_mutation_stops_experiment_and_preserves_training_snapshot (test_compare_training.SharedTrainingTests.test_evaluation_model_mutation_stops_experiment_and_preserves_training_snapshot) ... ok
+2026-11-05T03:34:26.6224102Z seed 1: incumbent training complete (20 rounds), model=09829b1551be2b073657ab90d09dea914c18f79da5543cb0e6d52e98308bb0f9
+2026-11-05T03:34:26.6270492Z seed 1: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6291327Z seed 2: incumbent training complete (20 rounds), model=e566f7edd4d13b9a202f007ae00634342fc840b8647b7a6a6e95f1276521d449
+2026-11-05T03:34:26.6344780Z seed 2: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6365973Z seed 3: incumbent training complete (20 rounds), model=c20c295cbbab7ba5a5ceae0be4d5a933520758eb5f32630524e3b9a254432a95
+2026-11-05T03:34:26.6425261Z seed 3: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6438927Z Decision: retain; see /tmp/tmp4eu7s7dm/output/comparison.json
+2026-11-05T03:34:26.6462102Z test_only_incumbent_trains_once_per_seed_and_both_arms_share_that_model (test_compare_training.SharedTrainingTests.test_only_incumbent_trains_once_per_seed_and_both_arms_share_that_model) ... ok
+2026-11-05T03:34:26.6489584Z test_targeting_diagnostics_record_zero_or_positive_evidence_without_mutation (test_compare_training.SharedTrainingTests.test_targeting_diagnostics_record_zero_or_positive_evidence_without_mutation) ... ok
+2026-11-05T03:34:26.6501424Z test_train_previous_rejects_changed_training_budget_policy_or_imported_model (test_compare_training.SharedTrainingTests.test_train_previous_rejects_changed_training_budget_policy_or_imported_model) ... ok
+2026-11-05T03:34:26.6563851Z test_wrong_persisted_training_counter_fails_before_any_evaluation (test_compare_training.SharedTrainingTests.test_wrong_persisted_training_counter_fails_before_any_evaluation) ... ok
+2026-11-05T03:34:26.6620214Z seed 1: incumbent training complete (20 rounds), model=c3283bd21b89e8155a5de0e6dc4e9299b53c24983f48141da5731403ca847f68
+2026-11-05T03:34:26.6664366Z seed 1: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6684646Z seed 2: incumbent training complete (20 rounds), model=e566f7edd4d13b9a202f007ae00634342fc840b8647b7a6a6e95f1276521d449
+2026-11-05T03:34:26.6739275Z seed 2: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6763371Z seed 3: incumbent training complete (20 rounds), model=c20c295cbbab7ba5a5ceae0be4d5a933520758eb5f32630524e3b9a254432a95
+2026-11-05T03:34:26.6824079Z seed 3: previous=20.00%, candidate=30.00%
+2026-11-05T03:34:26.6837360Z Decision: retain; see /tmp/tmp65zm3kqc/output/comparison.json
+2026-11-05T03:34:26.6854621Z test_zero_saved_targeting_evidence_does_not_exclude_a_seed_or_retrain (test_compare_training.SharedTrainingTests.test_zero_saved_targeting_evidence_does_not_exclude_a_seed_or_retrain) ... ok
+2026-11-05T03:34:26.6867020Z test_all_frozen_dependency_and_report_hashes_checked (test_confirm_own_wave_collector_compat.CollectorCompatTests.test_all_frozen_dependency_and_report_hashes_checked) ... ok
+2026-11-05T03:34:26.6871541Z test_frozen_file_changes_fail_before_evaluation (test_confirm_own_wave_collector_compat.CollectorCompatTests.test_frozen_file_changes_fail_before_evaluation) ... ok
+2026-11-05T03:34:26.6876629Z test_only_explicit_pair_and_exact_manifest_is_allowed (test_confirm_own_wave_collector_compat.CollectorCompatTests.test_only_explicit_pair_and_exact_manifest_is_allowed) ... ok
+2026-11-05T03:34:26.7027453Z test_registration_reads_immutable_git_blob_not_worktree (test_confirm_own_wave_collector_compat.CollectorCompatTests.test_registration_reads_immutable_git_blob_not_worktree) ... ok
+2026-11-05T03:34:26.7035076Z test_spent_and_failed_identity_and_missing_exclusion_rejected (test_confirm_own_wave_collector_compat.CollectorCompatTests.test_spent_and_failed_identity_and_missing_exclusion_rejected) ... ok
+2026-11-05T03:34:26.7056647Z test_binary_intercepts_and_constant_columns (test_containment_forecast.ContainmentTests.test_binary_intercepts_and_constant_columns) ... ok
+2026-11-05T03:34:26.9862983Z test_cli_frozen_hash_screen_and_output_preservation (test_containment_forecast.ContainmentTests.test_cli_frozen_hash_screen_and_output_preservation) ... ok
+2026-11-05T03:34:26.9864645Z test_confirmation_transfer_veto (test_containment_forecast.ContainmentTests.test_confirmation_transfer_veto) ... ok
+2026-11-05T03:34:27.1042212Z test_dev_and_spent_games_cannot_change_fit (test_containment_forecast.ContainmentTests.test_dev_and_spent_games_cannot_change_fit) ... ok
+2026-11-05T03:34:27.1045444Z test_fresh_games_reject_spent_ids_and_preserve_training_provenance (test_containment_forecast.ContainmentTests.test_fresh_games_reject_spent_ids_and_preserve_training_provenance) ... ok
+2026-11-05T03:34:27.2047277Z test_full_mask_screen_coverage_and_selection_counts (test_containment_forecast.ContainmentTests.test_full_mask_screen_coverage_and_selection_counts) ... ok
+2026-11-05T03:34:27.2706480Z test_rank_ties_current_and_stale_fallback (test_containment_forecast.ContainmentTests.test_rank_ties_current_and_stale_fallback) ... ok
+2026-11-05T03:34:27.2709069Z test_unrounded_gain_majority_short_and_missing_gates (test_containment_forecast.ContainmentTests.test_unrounded_gain_majority_short_and_missing_gates) ... ok
+2026-11-05T03:34:27.2716514Z test_context_future_and_round_isolation_and_explicit_fresh_split (test_containment_forecast_v3.ContainmentV3Tests.test_context_future_and_round_isolation_and_explicit_fresh_split) ... ok
+2026-11-05T03:34:27.5379296Z test_current_ties_stale_fallback_and_same_cli (test_containment_forecast_v3.ContainmentV3Tests.test_current_ties_stale_fallback_and_same_cli) ... ok
+2026-11-05T03:34:27.5386531Z test_exact_frozen_boundaries (test_containment_forecast_v3.ContainmentV3Tests.test_exact_frozen_boundaries) ... ok
+2026-11-05T03:34:27.5392405Z test_exact_prefix_and_original_eligibility (test_containment_forecast_v3.ContainmentV3Tests.test_exact_prefix_and_original_eligibility) ... ok
+2026-11-05T03:34:27.5397470Z test_global_earliest_recent_wave_prevents_using_other_old_wave (test_containment_forecast_v3.ContainmentV3Tests.test_global_earliest_recent_wave_prevents_using_other_old_wave) ... ok
+2026-11-05T03:34:27.7255456Z test_no_wave_reduces_to_v2_and_dev_cannot_change_fit (test_containment_forecast_v3.ContainmentV3Tests.test_no_wave_reduces_to_v2_and_dev_cannot_change_fit) ... ok
+2026-11-05T03:34:28.7058011Z test_cli_freezes_model_and_scores_full_dev_masks (test_containment_tree_v5.GainTreeTests.test_cli_freezes_model_and_scores_full_dev_masks) ... ok
+2026-11-05T03:34:29.5278839Z test_dev_and_spent_game_values_cannot_change_training (test_containment_tree_v5.GainTreeTests.test_dev_and_spent_game_values_cannot_change_training) ... ok
+2026-11-05T03:34:29.5282859Z test_empirical_gain_margin_ties_and_stale_current_fallback (test_containment_tree_v5.GainTreeTests.test_empirical_gain_margin_ties_and_stale_current_fallback) ... ok
+2026-11-05T03:34:29.5284707Z test_exact_quantiles_and_deduplication (test_containment_tree_v5.GainTreeTests.test_exact_quantiles_and_deduplication) ... ok
+2026-11-05T03:34:29.5286474Z test_first_split_floor_and_later_near_ties_are_distinct (test_containment_tree_v5.GainTreeTests.test_first_split_floor_and_later_near_ties_are_distinct) ... ok
+2026-11-05T03:34:29.5289754Z test_gain_target_counts_improvement_and_harm_not_just_hits (test_containment_tree_v5.GainTreeTests.test_gain_target_counts_improvement_and_harm_not_just_hits) ... ok
+2026-11-05T03:34:29.6086304Z test_nonlinear_three_way_context_depth_support_and_tie_order (test_containment_tree_v5.GainTreeTests.test_nonlinear_three_way_context_depth_support_and_tie_order) ... ok
+2026-11-05T03:34:29.6128139Z test_zero_reduction_and_unsupported_horizon (test_containment_tree_v5.GainTreeTests.test_zero_reduction_and_unsupported_horizon) ... ok
+2026-11-05T03:34:29.6146529Z test_frozen_development_rejection_and_input_dependencies (test_containment_v2_evidence.ContainmentScreenEvidenceTests.test_frozen_development_rejection_and_input_dependencies) ... ok
+2026-11-05T03:34:29.6152629Z test_cycle2_plan_path_is_generic_and_cannot_modify_thresholds (test_cycle2_plan.Cycle2PromotionBounds.test_cycle2_plan_path_is_generic_and_cannot_modify_thresholds) ... ok
+2026-11-05T03:34:29.6155761Z test_exact_maximum_single_block_loss_is_allowed_but_larger_loss_is_not (test_cycle2_plan.Cycle2PromotionBounds.test_exact_maximum_single_block_loss_is_allowed_but_larger_loss_is_not) ... ok
+2026-11-05T03:34:29.6158943Z test_exact_mean_wall_and_wins_boundaries_are_inclusive (test_cycle2_plan.Cycle2PromotionBounds.test_exact_mean_wall_and_wins_boundaries_are_inclusive) ... ok
+2026-11-05T03:34:29.6161225Z test_zero_previous_wall_rate_requires_zero_candidate_collisions (test_cycle2_plan.Cycle2PromotionBounds.test_zero_previous_wall_rate_requires_zero_candidate_collisions) ... ok
+2026-11-05T03:34:29.6216274Z test_all_training_and_evaluation_rows_models_and_diagnostics_reproduce_report (test_cycle3_evidence.CycleThreeEvidenceTests.test_all_training_and_evaluation_rows_models_and_diagnostics_reproduce_report) ... ok
+2026-11-05T03:34:29.6220866Z test_lower_bounds_use_sample_se (test_decision_rule_analysis.DecisionRuleAnalysisTests.test_lower_bounds_use_sample_se) ... ok
+2026-11-05T03:34:29.6295061Z test_null_guard_bootstrap_counts_each_guard (test_decision_rule_analysis.DecisionRuleAnalysisTests.test_null_guard_bootstrap_counts_each_guard) ... ok
+2026-11-05T03:34:33.7078413Z test_t_bound_controls_false_positives_and_floor_caps_acceptance (test_decision_rule_analysis.DecisionRuleAnalysisTests.test_t_bound_controls_false_positives_and_floor_caps_acceptance) ... ok
+2026-11-05T03:34:33.7080434Z test_t_quantiles_are_monotone_and_above_z (test_decision_rule_analysis.DecisionRuleAnalysisTests.test_t_quantiles_are_monotone_and_above_z) ... ok
+2026-11-05T03:34:33.7143136Z test_hashes_full_rounds_cold_endpoints_and_exact_decision (test_default_duel_policy_evidence.DefaultPolicyEvidenceTests.test_hashes_full_rounds_cold_endpoints_and_exact_decision) ... ok
+2026-11-05T03:34:33.7146738Z test_exact_screen_guards_and_no_retention_label (test_default_duel_policy_screen.DefaultPolicyScreenTests.test_exact_screen_guards_and_no_retention_label) ... ok
+2026-11-05T03:34:33.7148841Z test_mechanism_requires_eligible_forced_and_executed_credit (test_default_duel_policy_screen.DefaultPolicyScreenTests.test_mechanism_requires_eligible_forced_and_executed_credit) ... ok
+2026-11-05T03:34:33.7155549Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_challenger_experiment.ChallengerExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.7158530Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_challenger_experiment.ChallengerExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.7166820Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_challenger_experiment.ChallengerExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.7240828Z test_all20_cold_rows_private_endpoint_and_both_official_identities (test_diamond_context_evidence.DiamondContextEvidenceTests.test_all20_cold_rows_private_endpoint_and_both_official_identities) ... ok
+2026-11-05T03:34:33.7277535Z test_original_bytes_plan_and_exact_pilot_rejection (test_diamond_context_evidence.DiamondContextEvidenceTests.test_original_bytes_plan_and_exact_pilot_rejection) ... ok
+2026-11-05T03:34:33.7284807Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_context_experiment.ContextExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.7296305Z test_context_snapshot_rejects_future_labels_and_unbounded_memory (test_diamond_context_experiment.ContextExperimentTests.test_context_snapshot_rejects_future_labels_and_unbounded_memory) ... ok
+2026-11-05T03:34:33.7299224Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_context_experiment.ContextExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.7306977Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_context_experiment.ContextExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.7457206Z test_all20_cold_rows_own_memory_and_actual_wave_activation (test_diamond_guarded_ray_evidence.GuardedRayEvidenceTests.test_all20_cold_rows_own_memory_and_actual_wave_activation) ... ok
+2026-11-05T03:34:33.7523793Z test_original_bytes_plan_and_negative_decision (test_diamond_guarded_ray_evidence.GuardedRayEvidenceTests.test_original_bytes_plan_and_negative_decision) ... ok
+2026-11-05T03:34:33.7530868Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_guarded_ray_experiment.GuardedRayExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.7545097Z test_context_snapshot_rejects_future_labels_and_unbounded_memory (test_diamond_guarded_ray_experiment.GuardedRayExperimentTests.test_context_snapshot_rejects_future_labels_and_unbounded_memory) ... ok
+2026-11-05T03:34:33.7548119Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_guarded_ray_experiment.GuardedRayExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.7557163Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_guarded_ray_experiment.GuardedRayExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.7566481Z test_shared_attempt_denominators_cannot_be_mixed (test_diamond_guarded_ray_experiment.GuardedRayExperimentTests.test_shared_attempt_denominators_cannot_be_mixed) ... ok
+2026-11-05T03:34:33.7691885Z test_all20_physical_rows_and_endpoint_preserve_the_failure_without_reclassification (test_diamond_outgoing_context_evidence.OutgoingInvalidEvidenceTests.test_all20_physical_rows_and_endpoint_preserve_the_failure_without_reclassification) ... ok
+2026-11-05T03:34:33.7716573Z test_original_invalid_report_and_all_evidence_bytes_remain_intact (test_diamond_outgoing_context_evidence.OutgoingInvalidEvidenceTests.test_original_invalid_report_and_all_evidence_bytes_remain_intact) ... ok
+2026-11-05T03:34:33.7723471Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_outgoing_context_experiment.OutgoingContextExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.7741556Z test_context_snapshot_rejects_future_labels_and_unbounded_memory (test_diamond_outgoing_context_experiment.OutgoingContextExperimentTests.test_context_snapshot_rejects_future_labels_and_unbounded_memory) ... ok
+2026-11-05T03:34:33.7744511Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_outgoing_context_experiment.OutgoingContextExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.7753815Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_outgoing_context_experiment.OutgoingContextExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.7763743Z test_shared_attempt_denominators_cannot_be_mixed (test_diamond_outgoing_context_experiment.OutgoingContextExperimentTests.test_shared_attempt_denominators_cannot_be_mixed) ... ok
+2026-11-05T03:34:33.7773856Z test_all20_cold_rows_private_endpoint_and_both_official_identities (test_diamond_pressure_evidence.DiamondPressureEvidenceTests.test_all20_cold_rows_private_endpoint_and_both_official_identities) ... ok
+2026-11-05T03:34:33.7790329Z test_original_bytes_plan_and_exact_pilot_rejection (test_diamond_pressure_evidence.DiamondPressureEvidenceTests.test_original_bytes_plan_and_exact_pilot_rejection) ... ok
+2026-11-05T03:34:33.7851927Z test_all20_cold_rows_own_memory_and_actual_wave_activation (test_diamond_surf_evidence.SurfEvidenceTests.test_all20_cold_rows_own_memory_and_actual_wave_activation) ... ok
+2026-11-05T03:34:33.7886846Z test_original_bytes_plan_and_negative_decision (test_diamond_surf_evidence.SurfEvidenceTests.test_original_bytes_plan_and_negative_decision) ... ok
+2026-11-05T03:34:33.7893823Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_surf_experiment.SurfExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.7907682Z test_context_snapshot_rejects_future_labels_and_unbounded_memory (test_diamond_surf_experiment.SurfExperimentTests.test_context_snapshot_rejects_future_labels_and_unbounded_memory) ... ok
+2026-11-05T03:34:33.7910510Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_surf_experiment.SurfExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.7919335Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_surf_experiment.SurfExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.8069596Z test_all20_cold_rows_own_memory_and_actual_wave_activation (test_diamond_wave_horizon_evidence.WaveHorizonEvidenceTests.test_all20_cold_rows_own_memory_and_actual_wave_activation) ... ok
+2026-11-05T03:34:33.8135085Z test_original_bytes_plan_and_negative_decision (test_diamond_wave_horizon_evidence.WaveHorizonEvidenceTests.test_original_bytes_plan_and_negative_decision) ... ok
+2026-11-05T03:34:33.8142683Z test_confirmation_requires_all_three_winning_guards_and_zero_own_skips (test_diamond_wave_horizon_experiment.WaveHorizonExperimentTests.test_confirmation_requires_all_three_winning_guards_and_zero_own_skips) ... ok
+2026-11-05T03:34:33.8199574Z test_context_snapshot_rejects_future_labels_and_unbounded_memory (test_diamond_wave_horizon_experiment.WaveHorizonExperimentTests.test_context_snapshot_rejects_future_labels_and_unbounded_memory) ... ok
+2026-11-05T03:34:33.8202408Z test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60 (test_diamond_wave_horizon_experiment.WaveHorizonExperimentTests.test_fixed20_pilot_is_only_progress_and_confirmation_is_fresh60) ... ok
+2026-11-05T03:34:33.8211687Z test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts (test_diamond_wave_horizon_experiment.WaveHorizonExperimentTests.test_own_endpoint_is_not_an_ais_checkpoint_and_rejects_invalid_counts) ... ok
+2026-11-05T03:34:33.9011005Z test_corner_positions_remain_in_bounds_for_legal_commands (test_dual_aim_diagnostic.MovementFixtures.test_corner_positions_remain_in_bounds_for_legal_commands) ... ok
+2026-11-05T03:34:33.9013255Z test_engine_second_constraint_pass_at_reverse_corner (test_dual_aim_diagnostic.MovementFixtures.test_engine_second_constraint_pass_at_reverse_corner) ... ok
+2026-11-05T03:34:33.9015473Z test_first_wall_contact_not_independent_coordinate_clamp (test_dual_aim_diagnostic.MovementFixtures.test_first_wall_contact_not_independent_coordinate_clamp) ... ok
+2026-11-05T03:34:33.9017551Z test_linear_retcon_iteration_not_headon_time (test_dual_aim_diagnostic.MovementFixtures.test_linear_retcon_iteration_not_headon_time) ... ok
+2026-11-05T03:34:33.9019677Z test_move_before_turn_and_new_speed_turn_limit (test_dual_aim_diagnostic.MovementFixtures.test_move_before_turn_and_new_speed_turn_limit) ... ok
+2026-11-05T03:34:33.9021570Z test_reaction_delay_preserves_pending_motion (test_dual_aim_diagnostic.MovementFixtures.test_reaction_delay_preserves_pending_motion) ... ok
+2026-11-05T03:34:33.9023246Z test_server_speed_regressions (test_dual_aim_diagnostic.MovementFixtures.test_server_speed_regressions) ... ok
+2026-11-05T03:34:33.9080906Z test_analytic_distance_matches_dense_independent_segment_oracle (test_dual_aim_diagnostic.SweptCorridorFixtures.test_analytic_distance_matches_dense_independent_segment_oracle) ... ok
+2026-11-05T03:34:33.9083334Z test_creation_turn_sweep_is_advanced_not_origin_segment (test_dual_aim_diagnostic.SweptCorridorFixtures.test_creation_turn_sweep_is_advanced_not_origin_segment) ... ok
+2026-11-05T03:34:33.9089519Z test_interval_interior_and_wraparound (test_dual_aim_diagnostic.SweptCorridorFixtures.test_interval_interior_and_wraparound) ... ok
+2026-11-05T03:34:33.9091577Z test_segment_crossing_is_hit_when_endpoints_miss (test_dual_aim_diagnostic.SweptCorridorFixtures.test_segment_crossing_is_hit_when_endpoints_miss) ... ok
+2026-11-05T03:34:33.9101422Z test_versioned_withheld_cases_are_disjoint (test_dual_aim_diagnostic.SweptCorridorFixtures.test_versioned_withheld_cases_are_disjoint) ... ok
+2026-11-05T03:34:33.9103329Z test_wider_corridor_cannot_increase_clearance (test_dual_aim_diagnostic.SweptCorridorFixtures.test_wider_corridor_cannot_increase_clearance) ... ok
+2026-11-05T03:34:33.9105603Z test_accepts_both_actual_effects_without_assuming_callback_delivery_order (test_engine_energy_trace.TraceValidatorTests.test_accepts_both_actual_effects_without_assuming_callback_delivery_order) ... ok
+2026-11-05T03:34:33.9119594Z test_close_start_still_rejects_early_and_late_damage_or_bonus (test_engine_energy_trace.TraceValidatorTests.test_close_start_still_rejects_early_and_late_damage_or_bonus) ... ok
+2026-11-05T03:34:33.9122794Z test_invalid_duplicate_or_future_firing_evidence_is_rejected (test_engine_energy_trace.TraceValidatorTests.test_invalid_duplicate_or_future_firing_evidence_is_rejected) ... ok
+2026-11-05T03:34:33.9127226Z test_only_observed_enemy_costs_at_exact_scan_turns_are_subtracted (test_engine_energy_trace.TraceValidatorTests.test_only_observed_enemy_costs_at_exact_scan_turns_are_subtracted) ... ok
+2026-11-05T03:34:33.9131036Z test_recorded_close_start_cost_does_not_hide_delayed_effects (test_engine_energy_trace.TraceValidatorTests.test_recorded_close_start_cost_does_not_hide_delayed_effects) ... ok
+2026-11-05T03:34:33.9189086Z test_recorded_official_engine_fixture_hashes_and_assertions (test_engine_energy_trace.TraceValidatorTests.test_recorded_official_engine_fixture_hashes_and_assertions) ... ok
+2026-11-05T03:34:33.9191687Z test_rejects_same_turn_visibility_or_missing_consecutive_scan (test_engine_energy_trace.TraceValidatorTests.test_rejects_same_turn_visibility_or_missing_consecutive_scan) ... ok
+2026-11-05T03:34:33.9193650Z test_rejects_wrong_bonus_and_unconfirmed_damage (test_engine_energy_trace.TraceValidatorTests.test_rejects_wrong_bonus_and_unconfirmed_damage) ... ok
+2026-11-05T03:34:33.9198918Z test_complete_cold_game_cohorts (test_facet_benchmark.Acceptance.test_complete_cold_game_cohorts) ... ok
+2026-11-05T03:34:33.9202023Z test_diamond_only_roster_keeps_five_cold_games (test_facet_benchmark.Acceptance.test_diamond_only_roster_keeps_five_cold_games) ... ok
+2026-11-05T03:34:33.9210133Z test_environment_drops_other_state_and_server_settings (test_facet_benchmark.Acceptance.test_environment_drops_other_state_and_server_settings) ... ok
+2026-11-05T03:34:33.9373357Z test_failed_black_box_preserves_log_without_exposing_its_content (test_facet_benchmark.Acceptance.test_failed_black_box_preserves_log_without_exposing_its_content) ... ok
+2026-11-05T03:34:33.9401679Z test_freeze_rejects_changed_artifacts_and_source (test_facet_benchmark.Acceptance.test_freeze_rejects_changed_artifacts_and_source) ... ok
+2026-11-05T03:34:33.9403201Z test_invalid_screen_never_grants_new_budget (test_facet_benchmark.Acceptance.test_invalid_screen_never_grants_new_budget) ... ok
+2026-11-05T03:34:33.9406707Z test_official_outcome_survives_invalid_completion (test_facet_benchmark.Acceptance.test_official_outcome_survives_invalid_completion) ... ok
+2026-11-05T03:34:33.9435088Z test_prepared_cohort_all_shot_integrity (test_facet_benchmark.Acceptance.test_prepared_cohort_all_shot_integrity) ... ok
+2026-11-05T03:34:33.9453175Z test_round_identity_and_physical_transaction_invariants (test_facet_benchmark.Acceptance.test_round_identity_and_physical_transaction_invariants) ... ok
+2026-11-05T03:34:33.9465590Z test_schema3_requires_successful_terminal_evidence (test_facet_benchmark.Acceptance.test_schema3_requires_successful_terminal_evidence) ... ok
+2026-11-05T03:34:33.9471553Z test_archive_identity_fails_closed (test_facet_python_runtime.RuntimeIdentity.test_archive_identity_fails_closed) ... ok
+2026-11-05T03:34:33.9474672Z test_no_architecture_fallback (test_facet_python_runtime.RuntimeIdentity.test_no_architecture_fallback) ... ok
+2026-11-05T03:34:33.9476552Z test_counter_reset_is_not_a_learning_curve (test_facet_report.Evidence.test_counter_reset_is_not_a_learning_curve) ... ok
+2026-11-05T03:34:33.9609495Z test_failed_truncated_and_nonfinite_metrics_preserve_official_game (test_facet_report.Evidence.test_failed_truncated_and_nonfinite_metrics_preserve_official_game) ... ok
+2026-11-05T03:34:33.9611761Z test_integral_floating_observation_counts_are_native_schema (test_facet_report.Evidence.test_integral_floating_observation_counts_are_native_schema) ... ok
+2026-11-05T03:34:33.9629796Z test_invalid_finished_game_is_not_dropped_or_repaired (test_facet_report.Evidence.test_invalid_finished_game_is_not_dropped_or_repaired) ... ok
+2026-11-05T03:34:33.9956864Z test_retained_acquisition_replays_all_139_numeric_rows (test_facet_report.Evidence.test_retained_acquisition_replays_all_139_numeric_rows) ... ok
+2026-11-05T03:34:33.9965621Z test_both_batches_strict_majorities_and_evidence_are_required (test_final_default_confirmation.FinalDefaultTests.test_both_batches_strict_majorities_and_evidence_are_required) ... ok
+2026-11-05T03:34:33.9971178Z test_exact_budget_and_preserved_historical_helper (test_final_default_confirmation.FinalDefaultTests.test_exact_budget_and_preserved_historical_helper) ... ok
+2026-11-05T03:34:33.9973914Z test_t_bound_is_binding_even_when_all_other_performance_gates_pass (test_final_default_confirmation.FinalDefaultTests.test_t_bound_is_binding_even_when_all_other_performance_gates_pass) ... ok
+2026-11-05T03:34:33.9982512Z test_both_batches_strict_majorities_and_evidence_are_required (test_final_default_confirmation_redo.FinalDefaultRedoTests.test_both_batches_strict_majorities_and_evidence_are_required) ... ok
+2026-11-05T03:34:33.9987449Z test_exact_budget_and_preserved_historical_helper (test_final_default_confirmation_redo.FinalDefaultRedoTests.test_exact_budget_and_preserved_historical_helper) ... ok
+2026-11-05T03:34:34.0004112Z test_fresh_ids_seeds_and_exact_original_decision_rules (test_final_default_confirmation_redo.FinalDefaultRedoTests.test_fresh_ids_seeds_and_exact_original_decision_rules) ... ok
+2026-11-05T03:34:34.0006529Z test_t_bound_is_binding_even_when_all_other_performance_gates_pass (test_final_default_confirmation_redo.FinalDefaultRedoTests.test_t_bound_is_binding_even_when_all_other_performance_gates_pass) ... ok
+2026-11-05T03:34:34.0104748Z test_all140_raw_rounds_seven_models_and_single_skipped_turn_are_retained (test_final_default_evidence.FinalDefaultEvidenceTests.test_all140_raw_rounds_seven_models_and_single_skipped_turn_are_retained) ... ok
+2026-11-05T03:34:34.0136555Z test_original_hashes_reports_and_invalid_stopping_boundary (test_final_default_evidence.FinalDefaultEvidenceTests.test_original_hashes_reports_and_invalid_stopping_boundary) ... ok
+2026-11-05T03:34:34.0271667Z test_all200_official_raw_rounds_and_ten_independent_cold_models (test_final_default_redo_evidence.FinalDefaultRedoEvidenceTests.test_all200_official_raw_rounds_and_ten_independent_cold_models) ... ok
+2026-11-05T03:34:34.0323941Z test_original_bytes_registered_confirmation_and_execution_link (test_final_default_redo_evidence.FinalDefaultRedoEvidenceTests.test_original_bytes_registered_confirmation_and_execution_link) ... ok
+2026-11-05T03:34:34.0352066Z test_every_registered_official_game_and_round_record (test_fire_alignment_evidence.FireEvidenceTests.test_every_registered_official_game_and_round_record) ... ok
+2026-11-05T03:34:34.0375955Z test_raw_hashes_and_exact_rejection (test_fire_alignment_evidence.FireEvidenceTests.test_raw_hashes_and_exact_rejection) ... ok
+2026-11-05T03:34:34.0378703Z test_locked_screen_advances_but_never_retains (test_fire_alignment_screen.FireScreenTests.test_locked_screen_advances_but_never_retains) ... ok
+2026-11-05T03:34:34.0380656Z test_zero_shot_mechanism_is_inconclusive (test_fire_alignment_screen.FireScreenTests.test_zero_shot_mechanism_is_inconclusive) ... ok
+2026-11-05T03:34:34.0422594Z test_complete_fixed_rounds_native_exports_and_registered_decision (test_foundation_evidence.FoundationEvidenceTests.test_complete_fixed_rounds_native_exports_and_registered_decision) ... ok
+2026-11-05T03:34:34.0473077Z test_match_runtime_probe_raw_hashes_reproduce_actual_contract (test_foundation_evidence.FoundationEvidenceTests.test_match_runtime_probe_raw_hashes_reproduce_actual_contract) ... ok
+2026-11-05T03:34:34.0501782Z test_all_ten_official_games_and_two_hundred_valid_fixed_rounds (test_frozen_confirmation_evidence.FrozenEvidenceTests.test_all_ten_official_games_and_two_hundred_valid_fixed_rounds) ... ok
+2026-11-05T03:34:34.0528239Z test_original_evidence_hashes_and_registered_decision (test_frozen_confirmation_evidence.FrozenEvidenceTests.test_original_evidence_hashes_and_registered_decision) ... ok
+2026-11-05T03:34:34.0531013Z test_incomplete_or_duplicate_games_rejected (test_frozen_duel_confirmation.ConfirmationTests.test_incomplete_or_duplicate_games_rejected) ... ok
+2026-11-05T03:34:34.0559224Z test_relative_paths_become_absolute_before_child_process_and_loaded_model_fails (test_frozen_duel_confirmation.ConfirmationTests.test_relative_paths_become_absolute_before_child_process_and_loaded_model_fails) ... ok
+2026-11-05T03:34:34.0566789Z test_strict_three_gates_and_equal_game_aggregation (test_frozen_duel_confirmation.ConfirmationTests.test_strict_three_gates_and_equal_game_aggregation) ... ok
+2026-11-05T03:34:34.0572254Z test_actual_expected_payload_has_exact20keys (test_keel_brace_experiment.Approval.test_actual_expected_payload_has_exact20keys) ... ok
+2026-11-05T03:34:34.0574250Z test_duplicate_json_key_nonfinite_and_trailing_text_rejected (test_keel_brace_experiment.Approval.test_duplicate_json_key_nonfinite_and_trailing_text_rejected) ... ok
+2026-11-05T03:34:34.0576131Z test_exact20key_bound_approval (test_keel_brace_experiment.Approval.test_exact20key_bound_approval) ... ok
+2026-11-05T03:34:34.0578130Z test_report_and_separate_agent_provenance_are_mandatory (test_keel_brace_experiment.Approval.test_report_and_separate_agent_provenance_are_mandatory) ... ok
+2026-11-05T03:34:34.0584156Z test_stale_wrong_identity_author_extra_keys_and_bool_fail (test_keel_brace_experiment.Approval.test_stale_wrong_identity_author_extra_keys_and_bool_fail) ... ok
+2026-11-05T03:34:34.0586199Z test_authorized_malformed_authority_still_fails_closed (test_keel_brace_experiment.AuthorityActorFiltering.test_authorized_malformed_authority_still_fails_closed) ... ok
+2026-11-05T03:34:34.0588443Z test_foreign_malformed_approval_is_ignored (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_approval_is_ignored) ... ok
+2026-11-05T03:34:34.0590499Z test_foreign_malformed_dispatch_is_ignored_before_parse (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_dispatch_is_ignored_before_parse) ... ok
+2026-11-05T03:34:34.0592761Z test_foreign_malformed_report_does_not_poison_valid_report (test_keel_brace_experiment.AuthorityActorFiltering.test_foreign_malformed_report_does_not_poison_valid_report) ... ok
+2026-11-05T03:34:34.0729517Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.ConditionalGate.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+2026-11-05T03:34:34.0878758Z test_full_confirmation_gate_accepts_lossless_virtual_custody (test_keel_brace_experiment.ConditionalGate.test_full_confirmation_gate_accepts_lossless_virtual_custody) ... ok
+2026-11-05T03:34:34.0965929Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.ConditionalGate.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+2026-11-05T03:34:34.1032896Z test_inconclusive_original_screen_never_opens_confirmation (test_keel_brace_experiment.ConditionalGate.test_inconclusive_original_screen_never_opens_confirmation) ... ok
+2026-11-05T03:34:34.1764599Z test_no_success_without_original_export_and_independent_postcompletion_review (test_keel_brace_experiment.ConditionalGate.test_no_success_without_original_export_and_independent_postcompletion_review) ... ok
+2026-11-05T03:34:34.1974824Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.ConditionalGate.test_recording_path_game_binding_cannot_be_reused) ... ok
+2026-11-05T03:34:34.2428671Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.ConditionalGate.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+2026-11-05T03:34:34.2580853Z test_unreconciled_screen_never_opens_confirmation (test_keel_brace_experiment.ConditionalGate.test_unreconciled_screen_never_opens_confirmation) ... ok
+2026-11-05T03:34:34.2598287Z test_complete_screen_and_confirmation_progress (test_keel_brace_experiment.Decision.test_complete_screen_and_confirmation_progress) ... ok
+2026-11-05T03:34:34.2619245Z test_exact_percentage_boundaries_and_strict_majorities (test_keel_brace_experiment.Decision.test_exact_percentage_boundaries_and_strict_majorities) ... ok
+2026-11-05T03:34:34.2624260Z test_no_favorable_subset_or_incomplete_budget (test_keel_brace_experiment.Decision.test_no_favorable_subset_or_incomplete_budget) ... ok
+2026-11-05T03:34:34.2715974Z {"decision": "invalid", "physicalRounds": 1, "unplayedIDs": ["s02"]}
+2026-11-05T03:34:34.2723640Z test_first_invalid_game_stops_and_retains_partial_physical_budget (test_keel_brace_experiment.FailClosedStage.test_first_invalid_game_stops_and_retains_partial_physical_budget) ... ok
+2026-11-05T03:34:34.2726475Z test_consistent_unapproved_image_does_not_expand_allowlist (test_keel_brace_experiment.ImageProvenanceHold.test_consistent_unapproved_image_does_not_expand_allowlist) ... ok
+2026-11-05T03:34:34.2729115Z test_environment_alone_never_establishes_allowed_image (test_keel_brace_experiment.ImageProvenanceHold.test_environment_alone_never_establishes_allowed_image) ... ok
+2026-11-05T03:34:34.2731068Z test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed (test_keel_brace_experiment.ImageProvenanceHold.test_raw_setup_header_conflict_is_fatal_even_when_environment_is_allowed) ... ok
+2026-11-05T03:34:34.2733595Z test_real_identity_still_fails_closed_without_actual_stage_snapshots (test_keel_brace_experiment.ImageProvenanceHold.test_real_identity_still_fails_closed_without_actual_stage_snapshots) ... ok
+2026-11-05T03:34:34.2864958Z test_artifact_and_current_head_mismatch_fail (test_keel_brace_experiment.LiveAuthority.test_artifact_and_current_head_mismatch_fail) ... ok
+2026-11-05T03:34:34.2914900Z test_changed_prepared_command_cannot_redefine_local_approved_manifest (test_keel_brace_experiment.LiveAuthority.test_changed_prepared_command_cannot_redefine_local_approved_manifest) ... ok
+2026-11-05T03:34:34.3074412Z test_deleted_edited_wrong_author_and_timestamp_comments_fail (test_keel_brace_experiment.LiveAuthority.test_deleted_edited_wrong_author_and_timestamp_comments_fail) ... ok
+2026-11-05T03:34:34.3400635Z test_local_profile_approval_anchor_and_command_mutations_fail (test_keel_brace_experiment.LiveAuthority.test_local_profile_approval_anchor_and_command_mutations_fail) ... ok
+2026-11-05T03:34:34.3552004Z test_mutated_receipt_authority_chain_fails (test_keel_brace_experiment.LiveAuthority.test_mutated_receipt_authority_chain_fails) ... ok
+2026-11-05T03:34:34.3735721Z test_revoked_duplicate_approval_and_changed_assignment_fail (test_keel_brace_experiment.LiveAuthority.test_revoked_duplicate_approval_and_changed_assignment_fail) ... ok
+2026-11-05T03:34:34.3888764Z test_unchanged_current_authority_and_receipt_chain_pass (test_keel_brace_experiment.LiveAuthority.test_unchanged_current_authority_and_receipt_chain_pass) ... ok
+2026-11-05T03:34:34.3893625Z test_all_missing_duplicate_skip_and_boundary_records_fail_closed (test_keel_brace_experiment.Markers.test_all_missing_duplicate_skip_and_boundary_records_fail_closed) ... ok
+2026-11-05T03:34:34.3895755Z test_complete_integer_timing_and_candidate_exposure (test_keel_brace_experiment.Markers.test_complete_integer_timing_and_candidate_exposure) ... ok
+2026-11-05T03:34:34.3902495Z test_counters_overflow_bad_chain_and_baseline_leak_fail (test_keel_brace_experiment.NewBraceGuards.test_counters_overflow_bad_chain_and_baseline_leak_fail) ... ok
+2026-11-05T03:34:34.3928259Z test_exact_negative_diamond_guards_and_retcon_positive_boundary (test_keel_brace_experiment.NewBraceGuards.test_exact_negative_diamond_guards_and_retcon_positive_boundary) ... ok
+2026-11-05T03:34:34.3954706Z test_export_original_api_is_external_and_raw_decision_unchanged (test_keel_brace_experiment.NewBraceGuards.test_export_original_api_is_external_and_raw_decision_unchanged) ... ok
+2026-11-05T03:34:34.3972974Z test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering (test_keel_brace_experiment.NewBraceGuards.test_exposure_is_stage_local_and_zero_is_inconclusive_without_filtering) ... ok
+2026-11-05T03:34:34.3980756Z test_missing_upload_retains_incomplete_custody_without_new_games (test_keel_brace_experiment.NewBraceGuards.test_missing_upload_retains_incomplete_custody_without_new_games) ... ok
+2026-11-05T03:34:34.3983095Z test_prospective_storage_timestamp_size_and_real_evidence_guards (test_keel_brace_experiment.NewBraceGuards.test_prospective_storage_timestamp_size_and_real_evidence_guards) ... ok
+2026-11-05T03:34:34.3992056Z test_retcon_ceiling_cannot_relax_positive_gain (test_keel_brace_experiment.NewBraceGuards.test_retcon_ceiling_cannot_relax_positive_gain) ... ok
+2026-11-05T03:34:34.3994416Z test_runtime_report_unknown_keys_or_edit_are_not_authority (test_keel_brace_experiment.NewBraceGuards.test_runtime_report_unknown_keys_or_edit_are_not_authority) ... ok
+2026-11-05T03:34:34.4029440Z test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact (test_keel_brace_experiment.NewBraceGuards.test_worker_storage_aggregate_cap_is_sticky_and_floor_is_exact) ... ok
+2026-11-05T03:34:34.4033945Z test_exited_parent_still_signals_live_owned_process_group (test_keel_brace_experiment.OwnedTeardown.test_exited_parent_still_signals_live_owned_process_group) ... ok
+2026-11-05T03:34:34.4040543Z test_owned_descendants_are_killed_after_bounded_term_drain (test_keel_brace_experiment.OwnedTeardown.test_owned_descendants_are_killed_after_bounded_term_drain) ... ok
+2026-11-05T03:34:34.4069171Z test_official_counts_and_partial_physical_budget (test_keel_brace_experiment.Recording.test_official_counts_and_partial_physical_budget) ... ok
+2026-11-05T03:34:34.4098070Z test_private_contact_counter_is_only_an_upper_bounded_callback_count (test_keel_brace_experiment.RemainingBoundaries.test_private_contact_counter_is_only_an_upper_bounded_callback_count) ... ok
+2026-11-05T03:34:34.4107167Z test_teardown_respects_remaining_hard_deadline_and_retains_reap_error (test_keel_brace_experiment.RemainingBoundaries.test_teardown_respects_remaining_hard_deadline_and_retains_reap_error) ... ok
+2026-11-05T03:34:34.4219678Z test_all_original_members_and_whole_recordings_verify_without_expansion (test_keel_brace_experiment.VirtualCustody.test_all_original_members_and_whole_recordings_verify_without_expansion) ... ok
+2026-11-05T03:34:34.4288910Z test_gap_corruption_omission_and_metadata_changes_fail (test_keel_brace_experiment.VirtualCustody.test_gap_corruption_omission_and_metadata_changes_fail) ... ok
+2026-11-05T03:34:34.4478632Z test_recording_path_game_binding_cannot_be_reused (test_keel_brace_experiment.VirtualCustody.test_recording_path_game_binding_cannot_be_reused) ... ok
+2026-11-05T03:34:34.4910654Z test_source_path_identity_and_embedded_freeze_are_exact (test_keel_brace_experiment.VirtualCustody.test_source_path_identity_and_embedded_freeze_are_exact) ... ok
+2026-11-05T03:34:34.5430310Z test_actual_own_snapshot_wrapper_graph_identity (test_keel_brace_image_identity.Anchors.test_actual_own_snapshot_wrapper_graph_identity) ... ok
+2026-11-05T03:34:34.5796188Z test_all_snapshot_phases_invoke_exact_stock_collector_bounded (test_keel_brace_image_identity.Anchors.test_all_snapshot_phases_invoke_exact_stock_collector_bounded) ... ok
+2026-11-05T03:34:34.6188922Z test_read_time_pid_and_mtime_are_preserved_not_stable_equality (test_keel_brace_image_identity.Anchors.test_read_time_pid_and_mtime_are_preserved_not_stable_equality) ... ok
+2026-11-05T03:34:34.6739074Z test_snapshot_phase_context_and_top_level_disagreement_fail (test_keel_brace_image_identity.Anchors.test_snapshot_phase_context_and_top_level_disagreement_fail) ... ok
+2026-11-05T03:34:34.7658342Z test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail (test_keel_brace_image_identity.Anchors.test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail) ... ok
+2026-11-05T03:34:34.7662848Z test_only_exact_actual_job_404_deferral_or_matched_header (test_keel_brace_image_identity.Authority.test_only_exact_actual_job_404_deferral_or_matched_header) ... ok
+2026-11-05T03:34:34.7664575Z test_qualification_and_all_snapshot_bindings_mandatory (test_keel_brace_image_identity.Authority.test_qualification_and_all_snapshot_bindings_mandatory) ... ok
+2026-11-05T03:34:34.7828525Z test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable (test_keel_brace_image_identity.Captures.test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable) ... ok
+2026-11-05T03:34:34.8108393Z test_mutation_errors_truncation_discovery_and_parse_faults_rejected (test_keel_brace_image_identity.Captures.test_mutation_errors_truncation_discovery_and_parse_faults_rejected) ... ok
+2026-11-05T03:34:34.8170902Z test_original_observations_remain_distinct_and_noncanonical (test_keel_brace_image_identity.Captures.test_original_observations_remain_distinct_and_noncanonical) ... ok
+2026-11-05T03:34:34.8212085Z test_raw_prefix_or_unknown_native_tuple_rejected (test_keel_brace_image_identity.Captures.test_raw_prefix_or_unknown_native_tuple_rejected) ... ok
+2026-11-05T03:34:34.8289160Z test_rehashed_parsed_artifact_cannot_disagree_with_actual_raw (test_keel_brace_image_identity.Captures.test_rehashed_parsed_artifact_cannot_disagree_with_actual_raw) ... ok
+2026-11-05T03:34:34.8411036Z test_stat_size_spoof_and_missing_index_rejected_even_resealed (test_keel_brace_image_identity.Captures.test_stat_size_spoof_and_missing_index_rejected_even_resealed) ... ok
+2026-11-05T03:34:34.8574357Z test_confirmation_requires_receipt_bound_original_profile_and_final_raw_provider (test_keel_brace_image_identity.ControllerIntegration.test_confirmation_requires_receipt_bound_original_profile_and_final_raw_provider) ... ok
+2026-11-05T03:34:34.8592834Z test_receipt_child_revalidation_binds_actual_capture_and_prepared_graph (test_keel_brace_image_identity.ControllerIntegration.test_receipt_child_revalidation_binds_actual_capture_and_prepared_graph) ... ok
+2026-11-05T03:34:34.8602365Z test_runtime_image_review_cannot_be_missing_or_after_approval (test_keel_brace_image_identity.ControllerIntegration.test_runtime_image_review_cannot_be_missing_or_after_approval) ... ok
+2026-11-05T03:34:34.8629358Z test_final_provider_exact_original_and_current_job_bindings (test_keel_brace_image_identity.Provider.test_final_provider_exact_original_and_current_job_bindings) ... ok
+2026-11-05T03:34:34.8633730Z test_missing_full_final_provider_original_cannot_be_waived (test_keel_brace_image_identity.Provider.test_missing_full_final_provider_original_cannot_be_waived) ... ok
+2026-11-05T03:34:34.8646181Z test_naked_header_or_missing_real_startup_boundary_rejected (test_keel_brace_image_identity.Provider.test_naked_header_or_missing_real_startup_boundary_rejected) ... ok
+2026-11-05T03:34:34.8648259Z test_provider_second_resolution_has_exact_recorded_second_interval (test_keel_brace_image_identity.Provider.test_provider_second_resolution_has_exact_recorded_second_interval) ... ok
+2026-11-05T03:34:34.8698691Z test_real_original_full_provider_log_not_echoed_workflow (test_keel_brace_image_identity.Provider.test_real_original_full_provider_log_not_echoed_workflow) ... ok
+2026-11-05T03:34:34.8844588Z test_actual_preserved_case_a_and_failed_case_b_match_distinct_complete_cases (test_keel_brace_image_identity.V2JointCases.test_actual_preserved_case_a_and_failed_case_b_match_distinct_complete_cases) ... ok
+2026-11-05T03:34:34.8983489Z test_build_record_selector_matches_actual_workflow_without_running_build (test_keel_brace_image_identity.V2JointCases.test_build_record_selector_matches_actual_workflow_without_running_build) ... ok
+2026-11-05T03:34:34.9163355Z test_coherently_rehashed_process_environment_case_mix_still_rejected (test_keel_brace_image_identity.V2JointCases.test_coherently_rehashed_process_environment_case_mix_still_rejected) ... ok
+2026-11-05T03:34:34.9308660Z test_effective_freeze_origin_requires_v2_path_policy_and_strict_root_version (test_keel_brace_image_identity.V2JointCases.test_effective_freeze_origin_requires_v2_path_policy_and_strict_root_version) ... ok
+2026-11-05T03:34:34.9437682Z test_every_cross_case_native_environment_component_and_unknown_url_rejected (test_keel_brace_image_identity.V2JointCases.test_every_cross_case_native_environment_component_and_unknown_url_rejected) ... ok
+2026-11-05T03:34:34.9562850Z test_nested_runtime_review_explicit_caseid_and_header_must_match_frozen_case (test_keel_brace_image_identity.V2JointCases.test_nested_runtime_review_explicit_caseid_and_header_must_match_frozen_case) ... ok
+2026-11-05T03:34:35.0021392Z test_same_stage_drift_is_fatal_even_when_both_cases_individually_allowed (test_keel_brace_image_identity.V2JointCases.test_same_stage_drift_is_fatal_even_when_both_cases_individually_allowed) ... ok
+2026-11-05T03:34:35.0182547Z test_upstream_screen_a_confirmation_b_and_screen_b_confirmation_a (test_keel_brace_image_identity.V2JointCases.test_upstream_screen_a_confirmation_b_and_screen_b_confirmation_a) ... ok
+2026-11-05T03:34:35.0448131Z test_v2_does_not_waive_capture_size_deadline_or_error_caps (test_keel_brace_image_identity.V2JointCases.test_v2_does_not_waive_capture_size_deadline_or_error_caps) ... ok
+2026-11-05T03:34:35.0483453Z test_complete_original_roundtrip (test_keel_helm_confirmation_archive.ArchiveFixture.test_complete_original_roundtrip) ... ok
+2026-11-05T03:34:35.0507314Z test_missing_part_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_missing_part_rejected) ... ok
+2026-11-05T03:34:35.0544423Z test_missing_whole_recording_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_missing_whole_recording_rejected) ... ok
+2026-11-05T03:34:35.0610253Z test_registered_provider_identity (test_keel_helm_confirmation_archive.ArchiveFixture.test_registered_provider_identity) ... ok
+2026-11-05T03:34:35.0641294Z test_reordered_parts_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_reordered_parts_rejected) ... ok
+2026-11-05T03:34:35.0677301Z test_wrong_member_hash_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_wrong_member_hash_rejected) ... ok
+2026-11-05T03:34:35.0713573Z test_wrong_member_index_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_wrong_member_index_rejected) ... ok
+2026-11-05T03:34:35.0749795Z test_wrong_member_name_rejected (test_keel_helm_confirmation_archive.ArchiveFixture.test_wrong_member_name_rejected) ... ok
+2026-11-05T03:34:35.0755422Z test_actual_expected_payload_has_exact20keys (test_keel_helm_experiment.Approval.test_actual_expected_payload_has_exact20keys) ... ok
+2026-11-05T03:34:35.0757286Z test_duplicate_json_key_nonfinite_and_trailing_text_rejected (test_keel_helm_experiment.Approval.test_duplicate_json_key_nonfinite_and_trailing_text_rejected) ... ok
+2026-11-05T03:34:35.0759521Z test_exact20key_bound_approval (test_keel_helm_experiment.Approval.test_exact20key_bound_approval) ... ok
+2026-11-05T03:34:35.0762234Z test_report_and_separate_agent_provenance_are_mandatory (test_keel_helm_experiment.Approval.test_report_and_separate_agent_provenance_are_mandatory) ... ok
+2026-11-05T03:34:35.0766545Z test_stale_wrong_identity_author_extra_keys_and_bool_fail (test_keel_helm_experiment.Approval.test_stale_wrong_identity_author_extra_keys_and_bool_fail) ... ok
+2026-11-05T03:34:35.0776352Z test_complete_screen_and_confirmation_progress (test_keel_helm_experiment.Decision.test_complete_screen_and_confirmation_progress) ... ok
+2026-11-05T03:34:35.0788560Z test_exact_percentage_boundaries_and_strict_majorities (test_keel_helm_experiment.Decision.test_exact_percentage_boundaries_and_strict_majorities) ... ok
+2026-11-05T03:34:35.0790947Z test_no_favorable_subset_or_incomplete_budget (test_keel_helm_experiment.Decision.test_no_favorable_subset_or_incomplete_budget) ... ok
+2026-11-05T03:34:35.0822604Z {"decision": "invalid", "physicalRounds": 1, "unplayedIDs": ["s02"]}
+2026-11-05T03:34:35.0828891Z test_first_invalid_game_stops_and_retains_partial_physical_budget (test_keel_helm_experiment.FailClosedStage.test_first_invalid_game_stops_and_retains_partial_physical_budget) ... ok
+2026-11-05T03:34:35.0941718Z test_artifact_and_current_head_mismatch_fail (test_keel_helm_experiment.LiveAuthority.test_artifact_and_current_head_mismatch_fail) ... ok
+2026-11-05T03:34:35.0989635Z test_changed_prepared_command_cannot_redefine_local_approved_manifest (test_keel_helm_experiment.LiveAuthority.test_changed_prepared_command_cannot_redefine_local_approved_manifest) ... ok
+2026-11-05T03:34:35.1131350Z test_deleted_edited_wrong_author_and_timestamp_comments_fail (test_keel_helm_experiment.LiveAuthority.test_deleted_edited_wrong_author_and_timestamp_comments_fail) ... ok
+2026-11-05T03:34:35.1457315Z test_local_profile_approval_anchor_and_command_mutations_fail (test_keel_helm_experiment.LiveAuthority.test_local_profile_approval_anchor_and_command_mutations_fail) ... ok
+2026-11-05T03:34:35.1586042Z test_mutated_receipt_authority_chain_fails (test_keel_helm_experiment.LiveAuthority.test_mutated_receipt_authority_chain_fails) ... ok
+2026-11-05T03:34:35.1722176Z test_revoked_duplicate_approval_and_changed_assignment_fail (test_keel_helm_experiment.LiveAuthority.test_revoked_duplicate_approval_and_changed_assignment_fail) ... ok
+2026-11-05T03:34:35.1854513Z test_unchanged_current_authority_and_receipt_chain_pass (test_keel_helm_experiment.LiveAuthority.test_unchanged_current_authority_and_receipt_chain_pass) ... ok
+2026-11-05T03:34:35.1858022Z test_all_missing_duplicate_skip_and_boundary_records_fail_closed (test_keel_helm_experiment.Markers.test_all_missing_duplicate_skip_and_boundary_records_fail_closed) ... ok
+2026-11-05T03:34:35.1860194Z test_complete_integer_timing_and_candidate_exposure (test_keel_helm_experiment.Markers.test_complete_integer_timing_and_candidate_exposure) ... ok
+2026-11-05T03:34:35.1864060Z test_exited_parent_still_signals_live_owned_process_group (test_keel_helm_experiment.OwnedTeardown.test_exited_parent_still_signals_live_owned_process_group) ... ok
+2026-11-05T03:34:35.1871738Z test_owned_descendants_are_killed_after_bounded_term_drain (test_keel_helm_experiment.OwnedTeardown.test_owned_descendants_are_killed_after_bounded_term_drain) ... ok
+2026-11-05T03:34:35.1899543Z test_official_counts_and_partial_physical_budget (test_keel_helm_experiment.Recording.test_official_counts_and_partial_physical_budget) ... ok
+2026-11-05T03:34:37.8622026Z test_all_original_bytes_and_sixty_round_metrics (test_keel_prism.CompletedComparison.test_all_original_bytes_and_sixty_round_metrics) ... ok
+2026-11-05T03:34:38.2770729Z test_completed_game_combines_without_round_key_collision (test_keel_prism.FrozenContinuation.test_completed_game_combines_without_round_key_collision) ... ok
+2026-11-05T03:34:38.2799699Z test_original_partial_bytes_and_exact_unplayed_registration (test_keel_prism.FrozenContinuation.test_original_partial_bytes_and_exact_unplayed_registration) ... ok
+2026-11-05T03:34:38.2885203Z test_all60_rows_six_cold_models_official_identities_and_native_bytes (test_learned_danger_evidence.LearnedDangerEvidenceTests.test_all60_rows_six_cold_models_official_identities_and_native_bytes) ... ok
+2026-11-05T03:34:38.2919707Z test_preserved_bytes_and_exact_registered_rejection (test_learned_danger_evidence.LearnedDangerEvidenceTests.test_preserved_bytes_and_exact_registered_rejection) ... ok
+2026-11-05T03:34:38.2929923Z test_complete_stages_are60_then_conditional270_and_root_pins (test_learned_danger_experiment.LearnedDangerGateTests.test_complete_stages_are60_then_conditional270_and_root_pins) ... ok
+2026-11-05T03:34:38.2941635Z test_confirm_each_advanced_block_and_retcon_majority_are_binding (test_learned_danger_experiment.LearnedDangerGateTests.test_confirm_each_advanced_block_and_retcon_majority_are_binding) ... ok
+2026-11-05T03:34:38.2954306Z test_relative_safety_and_candidate_only_sample_skips (test_learned_danger_experiment.LearnedDangerGateTests.test_relative_safety_and_candidate_only_sample_skips) ... ok
+2026-11-05T03:34:38.2960273Z test_retcon_absolute_screen_share_and_wins_are_both_strict (test_learned_danger_experiment.LearnedDangerGateTests.test_retcon_absolute_screen_share_and_wins_are_both_strict) ... ok
+2026-11-05T03:34:38.2967125Z test_actual_java_serialization_obeys_the_accepted_label_schema (test_legal_recorder_fixture.JavaProducerSchemaTests.test_actual_java_serialization_obeys_the_accepted_label_schema) ... ok
+2026-11-05T03:34:38.2970434Z test_conflicting_cached_scan_and_duplicate_record_rejected (test_legal_scan_dataset.LabelFixtures.test_conflicting_cached_scan_and_duplicate_record_rejected) ... ok
+2026-11-05T03:34:38.2974194Z test_exact_fresh_future_only_no_interpolation (test_legal_scan_dataset.LabelFixtures.test_exact_fresh_future_only_no_interpolation) ... ok
+2026-11-05T03:34:38.2977336Z test_future_and_same_turn_intents_rejected (test_legal_scan_dataset.LabelFixtures.test_future_and_same_turn_intents_rejected) ... ok
+2026-11-05T03:34:38.2980460Z test_future_own_shot_and_conflicting_identity_rejected (test_legal_scan_dataset.LabelFixtures.test_future_own_shot_and_conflicting_identity_rejected) ... ok
+2026-11-05T03:34:38.2983503Z test_future_scan_values_do_not_enter_history (test_legal_scan_dataset.LabelFixtures.test_future_scan_values_do_not_enter_history) ... ok
+2026-11-05T03:34:38.2985951Z test_missing_turn_and_scan_masks_are_explicit (test_legal_scan_dataset.LabelFixtures.test_missing_turn_and_scan_masks_are_explicit) ... ok
+2026-11-05T03:34:38.2989377Z test_no_labels_across_game_round_or_target (test_legal_scan_dataset.LabelFixtures.test_no_labels_across_game_round_or_target) ... ok
+2026-11-05T03:34:38.2991058Z test_optional_state_fields_preserve_unknown_not_zero (test_legal_scan_dataset.LabelFixtures.test_optional_state_fields_preserve_unknown_not_zero) ... ok
+2026-11-05T03:34:38.2997416Z test_order_invariance_and_independent_feature_objects (test_legal_scan_dataset.LabelFixtures.test_order_invariance_and_independent_feature_objects) ... ok
+2026-11-05T03:34:38.2999562Z test_requested_fire_is_not_confirmed_fire (test_legal_scan_dataset.LabelFixtures.test_requested_fire_is_not_confirmed_fire) ... ok
+2026-11-05T03:34:38.3001573Z test_cached_scan_time_cannot_regress (test_legal_scan_dataset.SplitAndValidationFixtures.test_cached_scan_time_cannot_regress) ... ok
+2026-11-05T03:34:38.3855929Z test_cli_partitions_before_any_model_fit_and_preserves_outputs (test_legal_scan_dataset.SplitAndValidationFixtures.test_cli_partitions_before_any_model_fit_and_preserves_outputs) ... ok
+2026-11-05T03:34:38.3859484Z test_duplicate_game_or_acquisition_cannot_cross_splits (test_legal_scan_dataset.SplitAndValidationFixtures.test_duplicate_game_or_acquisition_cannot_cross_splits) ... ok
+2026-11-05T03:34:38.3867171Z test_entire_game_assigned_before_windows (test_legal_scan_dataset.SplitAndValidationFixtures.test_entire_game_assigned_before_windows) ... ok
+2026-11-05T03:34:38.3873241Z test_future_scan_nonfinite_bool_duplicate_json_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_future_scan_nonfinite_bool_duplicate_json_rejected) ... ok
+2026-11-05T03:34:38.3875565Z test_invalid_window_and_horizon_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_invalid_window_and_horizon_rejected) ... ok
+2026-11-05T03:34:38.3877944Z test_private_unknown_fields_are_not_silently_features (test_legal_scan_dataset.SplitAndValidationFixtures.test_private_unknown_fields_are_not_silently_features) ... ok
+2026-11-05T03:34:38.3880376Z test_same_tick_own_snapshot_consistency_and_arena_bounds (test_legal_scan_dataset.SplitAndValidationFixtures.test_same_tick_own_snapshot_consistency_and_arena_bounds) ... ok
+2026-11-05T03:34:38.3882614Z test_undeclared_game_and_injected_split_rejected (test_legal_scan_dataset.SplitAndValidationFixtures.test_undeclared_game_and_injected_split_rejected) ... ok
+2026-11-05T03:34:38.3884903Z test_descriptive_summary_keeps_skips_and_zero_duel_eligibility (test_melee_default_baseline.MeleeBaselineTests.test_descriptive_summary_keeps_skips_and_zero_duel_eligibility) ... ok
+2026-11-05T03:34:38.3925944Z test_exact_single_train_call_and_environment_cleanup_restoration (test_melee_default_baseline.MeleeBaselineTests.test_exact_single_train_call_and_environment_cleanup_restoration) ... ok
+2026-11-05T03:34:38.3978066Z test_all60_rows_three_cold_models_and_complete_four_bot_identities (test_melee_default_evidence.MeleeEvidenceTests.test_all60_rows_three_cold_models_and_complete_four_bot_identities) ... ok
+2026-11-05T03:34:38.3996844Z test_original_bytes_registration_and_descriptive_summary (test_melee_default_evidence.MeleeEvidenceTests.test_original_bytes_registration_and_descriptive_summary) ... ok
+2026-11-05T03:34:38.4009593Z test_original_artifact_hashes_population_and_no_confirmation (test_mixed_population_evidence.MixedPopulationEvidenceTests.test_original_artifact_hashes_population_and_no_confirmation) ... ok
+2026-11-05T03:34:44.7182648Z test_reproduce_development_only_with_frozen_weights (test_mixed_population_evidence.MixedPopulationEvidenceTests.test_reproduce_development_only_with_frozen_weights) ... ok
+2026-11-05T03:34:44.7328691Z test_fresh_layout_is_registered_disjoint_and_exact_budget (test_mixed_population_registration.MixedPopulationRegistrationTests.test_fresh_layout_is_registered_disjoint_and_exact_budget) ... ok
+2026-11-05T03:34:44.7413548Z test_only_original_three_sample_roles_and_dataset_id_change (test_mixed_population_registration.MixedPopulationRegistrationTests.test_only_original_three_sample_roles_and_dataset_id_change) ... ok
+2026-11-05T03:34:44.8158806Z test_original_corpus_and_capture_provenance_remain_exact (test_mixed_population_registration.MixedPopulationRegistrationTests.test_original_corpus_and_capture_provenance_remain_exact) ... ok
+2026-11-05T03:34:44.8290410Z test_original_scorer_and_all_feature_dependencies_are_unchanged (test_mixed_population_registration.MixedPopulationRegistrationTests.test_original_scorer_and_all_feature_dependencies_are_unchanged) ... ok
+2026-11-05T03:34:44.8291607Z test_cholesky_known_system (test_motion_forecast.ForecastTests.test_cholesky_known_system) ... ok
+2026-11-05T03:34:45.4397566Z test_cli_requires_frozen_hash_and_preserves_outputs (test_motion_forecast.ForecastTests.test_cli_requires_frozen_hash_and_preserves_outputs) ... ok
+2026-11-05T03:34:45.4400802Z test_confirmed_shot_dedup_and_intent_missingness (test_motion_forecast.ForecastTests.test_confirmed_shot_dedup_and_intent_missingness) ... ok
+2026-11-05T03:34:45.7286597Z test_fallback_is_frozen_baseline_and_missing_labels_count (test_motion_forecast.ForecastTests.test_fallback_is_frozen_baseline_and_missing_labels_count) ... ok
+2026-11-05T03:34:46.0158412Z test_heldout_values_cannot_change_fit_or_normalization (test_motion_forecast.ForecastTests.test_heldout_values_cannot_change_fit_or_normalization) ... ok
+2026-11-05T03:34:46.0237060Z test_labels_ids_do_not_enter_feature_vector (test_motion_forecast.ForecastTests.test_labels_ids_do_not_enter_feature_vector) ... ok
+2026-11-05T03:34:46.3232491Z test_missing_registered_games_are_inconclusive_not_dropped (test_motion_forecast.ForecastTests.test_missing_registered_games_are_inconclusive_not_dropped) ... ok
+2026-11-05T03:34:46.3235441Z test_scan_age_in_projection_and_final_wall_clamp (test_motion_forecast.ForecastTests.test_scan_age_in_projection_and_final_wall_clamp) ... ok
+2026-11-05T03:34:46.3250421Z test_unpenalized_intercept_and_constant_columns (test_motion_forecast.ForecastTests.test_unpenalized_intercept_and_constant_columns) ... ok
+2026-11-05T03:34:46.3253690Z test_unrounded_gate_boundary_and_coverage_veto (test_motion_forecast.ForecastTests.test_unrounded_gate_boundary_and_coverage_veto) ... ok
+2026-11-05T03:34:46.4603212Z test_zero_error_baseline_deterministic_dev_selection (test_motion_forecast.ForecastTests.test_zero_error_baseline_deterministic_dev_selection) ... ok
+2026-11-05T03:34:52.3464460Z test_frozen_development_counts_and_rejection_reproduce (test_nonlinear_gain_evidence.NonlinearGainEvidenceTests.test_frozen_development_counts_and_rejection_reproduce) ... ok
+2026-11-05T03:34:52.3474720Z test_original_bytes_and_fixed_tree_support (test_nonlinear_gain_evidence.NonlinearGainEvidenceTests.test_original_bytes_and_fixed_tree_support) ... ok
+2026-11-05T03:34:52.3476766Z test_creation_plus_one_and_first_seen_not_backfilled (test_own_wave_context_diagnostic.OwnWaveTests.test_creation_plus_one_and_first_seen_not_backfilled) ... ok
+2026-11-05T03:34:52.3481331Z test_dedup_first_seen_and_earliest_eligible_wave (test_own_wave_context_diagnostic.OwnWaveTests.test_dedup_first_seen_and_earliest_eligible_wave) ... ok
+2026-11-05T03:34:52.3483399Z test_exact_window_boundary_and_delayed_delivery (test_own_wave_context_diagnostic.OwnWaveTests.test_exact_window_boundary_and_delayed_delivery) ... ok
+2026-11-05T03:34:52.3487027Z test_future_records_spent_games_and_rounds_cannot_leak (test_own_wave_context_diagnostic.OwnWaveTests.test_future_records_spent_games_and_rounds_cannot_leak) ... ok
+2026-11-05T03:34:52.4814106Z test_complete_capture_original_bytes_and_per_game_boundaries (test_own_wave_evidence.OwnWaveEvidenceTests.test_complete_capture_original_bytes_and_per_game_boundaries) ... ok
+2026-11-05T03:34:52.4882158Z test_failed_attempt_is_preserved_as_invalid_and_unscored (test_own_wave_evidence.OwnWaveEvidenceTests.test_failed_attempt_is_preserved_as_invalid_and_unscored) ... ok
+2026-11-05T03:35:00.4929028Z test_frozen_report_reproduces_without_fitting (test_own_wave_evidence.OwnWaveEvidenceTests.test_frozen_report_reproduces_without_fitting) ... ok
+2026-11-05T03:35:00.4956578Z test_invalid_first_game_preserves_failure_and_never_calls_later_games (test_prism_screen.AcquisitionStopTest.test_invalid_first_game_preserves_failure_and_never_calls_later_games) ... ok
+2026-11-05T03:35:00.5081582Z test_poor_valid_scores_still_complete_every_registered_game (test_prism_screen.AcquisitionStopTest.test_poor_valid_scores_still_complete_every_registered_game) ... ok
+2026-11-05T03:35:00.5104477Z test_both_python_opponents_use_their_locked_source_paths (test_prism_screen.NativeStagingTest.test_both_python_opponents_use_their_locked_source_paths) ... ok
+2026-11-05T03:35:00.5111814Z test_pending_and_recorded_approval_states_are_both_supported (test_prism_screen.PlanSelectionTest.test_pending_and_recorded_approval_states_are_both_supported) ... ok
+2026-11-05T03:35:00.5114213Z test_v1_receipt_name_is_unchanged (test_prism_screen.PlanSelectionTest.test_v1_receipt_name_is_unchanged) ... ok
+2026-11-05T03:35:00.5119922Z test_v2_plan_has_its_own_receipt_seeds_and_approval_path (test_prism_screen.PlanSelectionTest.test_v2_plan_has_its_own_receipt_seeds_and_approval_path) ... ok
+2026-11-05T03:35:00.5121102Z test_all_gates_pass (test_prism_screen.PlanTest.test_all_gates_pass) ... ok
+2026-11-05T03:35:00.5122355Z test_any_invalid_game_rejects (test_prism_screen.PlanTest.test_any_invalid_game_rejects) ... ok
+2026-11-05T03:35:00.5123318Z test_plan_is_the_registered_budget (test_prism_screen.PlanTest.test_plan_is_the_registered_budget) ... ok
+2026-11-05T03:35:00.5124071Z test_share (test_prism_screen.PlanTest.test_share) ... ok
+2026-11-05T03:35:00.5128135Z test_share_thresholds (test_prism_screen.PlanTest.test_share_thresholds) ... ok
+2026-11-05T03:35:00.5131589Z test_skips_collisions_and_failures (test_prism_screen.PlanTest.test_skips_collisions_and_failures) ... ok
+2026-11-05T03:35:00.5134697Z test_approval_fields_are_the_only_exemption (test_prism_screen.ReceiptTest.test_approval_fields_are_the_only_exemption) ... ok
+2026-11-05T03:35:00.5139031Z test_approval_only_edit_of_the_plan_is_accepted (test_prism_screen.ReceiptTest.test_approval_only_edit_of_the_plan_is_accepted) ... ok
+2026-11-05T03:35:00.5158764Z test_changed_seat_opponent_rounds_freeze_or_receipt_is_rejected (test_prism_screen.ReceiptTest.test_changed_seat_opponent_rounds_freeze_or_receipt_is_rejected) ... ok
+2026-11-05T03:35:00.5165208Z test_exact_head_may_only_add_the_approval_record (test_prism_screen.ReceiptTest.test_exact_head_may_only_add_the_approval_record) ... ok
+2026-11-05T03:35:00.5167902Z test_receipt_is_tied_to_the_frozen_candidate (test_prism_screen.ReceiptTest.test_receipt_is_tied_to_the_frozen_candidate) ... ok
+2026-11-05T03:35:00.5173773Z test_receipt_of_another_run_or_head_is_rejected (test_prism_screen.ReceiptTest.test_receipt_of_another_run_or_head_is_rejected) ... ok
+2026-11-05T03:35:00.5177963Z test_reviewers_repro_changed_seed_and_id_is_rejected (test_prism_screen.ReceiptTest.test_reviewers_repro_changed_seed_and_id_is_rejected) ... ok
+2026-11-05T03:35:00.5183869Z test_second_dispatch_is_refused_before_any_game (test_prism_screen.ReceiptTest.test_second_dispatch_is_refused_before_any_game) ... ok
+2026-11-05T03:35:00.5186472Z test_unreadable_reviewed_plan_is_refused (test_prism_screen.ReceiptTest.test_unreadable_reviewed_plan_is_refused) ... ok
+2026-11-05T03:35:00.5191559Z test_unrecorded_or_mismatched_review_is_refused (test_prism_screen.ReceiptTest.test_unrecorded_or_mismatched_review_is_refused) ... ok
+2026-11-05T03:35:00.5224621Z test_every_preserved_file_hash (test_prism_screen_evidence.PrismEvidenceTest.test_every_preserved_file_hash) ... ok
+2026-11-05T03:35:00.5335377Z test_original_official_and_cumulative_evidence_reproduces_rejection (test_prism_screen_evidence.PrismEvidenceTest.test_original_official_and_cumulative_evidence_reproduces_rejection) ... ok
+2026-11-05T03:35:00.5379044Z test_every_preserved_file_hash (test_prism_v2_evidence.PrismV2EvidenceTest.test_every_preserved_file_hash) ... ok
+2026-11-05T03:35:00.5486747Z test_original_official_and_cumulative_evidence_reproduces_rejection (test_prism_v2_evidence.PrismV2EvidenceTest.test_original_official_and_cumulative_evidence_reproduces_rejection) ... ok
+2026-11-05T03:35:00.5489319Z test_decision_distinguishes_effect_neutral_and_regression (test_reliability_experiment.ReliabilityExperimentTests.test_decision_distinguishes_effect_neutral_and_regression) ... ok
+2026-11-05T03:35:00.5491169Z test_summary_counts_games_with_skips_and_latency (test_reliability_experiment.ReliabilityExperimentTests.test_summary_counts_games_with_skips_and_latency) ... ok
+2026-11-05T03:35:00.6349439Z test1260_cold_rows_66_finite_endpoints_and_60_native_exports (test_replay_parity_redo_evidence.ReplayRedoEvidenceTests.test1260_cold_rows_66_finite_endpoints_and_60_native_exports) ... ok
+2026-11-05T03:35:00.6511696Z test_all_preserved_bytes_and_exact_noninferiority_rules (test_replay_parity_redo_evidence.ReplayRedoEvidenceTests.test_all_preserved_bytes_and_exact_noninferiority_rules) ... ok
+2026-11-05T03:35:00.6513716Z test_lock_only_contains_retcon_sources_and_declared_license (test_retcon.RetconTests.test_lock_only_contains_retcon_sources_and_declared_license) ... ok
+2026-11-05T03:35:00.6515721Z test_rejects_source_traversal_and_absolute_paths (test_retcon.RetconTests.test_rejects_source_traversal_and_absolute_paths) ... ok
+2026-11-05T03:35:00.6528461Z test_source_hash_matches_catalog_algorithm_and_detects_extra_files (test_retcon.RetconTests.test_source_hash_matches_catalog_algorithm_and_detects_extra_files) ... ok
+2026-11-05T03:35:00.6544319Z test_wrong_source_bytes_fail_before_dependency_download (test_retcon.RetconTests.test_wrong_source_bytes_fail_before_dependency_download) ... ok
+2026-11-05T03:35:00.6548325Z test_aggregation_counts_each_game_final_snapshot_once (test_retcon_stats.RetconStatsTests.test_aggregation_counts_each_game_final_snapshot_once) ... ok
+2026-11-05T03:35:00.6570295Z test_cleanup_refuses_replaced_owner_and_unexpected_directory (test_retcon_stats.RetconStatsTests.test_cleanup_refuses_replaced_owner_and_unexpected_directory) ... ok
+2026-11-05T03:35:00.6584491Z test_complete_export_preserves_raw_and_normalizes_actual_virtual_separately (test_retcon_stats.RetconStatsTests.test_complete_export_preserves_raw_and_normalizes_actual_virtual_separately) ... ok
+2026-11-05T03:35:00.6624868Z test_existing_namespace_caller_captures_without_new_cli_attribute (test_retcon_stats.RetconStatsTests.test_existing_namespace_caller_captures_without_new_cli_attribute) ... ok
+2026-11-05T03:35:00.6630163Z test_java_temp_root_comes_from_selected_jvm (test_retcon_stats.RetconStatsTests.test_java_temp_root_comes_from_selected_jvm) ... ok
+2026-11-05T03:35:00.6731560Z test_malformed_identity_and_counter_data_fail_strict_capture (test_retcon_stats.RetconStatsTests.test_malformed_identity_and_counter_data_fail_strict_capture) ... ok
+2026-11-05T03:35:00.6756547Z test_missing_and_partial_are_not_silent_zero_measurements (test_retcon_stats.RetconStatsTests.test_missing_and_partial_are_not_silent_zero_measurements) ... ok
+2026-11-05T03:35:00.6778655Z test_multiple_game_files_and_wrong_filename_identity_are_rejected (test_retcon_stats.RetconStatsTests.test_multiple_game_files_and_wrong_filename_identity_are_rejected) ... ok
+2026-11-05T03:35:00.6789871Z test_retained_cohorts_preserve_original_native_hashes_and_ubuntu_provenance (test_retcon_stats.RetconStatsTests.test_retained_cohorts_preserve_original_native_hashes_and_ubuntu_provenance) ... ok
+2026-11-05T03:35:00.6799632Z test_unique_direct_java_temp_children_and_owned_cleanup (test_retcon_stats.RetconStatsTests.test_unique_direct_java_temp_children_and_owned_cleanup) ... ok
+2026-11-05T03:35:00.6855039Z test_all60_raw_rows_three_cold_models_four_identities_and_native_captures (test_strong_melee_evidence.StrongMeleeEvidenceTests.test_all60_raw_rows_three_cold_models_four_identities_and_native_captures) ... ok
+2026-11-05T03:35:00.6893293Z test_original_bytes_negative_summary_and_zero_game_failure (test_strong_melee_evidence.StrongMeleeEvidenceTests.test_original_bytes_negative_summary_and_zero_game_failure) ... ok
+2026-11-05T03:35:00.6914759Z test_fresh_shared_core_license_and_clean_configuration (test_strong_melee_opponents.NativeOpponentTests.test_fresh_shared_core_license_and_clean_configuration) ... ok
+2026-11-05T03:35:00.6919058Z test_lock_and_dependency_closure_are_exact_and_runtime_only (test_strong_melee_opponents.NativeOpponentTests.test_lock_and_dependency_closure_are_exact_and_runtime_only) ... ok
+2026-11-05T03:35:00.6943872Z test_prepare_materializes_absent_empty_package_file (test_strong_opponent_empty_files.EmptyPinnedFileTest.test_prepare_materializes_absent_empty_package_file) ... ok
+2026-11-05T03:35:00.6955437Z test_accepted_recording_provenance_and_known_firing_quirk_remain_frozen (test_targeting_characterization.TargetingRecordingTests.test_accepted_recording_provenance_and_known_firing_quirk_remain_frozen) ... ok
+2026-11-05T03:35:00.6966818Z test_registered_five_round_compatibility_reproduces_raw_evidence (test_targeting_sanity_evidence.TargetingSanityEvidenceTests.test_registered_five_round_compatibility_reproduces_raw_evidence) ... ok
+2026-11-05T03:35:00.6980984Z test_fresh_site_export_rebuilds_prior_rounds_from_canonical_reports (test_tournament.TournamentRulesTest.test_fresh_site_export_rebuilds_prior_rounds_from_canonical_reports) ... ok
+2026-11-05T03:35:00.6987246Z test_frozen_inputs_reject_changes_without_overwriting_evidence (test_tournament.TournamentRulesTest.test_frozen_inputs_reject_changes_without_overwriting_evidence) ... ok
+2026-11-05T03:35:00.6998256Z test_known_replay_exception_requires_all_and_only_known_failures (test_tournament.TournamentRulesTest.test_known_replay_exception_requires_all_and_only_known_failures) ... ok
+2026-11-05T03:35:00.7002756Z test_later_export_without_canonical_history_fails_before_writing (test_tournament.TournamentRulesTest.test_later_export_without_canonical_history_fails_before_writing) ... ok
+2026-11-05T03:35:00.7006701Z test_next_round_requires_a_complete_previous_round (test_tournament.TournamentRulesTest.test_next_round_requires_a_complete_previous_round) ... ok
+2026-11-05T03:35:00.7008837Z test_opening_draw_covers_each_bot_once (test_tournament.TournamentRulesTest.test_opening_draw_covers_each_bot_once) ... ok
+2026-11-05T03:35:00.7010534Z test_public_export_drops_artifacts_and_unexpected_result_fields (test_tournament.TournamentRulesTest.test_public_export_drops_artifacts_and_unexpected_result_fields) ... ok
+2026-11-05T03:35:00.7023980Z test_repeated_site_export_does_not_double_award_points (test_tournament.TournamentRulesTest.test_repeated_site_export_does_not_double_award_points) ... ok
+2026-11-05T03:35:00.7092238Z test_round_two_has_no_rematches_and_minimum_point_gap (test_tournament.TournamentRulesTest.test_round_two_has_no_rematches_and_minimum_point_gap) ... ok
+2026-11-05T03:35:00.7094844Z test_standings_use_current_opponent_points_and_mean_share (test_tournament.TournamentRulesTest.test_standings_use_current_opponent_points_and_mean_share) ... ok
+2026-11-05T03:35:00.7096310Z 
+2026-11-05T03:35:00.7096690Z ----------------------------------------------------------------------
+2026-11-05T03:35:00.7097603Z Ran 485 tests in 39.175s
+2026-11-05T03:35:00.7098214Z 
+2026-11-05T03:35:00.7098416Z OK
+2026-11-05T03:35:00.7098865Z reject
+2026-11-05T03:35:00.7099304Z reject
+2026-11-05T03:35:00.7526709Z ##[group]Run actions/setup-java@v4
+2026-11-05T03:35:00.7527031Z with:
+2026-11-05T03:35:00.7527253Z   distribution: temurin
+2026-11-05T03:35:00.7527513Z   java-version: 25
+2026-11-05T03:35:00.7528068Z   java-package: jdk
+2026-11-05T03:35:00.7528325Z   check-latest: false
+2026-11-05T03:35:00.7528590Z   server-id: github
+2026-11-05T03:35:00.7528828Z   server-username: GITHUB_ACTOR
+2026-11-05T03:35:00.7529117Z   server-password: GITHUB_TOKEN
+2026-11-05T03:35:00.7529398Z   overwrite-settings: true
+2026-11-05T03:35:00.7529663Z   job-status: success
+2026-11-05T03:35:00.7532197Z   token: ***
+2026-11-05T03:35:00.7532423Z env:
+2026-11-05T03:35:00.7532719Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.7533173Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:35:00.7533635Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.7534053Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.7534536Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.7534966Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:35:00.7535423Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:35:00.7535939Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:35:00.7536384Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T03:35:00.7536717Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T03:35:00.7537035Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T03:35:00.7537354Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T03:35:00.7537957Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T03:35:00.7538467Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T03:35:00.7538810Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T03:35:00.7539104Z ##[endgroup]
+2026-11-05T03:35:00.9243749Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-05T03:35:00.9245897Z ##[group]Installed distributions
+2026-11-05T03:35:00.9290327Z Resolved Java 25.0.5+8 from tool-cache
+2026-11-05T03:35:00.9290953Z Setting Java 25.0.5+8 as the default
+2026-11-05T03:35:00.9301530Z (node:2774) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:35:00.9302444Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:35:00.9304955Z Creating toolchains.xml for JDK version 25 from temurin
+2026-11-05T03:35:00.9465950Z Overwriting existing file /home/runner/.m2/toolchains.xml
+2026-11-05T03:35:00.9468242Z 
+2026-11-05T03:35:00.9468480Z Java configuration:
+2026-11-05T03:35:00.9469284Z   Distribution: temurin
+2026-11-05T03:35:00.9469641Z   Version: 25.0.5+8
+2026-11-05T03:35:00.9470134Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:00.9470462Z 
+2026-11-05T03:35:00.9470791Z ##[endgroup]
+2026-11-05T03:35:00.9473931Z Creating settings.xml with server-id: github
+2026-11-05T03:35:00.9498788Z Overwriting existing file /home/runner/.m2/settings.xml
+2026-11-05T03:35:00.9670607Z ##[group]Run if [ "$FULL" = "true" ]; then
+2026-11-05T03:35:00.9671178Z [36;1mif [ "$FULL" = "true" ]; then[0m
+2026-11-05T03:35:00.9671993Z [36;1m  python tools/benchmark.py --suite retcon --java "$JAVA_HOME/bin/java" --rounds 5 --training-rounds 20 --timeout 900 --require-metrics --require-retcon-stats --output build/retcon[0m
+2026-11-05T03:35:00.9672774Z [36;1melse[0m
+2026-11-05T03:35:00.9673405Z [36;1m  python tools/benchmark.py --suite retcon --smoke --java "$JAVA_HOME/bin/java" --timeout 180 --require-metrics --require-retcon-stats --output build/retcon[0m
+2026-11-05T03:35:00.9674088Z [36;1mfi[0m
+2026-11-05T03:35:00.9707883Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:35:00.9708182Z env:
+2026-11-05T03:35:00.9708481Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.9708960Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:35:00.9709419Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.9709863Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.9710292Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:00.9710705Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:35:00.9711174Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:00.9711682Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:35:00.9712127Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T03:35:00.9712461Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T03:35:00.9712781Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T03:35:00.9713101Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T03:35:00.9713574Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T03:35:00.9714086Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T03:35:00.9714445Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T03:35:00.9714878Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:00.9715302Z   FULL: false
+2026-11-05T03:35:00.9715520Z ##[endgroup]
+2026-11-05T03:35:16.0016932Z Retcon untrained: rank=2 score=18
+2026-11-05T03:35:16.0226019Z ##[group]Run python - <<'PY'
+2026-11-05T03:35:16.0226393Z [36;1mpython - <<'PY'[0m
+2026-11-05T03:35:16.0226679Z [36;1mfrom pathlib import Path[0m
+2026-11-05T03:35:16.0227028Z [36;1mevidence = Path('build/retcon/results.json')[0m
+2026-11-05T03:35:16.0227380Z [36;1mif evidence.exists():[0m
+2026-11-05T03:35:16.0227673Z [36;1m    print('RETCON_JSON_BEGIN')[0m
+2026-11-05T03:35:16.0228284Z [36;1m    print(evidence.read_text())[0m
+2026-11-05T03:35:16.0228597Z [36;1m    print('RETCON_JSON_END')[0m
+2026-11-05T03:35:16.0228955Z [36;1mfor log in Path('build/retcon').glob('*/runner.log'):[0m
+2026-11-05T03:35:16.0229348Z [36;1m    print(f'RUNNER_LOG_TAIL {log}')[0m
+2026-11-05T03:35:16.0229770Z [36;1m    print('\n'.join(log.read_text(errors='replace').splitlines()[-30:]))[0m
+2026-11-05T03:35:16.0230274Z [36;1mdiagnostic = Path('build/retcon-observability/results.json')[0m
+2026-11-05T03:35:16.0230699Z [36;1mif diagnostic.exists():[0m
+2026-11-05T03:35:16.0231054Z [36;1m    print('RETCON_OBSERVABILITY_JSON_BEGIN')[0m
+2026-11-05T03:35:16.0231397Z [36;1m    print(diagnostic.read_text())[0m
+2026-11-05T03:35:16.0231736Z [36;1m    print('RETCON_OBSERVABILITY_JSON_END')[0m
+2026-11-05T03:35:16.0232051Z [36;1mPY[0m
+2026-11-05T03:35:16.0262706Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:35:16.0262986Z env:
+2026-11-05T03:35:16.0263293Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0263779Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:35:16.0264241Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0264656Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0265083Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0265498Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:35:16.0266156Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:16.0266668Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:35:16.0267120Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T03:35:16.0267454Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T03:35:16.0268019Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T03:35:16.0268378Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T03:35:16.0268840Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T03:35:16.0269354Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T03:35:16.0269701Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T03:35:16.0270113Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:16.0270517Z ##[endgroup]
+2026-11-05T03:35:16.0530920Z RETCON_JSON_BEGIN
+2026-11-05T03:35:16.0531435Z {
+2026-11-05T03:35:16.0531838Z   "schemaVersion": 1,
+2026-11-05T03:35:16.0532326Z   "tankRoyaleVersion": "1.4.0",
+2026-11-05T03:35:16.0533017Z   "sourceCommit": "818ca64a609463b7a2aa5241cce8f9e0bd68b5bf",
+2026-11-05T03:35:16.0533678Z   "seed": 20261102,
+2026-11-05T03:35:16.0534102Z   "suite": "retcon",
+2026-11-05T03:35:16.0535539Z   "runtimeJava": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)",
+2026-11-05T03:35:16.0537039Z   "runtimeOS": {
+2026-11-05T03:35:16.0537448Z     "system": "Linux",
+2026-11-05T03:35:16.0538089Z     "release": "7.0.0-1017-azure",
+2026-11-05T03:35:16.0538565Z     "machine": "x86_64",
+2026-11-05T03:35:16.0539013Z     "osRelease": {
+2026-11-05T03:35:16.0539403Z       "NAME": "Ubuntu",
+2026-11-05T03:35:16.0539841Z       "ID": "ubuntu",
+2026-11-05T03:35:16.0540319Z       "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+2026-11-05T03:35:16.0540882Z       "VERSION_ID": "26.04",
+2026-11-05T03:35:16.0541435Z       "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+2026-11-05T03:35:16.0542048Z       "VERSION_CODENAME": "resolute",
+2026-11-05T03:35:16.0542866Z       "ID_LIKE": "debian",
+2026-11-05T03:35:16.0543400Z       "HOME_URL": "https://www.ubuntu.com/",
+2026-11-05T03:35:16.0544017Z       "SUPPORT_URL": "https://help.ubuntu.com/",
+2026-11-05T03:35:16.0544710Z       "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+2026-11-05T03:35:16.0545661Z       "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+2026-11-05T03:35:16.0546548Z       "UBUNTU_CODENAME": "resolute",
+2026-11-05T03:35:16.0547090Z       "LOGO": "ubuntu-logo"
+2026-11-05T03:35:16.0547507Z     }
+2026-11-05T03:35:16.0548032Z   },
+2026-11-05T03:35:16.0548400Z   "opponentProvenance": [
+2026-11-05T03:35:16.0548849Z     {
+2026-11-05T03:35:16.0549223Z       "name": "Retcon",
+2026-11-05T03:35:16.0549669Z       "version": "0.2.0",
+2026-11-05T03:35:16.0550185Z       "repository": "robocode-dev/rumble-bots",
+2026-11-05T03:35:16.0550857Z       "commit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+2026-11-05T03:35:16.0551499Z       "sourcePath": "bots/java/Retcon",
+2026-11-05T03:35:16.0552326Z       "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+2026-11-05T03:35:16.0553164Z       "license": "MIT",
+2026-11-05T03:35:16.0553599Z       "authors": [
+2026-11-05T03:35:16.0554015Z         "Flemming N. Larsen"
+2026-11-05T03:35:16.0554463Z       ],
+2026-11-05T03:35:16.0554818Z       "botApi": {
+2026-11-05T03:35:16.0555242Z         "version": "1.3.1",
+2026-11-05T03:35:16.0555958Z         "sha256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+2026-11-05T03:35:16.0557513Z         "url": "https://repo.maven.apache.org/maven2/dev/robocode/tankroyale/robocode-tankroyale-bot-api/1.3.1/robocode-tankroyale-bot-api-1.3.1.jar"
+2026-11-05T03:35:16.0558918Z       }
+2026-11-05T03:35:16.0559268Z     }
+2026-11-05T03:35:16.0559621Z   ],
+2026-11-05T03:35:16.0560675Z   "evaluationScope": "in-roster adaptation; training and evaluation use the same opponent identities",
+2026-11-05T03:35:16.0561600Z   "trainingRounds": 0,
+2026-11-05T03:35:16.0562329Z   "botJarSHA256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+2026-11-05T03:35:16.0563129Z   "assetSHA256": {
+2026-11-05T03:35:16.0563995Z     "robocode-tankroyale-runner-1.4.0.jar": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+2026-11-05T03:35:16.0565347Z     "sample-bots-Java-1.4.0.zip": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2"
+2026-11-05T03:35:16.0566205Z   },
+2026-11-05T03:35:16.0569188Z   "limitations": "Reference experiment, not evidence that learning improves strength. AISurvivor RNG is seeded; opponent randomness, arena starting positions, and engine scheduling are not seeded. Training and evaluation use the same roster, so this is in-roster adaptation rather than held-out generalization. Short samples have high uncertainty; repeat with larger budgets and multiple seeds before drawing strength conclusions.",
+2026-11-05T03:35:16.0572113Z   "battles": [
+2026-11-05T03:35:16.0572494Z     {
+2026-11-05T03:35:16.0572865Z       "scenario": "Retcon",
+2026-11-05T03:35:16.0573332Z       "policy": "untrained",
+2026-11-05T03:35:16.0573786Z       "rounds": 1,
+2026-11-05T03:35:16.0574168Z       "id": 1,
+2026-11-05T03:35:16.0574557Z       "name": "AISurvivor",
+2026-11-05T03:35:16.0575001Z       "version": "1.2.1",
+2026-11-05T03:35:16.0575425Z       "rank": 2,
+2026-11-05T03:35:16.0575766Z       "totalScore": 18,
+2026-11-05T03:35:16.0576015Z       "survival": 0,
+2026-11-05T03:35:16.0576257Z       "bulletDamage": 17,
+2026-11-05T03:35:16.0576508Z       "firstPlaces": 0,
+2026-11-05T03:35:16.0576746Z       "metrics": {
+2026-11-05T03:35:16.0576975Z         "turns": 270,
+2026-11-05T03:35:16.0577217Z         "shotsFired": 17,
+2026-11-05T03:35:16.0577463Z         "bulletHits": 3,
+2026-11-05T03:35:16.0577956Z         "damageDealt": 16.866533,
+2026-11-05T03:35:16.0578658Z         "damageTaken": 82.4,
+2026-11-05T03:35:16.0579141Z         "wallCollisions": 0,
+2026-11-05T03:35:16.0579620Z         "botCollisions": 1,
+2026-11-05T03:35:16.0580115Z         "skippedTurns": 0,
+2026-11-05T03:35:16.0580445Z         "hitRate": 0.17647058823529413,
+2026-11-05T03:35:16.0580751Z         "roundsRecorded": 1,
+2026-11-05T03:35:16.0581034Z         "checkpointLoaded": false
+2026-11-05T03:35:16.0581310Z       },
+2026-11-05T03:35:16.0581516Z       "results": [
+2026-11-05T03:35:16.0581741Z         {
+2026-11-05T03:35:16.0581949Z           "id": 2,
+2026-11-05T03:35:16.0582180Z           "name": "Retcon",
+2026-11-05T03:35:16.0582444Z           "version": "0.2.0",
+2026-11-05T03:35:16.0582701Z           "rank": 1,
+2026-11-05T03:35:16.0582947Z           "totalScore": 159,
+2026-11-05T03:35:16.0583214Z           "survival": 50,
+2026-11-05T03:35:16.0583473Z           "bulletDamage": 82,
+2026-11-05T03:35:16.0583743Z           "firstPlaces": 1
+2026-11-05T03:35:16.0583985Z         },
+2026-11-05T03:35:16.0584226Z         {
+2026-11-05T03:35:16.0584431Z           "id": 1,
+2026-11-05T03:35:16.0584665Z           "name": "AISurvivor",
+2026-11-05T03:35:16.0584941Z           "version": "1.2.1",
+2026-11-05T03:35:16.0585198Z           "rank": 2,
+2026-11-05T03:35:16.0585441Z           "totalScore": 18,
+2026-11-05T03:35:16.0585701Z           "survival": 0,
+2026-11-05T03:35:16.0585951Z           "bulletDamage": 17,
+2026-11-05T03:35:16.0586256Z           "firstPlaces": 0
+2026-11-05T03:35:16.0586504Z         }
+2026-11-05T03:35:16.0586709Z       ],
+2026-11-05T03:35:16.0586921Z       "retconStats": {
+2026-11-05T03:35:16.0587285Z         "schemaVersion": 1,
+2026-11-05T03:35:16.0587555Z         "status": "complete",
+2026-11-05T03:35:16.0587974Z         "expectedRounds": 1,
+2026-11-05T03:35:16.0588373Z         "bot": "Retcon",
+2026-11-05T03:35:16.0588643Z         "version": "0.2.0",
+2026-11-05T03:35:16.0589248Z         "sourceCommit": "28981c7a469ac064194b41001cd7183ec5ecf189",
+2026-11-05T03:35:16.0590114Z         "sourceSHA256": "5f7dfaaedefc39bd93d86440a2996342583d57b75b861942dc1e1899b7164bb2",
+2026-11-05T03:35:16.0590774Z         "rawArtifacts": [
+2026-11-05T03:35:16.0591028Z           {
+2026-11-05T03:35:16.0591285Z             "path": "Retcon-2-159519541245.json",
+2026-11-05T03:35:16.0591754Z             "sha256": "9fffbb49c809cb6649b8003605c63ef9096a8a5b5a8bb3914c5332cbc3c0c38c"
+2026-11-05T03:35:16.0592202Z           }
+2026-11-05T03:35:16.0592409Z         ],
+2026-11-05T03:35:16.0592626Z         "actualGun": {
+2026-11-05T03:35:16.0592870Z           "shots": 15,
+2026-11-05T03:35:16.0593106Z           "hits": 8,
+2026-11-05T03:35:16.0593349Z           "hitRate": 0.5333333333333333
+2026-11-05T03:35:16.0621435Z         },
+2026-11-05T03:35:16.0621853Z         "virtualGuns": [
+2026-11-05T03:35:16.0622381Z           {
+2026-11-05T03:35:16.0622777Z             "model": "LinearAimModel",
+2026-11-05T03:35:16.0623256Z             "hits": 7,
+2026-11-05T03:35:16.0623643Z             "shots": 14,
+2026-11-05T03:35:16.0624034Z             "hitRate": 0.5
+2026-11-05T03:35:16.0624432Z           },
+2026-11-05T03:35:16.0624843Z           {
+2026-11-05T03:35:16.0625237Z             "model": "HeadOnAimModel",
+2026-11-05T03:35:16.0625752Z             "hits": 2,
+2026-11-05T03:35:16.0626180Z             "shots": 14,
+2026-11-05T03:35:16.0626645Z             "hitRate": 0.14285714285714285
+2026-11-05T03:35:16.0627149Z           }
+2026-11-05T03:35:16.0627518Z         ],
+2026-11-05T03:35:16.0628161Z         "data": {
+2026-11-05T03:35:16.0628576Z           "bot": "Retcon",
+2026-11-05T03:35:16.0629028Z           "botId": 2,
+2026-11-05T03:35:16.0629468Z           "roundsRecorded": 1,
+2026-11-05T03:35:16.0629989Z           "turnTimeoutMicros": 100000,
+2026-11-05T03:35:16.0630548Z           "computeBudgetMicros": 16666,
+2026-11-05T03:35:16.0631048Z           "turns": 270,
+2026-11-05T03:35:16.0631342Z           "computeP50Micros": 60,
+2026-11-05T03:35:16.0631647Z           "computeP99Micros": 680,
+2026-11-05T03:35:16.0631953Z           "computeMaxMicros": 13508,
+2026-11-05T03:35:16.0632281Z           "overBudgetTurns": 0,
+2026-11-05T03:35:16.0632587Z           "skippedTurns": 0,
+2026-11-05T03:35:16.0633070Z           "skippedPerRound": [
+2026-11-05T03:35:16.0633347Z             0,
+2026-11-05T03:35:16.0633575Z             0
+2026-11-05T03:35:16.0633799Z           ],
+2026-11-05T03:35:16.0634040Z           "skippedTurnList": "",
+2026-11-05T03:35:16.0634685Z           "computeHistogram10us": "20:1,30:42,40:42,50:52,60:35,70:34,80:18,90:8,100:9,110:2,120:1,130:6,140:4,150:1,160:2,170:1,180:1,190:1,200:2,230:1,260:1,310:1,340:1,360:1,670:1,1290:1,13500:1",
+2026-11-05T03:35:16.0635322Z           "timing": {
+2026-11-05T03:35:16.0635572Z             "firesChecked": 15,
+2026-11-05T03:35:16.0635862Z             "firesNotCreated": 0,
+2026-11-05T03:35:16.0636172Z             "createdTurnMatches": 15,
+2026-11-05T03:35:16.0636484Z             "originMatches": 15,
+2026-11-05T03:35:16.0636792Z             "originMatchesAfterFirstMove": 0,
+2026-11-05T03:35:16.0637117Z             "headingMatches": 15,
+2026-11-05T03:35:16.0637419Z             "stillHitsChecked": 0,
+2026-11-05T03:35:16.0637996Z             "stillHitMatches": 0,
+2026-11-05T03:35:16.0638430Z             "hitsOnMovingTargets": 8,
+2026-11-05T03:35:16.0638734Z             "mismatches": ""
+2026-11-05T03:35:16.0638989Z           },
+2026-11-05T03:35:16.0639216Z           "waves": {
+2026-11-05T03:35:16.0639467Z             "firesDetected": 17,
+2026-11-05T03:35:16.0639753Z             "unanchoredShots": 0,
+2026-11-05T03:35:16.0640031Z             "hitsTaken": 3,
+2026-11-05T03:35:16.0640293Z             "hitsOnWave": 3,
+2026-11-05T03:35:16.0640578Z             "wavePowerCorrected": 0,
+2026-11-05T03:35:16.0640878Z             "waveHitsExact": 3,
+2026-11-05T03:35:16.0641172Z             "waveHitsOffByOneStep": 0,
+2026-11-05T03:35:16.0641488Z             "waveHitsOtherResidual": 0,
+2026-11-05T03:35:16.0641793Z             "waveMismatches": ""
+2026-11-05T03:35:16.0642065Z           },
+2026-11-05T03:35:16.0642294Z           "movement": {
+2026-11-05T03:35:16.0642731Z             "moveTurnsChecked": 268,
+2026-11-05T03:35:16.0643022Z             "moveMatches": 268,
+2026-11-05T03:35:16.0643304Z             "moveWallHitsChecked": 0,
+2026-11-05T03:35:16.0643603Z             "moveNotChecked": 1,
+2026-11-05T03:35:16.0643882Z             "moveMismatches": ""
+2026-11-05T03:35:16.0644147Z           },
+2026-11-05T03:35:16.0644368Z           "gun": {
+2026-11-05T03:35:16.0644607Z             "bulletsFired": 15,
+2026-11-05T03:35:16.0644885Z             "bulletHits": 8,
+2026-11-05T03:35:16.0645234Z             "virtualGuns": "LinearAimModel:7/14 HeadOnAimModel:2/14"
+2026-11-05T03:35:16.0645608Z           }
+2026-11-05T03:35:16.0645818Z         }
+2026-11-05T03:35:16.0646028Z       },
+2026-11-05T03:35:16.0646263Z       "modelSHA256": null
+2026-11-05T03:35:16.0646515Z     }
+2026-11-05T03:35:16.0646723Z   ]
+2026-11-05T03:35:16.0646928Z }
+2026-11-05T03:35:16.0647040Z 
+2026-11-05T03:35:16.0647143Z RETCON_JSON_END
+2026-11-05T03:35:16.0647465Z RUNNER_LOG_TAIL build/retcon/Retcon-untrained/runner.log
+2026-11-05T03:35:16.0648273Z Nov 05, 2026 3:35:06 AM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+2026-11-05T03:35:16.0648749Z INFO: Starting battle: rounds=1, bots=2
+2026-11-05T03:35:16.0649195Z Nov 05, 2026 3:35:07 AM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+2026-11-05T03:35:16.0649628Z INFO: Booting bots...
+2026-11-05T03:35:16.0650021Z Nov 05, 2026 3:35:12 AM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+2026-11-05T03:35:16.0650457Z INFO: Starting game...
+2026-11-05T03:35:16.0650842Z Nov 05, 2026 3:35:12 AM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync
+2026-11-05T03:35:16.0651289Z INFO: Battle started successfully
+2026-11-05T03:35:16.0651777Z Nov 05, 2026 3:35:14 AM dev.robocode.tankroyale.runner.BattleRunner startBattleAsync$lambda$6
+2026-11-05T03:35:16.0652270Z INFO: Battle finished, cleaning up...
+2026-11-05T03:35:16.0718267Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T03:35:16.0718622Z with:
+2026-11-05T03:35:16.0718858Z   name: retcon-results
+2026-11-05T03:35:16.0720542Z   path: build/retcon/results.json
+build/retcon/results.csv
+build/retcon/dashboard.html
+build/retcon/*/battle.json
+build/retcon/*/metrics.jsonl
+build/retcon/*/runner.log
+build/retcon/*/retcon-stats/**
+build/retcon-observability/results.json
+build/retcon-observability/block-*/*/battle.json
+build/retcon-observability/block-*/*/metrics.jsonl
+build/retcon-observability/block-*/*/runner.log
+build/retcon-observability/block-*/*/retcon-stats/**
+
+2026-11-05T03:35:16.0722237Z   if-no-files-found: warn
+2026-11-05T03:35:16.0722510Z   compression-level: 6
+2026-11-05T03:35:16.0722762Z   overwrite: false
+2026-11-05T03:35:16.0723015Z   include-hidden-files: false
+2026-11-05T03:35:16.0723287Z env:
+2026-11-05T03:35:16.0723569Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0724073Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-11-05T03:35:16.0724531Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0724946Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0725365Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-11-05T03:35:16.0725788Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-11-05T03:35:16.0726256Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:16.0726777Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:35:16.0727228Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-11-05T03:35:16.0727573Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-11-05T03:35:16.0728092Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-11-05T03:35:16.0728426Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-11-05T03:35:16.0728900Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-11-05T03:35:16.0729421Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-11-05T03:35:16.0729780Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-11-05T03:35:16.0730365Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.5-8/x64
+2026-11-05T03:35:16.0730776Z ##[endgroup]
+2026-11-05T03:35:16.2508705Z (node:3058) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:35:16.2510299Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:35:16.2694676Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-05T03:35:16.2697482Z The least common ancestor is /home/runner/work/robocode/robocode/build. This will be the root directory of the artifact
+2026-11-05T03:35:16.2699000Z With the provided path, there will be 8 files uploaded
+2026-11-05T03:35:16.2704512Z Artifact name is valid!
+2026-11-05T03:35:16.2705264Z Root directory input is valid!
+2026-11-05T03:35:16.4771493Z Beginning upload of artifact content to blob storage
+2026-11-05T03:35:16.5101701Z (node:3058) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T03:35:16.5359627Z Uploaded bytes 7097
+2026-11-05T03:35:16.5494717Z Finished uploading artifact content to blob storage!
+2026-11-05T03:35:16.5495802Z SHA256 digest of uploaded artifact zip is 2afec5c7aeac09b6a9601dcaed5b443c7c1b2aa47a87ddf6ea803211e545406d
+2026-11-05T03:35:16.5498099Z Finalizing artifact upload
+2026-11-05T03:35:16.9627179Z Artifact retcon-results.zip successfully finalized. Artifact ID 13385374817
+2026-11-05T03:35:16.9628650Z Artifact retcon-results has been successfully uploaded! Final size is 7097 bytes. Artifact ID is 13385374817
+2026-11-05T03:35:16.9636667Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41962290605/artifacts/13385374817
+2026-11-05T03:35:16.9863538Z Post job cleanup.
+2026-11-05T03:35:17.1291944Z (node:3071) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:35:17.1292907Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:35:17.1508414Z Post job cleanup.
+2026-11-05T03:35:17.4112347Z In post-action step
+2026-11-05T03:35:17.4124196Z Cache is read-only: will not save state for use in subsequent builds.
+2026-11-05T03:35:17.4131427Z Generating Job Summary
+2026-11-05T03:35:17.4153724Z Completed post-action step
+2026-11-05T03:35:17.4370500Z Post job cleanup.
+2026-11-05T03:35:17.5833045Z (node:3091) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:35:17.5834004Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:35:17.6049119Z Post job cleanup.
+2026-11-05T03:35:17.7290071Z (node:3099) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:35:17.7291366Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:35:17.7539278Z Post job cleanup.
+2026-11-05T03:35:17.8455131Z [command]/usr/bin/git version
+2026-11-05T03:35:17.8505912Z git version 2.56.0
+2026-11-05T03:35:17.8552008Z Temporarily overriding HOME='/home/runner/work/_temp/ac2f5ad5-2119-48dd-bf0a-cfd85f83458e' before making global git config changes
+2026-11-05T03:35:17.8553431Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:35:17.8558784Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:35:17.8601893Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:35:17.8639757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:35:17.8976961Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:35:17.9005180Z http.https://github.com/.extraheader
+2026-11-05T03:35:17.9020706Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-05T03:35:17.9064311Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:35:17.9411828Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:35:17.9449938Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:35:17.9936856Z Cleaning up orphan processes
+2026-11-05T03:35:18.0300522Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

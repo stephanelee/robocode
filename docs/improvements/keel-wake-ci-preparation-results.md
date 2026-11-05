@@ -1,0 +1,21 @@
+# KeelWake preparation: three unintended production CI rounds
+
+Opening [PR119](https://github.com/stephanelee/robocode/pull/119) at registration `48bd8e343b9ef017b35aa9b8103adc2825f87c02` triggered three inherited engine jobs whose branch exclusions omitted Wake. This was a preparation policy failure. Root missed the exclusions. Exactly **3 games / 3 physical rounds** completed: unchanged AISurvivor versus Target, unchanged AISurvivor versus Retcon, and Alpha/Beta stationary probes. Neither KeelWake nor original Keel participated; no Wake source or JAR existed. The registered 120-round screen and conditional 300-round confirmation remain unused. The three CI rounds are preserved separately and will not be repeated or used as competitive evidence.
+
+The [complete independent audit](../../benchmarks/keel-wake-v1/ci-preparation-failure/evidence/independent-ci-acquisition-audit.md) records every command, participant, outcome, own firing/damage/timing measurement, source/runtime limitation, original API, ZIP and full provider-log hash. All three acquisitions completed successfully; none is a valid Wake comparison or runtime approval. AIS's original JAR remained `b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800`. Retcon-private entries remain opaque original ZIP bytes.
+
+| Actual run | Separate physical budget | Public outcome |
+|---|---:|---|
+| 41962290338 | AIS/Target, 1 round | AIS 178/178 score share, 1 first place; 15 shots/11 hits |
+| 41962290605 | AIS/Retcon, 1 round | AIS 18/177 share (10.169492%), 0 first places; 17 shots/3 hits |
+| 41962290505 | Alpha/Beta, 1 round | Stationary timing probe; instrumentation only |
+
+One game per category gives no defined sample SD. Own AIS skips were zero; these facts do not supply a missing Wake admission gate. The two production jobs checked out synthetic merge `818ca64a609463b7a2aa5241cce8f9e0bd68b5bf`; trace checked out exact registration48bd. Provider image observations and generic runtimes lack Wake's full native/ENV/preparation proof, so no qualified Wake runtime or historical-worker acceptance is claimed.
+
+[Original artifacts and custody](../../benchmarks/keel-wake-v1/ci-preparation-failure/evidence/audit-custody-manifest.json) retain 39 payloads plus manifest, all 19 original ZIP members and the original failed binary-fetch attempt. The three original ZIPs are 4127/7097/7509 bytes, SHA256 `48d18f5f02c3ca7ef53f076af0c7c51a33881c0290c9ee541e0d75bf6e8e2c91` / `2afec5c7aeac09b6a9601dcaed5b443c7c1b2aa47a87ddf6ea803211e545406d` / `6d470f79708a631cf5ac06a635426e7cb7990d6725e7f6a73ee8fb0807f6c958`. Full job logs are 140621/152791/29085 bytes. No original result or failure was rewritten.
+
+The [prospective amendment](keel-wake-ci-acquisition-amendment.md) was published in issue118 comment6649074233 before guard implementation. [Independent method PASS](https://github.com/stephanelee/robocode/issues/118#issuecomment-6649109740) authorizes only the narrow future guards and one combined evidence publication. The repair extends the existing PR job exclusions in benchmark.yml, retcon.yml and engine-trace.yml with the exact Wake branch. Job names, genuine required-check conclusions, Ubuntu26.04, build/parity and all other branch/event behavior remain intact. No fabricated status or branch-protection change is permitted.
+
+The original protocol's mandatory pure contracts and evidence-shaped fixtures mean **required no-engine semantic/arithmetic fixtures only**. No extra engine-backed gameplay fixture, smoke, development match or parameter search is authorized. This future clarification does not authorize the three past CI rounds. Existing shared master-push production CI is separate repository validation and cannot supply candidate/control evidence.
+
+**Repair verification is pending:** the next exact published head must show these three genuine jobs SKIPPED with no engine steps and required zero-game checks passing. Independent published protocol/repair acceptance must follow before candidate implementation. Exact source/JAR/freeze and fresh active same-worker runtime approval remain later mandatory gates. Original registration payloads, numerical gates, seeds, opponent pins and unused create-only receipts remain unchanged. AISurvivor is unchanged; hourly monitoring stays paused.

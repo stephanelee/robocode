@@ -1,0 +1,372 @@
+﻿2026-11-05T03:33:04.8341527Z Current runner version: '2.338.2'
+2026-11-05T03:33:04.8376195Z ##[group]Runner Image Provisioner
+2026-11-05T03:33:04.8377693Z Hosted Compute Agent
+2026-11-05T03:33:04.8378859Z Version: 20261028.624
+2026-11-05T03:33:04.8379968Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-05T03:33:04.8381239Z Build Date: 2026-10-28T21:51:42Z
+2026-11-05T03:33:04.8382632Z Worker ID: {ebfc09f7-e04e-44b4-9a79-9618f40eabd9}
+2026-11-05T03:33:04.8383817Z Region: eastus
+2026-11-05T03:33:04.8385152Z Cloud: Azure
+2026-11-05T03:33:04.8386145Z ##[endgroup]
+2026-11-05T03:33:04.8388767Z ##[group]Operating System
+2026-11-05T03:33:04.8389990Z Ubuntu
+2026-11-05T03:33:04.8390929Z 26.04.1
+2026-11-05T03:33:04.8391855Z LTS
+2026-11-05T03:33:04.8392863Z ##[endgroup]
+2026-11-05T03:33:04.8393823Z ##[group]Runner Image
+2026-11-05T03:33:04.8395254Z Image: ubuntu-26.04
+2026-11-05T03:33:04.8396252Z Version: 20261101.186.1
+2026-11-05T03:33:04.8398503Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-05T03:33:04.8401314Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-05T03:33:04.8403095Z ##[endgroup]
+2026-11-05T03:33:04.8405285Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T03:33:04.8408580Z Contents: read
+2026-11-05T03:33:04.8409651Z Metadata: read
+2026-11-05T03:33:04.8410761Z ##[endgroup]
+2026-11-05T03:33:04.8414296Z Secret source: Actions
+2026-11-05T03:33:04.8416106Z Cache mode: write
+2026-11-05T03:33:04.8417801Z Prepare workflow directory
+2026-11-05T03:33:04.8953037Z Prepare all required actions
+2026-11-05T03:33:04.9035540Z Getting action download info
+2026-11-05T03:33:05.0901454Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-05T03:33:05.1916550Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-05T03:33:05.4122128Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-05T03:33:05.4767370Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-05T03:33:05.6856652Z Complete job name: Record actual 1.4.0 bullet scan timing
+2026-11-05T03:33:05.7946483Z ##[group]Run actions/checkout@v4
+2026-11-05T03:33:05.7947820Z with:
+2026-11-05T03:33:05.7948491Z   ref: 48bd8e343b9ef017b35aa9b8103adc2825f87c02
+2026-11-05T03:33:05.7949447Z   repository: stephanelee/robocode
+2026-11-05T03:33:05.7953738Z   token: ***
+2026-11-05T03:33:05.7954751Z   ssh-strict: true
+2026-11-05T03:33:05.7955464Z   ssh-user: git
+2026-11-05T03:33:05.7956067Z   persist-credentials: true
+2026-11-05T03:33:05.7956795Z   clean: true
+2026-11-05T03:33:05.7957429Z   sparse-checkout-cone-mode: true
+2026-11-05T03:33:05.7958202Z   fetch-depth: 1
+2026-11-05T03:33:05.7958918Z   fetch-tags: false
+2026-11-05T03:33:05.7959854Z   show-progress: true
+2026-11-05T03:33:05.7960647Z   lfs: false
+2026-11-05T03:33:05.7961256Z   submodules: false
+2026-11-05T03:33:05.7961942Z   set-safe-directory: true
+2026-11-05T03:33:05.7962624Z   allow-unsafe-pr-checkout: false
+2026-11-05T03:33:05.7963853Z ##[endgroup]
+2026-11-05T03:33:06.0768967Z Syncing repository: stephanelee/robocode
+2026-11-05T03:33:06.0773657Z ##[group]Getting Git version info
+2026-11-05T03:33:06.0775656Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-05T03:33:06.0778246Z [command]/usr/bin/git version
+2026-11-05T03:33:06.0779749Z git version 2.56.0
+2026-11-05T03:33:06.0794442Z ##[endgroup]
+2026-11-05T03:33:06.0812390Z Temporarily overriding HOME='/home/runner/work/_temp/06db6f11-f8e6-4863-8547-6bc6590bf166' before making global git config changes
+2026-11-05T03:33:06.0815775Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:33:06.0820141Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:33:06.0898222Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-05T03:33:06.0902422Z ##[group]Initializing the repository
+2026-11-05T03:33:06.0908705Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-05T03:33:06.1025352Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-05T03:33:06.1027817Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-05T03:33:06.1029980Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-05T03:33:06.1031832Z hint: call:
+2026-11-05T03:33:06.1032862Z hint:
+2026-11-05T03:33:06.1136024Z hint: 	git config --global init.defaultBranch <name>
+2026-11-05T03:33:06.1137915Z hint:
+2026-11-05T03:33:06.1139049Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-05T03:33:06.1140917Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-05T03:33:06.1142568Z hint:
+2026-11-05T03:33:06.1143646Z hint: 	git branch -m <name>
+2026-11-05T03:33:06.1144977Z hint:
+2026-11-05T03:33:06.1146237Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-05T03:33:06.1166603Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-05T03:33:06.1171123Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-05T03:33:06.1174905Z ##[endgroup]
+2026-11-05T03:33:06.1175943Z ##[group]Disabling automatic garbage collection
+2026-11-05T03:33:06.1176717Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-05T03:33:06.1178322Z ##[endgroup]
+2026-11-05T03:33:06.1179111Z ##[group]Setting up auth
+2026-11-05T03:33:06.1179932Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:33:06.1212398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:33:06.1721335Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:33:06.1767705Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:33:06.2068638Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:33:06.2107495Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:33:06.2412855Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-05T03:33:06.2462643Z ##[endgroup]
+2026-11-05T03:33:06.2464620Z ##[group]Fetching the repository
+2026-11-05T03:33:06.2475374Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 48bd8e343b9ef017b35aa9b8103adc2825f87c02
+2026-11-05T03:33:41.9421341Z From https://github.com/stephanelee/robocode
+2026-11-05T03:33:41.9435603Z  * branch            48bd8e343b9ef017b35aa9b8103adc2825f87c02 -> FETCH_HEAD
+2026-11-05T03:33:41.9439128Z ##[endgroup]
+2026-11-05T03:33:41.9440352Z ##[group]Determining the checkout info
+2026-11-05T03:33:41.9441619Z ##[endgroup]
+2026-11-05T03:33:41.9442383Z [command]/usr/bin/git sparse-checkout disable
+2026-11-05T03:33:41.9513694Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-05T03:33:41.9555962Z ##[group]Checking out the ref
+2026-11-05T03:33:41.9561066Z [command]/usr/bin/git checkout --progress --force 48bd8e343b9ef017b35aa9b8103adc2825f87c02
+2026-11-05T03:33:42.9751090Z Updating files:  54% (3664/6664)
+2026-11-05T03:33:43.1157099Z Updating files:  55% (3666/6664)
+2026-11-05T03:33:43.1897146Z Updating files:  56% (3732/6664)
+2026-11-05T03:33:43.2824837Z Updating files:  57% (3799/6664)
+2026-11-05T03:33:43.3128090Z Updating files:  58% (3866/6664)
+2026-11-05T03:33:43.4396790Z Updating files:  59% (3932/6664)
+2026-11-05T03:33:43.4555148Z Updating files:  60% (3999/6664)
+2026-11-05T03:33:43.4855257Z Updating files:  61% (4066/6664)
+2026-11-05T03:33:43.6067849Z Updating files:  62% (4132/6664)
+2026-11-05T03:33:43.7498096Z Updating files:  63% (4199/6664)
+2026-11-05T03:33:43.7548306Z Updating files:  64% (4265/6664)
+2026-11-05T03:33:43.7605294Z Updating files:  65% (4332/6664)
+2026-11-05T03:33:43.7783115Z Updating files:  66% (4399/6664)
+2026-11-05T03:33:43.7959738Z Updating files:  67% (4465/6664)
+2026-11-05T03:33:43.8042625Z Updating files:  68% (4532/6664)
+2026-11-05T03:33:43.8110358Z Updating files:  69% (4599/6664)
+2026-11-05T03:33:43.8175718Z Updating files:  70% (4665/6664)
+2026-11-05T03:33:43.8276637Z Updating files:  71% (4732/6664)
+2026-11-05T03:33:43.8326641Z Updating files:  72% (4799/6664)
+2026-11-05T03:33:43.8377137Z Updating files:  73% (4865/6664)
+2026-11-05T03:33:43.8425503Z Updating files:  74% (4932/6664)
+2026-11-05T03:33:43.8471638Z Updating files:  75% (4998/6664)
+2026-11-05T03:33:43.8520647Z Updating files:  76% (5065/6664)
+2026-11-05T03:33:43.8567463Z Updating files:  77% (5132/6664)
+2026-11-05T03:33:43.8612331Z Updating files:  78% (5198/6664)
+2026-11-05T03:33:43.8662256Z Updating files:  79% (5265/6664)
+2026-11-05T03:33:43.8703794Z Updating files:  80% (5332/6664)
+2026-11-05T03:33:43.8747978Z Updating files:  81% (5398/6664)
+2026-11-05T03:33:43.8789495Z Updating files:  82% (5465/6664)
+2026-11-05T03:33:43.8831242Z Updating files:  83% (5532/6664)
+2026-11-05T03:33:43.8871489Z Updating files:  84% (5598/6664)
+2026-11-05T03:33:43.8916647Z Updating files:  85% (5665/6664)
+2026-11-05T03:33:43.8970190Z Updating files:  86% (5732/6664)
+2026-11-05T03:33:43.9040268Z Updating files:  87% (5798/6664)
+2026-11-05T03:33:43.9153638Z Updating files:  88% (5865/6664)
+2026-11-05T03:33:43.9195981Z Updating files:  89% (5931/6664)
+2026-11-05T03:33:43.9260603Z Updating files:  90% (5998/6664)
+2026-11-05T03:33:43.9300140Z Updating files:  91% (6065/6664)
+2026-11-05T03:33:43.9334455Z Updating files:  92% (6131/6664)
+2026-11-05T03:33:43.9398234Z Updating files:  93% (6198/6664)
+2026-11-05T03:33:43.9524532Z Updating files:  94% (6265/6664)
+2026-11-05T03:33:43.9623441Z Updating files:  95% (6331/6664)
+2026-11-05T03:33:43.9668310Z Updating files:  96% (6398/6664)
+2026-11-05T03:33:43.9693665Z Updating files:  97% (6465/6664)
+2026-11-05T03:33:43.9717088Z Updating files:  97% (6501/6664)
+2026-11-05T03:33:43.9760218Z Updating files:  98% (6531/6664)
+2026-11-05T03:33:43.9795293Z Updating files:  99% (6598/6664)
+2026-11-05T03:33:43.9795633Z Updating files: 100% (6664/6664)
+2026-11-05T03:33:43.9795922Z Updating files: 100% (6664/6664), done.
+2026-11-05T03:33:43.9894232Z Note: switching to '48bd8e343b9ef017b35aa9b8103adc2825f87c02'.
+2026-11-05T03:33:43.9895250Z 
+2026-11-05T03:33:43.9895746Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-05T03:33:43.9896585Z changes and commit them, and you can discard any commits you make in this
+2026-11-05T03:33:43.9897433Z state without impacting any branches by switching back to a branch.
+2026-11-05T03:33:43.9898073Z 
+2026-11-05T03:33:43.9898411Z If you want to create a new branch to retain commits you create, you may
+2026-11-05T03:33:43.9899208Z do so (now or later) by using -c with the switch command. Example:
+2026-11-05T03:33:43.9899689Z 
+2026-11-05T03:33:43.9899876Z   git switch -c <new-branch-name>
+2026-11-05T03:33:43.9900194Z 
+2026-11-05T03:33:43.9900373Z Or undo this operation with:
+2026-11-05T03:33:43.9900636Z 
+2026-11-05T03:33:43.9900737Z   git switch -
+2026-11-05T03:33:43.9900879Z 
+2026-11-05T03:33:43.9901129Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-05T03:33:43.9901488Z 
+2026-11-05T03:33:43.9901817Z HEAD is now at 48bd8e3 Register KeelWake in-flight danger refresh protocol before implementation
+2026-11-05T03:33:44.0105163Z ##[endgroup]
+2026-11-05T03:33:44.0158001Z [command]/usr/bin/git log -1 --format=%H
+2026-11-05T03:33:44.0186556Z 48bd8e343b9ef017b35aa9b8103adc2825f87c02
+2026-11-05T03:33:44.0496205Z ##[group]Run actions/setup-java@v4
+2026-11-05T03:33:44.0496725Z with:
+2026-11-05T03:33:44.0496947Z   distribution: temurin
+2026-11-05T03:33:44.0497181Z   java-version: 17
+2026-11-05T03:33:44.0497394Z   java-package: jdk
+2026-11-05T03:33:44.0497606Z   check-latest: false
+2026-11-05T03:33:44.0497815Z   server-id: github
+2026-11-05T03:33:44.0498029Z   server-username: GITHUB_ACTOR
+2026-11-05T03:33:44.0498297Z   server-password: GITHUB_TOKEN
+2026-11-05T03:33:44.0498551Z   overwrite-settings: true
+2026-11-05T03:33:44.0498793Z   job-status: success
+2026-11-05T03:33:44.0501066Z   token: ***
+2026-11-05T03:33:44.0501296Z ##[endgroup]
+2026-11-05T03:33:44.2390594Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-05T03:33:44.2398827Z ##[group]Installed distributions
+2026-11-05T03:33:44.2593449Z Resolved Java 17.0.21+9 from tool-cache
+2026-11-05T03:33:44.2593886Z Setting Java 17.0.21+9 as the default
+2026-11-05T03:33:44.2605478Z (node:2432) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:44.2606420Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:44.2609918Z Creating toolchains.xml for JDK version 17 from temurin
+2026-11-05T03:33:44.2693245Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-05T03:33:44.2693801Z 
+2026-11-05T03:33:44.2694445Z Java configuration:
+2026-11-05T03:33:44.2694907Z   Distribution: temurin
+2026-11-05T03:33:44.2695321Z   Version: 17.0.21+9
+2026-11-05T03:33:44.2695902Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.2696412Z 
+2026-11-05T03:33:44.2697293Z ##[endgroup]
+2026-11-05T03:33:44.2727609Z Creating settings.xml with server-id: github
+2026-11-05T03:33:44.2758797Z Writing to /home/runner/.m2/settings.xml
+2026-11-05T03:33:44.3012607Z ##[group]Run actions/setup-python@v5
+2026-11-05T03:33:44.3012966Z with:
+2026-11-05T03:33:44.3013197Z   python-version: 3.12
+2026-11-05T03:33:44.3013456Z   check-latest: false
+2026-11-05T03:33:44.3016383Z   token: ***
+2026-11-05T03:33:44.3016678Z   update-environment: true
+2026-11-05T03:33:44.3016983Z   allow-prereleases: false
+2026-11-05T03:33:44.3017284Z   freethreaded: false
+2026-11-05T03:33:44.3017554Z env:
+2026-11-05T03:33:44.3017909Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.3018507Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.3018939Z ##[endgroup]
+2026-11-05T03:33:44.4532234Z ##[group]Installed versions
+2026-11-05T03:33:44.4668608Z (node:2444) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:44.4669908Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:44.4670840Z Successfully set up CPython (3.12.16)
+2026-11-05T03:33:44.4671861Z ##[endgroup]
+2026-11-05T03:33:44.4864766Z ##[group]Run python tools/engine_energy_trace.py --java "$JAVA_HOME/bin/java"
+2026-11-05T03:33:44.4865765Z [36;1mpython tools/engine_energy_trace.py --java "$JAVA_HOME/bin/java"[0m
+2026-11-05T03:33:44.4962260Z shell: /usr/bin/bash -e {0}
+2026-11-05T03:33:44.4962743Z env:
+2026-11-05T03:33:44.4963283Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.4964370Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:44.4965202Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:44.4965989Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-05T03:33:44.4966799Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:44.4967485Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:44.4968183Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:44.4969012Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-05T03:33:44.4969608Z ##[endgroup]
+2026-11-05T03:33:55.9804193Z {
+2026-11-05T03:33:55.9804853Z   "schemaVersion": 1,
+2026-11-05T03:33:55.9805198Z   "status": "verified",
+2026-11-05T03:33:55.9805576Z   "engineVersion": "1.4.0",
+2026-11-05T03:33:55.9806126Z   "upstreamSource": "https://github.com/robocode-dev/tank-royale/tree/v1.4.0",
+2026-11-05T03:33:55.9806923Z   "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+2026-11-05T03:33:55.9807775Z   "sampleArchiveSHA256": "1707c1011a37c6b854fc79d68549ab204007bac6d33d803fa254152ac0765fe2",
+2026-11-05T03:33:55.9808631Z   "botApiSHA256": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+2026-11-05T03:33:55.9809472Z   "probeSourceSHA256": "459bac5502f1692b376860e8446e3811cf35928b422cd743eabed3fa93d95e66",
+2026-11-05T03:33:55.9810366Z   "recorderSHA256": "255c11a7042f27d01dca43a37b4aaf2f864bbaa9153647334364f61dbc726615",
+2026-11-05T03:33:55.9811615Z   "runnerAdapterSHA256": "0ebdbd429920ef724f852293ec7d4b2acb7b035c58068798453b0f4e320c8d03",
+2026-11-05T03:33:55.9812822Z   "sourceCommit": "48bd8e343b9ef017b35aa9b8103adc2825f87c02",
+2026-11-05T03:33:55.9822938Z   "javaRuntime": "Property settings:\n    file.encoding = UTF-8\n    file.separator = /\n    java.class.path = \n    java.class.version = 61.0\n    java.home = /usr/lib/jvm/temurin-17-jdk-amd64\n    java.io.tmpdir = /tmp\n    java.library.path = /opt/hostedtoolcache/Python/3.12.16/x64/lib\n        /usr/java/packages/lib\n        /usr/lib64\n        /lib64\n        /lib\n        /usr/lib\n    java.runtime.name = OpenJDK Runtime Environment\n    java.runtime.version = 17.0.21+9\n    java.specification.maintenance.version = 1\n    java.specification.name = Java Platform API Specification\n    java.specification.vendor = Oracle Corporation\n    java.specification.version = 17\n    java.vendor = Eclipse Adoptium\n    java.vendor.url = https://adoptium.net/\n    java.vendor.url.bug = https://github.com/adoptium/adoptium-support/issues\n    java.vendor.version = Temurin-17.0.21+9\n    java.version = 17.0.21\n    java.version.date = 2026-10-20\n    java.vm.compressedOopsMode = Zero based\n    java.vm.info = mixed mode, sharing\n    java.vm.name = OpenJDK 64-Bit Server VM\n    java.vm.specification.name = Java Virtual Machine Specification\n    java.vm.specification.vendor = Oracle Corporation\n    java.vm.specification.version = 17\n    java.vm.vendor = Eclipse Adoptium\n    java.vm.version = 17.0.21+9\n    jdk.debug = release\n    line.separator = \\n \n    native.encoding = UTF-8\n    os.arch = amd64\n    os.name = Linux\n    os.version = 7.0.0-1019-azure\n    path.separator = :\n    sun.arch.data.model = 64\n    sun.boot.library.path = /usr/lib/jvm/temurin-17-jdk-amd64/lib\n    sun.cpu.endian = little\n    sun.io.unicode.encoding = UnicodeLittle\n    sun.java.launcher = SUN_STANDARD\n    sun.jnu.encoding = UTF-8\n    sun.management.compiler = HotSpot 64-Bit Tiered Compilers\n    user.dir = /home/runner/work/robocode/robocode\n    user.home = /home/runner\n    user.language = en\n    user.name = runner\n\nopenjdk version \"17.0.21\" 2026-10-20\nOpenJDK Runtime Environment Temurin-17.0.21+9 (build 17.0.21+9)\nOpenJDK 64-Bit Server VM Temurin-17.0.21+9 (build 17.0.21+9, mixed mode, sharing)\n",
+2026-11-05T03:33:55.9830266Z   "os": {
+2026-11-05T03:33:55.9830463Z     "system": "Linux",
+2026-11-05T03:33:55.9830694Z     "release": "7.0.0-1019-azure",
+2026-11-05T03:33:55.9830943Z     "machine": "x86_64",
+2026-11-05T03:33:55.9831165Z     "osRelease": {
+2026-11-05T03:33:55.9831374Z       "NAME": "Ubuntu",
+2026-11-05T03:33:55.9831582Z       "ID": "ubuntu",
+2026-11-05T03:33:55.9831812Z       "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+2026-11-05T03:33:55.9832091Z       "VERSION_ID": "26.04",
+2026-11-05T03:33:55.9832352Z       "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+2026-11-05T03:33:55.9832658Z       "VERSION_CODENAME": "resolute",
+2026-11-05T03:33:55.9832918Z       "ID_LIKE": "debian",
+2026-11-05T03:33:55.9833182Z       "HOME_URL": "https://www.ubuntu.com/",
+2026-11-05T03:33:55.9833504Z       "SUPPORT_URL": "https://help.ubuntu.com/",
+2026-11-05T03:33:55.9833859Z       "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+2026-11-05T03:33:55.9834867Z       "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+2026-11-05T03:33:55.9835343Z       "UBUNTU_CODENAME": "resolute",
+2026-11-05T03:33:55.9835613Z       "LOGO": "ubuntu-logo"
+2026-11-05T03:33:55.9835842Z     }
+2026-11-05T03:33:55.9836014Z   },
+2026-11-05T03:33:55.9836338Z   "purpose": "Actual event recording; no AISurvivor or Retcon gameplay is loaded",
+2026-11-05T03:33:55.9836742Z   "assertions": [
+2026-11-05T03:33:55.9836939Z     {
+2026-11-05T03:33:55.9837131Z       "hitTurn": 66,
+2026-11-05T03:33:55.9837340Z       "observer": 1,
+2026-11-05T03:33:55.9837535Z       "enemy": 2,
+2026-11-05T03:33:55.9837748Z       "effect": -2.0,
+2026-11-05T03:33:55.9837980Z       "previousScan": 100.0,
+2026-11-05T03:33:55.9838220Z       "sameTurnScan": 100.0,
+2026-11-05T03:33:55.9838473Z       "nextTurnScan": 98.0
+2026-11-05T03:33:55.9838691Z     },
+2026-11-05T03:33:55.9838864Z     {
+2026-11-05T03:33:55.9839050Z       "hitTurn": 66,
+2026-11-05T03:33:55.9839250Z       "observer": 2,
+2026-11-05T03:33:55.9839450Z       "enemy": 1,
+2026-11-05T03:33:55.9839645Z       "effect": 1.5,
+2026-11-05T03:33:55.9839863Z       "previousScan": 99.5,
+2026-11-05T03:33:55.9840098Z       "sameTurnScan": 99.5,
+2026-11-05T03:33:55.9840333Z       "nextTurnScan": 101.0
+2026-11-05T03:33:55.9840546Z     },
+2026-11-05T03:33:55.9840715Z     {
+2026-11-05T03:33:55.9840892Z       "hitTurn": 216,
+2026-11-05T03:33:55.9841096Z       "observer": 2,
+2026-11-05T03:33:55.9863496Z       "enemy": 1,
+2026-11-05T03:33:55.9864086Z       "effect": -2.0,
+2026-11-05T03:33:55.9864475Z       "previousScan": 101.0,
+2026-11-05T03:33:55.9864890Z       "sameTurnScan": 101.0,
+2026-11-05T03:33:55.9865199Z       "nextTurnScan": 99.0
+2026-11-05T03:33:55.9865434Z     },
+2026-11-05T03:33:55.9865621Z     {
+2026-11-05T03:33:55.9865822Z       "hitTurn": 216,
+2026-11-05T03:33:55.9866043Z       "observer": 1,
+2026-11-05T03:33:55.9866294Z       "enemy": 2,
+2026-11-05T03:33:55.9866607Z       "effect": 1.5,
+2026-11-05T03:33:55.9866828Z       "previousScan": 97.5,
+2026-11-05T03:33:55.9867072Z       "sameTurnScan": 97.5,
+2026-11-05T03:33:55.9867306Z       "nextTurnScan": 99.0
+2026-11-05T03:33:55.9867525Z     }
+2026-11-05T03:33:55.9867699Z   ],
+2026-11-05T03:33:55.9867879Z   "rawSHA256": {
+2026-11-05T03:33:55.9868224Z     "Alpha": "b78d8f1a52dc171f60882f0de5ad7d39a30ffe1451751192b3392a0852679ce3",
+2026-11-05T03:33:55.9868752Z     "Beta": "36c4cb85621d134288c89e4a732b16a9b49137335549f9fc7d7dde644ba938a3"
+2026-11-05T03:33:55.9869131Z   }
+2026-11-05T03:33:55.9869307Z }
+2026-11-05T03:33:56.0032449Z ##[group]Run actions/upload-artifact@v4
+2026-11-05T03:33:56.0032776Z with:
+2026-11-05T03:33:56.0032992Z   name: pinned-engine-energy-trace
+2026-11-05T03:33:56.0033699Z   path: build/engine-trace/trace.json
+build/engine-trace/Alpha.jsonl
+build/engine-trace/Beta.jsonl
+build/engine-trace/battle.json
+build/engine-trace/runner.log
+
+2026-11-05T03:33:56.0034672Z   if-no-files-found: warn
+2026-11-05T03:33:56.0034951Z   compression-level: 6
+2026-11-05T03:33:56.0035171Z   overwrite: false
+2026-11-05T03:33:56.0035390Z   include-hidden-files: false
+2026-11-05T03:33:56.0035624Z env:
+2026-11-05T03:33:56.0035918Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:56.0036411Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.21-9/x64
+2026-11-05T03:33:56.0036861Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:56.0037282Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-05T03:33:56.0037745Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:56.0038129Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:56.0038513Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-05T03:33:56.0038900Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-05T03:33:56.0039223Z ##[endgroup]
+2026-11-05T03:33:56.1889482Z (node:2647) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:56.1890856Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:56.1996804Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-05T03:33:56.2000751Z The least common ancestor is /home/runner/work/robocode/robocode/build/engine-trace. This will be the root directory of the artifact
+2026-11-05T03:33:56.2002170Z With the provided path, there will be 5 files uploaded
+2026-11-05T03:33:56.2008197Z Artifact name is valid!
+2026-11-05T03:33:56.2011306Z Root directory input is valid!
+2026-11-05T03:33:56.4278013Z Beginning upload of artifact content to blob storage
+2026-11-05T03:33:56.4676203Z (node:2647) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-05T03:33:56.5136557Z Uploaded bytes 7509
+2026-11-05T03:33:56.5338132Z Finished uploading artifact content to blob storage!
+2026-11-05T03:33:56.5339692Z SHA256 digest of uploaded artifact zip is 6d470f79708a631cf5ac06a635426e7cb7990d6725e7f6a73ee8fb0807f6c958
+2026-11-05T03:33:56.5341057Z Finalizing artifact upload
+2026-11-05T03:33:56.9767649Z Artifact pinned-engine-energy-trace.zip successfully finalized. Artifact ID 13385772686
+2026-11-05T03:33:56.9768899Z Artifact pinned-engine-energy-trace has been successfully uploaded! Final size is 7509 bytes. Artifact ID is 13385772686
+2026-11-05T03:33:56.9774862Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41962290505/artifacts/13385772686
+2026-11-05T03:33:57.0004819Z Post job cleanup.
+2026-11-05T03:33:57.1344536Z (node:2659) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:57.1345845Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:57.1538187Z Post job cleanup.
+2026-11-05T03:33:57.3218222Z (node:2667) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-05T03:33:57.3219583Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-05T03:33:57.3503740Z Post job cleanup.
+2026-11-05T03:33:57.4506176Z [command]/usr/bin/git version
+2026-11-05T03:33:57.4558217Z git version 2.56.0
+2026-11-05T03:33:57.4611369Z Temporarily overriding HOME='/home/runner/work/_temp/a50bcc6b-d0d3-4ca7-89d7-e5cfa2c24e7b' before making global git config changes
+2026-11-05T03:33:57.4613010Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T03:33:57.4621386Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-05T03:33:57.4691981Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T03:33:57.4746381Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T03:33:57.5128231Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T03:33:57.5159223Z http.https://github.com/.extraheader
+2026-11-05T03:33:57.5193857Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-05T03:33:57.5238807Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T03:33:57.5607902Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T03:33:57.5651106Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T03:33:57.6197599Z Cleaning up orphan processes
+2026-11-05T03:33:57.6695305Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

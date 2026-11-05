@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   retcon:
-    if: github.event_name != 'pull_request' || (github.head_ref != 'codex/keel-improvement-baseline' && github.head_ref != 'codex/keel-brace-v1')
+    if: github.event_name != 'pull_request' || (github.head_ref != 'codex/keel-improvement-baseline' && github.head_ref != 'codex/keel-brace-v1' && github.head_ref != 'codex/keel-wake-v1')
     name: Retcon 1v1 compatibility
     runs-on: ubuntu-26.04
     timeout-minutes: 30
