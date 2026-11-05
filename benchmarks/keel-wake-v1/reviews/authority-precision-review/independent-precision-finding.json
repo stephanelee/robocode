@@ -1,0 +1,42 @@
+{
+  "reviewerTask": "/root/wake_independent_review",
+  "scope": "Pure arithmetic/source review only; no full actual approval or game executed",
+  "observedPreFixSourceChain": [
+    "utc(value) returns float(image_identity.timestamp(value))",
+    "resource_lower(rawstr) delegates utc(rawstr)",
+    "resource_upper fractional returns same float",
+    "validate_approval compares resource_upper(created_at)>resource_lower(finalized)+1800"
+  ],
+  "counterexamples": [
+    {
+      "deltaSecondsExact": "0",
+      "createdEpochExact": "1800001800",
+      "exactWithinInclusiveWindow": true,
+      "oldFloatWithinWindow": true,
+      "oldFloatCreated": "1800001800.0"
+    },
+    {
+      "deltaSecondsExact": "1/10000000",
+      "createdEpochExact": "18000018000000001/10000000",
+      "exactWithinInclusiveWindow": false,
+      "oldFloatWithinWindow": true,
+      "oldFloatCreated": "1800001800.0"
+    },
+    {
+      "deltaSecondsExact": "9/10000000",
+      "createdEpochExact": "18000018000000009/10000000",
+      "exactWithinInclusiveWindow": false,
+      "oldFloatWithinWindow": false,
+      "oldFloatCreated": "1800001800.000001"
+    }
+  ],
+  "requiredClosure": [
+    "Exact Fraction/Decimal resource bounds or explicit unsupported-authority-precision rejection before chronology tests",
+    "Exact-cutoff acceptance and100ns/900ns lateness rejection at realistic epoch",
+    "Sweep future-created check, storage-preflight3600s, original initial-review-window cutoff, and every authority/resource comparison rather than phase-only timestamp parser",
+    "Relative I/O scheduling may use floats after exact fail-closed authorization comparisons; do not convert absolute epochs before proof"
+  ],
+  "authorReportedFix": "resource_lower raw string nowFraction and resource_upper/storage bounds exact; code still active, not independently final-verified",
+  "finalSourceRuntimeDispatchApproval": false,
+  "resourceGate": "Root reports local audit free below registered8GiB; no dispatch irrespective source review"
+}

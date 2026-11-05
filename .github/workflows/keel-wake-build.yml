@@ -8,6 +8,14 @@ on:
       - 'tools/keel_wake*.py'
       - 'tools/test_keel_wake*.py'
       - 'benchmarks/keel-wake-v1/freeze.json'
+      - 'benchmarks/keel-wake-v1/games.json'
+      - 'benchmarks/keel-wake-v1/runtime-pins.json'
+      - 'benchmarks/keel-wake-v1/baseline.json'
+      - 'benchmarks/keel-wake-v1/runtime-identity-policy.json'
+      - 'benchmarks/keel-wake-v1/harness-validation/data-interface.json'
+      - 'benchmarks/keel-wake-v1/harness-validation/runtime-identity-data-interface.json'
+      - 'benchmarks/keel-wake-v1/harness-validation/phase-order-data-interface.json'
+      - 'docs/improvements/keel-wake-v1.md'
       - 'benchmarks/keel-wake-v1/independent-analysis/**'
       - 'benchmarks/keel-wake-v1/image-probe-validation/**'
 permissions:
@@ -64,7 +72,7 @@ jobs:
             python -I -B -S -m unittest discover -s tools -p 'test_keel_wake*.py' -v 2>&1 | tee build/keel-wake-bootstrap/controller-tests.log
           fi
           if test -f benchmarks/keel-wake-v1/independent-analysis/test_audit.py; then
-            python -I -B -S -m unittest discover -s benchmarks/keel-wake-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-wake-bootstrap/independent-audit-tests.log
+            python -I -B -S -m unittest discover -s benchmarks/keel-wake-v1/independent-analysis -p 'test_*.py' -v 2>&1 | tee build/keel-wake-bootstrap/independent-audit-tests.log
           fi
           if test -f benchmarks/keel-wake-v1/image-probe-validation/test_image_probe.py; then
             python -I -B -S -m unittest discover -s benchmarks/keel-wake-v1/image-probe-validation -p test_image_probe.py -v 2>&1 | tee build/keel-wake-bootstrap/image-probe-tests.log

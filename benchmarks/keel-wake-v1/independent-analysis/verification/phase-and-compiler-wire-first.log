@@ -1,0 +1,753 @@
+....................................................................EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE..
+======================================================================
+ERROR: test_actual_cli_fresh_confirmation_with_full_original_screen_replay (test_full_reader.FullFreshConfirmationReaderTests.test_actual_cli_fresh_confirmation_with_full_original_screen_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 140, in test_actual_cli_fresh_confirmation_with_full_original_screen_replay
+    code,result=invoke(confirmation)
+                ~~~~~~^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_actual_cli_canonical_original_zip_all_validators_unmocked (test_full_reader.FullOriginalZIPReaderTests.test_actual_cli_canonical_original_zip_all_validators_unmocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 39, in test_actual_cli_canonical_original_zip_all_validators_unmocked
+    x=f.full_fixture(Path(t));code,r=invoke(x)
+                                     ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_equal_compatibility_aliases_still_use_original_canonical_profile (test_full_reader.FullOriginalZIPReaderTests.test_equal_compatibility_aliases_still_use_original_canonical_profile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 55, in test_equal_compatibility_aliases_still_use_original_canonical_profile
+    f.repack(x);code,r=invoke(x);self.assertEqual((code,r['decision']),(0,'PASS'),r)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='origin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='outer-approval')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-fraction')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-negative')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-overflow')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='counter-relations')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='no-label-refresh')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='baseline-counter')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='epoch-exposure-foreign')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='checkedAt-before-image')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='over180')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='fetch-outside-window')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='fetch-prefix')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='late-initial-approval')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='job-reserve')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='receipt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='edited-authority')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='mixed-image')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='raw-custody')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='installed-graph')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='early-header')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='final-header')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='provider-time-ambiguity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='reviewer-author-fiction')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='storage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='teardown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='population')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_full_unmocked_pipeline_corruptions_fail_closed (test_full_reader.FullOriginalZIPReaderTests.test_full_unmocked_pipeline_corruptions_fail_closed) (case='raw-decision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 104, in test_full_unmocked_pipeline_corruptions_fail_closed
+    f.repack(x);code,r=invoke(x)
+                       ~~~~~~^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+======================================================================
+ERROR: test_without_actual_review_proof_machine_cannot_impersonate_reviewer (test_full_reader.FullOriginalZIPReaderTests.test_without_actual_review_proof_machine_cannot_impersonate_reviewer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 59, in test_without_actual_review_proof_machine_cannot_impersonate_reviewer
+    x=f.full_fixture(Path(t));code,r=invoke(x,identity=False)
+                                     ~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_full_reader.py", line 27, in invoke
+    with contextlib.redirect_stdout(io.StringIO()):code=a.main()
+                                                        ~~~~~~^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 1525, in main
+    result=audit_stage(evidence,args.source_root,args.stage,args.head,args.run,args.provider_evidence,transport,args.reviewer_task,args.reviewer_identity_file)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 568, in audit_stage
+    provenance = verify_exported_provenance(evidence, source_root, stage, expected_head, expected_run)
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 408, in verify_exported_provenance
+    launcher_compilation.validate(evidence,profile,freeze,read_json,digest,image_timestamp)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/launcher_compilation.py", line 34, in validate
+    path=root/'classes'/name;need(path.is_file() and digest(path)==ref['sha256'] and path.stat().st_mode&0o7777==ref['mode'],'Whole actual source/typecheck class bytes/mode')
+                                                                                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'st_mode'
+
+----------------------------------------------------------------------
+Ran 75 tests in 14.515s
+
+FAILED (errors=34)

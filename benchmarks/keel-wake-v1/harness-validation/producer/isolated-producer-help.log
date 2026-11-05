@@ -1,0 +1,13 @@
+usage: keel_wake_experiment.py [-h]
+                               {freeze,capture-build,_revalidate-worker,prepare,run,approve,finalize-evidence} ...
+
+Registered KeelWake stages. Preparation/approval is zero-game; no retries.
+Source freeze and actual same-worker runtime approval are separate gates. Only
+run() can start games, after complete admission and a create-only durable
+receipt.
+
+positional arguments:
+  {freeze,capture-build,_revalidate-worker,prepare,run,approve,finalize-evidence}
+
+options:
+  -h, --help            show this help message and exit

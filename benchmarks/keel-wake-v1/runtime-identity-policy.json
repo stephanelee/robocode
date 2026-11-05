@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "policyID": "keel-wake-qualified-native-observations-v1",
+  "issue": 118,
+  "status": "PROPOSED Wake future admission identity policy; no current worker accepted",
+  "qualifiedClaim": "Metadata/provider-reported observed operational identity, NOT immutable/canonical VM content attestation",
+  "allowedJointCases": [
+    {
+      "caseID": "native-20261025.179.1_env-20261026.180.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261025.179.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261026.180.1"
+      }
+    },
+    {
+      "caseID": "native-20261101.186.1_env-20261101.186.1",
+      "native": {
+        "image": "ubuntu-26.04",
+        "version": "20261101.186.1",
+        "includedSoftwareURL": "https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md",
+        "imageReleaseURL": "https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186"
+      },
+      "environment": {
+        "ImageOS": "ubuntu26",
+        "ImageVersion": "20261101.186.1"
+      }
+    }
+  ],
+  "primaryPregameAuthority": "actual discovered same-worker runner .setup_info",
+  "nativeCorroboration": "actual /imagegeneration/imagedata.json",
+  "separateENVAuthorities": [
+    "process ImageOS/ImageVersion only",
+    "literal /etc/environment ImageOS/ImageVersion"
+  ],
+  "jointCaseRule": "Exactly one complete same case across both native and both ENV sources, fixed before-tools through prepared/live/final; no mix/translation/fallback/majority/unknown/worker search",
+  "canonicalPaths": {
+    "profile": "provenance/profile.json",
+    "freeze": "provenance/freeze.json",
+    "freezeOrigin": "provenance/effective-freeze-origin.json",
+    "repositoryFreeze": "benchmarks/keel-wake-v1/freeze.json",
+    "compatibilityAliases": {
+      "profile.json": "provenance/profile.json",
+      "freeze.json": "provenance/freeze.json"
+    },
+    "aliasRule": "Absent permitted; if present exact whole-byte equality mandatory; never selected as fallback",
+    "canonicalRequired": true,
+    "noExistencePriorityParentGlobSelection": true,
+    "binding": "Canonical wholebytes must match strict approval profileSHA256/freezeSHA256 and origin source inventory; all readers same explicitly selected profile/capsule",
+    "freezeSelfHashInOwnBytesAllowed": false
+  },
+  "captureMethod": "Exact reviewed tracked collector source via stock /usr/bin/python3 after checkout before Java/Python setup, again prepared. Preserve rawbytes/source/path/stat/parse/errors, discovery/boot/source/input graph. Installed graph first prepared, not compared to preinstall. Source review freezes actual collector bytes; no runtime approval follows from old fixture collector hashes.",
+  "nativeParser": "Exactly one source-backed Runner Image group and four unique literal fields per nativefile; duplicate/ambiguous/truncated/malformed/error failclosed",
+  "metadataBounds": {
+    "perMetadataFileBytes": 1048576,
+    "twoSnapshotPayloadAndReserveBytes": 10485760,
+    "processEntries": 512,
+    "matchingProcessMaximum": 16,
+    "singleCaptureSeconds": 120,
+    "completeLiveRevalidationSeconds": 180
+  },
+  "earlyProvider": "Actual current job startupheader attempt; available200 complete mustmatch; qualified correct bound inprogress404 only with verified run/jobs/artifact reads maydefer with native-only disclosure; anyothererror failsclosed",
+  "finalProvider": "Mandatory independent actual completed stage full rawAPI/joblog startupheader exactsamecase even earlymatched; pendinguntilpass; missing/contradiction/ambiguity invalidacceptance/no continuation/replacement/rerun",
+  "reviewIdentity": "Explicit actual task/assignment/tool custody, no static author-as-reviewer fiction; machine withoutproof UNAUDITED",
+  "capsuleOrigin": "benchmarks/keel-wake-v1/freeze.json exported exact provenance/freeze.json with noncyclic origin record; same original freeze hash everywhere",
+  "noCompetitiveChanges": "Original protocol treatment/gates/14+18games120+300rounds/420max/sourceJAR/opponents/runtimepins and failures unchanged",
+  "requiresBeforeUse": [
+    "Exact independent published protocol acceptance",
+    "Published reviewed final DATA schema and source/enforcement/corruption tests",
+    "Actual source/JAR/command freeze and CI",
+    "New actual stage assignment/immutable same-worker provenance approval before receipt/games"
+  ]
+}

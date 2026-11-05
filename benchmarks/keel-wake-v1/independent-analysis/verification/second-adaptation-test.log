@@ -1,0 +1,146 @@
+.F.........FF......F.F.....F.F.F........F.......FFFE......F.....F....
+======================================================================
+ERROR: test_actual_failed_v1_case_b_raw_format_only (test_audit.RuntimeV2CaseTests.test_actual_failed_v1_case_b_raw_format_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 695, in test_actual_failed_v1_case_b_raw_format_only
+    root=Path(__file__).resolve().parents[3]/'benchmarks/keel-wake-v1/preparation-failure-41947040130';archive=root/'screen-evidence-13378498977.zip';self.assertEqual(audit.digest(archive),'d7a0b572d4e4301500a3532c21871cf0a14fdea88f5ccea7850c4b5233ebfe7f')
+                                                                                                                                                                       ~~~~~~~~~~~~^^^^^^^^^
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/audit.py", line 75, in digest
+    with evidence_path(path).open('rb') as stream:
+         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.15/3.15.1/Frameworks/Python.framework/Versions/3.15/lib/python3.15/pathlib/__init__.py", line 970, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/preparation-failure-41947040130/screen-evidence-13378498977.zip'
+
+======================================================================
+FAIL: test_in_between_work_does_not_redefine_child_limit (test_audit.ActualChildTimingTests.test_in_between_work_does_not_redefine_child_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 399, in test_in_between_work_does_not_redefine_child_limit
+    result=audit.audit_authority(e,s,'screen',h,r,p);self.assertTrue(result['pass'],result)
+                                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'checked': ['accepted authority exact original approval payload', 'accepted payload canonical digest', 'new issue118 strict20-key typed approval', 'approval exact registered authority identity', 'exact normalized accepted comment pin approval-comment.json', 'accepted original bytes approval-comment.json', 'exact normalized accepted comment pin review-report-comment.json', 'accepted original bytes review-report-comment.json', 'exact normalized accepted comment pin dispatch-assignment-comment.json', 'accepted original bytes dispatch-assignment-comment.json', 'approval comment exactly strict payload', 'strict10-key fresh dispatch', 'dispatch stage/head/repository', 'separate actual reviewer identity', 'recorded active-before-dispatch task', 'actual assignment record canonical digest', 'exact dispatch comment body digest', 'strict4-key reasoned report', 'separate reasoned review binds approval', 'actual independent pregame tool provenance', 'artifact/report/approval ordered inside30minute deadline', 'provider report ID precedes approval ID', 'permanent receipt exact original authority chain', 'receipt canonical authority digest', 'annotated tag message equals exact receipt payload', 'permanent receipt commit binding', 'fixed annotated receipt object', 'exact pre-receipt/per-game revalidation population'], 'failures': ['ValueError: Canonical provenance capsule required: provenance/profile.json'], 'pass': False, 'scope': 'Archived original/live-revalidation bindings plus separately collected current provider APIs. Does not remotely rehash unexported system binaries or reconstruct every private callback. Controller storage/byte-limit proofs must also be reviewed against actual protocol/source and provider job logs before final approval.'}
+
+======================================================================
+FAIL: test_complete_original_live_authority_and_current_provider (test_audit.AuthorityPositiveTests.test_complete_original_live_authority_and_current_provider)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 215, in test_complete_original_live_authority_and_current_provider
+    self.assertTrue(result['pass'],result)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'checked': ['accepted authority exact original approval payload', 'accepted payload canonical digest', 'new issue118 strict20-key typed approval', 'approval exact registered authority identity', 'exact normalized accepted comment pin approval-comment.json', 'accepted original bytes approval-comment.json', 'exact normalized accepted comment pin review-report-comment.json', 'accepted original bytes review-report-comment.json', 'exact normalized accepted comment pin dispatch-assignment-comment.json', 'accepted original bytes dispatch-assignment-comment.json', 'approval comment exactly strict payload', 'strict10-key fresh dispatch', 'dispatch stage/head/repository', 'separate actual reviewer identity', 'recorded active-before-dispatch task', 'actual assignment record canonical digest', 'exact dispatch comment body digest', 'strict4-key reasoned report', 'separate reasoned review binds approval', 'actual independent pregame tool provenance', 'artifact/report/approval ordered inside30minute deadline', 'provider report ID precedes approval ID', 'permanent receipt exact original authority chain', 'receipt canonical authority digest', 'annotated tag message equals exact receipt payload', 'permanent receipt commit binding', 'fixed annotated receipt object', 'exact pre-receipt/per-game revalidation population'], 'failures': ['ValueError: Canonical provenance capsule required: provenance/profile.json'], 'pass': False, 'scope': 'Archived original/live-revalidation bindings plus separately collected current provider APIs. Does not remotely rehash unexported system binaries or reconstruct every private callback. Controller storage/byte-limit proofs must also be reviewed against actual protocol/source and provider job logs before final approval.'}
+
+======================================================================
+FAIL: test_normalized_pin_keeps_full_api_and_exact_stable_fields (test_audit.AuthorityPositiveTests.test_normalized_pin_keeps_full_api_and_exact_stable_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 224, in test_normalized_pin_keeps_full_api_and_exact_stable_fields
+    self.assertTrue(audit.audit_authority(e,s,'screen',h,r,p)['pass'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_positive_complete_original_screen_and_confirmation (test_audit.CanonicalDecisionTests.test_positive_complete_original_screen_and_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 422, in test_positive_complete_original_screen_and_confirmation
+    root=Path(tmp);p,r,g,d=self.stage(root,stage);result=audit.reconcile_canonical(root,stage,'a'*40,p,r,g,True);self.assertTrue(result['pass'],result)
+                                                                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'checked': [], 'failures': ["KeyError: 'candidateRetconEligibleRamScans'"], 'canonicalDecision': 'progress; confirmation open', 'pass': False}
+
+======================================================================
+FAIL: test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain (test_audit.CustodyFailureReportingTests.test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 345, in test_unknown_strict_approval_key_fails_even_with_consistent_hash_chain
+    self.assertFalse(result['pass']);self.assertIn('accepted authority exact original approval payload',result['checked']);self.assertIn('new issue114 strict20-key typed approval',result['failures'])
+                                                                                                                           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'new issue114 strict20-key typed approval' not found in ['new issue118 strict20-key typed approval', 'ValueError: Canonical provenance capsule required: provenance/profile.json']
+
+======================================================================
+FAIL: test_full_metrics_and_exact_ratio (test_audit.IntegrityTests.test_full_metrics_and_exact_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 38, in test_full_metrics_and_exact_ratio
+    r=self.reduce();self.assertTrue(r['valid'],r);self.assertTrue(r['timingPass'])
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpyg4vsvze/synthetic.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpyg4vsvze/markers.txt', 'valid': False, 'recordingSHA256': '06fbebc5a311d7481834dbf35d1142af0e3478fa2aab341a12c8d946f4623d3a', 'markerSHA256': 'be2fa6f11cfb4f9180cd9994a4f4b8595a38aed622595366b26ab860cfa59ec0', 'error': "KeyError: 'rawRamEvents'", 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+======================================================================
+FAIL: test_max75_is_rejection_not_rewritten_value (test_audit.IntegrityTests.test_max75_is_rejection_not_rewritten_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 56, in test_max75_is_rejection_not_rewritten_value
+    r=self.reduce(stats=stats);self.assertTrue(r['valid']);self.assertFalse(r['timingPass']);self.assertEqual(r['maxMs'],75)
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_skip_is_retained (test_audit.IntegrityTests.test_skip_is_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 64, in test_skip_is_retained
+    r=self.reduce(stats=stats);self.assertTrue(r['valid']);self.assertEqual(r['skips'],1);self.assertFalse(r['timingPass'])
+                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_snapshot_boot_source_hash_graph_and_live_binding_mutations (test_audit.QualifiedRuntimeIntegrationTests.test_snapshot_boot_source_hash_graph_and_live_binding_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 592, in test_snapshot_boot_source_hash_graph_and_live_binding_mutations
+    self.assertFalse(audit.audit_runner_image(e,h,r,p,e/'provenance/source')['pass'],case)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : policy
+
+======================================================================
+FAIL: test_different_approval_target_ignored (test_audit.RevocationPolicyTests.test_different_approval_target_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 293, in test_different_approval_target_ignored
+    def test_different_approval_target_ignored(self):self.assertTrue(self.check_case('wrong-target')['pass'])
+                                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_foreign_malformed_and_matching_run_ignored (test_audit.RevocationPolicyTests.test_foreign_malformed_and_matching_run_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 292, in test_foreign_malformed_and_matching_run_ignored
+    for case in ['foreign-malformed','foreign-matching']:self.assertTrue(self.check_case(case)['pass'],case)
+                                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : foreign-malformed
+
+======================================================================
+FAIL: test_missing_approval_target_ignored (test_audit.RevocationPolicyTests.test_missing_approval_target_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 294, in test_missing_approval_target_ignored
+    def test_missing_approval_target_ignored(self):self.assertTrue(self.check_case('missing-target')['pass'])
+                                                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings (test_audit.RuntimeV2CaseTests.test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 693, in test_v2_freeze_repository_origin_capsule_profile_and_live_case_bindings
+    self.assertFalse(self.image_result(e,p,h,r)['pass'],case)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : originpath
+
+======================================================================
+FAIL: test_streaming_replay_without_materializing_recording (test_audit.StreamingArchiveTests.test_streaming_replay_without_materializing_recording)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-wake/benchmarks/keel-wake-v1/independent-analysis/test_audit.py", line 134, in test_streaming_replay_without_materializing_recording
+    self.assertTrue(r['valid'],r);self.assertEqual(r['wins'],1)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: False is not true : {'recording': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpa5hojg7y/z.zip!/stage/raw.battle.gz', 'markers': '/var/folders/8q/cs9f976s609fmvyt9r4jxhzc0000gn/T/tmpa5hojg7y/z.zip!/stage/markers.txt', 'valid': False, 'recordingSHA256': 'f4e8802b25f793546b60a1ebe52914f7e95d605faa6b7ffe86ac2803ac19ccb7', 'markerSHA256': 'bc20d6026ab5929b92eadc63fcbba0fe0342e1ca5fc7834b5722a678968f1d42', 'error': "KeyError: 'rawRamEvents'", 'partialCounters': {'shots': 2, 'hits': 1, 'shotEnergy': 1.1, 'damageDealt': 0.4, 'enemyShots': 2, 'enemyHits': 1, 'enemyShotEnergy': 2.5, 'damageTaken': 10, 'wallContacts': 1, 'botContacts': 1, 'bulletCollisions': 1}, 'partialMarkerObservation': {'exists': True, 'skips': [], 'reportedTimingViolations': [], 'unparseableLines': []}, 'observedPhysicalRoundIds': [1], 'observedRoundEndpointIds': [1], 'observedTickCounts': {1: 2}, 'budgetLimit': 'Observed round IDs are a lower bound if the recording/process was interrupted; do not invent unrecorded rounds.'}
+
+----------------------------------------------------------------------
+Ran 69 tests in 0.947s
+
+FAILED (failures=14, errors=1)
