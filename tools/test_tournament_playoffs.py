@@ -14,6 +14,16 @@ def result(a, b, score_a=100, score_b=50, places_a=12, places_b=8, game=1):
         dict(name=b, totalScore=score_b, firstPlaces=places_b)]))
 
 
+def swiss_fixture(output):
+    """Use the committed score-only evidence, never require private raw reports."""
+    path = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04/official-results.json'
+    reports = [r for r in json.loads(path.read_text())['stages'] if r['stage'].startswith('swiss-')]
+    if len(reports) != 4:
+        raise ValueError('Expected four committed Swiss score reports')
+    for report in reports:
+        tournament.save(output / (report['stage']+'.json'), report)
+
+
 class PlayoffTest(unittest.TestCase):
     def pair(self):
         return dict(matchId='U1', a='A', b='B', games=[result('A', 'B'), result('A', 'B', game=2)])
@@ -90,14 +100,10 @@ class PlayoffTest(unittest.TestCase):
         self.assertEqual(15, sum(len(r['draw']) for r in reports))
 
     def test_canonical_context_freeze_and_history_validation(self):
-        # Use the actual frozen Swiss reports as input, but generate only toy playoff results.
-        original = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04'
-        if not (original / 'swiss-4.json').is_file():
-            self.skipTest('Local canonical Swiss fixture unavailable')
+        # Generate only toy playoff results over the committed Swiss score fixture.
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
-            for i in range(1, 5):
-                (root / f'swiss-{i}.json').write_bytes((original / f'swiss-{i}.json').read_bytes())
+            swiss_fixture(root)
             pairs, meta = playoffs.context(root, 1)
             self.assertEqual(pairs, playoffs.context(root, 1)[0])
             self.assertEqual([('KeelHelm','AISurvivor'),('Breakwater','Adaptive Prime'),('Keel','Meridian'),('Diamond Port','Prism')], [(p['a'],p['b']) for p in pairs])
@@ -120,14 +126,10 @@ class PlayoffTest(unittest.TestCase):
         self.assertNotIn('secret', json.dumps(public))
 
     def test_each_canonical_wave_and_reset_gate(self):
-        original = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04'
-        if not (original / 'swiss-4.json').is_file():
-            self.skipTest('Local canonical Swiss fixture unavailable')
         for reset in (False, True):
             with self.subTest(reset=reset), tempfile.TemporaryDirectory() as d:
                 root = Path(d)
-                for i in range(1, 5):
-                    (root/f'swiss-{i}.json').write_bytes((original/f'swiss-{i}.json').read_bytes())
+                swiss_fixture(root)
                 for wave in range(1, 8 if reset else 7):
                     pairs, _ = playoffs.context(root, wave)
                     for p in pairs:
