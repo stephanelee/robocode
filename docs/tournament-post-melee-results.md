@@ -89,3 +89,5 @@ Run from the repository root using the separate video environment for rendering:
 
 [Prospective protocol](tournament-post-melee-protocol.md) and
 [current event hub](../tournament/events/2026-11-04/README.md).
+
+[Source and documentation PR #122](https://github.com/stephanelee/robocode/pull/122).

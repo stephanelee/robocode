@@ -323,4 +323,5 @@ Both four-bot movies, original recordings and full archive retained. The website
 provides a separate exhibition page and two replay buttons; older lower-bracket
 public archival follows the user's existing authorization.
 [Protocol](tournament-post-melee-protocol.md),
-[measured report/raw evidence](tournament-post-melee-results.md).
+[measured report/raw evidence](tournament-post-melee-results.md),
+[PR #122](https://github.com/stephanelee/robocode/pull/122).
