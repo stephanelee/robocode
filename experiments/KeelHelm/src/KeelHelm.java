@@ -16,6 +16,8 @@ public final class KeelHelm extends Bot {
     private final Surfer surfer = new Surfer();
     private final Gun gun = new Gun();
     private final MeleePolicy melee = new MeleePolicy();
+    private final MeleeGun meleeGun = new MeleeGun();
+    private final int meleeFeatures;
     private int meleeTurns, meleeShots, duelTransitions;
     private final Track me = new Track(), enemy = new Track();
     private final Map<Integer, Double> corrections = new HashMap<>();
@@ -31,7 +33,12 @@ public final class KeelHelm extends Bot {
     static final double LEAD = 15, BASE_POWER = 1.2;
 
     KeelHelm() { this(BotInfo.fromFile("KeelHelm.json")); }
-    KeelHelm(BotInfo info) { super(info); }
+    KeelHelm(BotInfo info) { this(info, Integer.parseInt(System.getenv().getOrDefault("KEEL_HELM_MELEE_FEATURES", "0"))); }
+    KeelHelm(BotInfo info, int features) {
+        super(info);
+        if (features < 0 || (features & ~15) != 0) throw new IllegalArgumentException("Unknown melee feature mask");
+        meleeFeatures = features;
+    }
     public static void main(String[] args) { new KeelHelm().start(); }
 
     private synchronized void mark(String value) {
@@ -48,6 +55,7 @@ public final class KeelHelm extends Bot {
         radarSign = orbitDir;
         // RoundStarted precedes the first tick: tick-backed API getters are unavailable here.
         melee.newRound(0);
+        meleeGun.newRound();
         meleeTurns = 0; meleeShots = 0; duelTransitions = 0;
         mark("start");
     }
@@ -58,7 +66,11 @@ public final class KeelHelm extends Bot {
                 + " headingChangedSteps=" + surfer.headingChangedSteps
                 + " secondWaveEvaluations=" + surfer.secondWaveEvaluations
                 + " executedStopNow=" + surfer.executedStopNow
-                + " meleeTurns=" + meleeTurns + " meleeShots=" + meleeShots + " duelTransitions=" + duelTransitions);
+                + " meleeTurns=" + meleeTurns + " meleeShots=" + meleeShots + " duelTransitions=" + duelTransitions
+                + " features=" + meleeFeatures + " virtualConfirmed=" + meleeGun.confirmed + " virtualResolved=" + meleeGun.resolved
+                + " meleeGunChoices=" + java.util.Arrays.toString(meleeGun.choices)
+                + " powerChanges=" + meleeGun.changedPowerShots + " smartDifferences=" + melee.smartDifferences
+                + " riskDifferences=" + melee.riskDifferences);
         mark("end");
     }
     @Override public void onSkippedTurn(SkippedTurnEvent e) { mark("skip " + e.getTurnNumber()); }
@@ -69,7 +81,10 @@ public final class KeelHelm extends Bot {
     }
     @Override public void onBulletHitWall(BulletHitWallEvent e) { dropOwn(e.getBullet().getBulletId()); }
     @Override public void onBulletFired(BulletFiredEvent e) {
-        if (melee.active()) return;
+        if (melee.active()) {
+            if ((meleeFeatures & 7) != 0) meleeGun.confirm(e.getTurnNumber(), e.getBullet().getPower());
+            return;
+        }
         var b = e.getBullet();
         Phys.Pose o = me.get(e.getTurnNumber() - 1);
         if (o == null) return;
@@ -100,6 +115,7 @@ public final class KeelHelm extends Bot {
         int t = e.getTurnNumber();
         if (getEnemyCount() > 1) {
             melee.observe(e.getScannedBotId(), t, e.getX(), e.getY(), e.getDirection(), e.getSpeed(), e.getEnergy());
+            if ((meleeFeatures & 7) != 0) meleeGun.observe(e.getScannedBotId(), t, e.getX(), e.getY());
             return;
         }
         enterDuel();
@@ -134,10 +150,11 @@ public final class KeelHelm extends Bot {
         ex = p.x(); ey = p.y(); eEnergy = e.getEnergy(); scanT = t;
     }
 
-    @Override public void onBotDeath(BotDeathEvent e) { melee.died(e.getVictimId()); }
+    @Override public void onBotDeath(BotDeathEvent e) { melee.died(e.getVictimId()); meleeGun.died(e.getVictimId()); }
 
     private void enterDuel() {
         if (!melee.enterDuel(getEnemyCount())) return;
+        meleeGun.clearTransient();
         surfer.newRound(); gun.newRound(); me.clear(); enemy.clear(); corrections.clear();
         scanT = -1; ePrevT = -1; ePrev = null; stuck = 0;
         duelTransitions++;
@@ -147,19 +164,25 @@ public final class KeelHelm extends Bot {
         melee.activate();
         meleeTurns++;
         setRadarTurnRate(45 * radarSign);
-        MeleePolicy.Command command = melee.move(t, self, getEnergy(), w, h);
+        MeleePolicy.Command command = melee.move(t, self, getEnergy(), w, h, (meleeFeatures & 8) != 0);
         setTurnRate(command.turn()); setTargetSpeed(command.speed());
-        MeleePolicy.Opponent target = melee.target(t, self);
+        MeleePolicy.Opponent target = (meleeFeatures & 4) != 0
+                ? melee.targetSmart(t, self, getGunDirection(), getEnergy(), w, h, meleeGun, meleeFeatures) : melee.target(t, self);
         if (target == null) { setGunTurnRate(0); return; }
         double d = Phys.distance(self.x(), self.y(), target.x, target.y);
-        double power = MeleePolicy.power(d, getEnergy(), target.energy);
-        Phys.Pose predicted = MeleePolicy.intercept(target, t, self, power, w, h);
-        double aim = Phys.bearing(self.x(), self.y(), predicted.x(), predicted.y());
+        int model = meleeGun.choice(target.id, (meleeFeatures & 1) != 0);
+        double power = meleeGun.power(target, d, getEnergy(), model, (meleeFeatures & 2) != 0);
+        double[] angles = MeleeGun.angles(target, t, self, power, w, h);
+        double aim = angles[model];
         double error = Phys.norm(aim - getGunDirection());
         setGunTurnRate(error);
         double halfWidth = Math.toDegrees(Math.atan(Phys.BOT_RADIUS / Math.max(36, d)));
         if (t - target.turn <= 12 && getGunHeat() == 0 && Math.abs(error) <= halfWidth * 0.9
-                && getEnergy() > power + 0.5 && setFire(power)) meleeShots++;
+                && getEnergy() > power + 0.5 && setFire(power)) {
+            meleeShots++;
+            if ((meleeFeatures & 7) != 0) meleeGun.queue(t + 1, self, power, angles, target, model,
+                    power != MeleePolicy.power(d,getEnergy(),target.energy));
+        }
     }
 
     private static int latDir(Phys.Pose target, double sx, double sy, int fallback) {

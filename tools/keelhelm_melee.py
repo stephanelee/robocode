@@ -50,11 +50,11 @@ def schedule():
                               seed=2026110521+slot, order=['KeelHelm', name]))
     return games
 
-def collect(source, evidence, pins, java, python):
+def collect(source, evidence, pins, java, python, *, control_jar_sha=None, schedule_rows=None, extra_paths=()):
     candidate = ROOT/'experiments/KeelHelm'
     control = evidence/'control-source'
     paths = files(candidate) + files(control) + [pins/'entry-manifests.json',pins/'shared-inputs.json']
-    paths += [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
+    paths += list(extra_paths) + [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
               ROOT/'docs/improvements/keelhelm-melee-v1-protocol.md',
               ROOT/'docs/improvements/keelhelm-melee-v2-protocol.md']
     bases = {'Diamond Port': source/'guest-source/bots/ports/diamond-port',
@@ -70,7 +70,7 @@ def collect(source, evidence, pins, java, python):
             entrant += [source/f'experiments/{name}/{name}.jar',source/f'experiments/{name}/build.gradle']
         if {str(p.relative_to(source)):sha(p) for p in entrant} != registered[name]:
             raise ValueError('Tournament opponent pin changed: '+name)
-    if sha(control/'KeelHelm.jar') != sha(source/'experiments/KeelHelm/KeelHelm.jar'):
+    if sha(control/'KeelHelm.jar') != (control_jar_sha or sha(source/'experiments/KeelHelm/KeelHelm.jar')):
         raise ValueError('Control differs from the frozen champion JAR')
     for name, base in bases.items():
         paths += files(base)
@@ -106,7 +106,7 @@ def collect(source, evidence, pins, java, python):
     identities = {name:json.loads(next(base.glob('*.json')).read_text()) for name, base in bases.items()}
     return dict(source=str(source),evidence=str(evidence),files={str(p):sha(p) for p in sorted(set(paths))}, bases={n:str(p) for n,p in bases.items()},
                 identities={n:{k:v[k] for k in ('name','version')} for n,v in identities.items()},
-                java=str(java), python=str(python), schedule=schedule(), parent=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT,text=True).strip(),
+                java=str(java), python=str(python), schedule=schedule() if schedule_rows is None else schedule_rows, parent=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT,text=True).strip(),
                 runtime=dict(host=platform.node(), platform=platform.platform(), python=sys.version,
                     java=java_version, botPython=python_runtime))
 
@@ -169,11 +169,12 @@ def telemetry(path, rounds):
             raise ValueError('Own timing/coverage guard failed')
     return rows
 
-def execute(command, env, run):
+def execute(command, env, run, process_callback=None):
     cleanup = {}; start = time.monotonic()
     with (run/'runner.log').open('x') as log:
         process = subprocess.Popen(command,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         try:
+            if process_callback is not None: process_callback(process.pid)
             while process.poll() is None:
                 if time.monotonic()-start > 960: raise TimeoutError('Game timeout')
                 metrics = run/'helm-metrics.txt'
@@ -219,7 +220,7 @@ def stage_bots(game, source, evidence, freeze, run):
             shutil.copy2(jar,dst/jar.name)
         for sh in dst.glob('*.sh'): sh.chmod(0o755)
         d=json.loads(next(dst.glob('*.json')).read_text());identities.append((d['name'],d['version']));botdirs.append(str(dst))
-    if game['scenario']=='melee':
+    if 'Diamond Port' in game['order']:
         shutil.copytree(source/'guest-source/bots/bot_core',run/'bots/bot_core')
         shutil.copy2(source/'guest-source/LICENSE',run/'bots/LICENSE.shared-Apache-2.0')
     if game['scenario'] in ('Walls','SpinBot'): shutil.copytree(source/'samples/lib',run/'bots/lib')
