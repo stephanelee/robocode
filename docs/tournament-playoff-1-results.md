@@ -38,4 +38,4 @@ Independent pre-play review approved the seeded draw, tie rules, stop-on-failure
 
 The public Site now has separate Home, Matches, Bots and Rules pages. Fourteen Swiss Round 4 replay buttons sit beside their game scores, with the player alongside the result cards, slower speed controls and no game-selection dropdown. New playoff recordings are retained locally; no new playoff MP4 is claimed. All four pages passed static link/data checks and nonbrowser render/player-state checks. Browser layout/playback inspection remains unavailable in the current Work settings.
 
-[PR #117](https://github.com/stephanelee/robocode/pull/117) contains the bracket runner, tests, running guide, website template and score-only evidence. [Public matches](https://robocode-elimination-cup.stephane-lee.chatgpt.site/matches.html). No merge by the implementation agent.
+[PR #120](https://github.com/stephanelee/robocode/pull/120) contains the bracket runner, tests, running guide, website template and score-only evidence. [Public matches](https://robocode-elimination-cup.stephane-lee.chatgpt.site/matches.html). No merge by the implementation agent.
