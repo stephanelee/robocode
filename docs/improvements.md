@@ -330,3 +330,7 @@ Original study stopped: unchanged control skipped Round13 turns1/2/3; sibling fi
 ## 2026-11-05 — KeelHelm follow-up2: accuracy-power
 
 Decision reject: melee 30.78% -> 30.61% (-0.17pp). Exactly20 games/260rounds; positive policy exposure3564; all evidence/resource guards valid. Other guard outcomes, source/JAR/runtime pins and retained raw artifacts are in the [full report](improvements/keelhelm-followup-2-accuracy-power-results.md). [Protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No tuning or pooling; next accepted mask0.
+
+## 2026-11-05 — KeelHelm target-selection: invalid serial timing
+
+Stop the serial continuation: candidate skipped Round 18 turns 1/2/3 with only one engine game running. Two started games consumed 37 completed rounds plus one partial; eighteen stage-3 games and all stage-4 games remain unplayed. Resource guards and verified teardown passed; cause unknown. No promotion, retry or pooling. Serial spend is 297 completed plus one partial; total development accounting is 849 completed plus two partial. All new features remain disabled. [Failure report/raw evidence](improvements/keelhelm-followup-3-serial-invalid.md), [serial protocol](improvements/keelhelm-followups-serial-protocol.md), [PR 126](https://github.com/stephanelee/robocode/pull/126).
