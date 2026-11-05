@@ -1,0 +1,9 @@
+# Independent exact prepared-cohort registration approval
+
+2026-11-04. **Approve publication of exactly these registration bytes to trigger the user-authorized100 NEW Diamond-only rounds, five cold20-round games.** Reviewer launches no games; no retry/replacement/resume/tuning/confirmation/promotion/merge approved.
+
+File /tmp/facet-cohort-fix/final-freeze.json independently hashes to `1713338d6b6cd9d0d271173a4243f238642913ebe3e717d72b471feaf07ecb58`. All40 file pins and45 source/input hashes independently validate; authorize_registration passes. Exact candidate61677622675ca7ac536f3ef5b89b5cce82176f4e, user100 scope, Diamond-only5x20 and requirePreparedCohort=true verified.
+
+Structural comparison to approved proposal315132432577dc621edf4f25f466dccb4edffdbff99fdc1d711128d17018543f: only premeasurementApproved=true, final review reference/hash and three added evidence pins (premeasurement approval, independently verified CI, independent code review). Every prior pin unchanged. Copied final approval SHA35704cdf86faa7963506356e4fdc0424a35ee4d4d46ba98303cb6a7d98d90719 matches registration. Source22c032253036c936116046f939b0196c8291d45597c9e6ee2387055f64be4f4b, JAR9b489b8429b01ff96caba378fbb481ddac6811a9a48b522649b3e4ea0eccb174, profile/runtime/opponents/schedule/gates unchanged. All seven applicable actual CI checks were independently verified successful before this final step.
+
+Preserve prior invalid140/20 and valid rejected100 separately/immutably/unpooled. New100 would yield physical total360/Diamond220 if complete; old unrun games are not resumed or replaced. Publish these exact bytes before acquisition, retain runtime/parity/readiness checks and all-shot prepared-cohort integrity guards, stop on invalidity with every outcome retained. No further scope inherits approval. No new game had run at this revalidation time.

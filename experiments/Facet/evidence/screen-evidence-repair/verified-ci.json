@@ -1,0 +1,588 @@
+{
+  "candidateCommit": "57ec8d521ccb4547240e36964e9a0c7bcf24ad66",
+  "source": "read-only GitHub workflow jobs API; metadata only",
+  "runs": [
+    {
+      "id": 41883596477,
+      "jobs": [
+        {
+          "id": 126762070509,
+          "name": "Java 17 build and tests",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596477,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and test from source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Verify checked-in JAR matches source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Test final experimental output barrier (no games)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Test isolated Challenger lifecycle and verify its JAR",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Test isolated Keel experiment and verify its JAR",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Build Meridian, test its physics and compare the committed JAR",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Build Prism, run its engine-trace and semantic tests, and compare the committed JAR",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Upload test reports",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Upload runnable bot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            },
+            {
+              "name": "Post Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 26
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 27
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 28
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 29
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41883596717,
+      "jobs": [
+        {
+          "id": 126762071159,
+          "name": "facet",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596717,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Build Facet, run semantics, verify committed artifact",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Test screen evidence and acquisition guards without battles",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41883596478,
+      "jobs": [
+        {
+          "id": 126762070375,
+          "name": "Record actual 1.4.0 bullet scan timing",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596478,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Record two stationary probes using the pinned official runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Preserve raw events and source/runtime provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41883596912,
+      "jobs": [
+        {
+          "id": 126762071475,
+          "name": "fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596912,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Offline movement and swept-corridor fixtures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Legal-scan schema and leakage fixtures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Synthetic label preparation only (no collection or training)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Frozen development then withheld component suites",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Verify raw artifacts reproduce recorded summaries",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41883596576,
+      "jobs": [
+        {
+          "id": 126762070303,
+          "name": "Headless battle smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596576,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Test benchmark tooling",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Build current bot from source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run headless reference experiment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Print canonical experiment evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Upload experiment and dashboard",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41883596960,
+      "jobs": [
+        {
+          "id": 126762071763,
+          "name": "Retcon 1v1 compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41883596960,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build and verify AISurvivor under Java 17",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install Retcon source-launch runtime after Gradle finishes",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run bounded actual Retcon matches",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Print canonical Retcon evidence and failure diagnostics",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Upload Retcon evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Install Retcon source-launch runtime after Gradle finishes",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

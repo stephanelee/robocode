@@ -1,0 +1,80 @@
+Approved API SHA256: ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752
+Command: JAVA17/bin/javap -p -c -classpath official/robocode-tankroyale-bot-api-1.4.0.jar dev.robocode.tankroyale.botapi.internal.WebSocketHandler
+  private void handleRoundEnded(com.google.gson.JsonObject);
+    Code:
+       0: aload_1
+       1: ldc           #74                 // class dev/robocode/tankroyale/schema/RoundEndedEventForBot
+       3: invokestatic  #58                 // Method dev/robocode/tankroyale/botapi/internal/json/JsonConverter.fromJson:(Lcom/google/gson/JsonObject;Ljava/lang/Class;)Ljava/lang/Object;
+       6: checkcast     #74                 // class dev/robocode/tankroyale/schema/RoundEndedEventForBot
+       9: astore_2
+      10: new           #75                 // class dev/robocode/tankroyale/botapi/events/RoundEndedEvent
+      13: dup
+      14: aload_2
+      15: invokevirtual #76                 // Method dev/robocode/tankroyale/schema/RoundEndedEventForBot.getRoundNumber:()Ljava/lang/Integer;
+      18: invokevirtual #70                 // Method java/lang/Integer.intValue:()I
+      21: aload_2
+      22: invokevirtual #77                 // Method dev/robocode/tankroyale/schema/RoundEndedEventForBot.getTurnNumber:()Ljava/lang/Integer;
+      25: invokevirtual #70                 // Method java/lang/Integer.intValue:()I
+      28: aload_2
+      29: invokevirtual #78                 // Method dev/robocode/tankroyale/schema/RoundEndedEventForBot.getResults:()Ldev/robocode/tankroyale/schema/ResultsForBot;
+      32: ifnull        45
+      35: aload_2
+      36: invokevirtual #78                 // Method dev/robocode/tankroyale/schema/RoundEndedEventForBot.getResults:()Ldev/robocode/tankroyale/schema/ResultsForBot;
+      39: invokestatic  #79                 // Method dev/robocode/tankroyale/botapi/mapper/ResultsMapper.map:(Ldev/robocode/tankroyale/schema/ResultsForBot;)Ldev/robocode/tankroyale/botapi/BotResults;
+      42: goto          46
+      45: aconst_null
+      46: invokespecial #80                 // Method dev/robocode/tankroyale/botapi/events/RoundEndedEvent."<init>":(IILdev/robocode/tankroyale/botapi/BotResults;)V
+      49: astore_3
+      50: aload_0
+      51: getfield      #10                 // Field botEventHandlers:Ldev/robocode/tankroyale/botapi/internal/BotEventHandlers;
+      54: getfield      #81                 // Field dev/robocode/tankroyale/botapi/internal/BotEventHandlers.onRoundEnded:Ldev/robocode/tankroyale/botapi/internal/EventHandler;
+      57: aload_3
+      58: invokevirtual #17                 // Method dev/robocode/tankroyale/botapi/internal/EventHandler.publish:(Ljava/lang/Object;)V
+      61: aload_0
+      62: getfield      #11                 // Field internalEventHandlers:Ldev/robocode/tankroyale/botapi/internal/InternalEventHandlers;
+      65: getfield      #82                 // Field dev/robocode/tankroyale/botapi/internal/InternalEventHandlers.onRoundEnded:Ldev/robocode/tankroyale/botapi/internal/EventHandler;
+      68: aload_3
+      69: invokevirtual #17                 // Method dev/robocode/tankroyale/botapi/internal/EventHandler.publish:(Ljava/lang/Object;)V
+      72: aload_0
+      73: getfield      #5                  // Field baseBotInternals:Ldev/robocode/tankroyale/botapi/internal/BaseBotInternals;
+      76: invokevirtual #24                 // Method dev/robocode/tankroyale/botapi/internal/BaseBotInternals.flushFinalTurnEvents:()V
+      79: aload_0
+      80: getfield      #5                  // Field baseBotInternals:Ldev/robocode/tankroyale/botapi/internal/BaseBotInternals;
+      83: invokevirtual #83                 // Method dev/robocode/tankroyale/botapi/internal/BaseBotInternals.transferStdOutToBotIntent:()V
+      86: return
+
+
+  private void handleGameEnded(com.google.gson.JsonObject);
+    Code:
+       0: aload_1
+       1: ldc           #122                // class dev/robocode/tankroyale/schema/GameEndedEventForBot
+       3: invokestatic  #58                 // Method dev/robocode/tankroyale/botapi/internal/json/JsonConverter.fromJson:(Lcom/google/gson/JsonObject;Ljava/lang/Class;)Ljava/lang/Object;
+       6: checkcast     #122                // class dev/robocode/tankroyale/schema/GameEndedEventForBot
+       9: astore_2
+      10: new           #123                // class dev/robocode/tankroyale/botapi/events/GameEndedEvent
+      13: dup
+      14: aload_2
+      15: invokevirtual #124                // Method dev/robocode/tankroyale/schema/GameEndedEventForBot.getNumberOfRounds:()Ljava/lang/Integer;
+      18: invokevirtual #70                 // Method java/lang/Integer.intValue:()I
+      21: aload_2
+      22: invokevirtual #125                // Method dev/robocode/tankroyale/schema/GameEndedEventForBot.getResults:()Ldev/robocode/tankroyale/schema/ResultsForBot;
+      25: invokestatic  #79                 // Method dev/robocode/tankroyale/botapi/mapper/ResultsMapper.map:(Ldev/robocode/tankroyale/schema/ResultsForBot;)Ldev/robocode/tankroyale/botapi/BotResults;
+      28: invokespecial #126                // Method dev/robocode/tankroyale/botapi/events/GameEndedEvent."<init>":(ILdev/robocode/tankroyale/botapi/BotResults;)V
+      31: astore_3
+      32: aload_0
+      33: getfield      #10                 // Field botEventHandlers:Ldev/robocode/tankroyale/botapi/internal/BotEventHandlers;
+      36: getfield      #127                // Field dev/robocode/tankroyale/botapi/internal/BotEventHandlers.onGameEnded:Ldev/robocode/tankroyale/botapi/internal/EventHandler;
+      39: aload_3
+      40: invokevirtual #17                 // Method dev/robocode/tankroyale/botapi/internal/EventHandler.publish:(Ljava/lang/Object;)V
+      43: aload_0
+      44: getfield      #11                 // Field internalEventHandlers:Ldev/robocode/tankroyale/botapi/internal/InternalEventHandlers;
+      47: getfield      #128                // Field dev/robocode/tankroyale/botapi/internal/InternalEventHandlers.onGameEnded:Ldev/robocode/tankroyale/botapi/internal/EventHandler;
+      50: aload_3
+      51: invokevirtual #17                 // Method dev/robocode/tankroyale/botapi/internal/EventHandler.publish:(Ljava/lang/Object;)V
+      54: aload_0
+      55: getfield      #5                  // Field baseBotInternals:Ldev/robocode/tankroyale/botapi/internal/BaseBotInternals;
+      58: invokevirtual #24                 // Method dev/robocode/tankroyale/botapi/internal/BaseBotInternals.flushFinalTurnEvents:()V
+      61: return
+
+
+EventQueue.dispatchEvents removes next event at bytecode128 before dispatch at134. A removed TickEvent may be in a blocked callback, so a prior delivered frame is not proof the final tick was delivered. Expected-turn deferral is necessary.

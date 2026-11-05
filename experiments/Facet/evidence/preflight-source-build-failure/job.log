@@ -1,0 +1,187 @@
+﻿2026-11-04T15:04:13.5704386Z Current runner version: '2.338.2'
+2026-11-04T15:04:13.5728763Z ##[group]Runner Image Provisioner
+2026-11-04T15:04:13.5729672Z Hosted Compute Agent
+2026-11-04T15:04:13.5730274Z Version: 20261028.624
+2026-11-04T15:04:13.5731047Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-04T15:04:13.5731793Z Build Date: 2026-10-28T21:51:42Z
+2026-11-04T15:04:13.5732509Z Worker ID: {86a88d1f-1e17-4389-b900-4de6a4156c9b}
+2026-11-04T15:04:13.5733283Z Region: westus
+2026-11-04T15:04:13.5733841Z Cloud: Azure
+2026-11-04T15:04:13.5734462Z ##[endgroup]
+2026-11-04T15:04:13.5736168Z ##[group]Operating System
+2026-11-04T15:04:13.5736821Z Ubuntu
+2026-11-04T15:04:13.5737456Z 26.04.1
+2026-11-04T15:04:13.5737981Z LTS
+2026-11-04T15:04:13.5738611Z ##[endgroup]
+2026-11-04T15:04:13.5739162Z ##[group]Runner Image
+2026-11-04T15:04:13.5739783Z Image: ubuntu-26.04
+2026-11-04T15:04:13.5740422Z Version: 20261101.186.1
+2026-11-04T15:04:13.5741702Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-04T15:04:13.5743439Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-04T15:04:13.5744405Z ##[endgroup]
+2026-11-04T15:04:13.5746141Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T15:04:13.5748282Z Contents: read
+2026-11-04T15:04:13.5749038Z Metadata: read
+2026-11-04T15:04:13.5749601Z ##[endgroup]
+2026-11-04T15:04:13.5751691Z Secret source: Actions
+2026-11-04T15:04:13.5752690Z Cache mode: write
+2026-11-04T15:04:13.5753465Z Prepare workflow directory
+2026-11-04T15:04:13.6091826Z Prepare all required actions
+2026-11-04T15:04:13.6165317Z Getting action download info
+2026-11-04T15:04:13.9529707Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-04T15:04:14.0647684Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-04T15:04:14.4776029Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-04T15:04:14.6953730Z Complete job name: registered-duels
+2026-11-04T15:04:14.7881095Z ##[group]Run actions/checkout@v4
+2026-11-04T15:04:14.7882007Z with:
+2026-11-04T15:04:14.7882470Z   repository: stephanelee/robocode
+2026-11-04T15:04:14.7886865Z   token: ***
+2026-11-04T15:04:14.7887311Z   ssh-strict: true
+2026-11-04T15:04:14.7887753Z   ssh-user: git
+2026-11-04T15:04:14.7888200Z   persist-credentials: true
+2026-11-04T15:04:14.7888694Z   clean: true
+2026-11-04T15:04:14.7889143Z   sparse-checkout-cone-mode: true
+2026-11-04T15:04:14.7889670Z   fetch-depth: 1
+2026-11-04T15:04:14.7890096Z   fetch-tags: false
+2026-11-04T15:04:14.7890541Z   show-progress: true
+2026-11-04T15:04:14.7890987Z   lfs: false
+2026-11-04T15:04:14.7891402Z   submodules: false
+2026-11-04T15:04:14.7891852Z   set-safe-directory: true
+2026-11-04T15:04:14.7892374Z   allow-unsafe-pr-checkout: false
+2026-11-04T15:04:14.7893189Z ##[endgroup]
+2026-11-04T15:04:15.0984290Z Syncing repository: stephanelee/robocode
+2026-11-04T15:04:15.0987468Z ##[group]Getting Git version info
+2026-11-04T15:04:15.0989006Z Working directory is '/home/runner/work/robocode/robocode'
+2026-11-04T15:04:15.0991039Z [command]/usr/bin/git version
+2026-11-04T15:04:15.1018533Z git version 2.56.0
+2026-11-04T15:04:15.1043213Z ##[endgroup]
+2026-11-04T15:04:15.1060362Z Temporarily overriding HOME='/home/runner/work/_temp/5f3ef6e1-9594-4894-bbcd-858eb054461d' before making global git config changes
+2026-11-04T15:04:15.1062692Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T15:04:15.1066738Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T15:04:15.1143934Z Deleting the contents of '/home/runner/work/robocode/robocode'
+2026-11-04T15:04:15.1147457Z ##[group]Initializing the repository
+2026-11-04T15:04:15.1153117Z [command]/usr/bin/git init /home/runner/work/robocode/robocode
+2026-11-04T15:04:15.1421945Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T15:04:15.1500371Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T15:04:15.1504417Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T15:04:15.1506751Z hint: call:
+2026-11-04T15:04:15.1508599Z hint:
+2026-11-04T15:04:15.1510107Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T15:04:15.1512228Z hint:
+2026-11-04T15:04:15.1513765Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T15:04:15.1524224Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T15:04:15.1536316Z hint:
+2026-11-04T15:04:15.1537748Z hint: 	git branch -m <name>
+2026-11-04T15:04:15.1539207Z hint:
+2026-11-04T15:04:15.1541060Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T15:04:15.1543775Z Initialized empty Git repository in /home/runner/work/robocode/robocode/.git/
+2026-11-04T15:04:15.1548879Z [command]/usr/bin/git remote add origin https://github.com/stephanelee/robocode
+2026-11-04T15:04:15.1553871Z ##[endgroup]
+2026-11-04T15:04:15.1555931Z ##[group]Disabling automatic garbage collection
+2026-11-04T15:04:15.1571860Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T15:04:15.1660472Z ##[endgroup]
+2026-11-04T15:04:15.1662523Z ##[group]Setting up auth
+2026-11-04T15:04:15.1672214Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T15:04:15.1753469Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T15:04:15.2387448Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T15:04:15.2418586Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T15:04:15.2715670Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T15:04:15.2753537Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T15:04:15.3051817Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T15:04:15.3099640Z ##[endgroup]
+2026-11-04T15:04:15.3109275Z ##[group]Fetching the repository
+2026-11-04T15:04:15.3112193Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +14b34fd7a1d3efaf64d1fcd217e5ac439c3db99d:refs/remotes/origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:04:17.6481763Z From https://github.com/stephanelee/robocode
+2026-11-04T15:04:17.6482621Z  * [new ref]         14b34fd7a1d3efaf64d1fcd217e5ac439c3db99d -> origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:04:17.6488102Z ##[endgroup]
+2026-11-04T15:04:17.6489474Z ##[group]Determining the checkout info
+2026-11-04T15:04:17.6491814Z ##[endgroup]
+2026-11-04T15:04:17.6498559Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T15:04:17.6551719Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T15:04:17.6582703Z ##[group]Checking out the ref
+2026-11-04T15:04:17.6588090Z [command]/usr/bin/git checkout --progress --force -B facet/independent-v1-20261104-01a1a639 refs/remotes/origin/facet/independent-v1-20261104-01a1a639
+2026-11-04T15:04:18.0449293Z Switched to a new branch 'facet/independent-v1-20261104-01a1a639'
+2026-11-04T15:04:18.0453958Z branch 'facet/independent-v1-20261104-01a1a639' set up to track 'origin/facet/independent-v1-20261104-01a1a639'.
+2026-11-04T15:04:18.0479977Z ##[endgroup]
+2026-11-04T15:04:18.0534391Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T15:04:18.0560655Z 14b34fd7a1d3efaf64d1fcd217e5ac439c3db99d
+2026-11-04T15:04:18.0881363Z ##[group]Run python3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence build/facet-preflight
+2026-11-04T15:04:18.0882693Z [36;1mpython3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence build/facet-preflight[0m
+2026-11-04T15:04:18.0883373Z [36;1mecho "$RUNNER_TEMP/facet-python-3.13.9/bin" >> "$GITHUB_PATH"[0m
+2026-11-04T15:04:18.0938626Z shell: /usr/bin/bash -e {0}
+2026-11-04T15:04:18.0938927Z ##[endgroup]
+2026-11-04T15:06:39.4018554Z Traceback (most recent call last):
+2026-11-04T15:06:39.4050041Z   File "<string>", line 1, in <module>
+2026-11-04T15:06:39.4051899Z     import ssl,venv,ctypes,lzma,bz2,sqlite3,sys,sysconfig,json; assert sys.version_info[:3]==(3,13,9); print(json.dumps(dict(version=sys.version,ssl=ssl.OPENSSL_VERSION,configArgs=sysconfig.get_config_var("CONFIG_ARGS"),cflags=sysconfig.get_config_var("CFLAGS"))))
+2026-11-04T15:06:39.4053979Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-04T15:06:39.4054991Z   File "/home/runner/work/_temp/facet-python-3.13.9/lib/python3.13/bz2.py", line 17, in <module>
+2026-11-04T15:06:39.4055820Z     from _bz2 import BZ2Compressor, BZ2Decompressor
+2026-11-04T15:06:39.4056596Z ModuleNotFoundError: No module named '_bz2'
+2026-11-04T15:06:39.4506704Z Traceback (most recent call last):
+2026-11-04T15:06:39.4513358Z   File "/home/runner/work/robocode/robocode/tools/facet_python_runtime.py", line 83, in <module>
+2026-11-04T15:06:39.4514496Z     main(p.parse_args())
+2026-11-04T15:06:39.4515086Z     ~~~~^^^^^^^^^^^^^^^^
+2026-11-04T15:06:39.4515727Z   File "/home/runner/work/robocode/robocode/tools/facet_python_runtime.py", line 69, in main
+2026-11-04T15:06:39.4516765Z     report['observed'] = json.loads(subprocess.check_output([str(prefix/'bin/python'),'-c',probe],text=True,env=env))
+2026-11-04T15:06:39.4517666Z                                     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-04T15:06:39.4519504Z   File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+2026-11-04T15:06:39.4520183Z     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+2026-11-04T15:06:39.4520735Z            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-04T15:06:39.4521159Z                **kwargs).stdout
+2026-11-04T15:06:39.4521505Z                ^^^^^^^^^
+2026-11-04T15:06:39.4521898Z   File "/usr/lib/python3.14/subprocess.py", line 578, in run
+2026-11-04T15:06:39.4522425Z     raise CalledProcessError(retcode, process.args,
+2026-11-04T15:06:39.4522908Z                              output=stdout, stderr=stderr)
+2026-11-04T15:06:39.4525287Z subprocess.CalledProcessError: Command '['/home/runner/work/_temp/facet-python-3.13.9/bin/python', '-c', 'import ssl,venv,ctypes,lzma,bz2,sqlite3,sys,sysconfig,json; assert sys.version_info[:3]==(3,13,9); print(json.dumps(dict(version=sys.version,ssl=ssl.OPENSSL_VERSION,configArgs=sysconfig.get_config_var("CONFIG_ARGS"),cflags=sysconfig.get_config_var("CFLAGS"))))']' returned non-zero exit status 1.
+2026-11-04T15:06:39.4846935Z ##[error]Process completed with exit code 1.
+2026-11-04T15:06:39.4950705Z ##[group]Run actions/upload-artifact@v4
+2026-11-04T15:06:39.4951010Z with:
+2026-11-04T15:06:39.4951228Z   name: facet-registered-300-evidence
+2026-11-04T15:06:39.4952559Z   path: build/facet-preflight/
+build/facet-registered-300/results.json
+build/facet-registered-300/registration.json
+build/facet-registered-300/*/battle.json
+build/facet-registered-300/*/FACET_*
+build/facet-registered-300/*/AIS_metrics.jsonl
+build/facet-registered-300/*/runner.log
+experiments/Facet/build/reports/
+build/test-results/
+
+2026-11-04T15:06:39.4953880Z   if-no-files-found: warn
+2026-11-04T15:06:39.4954113Z   compression-level: 6
+2026-11-04T15:06:39.4954330Z   overwrite: false
+2026-11-04T15:06:39.4954543Z   include-hidden-files: false
+2026-11-04T15:06:39.4954780Z ##[endgroup]
+2026-11-04T15:06:39.6687175Z (node:12544) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-04T15:06:39.6688692Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-04T15:06:39.6845791Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T15:06:39.6847966Z The least common ancestor is /home/runner/work/robocode/robocode. This will be the root directory of the artifact
+2026-11-04T15:06:39.6848951Z With the provided path, there will be 3 files uploaded
+2026-11-04T15:06:39.6849770Z Artifact name is valid!
+2026-11-04T15:06:39.6850190Z Root directory input is valid!
+2026-11-04T15:06:40.0977424Z Beginning upload of artifact content to blob storage
+2026-11-04T15:06:40.1379873Z (node:12544) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-04T15:06:40.4680626Z Uploaded bytes 35681
+2026-11-04T15:06:40.5477373Z Finished uploading artifact content to blob storage!
+2026-11-04T15:06:40.5478867Z SHA256 digest of uploaded artifact zip is 969fe63728f62060947b15f5a98eef89927a211f7d88b5aab59b8dd9b62d11bb
+2026-11-04T15:06:40.5481211Z Finalizing artifact upload
+2026-11-04T15:06:41.0678450Z Artifact facet-registered-300-evidence.zip successfully finalized. Artifact ID 13336263876
+2026-11-04T15:06:41.0680684Z Artifact facet-registered-300-evidence has been successfully uploaded! Final size is 35681 bytes. Artifact ID is 13336263876
+2026-11-04T15:06:41.0687794Z Artifact download URL: https://github.com/stephanelee/robocode/actions/runs/41853893986/artifacts/13336263876
+2026-11-04T15:06:41.0940069Z Post job cleanup.
+2026-11-04T15:06:41.1805209Z [command]/usr/bin/git version
+2026-11-04T15:06:41.1853272Z git version 2.56.0
+2026-11-04T15:06:41.1893085Z Temporarily overriding HOME='/home/runner/work/_temp/1f4faa36-86a4-4856-83af-5b580f409eb3' before making global git config changes
+2026-11-04T15:06:41.1895361Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T15:06:41.1900416Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/robocode/robocode
+2026-11-04T15:06:41.1944646Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T15:06:41.1992401Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T15:06:41.2322382Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T15:06:41.2354620Z http.https://github.com/.extraheader
+2026-11-04T15:06:41.2367637Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-04T15:06:41.2436620Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T15:06:41.2765558Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T15:06:41.2803865Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T15:06:41.3252647Z Cleaning up orphan processes
+2026-11-04T15:06:41.3699793Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

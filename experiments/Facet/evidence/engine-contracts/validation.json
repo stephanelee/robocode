@@ -1,0 +1,89 @@
+{
+  "purpose": "own-state contract diagnostics only",
+  "status": "passed",
+  "comparisons": 866,
+  "maxError": {
+    "x": 1.3642420526593924e-12,
+    "y": 8.242295734817162e-13,
+    "speed": 0,
+    "body": 3.126388037344441e-13,
+    "gun": 2.8421709430404007e-13,
+    "radar": 3.126388037344441e-13
+  },
+  "failures": [],
+  "coverage": {
+    "acceleration-positive": 11,
+    "zero-stop-positive": 1,
+    "acceleration-negative": 11,
+    "reverse-negative": 6,
+    "accelerate": 10,
+    "reverse-positive": 6,
+    "zero-stop": 1,
+    "turn-decoupled": 13,
+    "stopped-turn": 8,
+    "before-finite": 1,
+    "finite-distance": 11,
+    "east-align": 10,
+    "wall-east": 130,
+    "inward-align": 50,
+    "inward-drive": 12,
+    "corner-align": 48,
+    "corner-ray": 104
+  },
+  "limitations": [
+    "First attempt failed before game start; preserved in attempt-1/.",
+    "Raw API infinite remaining-distance values use Java Infinity token, which is nonstandard JSON; strict normalized fixtures encode this as a string.",
+    "Runner detects completion marker at turn400 asynchronously; actual last-turn and row counts below include commands delivered before stop takes effect.",
+    "Probe fire is power0.1 and isolated; no competitive interpretation.",
+    "No rejected fire request was exercised. No enemy hit/scan-energy chronology acquisition in this diagnostic.",
+    "No bot-bot collision geometry fixture was acquired."
+  ],
+  "Alpha": {
+    "decisionRows": 434,
+    "lastTurn": 434,
+    "skips": 0,
+    "wallCallbacks": 73
+  },
+  "fire": {
+    "decisionTurn": 55,
+    "requestedFireTurn": 55,
+    "confirmedFireTurn": 56,
+    "firstBulletMotionTurn": 56,
+    "acceptedRequests": 1,
+    "confirmedBullets": 1,
+    "errors": {
+      "originX": 0.0,
+      "originY": 0.0,
+      "heading": 0.0,
+      "firstMotionX": 2.2737367544323206e-13,
+      "firstMotionY": 6.252776074688882e-13,
+      "fireHeat": 0.0
+    },
+    "origin": [
+      476.515472894236,
+      135.978869498657
+    ],
+    "headingDegrees": 325.523469864873,
+    "heatAtCreation": 1.02
+  },
+  "wallContactObserved": true,
+  "cornerContactObserved": true,
+  "Beta": {
+    "decisionRows": 434,
+    "lastTurn": 434,
+    "skips": 0,
+    "wallCallbacks": 0
+  },
+  "fixturesSHA256": "74a52a1601732700d089fd4b499b00652410a1c29592dfc6d5774bfa32a6d41c",
+  "runtime": "openjdk version \"17.0.21.0.3\" 2026-10-24\nOpenJDK Runtime Environment Homebrew (build 17.0.21.0.3+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.21.0.3+0, mixed mode, sharing)\n",
+  "os": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "hashes": {
+    "Alpha.jsonl": "37197b36fdae29766e43df57f85dad513228f47e2998e3baa414695fe950c2f7",
+    "Beta.jsonl": "96b1d0de90ef08a9efeb8ec0639b5bfcc4c87b1d50aa0e6a40d24a0399969abe",
+    "ContractProbe.java": "d44e4e7fa824c6293c88903415c829e9513451b091e0bac4c166bc8a551c3d22",
+    "ContractRunner.java": "e1bae4d8e309e48aad5e3032a0ed80de70eba6a0b858a9b74be1ca702cb50d42",
+    "official-server.jar": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
+    "validate.py": "11338709674b14c2dab88ffc3a302bfa1f22e4430f84d69a86d184090acc45fc",
+    "protocol.md": "8ba69a28feb6d649efba43e4e02dd9abc7a25fade07afa848ca23253c4498078"
+  }
+}

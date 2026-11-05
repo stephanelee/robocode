@@ -1,0 +1,43 @@
+plugins { id 'java'; id 'application' }
+java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
+repositories { mavenCentral() }
+dependencies { implementation 'dev.robocode.tankroyale:robocode-tankroyale-bot-api:1.4.0' }
+application { mainClass = 'Facet' }
+tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8'; options.debugOptions.debugLevel = 'source,lines' }
+jar {
+ archiveFileName = 'Facet.jar'
+ manifest { attributes 'Main-Class': 'Facet', 'Multi-Release': 'true' }
+ duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+ from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+ exclude 'META-INF/*.SF', 'META-INF/*.RSA', 'META-INF/*.DSA'
+ preserveFileTimestamps = false
+ reproducibleFileOrder = true
+}
+tasks.register('semanticTest', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.runtimeClasspath
+ mainClass = 'FacetSemanticTest'
+ workingDir = rootProject.projectDir
+ jvmArgs '-Xmx256m'
+}
+tasks.register('adapterConcurrencyTest', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.runtimeClasspath
+ mainClass = 'AdapterConcurrencyTest'
+ workingDir = rootProject.projectDir
+ jvmArgs '-Xmx256m'
+}
+tasks.register('preparedCohortTest', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.runtimeClasspath
+ mainClass = 'PreparedCohortTest'
+ workingDir = rootProject.projectDir
+ jvmArgs '-Xmx256m'
+}
+test { dependsOn semanticTest, adapterConcurrencyTest, preparedCohortTest }
+tasks.register('verifyJarParity', Exec) {
+ dependsOn jar
+ commandLine 'python3', 'parity.py', tasks.jar.archiveFile.get().asFile.absolutePath, 'Facet.jar'
+}
+
+check { dependsOn verifyJarParity }

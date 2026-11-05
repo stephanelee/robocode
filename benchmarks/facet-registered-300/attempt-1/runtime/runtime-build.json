@@ -1,0 +1,86 @@
+{
+  "status": "ready-before-any-game",
+  "version": "3.13.9",
+  "sourceURL": "https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz",
+  "sourceSHA256": "ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66",
+  "sourceBytes": 22681368,
+  "configure": [
+    "--with-ensurepip=install",
+    "--disable-test-modules"
+  ],
+  "explicitBuildEnvironment": {
+    "CC": "gcc",
+    "CXX": "g++",
+    "CFLAGS": "-O3 -fno-omit-frame-pointer",
+    "CPPFLAGS": "",
+    "LDFLAGS": ""
+  },
+  "makeJobs": 2,
+  "developmentPackages": [
+    "build-essential",
+    "libssl-dev",
+    "zlib1g-dev",
+    "libffi-dev",
+    "liblzma-dev",
+    "libbz2-dev",
+    "libreadline-dev",
+    "libsqlite3-dev"
+  ],
+  "optimization": "O3, no PGO, no LTO; normal GIL, no experimental JIT",
+  "license": "PSF-2.0 and historical bundled notices; LICENSE copied to evidence",
+  "commands": [
+    [
+      "sudo",
+      "apt-get",
+      "update"
+    ],
+    [
+      "sudo",
+      "apt-get",
+      "install",
+      "--yes",
+      "--no-install-recommends",
+      "build-essential",
+      "libssl-dev",
+      "zlib1g-dev",
+      "libffi-dev",
+      "liblzma-dev",
+      "libbz2-dev",
+      "libreadline-dev",
+      "libsqlite3-dev"
+    ],
+    [
+      "./configure",
+      "--prefix=/home/runner/work/_temp/facet-python-3.13.9",
+      "--with-ensurepip=install",
+      "--disable-test-modules"
+    ],
+    [
+      "make",
+      "-j2"
+    ],
+    [
+      "make",
+      "install"
+    ]
+  ],
+  "observedDevelopmentPackages": "build-essential=12.12ubuntu2.26.04.2\nlibbz2-dev=1.0.8-6ubuntu0.1\nlibffi-dev=3.5.2-4\nliblzma-dev=5.8.3-1ubuntu0.1\nlibreadline-dev=8.3-4\nlibsqlite3-dev=3.46.1-9ubuntu0.3\nlibssl-dev=3.5.5-1ubuntu3.7\nzlib1g-dev=1:1.3.dfsg+really1.3.1-1ubuntu3.2\n",
+  "systemLicenseSHA256": {
+    "build-essential": "5ac244848c8571fcd7044b0c3778cde9e068ce169227b0354a1be519b695358f",
+    "libssl-dev": "6a7da622fe0637a334d2a8fc470852d2ffb77d9a2b2f930f854e32a41ad6ef35",
+    "zlib1g-dev": "9e5b96d63773a5d177ba264254390f792be07e41748ebd94730981c6cac31cc6",
+    "libffi-dev": "25ee86cfccc2b7eb9a156a127f1e1b38c46c231f516ff201912223eaf62ee186",
+    "liblzma-dev": "a9c3f6e1bf373b54e29704e31afd99f5405a32cbc7897608b0f15e9d544882d4",
+    "libbz2-dev": "832ed535ff3c3d025a8d2348eb1b697b89addcf2eaadbc17650262040b9145e2",
+    "libreadline-dev": "00e252bd06d79a7b9bf235934aa1e2e475bd949e9cf179cd388608247d68fac7",
+    "libsqlite3-dev": "7b1679aaa97e6e49ec12460eefa85a82b432053bc468dd89dbdb50f2326589f3"
+  },
+  "compiler": "gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "observed": {
+    "version": "3.13.9 (main, Nov  4 2026, 15:30:34) [GCC 15.2.0]",
+    "ssl": "OpenSSL 3.5.5 27 Jan 2026",
+    "configArgs": "'--prefix=/home/runner/work/_temp/facet-python-3.13.9' '--with-ensurepip=install' '--disable-test-modules' 'CC=gcc' 'CFLAGS=-O3 -fno-omit-frame-pointer' 'LDFLAGS=' 'CPPFLAGS='",
+    "cflags": "-fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -O3 -fno-omit-frame-pointer -O3 -fno-omit-frame-pointer"
+  },
+  "pythonExecutableSHA256": "5987b9dd2fc67c578ef43f175b31840785e0343d76ef1c73e510e8e703f591dc"
+}

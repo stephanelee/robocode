@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "task": "/root/brace_harness_impl",
-  "status": "PURE IMPLEMENTATION READY FOR REVIEW; operational image authority collector unresolved and all freeze/preparation/games ON HOLD",
+  "status": "QUALIFIED FUTURE RUNTIME IMPLEMENTATION READY FOR INDEPENDENT SOURCE REVIEW; no freeze/preparation/game/runtime approval",
   "files": {
     "tools/keel_brace_experiment.py": {
-      "bytes": 97150,
-      "sha256": "9348f3055605f236543fbb29aa7ddf1a058166b57f6703c4797ae3b93a4b9071"
+      "bytes": 103556,
+      "sha256": "a1f6eedaf9a329b5a8c17f9be472a768a0506741fbc155f5734e2cf14bf7399e"
     },
     "tools/KeelBraceBattle.java": {
       "bytes": 3086,
@@ -16,16 +16,28 @@
       "sha256": "19ce6c482f153df92f2ca284e58b9ba1c6bd043a6cc0325978c2c9a7c2d4841c"
     },
     "tools/test_keel_brace_experiment.py": {
-      "bytes": 47806,
-      "sha256": "8f9dece2e2660cf53bd98c97c52d4ac5d243463d194b3c00d77ea3be90940d25"
+      "bytes": 48820,
+      "sha256": "fc52dd91de8a8ed4a85d65096a7c066869698b4bc9145f5d4723a74d3b25d5b4"
     },
     "tools/keel_brace_harness.md": {
-      "bytes": 12560,
-      "sha256": "cf739dceedf9f2bac50cffed707ac1382127e6e228aa4e6c7daf3ef3236e932e"
+      "bytes": 16750,
+      "sha256": "df6f175b521c8923687627ffeee5700a568c3c1c5f88eba91c1e07f6c81fe6b2"
     },
     ".github/workflows/keel-brace-v1.yml": {
-      "bytes": 5842,
-      "sha256": "75ef80d4133d8e731462c65f8e561448920f1d3a489c8c612563a8f727d89b21"
+      "bytes": 6238,
+      "sha256": "6e053e291be88360abb907e7066da3de23154332618dc334ee29eb0e4f97ce2d"
+    },
+    "tools/keel_brace_image_identity.py": {
+      "bytes": 30173,
+      "sha256": "e80c662b37c1d8fd418fbaf2492c45d95c295e8347b4a32f6d3fda898ed0a118"
+    },
+    "tools/test_keel_brace_image_identity.py": {
+      "bytes": 22435,
+      "sha256": "a7eb1ab5c5c95265937d4c4aaf9234dac48e98b5723f06137a82b23081dcd2e2"
+    },
+    "benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json": {
+      "bytes": 9045,
+      "sha256": "080d03c8d69eb2815a5c11920296a74952f2367dffc0749213167ba0a3adaec7"
     }
   },
   "localRuntime": {
@@ -34,10 +46,10 @@
     "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
   },
   "pureTests": {
-    "command": "python3 -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v",
-    "count": 51,
+    "command": "python3 -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v",
+    "count": 73,
     "result": "PASS",
-    "log": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/after-fix-tests.log"
+    "log": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/final-pure-tests-second-resolution.log"
   },
   "workflowValidation": {
     "command": "ruby -ryaml -e YAML.load_file(...)[jobs]",
@@ -53,10 +65,9 @@
     "No candidate JAR hash invented"
   ],
   "imageBlocker": {
-    "environmentClaim": "20261026.180.1",
-    "rawProviderHeaderClaim": "20261025.179.1",
-    "source": "Root independently inspected bootstrap and prior Helm raw logs; zero-game actual metadata authority/schema review pending",
-    "enforcement": "identity calls unconditional image_evidence failure; pure image_consensus rejects environment-only, conflicting and unapproved claims without widening IMAGES"
+    "resolution": "Prospective methodology amendment published at c2b4b4ab74022a670f16e93b6de0f23322e7611e, independent published-text PASS6646260644",
+    "qualification": "Future exact native observations20261025.179.1 AND separate environment20261026.180.1; never canonical VM equivalence or old Helm rescue",
+    "remaining": "Independent exact-source review + actual source freeze/publication/CI + actual same-worker captures/artifact/runtime approval; mandatory independent final provider reconciliation before acceptance or confirmation"
   },
   "revisionEvidence": {
     "reason": "Independent P2: filter unassigned actors before strict authority JSON parsing",
@@ -64,5 +75,14 @@
     "before47TestLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/before/benchmarks/keel-brace-v1/harness-validation/final-pure-tests-image-hold.log",
     "newFixtureFailLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/before-fix-tests.log",
     "newFixturePassLog": "benchmarks/keel-brace-v1/harness-validation/actor-filter-revision/after-fix-tests.log"
+  },
+  "qualifiedRuntimeRevisionEvidence": {
+    "beforeManifest": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/before-manifest.json",
+    "initialFailures": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/initial-integration-tests.log",
+    "firstImageFixtureFailure": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/identity-fixtures-first.log",
+    "finalPass": "benchmarks/keel-brace-v1/harness-validation/qualified-runtime-revision/final-pure-tests-second-resolution.log",
+    "dataInterface": "benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json",
+    "sourceCompile": "All owned .py bytes compile via builtin compile() without execution or pyc output",
+    "workflow": "Ruby YAML parsed sole registered-stage ubuntu-26.04/340minutes"
   }
 }

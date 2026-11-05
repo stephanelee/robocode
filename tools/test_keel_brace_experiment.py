@@ -8,6 +8,7 @@ import unittest
 from unittest import mock
 
 import keel_brace_experiment as k
+from test_keel_brace_image_identity import anchor as image_anchor, review as image_review
 
 
 def markers(candidate=False):
@@ -197,7 +198,7 @@ class LiveAuthority(unittest.TestCase):
         self.artifact = dict(id=50,name='provenance',digest='sha256:'+'d'*64,size_in_bytes=1000,
             created_at='2026-11-04T10:00:00Z',updated_at='2026-11-04T10:00:00Z',expired=False,
             workflow_run=dict(id=9,head_sha='a'*40))
-        k.save(self.out/'profile.json', {'identity':self.ident})
+        k.save(self.out/'profile.json', {'identity':self.ident,'imageIdentity':image_anchor()})
         k.save(self.out/'participant-manifest.json',{});k.save(self.out/'opponent-manifest.json',{})
         k.save(self.reg/'freeze.json',{});k.save(self.reg/'games.json',{})
         k.save(self.out/'dispatch-assignment.json',self.assignment)
@@ -213,7 +214,7 @@ class LiveAuthority(unittest.TestCase):
         self.approval = self.comment(30,k.APPROVAL_PREFIX+'\n'+json.dumps(self.expected),'2026-11-04T10:02:00Z')
         report = dict(approvalPayloadSHA256=k.sha(k.canonical(self.expected)),reviewerTask='/root/independent',
             reviewReport='Checked actual immutable artifacts before games.',
-            agentToolProvenance=dict(reviewerTask='/root/independent',reportGeneratedBeforeGames=True))
+            agentToolProvenance=dict(reviewerTask='/root/independent',reportGeneratedBeforeGames=True,imageIdentityReview=image_review(self.ident)))
         self.report = self.comment(20,k.REPORT_PREFIX+'\n'+json.dumps(report),'2026-11-04T10:01:00Z')
         for name,value in [('approval.json',self.expected),('approval-comment.json',self.approval),
                            ('review-report-comment.json',self.report)]:k.save(self.out/name,value)
@@ -223,7 +224,8 @@ class LiveAuthority(unittest.TestCase):
         self.run=dict(created_at='2026-11-04T09:30:00Z')
         self.remote_tag=None
         for patch in [mock.patch.object(k,'api',side_effect=self.api),mock.patch.object(k,'comments',side_effect=lambda:list(self.current.values())),
-                      mock.patch.object(k,'identity',return_value=self.ident)]:
+                      mock.patch.object(k,'identity',return_value=self.ident),
+                      mock.patch.object(k,'revalidate_image_worker',return_value=dict(snapshotFile='synthetic',snapshotSHA256='f'*64,preparedSnapshotSHA256='2'*64,runtimeProfileSHA256='e'*64))]:
             patch.start();self.addCleanup(patch.stop)
 
     def comment(self, ident, body, timestamp):
@@ -576,6 +578,8 @@ class VirtualCustody(unittest.TestCase):
 
 class ConditionalGate(VirtualCustody):
     def setUp(self):
+        patch=mock.patch.object(k,'verify_final_screen_provenance',return_value={'status':'PASS'})
+        self.final_provenance=patch.start();self.addCleanup(patch.stop)
         rows=Decision().rows('screen')
         for row in rows:row['recordingSHA256']=k.sha(('synthetic-recording-'+row['id']).encode())
         self.decision_bytes=json.dumps(dict(stage='screen',headSHA='a'*40,decision='progress; confirmation open',games=rows)).encode()
@@ -612,6 +616,7 @@ class ConditionalGate(VirtualCustody):
 
     def test_full_confirmation_gate_accepts_lossless_virtual_custody(self):
         k.verify_confirmation_gate(self.out)
+        self.final_provenance.assert_called_once()
         retained=k.load(self.out/'screen-gate-verified.json')
         self.assertEqual(retained['originalArtifact']['id'],30)
         self.assertFalse(list(self.root.rglob('*.battle.gz')))
@@ -628,6 +633,10 @@ class ConditionalGate(VirtualCustody):
             with self.subTest(change=change),self.assertRaises(ValueError):k.verify_confirmation_gate(self.out)
         self.review=base_review;self.jobs=base_jobs;self.artifact=base_artifact;self.run['status']='in_progress'
         with self.assertRaises(ValueError):k.verify_confirmation_gate(self.out)
+
+    def test_unreconciled_screen_never_opens_confirmation(self):
+        self.final_provenance.side_effect=ValueError('PROVENANCE-INCOMPLETE')
+        with self.assertRaisesRegex(ValueError,'PROVENANCE-INCOMPLETE'):k.verify_confirmation_gate(self.out)
 
     def test_inconclusive_original_screen_never_opens_confirmation(self):
         value=k.load(self.root/'kept/decision.json')
@@ -655,8 +664,9 @@ class ImageProvenanceHold(unittest.TestCase):
             k.image_consensus('20261025.179.1',{'fixtureImageFile':'20261025.179.1'},'20261025.179.1')
         self.assertEqual(k.image_consensus('20261026.180.1',{'fixtureImageFile':'20261026.180.1'},'20261026.180.1'),'20261026.180.1')
 
-    def test_real_identity_is_blocked_until_authority_schema_review(self):
-        with self.assertRaisesRegex(ValueError,'UNRESOLVED IMAGE PROVENANCE'):k.identity()
+    def test_real_identity_still_fails_closed_without_actual_stage_snapshots(self):
+        with mock.patch.object(k.image_identity,'policy'),mock.patch.object(k.image_identity,'original',side_effect=ValueError('Missing actual stage snapshots')):
+            with self.assertRaisesRegex(ValueError,'Missing actual stage snapshots'):k.identity()
 
 
 class RemainingBoundaries(unittest.TestCase):

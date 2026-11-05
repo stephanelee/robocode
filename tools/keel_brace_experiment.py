@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import benchmark
 import retcon
 import strong_melee_opponents as native
+import keel_brace_image_identity as image_identity
 
 ROOT = benchmark.ROOT
 REG = ROOT / 'benchmarks/keel-brace-v1'
@@ -236,7 +237,11 @@ def source_assets():
     paths += [ROOT / p for p in ('build.gradle', 'settings.gradle', 'gradlew', 'tools/benchmark.py',
         'tools/retcon.py', 'tools/retcon_stats.py', 'tools/strong_melee_opponents.py', 'tools/verify_jar.py',
         'tools/keel_brace_experiment.py', 'tools/keel_brace_python_proof.py', 'tools/KeelBraceBattle.java',
-        'tools/test_keel_brace_experiment.py', 'tools/keel_brace_harness.md', '.github/workflows/keel-brace-v1.yml',
+        'tools/test_keel_brace_experiment.py', 'tools/keel_brace_image_identity.py',
+        'tools/test_keel_brace_image_identity.py', 'tools/keel_brace_image_probe.py',
+        'docs/improvements/keel-brace-runtime-identity-amendment.md',
+        'benchmarks/keel-brace-v1/runtime-identity-amendment.json',
+        'benchmarks/keel-brace-v1/harness-validation/runtime-identity-data-interface.json', 'tools/keel_brace_harness.md', '.github/workflows/keel-brace-v1.yml',
         '.github/workflows/keel-brace-build.yml', '.github/workflows/ci.yml',
         'tools/opponents/strong-melee.lock.json', 'tools/opponents/retcon.lock.json',
         'docs/improvements/keel-brace-v1.md', 'benchmarks/keel-brace-v1/games.json',
@@ -248,6 +253,8 @@ def source_assets():
     if not (analysis / 'audit.py').is_file():
         raise ValueError('Independent outcome reducer must exist before source freeze')
     paths += [p for p in analysis.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+    fixture = REG / 'image-probe-evidence-41940635533'
+    paths += [fixture / 'job.log'] + [p for p in (fixture / 'original-members').rglob('*') if p.is_file()]
     paths += [p for p in (ROOT / 'gradle').rglob('*') if p.is_file()]
     return {p.relative_to(ROOT).as_posix(): benchmark.digest(p) for p in sorted(set(paths))}
 
@@ -260,6 +267,7 @@ def validate_baseline():
 
 
 def freeze():
+    image_identity.policy()
     target = REG / 'freeze.json'
     if target.exists():
         raise FileExistsError('Source freeze is write-once')
@@ -267,7 +275,8 @@ def freeze():
     validate_registration()
     stage_plan('screen')
     save(target, dict(schemaVersion=1, protocol='keel-brace-v1', assets=source_assets(),
-        allowedImages=sorted(IMAGES), javaBuild='17.0.21+9', javaBattle='25.0.5+8', python='3.13.17',
+        historicalAllowedImages=sorted(IMAGES), qualifiedImagePolicyID=image_identity.POLICY_ID,
+        qualifiedImagePolicySHA256=image_identity.POLICY_SHA, javaBuild='17.0.21+9', javaBattle='25.0.5+8', python='3.13.17',
         screenRounds=120, confirmationRounds=300, approvalKeys=sorted(APPROVAL_KEYS),
         gameTimeoutSeconds=1800, stageTimeoutMinutes=340, reviewTimeoutSeconds=1800,
         minimumRemainingSeconds=2100, maxRoundMsExclusive=75))
@@ -331,7 +340,7 @@ def storage_preflight(record, dispatch_created, run_created):
 
 def owned_output_bytes(out):
     """Logical stage-owned outputs; unrelated checkout/history is excluded."""
-    roots = [out, CACHE, ROOT / 'build/keel-brace-build.log', ROOT / 'build/keel-brace-build.json']
+    roots = [out, CACHE, ROOT / '.benchmark-cache/keel-brace-image-identity' / out.name, ROOT / 'build/keel-brace-build.log', ROOT / 'build/keel-brace-build.json']
     total = 0
     for root in roots:
         if not root.exists():
@@ -382,18 +391,20 @@ def image_consensus(environment_version, authoritative_versions, raw_header_vers
 
 
 def image_evidence():
-    # 2026-11-04: root found ENVImageVersion20261026.180.1 contradicting
-    # provider Set Up header20261025.179.1 in zero-game and prior Helm runs.
-    # A zero-game probe + independent review must resolve the actual metadata
-    # authority/schema prospectively. Never silently trust ENV or widen IMAGES.
-    raise ValueError('UNRESOLVED IMAGE PROVENANCE: reviewed authoritative file/header capture is required before any preparation')
+    image_identity.policy()
+    stage = os.environ.get('STAGE')
+    base = ROOT / '.benchmark-cache/keel-brace-image-identity' / str(stage)
+    early = image_identity.original(base, 'before-tools')
+    if early['stable']['sourceIdentity'] != image_identity.source_context(stage):
+        raise ValueError('Original before-tools image capture belongs to another stage/worker')
+    return early
 
 
 def identity():
     image_evidence()
     if os.environ.get('GITHUB_REPOSITORY') != REPOSITORY or os.environ.get('GITHUB_RUN_ATTEMPT') != '1':
         raise ValueError('Hosted repository/run_attempt1 required')
-    if platform.machine() != 'x86_64' or os.environ.get('ImageVersion') not in IMAGES:
+    if platform.machine() != 'x86_64' or {k: os.environ.get(k) for k in image_identity.ENVIRONMENT} != image_identity.ENVIRONMENT:
         raise ValueError('Unregistered architecture/image')
     os_release = Path('/etc/os-release').read_text()
     if 'VERSION_ID="26.04"' not in os_release:
@@ -475,7 +486,7 @@ def runtime_metadata(out, collect=False):
     build = load(ROOT / 'build/keel-brace-build.json')
     if files(Path(build['java17']['home'])) != build['java17']['files']:
         raise ValueError('Java17 build toolchain mutated')
-    return dict(identity=identity(), java17=build['java17'], java25=java_identity(location['java25'], '25.0.5+8'),
+    return dict(identity=identity(), imageIdentity=image_identity.profile(ROOT / '.benchmark-cache/keel-brace-image-identity' / out.name), java17=build['java17'], java25=java_identity(location['java25'], '25.0.5+8'),
         pythonRuntime=load(proof_file), pythonRuntimeSHA256=benchmark.digest(proof_file),
         native=native_verify(Path(location['diamondSource']), py),
         retcon=dict(source=files(Path(location['retconSource'])), api=files(Path(location['retconAPI']))),
@@ -582,8 +593,11 @@ def prepare(stage):
     location = dict(diamondSource=str(source), python=str(python), retconSource=str(ret_source),
         retconAPI=str(ret_api), runner=str(runner), samples=str(samples), java25=str(Path(os.environ['JAVA_HOME']).resolve()))
     save(out / 'locations.json', location)
-    metadata = runtime_metadata(out, collect=True)
     plans = [prepare_game(g, out, location) for g in stage_plan(stage)]
+    image_base = ROOT / '.benchmark-cache/keel-brace-image-identity' / stage
+    image_identity.snapshot(image_base, stage, 'prepared')
+    image_identity.bind_prepared(image_base, api(f'actions/runs/{ident["runId"]}/jobs?filter=latest&per_page=100'))
+    metadata = runtime_metadata(out, collect=True)
     participants = {arm: dict(name=BOT[arm][0], version='0.1.0', jarSHA256=benchmark.digest(ROOT / 'experiments' / BOT[arm][0] / (BOT[arm][0] + '.jar')),
         source=files(ROOT / 'experiments' / BOT[arm][0] / 'src'), modelHashes='N/A: in-memory only') for arm in BOT}
     opponents = dict(diamond=py, retcon=rc, samplesArchiveSHA256=benchmark.digest(samples_zip),
@@ -598,6 +612,7 @@ def prepare(stage):
     # Archive all reviewed source/JAR bytes and exact build log; actual runtime files are hashed by profile.
     provenance = out / 'provenance'
     provenance.mkdir()
+    shutil.copytree(image_base, provenance / 'image-identity')
     for rel in verify_freeze()['assets']:
         dst = provenance / 'source' / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -690,6 +705,17 @@ def review_report(rows, approval, expected, account, finalized):
     return result[0]
 
 
+def validate_image_review(report, out, approval):
+    body = prefixed(report['body'], REPORT_PREFIX)
+    profile = load(out / 'profile.json')
+    review = body['agentToolProvenance'].get('imageIdentityReview')
+    image_identity.review(review, profile['imageIdentity'], profile['identity'])
+    observed = utc(review['earlyHeaderEvidence']['observedAtUTC'])
+    artifact = load(out / 'artifact.json')
+    if not utc(artifact['updated_at']) < observed < utc(report['created_at']) < utc(approval['created_at']):
+        raise ValueError('Actual early provider attempt must be after immutable artifact and before report/approval')
+
+
 def comment_pin(row):
     """Stable authority fields; mutable avatar/reaction metadata is not authority."""
     required = ('id', 'node_id', 'url', 'issue_url', 'html_url', 'created_at', 'updated_at', 'body')
@@ -768,6 +794,17 @@ def revocation(rows, expected, approval, account):
         raise ValueError('Independent runtime approval was explicitly revoked')
 
 
+def revalidate_image_worker(stage, out, profile):
+    image_base = ROOT / '.benchmark-cache/keel-brace-image-identity' / stage
+    current = image_identity.live(image_base, stage, out / 'image-identity-revalidations')
+    snapshot_file = out / 'image-identity-revalidations' / current['phase'] / 'snapshot.json'
+    if runtime_metadata(out) != profile:
+        raise ValueError('Prepared installed graph changed before authority revalidation')
+    return dict(snapshotFile=snapshot_file.relative_to(out).as_posix(), snapshotSHA256=benchmark.digest(snapshot_file),
+        preparedSnapshotSHA256=profile['imageIdentity']['preparedSnapshotSHA256'],
+        runtimeProfileSHA256=benchmark.digest(out / 'profile.json'))
+
+
 def revalidate_authority(stage, out, phase):
     """Fetch pinned live authority before receipt and each child; never redefine originals."""
     evidence = out / 'approval-revalidations' / (phase + '.json')
@@ -777,7 +814,10 @@ def revalidate_authority(stage, out, phase):
         checkedAtUTC=dt.datetime.now(dt.timezone.utc).isoformat(), currentComments={}, status='checking')
     save(evidence, state)
     try:
-        ident = load(out / 'profile.json')['identity']
+        profile = load(out / 'profile.json')
+        ident = profile['identity']
+        state['imageIdentityRevalidation'] = revalidate_image_worker(stage, out, profile)
+        save(evidence, state)
         original_artifact = load(out / 'artifact.json')
         original_approval = load(out / 'approval.json')
         authority = load(out / 'accepted-authority.json')
@@ -813,6 +853,7 @@ def revalidate_authority(stage, out, phase):
         if len(selected) != 1 or comment_pin(selected[0]) != authority['comments']['approval-comment.json']:
             raise ValueError('Current runtime approval is missing/ambiguous/replaced')
         current_report = review_report(rows, approval, expected, assignment['reviewerAccount'], finalized)
+        validate_image_review(current_report, out, approval)
         if comment_pin(current_report) != authority['comments']['review-report-comment.json']:
             raise ValueError('Current independent report/provenance is ambiguous/replaced')
         raw_assignment, current_assignment = dispatch_assignment(stage, ident, rows=rows)
@@ -874,6 +915,7 @@ def wait_approval(stage, artifact_id, digest):
             raise ValueError('Duplicate runtime approvals')
         if valid:
             report = review_report(rows, valid[0], expected, assignment['reviewerAccount'], finalized)
+            validate_image_review(report, out, valid[0])
             artifact_identity(artifact_id, digest, ident)
             save(out / 'approval-comment.json', valid[0])
             save(out / 'review-report-comment.json', report)
@@ -1476,6 +1518,53 @@ def verify_custody(custody, retained, source_head, decision_sha):
     return members
 
 
+def verify_final_screen_provenance(report, gate, custody, receipt, run, jobs):
+    reconciliation = report['agentToolProvenance'].get('imageIdentityReconciliation')
+    if not isinstance(reconciliation, dict) or reconciliation.get('reviewerTask') != report['reviewerTask']:
+        raise ValueError('Final screen reconciliation must belong to independent outcome reviewer')
+    prefix = custody['freezeMember'].removesuffix('provenance/freeze.json')
+    original = custody['originalZIP']
+    with PartsReader(original['parts'], original['bytes']) as stream, zipfile.ZipFile(stream) as archive:
+        profile_raw = archive.read(prefix + 'provenance/profile.json')
+        if sha(profile_raw) != receipt['approval']['profileSHA256']:
+            raise ValueError('Original screen image profile is not receipt/approval bound')
+        profile = strict_json(profile_raw)
+        anchor = profile['imageIdentity']
+        original_identity = profile['identity']
+        if (original_identity['runId'] != gate['screenRunId'] or original_identity['headSHA'] != report['headSHA']
+                or original_identity['runAttempt'] != 1 or original_identity['bootId'] != receipt['approval']['bootId']
+                or original_identity['workspace'] != receipt['approval']['workspace']):
+            raise ValueError('Original screen profile does not bind receipt worker identity')
+        image_prefix = prefix + 'provenance/image-identity/'
+        snapshots = {}
+        for name, expected in [('before-tools/snapshot.json', anchor['beforeToolsSnapshotSHA256']),
+                ('prepared/snapshot.json', anchor['preparedSnapshotSHA256']),
+                ('prepared-wrapper.json', anchor['preparedWrapperSHA256'])]:
+            original_bytes = archive.read(image_prefix + name)
+            if name.endswith('snapshot.json'):
+                snapshots[name.split('/')[0]] = strict_json(original_bytes)
+            if sha(original_bytes) != expected:
+                raise ValueError('Original screen image snapshot/wrapper does not match approved profile')
+        windows = {}
+        for phase, step, collector_phase in [('before-tools', 'Capture original qualified image observations before tools', 'before-tools'),
+                ('prepared', 'Prepare exact sources/runtime/commands on this worker (zero games)', 'after-tools')]:
+            capture = archive.read(image_prefix + phase + '/collector/' + collector_phase + '/report.json')
+            snapshot = snapshots[phase]
+            if sha(capture) != snapshot['reportSHA256']:
+                raise ValueError('Original snapshot capture report SHA differs')
+            if any(snapshot[k] != original_identity[k] for k in ('runId','runAttempt','headSHA','bootId','workspace')):
+                raise ValueError('Original image capture belongs to other receipt worker')
+            data = strict_json(capture)
+            windows[step] = (data['utcStart'], data['utcEnd'])
+    def read_ref(name):
+        if name not in gate['retainedEvidenceFiles']:
+            raise ValueError('Final provider evidence is absent from retained screen custody')
+        return retained_path(name).read_bytes()
+    ident = dict(runId=gate['screenRunId'], headSHA=report['headSHA'])
+    image_identity.final_reconciliation(reconciliation, anchor, ident, read_ref, run, dict(jobs=jobs), windows)
+    return reconciliation
+
+
 def verify_confirmation_gate(out):
     gate = load(REG / 'screen-evidence.json')
     required = {'schemaVersion', 'sourceFreezeSHA256', 'screenRunId', 'receiptTagSHA', 'decisionFile',
@@ -1543,7 +1632,8 @@ def verify_confirmation_gate(out):
             or not report['agentToolProvenance'] or report['agentToolProvenance'].get('reviewerTask') != report['reviewerTask']
             or utc(review['created_at']) <= utc(stages[0]['completed_at'])):
         raise ValueError('Missing separate independent post-completion screen outcome review')
-    save(out / 'screen-gate-verified.json', dict(gate=gate, receipt=tag, run=run, review=review,
+    reconciliation = verify_final_screen_provenance(report, gate, custody, receipt, run, jobs)
+    save(out / 'screen-gate-verified.json', dict(imageIdentityReconciliation=reconciliation, gate=gate, receipt=tag, run=run, review=review,
         originalArtifact=artifact, jobs=jobs,
         custodyManifestSHA256=benchmark.digest(retained_path(gate['custodyManifestFile']))))
 
@@ -1558,7 +1648,8 @@ def run(stage):
         verify_confirmation_gate(out)
     plan = stage_plan(stage)
     report = dict(stage=stage, headSHA=head(), games=[], unplayedIDs=[g['id'] for g in plan],
-        decision='pending', observedPhysicalRounds=0, completedPhysicalRounds=0)
+        decision='pending', imageProvenanceStatus='PROVENANCE-PENDING',
+        finalExternalReconciliationRequired=True, observedPhysicalRounds=0, completedPhysicalRounds=0)
     save(out / 'decision.json', report)
     verify_worker(stage)
     consume_receipt(stage, out)

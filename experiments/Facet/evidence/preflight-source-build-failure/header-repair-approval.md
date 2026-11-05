@@ -1,0 +1,15 @@
+# Independent development-header preflight repair review
+
+2026-11-04. Separate reviewer; no gameplay edits or restricted opponent source access.
+
+**Approve this administrative development-header/evidence-path repair before the first actual acquisition**, conditional on successful recorded readiness, unchanged candidate pins and publication of the reviewed final registration. No measured retry, replacement, tuning, confirmation, promotion or merge is approved.
+
+Reviewed tools/facet_python_runtime.py, .github/workflows/facet-benchmark.yml, docs/facet-preflight-repair.md and repair draft SHA256 `c37798b9a657879adfc620ee10dd9a4624af2dc92d3d27266d7da718fabb1b87`. Independently validated all 20 frozen file pins and 43 source/input hashes. Relative to the previous reviewed draft, changed file pins are only the bootstrap, workflow and added previous approval report; registration metadata adds preflight history and the explicit prerequisite-package/readline/evidence policy. Candidate source `ea6ead0e635a78a9190ca435f476def1eeb33179ca5a4355f87a6f18c362a6d8` and JAR `7729fa0419dc8a6efc08ee7d5812ad28aca76195d51ce44bb53056b6c064788d` remain unchanged.
+
+Explicit Ubuntu development packages address the observed missing _bz2/readline build dependencies. The bootstrap records installed versions and available copyright notices, retains the official pinned Python3.13.9 archive identity and build flags, and strengthens the required-module guard with readline. Actual package versions are observed from Ubuntu26.04 repositories rather than prospectively byte-pinned; this limitation is explicit. The runtime evidence path now survives both Gradle clean steps and is always uploaded. Java17 build/parity remains before JDK25, committed JAR bytes are restored, image remains exactly ubuntu-26.04, and no battle launcher is introduced into setup.
+
+Independently reran the two bootstrap tests and five acquisition tests: all seven passed. Logs and manifest verification are under /tmp/facet-review/header-repair/. These tests do not establish a successful Ubuntu build or required-module availability. Both must succeed and be recorded before any game; no guard is waived.
+
+Reviewed preserved source-build-failure status/runtime report and job log: CPython installation completed but the required import raised ModuleNotFoundError for _bz2 before Java/build/acquisition. No acquisition step appears after this failure; zero games/rounds were measured. Preserve run41853893986/job126657168806, original registration SHA256 `7768d28eb53da987ce08e3a4646a2142f9c13b829a1b3aafc36e34bc5fc4352c`, prior failed run and all raw evidence. This remains setup recovery for the originally authorized first screen, not repetition of a measured cohort.
+
+Existing fixed 300-round protocol and final candidate premeasurement approval remain applicable. Invalid acquisition after games begin must stop without replacement. Final registration may replace the pending repair approval field with this disposition and record its resulting hash. No competitive outcome exists at this review time.

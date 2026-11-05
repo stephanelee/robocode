@@ -30,6 +30,7 @@ public class BenchmarkBattle {
                             r.getId(), quote(r.getName()), quote(r.getVersion()), r.getRank(), r.getTotalScore(), r.getSurvival(), r.getBulletDamage(), r.getFirstPlaces()));
                     Files.writeString(Path.of(args[2]), "{\"numberOfRounds\":" + results.getNumberOfRounds()
                             + ",\"results\":[" + String.join(",", rows) + "]}\n");
+                    awaitFacetCompletion(rounds);
                     awaitChallengerCompletion(rounds);
                     awaitLegalDataset();
                 } catch (TimeoutException e) {
@@ -38,6 +39,54 @@ public class BenchmarkBattle {
                 } finally { executor.shutdownNow(); }
             }
         }
+    }
+    private static void awaitFacetCompletion(int rounds) throws Exception {
+        String model = System.getenv("FACET_STATE_PATH");
+        if (model == null) model = System.getenv("FACET_MODEL_PATH");
+        String metrics = System.getenv("FACET_METRICS_PATH");
+        if (model == null && metrics == null) return;
+        if (model == null || model.isBlank() || metrics == null || metrics.isBlank())
+            throw new IllegalArgumentException("Facet completion requires both model and metrics paths");
+        awaitFacetCompletion(Path.of(model), Path.of(metrics), rounds, Duration.ofSeconds(5));
+    }
+    // Readiness inside handle lifetime; strict Python validation remains authoritative.
+    static void awaitFacetCompletion(Path model, Path metrics, int rounds, Duration timeout) throws Exception {
+        if (!model.isAbsolute() || !metrics.isAbsolute() || model.normalize().equals(metrics.normalize())
+                || !model.getFileName().toString().startsWith("FACET_")
+                || !metrics.getFileName().toString().startsWith("FACET_") || rounds < 1
+                || timeout.isNegative() || timeout.isZero())
+            throw new IllegalArgumentException("Facet outputs must be distinct absolute FACET_ paths and positive bounds");
+        var roundPattern = java.util.regex.Pattern.compile("\"round\"\\s*:\\s*(\\d+)\\s*[,}]");
+        var statuses = new ArrayList<java.util.regex.Pattern>();
+        for (String key : List.of("snapshotStatus", "terminalObservation", "terminalHash"))
+            statuses.add(java.util.regex.Pattern.compile("\"" + key + "\"\\s*:\\s*\"success\""));
+        long deadline = System.nanoTime() + timeout.toNanos();
+        while (System.nanoTime() < deadline) {
+            if (Files.isSymbolicLink(model) || Files.isSymbolicLink(metrics))
+                throw new IllegalStateException("Facet final outputs must not be symlinks");
+            if (Files.isRegularFile(model, LinkOption.NOFOLLOW_LINKS)
+                    && Files.isRegularFile(metrics, LinkOption.NOFOLLOW_LINKS)) {
+                if (Files.size(model) > 134217728 || Files.size(metrics) > 33554432)
+                    throw new IllegalStateException("Facet completion output exceeds size limit");
+                byte[] bytes;
+                try (var input = Files.newInputStream(metrics, LinkOption.NOFOLLOW_LINKS)) {
+                    bytes = input.readNBytes(33554433);
+                }
+                if (bytes.length > 33554432)
+                    throw new IllegalStateException("Facet completion output exceeds size limit");
+                String raw = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+                var rows = raw.lines().toList();
+                boolean ready = Files.size(model) > 0 && raw.endsWith("\n") && rows.size() == rounds;
+                for (int i = 0; ready && i < rows.size(); i++) {
+                    var match = roundPattern.matcher(rows.get(i));
+                    ready = match.find() && Integer.parseInt(match.group(1)) == i + 1 && !match.find();
+                    for (var status : statuses) ready &= status.matcher(rows.get(i)).find();
+                }
+                if (ready) return;
+            }
+            Thread.sleep(20);
+        }
+        throw new IllegalStateException("Facet final model/metrics did not finish within bounded runner-lifetime wait");
     }
     private static void awaitChallengerCompletion(int rounds) throws Exception {
         String model = System.getenv("CHALLENGER_MODEL_PATH");

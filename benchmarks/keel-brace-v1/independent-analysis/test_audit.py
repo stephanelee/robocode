@@ -460,13 +460,13 @@ class AuthoritativeImageTests(unittest.TestCase):
 
     def test_agreeing_allowed_header_fixture_only(self):
         with tempfile.TemporaryDirectory() as t:
-            e,p,h,r=self.fixture(Path(t));result=audit.audit_runner_image(e,h,r,p);self.assertTrue(result['pass'],result)
-            self.assertFalse(audit.audit_runner_image(e,h,r,None)['pass'])
+            e,p,h,r=self.fixture(Path(t));result=audit.audit_legacy_runner_image(e,h,r,p);self.assertTrue(result['pass'],result)
+            self.assertFalse(audit.audit_legacy_runner_image(e,h,r,None)['pass'])
 
     def test_actual_dispute_shape_and_unapproved_agreement_fail_closed(self):
         for env in ['20261026.180.1','20261025.179.1']:
             with tempfile.TemporaryDirectory() as t:
-                e,p,h,r=self.fixture(Path(t),'20261025.179.1',env);result=audit.audit_runner_image(e,h,r,p)
+                e,p,h,r=self.fixture(Path(t),'20261025.179.1',env);result=audit.audit_legacy_runner_image(e,h,r,p)
                 self.assertFalse(result['pass']);self.assertIn('authoritative Runner Image version is prospectively allowed',result['failures'])
                 if env!='20261025.179.1':self.assertIn('NO conflict between ENV/profile and independent authoritative Runner Image header',result['failures'])
 
@@ -480,9 +480,9 @@ class AuthoritativeImageTests(unittest.TestCase):
 
     def test_collector_digest_and_job_identity_tamper_fail(self):
         with tempfile.TemporaryDirectory() as t:
-            e,p,h,r=self.fixture(Path(t));(p/'job.log').write_text(image_log('20261101.186.1'));self.assertFalse(audit.audit_runner_image(e,h,r,p)['pass'])
+            e,p,h,r=self.fixture(Path(t));(p/'job.log').write_text(image_log('20261101.186.1'));self.assertFalse(audit.audit_legacy_runner_image(e,h,r,p)['pass'])
         with tempfile.TemporaryDirectory() as t:
-            e,p,h,r=self.fixture(Path(t));d=json.loads((p/'job-log-api.json').read_text());d['jobId']=20;dump(p/'job-log-api.json',d);self.assertFalse(audit.audit_runner_image(e,h,r,p)['pass'])
+            e,p,h,r=self.fixture(Path(t));d=json.loads((p/'job-log-api.json').read_text());d['jobId']=20;dump(p/'job-log-api.json',d);self.assertFalse(audit.audit_legacy_runner_image(e,h,r,p)['pass'])
 
 
 class ActualChildTimingTests(unittest.TestCase):
@@ -556,6 +556,177 @@ class CanonicalDecisionTests(unittest.TestCase):
                 elif mutation=='exposure':d['candidateRetconEligibleRamScans']=0
                 else:d['decision']='pending'
                 dump(root/'decision.json',d);self.assertFalse(audit.reconcile_canonical(root,'screen','a'*40,p,r,g,True)['pass'],mutation)
+
+
+class QualifiedRuntimePrimitiveTests(unittest.TestCase):
+    def native(self,upper=False,claim=None):
+        c=audit.QUALIFIED_NATIVE if claim is None else claim
+        detail='\n'.join(k+': '+c[v] for k,v in [('Image','image'),('Version','version'),('Included Software','includedSoftwareURL'),('Image Release','imageReleaseURL')])
+        return json.dumps([{('Group' if upper else 'group'):'Runner Image',('Detail' if upper else 'detail'):detail}]).encode()
+    def test_separate_qualified_native_and_env_observations(self):
+        self.assertEqual(audit.strict_native_claim(self.native(),'imagedata'),audit.QUALIFIED_NATIVE)
+        self.assertEqual(audit.strict_native_claim(self.native(True),'setup_info'),audit.QUALIFIED_NATIVE)
+        self.assertEqual(audit.strict_environment_claim(b'ImageOS=ubuntu26\nImageVersion="20261026.180.1"\nPATH=/unrelated\n'),audit.QUALIFIED_ENV)
+        self.assertNotEqual(audit.QUALIFIED_NATIVE['version'],audit.QUALIFIED_ENV['ImageVersion'])
+    def test_native_duplicates_aliases_extra_fields_and_unknown_tuple_fail(self):
+        data=json.loads(self.native())
+        bad=[data*2,[dict(data[0],Group='Runner Image')],[{'group':'Runner Image','detail':data[0]['detail']+'\nVersion: 20261025.179.1'}],[{'group':'Runner Image','detail':data[0]['detail']+'\nExtra: x'}]]
+        for value in bad:
+            with self.assertRaises(ValueError):audit.strict_native_claim(json.dumps(value).encode(),'imagedata')
+        for key in audit.QUALIFIED_NATIVE:
+            c=dict(audit.QUALIFIED_NATIVE);c[key]+='changed'
+            with self.assertRaises(ValueError):audit.strict_native_claim(self.native(claim=c),'imagedata')
+    def test_environment_missing_duplicate_expansion_and_nonliteral_fail(self):
+        for text in ['ImageOS=ubuntu26','ImageOS=ubuntu26\nImageVersion=20261026.180.1\nImageOS=ubuntu26','ImageOS=ubuntu26\nImageVersion=$REV','export ImageOS=ubuntu26\nImageVersion=20261026.180.1','ImageOS=ubuntu26\nImageVersion=20261025.179.1']:
+            with self.assertRaises(ValueError):audit.strict_environment_claim(text.encode())
+    def test_startup_scope_ignores_later_echoes_and_requires_exact_four_claims(self):
+        detail=json.loads(self.native())[0]['detail'];log="Current runner version: '2.338.2'\n"+'##[group]Operating System\nUbuntu\n26.04.1\nLTS\n##[endgroup]\n##[group]Runner Image\n'+detail+'\n##[endgroup]\nComplete job name: Synthetic pure metadata job\n';self.assertEqual(audit.qualified_provider_header(log.encode()),audit.QUALIFIED_NATIVE)
+        later=log+'##[group]Runner Image\nImage: malicious later echo\n##[endgroup]\n';self.assertEqual(audit.qualified_provider_header(later.encode()),audit.QUALIFIED_NATIVE)
+        for bad in ['\n'.join(log.split('\n')[1:]),log.replace('Complete job name: Synthetic pure metadata job',''),log.replace('Image Release: '+audit.QUALIFIED_NATIVE['imageReleaseURL'],'Image Release: normalized-but-different'),log.replace('Complete job name: Synthetic pure metadata job','##[group]Runner Image\nImage: spoof\n##[endgroup]\nComplete job name: Synthetic pure metadata job')]:
+            with self.assertRaises(ValueError):audit.qualified_provider_header(bad.encode())
+    def test_metadata_caps_and_original_raw_format_required(self):
+        with self.assertRaises(ValueError):audit.strict_native_claim(b' '*1048577,'imagedata')
+        with self.assertRaises(ValueError):audit.strict_environment_claim(b' '*1048577)
+        with self.assertRaises(ValueError):audit.qualified_provider_header(('later-step\tLater output\t'+image_log('20261025.179.1')).encode())
+
+
+def qualified_image_fixture(root,early_status=404):
+    import copy
+    e=root/'evidence';p=root/'provider';pro=e/'provenance';image=pro/'image-identity';head='c'*40;run=7;job=83;workspace='/synthetic/workspace';boot='synthetic-worker-boot';collector=b'PURE SYNTHETIC COLLECTOR BYTES; NOT EXECUTED';sha=lambda b:hashlib.sha256(b).hexdigest();at=lambda minute,second=0:f'2026-11-05T00:{minute:02d}:{second:02d}+00:00'
+    freeze={'assets':{'tools/keel_brace_image_probe.py':sha(collector)}}
+    source_root=Path(__file__).resolve().parents[3]
+    for rel,wanted in [('docs/improvements/keel-brace-runtime-identity-amendment.md',audit.AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-brace-v1/runtime-identity-amendment.json',audit.AMENDMENT_POLICY_SHA256)]:
+        data=(source_root/rel).read_bytes();assert sha(data)==wanted;target=pro/'source'/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data);freeze['assets'][rel]=wanted
+    game=dict(id='synthetic-only',rounds=1);dump(pro/'source/benchmarks/keel-brace-v1/games.json',dict(screen=[game]));dump(pro/'freeze.json',freeze)
+    native_detail='\n'.join(k+': '+audit.QUALIFIED_NATIVE[v] for k,v in [('Image','image'),('Version','version'),('Included Software','includedSoftwareURL'),('Image Release','imageReleaseURL')])
+    raws=dict(imagedata=json.dumps([dict(group='Runner Image',detail=native_detail)]).encode(),setup_info_0=json.dumps([dict(Group='Runner Image',Detail=native_detail)]).encode(),etc_environment=b'ImageOS=ubuntu26\nImageVersion=20261026.180.1\n',etc_os_release=b'ID=ubuntu\nVERSION_ID="26.04"\n',usr_lib_os_release=b'ID=ubuntu\nVERSION_ID="26.04"\n',etc_lsb_release=b'DISTRIB_ID=Ubuntu\n',boot_id=(boot+'\n').encode())
+    runner='/observed/runner';exe=runner+'/bin/Runner.Worker';comm='Runner.Worker\n';paths=dict(audit.IMAGE_LABEL_PATHS,setup_info_0=runner+'/.setup_info')
+    source_identity=dict(stage='screen',runId=run,runAttempt=1,headSHA=head,workspace=workspace,logicalJobName='registered-stage')
+    claims=dict(imagedataNative=dict(audit.QUALIFIED_NATIVE),setupInfoNative=dict(audit.QUALIFIED_NATIVE),processEnvironment=dict(audit.QUALIFIED_ENV),etcEnvironment=dict(audit.QUALIFIED_ENV))
+    def snapshot(target,phase,minute,collector_phase):
+        c=target/'collector'/collector_phase;c.mkdir(parents=True,exist_ok=True);files={};captures={};stable_raw={}
+        def retain(rel,data,raw=False):
+            f=c/rel;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(data);row=dict(artifactPath=rel,bytes=len(data),suppliedBytes=len(data),complete=True,sha256=sha(data))
+            if raw:row['sourceBytesComplete']=True
+            files[rel]=row;return copy.deepcopy(row)
+        collector_ref=retain('collector.py',collector)
+        for label,data in raws.items():
+            stat=dict(size=0 if label=='boot_id' else len(data),mode=33188,uid=1001,gid=1001,device=1,inode=3,mtimeNs=4,regular=True,modeOctal='0o644')
+            raw=retain('raw/'+label+'.bin',data,True);record=dict(requestedPath=paths[label],resolvedPath=paths[label],exists=True,errors=[],bytesComplete=True,raw=raw,rawSHA256Scope='whole-observed-file',utcStart=at(minute),utcEnd=at(minute,1),durationNs=1,lstatBefore=stat,statBefore=stat,openedStat=stat,statAfter=stat)
+            if label in ('imagedata','setup_info_0','etc_environment'):
+                parsed=claims['imagedataNative' if label=='imagedata' else 'setupInfoNative'] if label!='etc_environment' else {k:dict(present=True,value=v) for k,v in audit.QUALIFIED_ENV.items()}
+                record.update(parsedArtifact=retain('parsed/'+label+'.json',json.dumps({'claims':parsed}).encode()),parsedClaims=copy.deepcopy(parsed),parseErrors=[])
+            captures[label]=record;stable_raw[label]=dict(sourcePath=paths[label],resolvedPath=paths[label],size=stat['size'],wholeSHA256=sha(data),mode=stat['mode'],uid=1001,gid=1001)
+        discovery=dict(procRoot='/proc',scannedEntries=1,nonmatchingCount=0,truncated=False,errors=[],roots=[runner],matches=[dict(pid=42,comm='Runner.Worker',commRawASCII=comm,commSHA256=sha(comm.encode()),commPath='/proc/42/comm',commStat=dict(device=1,gid=1001,inode=2,mode=33188,modeOctal='0o644',mtimeNs=3,regular=True,size=0,uid=1001),exeSymlinkStat=dict(device=1,gid=1001,inode=4,mode=41471,modeOctal='0o777',mtimeNs=3,regular=False,size=0,uid=1001),exeReadlink=exe,exePath=exe,exeReadlinkSHA256=sha(exe.encode()),runnerRoot=runner,setupInfoPath=runner+'/.setup_info',errors=[])])
+        report=dict(schemaVersion=1,phase=collector_phase,errors=[],collectorPython=dict(executable='/usr/bin/python3'),durationNs=10**9,utcStart=at(minute),utcEnd=at(minute,1),limits=dict(eachFileBytes=1048576,wholeTwoPhaseArtifactBytes=10485760,procEntries=512,runnerMatches=16,collectionSeconds=120),collectorSource=collector_ref,runnerDiscovery=discovery,captures=captures,processImageEnvironment={k:dict(present=True,value=v) for k,v in audit.QUALIFIED_ENV.items()},platform=dict(architecture='x86_64',kernel='synthetic-kernel',kernelVersion='synthetic-kernel-version'),context=dict(GITHUB_RUN_ID=str(run),GITHUB_RUN_ATTEMPT='1',GITHUB_JOB='registered-stage',GITHUB_REPOSITORY='stephanelee/robocode'),rawArtifactIndex=copy.deepcopy(files))
+        report_ref=retain('report.json',json.dumps(report,indent=2).encode());status=dict(schemaVersion=1,phase=collector_phase,diagnosticErrorCount=0,files=files,report=report_ref,retainedBytesBeforeStatus=sum(v['bytes'] for v in files.values()));dump(c/'capture-status.json',status)
+        stable=dict(rawSources=stable_raw,claims=copy.deepcopy(claims),runnerRoot=runner,setupInfoPath=runner+'/.setup_info',bootId=boot,architecture='x86_64',kernel='synthetic-kernel',kernelVersion='synthetic-kernel-version',collectorSourceSHA256=sha(collector),sourceIdentity=dict(source_identity))
+        snap=dict(schemaVersion=1,policyID=audit.QUALIFIED_POLICY_ID,policySHA256=audit.AMENDMENT_POLICY_SHA256,**source_identity,phase=phase,bootId=boot,architecture='x86_64',kernel='synthetic-kernel',kernelVersion='synthetic-kernel-version',collectorSourceSHA256=sha(collector),snapshotManifestSHA256=audit.digest(c/'capture-status.json'),reportSHA256=audit.digest(c/'report.json'),stable=stable);dump(target/'snapshot.json',snap);return snap
+    b=snapshot(image/'before-tools','before-tools',2,'before-tools');prepared=snapshot(image/'prepared','prepared',4,'after-tools')
+    provider_job=dict(id=job,run_id=run,run_attempt=1,status='in_progress',name='registered-stage');dump(image/'prepared-jobs-api.json',dict(jobs=[provider_job]))
+    hashes=dict(beforeToolsSnapshotSHA256=audit.digest(image/'before-tools/snapshot.json'),preparedSnapshotSHA256=audit.digest(image/'prepared/snapshot.json'))
+    wrapper=dict(schemaVersion=1,policyID=audit.QUALIFIED_POLICY_ID,policySHA256=audit.AMENDMENT_POLICY_SHA256,runId=run,runAttempt=1,headSHA=head,logicalJobName='registered-stage',preparedNumericJobId=job,beforeToolsSnapshotFile='before-tools/snapshot.json',preparedSnapshotFile='prepared/snapshot.json',jobsAPIFile='prepared-jobs-api.json',jobsAPISHA256=audit.digest(image/'prepared-jobs-api.json'),**hashes);dump(image/'prepared-wrapper.json',wrapper);hashes['preparedWrapperSHA256']=audit.digest(image/'prepared-wrapper.json')
+    profile=dict(identity=dict(workspace=workspace,bootId=boot,image=audit.QUALIFIED_ENV['ImageVersion']),imageIdentity=dict(policyID=audit.QUALIFIED_POLICY_ID,policySHA256=audit.AMENDMENT_POLICY_SHA256,**hashes,preparedNumericJobId=job,stable=prepared['stable']));dump(pro/'profile.json',profile);dump(e/'approval.json',dict(stage='screen'))
+    artifact=dict(id=99,digest='sha256:'+'a'*64,updated_at=at(6),workflow_run=dict(id=run,head_sha=head));dump(e/'artifact.json',artifact)
+    log="Current runner version: '2.338.2'\n"+'##[group]Operating System\nUbuntu\n26.04.1\nLTS\n##[endgroup]\n##[group]Runner Image\n'+native_detail+'\n##[endgroup]\nComplete job name: Synthetic pure metadata job\n'
+    response=b'{"message":"Not Found"}' if early_status==404 else log.encode();(p/'early').mkdir(parents=True);(p/'early/early-header-response.bin').write_bytes(response)
+    early=dict(status='unavailable-404-deferred' if early_status==404 else 'available-matched',endpoint=f'https://api.github.com/repos/stephanelee/robocode/actions/jobs/{job}/logs',runId=run,runAttempt=1,jobId=job,headSHA=head,observedAtUTC=at(7),httpStatus=early_status,responseBytes=len(response),responseSHA256=sha(response),responseFile='early-header-response.bin',scope='actual-job-log-request' if early_status==404 else 'complete-startup-header',runAccessVerified=True,jobsAccessVerified=True,artifactAccessVerified=True,jobInProgress=True,nativeClaim=None if early_status==404 else dict(audit.QUALIFIED_NATIVE))
+    review=dict(schemaVersion=1,policyID=audit.QUALIFIED_POLICY_ID,policySHA256=audit.AMENDMENT_POLICY_SHA256,**hashes,primaryPregameAuthority='native-only-qualified-observation',earlyHeaderEvidence=early,finalExternalReconciliationRequired=True)
+    comment=dict(user=dict(login='stephanelee',id=30698997),created_at=at(8),body='KEEL_BRACE_RUNTIME_REVIEW_V1\n'+json.dumps(dict(agentToolProvenance=dict(imageIdentityReview=review))));dump(e/'review-report-comment.json',comment)
+    early_run=dict(id=run,head_sha=head,run_attempt=1,status='in_progress');dump(p/'early/run.json',early_run);dump(p/'early/jobs.json',dict(jobs=[provider_job]));dump(p/'early/artifact.json',artifact)
+    for phase,minute in [('before-receipt',9),('before-synthetic-only',10)]:
+        rel=f'image-identity-revalidations/revalidation-{minute}/snapshot.json';snapshot((e/rel).parent,f'revalidation-{minute}',minute,'after-tools');dump(e/'approval-revalidations'/(phase+'.json'),dict(checkedAtUTC=at(minute,2),imageIdentityRevalidation=dict(snapshotFile=rel,snapshotSHA256=audit.digest(e/rel),preparedSnapshotSHA256=hashes['preparedSnapshotSHA256'],runtimeProfileSHA256=audit.digest(pro/'profile.json'))))
+    steps=[]
+    for name,start,end in [('Capture original qualified image observations before tools',2,3),('Prepare exact sources/runtime/commands on this worker (zero games)',4,5),('Finalize immutable zero-game provenance before independent review',5,6)]:steps.append(dict(name=name,status='completed',conclusion='success',started_at=at(start),completed_at=at(end)))
+    final_job=dict(provider_job,status='completed',conclusion='success',completed_at=at(11),steps=steps);dump(p/'jobs.json',dict(jobs=[final_job]));dump(p/'run.json',dict(early_run,status='completed',conclusion='success'))
+    (p/'job.log').write_bytes(log.encode());dump(p/'job-log-api.json',dict(schemaVersion=1,jobId=job,runId=run,headSHA=head,logSHA256=sha(log.encode()),sourceURL=early['endpoint'],retrievedAtUTC=at(12),collectorTask='/synthetic-independent-collector',toolEvidence=dict(scope='PURE FIXTURE, NOT RUNTIME CLEARANCE')))
+    return e,p,head,run
+
+
+class QualifiedRuntimeIntegrationTests(unittest.TestCase):
+    def test_provider_step_recorded_second_boundary(self):
+        step=dict(started_at='2026-11-05T00:02:00Z',completed_at='2026-11-05T00:02:01Z')
+        self.assertTrue(audit.provider_step_contains(step,'2026-11-05T00:02:00.5Z','2026-11-05T00:02:01.999999Z'))
+        self.assertFalse(audit.provider_step_contains(step,'2026-11-05T00:02:00Z','2026-11-05T00:02:02Z'))
+        self.assertFalse(audit.provider_step_contains(step,'2026-11-05T00:01:59.999999Z','2026-11-05T00:02:01Z'))
+        step['completed_at']='2026-11-05T00:02:01.500000Z'
+        self.assertTrue(audit.provider_step_contains(step,'2026-11-05T00:02:00Z','2026-11-05T00:02:01.500000Z'))
+        self.assertFalse(audit.provider_step_contains(step,'2026-11-05T00:02:00Z','2026-11-05T00:02:01.500001Z'))
+
+    def test_complete_qualified_tuple_404_and_available_header(self):
+        for status in (404,200):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp),status);result=audit.audit_runner_image(e,h,r,p);self.assertTrue(result['pass'],result);self.assertEqual(result['status'],'PASS')
+    def test_missing_final_provider_pending_then_completed_incomplete(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            e,p,h,r=qualified_image_fixture(Path(tmp));result=audit.audit_runner_image(e,h,r,None);self.assertFalse(result['pass']);self.assertEqual(result['status'],'PROVENANCE-PENDING')
+            (p/'job.log').unlink();result=audit.audit_runner_image(e,h,r,p);self.assertFalse(result['pass']);self.assertEqual(result['status'],'PROVENANCE-INCOMPLETE')
+    def test_early_actual_bytes_api_status_and_report_deferral_mutations(self):
+        for case in ('response','earlyjob','earlyartifact','http403','declaration','endpoint'):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp));f=e/'review-report-comment.json';comment=json.loads(f.read_text());payload=json.loads(comment['body'].split('\n',1)[1]);early=payload['agentToolProvenance']['imageIdentityReview']['earlyHeaderEvidence']
+                if case=='response':(p/'early/early-header-response.bin').write_bytes(b'changed')
+                elif case=='earlyjob':dump(p/'early/jobs.json',{'jobs':[]})
+                elif case=='earlyartifact':dump(p/'early/artifact.json',{'id':1})
+                elif case=='http403':early['httpStatus']=403
+                elif case=='declaration':early['artifactAccessVerified']=False
+                else:early['endpoint']='https://api.github.com/repos/stephanelee/robocode/actions/jobs/1/logs'
+                comment['body']='KEEL_BRACE_RUNTIME_REVIEW_V1\n'+json.dumps(payload);dump(f,comment);self.assertFalse(audit.audit_runner_image(e,h,r,p)['pass'],case)
+    def test_snapshot_boot_source_hash_graph_and_live_binding_mutations(self):
+        for case in ('snapshot','raw','collector','live','profile','policy'):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity'
+                if case=='snapshot':f=base/'before-tools/snapshot.json';d=json.loads(f.read_text());d['bootId']='different';dump(f,d)
+                elif case=='raw':(base/'prepared/collector/after-tools/raw/imagedata.bin').write_bytes(b'changed')
+                elif case=='collector':(base/'prepared/collector/after-tools/collector.py').write_bytes(b'different source')
+                elif case=='live':f=e/'approval-revalidations/before-synthetic-only.json';d=json.loads(f.read_text());d['imageIdentityRevalidation']['runtimeProfileSHA256']='0'*64;dump(f,d)
+                elif case=='profile':f=e/'provenance/profile.json';d=json.loads(f.read_text());d['imageIdentity']['stable']['claims']['processEnvironment']['ImageVersion']='fake';dump(f,d)
+                else:(e/'provenance/source/benchmarks/keel-brace-v1/runtime-identity-amendment.json').write_bytes(b'changed')
+                self.assertFalse(audit.audit_runner_image(e,h,r,p)['pass'],case)
+    def rebind_snapshot_report(self,root,report,snapshot):
+        c=root/'collector/before-tools';dump(c/'report.json',report);status=json.loads((c/'capture-status.json').read_text());row=status['files']['report.json'];row.update(bytes=(c/'report.json').stat().st_size,suppliedBytes=(c/'report.json').stat().st_size,sha256=audit.digest(c/'report.json'));status['report']=row;status['retainedBytesBeforeStatus']=sum(v['bytes'] for v in status['files'].values());dump(c/'capture-status.json',status);snapshot.update(reportSHA256=audit.digest(c/'report.json'),snapshotManifestSHA256=audit.digest(c/'capture-status.json'));dump(root/'snapshot.json',snapshot)
+    def test_rehashed_discovery_stat_cap_and_complete_flags_still_rejected(self):
+        for case in ('discoverycap','discoveryerror','ambiguousroot','truncated','statmutation','prefix','readdeadline','reporterror','processenv','booleanstat','nonUTC','lstatmissing','commstatmissing','exestatbad'):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity/before-tools';report=json.loads((base/'collector/before-tools/report.json').read_text());snapshot=json.loads((base/'snapshot.json').read_text())
+                if case=='discoverycap':report['runnerDiscovery']['scannedEntries']=513
+                elif case=='discoveryerror':report['runnerDiscovery']['errors']=['failed read']
+                elif case=='ambiguousroot':report['runnerDiscovery']['roots'].append('/another/root')
+                elif case=='truncated':report['runnerDiscovery']['truncated']=True
+                elif case=='statmutation':report['captures']['setup_info_0']['statAfter']['mtimeNs']+=1
+                elif case=='prefix':report['captures']['imagedata']['bytesComplete']=False
+                elif case=='readdeadline':report['durationNs']=120*10**9+1
+                elif case=='reporterror':report['errors']=['diagnostic failed']
+                elif case=='booleanstat':report['captures']['setup_info_0']['openedStat']['uid']=True
+                elif case=='nonUTC':report['utcStart']='2026-11-05T01:02:00+01:00'
+                elif case=='lstatmissing':report['captures']['setup_info_0'].pop('lstatBefore')
+                elif case=='commstatmissing':report['runnerDiscovery']['matches'][0]['commStat']={}
+                elif case=='exestatbad':report['runnerDiscovery']['matches'][0]['exeSymlinkStat']['regular']=True
+                else:report['processImageEnvironment']['ImageVersion']['present']=False
+                self.rebind_snapshot_report(base,report,snapshot);freeze=json.loads((e/'provenance/freeze.json').read_text());expected={k:snapshot[k] for k in audit.IMAGE_SOURCE_KEYS}
+                with self.assertRaises((ValueError,KeyError),msg=case):audit.audit_image_snapshot(base,expected,'before-tools',freeze)
+    def test_exact_optional_lsb_absence_and_other_errors_rejected(self):
+        for error in ('FileNotFoundError','PermissionError'):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp));base=e/'provenance/image-identity/before-tools';c=base/'collector/before-tools';report=json.loads((c/'report.json').read_text());snapshot=json.loads((base/'snapshot.json').read_text());label='etc_lsb_release';record=report['captures'][label];record.update(exists=False,raw=None,bytesComplete=False,resolvedPath=None,errors=[dict(operation='lstat',path='/etc/lsb-release',type=error,message='synthetic missing source',messageWasTruncated=False)]);report['rawArtifactIndex'].pop('raw/'+label+'.bin');status=json.loads((c/'capture-status.json').read_text());status['files'].pop('raw/'+label+'.bin');status['diagnosticErrorCount']=1;dump(c/'capture-status.json',status);snapshot['stable']['rawSources'][label]=dict(sourcePath='/etc/lsb-release',absent=True);self.rebind_snapshot_report(base,report,snapshot);freeze=json.loads((e/'provenance/freeze.json').read_text());expected={k:snapshot[k] for k in audit.IMAGE_SOURCE_KEYS}
+                if error=='FileNotFoundError':audit.audit_image_snapshot(base,expected,'before-tools',freeze)
+                else:
+                    with self.assertRaises(ValueError):audit.audit_image_snapshot(base,expected,'before-tools',freeze)
+
+    def test_final_job_header_source_and_step_order_mutations(self):
+        for case in ('header','job','step','capturetime','collector','loghash'):
+            with tempfile.TemporaryDirectory() as tmp:
+                e,p,h,r=qualified_image_fixture(Path(tmp))
+                if case=='header':
+                    (p/'job.log').write_text((p/'job.log').read_text().replace('Version: 20261025.179.1','Version: 20261026.180.1'));f=p/'job-log-api.json';d=json.loads(f.read_text());d['logSHA256']=audit.digest(p/'job.log');dump(f,d)
+                elif case=='job':f=p/'jobs.json';d=json.loads(f.read_text());d['jobs'][0]['id']=84;dump(f,d)
+                elif case in ('step','capturetime'):
+                    f=p/'jobs.json';d=json.loads(f.read_text())
+                    if case=='step':d['jobs'][0]['steps'].reverse()
+                    else:d['jobs'][0]['steps'][0]['completed_at']='2026-11-05T00:01:59+00:00'
+                    dump(f,d)
+                else:f=p/'job-log-api.json';d=json.loads(f.read_text());d['collectorTask']='' if case=='collector' else d['collectorTask'];d['logSHA256']='0'*64 if case=='loghash' else d['logSHA256'];dump(f,d)
+                self.assertFalse(audit.audit_runner_image(e,h,r,p)['pass'],case)
 
 
 class UpstreamCustodyTests(unittest.TestCase):

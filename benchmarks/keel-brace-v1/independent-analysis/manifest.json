@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "status": "PREMEASURE INDEPENDENT COMPONENT FREEZE; runtime identity resolution blocked; no execution authorization",
+  "status": "PREMEASURE INDEPENDENT COMPONENT READY FOR SOURCE REVIEW; no stage approval or gameplay permission",
   "newBraceGames": 0,
   "newBraceRounds": 0,
-  "tests": 60,
+  "tests": 73,
   "fixturesResult": "PASS",
   "localPython": "3.15.1 (main, Oct 21 2026, 05:55:12) [Clang 21.0.0 (clang-2100.3.34.2)]",
   "localExecutable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
@@ -12,25 +12,26 @@
   "historicalParserFieldsCompared": 28,
   "historicalParserMismatches": 0,
   "sourceBoundary": "No candidate/harness reducer implementation read/imported; plain artifact interface and published protocol only",
-  "imageBlocker": "Authoritative historical Setup Runner Image 20261025.179.1 conflicts with ENV/profile 20261026.180.1 and is not allowlisted. No waiver/new runtime pass.",
+  "imageBlocker": "No actual future stage worker captured or reviewed. Pinned CI and independent current source review precede root source freeze; actual stage review and final same-job reconciliation remain mandatory. Historical Helm image compliance remains unproven.",
   "commands": [
     "python3 -B -m unittest discover -s benchmarks/keel-brace-v1/independent-analysis -p test_audit.py",
     "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-final.json",
     "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-normalized-pin.json",
-    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-canonical.json"
+    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-canonical.json",
+    "python3 -B benchmarks/keel-brace-v1/independent-analysis/verification/replay_historical_baseline.py --zip /private/tmp/keel-helm-confirmation-41889609469.zip --prior-audit /private/tmp/keel-helm-confirmation-41889609469-independent-audit.json --output benchmarks/keel-brace-v1/independent-analysis/verification/historical-baseline-parser-qualified-final.json"
   ],
   "files": {
     "README.md": {
-      "bytes": 14419,
-      "sha256": "dd4728b0e8b1cbb368bd327626c8840e6b55b3071650e89c414f10f4e4cdc5b1"
+      "bytes": 19914,
+      "sha256": "8345c27e202b812bdab6f03cbc002e16ebf1dc566de94f9746873b266c189e9a"
     },
     "audit.py": {
-      "bytes": 90349,
-      "sha256": "ab4b8957df2f1cada0094332fac89faca80fd3fa53e98461b945ee6e127c6c6a"
+      "bytes": 128371,
+      "sha256": "53f026d481101a1b06ce95a8485ed65763c22f3c848710072972f844c1929aa4"
     },
     "test_audit.py": {
-      "bytes": 47620,
-      "sha256": "67d2e9cb2ce0d5c650a970ca4f749bf38f06158a9c6a4464df41c86662094ec9"
+      "bytes": 71697,
+      "sha256": "b3d983c14a87a31477d923bd7f101de3065285a4b4c2b74ce8c2522a3c8337e5"
     },
     "verification/fixtures-attempt1.log": {
       "bytes": 5094,
@@ -72,9 +73,49 @@
       "bytes": 159,
       "sha256": "ab4cd2243840025771db272c9979a676797927ab88ca13fea3509ccaa029b11f"
     },
+    "verification/fixtures-attempt19.log": {
+      "bytes": 1561,
+      "sha256": "92d0781d2e5f69dd6046f7924f25e810a52e252c5d63676f48193a81d2cb8d2e"
+    },
     "verification/fixtures-attempt2.log": {
       "bytes": 3954,
       "sha256": "378066547f5651a91ff2780105889cb7a246f30a0100e28f1080bc1a705245a1"
+    },
+    "verification/fixtures-attempt20.log": {
+      "bytes": 164,
+      "sha256": "161c795c046adbf29ecec4fb95bb7552aa8ed0d3f52f36d93195e0c7c3da8b5b"
+    },
+    "verification/fixtures-attempt21.log": {
+      "bytes": 164,
+      "sha256": "3dd7d5b44dfe00008c1170bec17f970b1b6742f65c85ab3044e727aee4c307fb"
+    },
+    "verification/fixtures-attempt22.log": {
+      "bytes": 169,
+      "sha256": "3cf0460185f5e607458bc88bf20e716f472d3be35b5acfae43f56a26be7a7e5a"
+    },
+    "verification/fixtures-attempt23.log": {
+      "bytes": 171,
+      "sha256": "82a300c748cbe76eeb4a0fe0275c800a53a4a12643838ab8d01497d505a981d3"
+    },
+    "verification/fixtures-attempt24.log": {
+      "bytes": 171,
+      "sha256": "f05a4255f8f3540bd0c12005c172c9975ebf736f96cac098f9fedf1ad1c755a4"
+    },
+    "verification/fixtures-attempt25.log": {
+      "bytes": 171,
+      "sha256": "334bd61bf23f373d72243df58c41fe3cfdf9be7f7f20bf12a62b74f701e34fcd"
+    },
+    "verification/fixtures-attempt26.log": {
+      "bytes": 171,
+      "sha256": "5e01e43bd554d2832f6c9ca28dcb13d4c770bb8a7664e83bbe148875664c1401"
+    },
+    "verification/fixtures-attempt27.log": {
+      "bytes": 172,
+      "sha256": "00a134d7930359f4175508799f89ef7936430f554ab9ac3c9372b8db765cf2f7"
+    },
+    "verification/fixtures-attempt28.log": {
+      "bytes": 172,
+      "sha256": "14419f1e16e719a4680aaf95d169b41e9299f39257693d66d5af24c8bfbf0ca5"
     },
     "verification/fixtures-attempt3.log": {
       "bytes": 4892,
@@ -120,9 +161,25 @@
       "bytes": 1591,
       "sha256": "df7367ab46e3ee499f7095090a6197afa90ae5f8691b42d3fa1e368140df5b85"
     },
+    "verification/historical-baseline-parser-qualified-final.json": {
+      "bytes": 1591,
+      "sha256": "1332efcdbc2475a879ec91953cdeaef514892b6db2d2a58ae8eeb36a351ace05"
+    },
+    "verification/historical-baseline-parser-qualified.json": {
+      "bytes": 1591,
+      "sha256": "889af19d08e5ff8bedf9704dae510c6856de1f518f02797bd5f690a4ce7dbede"
+    },
     "verification/historical-baseline-parser.json": {
       "bytes": 1591,
       "sha256": "600d0d6927d5235b1f67840c4ecd7707677b6a719ca9b0267ee80a1e43d51947"
+    },
+    "verification/historical-qualified-runtime-parser-attempt1.json": {
+      "bytes": 2407,
+      "sha256": "fdfc6cc69b87992c5b7f28eadad2af70b0122d812945110b1d5807c248adb3c5"
+    },
+    "verification/historical-qualified-runtime-parser.json": {
+      "bytes": 2407,
+      "sha256": "e6d1272d8179d63fced1374f0107f35bcfda173c3e7a89115dc62c6a49c95741"
     },
     "verification/historical-runner-conflict-attempt1.json": {
       "bytes": 1106,
@@ -172,6 +229,38 @@
       "bytes": 35697,
       "sha256": "5a7f29fdba2b2e1f5750a9fe84cbe52f9289ea4dd59056f381179508efd17ebd"
     },
+    "verification/pre-review-runtime-73/audit.py": {
+      "bytes": 126536,
+      "sha256": "ff23e15b8fe20be27ac0e17e7edb988f5c36bbd9cc0066293186332f596f69a0"
+    },
+    "verification/pre-review-runtime-73/fixtures.log": {
+      "bytes": 172,
+      "sha256": "00a134d7930359f4175508799f89ef7936430f554ab9ac3c9372b8db765cf2f7"
+    },
+    "verification/pre-review-runtime-73/test_audit.py": {
+      "bytes": 70817,
+      "sha256": "798a6f0bb0ff6104d001f9b98c3d8b453980faba2f650592f7990b6760229ced"
+    },
+    "verification/pre-runtime-amendment-60/README.md": {
+      "bytes": 14419,
+      "sha256": "dd4728b0e8b1cbb368bd327626c8840e6b55b3071650e89c414f10f4e4cdc5b1"
+    },
+    "verification/pre-runtime-amendment-60/audit.py": {
+      "bytes": 90349,
+      "sha256": "ab4b8957df2f1cada0094332fac89faca80fd3fa53e98461b945ee6e127c6c6a"
+    },
+    "verification/pre-runtime-amendment-60/fixtures.log": {
+      "bytes": 159,
+      "sha256": "ab4cd2243840025771db272c9979a676797927ab88ca13fea3509ccaa029b11f"
+    },
+    "verification/pre-runtime-amendment-60/manifest.json": {
+      "bytes": 8689,
+      "sha256": "8580812ec2cfbacec7869a805d02903c283a7d98df4a4f228584492019ee5c33"
+    },
+    "verification/pre-runtime-amendment-60/test_audit.py": {
+      "bytes": 47620,
+      "sha256": "67d2e9cb2ce0d5c650a970ca4f749bf38f06158a9c6a4464df41c86662094ec9"
+    },
     "verification/replay_historical_baseline.py": {
       "bytes": 2465,
       "sha256": "b170c7e32b47d4a46b66d57258a71c889f721e783a63df8d2769c96d54ed0212"
@@ -181,5 +270,13 @@
       "sha256": "5dadff17bdcf174922fe5877f9aaa210c28cf9dfa3b6992dde35be37cbbeb0a5"
     }
   },
-  "repair": "Exact normalized authority/revocation audit plus original canonical acquisition/decision reconciliation on current and upstream stages; global marker chronology; prior48 and55 states retained"
+  "repair": "Published future qualified native/environment tuple; immutable raw snapshots/source/discovery/caps, explicit receipt/child image+prepared profile revalidation, original early404/available evidence, mandatory independent final provider reconciliation including upstream screen; canonical and authority/Fraction/exposure fixes retained",
+  "historicalImageLimitation": "Authoritative historical Setup Runner Image 20261025.179.1 conflicts with ENV/profile 20261026.180.1 and is not allowlisted. No waiver/new runtime pass.",
+  "publishedAmendment": {
+    "commit": "c2b4b4ab74022a670f16e93b6de0f23322e7611e",
+    "documentSHA256": "85229f18285ce4dabbd076d5f8e56d0a6ec93174c5ab98bfac56ff6553dabb84",
+    "policySHA256": "7429753f1d72c888718bd8965a674c7d7f18003f7f9edf3dee309bbb30976edf",
+    "methodologyReviewCommentId": 6646260644,
+    "scope": "Future qualified observations only; no actual runtime approval, VM attestation or old-worker rescue"
+  }
 }

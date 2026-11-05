@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "purpose": "User-authorized fresh Diamond100 after runner completion repair; premeasurement review pending",
+  "roundsPerGame": 20,
+  "gamesPerOpponent": 5,
+  "opponents": [
+    "diamond-port"
+  ],
+  "seeds": [
+    49667,
+    49668,
+    49669,
+    49670,
+    49671
+  ],
+  "premeasurementApproved": false,
+  "independentReviewEvidence": {
+    "path": "experiments/Facet/evidence/runner-completion-repair/independent-review.md",
+    "scope": "offline runner repair reviewed; renewed100-round premeasurement approval pending"
+  },
+  "facetJarSHA256": "817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792",
+  "facetSourceSHA256": "dc5cc37c364b7ff76b122116cdc6a3d65a85abd102202a2f75f8add65b68ec5d",
+  "facetSourceFiles": {
+    "Facet.json": "d1202fd982de3bef266c5f874792254ed28addc6960c8b2204651b88039319c7",
+    "Facet.sh": "179794344b7bf1adc9797603e0f8e6c7c91020a66a7d8022d29e414798147797",
+    "build.gradle": "409a8a634ebc0814a54226ddc086cc369c05c51839d535b66a36fed191cac373",
+    "build.py": "4365397a13551a99015ade08a0015fad2bb677b8f02f2d26e19f7cf181edbd0c",
+    "parity.py": "3e67376fc1b6be970b9bc0300f58aaa18837eba09d217b35f42c9db0e6dac29d",
+    "settings.gradle": "7864ef16aa6807f400f1ba36897e7e4a3e286ff89fe4ac8cf3d2d46bbc3baa33",
+    "src/main/java/Core.java": "13fa82437871be132f6bc0c79bb3c2fef5874389c80ab1532a98ea8a2b7839bb",
+    "src/main/java/Diagnostics.java": "65b2104a3cc9929b6f7a362303bcbc9b6a808b9f1c7c954d88a1abf1f6581351",
+    "src/main/java/Energy.java": "728589465ec4597a7744a44fda5bc171f7e4e30ac1cc6159068ac400fa670088",
+    "src/main/java/Facet.java": "ba3e6aa6e5a4b34272210141b7e41799e8bbd9d39867ddf332d114217690e725",
+    "src/main/java/FireControl.java": "f09721e353f3febb0d13c9d8c14a00820acb4931b2e3053602671114e5d3205d",
+    "src/main/java/Geometry.java": "ff41bdabd4236bae7e99c0af061d22a56b28fc59205db4d1e1b7ab3206e9a629",
+    "src/main/java/Learner.java": "ce8e8c3c99cc8b9a9e28d627bc0dfb76f5bb63a5dafb6e4262967fcbf1da59a3",
+    "src/main/java/Melee.java": "c269ef00c0babf8d23facb7dabfc80ce7a83a32316d3653c631aa15d4b7c8912",
+    "src/main/java/Memory.java": "78bd23c9231c1d2d7686944496ccfe2d6d1a418c2e119d81b3bac5bbefaf8fd1",
+    "src/main/java/ModelSnapshot.java": "f3b4a3f5bb951f130585747f1007ededb8bab048e43b1af0abd696d9d9c46233",
+    "src/main/java/Physics.java": "43cfccd5196aa73bcd77e6cce5d80510dca27183d00f46f5ff9fa5509c3e18c4",
+    "src/main/java/Planner.java": "425c764cedf180e89b622b3360bc50b293cf4895951ec4e3dca8627efb42c19b",
+    "src/main/java/Radar.java": "50785bc088e9b04dbcf556fbc9ffe4635d615f1d428fd1a9d31b0288bb757318",
+    "src/main/java/RuntimeConfig.java": "c19d049e7acf4b750b945442e086f3a963229a80d08ec660370ac98ed1780ce2",
+    "src/main/java/Waves.java": "7fff4970198ba7da84f1da8ed199db2238dea158b9232ded2e6a38f71acd6921",
+    "src/main/resources/Facet.json": "d1202fd982de3bef266c5f874792254ed28addc6960c8b2204651b88039319c7",
+    "src/main/resources/facet.properties": "9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25",
+    "src/test/java/AdapterConcurrencyTest.java": "977b00d40daee062e80411c627d8e540ef8aef3084b41551251465ba352edbf2",
+    "src/test/java/AdditionalRegressionTest.java": "bc44bb2e99bb0145275f63b0fbb1a5f2cad6bbf203b066a1cc72a7b0cea0e9a5",
+    "src/test/java/FacetSemanticTest.java": "6ff40b404cf0ef89b6de03978b2b821021846e79ebd88635f12a9d7b77a533f1",
+    "src/test/java/FacetTelemetryFixture.java": "5ff321fa78f977d2353ee28771bee94ad0fd4c481d333c14fdea21f023cf0537",
+    "src/test/java/FollowupTelemetryFixture.java": "d9cbe40d7fd13cbae1f4a78ceab356571b6bd8abee3d783a7c1fc9c55bc77528",
+    "src/test/java/LifecycleTelemetryFixture.java": "d7e84cfd7d2fa74891b969ddaa8963f7afceef27e4695483dfa8974f23dfeaad",
+    "src/test/java/MeleeCorrectionTest.java": "ca9e2262fce637f45cd7b7ea30ef79020a15197ca95eb9e59f142bb471b6c5a4",
+    "src/test/java/MeleeTotalQuotaTest.java": "200f05ea774dcfdb1e55ca230d2338f6820bdac37a5d4afe2ae36e7884412336",
+    "src/test/java/ReviewRegressionTest.java": "4155e0fd167ffe98e36f26e3dd7519006df1317043993a53e8fa96c9cf5accf8",
+    "src/test/java/Revision2RegressionTest.java": "6f65f2dc6207771f3ce9ce622cb84b9c975f2e837c5d291bde60f87abf68575a",
+    "src/test/resources/energy-trace/Alpha.jsonl": "61719d36558eccc75d032edcf938a64a78667ddc45c4685e27cff0b07a11759e",
+    "src/test/resources/energy-trace/Beta.jsonl": "4a95f4696f3a02e9ac6e9120ce022480ea2e0cc0cecb13aad428e474ddfed2b4",
+    "src/test/resources/energy-trace/trace.json": "90efabc89b4a834bd1ba4d2f64c466cc6051adadecba01d6670d49ae512f761e",
+    "src/test/resources/independent-contracts/Alpha.jsonl": "37197b36fdae29766e43df57f85dad513228f47e2998e3baa414695fe950c2f7",
+    "src/test/resources/independent-contracts/Beta.jsonl": "96b1d0de90ef08a9efeb8ec0639b5bfcc4c87b1d50aa0e6a40d24a0399969abe",
+    "src/test/resources/independent-contracts/ContractProbe.java": "d44e4e7fa824c6293c88903415c829e9513451b091e0bac4c166bc8a551c3d22",
+    "src/test/resources/independent-contracts/engine-source-manifest.json": "fe9046e683a6f923fb6a119a40b5817fc5310e48732a49e839fd06d4289badea",
+    "src/test/resources/independent-contracts/manifest.json": "aa1a47e6b4b966f5a749bfc4333bfe5e36b171ab558ee116b9133fbf54793261",
+    "src/test/resources/independent-contracts/motion-fixtures.json": "74a52a1601732700d089fd4b499b00652410a1c29592dfc6d5774bfa32a6d41c",
+    "src/test/resources/independent-contracts/protocol.md": "8ba69a28feb6d649efba43e4e02dd9abc7a25fade07afa848ca23253c4498078",
+    "src/test/resources/independent-contracts/validation.json": "9d6516f95feb831bd751cbda8b0ab26e02d901ac37d5b994291aaf45d9a1a6ff"
+  },
+  "facetConfigSHA256": "9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25",
+  "aisJarSHA256": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+  "fileSHA256": {
+    "experiments/Facet/Facet.jar": "817a9d53ce944d27e3f536a92869eeca2e0aec20ef5c52b2dab882e931205792",
+    "experiments/Facet/Facet.json": "d1202fd982de3bef266c5f874792254ed28addc6960c8b2204651b88039319c7",
+    "experiments/Facet/Facet.sh": "179794344b7bf1adc9797603e0f8e6c7c91020a66a7d8022d29e414798147797",
+    "experiments/Facet/src/main/resources/Facet.json": "d1202fd982de3bef266c5f874792254ed28addc6960c8b2204651b88039319c7",
+    "experiments/Facet/src/main/resources/facet.properties": "9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25",
+    "AISurvivor/AISurvivor.jar": "b41b5de479b1288f087e0cbc9efa64abb68f12381b41d33ad65ff48be5914800",
+    "AISurvivor/AISurvivor.json": "8380cb2c3ae4b2b07a68b3e9f6716be1314a78184e9818628b9ca2bdfc26f215",
+    "AISurvivor/AISurvivor.sh": "6c8502b202ca02e360f81509f15d3a5e48cd71067030eec196a855b40694f89d",
+    "tools/opponents/retcon.lock.json": "438b4d08ce1df2e323760529e03a5f66ba26fa5de2767e43416d89003b08104f",
+    "tools/opponents/strong-melee.lock.json": "ddd14064a26f2ec15d38bb704fcac1e4c0dfe605fe015e92d67da8e761df20c3",
+    "tools/facet_benchmark.py": "490cf71c3d35745157c1f59dfbd3f0820b86802509229b1a6af2a55c10bbf9af",
+    "tools/facet_evidence.py": "a397024a2b424de35213b72d7651d1fcfd5698c7d2d1f19ca04d98633de224e3",
+    "tools/benchmark.py": "f31a7f85d06d99ca5f19e6a2eddb6264059443d1856816a4860fe3691aa2a576",
+    "tools/BenchmarkBattle.java": "0ebdbd429920ef724f852293ec7d4b2acb7b035c58068798453b0f4e320c8d03",
+    "tools/retcon.py": "4171e5a7e82ce58cc3b66835c9981ce143c9dadd59d7a9fdb34abe98df7c2c52",
+    "tools/strong_melee_opponents.py": "a5aba18c6c103c464618303efc0e1cc285eb37bda9960f0621b762b30be21524",
+    "experiments/Facet/evidence/final-premeasurement-approval.md": "cb772c15c0893621f83a52ae9eb97a6949825c3693006cab1519a1b36ab8fd2f",
+    "tools/facet_python_runtime.py": "3bdec36581be99e0f8d639d669eeb85ff384b3bb843cd35395d8fa4e4c50963f",
+    "experiments/Facet/evidence/preflight-setup-failure/concrete-repair-approval.md": "9e81964218a6d6f630c86e54648ebfc8d939512f9450e6616a7d1fbf873435cd",
+    "experiments/Facet/evidence/preflight-source-build-failure/header-repair-approval.md": "95a2bc6465b5c388f72ab9ad893037278d41c05642accfdb349e6c566b7d30da",
+    "experiments/Facet/evidence/preflight-jdk-selector-failure/independent-selector-approval.md": "fadbc9f4ad7efb74fdaf6cb790a2da1f026c85e6aa68a1fd13f1ac5ce50cab6c",
+    ".github/workflows/facet.yml": "2706bde14104f806df524d7e5d4c91ef9bc122f9f6ddc330f77981a734d73d38",
+    "tools/facet_report.py": "d9ae694d8def5839191ac76e89ca0fb728df0acbb62ea38f0abad4c3881a7d60",
+    "tools/test_facet_benchmark.py": "6cab553b4a00e89333f030d8464762cea8baada26f8c2ecf83483a73ddf7bed5",
+    "tools/test_facet_report.py": "7c03ab6bcd579fd81e9b680f16bd0e2c15178893225448aa3f4c299f4387ef62",
+    "docs/facet-diamond-100-protocol.md": "b4973244b5e23fb201aed7290b5ac08fe477249830f0a02c8f45f49dc600084f",
+    "docs/facet-screen-evidence-repair.md": "e96010d4d5f5707aa1ddc497a0a61dc159ea870f0e11fcc2336a50cc0f2ac007",
+    "experiments/Facet/evidence/screen-evidence-repair/infrastructure-approval.md": "630b818226800efb4227d6de62e598afe1320ce9cfffd6951e2a6e6cd1178399",
+    "experiments/Facet/evidence/screen-evidence-repair/verified-ci.json": "f6cab0dab21cd394029b6ef5c0953fbf452cf0edfb12a24eaa459095d4a465ba",
+    ".github/workflows/facet-diamond-repaired-screen.yml": "7c46fd1934323556c403949e60ca57d90cc6ccabcee5c1926c9998ebbfd93d40",
+    "tools/FacetCompletionBarrierTest.java": "65be65187f1248d3deb399e0246a29115a5885b73c6fe0c1949e9ae85ed3e802",
+    "docs/facet-diamond-repaired-100-protocol.md": "6f7e86a4e41fc903e25fa6b2ef07e943290487c0ca9048881241add705945691",
+    "docs/facet-runner-completion-repair.md": "6e3bcd19eda2bd511872d326c2f9dc198546075e02549df6dadc68c06ad910be",
+    "experiments/Facet/evidence/runner-completion-repair/independent-review.md": "6b0dede18ad86355d8b12e5d430c7d06fc6085895f3ddd559e12b1ec5ba34970"
+  },
+  "runnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "serverSHA256": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
+  "apiSHA256": "ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752",
+  "retconApiSHA256": "acb1858a7b83b45ddd153db52fcea4d855b95cc442f643f94f299f0ee2258ce2",
+  "runtime": {
+    "image": "ubuntu-26.04",
+    "architecture": "x86_64",
+    "buildJDK": "Temurin17.0.17+10",
+    "battleJDK": "Temurin25.0.1+8",
+    "python": "3.13.9",
+    "buildJDKArchiveSHA256": "992f96e7995075ac7636bb1a8de52b0c61d71ed3137fafc979ab96b4ab78dd75",
+    "battleJDKArchiveSHA256": "8daf77d1aacffe38c9889689bc224a13557de77559d9a5bb91991e6a298baa0d",
+    "provenancePolicy": "observe actual JVM properties, executable hashes, OS release and runner image version before first game; reject mismatched required versions/image/architecture",
+    "pythonInstallation": {
+      "method": "official source bootstrap on required Ubuntu26.04; no image/version fallback",
+      "url": "https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz",
+      "sha256": "ed5ef34cda36cfa2f3a340f07cac7e7814f91c7f3c411f6d3562323a866c5c66",
+      "bytes": 22681368,
+      "configure": [
+        "--with-ensurepip=install",
+        "--disable-test-modules"
+      ],
+      "compiler": "gcc/g++; actual version recorded",
+      "cflags": "-O3 -fno-omit-frame-pointer",
+      "cppflags": "",
+      "ldflags": "",
+      "makeJobs": 2,
+      "pgo": false,
+      "lto": false,
+      "experimentalJit": false,
+      "freeThreaded": false,
+      "requiredModules": [
+        "ssl",
+        "venv",
+        "ctypes",
+        "lzma",
+        "bz2",
+        "sqlite3",
+        "readline"
+      ],
+      "developmentPackages": [
+        "build-essential",
+        "libssl-dev",
+        "zlib1g-dev",
+        "libffi-dev",
+        "liblzma-dev",
+        "libbz2-dev",
+        "libreadline-dev",
+        "libsqlite3-dev"
+      ],
+      "packageVersionPolicy": "Ubuntu26.04 repositories; exact installed versions and copyright notices recorded before first game",
+      "evidencePath": "facet-runtime-preflight (outside both Gradle build directories)"
+    },
+    "setupJava25Selector": "25.0.1+8.0.LTS (action vendor metadata spelling for same frozen Temurin25.0.1 build8)"
+  },
+  "setup": {
+    "arenaWidth": 800,
+    "arenaHeight": 600,
+    "gunCoolingRate": 0.1,
+    "turnTimeoutMicros": 100000,
+    "readyTimeoutMicros": 10000000,
+    "maxInactivityTurns": 450,
+    "turnsPerSecond": -1
+  },
+  "modelPolicy": "each game fresh processes/private empty paths; Facet export-only/no loader; Diamond cold black-box process; no private opponent stats or cross-game models",
+  "engineSeedSeatLimitations": "engine seed/initial positions/seats uncontrolled; only launch order alternates; five game clusters per opponent; rounds not independent",
+  "acquisitionPolicy": "fixed five-game Diamond Port schedule, no retries/resume/replacements/tuning; stop on invalid acquisition; preserve all official results before own-telemetry acceptance",
+  "timeBudget": {
+    "perGameSeconds": 900,
+    "outerProcessSeconds": 990,
+    "jobMinutes": 180
+  },
+  "promotionPolicy": "Diamond equal-game mean share>40%, skip<.5%, collision<1%, exact completion/engineering gates unchanged; no promotion/merge/confirmation automatically; transfer/melee gaps remain",
+  "candidateCommit": "93863d2aa9501c537b098fe556b4ff961c9f772e",
+  "preflightSetupFailure": {
+    "runId": 41850497212,
+    "measuredGames": 0,
+    "measuredRounds": 0,
+    "registrationSHA256": "96f307e06becf3bfa5b8fc302558d5a14c1e35851dc1f752f6b77f9f45f0424a",
+    "evidence": "experiments/Facet/evidence/preflight-setup-failure/",
+    "scope": "administrative setup recovery before first actual acquisition; no measured game retry"
+  },
+  "setupRepairApproval": {
+    "path": "experiments/Facet/evidence/preflight-jdk-selector-failure/independent-selector-approval.md",
+    "sha256": "fadbc9f4ad7efb74fdaf6cb790a2da1f026c85e6aa68a1fd13f1ac5ce50cab6c",
+    "decision": "independent2026-11-04 same-build action selector correction; successful exact runtime checks before first game; no measured retries"
+  },
+  "preflightHistory": [
+    {
+      "runId": 41850497212,
+      "measuredGames": 0,
+      "measuredRounds": 0,
+      "registrationSHA256": "96f307e06becf3bfa5b8fc302558d5a14c1e35851dc1f752f6b77f9f45f0424a",
+      "evidence": "experiments/Facet/evidence/preflight-setup-failure/",
+      "scope": "administrative setup recovery before first actual acquisition; no measured game retry"
+    },
+    {
+      "runId": 41853893986,
+      "jobId": 126657168806,
+      "measuredGames": 0,
+      "measuredRounds": 0,
+      "registrationSHA256": "7768d28eb53da987ce08e3a4646a2142f9c13b829a1b3aafc36e34bc5fc4352c",
+      "evidence": "experiments/Facet/evidence/preflight-source-build-failure/",
+      "failure": "required bz2 module missing before Java/build/acquisition; no measured game started"
+    },
+    {
+      "runId": 41856016648,
+      "jobId": 126664718973,
+      "measuredGames": 0,
+      "measuredRounds": 0,
+      "registrationSHA256": "9972285a72e7f534f2a495a3f64aead9306d74423ddade8819049ff54889d169",
+      "evidence": "experiments/Facet/evidence/preflight-jdk-selector-failure/",
+      "failure": "runtime and bothJava17build/parity passed; sameJDK25 actionselector needsLTSmetadata spelling; acquisition skipped"
+    }
+  ],
+  "freshAcquisitionAfterInvalid": true,
+  "userAuthorizedFreshBudget": true,
+  "metricsSchema": 3,
+  "priorInvalidAcquisition": {
+    "officialPhysicalRounds": 160,
+    "newBudgetRequested": 100,
+    "totalIfApproved": 260,
+    "noPooling": true,
+    "evidence": "docs/facet-diamond-100-results.md"
+  },
+  "proposalProtocol": "docs/facet-diamond-repaired-100-protocol.md",
+  "userDecision": {
+    "date": "2026-11-04",
+    "answer": "Test it vs diamond port",
+    "scope": "100 NEW rounds, five cold20 Diamond-only games after runner repair",
+    "newRoundsAuthorized": 100,
+    "evidence": "https://github.com/stephanelee/robocode/issues/101#issuecomment-6638845353"
+  },
+  "priorInvalidAcquisitions": [
+    {
+      "officialPhysicalRounds": 140,
+      "evidence": "benchmarks/facet-registered-300/attempt-1/"
+    },
+    {
+      "officialPhysicalRounds": 20,
+      "evidence": "benchmarks/facet-diamond-100/attempt-1/",
+      "unrunRounds": 80
+    }
+  ]
+}

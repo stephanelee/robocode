@@ -1,0 +1,12 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+
+> Task :verifyJarParity
+PASS source/JAR payload parity entries=831 jar=378ebc23a589c8107eb381924b53736e19bf0a4247969257a301ad2a0434bec5
+
+BUILD SUCCESSFUL in 2s
+4 actionable tasks: 4 executed

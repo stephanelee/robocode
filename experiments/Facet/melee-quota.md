@@ -1,0 +1,24 @@
+# Global melee quota correction — 2026-11-04
+
+Offline implementation acceptance only; independent review, Gradle/CI and actual own-three-bot diagnostic remain pending. Parent owns issue/PR publishing, final freeze and prospective 300-round user benchmark. Zero battles, tuning, training, network, plugins or additional agents. No competitive strength claim.
+
+The previous accepted approximation of three stages ×80 (240 total) is **REJECTED and superseded**. Old reports are historical. [Prospective protocol](../../docs/facet-melee-quota-protocol.md).
+
+Chosen bounded assumption: reserve 26/27/27 samples across the existing three stages, without transferring unused slots. Every stage queries current candidate power/context and projects at that same power, then validates the selected primary's range/energy policy. Target weights remain normalized separately and query shares remain equal integer shares. More than 26 fresh targets is unsupported and conservatively yields no shot. Cycling/nonpositive solutions also yield no shot. Stable first-stage decisions use fewer labels; this is the explicit resolution cost, not a measured performance improvement. No property/profile constants changed; the global maximum remains exactly80. Maximum solve work is960 iterations. Missing stores retain analytic fallback. Survivor selection/eligibility, retained displacement stores, fresh-scan requirement and confirmed-shot metadata are preserved; analytic may win stationary probes. Independent long/recent selection fixtures remain; unexercised live types remain gaps.
+
+Telemetry: `decisionReturned` counts actual neighbor rows returned, `decisionSamples` counts actual projection evaluations, `decisionQueries` counts store calls, `decisionPasses` counts power stages, and `decisionIterations` counts solve iterations. Each sample returned is projected once in its stage, including rejected projections. Stages query independently: the same stored observation can return again; these are evaluation counts, not a claim of distinct label identities. Thus unique returned identities are bounded by these stricter <=80 evaluation totals. No frozen cohort reuse. Cumulative ProjectionWork accounting remains intact; decision deltas use before/after counters in finally, including failure. Cached/disabled decisions reset to zero. Bounded work trace, summary observations and additive counters expose these actual costs.
+
+Results: [full Java17 build](evidence/quota-final.txt) passes **19 groups /10,192 assertions**, retaining all prior19/10,169 gates and866 supplied actual physical transitions. [Focused runnable regression](evidence/quota-focused.txt) passes. Supplied reviewer case: 80 stored labels, initial2.5→final1.5, primary1, range539.1304226442027, **53 actual returned/projected evaluations in2 stages**. Cycling case:3 stages/80 evaluations, no shot. Stable first stage:26; empty store:0 with analytic fallback. Active Core power change, multiple decisions/cumulative accounting, multi-target, unsupported population, hot-cache and actual disabled path pass. Filled4-target/8-wave/16-full-store fixture uses24 evaluations/60 solve iterations,437 shared predictor steps and8 certified movement steps. These fixtures do not establish live performance or strength.
+
+Runnable JAR smoke, deterministic duplicate packaging and835-entry source/JAR payload parity pass. Runtime: Homebrew OpenJDK17.0.21.0.3+0, macOS27.2 arm64,256MiB tests; [metadata](evidence/build.json). Build command from workspace root: `FACET_BUILD_API_JAR="$PWD/official/robocode-tankroyale-bot-api-1.4.0.jar" python3 experiments/Facet/build.py`. No added temporary runtime dependency.
+
+SHA256:
+
+- JAR: `c09e0a300865c07244a5cb37151b4fa07ec3403acdcbcd09155a741fe83939f2`
+- Source manifest content: `a587ea491741511fbbf25145d783ccd690884ba7be634931c817aea5317cd226`
+- Official API1.4.0: `ab65c4d5cec1808adeb71375adae6d15341ae250def89a6c10fc9da879de0752`
+- Unchanged properties: `9ee52f73dc46e8503fe784d116e247fefc566dcb4e183215385840869d412a25`
+- Final build output: `c12d3d272218e788f5a4c3b44a5942ddda1840d52f2e1516f9552f7ed844b45e`
+- Focused output: `8bdd2a6048482bc725cab4053769e3a3ee1c7e22620c22828e496d931ec68476`
+
+Attempts: initial heredoc patch command was denied before writes by filtered temporary-file restrictions; reapplied without temporary files. [Build attempt1](evidence/quota-attempt-1.txt) failed before compilation because default lib path was absent; supplied the pinned workspace official API explicitly. OS-denied system Python cache warnings did not relax the boundary. [Attempt2](evidence/quota-attempt-2.txt) passed19/10,189; final adds direct cache-reset and counter/unsupported/disabled checks. No semantic assertion failed or was weakened. The obsolete80×passes gate is replaced by80 per decision; multiple-turn cumulative equality is separately checked. Parent issue/PR link pending, publication prohibited here.

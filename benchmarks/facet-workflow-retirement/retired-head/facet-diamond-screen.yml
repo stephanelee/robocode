@@ -1,0 +1,67 @@
+name: Facet registered Diamond Port 100-round screen
+on:
+  push:
+    branches: ['facet/independent-v1-20261104-01a1a639']
+    paths: ['docs/facet-diamond-100.freeze.json']
+permissions:
+  contents: read
+jobs:
+  registered-duels:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned CPython3.13.9 on Ubuntu26.04 before any acquisition
+        run: |
+          python3 tools/facet_python_runtime.py --prefix "$RUNNER_TEMP/facet-python-3.13.9" --evidence facet-runtime-preflight
+          echo "$RUNNER_TEMP/facet-python-3.13.9/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17.0.17+10'
+      - name: Build and verify both source and committed artifacts under Java 17
+        run: |
+          cp AISurvivor/AISurvivor.jar "$RUNNER_TEMP/AISurvivor-committed.jar"
+          cp experiments/Facet/Facet.jar "$RUNNER_TEMP/Facet-committed.jar"
+          ./gradlew --no-daemon clean build
+          python tools/verify_jar.py "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+          ./gradlew -p experiments/Facet --no-daemon clean build verifyJarParity
+          python tools/verify_jar.py "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/build/libs/Facet.jar
+          cp "$RUNNER_TEMP/AISurvivor-committed.jar" AISurvivor/AISurvivor.jar
+          cp "$RUNNER_TEMP/Facet-committed.jar" experiments/Facet/Facet.jar
+      - name: Select frozen Retcon source-launch runtime after builds
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.1+8.0.LTS'
+      - name: Run the single registered acquisition without retries
+        run: >-
+          python tools/facet_benchmark.py
+          --freeze docs/facet-diamond-100.freeze.json
+          --output build/facet-diamond-100
+          --cache "$RUNNER_TEMP/facet-opponent-cache"
+          --java "$JAVA_HOME/bin/java"
+          --python "$(command -v python)"
+      - name: Render official and incomplete screen evidence without launching bots
+        if: always()
+        run: |
+          if test -f build/facet-diamond-100/results.json; then
+            python3 tools/facet_report.py --results build/facet-diamond-100/results.json --output build/facet-diamond-100/report
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: facet-diamond-100-evidence
+          path: |
+            facet-runtime-preflight/
+            build/facet-diamond-100/report/
+            build/facet-diamond-100/results.json
+            build/facet-diamond-100/registration.json
+            build/facet-diamond-100/*/battle.json
+            build/facet-diamond-100/*/FACET_*
+            build/facet-diamond-100/*/AIS_metrics.jsonl
+            build/facet-diamond-100/*/runner.log
+            experiments/Facet/build/reports/
+            build/test-results/
+          if-no-files-found: warn

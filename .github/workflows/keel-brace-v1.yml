@@ -24,6 +24,7 @@ jobs:
     env:
       STAGE: ${{ github.event.label.name == 'run-keel-brace-v1-screen' && 'screen' || 'confirmation' }}
       PYTHONDONTWRITEBYTECODE: '1'
+      KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       PULL_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +32,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Capture original qualified image observations before tools
+        env:
+          KEEL_BRACE_IMAGE_PROBE_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: /usr/bin/python3 -I -B -S tools/keel_brace_image_identity.py "$STAGE" before-tools
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -54,7 +59,7 @@ jobs:
             python tools/verify_jar.py experiments/Keel/Keel.jar experiments/Keel/build/bot/Keel/Keel.jar
             ./gradlew -p experiments/KeelBrace --no-daemon clean build
             python tools/verify_jar.py experiments/KeelBrace/KeelBrace.jar experiments/KeelBrace/build/bot/KeelBrace/KeelBrace.jar
-            python -I -B -S -m unittest discover -s tools -p test_keel_brace_experiment.py -v
+            python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v
           } 2>&1 | tee "$RUNNER_TEMP/keel-brace-build.log"
           mkdir -p build
           cp "$RUNNER_TEMP/keel-brace-build.log" build/keel-brace-build.log
@@ -94,6 +99,7 @@ jobs:
           name: keel-brace-v1-${{ env.STAGE }}-evidence-${{ github.run_id }}
           path: |
             build/keel-brace/
+            .benchmark-cache/keel-brace-image-identity/
             build/keel-brace-build.json
             build/keel-brace-build.log
             ${{ runner.temp }}/keel-brace-build.log

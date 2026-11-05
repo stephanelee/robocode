@@ -337,8 +337,8 @@ def verify_exported_provenance(evidence, source_root, stage, expected_head, expe
         ident = profile['identity']
         require(ident['repository'] == 'stephanelee/robocode' and ident['headSHA'] == expected_head and ident['pullNumber'] == PR, 'profile exact repository/head')
         require(ident['runId'] == expected_run and ident['runAttempt'] == 1, 'profile exact run/attempt1')
-        require(ident['image'] in ('20261026.180.1', '20261101.186.1') and ident['architecture'] == 'x86_64'
-                and 'VERSION_ID="26.04"' in ident['os'], 'profile DECLARES allowed Ubuntu image/architecture; independent header check remains mandatory')
+        require(ident['image'] == QUALIFIED_ENV['ImageVersion'] and ident['architecture'] == 'x86_64'
+                and 'VERSION_ID="26.04"' in ident['os'], 'profile DECLARES separate qualified environment/Ubuntu architecture; native snapshots and final reconciliation remain mandatory')
         require(ident['pythonVersion'].startswith('3.13.17 '), 'registered Python3.13.17')
         require(bool(ident['bootId']) and bool(ident['workspace']), 'profile boot/workspace recorded')
         freeze_path = provenance / 'freeze.json'
@@ -530,7 +530,7 @@ def audit_stage(evidence, source_root, stage, expected_head, expected_run, provi
     upstream_screen = audit_upstream_screen(source_root, stage, provider_evidence)
     canonical=reconcile_canonical(evidence,stage,expected_head,population,rows,raw,complete)
     raw_disposition = raw['rawDisposition'] if complete else 'INVALID/INCOMPLETE'
-    decision = 'INVALID/INCOMPLETE' if not canonical['pass'] else raw_disposition if raw_disposition == 'INVALID/INCOMPLETE' else 'PROVENANCE-INCOMPLETE' if not provenance['pass'] or not authority['pass'] or not storage['pass'] or not runner_image['pass'] or not upstream_screen['pass'] else raw_disposition
+    decision = 'INVALID/INCOMPLETE' if not canonical['pass'] or raw_disposition=='INVALID/INCOMPLETE' else 'PROVENANCE-INCOMPLETE' if not provenance['pass'] or not authority['pass'] or not storage['pass'] or not upstream_screen['pass'] else runner_image.get('status','PROVENANCE-INCOMPLETE') if not runner_image['pass'] else raw_disposition
     return {'schemaVersion': 1, 'stage': stage, 'independentReducer': True, 'gamesSHA256': digest(plan_path),
             'expectedHead': expected_head, 'expectedRun': expected_run, 'registeredGames': len(population),
             'registeredRoundBudget': sum(g['rounds'] for g in population), 'validGames': rows,
@@ -862,6 +862,76 @@ def audit_storage(evidence, stage, expected_run, provider=None, transport=None):
     return dict(checked=checked,failures=failures,**{'pass':not failures},scope='Recorded controller observations/monitor plus exact original and separate companion artifact bytes and external final APIs. Source review must prove sampling/wiring and first-fault enforcement. Archived samples are not an independent remote live-disk scan or byte-level proof of unobserved transient peaks.')
 
 
+AMENDMENT_POLICY_SHA256='7429753f1d72c888718bd8965a674c7d7f18003f7f9edf3dee309bbb30976edf'
+AMENDMENT_DOCUMENT_SHA256='85229f18285ce4dabbd076d5f8e56d0a6ec93174c5ab98bfac56ff6553dabb84'
+QUALIFIED_POLICY_ID='keel-brace-qualified-native-observations-v1'
+QUALIFIED_NATIVE=dict(image='ubuntu-26.04',version='20261025.179.1',includedSoftwareURL='https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md',imageReleaseURL='https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179')
+QUALIFIED_ENV=dict(ImageOS='ubuntu26',ImageVersion='20261026.180.1')
+
+
+def strict_native_claim(raw, source):
+    check(len(raw)<=1048576,'Native metadata cap; no prefixes accepted')
+    data=json_data(raw);check(type(data) is list,'Native metadata group/detail array required')
+    group,detail=('Group','Detail') if source=='setup_info' else ('group','detail') if source=='imagedata' else (None,None)
+    check(group is not None,'Unregistered native source')
+    matches=[]
+    for entry in data:
+        check(type(entry) is dict and set(entry)=={group,detail} and type(entry[group]) is str and type(entry[detail]) is str,'Native exact source-backed keys; aliases/ambiguity rejected')
+        if entry[group]=='Runner Image':matches.append(entry[detail])
+    check(len(matches)==1,'Native exactly one Runner Image group')
+    fields={}
+    for line in matches[0].split('\n'):
+        key,separator,value=line.partition(': ');check(separator and key not in fields and bool(value),'Native malformed/duplicate detail')
+        fields[key]=value
+    names={'Image':'image','Version':'version','Included Software':'includedSoftwareURL','Image Release':'imageReleaseURL'}
+    check(set(fields)==set(names),'Native exact four fields')
+    claim={names[k]:v for k,v in fields.items()};check(claim==QUALIFIED_NATIVE,'Native qualified tuple literal mismatch')
+    return claim
+
+
+def strict_environment_claim(raw):
+    check(len(raw)<=1048576,'Environment metadata cap; no prefixes accepted')
+    text=raw.decode('utf-8');values={}
+    for line in text.split('\n'):
+        if not line or line.startswith('#'):continue
+        match=re.fullmatch(r'([A-Za-z_][A-Za-z0-9_]*)=(.*)',line);check(match is not None,'Literal environment assignment required')
+        key,value=match.groups()
+        if key not in QUALIFIED_ENV:continue
+        check(key not in values,'Duplicate required environment name')
+        if value.startswith(('"',"'")):
+            check(len(value)>=2 and value[-1]==value[0],'Environment unterminated quote');value=value[1:-1]
+        check(value and not any(x in value for x in ('$', '`', '\n', '\r', '"',"'")),'Environment expansion/empty/ambiguous required value')
+        values[key]=value
+    check(values==QUALIFIED_ENV,'Both literal environment fields must match separate qualified tuple')
+    return values
+
+
+def qualified_provider_header(raw):
+    """Original raw job-log bytes only; stop before actual workflow output."""
+    check(type(raw) is bytes,'Original provider log bytes required')
+    text=raw.decode('utf-8');groups=[];systems=[];active=None;lines=[];boundary=False;prologue=False
+    for index,line in enumerate(text.split('\n')):
+        check(index<2048,'Startup parser cap reached without bounded scope')
+        line=line[:-1] if line.endswith('\r') else line
+        if index==0:
+            check(re.fullmatch(r"(?:\ufeff)?(?:\d{4}-\d{2}-\d{2}T[0-9:.]+Z )?Current runner version: '[0-9]+\.[0-9]+\.[0-9]+'",line) is not None,'Original complete provider log must begin with actual runner startup prologue');prologue=True
+        line=re.sub(r'^\d{4}-\d{2}-\d{2}T[0-9:.]+Z ','',line)
+        if line.startswith(('Complete job name: ','##[group]Run ','##[group]Complete job')):
+            check(active is None,'Unclosed startup group at workflow boundary');boundary=True;break
+        if line.startswith('##[group]'):
+            check(active is None,'Nested startup group');active=line[len('##[group]'):];lines=[]
+        elif line=='##[endgroup]':
+            check(active is not None,'Unmatched startup group end')
+            if active=='Runner Image':groups.append(lines)
+            elif active=='Operating System':systems.append(lines)
+            active=None;lines=[]
+        elif active is not None:lines.append(line)
+    check(prologue and boundary and active is None and len(groups)==len(systems)==1,'Complete unambiguous startup image/OS scope required')
+    claim=strict_native_claim(json.dumps([dict(group='Runner Image',detail='\n'.join(groups[0]))]).encode(),'imagedata')
+    check(len(systems[0])==3 and systems[0][0]=='Ubuntu' and re.fullmatch(r'26\.04(?:\.[0-9]+)?',systems[0][1]) is not None and systems[0][2]=='LTS','Qualified startup Ubuntu26.04 OS')
+    return claim
+
+
 def runner_image_header(lines):
     """Parse only actual Setup-job groups; never provisioner version or later shell ENV."""
     image_groups=[];os_groups=[];active=None;values=[]
@@ -983,6 +1053,13 @@ def audit_upstream_screen(source_root, stage, provider=None):
         prefix_comment='KEEL_BRACE_OUTCOME_REVIEW_V1\n';check(comment['body'].startswith(prefix_comment),'Upstream outcome prefix');review=json_data(comment['body'][len(prefix_comment):])
         check(set(review)=={'verdict','stage','sourceFreezeSHA256','runId','headSHA','decisionSHA256','reviewerTask','agentToolProvenance'},'Upstream exact outcome keys')
         check(review['verdict']=='SCREEN-PASS' and review['stage']=='screen' and review['sourceFreezeSHA256']==gate['sourceFreezeSHA256'] and review['runId']==run['id'] and review['headSHA']==m['headSHA'] and review['decisionSHA256']==gate['decisionSHA256'],'Independent upstream outcome exact identity')
+        published=review['agentToolProvenance']['imageIdentityReconciliation'];check(set(published)==IMAGE_FINAL_KEYS,'Upstream exact published mandatory final image reconciliation')
+        derived=image['finalReconciliation'];check(derived is not None,'Upstream independently recomputed final image reconciliation')
+        for key in IMAGE_FINAL_KEYS-{'runAPI','jobsAPI','jobLog','reviewerTask'}:check(type(published[key]) is type(derived[key]) and published[key]==derived[key],'Upstream exact independent final reconciliation '+key)
+        for key,filename in [('runAPI','run.json'),('jobsAPI','jobs.json'),('jobLog','job.log')]:
+            ref=published[key];check(set(ref)=={'path','bytes','sha256'},'Upstream exact final provider evidence reference');safe_zip_name(ref['path']);path=source_root/ref['path']
+            check(ref['path'] in retained and path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(source_root.resolve()) and type(ref['bytes']) is int and ref['bytes']==path.stat().st_size and digest(path)==ref['sha256']==retained[ref['path']]==digest(prior/filename),'Upstream actual retained full original provider bytes '+key)
+        check(published['reviewerTask']==review['reviewerTask'],'Actual separate outcome reviewer owns final reconciliation')
         dispatch=json_data(read_json(evidence/'receipt.json')['payload']['dispatchAssignment']['body'].split('\n',1)[1])
         check(type(review['reviewerTask']) is str and bool(review['reviewerTask']) and type(review['agentToolProvenance']) is dict and bool(review['agentToolProvenance']) and review['agentToolProvenance']['reviewerTask']==review['reviewerTask'] and review['reviewerTask'] not in dispatch['implementationTasks'] and comment['updated_at']==comment['created_at'] and timestamp(comment['created_at'])>max(timestamp(j['completed_at']) for j in jobs['jobs']),'Unedited strictly post-completion separate reviewer/tool task provenance recorded')
         checked.append('All original upstream ZIP ranges/members/source bindings, raw screen gates, provider run/receipt/image and published independent outcome matched')
@@ -992,7 +1069,230 @@ def audit_upstream_screen(source_root, stage, provider=None):
     return dict(checked=checked,failures=failures,rawGates=raw,**{'pass':not failures},scope='Independent full original screen byte custody and raw score/timing/exposure replay. Published separate review supplies upstream source-policy/runtime approval judgment; current confirmation independently needs its own complete authority. Collector must corroborate actual reviewer task provenance; no self-certified runtime clearance.')
 
 
+IMAGE_SNAPSHOT_KEYS={'schemaVersion','policyID','policySHA256','stage','phase','runId','runAttempt','headSHA','workspace','bootId','architecture','kernel','kernelVersion','logicalJobName','collectorSourceSHA256','snapshotManifestSHA256','reportSHA256','stable'}
+IMAGE_STABLE_KEYS={'rawSources','claims','runnerRoot','setupInfoPath','bootId','architecture','kernel','kernelVersion','collectorSourceSHA256','sourceIdentity'}
+IMAGE_SOURCE_KEYS={'stage','runId','runAttempt','headSHA','workspace','logicalJobName'}
+IMAGE_WRAPPER_KEYS={'schemaVersion','policyID','policySHA256','runId','runAttempt','headSHA','logicalJobName','preparedNumericJobId','beforeToolsSnapshotFile','beforeToolsSnapshotSHA256','preparedSnapshotFile','preparedSnapshotSHA256','jobsAPIFile','jobsAPISHA256'}
+IMAGE_REVIEW_KEYS={'schemaVersion','policyID','policySHA256','beforeToolsSnapshotSHA256','preparedSnapshotSHA256','preparedWrapperSHA256','primaryPregameAuthority','earlyHeaderEvidence','finalExternalReconciliationRequired'}
+IMAGE_EARLY_KEYS={'status','endpoint','runId','runAttempt','jobId','headSHA','observedAtUTC','httpStatus','responseBytes','responseSHA256','responseFile','scope','runAccessVerified','jobsAccessVerified','artifactAccessVerified','jobInProgress','nativeClaim'}
+IMAGE_FINAL_KEYS={'schemaVersion','status','policyID','policySHA256','runId','runAttempt','jobId','headSHA','beforeToolsSnapshotSHA256','preparedSnapshotSHA256','preparedWrapperSHA256','nativeClaim','runAPI','jobsAPI','jobLog','completedAtUTC','reviewerTask'}
+IMAGE_LABEL_PATHS={'imagedata':'/imagegeneration/imagedata.json','etc_environment':'/etc/environment','etc_os_release':'/etc/os-release','usr_lib_os_release':'/usr/lib/os-release','etc_lsb_release':'/etc/lsb-release','boot_id':'/proc/sys/kernel/random/boot_id'}
+
+
+def strict_int(value,label,minimum=0,maximum=None):
+    check(type(value) is int and value>=minimum and (maximum is None or value<=maximum),'Strict bounded integer '+label)
+    return value
+
+
+def image_stat_record(value,label):
+    check(set(value)=={'device','gid','inode','mode','modeOctal','mtimeNs','regular','size','uid'},'Complete original stat evidence '+label)
+    for key in ('device','gid','inode','mode','mtimeNs','size','uid'):strict_int(value[key],'stat '+label+':'+key)
+    check(type(value['regular']) is bool and value['regular']==((value['mode']&0o170000)==0o100000) and value['modeOctal']==oct(value['mode']&0o7777),'Stat mode/type/perms consistency '+label)
+
+
+def image_policy_binding(source_root,freeze):
+    for rel,wanted in [('docs/improvements/keel-brace-runtime-identity-amendment.md',AMENDMENT_DOCUMENT_SHA256),('benchmarks/keel-brace-v1/runtime-identity-amendment.json',AMENDMENT_POLICY_SHA256)]:
+        check(digest(source_root/rel)==wanted and freeze['assets'][rel]==wanted,'Exact prospectively published future image policy '+rel)
+    check('tools/keel_brace_image_probe.py' in freeze['assets'],'Actual reviewed collector included in current source freeze')
+
+
+def audit_image_snapshot(root,expected,collector_phase,freeze):
+    """Independently reconstruct stable claims from complete captured raw bytes."""
+    snapshot=read_json(root/'snapshot.json');check(set(snapshot)==IMAGE_SNAPSHOT_KEYS,'Image snapshot exact keys')
+    strict_int(snapshot['schemaVersion'],'snapshot schema',1,1)
+    check(snapshot['policyID']==QUALIFIED_POLICY_ID and snapshot['policySHA256']==AMENDMENT_POLICY_SHA256,'Snapshot exact qualified policy')
+    for k,v in expected.items():check(type(snapshot[k]) is type(v) and snapshot[k]==v,'Snapshot actual identity '+k)
+    for k in ('workspace','bootId','architecture','kernel','kernelVersion','logicalJobName'):check(type(snapshot[k]) is str and bool(snapshot[k]),'Snapshot nonempty observed '+k)
+    check(snapshot['architecture']=='x86_64','Snapshot qualified architecture')
+    stable=snapshot['stable'];check(set(stable)==IMAGE_STABLE_KEYS,'Snapshot stable exact keys')
+    collector=root/'collector'/collector_phase;status=read_json(collector/'capture-status.json');report=read_json(collector/'report.json')
+    check(snapshot['snapshotManifestSHA256']==digest(collector/'capture-status.json') and snapshot['reportSHA256']==digest(collector/'report.json'),'Immutable whole snapshot/report byte binding')
+    for path in (root/'snapshot.json',collector/'capture-status.json'):check(path.stat().st_size<=1048576,'Snapshot/status metadata cap')
+    check(status['schemaVersion']==1 and type(status['schemaVersion']) is int and report['schemaVersion']==1 and type(report['schemaVersion']) is int and report['phase']==collector_phase and status['phase']==collector_phase,'Original collector phase/schema')
+    check(report['errors']==[],'No global collector errors');strict_int(status['diagnosticErrorCount'],'diagnostic error count',0,1)
+    check(report['collectorPython']['executable']=='/usr/bin/python3','Frozen collector stock Python interpreter')
+    strict_int(report['durationNs'],'capture duration',0,120*10**9)
+    check(image_timestamp(report['utcStart'])<=image_timestamp(report['utcEnd']) and image_timestamp(report['utcEnd'])-image_timestamp(report['utcStart'])<=datetime.timedelta(seconds=120),'Bounded actual capture UTC')
+    check(report['limits']['eachFileBytes']==1048576 and report['limits']['wholeTwoPhaseArtifactBytes']==10485760 and report['limits']['procEntries']==512 and report['limits']['runnerMatches']==16 and report['limits']['collectionSeconds']==120,'Registered raw collector bounds')
+    payload=0
+    expected_files={'collector.py','report.json'}|{'raw/'+k+'.bin' for k,v in report['captures'].items() if v.get('exists') is True}|{'parsed/'+k+'.json' for k in ('imagedata','setup_info_0','etc_environment')}
+    check(set(status['files'])==expected_files,'Exact source-backed capture/parsed/code/report file inventory')
+    for rel,row in status['files'].items():
+        safe_zip_name(rel);path=collector/rel
+        check(row['artifactPath']==rel and row['complete'] is True,'Whole original capture file '+rel)
+        strict_int(row['bytes'],'capture file bytes',0,1048576);strict_int(row['suppliedBytes'],'supplied complete bytes',0,1048576);check(row['bytes']==row['suppliedBytes']==path.stat().st_size and digest(path)==row['sha256'],'Original complete capture bytehash/size '+rel)
+        if rel.endswith('.json'):read_json(path)
+        payload+=row['bytes']
+    check(payload==status['retainedBytesBeforeStatus'] and payload+65536<=5210112,'Per-snapshot payload/archive reserve')
+    check(status['report']==status['files']['report.json'] and report['collectorSource']==status['files']['collector.py'],'Original report/source capture manifest bindings')
+    check(report['rawArtifactIndex']=={k:v for k,v in status['files'].items() if k!='report.json'},'Complete report raw/source/parsed artifact inventory')
+    collector_sha=digest(collector/'collector.py');check(collector_sha==snapshot['collectorSourceSHA256']==freeze['assets']['tools/keel_brace_image_probe.py'],'Actual current frozen executed collector bytes, no probe-code hash substitution')
+    discovery=report['runnerDiscovery'];check(discovery['procRoot']=='/proc' and discovery['errors']==[] and discovery['truncated'] is False,'Error-free bounded real process discovery')
+    strict_int(discovery['scannedEntries'],'scanned proc entries',1,512);strict_int(discovery['nonmatchingCount'],'nonmatching proc entries',0,512)
+    check(0<len(discovery['matches'])<16 and discovery['scannedEntries']==discovery['nonmatchingCount']+len(discovery['matches']),'Complete nontruncated process accounting')
+    roots=set();pids=set()
+    for match in discovery['matches']:
+        pid=strict_int(match['pid'],'observed runner PID',1);check(pid not in pids,'Distinct runner PID');pids.add(pid)
+        image_stat_record(match['commStat'],'observed proc comm');image_stat_record(match['exeSymlinkStat'],'observed proc exe symlink')
+        check(match['commStat']['regular'] is True and (match['exeSymlinkStat']['mode']&0o170000)==0o120000,'Observed proc comm regular/exe symlink source types')
+        comm=match['comm'];check(comm in ('Runner.Worker','Runner.Listener') and match['commRawASCII']==comm+'\n' and hashlib.sha256(match['commRawASCII'].encode('ascii')).hexdigest()==match['commSHA256'],'Whole observed runner comm bytes')
+        check(match['commPath']=='/proc/'+str(pid)+'/comm' and match['errors']==[],'Observed PID/comm source binding')
+        exe=match['exeReadlink'];check(exe==match['exePath'] and hashlib.sha256(exe.encode()).hexdigest()==match['exeReadlinkSHA256'],'Observed executable link bytes')
+        check(exe.endswith('/bin/'+comm) and match['runnerRoot']==exe[:-len('/bin/'+comm)] and match['setupInfoPath']==match['runnerRoot']+'/.setup_info','Runner root derived exclusively from observed matching executable layout')
+        roots.add(match['runnerRoot'])
+    check(len(roots)==1 and discovery['roots']==sorted(roots),'Unique actually observed runner root')
+    runner_root=next(iter(roots));paths=dict(IMAGE_LABEL_PATHS,setup_info_0=runner_root+'/.setup_info')
+    check(set(report['captures'])==set(paths) and set(stable['rawSources'])==set(paths),'Exact allowed raw capture population')
+    raw_sources={};raw_bytes={};allowed_absence_count=0
+    for label,path in paths.items():
+        record=report['captures'][label];check(record['requestedPath']==path,'Exact observed raw source path '+label)
+        if label=='etc_lsb_release' and record['exists'] is False:
+            errors=record['errors'];check(len(errors)==1 and set(errors[0])=={'operation','path','type','message','messageWasTruncated'} and errors[0]['operation']=='lstat' and errors[0]['path']=='/etc/lsb-release' and errors[0]['type']=='FileNotFoundError' and type(errors[0]['message']) is str and bool(errors[0]['message']) and errors[0]['messageWasTruncated'] is False and record['raw'] is None and record['bytesComplete'] is False and record['resolvedPath'] is None,'Only exact optional lsb lstat-not-found absence allowed')
+            allowed_absence_count+=1;raw_sources[label]=dict(sourcePath=path,absent=True);check(stable['rawSources'][label]==raw_sources[label],'Optional absence exact stable record');continue
+        check(record['exists'] is True and record['errors']==[] and record['bytesComplete'] is True and record.get('parseErrors',[])==[] and record['rawSHA256Scope']=='whole-observed-file','Complete error-free untruncated raw source '+label)
+        raw=record['raw'];check(raw==status['files'][raw['artifactPath']] and raw['sourceBytesComplete'] is True,'Raw source complete capture manifest '+label)
+        check(raw['artifactPath']=='raw/'+label+'.bin','Fixed source-backed raw filename')
+        for stat_key in ('lstatBefore','statBefore','openedStat','statAfter'):image_stat_record(record[stat_key],label+':'+stat_key)
+        if record['lstatBefore']['regular']:check(record['lstatBefore']==record['statBefore'],'Non-symlink source unchanged between lstat/stat')
+        for field in ('size','mode','uid','gid','device','inode','mtimeNs'):
+            value=record['statBefore'][field];strict_int(value,'raw stat '+field)
+            strict_int(record['openedStat'][field],'opened raw stat '+field);strict_int(record['statAfter'][field],'after raw stat '+field)
+            check(record['openedStat'][field]==value==record['statAfter'][field],'No source mutation during individual read '+label+':'+field)
+        check(record['openedStat']['regular'] is True,'Opened metadata source regular file')
+        strict_int(record['durationNs'],'individual read duration',0,120*10**9)
+        check(image_timestamp(report['utcStart'])<=image_timestamp(record['utcStart'])<=image_timestamp(record['utcEnd'])<=image_timestamp(report['utcEnd']),'Actual raw read bounded inside snapshot')
+        raw_bytes[label]=(collector/raw['artifactPath']).read_bytes()
+        check(label=='boot_id' or record['statBefore']['size']==len(raw_bytes[label]),'Raw whole source size '+label)
+        raw_sources[label]=dict(sourcePath=path,resolvedPath=record['resolvedPath'],size=record['statBefore']['size'],wholeSHA256=raw['sha256'],mode=record['statBefore']['mode'],uid=record['statBefore']['uid'],gid=record['statBefore']['gid'])
+        check(type(record['resolvedPath']) is str and record['resolvedPath'].startswith('/'),'Observed resolved source path')
+        for key in ('size','mode','uid','gid'):strict_int(stable['rawSources'][label][key],'stable raw '+key)
+        check(stable['rawSources'][label]==raw_sources[label] and set(stable['rawSources'][label])=={'sourcePath','resolvedPath','size','wholeSHA256','mode','uid','gid'},'Exact reconstructed stable raw source '+label)
+    check(status['diagnosticErrorCount']==allowed_absence_count,'Only exact known optional absence contributes diagnostic count')
+    check(raw_bytes['boot_id'].decode('ascii').strip()==snapshot['bootId'],'Actual raw boot ID binding')
+    for label in ('etc_os_release','usr_lib_os_release'):
+        text=raw_bytes[label].decode();check('ID=ubuntu' in text.splitlines() and 'VERSION_ID="26.04"' in text.splitlines(),'Both actual raw Ubuntu26.04 release files')
+    process=report['processImageEnvironment'];check(set(process)==set(QUALIFIED_ENV) and all(set(process[k])=={'present','value'} and process[k]['present'] is True and process[k]['value']==v for k,v in QUALIFIED_ENV.items()),'Separate observed process ImageOS/ImageVersion')
+    claims=dict(imagedataNative=strict_native_claim(raw_bytes['imagedata'],'imagedata'),setupInfoNative=strict_native_claim(raw_bytes['setup_info_0'],'setup_info'),processEnvironment=dict(QUALIFIED_ENV),etcEnvironment=strict_environment_claim(raw_bytes['etc_environment']))
+    for label,key in [('imagedata','imagedataNative'),('setup_info_0','setupInfoNative')]:
+        record=report['captures'][label];check(record['parsedClaims']==claims[key] and record['parsedArtifact']==status['files']['parsed/'+label+'.json'],'Independently reparsed native claims and complete parsed bytehash record')
+    check(stable['claims']==claims and stable['runnerRoot']==runner_root and stable['setupInfoPath']==runner_root+'/.setup_info','Reconstructed separate claims/root equal immutable stable snapshot')
+    source={k:snapshot[k] for k in IMAGE_SOURCE_KEYS};check(stable['sourceIdentity']==source and set(stable['sourceIdentity'])==IMAGE_SOURCE_KEYS and all(type(stable['sourceIdentity'][k]) is type(v) for k,v in source.items()),'Exact stable actual source/run/head/workspace/job')
+    for key in ('bootId','architecture','kernel','kernelVersion','collectorSourceSHA256'):check(stable[key]==snapshot[key],'Stable snapshot observation '+key)
+    check(report['platform']['architecture']==snapshot['architecture'] and report['platform']['kernel']==snapshot['kernel'] and report['platform']['kernelVersion']==snapshot['kernelVersion'],'Observed platform/kernel binding')
+    context=report['context'];check(context['GITHUB_RUN_ID']==str(snapshot['runId']) and context['GITHUB_RUN_ATTEMPT']==str(snapshot['runAttempt']) and context['GITHUB_JOB']==snapshot['logicalJobName'] and context['GITHUB_REPOSITORY']=='stephanelee/robocode','Original logical job/run/attempt context; no fabricated early numeric job ID')
+    envelope=(root/'snapshot.json').stat().st_size+(collector/'capture-status.json').stat().st_size
+    check(payload+envelope+65536<=5210112,'Complete bounded snapshot payload including immutable manifests/reserve')
+    return dict(snapshot=snapshot,report=report,payloadBytes=payload,envelopeBytes=envelope,root=root)
+
+
+def image_timestamp(value):
+    result=timestamp(value);check(result.utcoffset()==datetime.timedelta(0),'Qualified image evidence timestamp must be actual UTC')
+    return result
+
+
+def provider_step_contains(step,start,end):
+    # GitHub step timestamps record whole seconds: completed T denotes [T,T+1s).
+    finish=image_timestamp(end);completed=image_timestamp(step['completed_at']);second_resolution=re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:Z|[+]00:00)',step['completed_at']) is not None
+    upper=finish<completed+datetime.timedelta(seconds=1) if second_resolution else finish<=completed
+    return image_timestamp(step['started_at'])<=image_timestamp(start)<=finish and upper
+
+
+def actual_file_ref(path):
+    return dict(path=str(path),bytes=path.stat().st_size,sha256=digest(path))
+
+
 def audit_runner_image(evidence, expected_head, expected_run, provider=None):
+    """FUTURE Brace qualified observations; never a legacy fallback/VM attestation."""
+    checked=[];failures=[];final=None;status='PROVENANCE-PENDING';qualified=None
+    try:
+        profile_path=evidence/'profile.json'
+        if not profile_path.exists():profile_path=evidence/'provenance/profile.json'
+        provenance=profile_path.parent;profile=read_json(profile_path);freeze=read_json(provenance/'freeze.json');image=provenance/'image-identity'
+        image_policy_binding(provenance/'source',freeze)
+        approval=read_json(evidence/'approval.json');stage=approval['stage'];identity=profile['identity']
+        expected=dict(stage=stage,runId=expected_run,runAttempt=1,headSHA=expected_head,workspace=identity['workspace'])
+        before=audit_image_snapshot(image/'before-tools',dict(expected,phase='before-tools'),'before-tools',freeze)
+        prepared=audit_image_snapshot(image/'prepared',dict(expected,phase='prepared'),'after-tools',freeze)
+        bs,ps=before['snapshot'],prepared['snapshot'];qualified=ps['stable']['claims']
+        check(bs['stable']==ps['stable'],'Before-tools and prepared whole raw stable/image/boot/source/collector equality; installed graph first frozen only at prepared')
+        check(before['payloadBytes']+prepared['payloadBytes']+before['envelopeBytes']+prepared['envelopeBytes']+(image/'prepared-wrapper.json').stat().st_size+(image/'prepared-jobs-api.json').stat().st_size+65536<=10485760,'Two immutable snapshot payloads plus archive reserve cap')
+        check(bs['bootId']==ps['bootId']==identity['bootId'] and identity['image']==QUALIFIED_ENV['ImageVersion'],'Original profile anchors same-worker qualified native/separate ENV observations')
+        check((image/'prepared-wrapper.json').stat().st_size<=1048576 and (image/'prepared-jobs-api.json').stat().st_size<=1048576,'Wrapper/jobs API metadata caps')
+        wrapper=read_json(image/'prepared-wrapper.json');check(set(wrapper)==IMAGE_WRAPPER_KEYS,'Prepared wrapper exact schema')
+        strict_int(wrapper['schemaVersion'],'prepared wrapper schema',1,1);job_id=strict_int(wrapper['preparedNumericJobId'],'actual numeric prepared job ID',1)
+        for k in ('runId','runAttempt','headSHA','logicalJobName'):check(type(wrapper[k]) is type(ps[k]) and wrapper[k]==ps[k],'Wrapper exact actual '+k)
+        check(wrapper['policyID']==QUALIFIED_POLICY_ID and wrapper['policySHA256']==AMENDMENT_POLICY_SHA256,'Wrapper exact policy')
+        check(wrapper['beforeToolsSnapshotFile']=='before-tools/snapshot.json' and wrapper['preparedSnapshotFile']=='prepared/snapshot.json' and wrapper['jobsAPIFile']=='prepared-jobs-api.json','Fixed immutable wrapper reference paths')
+        check(wrapper['beforeToolsSnapshotSHA256']==digest(image/'before-tools/snapshot.json') and wrapper['preparedSnapshotSHA256']==digest(image/'prepared/snapshot.json') and wrapper['jobsAPISHA256']==digest(image/'prepared-jobs-api.json'),'Actual immutable snapshot/API bytehashes')
+        prepared_jobs=read_json(image/'prepared-jobs-api.json');matches=[j for j in prepared_jobs['jobs'] if j['id']==job_id]
+        check(len(matches)==1,'Exactly one original prepared numeric job');strict_int(matches[0]['id'],'prepared API job ID',1);strict_int(matches[0]['run_id'],'prepared API run ID',1);strict_int(matches[0]['run_attempt'],'prepared API run attempt',1,1);check(matches[0]['name']==ps['logicalJobName'],'Prepared numeric provider job reconciles exact logical job name')
+        check(matches[0]['run_id']==expected_run and matches[0]['status']=='in_progress','Prepared numeric job comes from actual same-run in-progress jobs API')
+        hashes=dict(beforeToolsSnapshotSHA256=wrapper['beforeToolsSnapshotSHA256'],preparedSnapshotSHA256=wrapper['preparedSnapshotSHA256'],preparedWrapperSHA256=digest(image/'prepared-wrapper.json'))
+        anchored=profile['imageIdentity'];check(set(anchored)=={'policyID','policySHA256',*hashes,'preparedNumericJobId','stable'},'Profile exact imageIdentity schema')
+        check(anchored==dict(policyID=QUALIFIED_POLICY_ID,policySHA256=AMENDMENT_POLICY_SHA256,**hashes,preparedNumericJobId=job_id,stable=ps['stable']),'Immutable prepared profile exact policy/snapshot/wrapper/stable anchor')
+        report_comment=read_json(evidence/'review-report-comment.json');report=comment_payload(report_comment,'KEEL_BRACE_RUNTIME_REVIEW_V1');review=report['agentToolProvenance']['imageIdentityReview']
+        check(set(review)==IMAGE_REVIEW_KEYS and type(review['schemaVersion']) is int and review['schemaVersion']==1,'Accepted runtime review nested exact schema')
+        check(review['policyID']==QUALIFIED_POLICY_ID and review['policySHA256']==AMENDMENT_POLICY_SHA256 and all(review[k]==v for k,v in hashes.items()),'Actual immutable runtime report binds qualified snapshots/policy')
+        check(review['primaryPregameAuthority']=='native-only-qualified-observation' and review['finalExternalReconciliationRequired'] is True,'Explicit native-only pregame authority with mandatory independent final reconciliation')
+        early=review['earlyHeaderEvidence'];check(set(early)==IMAGE_EARLY_KEYS,'Exact early actual-job header record')
+        for key,value in [('runId',expected_run),('runAttempt',1),('jobId',job_id),('headSHA',expected_head)]:check(type(early[key]) is type(value) and early[key]==value,'Actual early job identity '+key)
+        check(early['endpoint']=='https://api.github.com/repos/stephanelee/robocode/actions/jobs/'+str(job_id)+'/logs' and early['responseFile']=='early-header-response.bin','Exact original actual-job log endpoint/response path')
+        check(all(early[k] is True for k in ('runAccessVerified','jobsAccessVerified','artifactAccessVerified')),'Early access declarations; independently corroborated below')
+        check(provider is not None,'External early originals/final provider reconciliation not supplied')
+        provider=evidence_path(provider);earlyroot=provider/'early';earlyrun=read_json(earlyroot/'run.json');earlyjobs=read_json(earlyroot/'jobs.json');earlyartifact=read_json(earlyroot/'artifact.json');response=earlyroot/'early-header-response.bin'
+        check(type(early['responseBytes']) is int and 0<=early['responseBytes']<=1048576 and response.stat().st_size==early['responseBytes'] and digest(response)==early['responseSHA256'],'Actual original early HTTP response bytes/length/hash')
+        strict_int(earlyrun['id'],'actual early run ID',1);strict_int(earlyrun['run_attempt'],'actual early run attempt',1,1)
+        check(earlyrun['id']==expected_run and earlyrun['head_sha']==expected_head and earlyrun['run_attempt']==1 and earlyrun['status']=='in_progress','Actual independently retained early same-run/head/attempt in-progress access')
+        earlyjob=[j for j in earlyjobs['jobs'] if j['id']==job_id];check(len(earlyjob)==1,'Exactly one original early numeric job');strict_int(earlyjob[0]['id'],'early API job ID',1);strict_int(earlyjob[0]['run_id'],'early API run ID',1);strict_int(earlyjob[0]['run_attempt'],'early API run attempt',1,1);check(earlyjob[0]['name']==ps['logicalJobName'],'Early numeric provider job reconciles exact logical job name');check(len(earlyjob)==1 and earlyjob[0]['run_id']==expected_run,'Actual early jobs API binds original numeric job')
+        artifact=read_json(evidence/'artifact.json');check(earlyartifact['id']==artifact['id'] and earlyartifact['digest']==artifact['digest'] and earlyartifact['workflow_run']['id']==expected_run and earlyartifact['workflow_run']['head_sha']==expected_head,'Actual independently retained original finalized artifact access')
+        observed=image_timestamp(early['observedAtUTC']);check(image_timestamp(artifact['updated_at'])<=observed<=image_timestamp(report_comment['created_at']),'Early HTTP attempt after actual finalized artifact and before immutable independent report')
+        check(type(early['httpStatus']) is int,'Original HTTP status strict integer')
+        if early['status']=='unavailable-404-deferred':
+            check(early['httpStatus']==404 and early['scope']=='actual-job-log-request' and early['jobInProgress'] is True and earlyjob[0]['status']=='in_progress' and early['nativeClaim'] is None,'Sole explicitly registered correctly bound HTTP404 in-progress deferral')
+        else:
+            check(early['status']=='available-matched' and early['httpStatus']==200 and early['scope']=='complete-startup-header' and early['nativeClaim']==QUALIFIED_NATIVE and qualified_provider_header(response.read_bytes())==QUALIFIED_NATIVE,'Available original complete startup header must exactly match native tuple')
+        phases=['before-receipt']+['before-'+g['id'] for g in read_json(provenance/'source/benchmarks/keel-brace-v1/games.json')[stage]]
+        revalidation_files=[]
+        for phase in phases:
+            authority=read_json(evidence/'approval-revalidations'/(phase+'.json'));binding=authority['imageIdentityRevalidation']
+            check(set(binding)=={'snapshotFile','snapshotSHA256','preparedSnapshotSHA256','runtimeProfileSHA256'},'Exact per-authority image/prepared-graph revalidation binding')
+            rel=binding['snapshotFile'];safe_zip_name(rel);check(re.fullmatch(r'image-identity-revalidations/revalidation-[0-9]+/snapshot\.json',rel) is not None,'Fresh image revalidation source path')
+            path=evidence/rel;check(binding['snapshotSHA256']==digest(path) and binding['preparedSnapshotSHA256']==hashes['preparedSnapshotSHA256'] and binding['runtimeProfileSHA256']==digest(profile_path),'Each receipt/child binds fresh image snapshot and original prepared installed graph/profile')
+            current=audit_image_snapshot(path.parent,expected,'after-tools',freeze)
+            check(current['snapshot']['phase']==rel.split('/')[1] and current['snapshot']['stable']==ps['stable'],'Fresh actual stable image/source/boot equals original prepared anchor; no overwrite')
+            check(image_timestamp(prepared['report']['utcEnd'])<=image_timestamp(current['report']['utcStart'])<=image_timestamp(current['report']['utcEnd'])<=image_timestamp(authority['checkedAtUTC']),'Image/installed-graph live check before authority admission')
+            check(rel not in revalidation_files,'Distinct immutable per-admission snapshots');revalidation_files.append(rel)
+        # Final provider records are mandatory even when early access succeeded.
+        run=read_json(provider/'run.json');jobs=read_json(provider/'jobs.json')
+        if run['status']=='completed':status='PROVENANCE-INCOMPLETE'
+        strict_int(run['id'],'actual final run ID',1);strict_int(run['run_attempt'],'actual final run attempt',1,1)
+        check(run['id']==expected_run and run['head_sha']==expected_head and run['run_attempt']==1 and run['status']=='completed' and run['conclusion']=='success','Actual completed successful same-run/head/attempt provider API')
+        selected=[j for j in jobs['jobs'] if j['id']==job_id];check(len(selected)==1,'Actual completed original numeric job')
+        job=selected[0];strict_int(job['id'],'final API job ID',1);strict_int(job['run_id'],'final API run ID',1);strict_int(job['run_attempt'],'final API run attempt',1,1);check(job['name']==ps['logicalJobName'],'Final numeric provider job reconciles exact logical job name');check(job['run_id']==expected_run and job['status']=='completed' and job['conclusion']=='success','Actual successful same-run completed job')
+        steps=job['steps'];names=['Capture original qualified image observations before tools','Prepare exact sources/runtime/commands on this worker (zero games)','Finalize immutable zero-game provenance before independent review'];ordered=[]
+        for name in names:
+            found=[(i,x) for i,x in enumerate(steps) if x['name']==name];check(len(found)==1 and found[0][1]['status']=='completed' and found[0][1]['conclusion']=='success','Exact provider completed capture/prepare/finalize step '+name);ordered.append(found[0])
+        check(ordered[0][0]<ordered[1][0]<ordered[2][0],'Actual provider before-tools/prepared/finalize UTC step ordering')
+        for capture,(_,step) in zip((before,prepared),ordered):check(provider_step_contains(step,capture['report']['utcStart'],capture['report']['utcEnd']),'Actual capture UTC inside exact provider recorded-second interval [T,T+1s)')
+        check(all(not re.search(r'java|python|temurin|jdk|cpython',step['name'],re.I) for step in steps[:ordered[0][0]]),'Native original capture precedes any registered Java/Python setup')
+        check(image_timestamp(prepared['report']['utcEnd'])<=image_timestamp(artifact['updated_at'])<=image_timestamp(report_comment['created_at'])<image_timestamp(job['completed_at']),'Prepared/provenance/review/actual completion chronology')
+        meta=read_json(provider/'job-log-api.json');log=provider/'job.log'
+        check(set(meta)=={'schemaVersion','jobId','runId','headSHA','logSHA256','sourceURL','retrievedAtUTC','collectorTask','toolEvidence'},'Original independent full-provider-log custody record')
+        check(type(meta['schemaVersion']) is int and meta['schemaVersion']==1 and type(meta['jobId']) is int and meta['jobId']==job_id and meta['runId']==expected_run and meta['headSHA']==expected_head,'Actual final log exact original job/run/head')
+        check(meta['sourceURL']==early['endpoint'] and meta['logSHA256']==digest(log) and bool(meta['collectorTask']) and bool(meta['toolEvidence']) and image_timestamp(meta['retrievedAtUTC'])>=image_timestamp(job['completed_at']),'Full original provider log bytehash/source/task/post-completion custody')
+        native=qualified_provider_header(log.read_bytes());check(native==ps['stable']['claims']['setupInfoNative']==ps['stable']['claims']['imagedataNative'],'Mandatory independent actual-job final native four-field reconciliation')
+        final=dict(schemaVersion=1,status='PASS',policyID=QUALIFIED_POLICY_ID,policySHA256=AMENDMENT_POLICY_SHA256,runId=expected_run,runAttempt=1,jobId=job_id,headSHA=expected_head,**hashes,nativeClaim=native,runAPI=actual_file_ref(provider/'run.json'),jobsAPI=actual_file_ref(provider/'jobs.json'),jobLog=actual_file_ref(log),completedAtUTC=job['completed_at'],reviewerTask='/root/brace_independent_outcomes')
+        status='PASS';checked.append('Qualified observed native/ENV tuple, immutable before-tools/prepared anchors, original early actual-job evidence, every explicit live image/prepared-graph binding and mandatory independent final same-job provider reconciliation')
+    except (KeyError,TypeError,ValueError,OSError,StopIteration,UnicodeError) as exc:
+        failures.append(type(exc).__name__+': '+str(exc))
+        if provider is not None:
+            try:
+                if read_json(evidence_path(provider)/'run.json').get('status')=='completed':status='PROVENANCE-INCOMPLETE'
+            except (KeyError,TypeError,ValueError,OSError):status='PROVENANCE-INCOMPLETE'
+    return dict(checked=checked,failures=failures,status=status,qualifiedClaims=qualified,finalReconciliation=final,**{'pass':not failures},scope='Prospectively registered FUTURE Brace qualified observations only. Native20261025.179.1 and separate ENV20261026.180.1 remain distinct; this is NOT canonical VM/build attestation, a version translation, old Helm rescue or gameplay clearance. Unexported actual executable bytes and source-wired prepared-graph equality still require independent live runtime/source review. External original HTTP/API/log bytes are retained separately, never retro-added to immutable stage provenance.')
+
+
+def audit_legacy_runner_image(evidence, expected_head, expected_run, provider=None):
     checked,failures=[],[];header=None;declared=None
     def require(ok,label):(checked if ok else failures).append(label)
     try:

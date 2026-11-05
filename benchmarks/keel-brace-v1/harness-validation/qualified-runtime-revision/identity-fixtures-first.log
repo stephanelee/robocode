@@ -1,0 +1,29 @@
+test_actual_own_snapshot_wrapper_graph_identity (test_keel_brace_image_identity.Anchors.test_actual_own_snapshot_wrapper_graph_identity) ... ok
+test_read_time_pid_and_mtime_are_preserved_not_stable_equality (test_keel_brace_image_identity.Anchors.test_read_time_pid_and_mtime_are_preserved_not_stable_equality) ... ok
+test_snapshot_phase_context_and_top_level_disagreement_fail (test_keel_brace_image_identity.Anchors.test_snapshot_phase_context_and_top_level_disagreement_fail) ... ok
+test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail (test_keel_brace_image_identity.Anchors.test_wrapper_numeric_job_policy_extra_key_and_path_mutations_fail) ... ok
+test_only_exact_actual_job_404_deferral_or_matched_header (test_keel_brace_image_identity.Authority.test_only_exact_actual_job_404_deferral_or_matched_header) ... ok
+test_qualification_and_all_snapshot_bindings_mandatory (test_keel_brace_image_identity.Authority.test_qualification_and_all_snapshot_bindings_mandatory) ... ok
+test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable (test_keel_brace_image_identity.Captures.test_missing_optional_lsb_must_be_clean_and_appearance_changes_stable) ... ok
+test_mutation_errors_truncation_discovery_and_parse_faults_rejected (test_keel_brace_image_identity.Captures.test_mutation_errors_truncation_discovery_and_parse_faults_rejected) ... ok
+test_original_observations_remain_distinct_and_noncanonical (test_keel_brace_image_identity.Captures.test_original_observations_remain_distinct_and_noncanonical) ... ok
+test_raw_prefix_or_unknown_native_tuple_rejected (test_keel_brace_image_identity.Captures.test_raw_prefix_or_unknown_native_tuple_rejected) ... ok
+test_stat_size_spoof_and_missing_index_rejected_even_resealed (test_keel_brace_image_identity.Captures.test_stat_size_spoof_and_missing_index_rejected_even_resealed) ... ok
+test_final_provider_exact_original_and_current_job_bindings (test_keel_brace_image_identity.Provider.test_final_provider_exact_original_and_current_job_bindings) ... ok
+test_missing_full_final_provider_original_cannot_be_waived (test_keel_brace_image_identity.Provider.test_missing_full_final_provider_original_cannot_be_waived) ... ok
+test_real_original_full_provider_log_not_echoed_workflow (test_keel_brace_image_identity.Provider.test_real_original_full_provider_log_not_echoed_workflow) ... 
+  test_real_original_full_provider_log_not_echoed_workflow (test_keel_brace_image_identity.Provider.test_real_original_full_provider_log_not_echoed_workflow) (change='2026-11-05T00:20:51.2265239Z C') ... FAIL
+
+======================================================================
+FAIL: test_real_original_full_provider_log_not_echoed_workflow (test_keel_brace_image_identity.Provider.test_real_original_full_provider_log_not_echoed_workflow) (change='2026-11-05T00:20:51.2265239Z C')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/robocode-keel-brace/tools/test_keel_brace_image_identity.py", line 157, in test_real_original_full_provider_log_not_echoed_workflow
+    with self.subTest(change=changed[:30]),self.assertRaises(ValueError):i.parse_provider_header(changed.encode())
+                                           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.140s
+
+FAILED (failures=1)
