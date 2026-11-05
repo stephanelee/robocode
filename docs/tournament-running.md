@@ -35,7 +35,7 @@ python3 tools/prepare_tournament.py \
   --python "$CUP_PYTHON/bin/python"
 ```
 
-Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
+Preparation requires an empty output directory and a fresh source checkout without `guest-source/` or `samples/`. It preserves build logs, test results, parity results and runtime/package provenance. It also writes prepared input snapshots. Every stage compares entry bytes, shared sample libraries, the battle harness, cached Retcon API and Java/Python runtime snapshots against preparation and the immutable first-stage inputs; a change stops before any game and never overwrites the original manifest. It fails on a bad pin or JAR mismatch. An existing Gradle executable can be supplied with `--gradle /absolute/path/to/gradle`.
 
 On this Mac, five AISurvivor exact replay tests differed at tiny floating-point values; 83 tests passed and one was skipped. The first observed gun-turn value was `2.0869864576583836` versus `2.086986457658327`. The underlying platform/JDK cause has not been independently established. A normal preparation stops on that failure. `--allow-known-macos-replay-differences` acknowledges only the exact five recorded test cases/signature on macOS ARM64 and retains their failures. It never labels the tests as passed, permits unrelated failures, or relaxes JAR parity. All seven experimental bot build/test suites passed in the recorded run.
 
@@ -59,7 +59,7 @@ Then explicitly run `swiss-2`, `swiss-3` and `swiss-4` as authorized. Each stage
 
 Standings use cumulative Swiss points, then current opponents' total Swiss points (Buchholz), then mean pairing score share. Each pairing's share uses its two-game combined score. Displayed standings remain provisional until all four Swiss rounds are complete. Exact qualification ties require the protocol's recorded draw of lots; no playoff qualification is performed automatically.
 
-`--site` is optional. When supplied, it updates the copied static website's `data.json` after games and pairings. It exports profiles and official scores only. Models, telemetry, logs and invocation environments stay in the local evidence directory. The website preserves earlier rounds, highlights guests and completed pairing winners, and checks for new published snapshots every 15 seconds. A local export is not a hosted deployment: publish the static files through the Sites workflow, reusing the existing Site identity and audience. Hosting credentials are never stored in this repository.
+`--site` is optional. When supplied, it updates the copied static website's `data.json` after games and pairings. It reconstructs cumulative results from the canonical stage reports in the output directory, so an export added later or a restored website template cannot drop previous points. It exports profiles and official scores only. Models, telemetry, logs and invocation environments stay in the local evidence directory. The website preserves earlier rounds, highlights guests and completed pairing winners, and checks for new published snapshots every 15 seconds. A local export is not a hosted deployment: publish the static files through the Sites workflow, reusing the existing Site identity and audience. Hosting credentials are never stored in this repository.
 
 ## Failures, retention and continuation
 
@@ -77,4 +77,4 @@ python3 -m py_compile tools/tournament.py tools/prepare_tournament.py
 python3 -m http.server 8766 --directory website
 ```
 
-The seven unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, artifact exclusion and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.
+The ten unit tests cover draw coverage, rematch exclusion, minimum point-gap matching, prerequisites, cumulative standings, idempotent score exports, canonical history reconstruction, immutable input guards, artifact exclusion and the narrow replay-test exception. They do not establish bot strength or replace real game evidence. This event used Java 17 for builds and Temurin 25.0.5+8 for battles. No GitHub Actions jobs are needed to reproduce it.

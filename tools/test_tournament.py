@@ -79,6 +79,47 @@ class TournamentRulesTest(unittest.TestCase):
             self.assertTrue(all(r['played'] == 1 for r in data['standings']))
             self.assertEqual(21, sum(r['points'] for r in data['standings']))
 
+    def test_frozen_inputs_reject_changes_without_overwriting_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            prepared = root / 'prepared.json'
+            prepared.write_text(json.dumps({'jar': 'original'}))
+            frozen = root / 'frozen.json'
+            tournament.freeze_manifest(frozen, {'jar': 'original'}, prepared)
+            original = frozen.read_bytes()
+            with self.assertRaises(ValueError):
+                tournament.freeze_manifest(frozen, {'jar': 'changed'}, prepared)
+            self.assertEqual(original, frozen.read_bytes())
+            with self.assertRaises(ValueError):
+                tournament.freeze_manifest(root / 'new.json', {'jar': 'anything'}, root / 'missing.json')
+
+    def test_fresh_site_export_rebuilds_prior_rounds_from_canonical_reports(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'data.json').write_text(json.dumps(dict(rounds=[])))
+            previous = round_one()
+            (root / 'swiss-1.json').write_text(json.dumps(previous))
+            current = copy.deepcopy(previous)
+            current['stage'] = 'swiss-2'
+            tournament.update_site(root, current, root)
+            data = json.loads((root / 'data.json').read_text())
+            self.assertEqual(2, len(data['rounds']))
+            self.assertTrue(all(r['played'] == 2 for r in data['standings']))
+            self.assertEqual(42, sum(r['points'] for r in data['standings']))
+            self.assertEqual(6, max(r['points'] for r in data['standings']))
+
+    def test_later_export_without_canonical_history_fails_before_writing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / 'data.json'
+            path.write_text(json.dumps(dict(rounds=[])))
+            before = path.read_bytes()
+            report = round_one()
+            report['stage'] = 'swiss-2'
+            with self.assertRaises(ValueError):
+                tournament.update_site(root, report)
+            self.assertEqual(before, path.read_bytes())
+
     def test_known_replay_exception_requires_all_and_only_known_failures(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

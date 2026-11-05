@@ -1,7 +1,7 @@
 """Bounded local tournament execution over a frozen, prebuilt source snapshot.
 Official pairing scores are sums over two cold 20-round games. Never reruns a game.
 """
-import argparse, datetime, hashlib, json, os, random, shutil, subprocess, sys, time
+import argparse, datetime, hashlib, json, os, random, shutil, subprocess, sys, time, platform, zipfile
 from functools import lru_cache
 from pathlib import Path
 NAMES = ['AISurvivor', 'Aegis', 'Breakwater', 'DiamondChallenger', 'Keel', 'KeelHelm', 'Meridian', 'Prism', 'Retcon', 'Diamond Port', 'Adaptive Prime', 'Walls', 'SpinBot', 'RamFire']
@@ -87,6 +87,43 @@ def validate_result(data, identities):
         if r['firstPlaces'] > 20:
             raise ValueError('First-place count exceeds round budget')
 
+def collect_entry_manifests(source, bases):
+    manifests = {}
+    for name in NAMES:
+        paths = list(bases[name].rglob('*'))
+        if name in NAMES[1:8]:
+            paths += list((source / 'experiments' / name / 'src').rglob('*')) + [source / 'experiments' / name / 'build.gradle', source / 'experiments' / name / (name + '.jar')]
+        if name == 'AISurvivor':
+            paths += list((source / 'src/main').rglob('*')) + [source / 'build.gradle']
+        manifests[name] = {str(path.relative_to(source)): digest(path) for path in paths if path.is_file()}
+    return manifests
+
+def freeze_manifest(path, current, prepared=None):
+    if prepared is not None and prepared.is_file() and json.loads(prepared.read_text()) != current:
+        raise ValueError('Inputs differ from preparation: ' + str(prepared))
+    if path.exists():
+        if json.loads(path.read_text()) != current:
+            raise ValueError('Frozen tournament inputs changed: ' + str(path))
+    else:
+        if prepared is not None and not prepared.is_file():
+            raise ValueError('Run prepare_tournament.py before starting a new edition')
+        save(path, current)
+
+def collect_shared_inputs(source, java, python):
+    cache = source / '.benchmark-cache'
+    paths = [source / 'tools/BenchmarkBattle.java'] + list((source / 'samples/lib').rglob('*')) + list((cache / 'retcon-api').glob('*.jar'))
+    files = {str(path.relative_to(source)): digest(path) for path in paths if path.is_file()}
+    # Verify extracted shared/sample bytes against the already hash-pinned release ZIP.
+    with zipfile.ZipFile(cache / 'sample-bots-Java-1.4.0.zip') as archive:
+        prefixes = tuple(name + '/' for name in NAMES[-3:]) + ('lib/',)
+        for entry in archive.infolist():
+            if not entry.is_dir() and entry.filename.startswith(prefixes):
+                actual = source / 'samples' / entry.filename
+                if not actual.is_file() or digest(actual) != hashlib.sha256(archive.read(entry)).hexdigest():
+                    raise ValueError('Extracted official sample/library differs: ' + entry.filename)
+    python_runtime = json.loads(subprocess.check_output([str(python), '-c', 'import sys,json,importlib.metadata as m; print(json.dumps(dict(version=sys.version,packages=sorted((d.metadata["Name"],d.version) for d in m.distributions()))))'], text=True))
+    return dict(files=files, javaSHA256=digest(java), javaVersion=subprocess.check_output([str(java), '-version'], stderr=subprocess.STDOUT, text=True), pythonSHA256=digest(python), pythonRuntime=python_runtime)
+
 def main(args):
     R = args.source.resolve()
     O = args.output.resolve()
@@ -122,15 +159,13 @@ def main(args):
         bases[n] = R / 'samples' / n
     descriptors = {n: next(bases[n].glob('*.json')) for n in NAMES}
     identities = {n: (json.loads(p.read_text())['name'], json.loads(p.read_text())['version']) for n, p in descriptors.items()}
-    manifests = {}
-    for name in NAMES:
-        paths = list(bases[name].rglob('*'))
-        if name in NAMES[1:8]:
-            paths += list((R / 'experiments' / name / 'src').rglob('*')) + [R / 'experiments' / name / 'build.gradle', R / 'experiments' / name / (name + '.jar')]
-        if name == 'AISurvivor':
-            paths += list((R / 'src/main').rglob('*')) + [R / 'build.gradle']
-        manifests[name] = {str(p.relative_to(R)): digest(p) for p in paths if p.is_file()}
-    save(O / 'entry-manifests.json', manifests)
+    manifests = collect_entry_manifests(R, bases)
+    freeze_manifest(O / 'entry-manifests.json', manifests, O / 'prepared-entry-manifests.json')
+    retcon_lock = json.loads(retcon.LOCK.read_text())
+    dependency = retcon_lock['botApi']
+    if digest(cache / 'retcon-api' / ('robocode-tankroyale-bot-api-' + dependency['version'] + '.jar')) != dependency['sha256']:
+        raise ValueError('Retcon API pin mismatch')
+    freeze_manifest(O / 'shared-inputs.json', collect_shared_inputs(R, java, args.python.absolute()), O / 'prepared-shared-inputs.json' if (O / 'prepared-entry-manifests.json').exists() else None)
     number = int(args.stage.split('-')[1]) if args.stage.startswith('swiss-') else 0
     proposed, pairing = (draw(202611040), dict(algorithm='seeded practice draw', seed=202611040)) if not number else swiss_draw(O, number)
     seed = pairing.get('seed')
@@ -152,7 +187,7 @@ def main(args):
         report['continuedAt'] = stamp()
     else:
         pairs = proposed
-        report = dict(stage=args.stage, status='running', started=stamp(), drawSeed=seed, draw=pairs, plannedGames=14, completedGames=0, completedRounds=0, failures=[], mainCommit='1f6e6a38582838fe891330a0b3e7a7d9f1668279', host='minimind', pointsApplied=args.stage != 'practice')
+        report = dict(stage=args.stage, status='running', started=stamp(), drawSeed=seed, draw=pairs, plannedGames=14, completedGames=0, completedRounds=0, failures=[], mainCommit='1f6e6a38582838fe891330a0b3e7a7d9f1668279', host=platform.node(), pointsApplied=args.stage != 'practice')
         report['pairing'] = pairing
         save(O / (args.stage + '-prospective-draw.json'), dict(pairing=pairing, draw=pairs, registeredAt=stamp(), gamesPerPair=2, roundsPerGame=20))
     save(statefile, report)
@@ -238,7 +273,7 @@ def main(args):
             row['elapsedSeconds'] = round(time.monotonic() - start, 3)
             row['finished'] = stamp()
             save(statefile, report)
-            update_site(args.site, report)
+            update_site(args.site, report, O)
             print(f"END p{pi:02d} g{game}: {row['status']} {row['elapsedSeconds']}s", flush=True)
         if all((g['status'] == 'complete' for g in pair['games'])):
             scores = {n: sum((next((r['totalScore'] for r in g['official']['results'] if r['name'] == identities[n][0])) for g in pair['games'])) for n in [pair['a'], pair['b']]}
@@ -250,11 +285,11 @@ def main(args):
         else:
             pair['status'] = 'incomplete'
         save(statefile, report)
-        update_site(args.site, report)
+        update_site(args.site, report, O)
     report['status'] = 'complete' if not report['failures'] else 'incomplete'
     report['finished'] = stamp()
     save(statefile, report)
-    update_site(args.site, report)
+    update_site(args.site, report, O)
     print('STAGE ' + report['status'].upper(), flush=True)
 
 def public_pair(pair):
@@ -273,23 +308,33 @@ def public_stage(report):
     out['draw'] = [public_pair(p) for p in report['draw']]
     return out
 
-def update_site(site, report):
+def update_site(site, report, output=None):
     if site is None:
         return
-    p = site / 'data.json'
-    data = json.loads(p.read_text())
+    path = site / 'data.json'
+    data = json.loads(path.read_text())
     data['updated'] = stamp()
+    practice = report if report['stage'] == 'practice' else None
+    if output is not None and (output / 'practice.json').exists():
+        practice = json.loads((output / 'practice.json').read_text())
+    if practice is not None:
+        data['practice'] = [public_pair(pair) for pair in practice['draw']]
+        data['completedGames'] = practice['completedGames']
     if report['stage'] == 'practice':
-        data['practice'] = [public_pair(p) for p in report['draw']]
-        data['completedGames'] = report['completedGames']
         data['status'] = 'Practice ' + report['status']
     else:
-        rounds = {r['stage']: r for r in data.get('rounds', [])}
-        rounds[report['stage']] = public_stage(report)
-        data['rounds'] = sorted(rounds.values(), key=lambda r: int(r['stage'].split('-')[1]))
-        data['standings'] = swiss_standings(data['rounds'])
-        data['status'] = 'Swiss round ' + report['stage'].split('-')[1] + ' ' + report['status']
-    save(p, data)
+        number = int(report['stage'].split('-')[1])
+        if number > 1 and output is None:
+            raise ValueError('Canonical output directory is required for cumulative exports')
+        rounds = []
+        for prior in range(1, number + 1):
+            canonical = report if prior == number else json.loads((output / f'swiss-{prior}.json').read_text())
+            rounds.append(public_stage(canonical))
+        data['rounds'] = rounds
+        data['standings'] = swiss_standings(rounds)
+        data['status'] = 'Swiss round ' + str(number) + ' ' + report['status']
+    save(path, data)
+
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('--source', type=Path, required=True)

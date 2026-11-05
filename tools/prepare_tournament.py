@@ -52,7 +52,7 @@ def main(args):
     actual = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
     if actual != COMMIT:
         raise ValueError(f'Use a separate frozen source checkout at {COMMIT}; observed {actual}')
-    subprocess.run(['git', '-C', str(source), 'diff', '--exit-code', 'HEAD', '--', 'src', 'AISurvivor', 'experiments', 'build.gradle'], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(['git', '-C', str(source), 'diff', '--exit-code', 'HEAD', '--', 'src', 'AISurvivor', 'experiments', 'build.gradle', 'tools'], check=True, stdout=subprocess.DEVNULL)
     java17 = args.java17_home.absolute() / 'bin/java'
     version17 = subprocess.check_output([str(java17), '-version'], stderr=subprocess.STDOUT, text=True)
     if 'version "17.' not in version17:
@@ -112,6 +112,12 @@ def main(args):
     python = str(args.python.absolute())  # Keep the venv path; resolving its symlink loses site-packages.
     runtime = json.loads(subprocess.check_output([python, '-c', 'import sys,json,importlib.metadata as m; assert sys.version_info >= (3,10); assert m.version("robocode-tank-royale")=="1.3.1"; print(json.dumps(dict(version=sys.version,packages=sorted((d.metadata["Name"],d.version) for d in m.distributions()))))'], text=True))
     subprocess.run([python, '-m', 'pip', 'check'], check=True)
+    import tournament
+    bases = {name: source / 'AISurvivor' if name == 'AISurvivor' else source / 'experiments' / name / 'bot' for name in tournament.NAMES[:8]}
+    bases.update({'Retcon': retcon_source, 'Diamond Port': guest / 'bots/ports/diamond-port', 'Adaptive Prime': guest / 'bots/adaptive-prime'})
+    bases.update({name: source / 'samples' / name for name in tournament.NAMES[-3:]})
+    tournament.save(output / 'prepared-entry-manifests.json', tournament.collect_entry_manifests(source, bases))
+    tournament.save(output / 'prepared-shared-inputs.json', tournament.collect_shared_inputs(source, args.java25.absolute(), args.python.absolute()))
     provenance = dict(mainCommit=actual, java17=version17, java25=version25, python=runtime, platform=platform.platform(), machine=platform.machine(), host=platform.node(), assets=benchmark.ASSETS, retcon=retcon_provenance, pythonGuests=dict(commit=lock['commit'], sourceSHA256=lock['sourceSHA256'], opponents=lock['opponents']), builds=builds)
     (output / 'builds.json').write_text(json.dumps(builds, indent=2) + '\n')
     (output / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
