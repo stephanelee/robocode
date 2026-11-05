@@ -1,0 +1,180 @@
+{
+  "reviewedAt": "2026-11-05T18:50:30.345901+00:00",
+  "reviewer": "Independent audit without importing experiment reducer",
+  "freezeSHA256": "5088186766615ca7bafffce29fc68c65f9a16c598bc88ffddad2402d2fbc00a8",
+  "experimentStatus": "invalid",
+  "completeGamesAudited": 1,
+  "completedRoundsAudited": 20,
+  "games": [
+    {
+      "id": "melee-1-control",
+      "rounds": 20,
+      "recordingSHA256": "f86bed7df322bd4a44ba09cebeba5e2e77066a6ada4000e0255bbca31896bfdd",
+      "officialSHA256": "48a5f7ca2539b52cb7269b479463d7fb14446ed0208d18263697f5de29ae9cce",
+      "tickCount": 35785,
+      "maxOwnMs": 5,
+      "ownSkippedTurns": 0,
+      "share": 0.3214928057553957,
+      "shareExact": "715/2224"
+    }
+  ],
+  "errors": [],
+  "freezeFileCount": 7019,
+  "freezeErrors": [],
+  "independentSummary": {},
+  "independentGates": {},
+  "decision": "invalid-evidence-no-improvement-claim",
+  "productionGoldenLimitation": "Five exact-bit golden replay failures and one skip on unchanged arm64 production source; not used to relax experiment gates.",
+  "resourceWaves": [
+    {
+      "wave": 1,
+      "samples": 31,
+      "minimumAvailablePercent": 49,
+      "maximumSwapoutPagesPer2Seconds": 0,
+      "ownedGroups": [
+        "89480"
+      ]
+    },
+    {
+      "wave": 2,
+      "samples": 27,
+      "minimumAvailablePercent": 38,
+      "maximumSwapoutPagesPer2Seconds": 0,
+      "ownedGroups": [
+        "89708"
+      ]
+    }
+  ],
+  "resourceErrors": [],
+  "stage": 3,
+  "policyChangeExposure": null,
+  "controlMask": 0,
+  "candidateMask": 4,
+  "nextAcceptedMask": 0,
+  "nextAcceptedJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "featureJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+  "featureProjectManifestSHA256": "97162a8339d01277cbb5d017ca13a0844ab5307fa80f030440b54c9b5e5f216e",
+  "successfulResourceAdmissions": 2,
+  "concurrency": 1,
+  "loadPlan": "serial-continuation",
+  "priorProjectCompletedRounds": 812,
+  "priorProjectPartialRounds": 1,
+  "completedProjectRoundsIncludingThisStage": 849,
+  "completedFollowupRoundsThisStage": 20,
+  "sourceCommit": "935ad0e993e894bf611a6bbae402488836886c24",
+  "stagedInputFileCopiesVerified": 56,
+  "serialWaveIsolationVerified": [
+    {
+      "wave": 1,
+      "samplesWithOneOwnedGroupAlive": 30
+    },
+    {
+      "wave": 2,
+      "samplesWithOneOwnedGroupAlive": 26
+    }
+  ],
+  "chainInputsVerified": true,
+  "reasonedVerdict": "INVALID serialstage3; continuation stops and stage4 remains unplayed. Baselinecontrol20rounds validates; candidate17completed+partialRound18through119ticks terminates withownskips. Corrected cleanup verifies absence/reaping and preserves primary ValueError. All7019frozen hashes and56stagedcopies match. Keepacceptedmask0/baseline0.2.1; no resume/replacement/pooling under currentregistration.",
+  "continuationStopped": true,
+  "remainingStagesNotStarted": [
+    4
+  ],
+  "unplayedGameIDs": [
+    "melee-2-candidate",
+    "melee-2-control",
+    "melee-3-control",
+    "melee-3-candidate",
+    "melee-4-candidate",
+    "melee-4-control",
+    "diamond-1-control",
+    "diamond-1-candidate",
+    "diamond-2-candidate",
+    "diamond-2-control",
+    "retcon-1-control",
+    "retcon-1-candidate",
+    "retcon-2-candidate",
+    "retcon-2-control",
+    "walls-control",
+    "walls-candidate",
+    "spinbot-candidate",
+    "spinbot-control"
+  ],
+  "attemptedEngineGames": 2,
+  "completedEngineGames": 1,
+  "terminatedEngineGames": 1,
+  "physicalCompletedRoundsThisStage": 37,
+  "partialPhysicalRoundsThisStage": 1,
+  "partialProjectRoundsIncludingThisStage": 2,
+  "physicalProjectRoundStarts": 851,
+  "serialContinuationCompletedRounds": 297,
+  "serialContinuationPartialRounds": 1,
+  "failedCandidate": {
+    "recordingSHA256": "8f2cbd641df4fe9b5a0d73cbeb73fdd6a82595ad4a49313a95b620fd35336875",
+    "recordingCRCValid": true,
+    "gameStartedEvents": 1,
+    "roundEndedEvents": 17,
+    "roundEnds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "gameAbortedEvents": 0,
+    "gameEndedEvents": 0,
+    "totalObservedTicks": 29168,
+    "terminalRound": 18,
+    "terminalTurn": 119,
+    "telemetryStartRows": 18,
+    "telemetryStatsRows": 17,
+    "telemetryEndRows": 17,
+    "ownSkips": [
+      {
+        "round": 18,
+        "turn": 1
+      },
+      {
+        "round": 18,
+        "turn": 2
+      },
+      {
+        "round": 18,
+        "turn": 3
+      }
+    ],
+    "observerSkipEventsNotPresent": true,
+    "officialResultAbsent": true,
+    "maximumLoggedLoopMsBeforeIncompleteRound": 4
+  },
+  "cleanupVerifiedForBothGames": true,
+  "failedCandidateCleanup": {
+    "processGroup": 89708,
+    "signalErrors": [],
+    "remainingPids": [],
+    "verified": true,
+    "parentReturnCode": 143
+  },
+  "currentTrackedGroupInspection": {
+    "groups": [
+      89480,
+      89708
+    ],
+    "survivingTrackedGroups": 0,
+    "readOnly": true,
+    "signalsSent": false,
+    "inspectedAt": "2026-11-05T18:52:06.591385+00:00"
+  },
+  "diagnosisLimits": "Candidate own skipped-turn callbacks at Round18turns1/2/3 violate registered timing gate. Resource sampling passed(min38%available,noSwapouts); this neither establishes nor excludes CPU/GC/scheduling/event-handler/API causes. Logged loop timings exclude event-handler work and incomplete Round18 has no stats. No feature-strength conclusion or causal attribution is supported."
+}
