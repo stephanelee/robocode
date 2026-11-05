@@ -83,7 +83,7 @@ class EventStarterTests(unittest.TestCase):
         actual = [(r['name'], r['losses']) for r in index['playoffStandings'] if not r['eliminated']]
         recorded = [(r['name'], r['losses']) for r in config['results']['remaining']]
         self.assertEqual(actual, recorded)
-        self.assertEqual('playoff-4', config['authorization']['latestAuthorizedStage'])
+        self.assertEqual(index['stages'][-1]['stage'], config['results']['latestStage'])
 
 
 if __name__ == '__main__':

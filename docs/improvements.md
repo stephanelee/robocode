@@ -284,3 +284,29 @@ bracket live videos archived under user authorization; private originals kept.
 [explicit void ruling](tournament-playoff-4-void-ruling.md),
 [measured report/raw evidence](tournament-playoff-4-results.md),
 [PR #120](https://github.com/stephanelee/robocode/pull/120).
+
+## 2026-11-05 — lower final
+
+Two original games / forty rounds on minimind; no tie game, failure or rerun.
+Diamond Port wins 2,642–2,621 and Keel receives its second loss. Accept descriptive
+tournament results; no gameplay promotion or strength claim. At that point,
+96 valid games / 1,920 valid rounds / 1,960 known physical rounds. Frozen inputs
+unchanged; independent CRC/hash/round/final-score review passes; both movies
+published with private originals retained.
+[Protocol](tournament-playoff-5-protocol.md),
+[measured report/raw evidence](tournament-playoff-5-results.md),
+[PR #121](https://github.com/stephanelee/robocode/pull/121).
+
+## 2026-11-05 — grand final and tournament completion
+
+Two original games / forty rounds on minimind; no tie game, reset, failure,
+void or rerun. KeelHelm wins 3,175–1,861 and is champion with zero playoff losses;
+all seven other qualifiers have two. Accept descriptive event evidence; no
+gameplay improvement or general strength claim. Final98validgames/1,960validrounds
+plus20earlierexcludedsolo and20user-voidedrounds =2,000knownphysicalrounds.
+Frozen inputs unchanged; independent recording/score/termination audit passes.
+Twenty public movies and forty-two valid private originals verified; all raw
+artifacts retained. Public source, notes and reusable tournament foundation updated.
+[Prospective protocol](tournament-grand-final-protocol.md),
+[measured report/raw evidence](tournament-grand-final-results.md),
+[PR #121](https://github.com/stephanelee/robocode/pull/121).
