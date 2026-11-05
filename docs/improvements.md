@@ -350,3 +350,7 @@ Decision reject: melee 25.96% → 33.17% (+7.21pp), policy exposure 6621. Exactl
 ## 2026-11-05 — KeelHelm profiler exact-shell fixture
 
 Zero games/rounds. Reproduce PATH launcher comm mismatch offline, then validate explicit pinned JAVA_HOME executable and retained identity rows with readable JFR/verified cleanup. Accept acquisition correction only; no game timing repair or competitive inference. Physical accounting unchanged. [Report/raw fixture evidence](improvements/keelhelm-timing-shell-fix.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm next 2: radar-revisit
+
+Decision reject: melee 35.31% → 29.84% (-5.48pp), policy exposure 1209. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1390 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-2-radar-revisit-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
