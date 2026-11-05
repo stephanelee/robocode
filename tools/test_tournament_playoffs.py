@@ -25,6 +25,20 @@ def swiss_fixture(output):
 
 
 class PlayoffTest(unittest.TestCase):
+    def test_published_evidence_index_matches_stage_coverage(self):
+        path = Path(__file__).resolve().parents[1] / 'benchmarks/tournament-2026-11-04/official-results.json'
+        index = json.loads(path.read_text())
+        games = [g for s in index['stages'] for p in s['draw'] for g in p['games'] if g['status'] == 'complete']
+        self.assertEqual(len(games), index['validatedGames'])
+        self.assertEqual(sum(g['official']['numberOfRounds'] for g in games), index['validatedRounds'])
+        self.assertEqual(len(games), len(index['officialFileSHA256']))
+        for stage in index['stages']:
+            for pair_number, pair in enumerate(stage['draw'], 1):
+                for game in pair['games']:
+                    if game['status'] == 'complete':
+                        key = f"{stage['stage']}/p{pair_number:02d}-g{game['game']}/battle.json"
+                        self.assertIn(key, index['officialFileSHA256'])
+
     def pair(self):
         return dict(matchId='U1', a='A', b='B', games=[result('A', 'B'), result('A', 'B', game=2)])
 

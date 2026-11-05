@@ -56,7 +56,7 @@ Full raw archive: `local-evidence/tournament-2026-11-04/playoff-3-full-artifacts
 Independent verification: `playoff-3-verification.json`. All-34 movie proof:
 `replay-catalog-original34-verification.json`; current public catalog proof:
 `video/replay-catalog-verification.json`. The raw recordings, models and private
-logs remain local. Rendering and playback checks start no games.
+logs remain local. Rendering and playback checks start no games. All 21 tournament tests pass, including a publication-index coverage check against every completed stage game.
 
 [Prospective protocol](tournament-playoff-3-protocol.md),
 [running/replay workflow](tournament-running.md),
