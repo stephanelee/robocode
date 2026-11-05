@@ -2,7 +2,7 @@
 
 The runner reproduces this event's frozen 14-bot roster. Run it locally; do not dispatch GitHub Actions. Each command executes one requested stage and stops. Practice is unranked. Swiss pairings award 3 points for a win, 1 each for an exact combined-score draw, and 0 for a loss. A pairing contains two cold 20-round games, with launch order reversed in game two.
 
-This PR automates practice and Swiss rounds 1–4. The agreed top-eight double-elimination playoff format is documented in the protocol; its bracket execution is not yet automated by this runner. Do not use a Swiss stage as a substitute for a playoff. No bot is eliminated during the four Swiss rounds.
+The runner automates practice, Swiss rounds 1–4 and the fixed top-eight double-elimination bracket. Each invocation executes one explicit stage and stops. No bot is eliminated during Swiss; a second playoff match loss eliminates it. See the [prospective playoff registration](tournament-playoffs-2026-11-05.md) for the fixed feeds and tie rules. The current user request authorizes opening wave 1 only.
 
 ## Prepare an isolated source checkout
 
@@ -116,3 +116,25 @@ Each movie loads on demand into a browser Blob so seeking does not depend on the
 To reproduce the playlist, iterate each pairing's `games` in `benchmarks/tournament-2026-11-04/swiss-4.json`. For each game, render its `recording.path` beneath that benchmark directory and pass its `directory/battle.json` as `--official`, `--game` as 1 or 2, and `--swiss-round 4`. Use a distinct output filename per game. The local JSON report supplies the source/video SHA256s, final scores, duration and round chapter timestamps. Public `data.json` lists these movies in `videos`; `video` retains the first movie for compatibility. Each entry supplies `title`, `label`, `mp4`, `poster`, `chaptersFile`, `chapters`, `sizeBytes` and `turnsPerSecond`.
 
 Only user-approved rendered videos, posters and chapters are published. Raw `.battle.gz` files, models and private logs remain local. All 14 recordings passed gzip and game/round-boundary checks. Video reports check every final score against its original official result, and codec metadata is checked for each generated MP4. No games were rerun, and no competitive result changed for this presentation update.
+
+## Run one authorized playoff wave
+
+Use `--stage playoff-1` after all four canonical Swiss reports are complete. The runner freezes their hashes, final seeds and the full bracket in `playoff-registration.json`. It verifies the existing frozen bot/shared inputs and requires recordings. No bot rebuild or new preparation replaces this event’s frozen inputs.
+
+```sh
+python3 tools/tournament.py \
+  --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
+  --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
+  --site /absolute/path/to/tournament-site/dist \
+  --stage playoff-1 --register-only
+# Publish the registered draw, then execute its still-unplayed games:
+python3 tools/tournament.py \
+  --source "$CUP_SOURCE" --output "$CUP_OUTPUT" \
+  --java "$CUP_JAVA25" --python "$CUP_PYTHON/bin/python" \
+  --site /absolute/path/to/tournament-site/dist \
+  --stage playoff-1 --resume-unplayed
+```
+
+Opening wave is four pairings / eight games / 160 rounds, with at most one extra 20-round tie-break game per pairing. Two-game total scores decide first, round first places second. Only if both tie is game 3 played; its total score decides, or the predeclared SHA256 draw of lots if that game ties. Playoff wins/losses replace Swiss points for advancement. No lower-bracket game starts in this invocation.
+
+Subsequent `playoff-2` through `playoff-7` stages require separate user authorization. Wave 7 is refused unless the lower finalist won G1. A failed/incomplete game stops the playoff wave and remains retained; no automatic rerun, forfeit or advancement. Public exports rebuild the cumulative bracket from canonical completed waves and expose only approved scores/resolutions, never raw replay paths or private telemetry.
