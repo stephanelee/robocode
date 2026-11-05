@@ -6,7 +6,7 @@ import keelhelm_resources as resources
 BASE='19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b'
 LAUNCHER='''#!/bin/sh
 cd "$(dirname "$0")" || exit 1
-java -XX:+UseSerialGC -Xms128m -Xmx512m "-XX:StartFlightRecording=name=KeelTiming,filename=$KEEL_HELM_JFR,settings=profile,disk=true,maxsize=8m,dumponexit=true" -jar KeelHelm.jar &
+"$JAVA_HOME/bin/java" -XX:+UseSerialGC -Xms128m -Xmx512m "-XX:StartFlightRecording=name=KeelTiming,filename=$KEEL_HELM_JFR,settings=profile,disk=true,maxsize=8m,dumponexit=true" -jar KeelHelm.jar &
 bot_pid=$!
 printf '%s\n' "$bot_pid" > "$KEEL_HELM_PIDFILE"
 wait "$bot_pid"
@@ -27,7 +27,9 @@ class Snapshots:
     if self.done.wait(5):return
     result=subprocess.run(['/bin/ps','-p',str(pid),'-o','pgid=,lstart=,comm='],capture_output=True,text=True,timeout=3)
     if result.returncode or not result.stdout.strip():return
-    row=result.stdout.strip();assert int(row.split()[0])==self.pgid and row.endswith(str(self.jcmd.parent/'java')),'PID identity differs'
+    row=result.stdout.strip()
+    with (self.run/'identity-log.jsonl').open('a') as f:f.write(json.dumps(dict(monotonic=time.monotonic(),pid=pid,expectedGroup=self.pgid,observed=row))+'\n')
+    assert int(row.split()[0])==self.pgid and row.endswith(str(self.jcmd.parent/'java')),'PID identity differs'
     if identity is None:identity=row
     assert row==identity,'PID reused'
     path=self.run/f'snapshot-{i:02d}.jfr'
