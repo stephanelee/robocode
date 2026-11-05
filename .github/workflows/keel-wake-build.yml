@@ -5,8 +5,8 @@ on:
       - 'experiments/KeelWake/**'
       - '.github/workflows/keel-wake-build.yml'
       - 'tools/verify_jar.py'
-      - 'tools/keel_brace*.py'
-      - 'tools/test_keel_brace*.py'
+      - 'tools/keel_wake*.py'
+      - 'tools/test_keel_wake*.py'
       - 'benchmarks/keel-wake-v1/freeze.json'
       - 'benchmarks/keel-wake-v1/independent-analysis/**'
       - 'benchmarks/keel-wake-v1/image-probe-validation/**'
@@ -60,8 +60,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if test -f tools/test_keel_brace_experiment.py; then
-            python -I -B -S -m unittest discover -s tools -p 'test_keel_brace*.py' -v 2>&1 | tee build/keel-wake-bootstrap/controller-tests.log
+          if test -f tools/test_keel_wake_experiment.py; then
+            python -I -B -S -m unittest discover -s tools -p 'test_keel_wake*.py' -v 2>&1 | tee build/keel-wake-bootstrap/controller-tests.log
           fi
           if test -f benchmarks/keel-wake-v1/independent-analysis/test_audit.py; then
             python -I -B -S -m unittest discover -s benchmarks/keel-wake-v1/independent-analysis -p test_audit.py -v 2>&1 | tee build/keel-wake-bootstrap/independent-audit-tests.log
