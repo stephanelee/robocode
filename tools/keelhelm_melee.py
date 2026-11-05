@@ -55,7 +55,8 @@ def collect(source, evidence, pins, java, python):
     control = evidence/'control-source'
     paths = files(candidate) + files(control) + [pins/'entry-manifests.json',pins/'shared-inputs.json']
     paths += [Path(__file__), ROOT/'tools/test_keelhelm_melee.py', ROOT/'tournament/scripts/TournamentBattle.java',
-              ROOT/'docs/improvements/keelhelm-melee-v1-protocol.md']
+              ROOT/'docs/improvements/keelhelm-melee-v1-protocol.md',
+              ROOT/'docs/improvements/keelhelm-melee-v2-protocol.md']
     bases = {'Diamond Port': source/'guest-source/bots/ports/diamond-port',
              'Keel': source/'experiments/Keel/bot', 'Prism': source/'experiments/Prism/bot',
              'Retcon': source/f'.benchmark-cache/retcon/{RETC}/Retcon',

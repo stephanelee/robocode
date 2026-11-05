@@ -30,7 +30,8 @@ public final class KeelHelm extends Bot {
     /** Energy lead over the opponent above which Keel fires normal 1.2-power shots instead of 0.1 tokens. */
     static final double LEAD = 15, BASE_POWER = 1.2;
 
-    KeelHelm() { super(BotInfo.fromFile("KeelHelm.json")); }
+    KeelHelm() { this(BotInfo.fromFile("KeelHelm.json")); }
+    KeelHelm(BotInfo info) { super(info); }
     public static void main(String[] args) { new KeelHelm().start(); }
 
     private synchronized void mark(String value) {
@@ -45,7 +46,8 @@ public final class KeelHelm extends Bot {
         scanT = -1; ePrevT = -1; ePrev = null; stuck = 0; maxNanos = 0;
         orbitDir = new java.util.SplittableRandom(seed * 31 + round).nextBoolean() ? 1 : -1;
         radarSign = orbitDir;
-        melee.newRound(getEnemyCount());
+        // RoundStarted precedes the first tick: tick-backed API getters are unavailable here.
+        melee.newRound(0);
         meleeTurns = 0; meleeShots = 0; duelTransitions = 0;
         mark("start");
     }

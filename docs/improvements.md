@@ -310,3 +310,7 @@ artifacts retained. Public source, notes and reusable tournament foundation upda
 [Prospective protocol](tournament-grand-final-protocol.md),
 [measured report/raw evidence](tournament-grand-final-results.md),
 [PR #121](https://github.com/stephanelee/robocode/pull/121).
+
+## 2026-11-05 — KeelHelm melee v1: invalid lifecycle
+
+Consumed 40 physical rounds in two games; one valid control, one candidate with missing round-start telemetry and uncleared melee state. A preceding staging failure launched zero games. Reject the improvement claim; stop v1 with fourteen games unplayed. Preserve all recordings, source/JAR/runtime hashes, failed setup and callback reproduction. Register v2 separately; no pooling or resume. [Protocol](improvements/keelhelm-melee-v1-protocol.md), [measured failure/raw evidence](improvements/keelhelm-melee-v1-invalid.md), [PR #124](https://github.com/stephanelee/robocode/pull/124).
