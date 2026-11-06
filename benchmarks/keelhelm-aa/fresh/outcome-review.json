@@ -1,0 +1,1886 @@
+{
+  "reviewedAt": "2026-11-06T12:49:38.505121+00:00",
+  "reviewer": "Independent stdlib raw/transport/A-A audit; no acquisition reducer imported",
+  "freezeSHA256": "5d75523c5cf3a465dc86df7d82d154cf9f964ca4a52a838cb5c0f5255f3fecec",
+  "sourceCommit": "d2fa1dcf957ea34aea00542354363ff49d6edaa8",
+  "experimentStatus": "complete",
+  "decision": "stop-measurement-not-ready",
+  "completeGamesAudited": 32,
+  "completedRoundsAudited": 240,
+  "physicalCompletedRounds": 240,
+  "partialPhysicalRounds": 0,
+  "errors": [],
+  "changedFrozenFiles": [],
+  "frozenFilesVerified": 7019,
+  "stagedEntrantFilesVerified": 768,
+  "stagedGuestSharedFilesVerified": 2816,
+  "stagedWrappersVerified": 96,
+  "resources": [
+    {
+      "game": "01-random-A",
+      "samples": 27,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "01-random-B",
+      "samples": 33,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "02-fixed-B",
+      "samples": 22,
+      "minimumAvailablePercent": 51,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "02-fixed-A",
+      "samples": 14,
+      "minimumAvailablePercent": 53,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "03-random-A",
+      "samples": 23,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "03-random-B",
+      "samples": 35,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "04-fixed-B",
+      "samples": 19,
+      "minimumAvailablePercent": 50,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "04-fixed-A",
+      "samples": 18,
+      "minimumAvailablePercent": 51,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "05-random-A",
+      "samples": 24,
+      "minimumAvailablePercent": 50,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "05-random-B",
+      "samples": 31,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "06-fixed-B",
+      "samples": 21,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "06-fixed-A",
+      "samples": 20,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "07-random-A",
+      "samples": 32,
+      "minimumAvailablePercent": 56,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "07-random-B",
+      "samples": 34,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "08-fixed-B",
+      "samples": 37,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "08-fixed-A",
+      "samples": 38,
+      "minimumAvailablePercent": 56,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "09-random-A",
+      "samples": 17,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "09-random-B",
+      "samples": 25,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "10-fixed-B",
+      "samples": 32,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "10-fixed-A",
+      "samples": 24,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "11-random-A",
+      "samples": 31,
+      "minimumAvailablePercent": 59,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "11-random-B",
+      "samples": 39,
+      "minimumAvailablePercent": 39,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "12-fixed-B",
+      "samples": 37,
+      "minimumAvailablePercent": 51,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "12-fixed-A",
+      "samples": 37,
+      "minimumAvailablePercent": 53,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "13-random-A",
+      "samples": 24,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "13-random-B",
+      "samples": 18,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "14-fixed-B",
+      "samples": 20,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "14-fixed-A",
+      "samples": 25,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "15-random-A",
+      "samples": 23,
+      "minimumAvailablePercent": 56,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "15-random-B",
+      "samples": 41,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "16-fixed-B",
+      "samples": 35,
+      "minimumAvailablePercent": 56,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "16-fixed-A",
+      "samples": 36,
+      "minimumAvailablePercent": 55,
+      "swapoutDelta": 0
+    }
+  ],
+  "games": [
+    {
+      "game": "01-random-A",
+      "plan": {
+        "id": "01-random-A",
+        "pair": 0,
+        "layout": 0,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112400,
+        "order": [
+          "KeelHelm",
+          "Diamond Port",
+          "Keel",
+          "Prism"
+        ]
+      },
+      "recordingSHA256": "e732811cb6f0e2d44b16f222695b9ba27892140f055ba4583087467d146e76a8",
+      "officialSHA256": "dc6453f14312e5a14b85904bc82726e4c59f45172b65c7a8a0ce3f015431616a",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1677,
+      "firstPlaces": 3,
+      "totalAllScore": 5565,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "4d8404daad43af8c01043516f78e1316f977fe8961c5ae6239770195769f25fa"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "2505a38b6c3b674394fa00604fcdde52afb62b0fa7ad27edf14b2a25deff0055",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "01-random-B",
+      "plan": {
+        "id": "01-random-B",
+        "pair": 0,
+        "layout": 0,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112400,
+        "order": [
+          "KeelHelm",
+          "Diamond Port",
+          "Keel",
+          "Prism"
+        ]
+      },
+      "recordingSHA256": "5e399f02b7d6ed79cf4568da2ab6945d3c82d88748017252b5b493dddcd01b38",
+      "officialSHA256": "cda6d05fa5770ec3afdba6126521a2627a00e1776b6a9fb1694505b33e8507e8",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 6,
+      "totalScore": 1578,
+      "firstPlaces": 3,
+      "totalAllScore": 5593,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "142d787a3e1dd556e260f2259e0b89c0b3885eaf491ccfc5e4536273b70ec03f"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "2f50ab53480baf726b5e11ece90b9ac61702d282fbf49b46ee882fff5c54d599",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "02-fixed-B",
+      "plan": {
+        "id": "02-fixed-B",
+        "pair": 1,
+        "layout": 0,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112401,
+        "order": [
+          "KeelHelm",
+          "Diamond Port",
+          "Keel",
+          "Prism"
+        ]
+      },
+      "recordingSHA256": "c963833f61db0059da24471e6faf82b483a2e09fb8e37e0227f1eba82b78f73a",
+      "officialSHA256": "7ea2b905740c11cf9b4bb09f5e80ab2fff92e592b415f834559992bfe235ce10",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3,
+      "totalScore": 2034,
+      "firstPlaces": 5,
+      "totalAllScore": 5734,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "8509a397c9e319431ad4f9bacd247feebf09a92eac619dee4368fb4e531e30ca"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "f418d37c3828163380809bbb24d470456dd4df6c238617439d755e3a144614c1",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "02-fixed-A",
+      "plan": {
+        "id": "02-fixed-A",
+        "pair": 1,
+        "layout": 0,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112401,
+        "order": [
+          "KeelHelm",
+          "Diamond Port",
+          "Keel",
+          "Prism"
+        ]
+      },
+      "recordingSHA256": "5aa08e2a55db706f7c22654789f3f78aa3b48d45e21267c14792b9f13f94785b",
+      "officialSHA256": "23063b426e5b47458ba51fdfaf2769f3499b65be4051ba02692c763b4f7e0dc0",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 2,
+      "totalScore": 2305,
+      "firstPlaces": 7,
+      "totalAllScore": 5662,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "6f62b957442177c628b28f2a7f7f0c494278d65d1ee840a7ae608febac969f2b"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "8f7ac4fc5109d789c55e9e0e2f049778e24d2923d5902387218b50d845bbeee7",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "03-random-A",
+      "plan": {
+        "id": "03-random-A",
+        "pair": 2,
+        "layout": 0,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112402,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "7d94787cdb56f1e4c0917f6d04059e8c4f24af9cb7e2f29d680a0cf85e122542",
+      "officialSHA256": "59bb0a1d4fab8efd5e8b0912e064ecccfdd0e8e7fcd5c2209bbcc22c6e270aa0",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 396,
+      "firstPlaces": 4,
+      "totalAllScore": 652,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "f5f793320c66fd4bcfea40d01a31ad85dd7a4adf5e37743d46495bdb204b1256"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "311ae4a9d4fd7b579d6c2b1270e5cec1e59ab090381cb0e279a2a6a75231cfb1",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "03-random-B",
+      "plan": {
+        "id": "03-random-B",
+        "pair": 2,
+        "layout": 0,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112402,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "eb3050f624e84f88e5388af69c64c0e5773239f41f09ee25be2d35796cee42ea",
+      "officialSHA256": "9dcbf3541bf61870cd8ec985f16f0a336bd439f2c9f5bb99d86f3b14f1e36c42",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 423,
+      "firstPlaces": 5,
+      "totalAllScore": 674,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "a6df5a1621600261cbb72ee5601de2e506c69fada902323362313630002fb1c7"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "64b97cecf765df38d7a7bed584e0b1fd406dc25ecb97e806f7976933933c5800",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "04-fixed-B",
+      "plan": {
+        "id": "04-fixed-B",
+        "pair": 3,
+        "layout": 0,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112403,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "62395be9875842c12308050558449be61f4a4050c2241f2281090bb0acea3df8",
+      "officialSHA256": "0761cf9c7bb317b078361925a543cb8785b9d415c4013f74862911bec7e35a15",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 333,
+      "firstPlaces": 3,
+      "totalAllScore": 711,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "5623c615459e1c39eeef37388588163cc31da848c57604748816df6e5d2cf60a"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a691235d26dd94901dbedf68b4c9944a9602dc05df6570663c26512ce4d59899",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "04-fixed-A",
+      "plan": {
+        "id": "04-fixed-A",
+        "pair": 3,
+        "layout": 0,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112403,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "710def2f851c59a85cb566585a276e3572892fbba1446087f0c8ea28c1e3b793",
+      "officialSHA256": "0761cf9c7bb317b078361925a543cb8785b9d415c4013f74862911bec7e35a15",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 333,
+      "firstPlaces": 3,
+      "totalAllScore": 711,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "4e0f0ba68b3cb0e7511f12d4f2f905d78012c668bcf8c1f3af4efa04fb585247"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a691235d26dd94901dbedf68b4c9944a9602dc05df6570663c26512ce4d59899",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "05-random-A",
+      "plan": {
+        "id": "05-random-A",
+        "pair": 4,
+        "layout": 1,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112404,
+        "order": [
+          "Diamond Port",
+          "Keel",
+          "Prism",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "60bd42c8acf3a7d50d7c93248af33525ac2e9097637963d87caafca8f19c86ea",
+      "officialSHA256": "bad09b25d3575d8ef2c90f857d92e0a6684a20095902d60241fefe40ca15dd7d",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5,
+      "totalScore": 1428,
+      "firstPlaces": 2,
+      "totalAllScore": 5661,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "fbfc9b37e5a21e1f3d2ba60efa663155b2239d52d07cd6fc746489f7344529fa"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "f333252ce23b352aa391ed3ad06717c2d261a2230aef50713b0195e02b9830c4",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "05-random-B",
+      "plan": {
+        "id": "05-random-B",
+        "pair": 4,
+        "layout": 1,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112404,
+        "order": [
+          "Diamond Port",
+          "Keel",
+          "Prism",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "07f2e03ee9b131ed8eac240b787ac504f1e47d9826570056527a2beb4632a1d1",
+      "officialSHA256": "248d52f85d2cd06f696afb0f11853fb111db45700349b652a327ba8a7ccf3eaa",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1751,
+      "firstPlaces": 3,
+      "totalAllScore": 5714,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "0224172ceca31bdd58b9bf455ec2e893694e7c261b91ba021f23a1a957046361"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "d49a29db3f0f8d085f299deefcc8e5a953a1f25d8f974919e89e1abbb0e7e7b1",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "06-fixed-B",
+      "plan": {
+        "id": "06-fixed-B",
+        "pair": 5,
+        "layout": 1,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112405,
+        "order": [
+          "Diamond Port",
+          "Keel",
+          "Prism",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "cad4116aa4f9998319021f3b22c8df1ded80acc2e1397bcbfddfb965e2ecc813",
+      "officialSHA256": "31c7dc2fab31442e87c46d00b2220f5d875706d4fc0d09419a68c2472d6ea0f4",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1188,
+      "firstPlaces": 2,
+      "totalAllScore": 5738,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "ddd33333a1871a1fd584bc230e6fadc1f3853a78abf7482094862e1cf6881e22"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a6e445bd4744ab2252dc1ee74ee446bf82bec4dc0d9a93251dbde0a7b8cdc58f",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "06-fixed-A",
+      "plan": {
+        "id": "06-fixed-A",
+        "pair": 5,
+        "layout": 1,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112405,
+        "order": [
+          "Diamond Port",
+          "Keel",
+          "Prism",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "8be8495932872fad274770d407a17796f4981fbd546a3bc1d3cc7bdecc5948a2",
+      "officialSHA256": "57d6be167600c23d0bfcd7920f3c0f2cd615e9fa26727f3ee9db1ea5fedd1cb4",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1783,
+      "firstPlaces": 4,
+      "totalAllScore": 5716,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "a92e7a74492d2b4b2f590ff834cb0437ab3ab48b4479214b0f1a9615ef7e05ec"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "90c1033762a587d3a1bc15796b1272b115c71d0225779f3bf35a11ceda077762",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "07-random-A",
+      "plan": {
+        "id": "07-random-A",
+        "pair": 6,
+        "layout": 1,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112406,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "a9213dfb0bee3c16b3c1cd6b6bd89a6cf2beafb09284cd5e3d0e5301b81c4f40",
+      "officialSHA256": "8c620f63018777166f6da03fe5b12deab6463127196e0755959e1f1384d9b306",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3,
+      "totalScore": 264,
+      "firstPlaces": 3,
+      "totalAllScore": 703,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "145a2344a2e1dedec520beb901966d0c34bc430cb95fd34a03b3cb503a0b84ce"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a5cc331f63cac84f5eb31c618c4936d6d8a7d46f18fadebeaf31283c536d44d3",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "07-random-B",
+      "plan": {
+        "id": "07-random-B",
+        "pair": 6,
+        "layout": 1,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112406,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "0271f0f82612e576376420223582808872d215593f9e70753ed4228accfcb8e9",
+      "officialSHA256": "fca5bba7ad1dc454d69bf4182adc1ac57a1f811099f1b2d4b56e4ee38e477962",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 257,
+      "firstPlaces": 3,
+      "totalAllScore": 677,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "33daf5f189140dae169bbc39694cb9d45b37f9ebb895e60ed8e9a1d431c595b6"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "03cab17c1ed3af27f3ce8061ecef7fab66f6a4fd980d7c15d8bcd66e5b24da09",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "08-fixed-B",
+      "plan": {
+        "id": "08-fixed-B",
+        "pair": 7,
+        "layout": 1,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112407,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "55dd620dfc07bc7ac73ce7ccf649a9daaf0a0005762f5473516407472b0b534c",
+      "officialSHA256": "9c994942a66af09012c8c06c50ac7d183255d468b3a843e357e30d1832a0d19e",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3,
+      "totalScore": 378,
+      "firstPlaces": 4,
+      "totalAllScore": 662,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "cc92e455bf20a06eff7de3182bc189edb631b083abef523c8e796ab13a703206"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "bcce9f8fc4a5ff6cda86b47568d9e2260742995aa774a09637ee73bcc2ba6dca",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "08-fixed-A",
+      "plan": {
+        "id": "08-fixed-A",
+        "pair": 7,
+        "layout": 1,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112407,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "f95cf9e4e41a7cee3db2ff7f98285c407cf3caa20d5179aa356caf7701bc31d2",
+      "officialSHA256": "9c994942a66af09012c8c06c50ac7d183255d468b3a843e357e30d1832a0d19e",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3,
+      "totalScore": 378,
+      "firstPlaces": 4,
+      "totalAllScore": 662,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "03ed6a51d6bdcc5dbaab2bb98fda156275a65c79812eb44ff9e7d654f4ef2876"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "bcce9f8fc4a5ff6cda86b47568d9e2260742995aa774a09637ee73bcc2ba6dca",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "09-random-A",
+      "plan": {
+        "id": "09-random-A",
+        "pair": 8,
+        "layout": 2,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112408,
+        "order": [
+          "Keel",
+          "Prism",
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "13867d28c244d59daa9f0583b0fd506147292c63525bc8c096f81159ff60f4ed",
+      "officialSHA256": "c2e81efbc377a9659765fade32b20380a2d6d18f23e73914e0442824a9de01ec",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1680,
+      "firstPlaces": 6,
+      "totalAllScore": 5567,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "b9baac7c4d51bdfaa31d7da14a2f52b6f9ad090c8f1313721a30eead0a0b27d8"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "8e2a667a987b97b5ec20b5c8acc9c596ae7f93bec26d64c3437ba69dd6f62ff4",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "09-random-B",
+      "plan": {
+        "id": "09-random-B",
+        "pair": 8,
+        "layout": 2,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112408,
+        "order": [
+          "Keel",
+          "Prism",
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "1606a21c327b54bf55014d45df8541a526393d219f44ec16312fde35e3f7a25f",
+      "officialSHA256": "8e578a316f4fb1fb088f486aa2e3f9027a0b28cba3020b8924518eff3424a0df",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1842,
+      "firstPlaces": 5,
+      "totalAllScore": 5677,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "91a199719c169e8af8bc7290524b744a69b689acdf846308bbf65d4802ba435f"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "fc6b7be7d6f345bc427807b3dd08eb9b7d722e7f3ec26dbc67313a44dfece1e0",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "10-fixed-B",
+      "plan": {
+        "id": "10-fixed-B",
+        "pair": 9,
+        "layout": 2,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112409,
+        "order": [
+          "Keel",
+          "Prism",
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "b4a237f32eddf0775ee5bd492366a31a9019a778f53fa7555db0aad6d4ab67ea",
+      "officialSHA256": "2ace63a275d1f5675a684d30888a278a55817e3e9888ce247f78415cf575c94e",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5,
+      "totalScore": 1524,
+      "firstPlaces": 4,
+      "totalAllScore": 5609,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "fb0e3c9e057a888a3419c3f08591f2957a49010c70a080c5e6ceb7f5af987932"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "b3fce1d6b053ccca7d0ec2ffcf0e37d3a28cf67856ffa22e1e221e262b35ed32",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "10-fixed-A",
+      "plan": {
+        "id": "10-fixed-A",
+        "pair": 9,
+        "layout": 2,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112409,
+        "order": [
+          "Keel",
+          "Prism",
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "51f26edc3d0f9671411eed0abe9cbc6c31ce902a7184481549eb56dc075708f8",
+      "officialSHA256": "dc121310a7b366a06b33bba4dd332b07990f8bd8efd78cd683916174ef11c5d3",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 2226,
+      "firstPlaces": 7,
+      "totalAllScore": 5473,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "6b3e208cf8fe425625946ff291b2607d3146517382cab10cc4c7bac214bd931d"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "6f7b76750004f697009d74ca022f3a375df65ee318a838097f5b62ae25869f85",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "11-random-A",
+      "plan": {
+        "id": "11-random-A",
+        "pair": 10,
+        "layout": 2,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112410,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "2d7cc26c2e1a2ac02583653e272d002959ae914e747bf6888213c1fc1ff68f99",
+      "officialSHA256": "167bf8184085ce50735f83192f30cdc122a69503f925b644f5e493aaf82f76dc",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 334,
+      "firstPlaces": 4,
+      "totalAllScore": 681,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "565e1755108d9c67448ee99dc0d769a93fe2f387bfebdc73843bd2afdf262f13"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "b83f16d68146c438a401185c5b44f8fc227d2c77b66c13fbab2724055342faeb",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "11-random-B",
+      "plan": {
+        "id": "11-random-B",
+        "pair": 10,
+        "layout": 2,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112410,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "c64de72f78d4e3d0451c1db455f0468264a44c1344bb2b04a4b82d8b39136377",
+      "officialSHA256": "afc71bb54687ba9a42ad452b30acddd2bff8bf7e481c186afdc868c4b9eb425f",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 406,
+      "firstPlaces": 5,
+      "totalAllScore": 641,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "cc0c3d1526119ba39ab975d45808080eccd25a1338c2281bbef2f17b0a1d78f4"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "7b36fc763206c045ebe3d35aa556fe74836f6cdcd48022dfa6eaf79f279318ca",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "12-fixed-B",
+      "plan": {
+        "id": "12-fixed-B",
+        "pair": 11,
+        "layout": 2,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112411,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "753c9ca7e42c4f264db37cd49d1e7ad3715bf4cfec7707a41a8ce5217f482942",
+      "officialSHA256": "14b6ca3592e11930cf8f7d3a4d03c4c8f81c9a56e810c15f0cb2c809cc55b863",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 434,
+      "firstPlaces": 5,
+      "totalAllScore": 651,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "c45cc896aba5a030ab9ab0a3d3d2efbbdc4eb9f6a2794c0446fdc765ebf764a0"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a069c5d1b494e1c644d3982765e4382576daf58659ccd0dab170f47255652f33",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "12-fixed-A",
+      "plan": {
+        "id": "12-fixed-A",
+        "pair": 11,
+        "layout": 2,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112411,
+        "order": [
+          "KeelHelm",
+          "Diamond Port"
+        ]
+      },
+      "recordingSHA256": "8174aba7ae79a760bf9d9d59afa26a4f2797f3974926a92ca290ecfe594a0132",
+      "officialSHA256": "14b6ca3592e11930cf8f7d3a4d03c4c8f81c9a56e810c15f0cb2c809cc55b863",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 434,
+      "firstPlaces": 5,
+      "totalAllScore": 651,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "42da822cc3f8a32679ca1e9b7b3e7989f104cc82c4828c9ac9893a5d77f23d2d"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "a069c5d1b494e1c644d3982765e4382576daf58659ccd0dab170f47255652f33",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "13-random-A",
+      "plan": {
+        "id": "13-random-A",
+        "pair": 12,
+        "layout": 3,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112412,
+        "order": [
+          "Prism",
+          "KeelHelm",
+          "Diamond Port",
+          "Keel"
+        ]
+      },
+      "recordingSHA256": "fcd0c125d008497fe049ad43eb10db56b624b5849ea0c0667087dba93ae7af4b",
+      "officialSHA256": "224269493b19c5112387cc018a21184c7830f7c5b9fb237788d22a6442e96e96",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1520,
+      "firstPlaces": 2,
+      "totalAllScore": 5758,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "988ac56c4a1985018a7aab5327b9dda56744766fa4824240a2bb042b4ce29ce0"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "1e17eeca998688bfb6efde8d8939802e30e6e3d9ea7690ab9686bfe9b5c10275",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "13-random-B",
+      "plan": {
+        "id": "13-random-B",
+        "pair": 12,
+        "layout": 3,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112412,
+        "order": [
+          "Prism",
+          "KeelHelm",
+          "Diamond Port",
+          "Keel"
+        ]
+      },
+      "recordingSHA256": "84f0d40304e57e15f1f4938450ce1c43330a371538f25ba89f3098aeab1a315d",
+      "officialSHA256": "50ce396b4a528470639350f3297f5fc2e4df98e6aeb69f7f76e930385e914894",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 1276,
+      "firstPlaces": 3,
+      "totalAllScore": 5623,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "3b6b73d235930626e5d6287b2ea8e9e86b447c6cd2fcdb4a56ec20bc77f76bc5"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "7009d449807979d76c8e7f550d12dce54447fcdde72a57549d9d9bc9b4b6ae10",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "14-fixed-B",
+      "plan": {
+        "id": "14-fixed-B",
+        "pair": 13,
+        "layout": 3,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112413,
+        "order": [
+          "Prism",
+          "KeelHelm",
+          "Diamond Port",
+          "Keel"
+        ]
+      },
+      "recordingSHA256": "0df5a8ebe79113809c659b56bfc2c6a7ef3eb978671d87db3887cd439f310c1c",
+      "officialSHA256": "33527342b0d6add9d01ab7ddd18848cc9f9b6dcd2ad0ce4b30d233d9093ce23f",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 2247,
+      "firstPlaces": 8,
+      "totalAllScore": 5498,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "034d239793ca43b692be44cfc0729889128081cc99fda9363bd13c50018572fa"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "c0e4506c2f6f63a7b8398b69fd377b9026cb830641fdf1d2a2930ff29bc03f77",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "14-fixed-A",
+      "plan": {
+        "id": "14-fixed-A",
+        "pair": 13,
+        "layout": 3,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "melee",
+        "rounds": 10,
+        "seed": 2026112413,
+        "order": [
+          "Prism",
+          "KeelHelm",
+          "Diamond Port",
+          "Keel"
+        ]
+      },
+      "recordingSHA256": "94b36385461ee64996a59fe9902643b8179d23ac2b5418f337725dfc76286e58",
+      "officialSHA256": "130c07c3a19deb5e5f4c796b7e9c11d8dd54757044a22ce3688a55d4a7ee26e8",
+      "roundsVerified": 10,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3,
+      "totalScore": 1512,
+      "firstPlaces": 2,
+      "totalAllScore": 5853,
+      "transport": {
+        "connections": 7,
+        "botHandshakes": 4,
+        "sha256": "f3717b09a4f55fcc35156a4849436aa792c90f6c3d5c8668f1327d6a3ab3a75c"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "7617046e822c5fbdaf0fc1831b3c6f50eb47af594cdb5e0b399de6b4234a2ea0",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "15-random-A",
+      "plan": {
+        "id": "15-random-A",
+        "pair": 14,
+        "layout": 3,
+        "mode": "random",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112414,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "416a66ac643c46fe02655e45436d497642526f6c6f3a3198d394144f254c97cb",
+      "officialSHA256": "9c1a583ec7e3cb2a52ff490cebd316f901c3928dd488c3aadc4e745ab01af5e3",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4,
+      "totalScore": 292,
+      "firstPlaces": 3,
+      "totalAllScore": 676,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "10c2d9dc9b815a0ac5727672d44bca1106944cc11b2724e69d5d6843687d5b1b"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "67577b3c381ca3ccac280d5f0ebb75e0c519bb194513022900d253291a40cc6d",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "15-random-B",
+      "plan": {
+        "id": "15-random-B",
+        "pair": 14,
+        "layout": 3,
+        "mode": "random",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112414,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "699290776d023e7ce7cf46f419be547e680c946699c17d0d52c3bca815a780e3",
+      "officialSHA256": "b81809f62a6651df62aacd7a78499e7d58cf96faa4908a98a6c37f2f2aa23410",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5,
+      "totalScore": 329,
+      "firstPlaces": 4,
+      "totalAllScore": 680,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "acf303c9d93686577a30f63e52a4c0639d7ebdd51e961040ad1684837cb4b8e6"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "871e04406acda8dfce6502a7d10713590bde914393679372245d2cbbf889b9d5",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "16-fixed-B",
+      "plan": {
+        "id": "16-fixed-B",
+        "pair": 15,
+        "layout": 3,
+        "mode": "fixed",
+        "arm": "B",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112415,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "d994e298ac602d0d50e0de9a1270f6d40f96cf587f9c178943be19813dad4fb7",
+      "officialSHA256": "469a6152881e0c6f75d9f6d1d1479d9c140e17a7e96a1433f1b2382e7521b2e5",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 2,
+      "totalScore": 351,
+      "firstPlaces": 4,
+      "totalAllScore": 624,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "3638e96c60f5891e3337d39098d9885913267030e1c18c9c011b38cdff1a5683"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "9683731f7b8882d7c62081336db40f9495db531661fc70a8be7ef0d32c108f59",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    },
+    {
+      "game": "16-fixed-A",
+      "plan": {
+        "id": "16-fixed-A",
+        "pair": 15,
+        "layout": 3,
+        "mode": "fixed",
+        "arm": "A",
+        "scenario": "Diamond Port",
+        "rounds": 5,
+        "seed": 2026112415,
+        "order": [
+          "Diamond Port",
+          "KeelHelm"
+        ]
+      },
+      "recordingSHA256": "387ee16290dec17726f1f42de592c6db8f8d239c2b1fa4d6db9a6903360c60b7",
+      "officialSHA256": "469a6152881e0c6f75d9f6d1d1479d9c140e17a7e96a1433f1b2382e7521b2e5",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 2,
+      "totalScore": 351,
+      "firstPlaces": 4,
+      "totalAllScore": 624,
+      "transport": {
+        "connections": 5,
+        "botHandshakes": 2,
+        "sha256": "2e700c31387b2a873567f29f05223dcb2024f90f9a5f00a6f17ee936fcce3eba"
+      },
+      "startAuditSummary": {
+        "omittedFromPublicCopy": true,
+        "canonicalSHA256": "9683731f7b8882d7c62081336db40f9495db531661fc70a8be7ef0d32c108f59",
+        "fullAuditLocation": "aa-full-artifacts.tar.gz: fresh-aa/outcome-review.json",
+        "keys": [
+          "ids",
+          "initialPoses",
+          "trajectories"
+        ]
+      }
+    }
+  ],
+  "incompleteGames": [],
+  "independentMeans": [
+    {
+      "mode": "random",
+      "scenario": "melee",
+      "A": 0.27983971164383686,
+      "B": 0.28499274659056467,
+      "deltaPP": -0.5153034946727819,
+      "deltaPPExact": "-7081068822727413562870595/13741550165934537750336414",
+      "withinAllowance": true
+    },
+    {
+      "mode": "random",
+      "scenario": "Diamond Port",
+      "A": 0.4763258167498145,
+      "B": 0.5311053141817412,
+      "deltaPP": -5.47794974319267,
+      "deltaPPExact": "-1436846243679299297105/262296353752576343304",
+      "withinAllowance": false
+    },
+    {
+      "mode": "fixed",
+      "scenario": "melee",
+      "A": 0.3460210911707128,
+      "B": 0.3105418081113749,
+      "deltaPP": 3.54792830593379,
+      "deltaPPExact": "4092177493200895739528806675/1153399150246882736242100276",
+      "withinAllowance": false
+    },
+    {
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "A": 0.5671295189745943,
+      "B": 0.5671295189745943,
+      "deltaPP": 0.0,
+      "deltaPPExact": "0",
+      "withinAllowance": true
+    }
+  ],
+  "independentPairs": [
+    {
+      "pair": 0,
+      "mode": "random",
+      "scenario": "melee",
+      "shareDeltaPP": 1.920932162507717,
+      "absoluteDeltaPP": 1.920932162507717,
+      "shareDeltaPPExact": "569420/296429",
+      "scoreDelta": 99,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1
+      }
+    },
+    {
+      "pair": 1,
+      "mode": "fixed",
+      "scenario": "melee",
+      "shareDeltaPP": 5.237377004826109,
+      "absoluteDeltaPP": 5.237377004826109,
+      "shareDeltaPPExact": "42509050/8116477",
+      "scoreDelta": 271,
+      "winDelta": 2,
+      "firstStateDivergence": {
+        "1": 10,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 2,
+        "10": 3
+      }
+    },
+    {
+      "pair": 2,
+      "mode": "random",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": -2.0234475978955415,
+      "absoluteDeltaPP": 2.0234475978955415,
+      "shareDeltaPPExact": "-111150/54931",
+      "scoreDelta": -27,
+      "winDelta": -1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      }
+    },
+    {
+      "pair": 3,
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": 0.0,
+      "absoluteDeltaPP": 0.0,
+      "shareDeltaPPExact": "0",
+      "scoreDelta": 0,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    {
+      "pair": 4,
+      "mode": "random",
+      "scenario": "melee",
+      "shareDeltaPP": -5.418806976384856,
+      "absoluteDeltaPP": 5.418806976384856,
+      "shareDeltaPPExact": "-1718450/317127",
+      "scoreDelta": -323,
+      "winDelta": -1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1
+      }
+    },
+    {
+      "pair": 5,
+      "mode": "fixed",
+      "scenario": "melee",
+      "shareDeltaPP": 10.489063981398122,
+      "absoluteDeltaPP": 10.489063981398122,
+      "shareDeltaPPExact": "43003075/4099801",
+      "scoreDelta": 595,
+      "winDelta": 2,
+      "firstStateDivergence": {
+        "1": 14,
+        "2": 2,
+        "3": 2,
+        "4": 3,
+        "5": 2,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 2,
+        "10": 2
+      }
+    },
+    {
+      "pair": 6,
+      "mode": "random",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": -0.40825245676369054,
+      "absoluteDeltaPP": 0.40825245676369054,
+      "shareDeltaPPExact": "-194300/475931",
+      "scoreDelta": 7,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      }
+    },
+    {
+      "pair": 7,
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": 0.0,
+      "absoluteDeltaPP": 0.0,
+      "shareDeltaPPExact": "0",
+      "scoreDelta": 0,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    {
+      "pair": 8,
+      "mode": "random",
+      "scenario": "melee",
+      "shareDeltaPP": -2.268881151507479,
+      "absoluteDeltaPP": 2.268881151507479,
+      "shareDeltaPPExact": "-71705400/31603859",
+      "scoreDelta": -162,
+      "winDelta": 1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1
+      }
+    },
+    {
+      "pair": 9,
+      "mode": "fixed",
+      "scenario": "melee",
+      "shareDeltaPP": 13.501773092674888,
+      "absoluteDeltaPP": 13.501773092674888,
+      "shareDeltaPPExact": "414478200/30698057",
+      "scoreDelta": 702,
+      "winDelta": 3,
+      "firstStateDivergence": {
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 2,
+        "10": 2
+      }
+    },
+    {
+      "pair": 10,
+      "mode": "random",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": -14.293012249124326,
+      "absoluteDeltaPP": 14.293012249124326,
+      "shareDeltaPPExact": "-6239200/436521",
+      "scoreDelta": -72,
+      "winDelta": -1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      }
+    },
+    {
+      "pair": 11,
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": 0.0,
+      "absoluteDeltaPP": 0.0,
+      "shareDeltaPPExact": "0",
+      "scoreDelta": 0,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    {
+      "pair": 12,
+      "mode": "random",
+      "scenario": "melee",
+      "shareDeltaPP": 3.7055419866934898,
+      "absoluteDeltaPP": 3.7055419866934898,
+      "shareDeltaPPExact": "59987600/16188617",
+      "scoreDelta": 244,
+      "winDelta": -1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1
+      }
+    },
+    {
+      "pair": 13,
+      "mode": "fixed",
+      "scenario": "melee",
+      "shareDeltaPP": -15.036500855163958,
+      "absoluteDeltaPP": 15.036500855163958,
+      "shareDeltaPPExact": "-80645250/5363299",
+      "scoreDelta": -735,
+      "winDelta": -6,
+      "firstStateDivergence": {
+        "1": 3,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2,
+        "6": 2,
+        "7": 2,
+        "8": 2,
+        "9": 2,
+        "10": 2
+      }
+    },
+    {
+      "pair": 14,
+      "mode": "random",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": -5.187086668987122,
+      "absoluteDeltaPP": 5.187086668987122,
+      "shareDeltaPPExact": "-29805/5746",
+      "scoreDelta": -37,
+      "winDelta": -1,
+      "firstStateDivergence": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      }
+    },
+    {
+      "pair": 15,
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "shareDeltaPP": 0.0,
+      "absoluteDeltaPP": 0.0,
+      "shareDeltaPPExact": "0",
+      "scoreDelta": 0,
+      "winDelta": 0,
+      "firstStateDivergence": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    }
+  ],
+  "independentGates": {
+    "melee": false,
+    "Diamond Port": true
+  },
+  "identicalArmJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "auditSourceSHA256": "7fd21f8339ffeef7c8af670084eb4961bfca7628064af175b895cada4a3e3b46",
+  "limitations": "A/A measurement calibration only; fixed mode jointly controls poses/IDs, not all hidden randomness. No strength, significance, timing-cause or trajectory-determinism claim. Continuation requires separate prospective movement protocol and source/freeze approval."
+}

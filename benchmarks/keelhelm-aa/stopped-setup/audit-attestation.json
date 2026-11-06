@@ -1,0 +1,30 @@
+{
+  "reviewedAt": "2026-11-06T11:59:42.334309+00:00",
+  "verdict": "INVALID setup attempt; preserve and do not resume",
+  "engineGamesStartedThisStage": 0,
+  "physicalCompletedRoundsThisStage": 0,
+  "partialPhysicalRoundsThisStage": 0,
+  "budgetEvidence": "No bot-role handshakes, no recordings, no official battle output or own telemetry. Native log contains observer/controller joins and abort, without game start. Runner reached boot phase; this is not a completed or partially played battle.",
+  "sourceInputsVerified": 7017,
+  "changedFrozenFiles": [],
+  "stagedFilesMatchPreflight": 120,
+  "cleanupVerified": true,
+  "currentOwnedGroup52142Processes": 0,
+  "primaryFailure": "RuntimeError(\"Relay failed: ['ConnectionClosedError(None, None, None)']\")",
+  "resourceLimitation": "Only1sample: insufficient resource-wave evidence. Retain both the primary relay error and outer insufficient-samples error; no valid gameplay measurement.",
+  "probeEvidence": {
+    "path": "/",
+    "upstreamFrames": 0,
+    "downstreamFrames": 1,
+    "downstreamForwardedUnchanged": true,
+    "error": "ConnectionClosedError(None, None, None)"
+  },
+  "pinnedRunnerSHA256": "02f6d1d8e9346a4aeae1b91e7abb278c98ac1f1d30c605f867758566f5f327cf",
+  "bytecodeArtifacts": {
+    "ServerManager.javap.txt": "6e2edaebb11adab351cbc314f8a7ce7a2e43ab9154a63da86ccc0662b677f0d5",
+    "WebSocketClient.javap.txt": "16700df8ef5ed8eb8e3c7f0ac39024f0107557f753276afecdb50201b6f9c79d"
+  },
+  "cause": "Pinned ServerManager.validateExternalServer calls tryHandshake; tryHandshake opens a WebSocketClient, awaits ServerHandshake readiness, then closes without assigning a role. Pinned WebSocketClient.close calls java.net.http.WebSocket.abort. This is consistent with the empty root probe and abrupt-close classification failure.",
+  "approval": "Approved only a zero-engine mock fixture and narrow offline transport correction. A fresh prospective continuation protocol, exact freeze/source/roster review and explicit approval are required before new games. No movement calibration result or continuation permission follows.",
+  "auditSourceSHA256": "ce05cd0293ffb291afc461be2dc5b1228f4eaa09858c8be7a301b9ecf1f255c9"
+}
