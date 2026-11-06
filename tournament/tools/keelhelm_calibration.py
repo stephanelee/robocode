@@ -45,6 +45,7 @@ def inspect_transport(path,game,ids):
     bots=[r for r in data['connections']if 'name'in r];assert sorted((r['name'],json.loads(r['handshakeAfter'])['version'])for r in bots)==sorted(ids)
     for r in data['connections']:
         assert not r.get('error')
+        if r.get('roleType'):assert r.get('expectedClose')in('game-ended','owned-shutdown')
         if r['path']=='/'and'roleType'not in r:
             from paired_transport import is_empty_front_probe
             assert r.get('discoveryProbe')and is_empty_front_probe(r)

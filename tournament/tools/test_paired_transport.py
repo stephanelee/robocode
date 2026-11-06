@@ -22,7 +22,8 @@ class SocketContracts(unittest.IsolatedAsyncioTestCase):
             await ws.send(json.dumps(dict(type='ServerHandshake',sessionId=session)))
             try:
                 received.append(json.loads(await ws.recv()))
-                async for message in ws:await ws.send(message)
+                async for message in ws:
+                    await ws.send(message);await ws.send('{"type":"GameEndedEventForBot"}')
             except Exception:pass
         native=await serve(backend,'127.0.0.1',0)
         relay=Relay(f'ws://127.0.0.1:{native.sockets[0].getsockname()[1]}',{'Alpha':'1','Beta':'1'},{'Alpha':[200,300,45],'Beta':[600,300,225]}if fixed else None)
@@ -36,7 +37,7 @@ class SocketContracts(unittest.IsolatedAsyncioTestCase):
                     raw=json.dumps(dict(type='BotHandshake',name=name,version='1',sessionId=session))
                     await front.send(raw)
                     intent=' { "type" : "BotIntent", "turnNumber":1, "targetSpeed":-3.25 } '
-                    await front.send(intent);self.assertEqual(intent,await front.recv())
+                    await front.send(intent);self.assertEqual(intent,await front.recv());self.assertEqual('GameEndedEventForBot',json.loads(await front.recv())['type'])
             await asyncio.sleep(.05)
             self.assertFalse(relay.errors);self.assertEqual({'Alpha','Beta'},relay.seen);self.assertFalse(relay.pool)
             self.assertEqual(2,len(received))
@@ -97,4 +98,35 @@ class SocketContracts(unittest.IsolatedAsyncioTestCase):
         for role in ['BotHandshake','ControllerHandshake']:
             with self.subTest(role=role):await self.probe_case(role)
     async def test_backend_loss_is_never_a_front_probe(self):await self.probe_case(backend_abort=True)
+    async def normal_close_case(self,role,server_closes=False,terminal=False):
+        async def backend(ws):
+            await ws.send('{"type":"ServerHandshake","sessionId":"ok"}')
+            try:
+                await ws.recv()
+                if terminal:await ws.send(json.dumps(dict(type='GameEndedEventForBot'if role=='BotHandshake'else'GameEndedEventForObserver')))
+                if server_closes:await ws.close();return
+                await ws.wait_closed()
+            except Exception:pass
+        native=await serve(backend,'127.0.0.1',0);relay=Relay(f'ws://127.0.0.1:{native.sockets[0].getsockname()[1]}',{'Alpha':'1'},None);proxy=await serve(relay.handler,'127.0.0.1',0)
+        path='/identity/Alpha'if role=='BotHandshake'else'/'
+        try:
+            async with connect(f'ws://127.0.0.1:{proxy.sockets[0].getsockname()[1]}'+path)as front:
+                await front.recv();msg=dict(type=role,sessionId='ok')
+                if role=='BotHandshake':msg.update(name='Alpha',version='1')
+                await front.send(json.dumps(msg));await asyncio.sleep(.03)
+                if terminal:await front.recv()
+                if not server_closes:await front.close()
+                await asyncio.sleep(.06)
+            if terminal:
+                self.assertFalse(relay.errors);self.assertEqual('game-ended',relay.rows[0]['expectedClose'])
+            else:self.assertTrue(relay.errors)
+        finally:
+            relay.closing=True;proxy.close();await asyncio.wait_for(proxy.wait_closed(),3);await relay.close();native.close();await asyncio.wait_for(native.wait_closed(),3)
+        self.assertFalse(native.connections)
+    async def test_premature_normal_bot_controller_and_backend_close_are_fatal(self):
+        for role,backend in [('BotHandshake',False),('ControllerHandshake',False),('BotHandshake',True)]:
+            with self.subTest(role=role,backend=backend):await self.normal_close_case(role,backend)
+    async def test_forwarded_bot_or_observer_terminal_makes_close_expected(self):
+        for role in ['BotHandshake','ObserverHandshake']:
+            with self.subTest(role=role):await self.normal_close_case(role,terminal=True)
 if __name__=='__main__':unittest.main()

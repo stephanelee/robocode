@@ -29,7 +29,7 @@ def is_empty_front_probe(row):
 
 class Relay:
     def __init__(self,url,identities,positions):
-        self.url=url;self.identities=identities;self.positions=positions;self.pool={};self.seen=set();self.errors=[];self.rows=[];self.closing=False
+        self.url=url;self.identities=identities;self.positions=positions;self.pool={};self.seen=set();self.errors=[];self.rows=[];self.closing=False;self.game_ended=False
     async def open_backend(self):
         ws=await connect(self.url,max_size=None,ping_interval=None,open_timeout=10)
         try:
@@ -82,18 +82,30 @@ class Relay:
             async def down():
                 async for raw in backend:
                     digest('downInput',raw);await front.send(raw);digest('downOutput',raw);row['messagesDown']+=1
+                    if isinstance(raw,str)and '"GameEndedEventFor'in raw:
+                        kind=json.loads(raw).get('type')
+                        if name is not None and kind=='GameEndedEventForBot':row['terminalType']=kind
+                        if name is None and row.get('roleType')=='ObserverHandshake'and kind=='GameEndedEventForObserver':
+                            row['terminalType']=kind;self.game_ended=True
             tasks=[asyncio.create_task(up(),name='up'),asyncio.create_task(down(),name='down')]
             done,pending=await asyncio.wait(tasks,return_when=asyncio.FIRST_COMPLETED)
             for task in done:
                 try:task.result();row.setdefault('closeOrigin',task.get_name())
                 except BaseException:row['closeOrigin']=task.get_name();raise
             for task in pending:task.cancel()
+            row.update({k:v.hexdigest()for k,v in hashes.items()})
+            if is_empty_front_probe(row):row['discoveryProbe']=True
+            elif not self.closing and not(self.game_ended or row.get('terminalType')):raise RuntimeError('Premature normal connection closure')
+            else:row['expectedClose']='game-ended'if self.game_ended or row.get('terminalType')else'owned-shutdown'
         except ConnectionClosedError as error:
             row.update({k:v.hexdigest()for k,v in hashes.items()})
             if is_empty_front_probe(row) and error.rcvd is None and error.sent is None:
                 row['discoveryProbe']=True;row['probeClose']=repr(error)
+            elif self.game_ended or row.get('terminalType'):row['expectedClose']='game-ended';row['terminalClose']=repr(error)
             elif not self.closing:self.errors.append(repr(error));row['error']=repr(error)
-        except ConnectionClosedOK:pass
+        except ConnectionClosedOK as error:
+            if self.game_ended or row.get('terminalType'):row['expectedClose']='game-ended'
+            elif not self.closing:self.errors.append(repr(error));row['error']=repr(error)
         except asyncio.CancelledError:raise
         except BaseException as e:
             if not self.closing:self.errors.append(repr(e));row['error']=repr(e)
