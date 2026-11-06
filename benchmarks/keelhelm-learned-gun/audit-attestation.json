@@ -1,0 +1,82 @@
+{
+  "reviewedAt": "2026-11-06T01:05:09.143390+00:00",
+  "verdict": "VALID acquisition; REJECT candidate under prospectively fixed gates",
+  "outcomeReview": "outcome-review-v2.json",
+  "outcomeReviewSHA256": "b9723e720d5cb8a210c0be16b41d89bc8a05a2481750e56b2e933afbc58f4ca7",
+  "auditSource": "/private/tmp/review-keelhelm-displacement-v2.py",
+  "auditSourceSHA256": "f3df46c15e8d9c09549580644c86b563a168dbb42b094324154d9b313ce9cd43",
+  "supersededAudit": {
+    "file": "outcome-review.json",
+    "sha256": "0e304fd6cf13f5a99b5c20485ed07c4e4527da316717d0eaabf66c7f5cf5bbb9",
+    "reason": "Reviewer incorrectly assumed unique physical terminal kind per bullet; original retained, corrected audit preserves multiple legal same-tick physical events."
+  },
+  "freezeSHA256": "be36934fb74a0a18b424f5d426e7342b7650ab7efcb1847faadddc8e51f18be0",
+  "games": 40,
+  "physicalCompletedRoundsThisStage": 520,
+  "partialPhysicalRoundsThisStage": 0,
+  "cumulativePhysicalCompletedRounds": 2510,
+  "cumulativeHistoricalPartialRounds": 3,
+  "zeroOwnSkippedTurns": true,
+  "maximumLoggedLoopMs": 8,
+  "minimumObservedAvailablePercent": 56,
+  "resourceWaves": 40,
+  "cleanupVerifiedAll": true,
+  "frozenFilesRehashed": 6995,
+  "changedFrozenFiles": [],
+  "stagedEntrantCopiesVerified": 1440,
+  "stagedSharedSupportCopiesVerified": 2112,
+  "stagedSampleLibraryCopiesVerified": 8,
+  "independentSummary": {
+    "melee": {
+      "controlMean": 0.29866892715399834,
+      "candidateMean": 0.315216972253229,
+      "deltaPP": 1.6548045099230628
+    },
+    "Diamond Port": {
+      "controlMean": 0.5203571177954548,
+      "candidateMean": 0.45184637329042626,
+      "deltaPP": -6.851074450502849
+    },
+    "Retcon": {
+      "controlMean": 0.9266896325921397,
+      "candidateMean": 0.9459397104084712,
+      "deltaPP": 1.9250077816331626
+    },
+    "Walls": {
+      "controlMean": 0.942293662891986,
+      "candidateMean": 0.9339494408965848,
+      "deltaPP": -0.8344221995401263
+    },
+    "SpinBot": {
+      "controlMean": 1.0,
+      "candidateMean": 0.9979976786769901,
+      "deltaPP": -0.2002321323009934
+    },
+    "survival": {
+      "controlMean": 0.33541666666666664,
+      "candidateMean": 0.3524422268907563,
+      "deltaPP": 1.7025560224089635
+    }
+  },
+  "gates": {
+    "meleeGain": false,
+    "meleeShare": true,
+    "Diamond Port": false,
+    "Retcon": true,
+    "Walls": true,
+    "SpinBot": true,
+    "survival": true,
+    "confirmedChanged": true,
+    "multipleNamedTargets": true
+  },
+  "confirmedChanged": 6349,
+  "namedTargets": {
+    "Keel": 3156,
+    "Diamond Port": 1142,
+    "Prism": 2051
+  },
+  "acceptedJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "candidateJarSHA256": "80f19d7951dd7cb169d56720b0d6f12e219264c3aad0387d75fbefcf56dba3c1",
+  "legacyFieldNote": "Unused summary.policyChangeExposure=0 does not represent the learned-gun exposure; canonical confirmedChanged independently recomputed as6349.",
+  "scope": "No games launched by reviewer. No default promotion or subsequent power-phase approval. Finite descriptive comparison; no significance or general-strength claim. Physical callback cutoff censoring remains distinct from misses."
+}
