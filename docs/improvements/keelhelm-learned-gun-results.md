@@ -10,6 +10,8 @@
 | Walls | 94.23% | 93.39% | -0.83 pp |
 | SpinBot | 100.00% | 99.80% | -0.20 pp |
 
+The inherited from-start duel controller is unchanged. Unpaired duel deltas are transfer-guard measurements, not causal proof that the melee gun changed duel strength.
+
 Melee mean survival-point share: 33.54% → 35.24% (+1.70 pp). Each game is normalized and weighted equally. Engine placements are unpaired; matching seeds govern bot choices only.
 
 | Registered gate | Pass |
