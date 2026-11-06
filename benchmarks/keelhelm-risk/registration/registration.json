@@ -1,0 +1,3193 @@
+{
+  "candidateProject": "/private/tmp/robocode-keelhelm-aa-movement/benchmarks/keelhelm-risk/candidate-project",
+  "source": "/private/tmp/robocode-tournament-r1",
+  "evidence": "/private/tmp/keelhelm-risk-v3-evidence",
+  "bases": {
+    "Diamond Port": "/private/tmp/robocode-tournament-r1/guest-source/bots/ports/diamond-port",
+    "Keel": "/private/tmp/robocode-tournament-r1/experiments/Keel/bot",
+    "Prism": "/private/tmp/robocode-tournament-r1/experiments/Prism/bot",
+    "Retcon": "/private/tmp/robocode-tournament-r1/.benchmark-cache/retcon/28981c7a469ac064194b41001cd7183ec5ecf189/Retcon",
+    "Walls": "/private/tmp/robocode-tournament-r1/samples/Walls",
+    "SpinBot": "/private/tmp/robocode-tournament-r1/samples/SpinBot"
+  },
+  "identities": {
+    "Diamond Port": {
+      "name": "Diamond Port",
+      "version": "1.8.28"
+    },
+    "Keel": {
+      "name": "Keel",
+      "version": "0.1.0"
+    },
+    "Prism": {
+      "name": "Prism",
+      "version": "0.2.0"
+    },
+    "Retcon": {
+      "name": "Retcon",
+      "version": "0.2.0"
+    },
+    "Walls": {
+      "name": "Walls",
+      "version": "1.0"
+    },
+    "SpinBot": {
+      "name": "Spin Bot",
+      "version": "1.0"
+    }
+  },
+  "java": "/private/tmp/robocode-tournament-runtime/jdk-25.0.5+8/Contents/Home/bin/java",
+  "python": "/private/tmp/robocode-tournament-python/bin/python",
+  "schedule": [
+    {
+      "id": "01-1-candidate",
+      "pair": 0,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          257,
+          106,
+          214
+        ],
+        "Diamond Port": [
+          184,
+          718,
+          185
+        ],
+        "Keel": [
+          569,
+          817,
+          47
+        ],
+        "Prism": [
+          804,
+          557,
+          97
+        ]
+      }
+    },
+    {
+      "id": "01-2-control",
+      "pair": 0,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          257,
+          106,
+          214
+        ],
+        "Diamond Port": [
+          184,
+          718,
+          185
+        ],
+        "Keel": [
+          569,
+          817,
+          47
+        ],
+        "Prism": [
+          804,
+          557,
+          97
+        ]
+      }
+    },
+    {
+      "id": "02-1-candidate",
+      "pair": 1,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          672,
+          850,
+          69
+        ],
+        "Diamond Port": [
+          772,
+          445,
+          216
+        ],
+        "Keel": [
+          190,
+          184,
+          175
+        ],
+        "Prism": [
+          244,
+          446,
+          127
+        ]
+      }
+    },
+    {
+      "id": "02-2-control",
+      "pair": 1,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          672,
+          850,
+          69
+        ],
+        "Diamond Port": [
+          772,
+          445,
+          216
+        ],
+        "Keel": [
+          190,
+          184,
+          175
+        ],
+        "Prism": [
+          244,
+          446,
+          127
+        ]
+      }
+    },
+    {
+      "id": "03-1-control",
+      "pair": 2,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          838,
+          121,
+          49
+        ],
+        "Diamond Port": [
+          531,
+          100,
+          65
+        ],
+        "Keel": [
+          343,
+          646,
+          113
+        ],
+        "Prism": [
+          777,
+          706,
+          16
+        ]
+      }
+    },
+    {
+      "id": "03-2-candidate",
+      "pair": 2,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          838,
+          121,
+          49
+        ],
+        "Diamond Port": [
+          531,
+          100,
+          65
+        ],
+        "Keel": [
+          343,
+          646,
+          113
+        ],
+        "Prism": [
+          777,
+          706,
+          16
+        ]
+      }
+    },
+    {
+      "id": "04-1-control",
+      "pair": 3,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          381,
+          709,
+          191
+        ],
+        "Diamond Port": [
+          421,
+          421,
+          92
+        ],
+        "Keel": [
+          663,
+          895,
+          234
+        ],
+        "Prism": [
+          664,
+          294,
+          226
+        ]
+      }
+    },
+    {
+      "id": "04-2-candidate",
+      "pair": 3,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          381,
+          709,
+          191
+        ],
+        "Diamond Port": [
+          421,
+          421,
+          92
+        ],
+        "Keel": [
+          663,
+          895,
+          234
+        ],
+        "Prism": [
+          664,
+          294,
+          226
+        ]
+      }
+    },
+    {
+      "id": "05-1-candidate",
+      "pair": 4,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          544,
+          357,
+          167
+        ],
+        "Diamond Port": [
+          576,
+          859,
+          174
+        ],
+        "Keel": [
+          867,
+          128,
+          85
+        ],
+        "Prism": [
+          259,
+          470,
+          146
+        ]
+      }
+    },
+    {
+      "id": "05-2-control",
+      "pair": 4,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          544,
+          357,
+          167
+        ],
+        "Diamond Port": [
+          576,
+          859,
+          174
+        ],
+        "Keel": [
+          867,
+          128,
+          85
+        ],
+        "Prism": [
+          259,
+          470,
+          146
+        ]
+      }
+    },
+    {
+      "id": "06-1-control",
+      "pair": 5,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112705,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          731,
+          769,
+          245
+        ],
+        "Diamond Port": [
+          219,
+          864,
+          166
+        ],
+        "Keel": [
+          199,
+          436,
+          196
+        ],
+        "Prism": [
+          768,
+          400,
+          75
+        ]
+      }
+    },
+    {
+      "id": "06-2-candidate",
+      "pair": 5,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112705,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          731,
+          769,
+          245
+        ],
+        "Diamond Port": [
+          219,
+          864,
+          166
+        ],
+        "Keel": [
+          199,
+          436,
+          196
+        ],
+        "Prism": [
+          768,
+          400,
+          75
+        ]
+      }
+    },
+    {
+      "id": "07-1-candidate",
+      "pair": 6,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112706,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          894,
+          186,
+          131
+        ],
+        "Diamond Port": [
+          417,
+          484,
+          122
+        ],
+        "Keel": [
+          754,
+          879,
+          24
+        ],
+        "Prism": [
+          154,
+          371,
+          155
+        ]
+      }
+    },
+    {
+      "id": "07-2-control",
+      "pair": 6,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112706,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          894,
+          186,
+          131
+        ],
+        "Diamond Port": [
+          417,
+          484,
+          122
+        ],
+        "Keel": [
+          754,
+          879,
+          24
+        ],
+        "Prism": [
+          154,
+          371,
+          155
+        ]
+      }
+    },
+    {
+      "id": "08-1-candidate",
+      "pair": 7,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112707,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          786,
+          170,
+          308
+        ],
+        "Diamond Port": [
+          249,
+          370,
+          357
+        ],
+        "Keel": [
+          482,
+          751,
+          257
+        ],
+        "Prism": [
+          256,
+          635,
+          325
+        ]
+      }
+    },
+    {
+      "id": "08-2-control",
+      "pair": 7,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112707,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          786,
+          170,
+          308
+        ],
+        "Diamond Port": [
+          249,
+          370,
+          357
+        ],
+        "Keel": [
+          482,
+          751,
+          257
+        ],
+        "Prism": [
+          256,
+          635,
+          325
+        ]
+      }
+    },
+    {
+      "id": "09-1-candidate",
+      "pair": 8,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112708,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          249,
+          846,
+          189
+        ],
+        "Diamond Port": [
+          738,
+          211,
+          61
+        ],
+        "Keel": [
+          403,
+          568,
+          155
+        ],
+        "Prism": [
+          208,
+          187,
+          88
+        ]
+      }
+    },
+    {
+      "id": "09-2-control",
+      "pair": 8,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112708,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          249,
+          846,
+          189
+        ],
+        "Diamond Port": [
+          738,
+          211,
+          61
+        ],
+        "Keel": [
+          403,
+          568,
+          155
+        ],
+        "Prism": [
+          208,
+          187,
+          88
+        ]
+      }
+    },
+    {
+      "id": "10-1-control",
+      "pair": 9,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112709,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          320,
+          782,
+          116
+        ],
+        "Diamond Port": [
+          601,
+          131,
+          74
+        ],
+        "Keel": [
+          753,
+          667,
+          250
+        ],
+        "Prism": [
+          203,
+          211,
+          137
+        ]
+      }
+    },
+    {
+      "id": "10-2-candidate",
+      "pair": 9,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112709,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          320,
+          782,
+          116
+        ],
+        "Diamond Port": [
+          601,
+          131,
+          74
+        ],
+        "Keel": [
+          753,
+          667,
+          250
+        ],
+        "Prism": [
+          203,
+          211,
+          137
+        ]
+      }
+    },
+    {
+      "id": "11-1-control",
+      "pair": 10,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112710,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          155,
+          786,
+          153
+        ],
+        "Diamond Port": [
+          289,
+          109,
+          230
+        ],
+        "Keel": [
+          893,
+          686,
+          280
+        ],
+        "Prism": [
+          554,
+          219,
+          272
+        ]
+      }
+    },
+    {
+      "id": "11-2-candidate",
+      "pair": 10,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112710,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          155,
+          786,
+          153
+        ],
+        "Diamond Port": [
+          289,
+          109,
+          230
+        ],
+        "Keel": [
+          893,
+          686,
+          280
+        ],
+        "Prism": [
+          554,
+          219,
+          272
+        ]
+      }
+    },
+    {
+      "id": "12-1-control",
+      "pair": 11,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112711,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          268,
+          607,
+          20
+        ],
+        "Diamond Port": [
+          605,
+          359,
+          203
+        ],
+        "Keel": [
+          170,
+          207,
+          80
+        ],
+        "Prism": [
+          884,
+          116,
+          125
+        ]
+      }
+    },
+    {
+      "id": "12-2-candidate",
+      "pair": 11,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112711,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          268,
+          607,
+          20
+        ],
+        "Diamond Port": [
+          605,
+          359,
+          203
+        ],
+        "Keel": [
+          170,
+          207,
+          80
+        ],
+        "Prism": [
+          884,
+          116,
+          125
+        ]
+      }
+    },
+    {
+      "id": "13-1-control",
+      "pair": 12,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112712,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          115,
+          823,
+          308
+        ],
+        "Diamond Port": [
+          825,
+          466,
+          352
+        ],
+        "Keel": [
+          293,
+          152,
+          34
+        ],
+        "Prism": [
+          469,
+          534,
+          283
+        ]
+      }
+    },
+    {
+      "id": "13-2-candidate",
+      "pair": 12,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112712,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          115,
+          823,
+          308
+        ],
+        "Diamond Port": [
+          825,
+          466,
+          352
+        ],
+        "Keel": [
+          293,
+          152,
+          34
+        ],
+        "Prism": [
+          469,
+          534,
+          283
+        ]
+      }
+    },
+    {
+      "id": "14-1-control",
+      "pair": 13,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112713,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          488,
+          880,
+          50
+        ],
+        "Diamond Port": [
+          216,
+          361,
+          85
+        ],
+        "Keel": [
+          723,
+          276,
+          264
+        ],
+        "Prism": [
+          167,
+          809,
+          112
+        ]
+      }
+    },
+    {
+      "id": "14-2-candidate",
+      "pair": 13,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112713,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          488,
+          880,
+          50
+        ],
+        "Diamond Port": [
+          216,
+          361,
+          85
+        ],
+        "Keel": [
+          723,
+          276,
+          264
+        ],
+        "Prism": [
+          167,
+          809,
+          112
+        ]
+      }
+    },
+    {
+      "id": "15-1-candidate",
+      "pair": 14,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112714,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          588,
+          220,
+          290
+        ],
+        "Diamond Port": [
+          491,
+          457,
+          299
+        ],
+        "Keel": [
+          771,
+          437,
+          280
+        ],
+        "Prism": [
+          409,
+          716,
+          222
+        ]
+      }
+    },
+    {
+      "id": "15-2-control",
+      "pair": 14,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112714,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          588,
+          220,
+          290
+        ],
+        "Diamond Port": [
+          491,
+          457,
+          299
+        ],
+        "Keel": [
+          771,
+          437,
+          280
+        ],
+        "Prism": [
+          409,
+          716,
+          222
+        ]
+      }
+    },
+    {
+      "id": "16-1-control",
+      "pair": 15,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112715,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          268,
+          629,
+          242
+        ],
+        "Diamond Port": [
+          851,
+          644,
+          342
+        ],
+        "Keel": [
+          659,
+          900,
+          101
+        ],
+        "Prism": [
+          586,
+          123,
+          64
+        ]
+      }
+    },
+    {
+      "id": "16-2-candidate",
+      "pair": 15,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112715,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          268,
+          629,
+          242
+        ],
+        "Diamond Port": [
+          851,
+          644,
+          342
+        ],
+        "Keel": [
+          659,
+          900,
+          101
+        ],
+        "Prism": [
+          586,
+          123,
+          64
+        ]
+      }
+    },
+    {
+      "id": "17-1-candidate",
+      "pair": 16,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112716,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          233,
+          337,
+          28
+        ],
+        "Diamond Port": [
+          830,
+          431,
+          212
+        ],
+        "Keel": [
+          425,
+          735,
+          173
+        ],
+        "Prism": [
+          672,
+          168,
+          196
+        ]
+      }
+    },
+    {
+      "id": "17-2-control",
+      "pair": 16,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112716,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          233,
+          337,
+          28
+        ],
+        "Diamond Port": [
+          830,
+          431,
+          212
+        ],
+        "Keel": [
+          425,
+          735,
+          173
+        ],
+        "Prism": [
+          672,
+          168,
+          196
+        ]
+      }
+    },
+    {
+      "id": "18-1-candidate",
+      "pair": 17,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112717,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          446,
+          269,
+          108
+        ],
+        "Diamond Port": [
+          110,
+          525,
+          10
+        ],
+        "Keel": [
+          683,
+          473,
+          329
+        ],
+        "Prism": [
+          439,
+          750,
+          107
+        ]
+      }
+    },
+    {
+      "id": "18-2-control",
+      "pair": 17,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112717,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          446,
+          269,
+          108
+        ],
+        "Diamond Port": [
+          110,
+          525,
+          10
+        ],
+        "Keel": [
+          683,
+          473,
+          329
+        ],
+        "Prism": [
+          439,
+          750,
+          107
+        ]
+      }
+    },
+    {
+      "id": "19-1-candidate",
+      "pair": 18,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112718,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          425,
+          389,
+          39
+        ],
+        "Diamond Port": [
+          574,
+          671,
+          99
+        ],
+        "Keel": [
+          155,
+          105,
+          19
+        ],
+        "Prism": [
+          221,
+          586,
+          328
+        ]
+      }
+    },
+    {
+      "id": "19-2-control",
+      "pair": 18,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112718,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          425,
+          389,
+          39
+        ],
+        "Diamond Port": [
+          574,
+          671,
+          99
+        ],
+        "Keel": [
+          155,
+          105,
+          19
+        ],
+        "Prism": [
+          221,
+          586,
+          328
+        ]
+      }
+    },
+    {
+      "id": "20-1-control",
+      "pair": 19,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112719,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          379,
+          867,
+          81
+        ],
+        "Diamond Port": [
+          656,
+          116,
+          213
+        ],
+        "Keel": [
+          442,
+          369,
+          270
+        ],
+        "Prism": [
+          743,
+          497,
+          47
+        ]
+      }
+    },
+    {
+      "id": "20-2-candidate",
+      "pair": 19,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112719,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          379,
+          867,
+          81
+        ],
+        "Diamond Port": [
+          656,
+          116,
+          213
+        ],
+        "Keel": [
+          442,
+          369,
+          270
+        ],
+        "Prism": [
+          743,
+          497,
+          47
+        ]
+      }
+    },
+    {
+      "id": "21-1-control",
+      "pair": 20,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112720,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          821,
+          125
+        ],
+        "Diamond Port": [
+          325,
+          389,
+          160
+        ],
+        "Keel": [
+          751,
+          697,
+          184
+        ],
+        "Prism": [
+          174,
+          120,
+          245
+        ]
+      }
+    },
+    {
+      "id": "21-2-candidate",
+      "pair": 20,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112720,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          821,
+          125
+        ],
+        "Diamond Port": [
+          325,
+          389,
+          160
+        ],
+        "Keel": [
+          751,
+          697,
+          184
+        ],
+        "Prism": [
+          174,
+          120,
+          245
+        ]
+      }
+    },
+    {
+      "id": "22-1-control",
+      "pair": 21,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112721,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          583,
+          547,
+          71
+        ],
+        "Diamond Port": [
+          781,
+          823,
+          53
+        ],
+        "Keel": [
+          340,
+          839,
+          288
+        ],
+        "Prism": [
+          423,
+          297,
+          326
+        ]
+      }
+    },
+    {
+      "id": "22-2-candidate",
+      "pair": 21,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112721,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          583,
+          547,
+          71
+        ],
+        "Diamond Port": [
+          781,
+          823,
+          53
+        ],
+        "Keel": [
+          340,
+          839,
+          288
+        ],
+        "Prism": [
+          423,
+          297,
+          326
+        ]
+      }
+    },
+    {
+      "id": "23-1-candidate",
+      "pair": 22,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112722,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          220,
+          689,
+          158
+        ],
+        "Diamond Port": [
+          554,
+          103,
+          324
+        ],
+        "Keel": [
+          808,
+          701,
+          84
+        ],
+        "Prism": [
+          879,
+          355,
+          33
+        ]
+      }
+    },
+    {
+      "id": "23-2-control",
+      "pair": 22,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112722,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          220,
+          689,
+          158
+        ],
+        "Diamond Port": [
+          554,
+          103,
+          324
+        ],
+        "Keel": [
+          808,
+          701,
+          84
+        ],
+        "Prism": [
+          879,
+          355,
+          33
+        ]
+      }
+    },
+    {
+      "id": "24-1-control",
+      "pair": 23,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112723,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          503,
+          266,
+          160
+        ],
+        "Diamond Port": [
+          111,
+          306,
+          170
+        ],
+        "Keel": [
+          338,
+          613,
+          229
+        ],
+        "Prism": [
+          722,
+          628,
+          61
+        ]
+      }
+    },
+    {
+      "id": "24-2-candidate",
+      "pair": 23,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112723,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          503,
+          266,
+          160
+        ],
+        "Diamond Port": [
+          111,
+          306,
+          170
+        ],
+        "Keel": [
+          338,
+          613,
+          229
+        ],
+        "Prism": [
+          722,
+          628,
+          61
+        ]
+      }
+    },
+    {
+      "id": "25-1-candidate",
+      "pair": 24,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112724,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          484,
+          61
+        ],
+        "Diamond Port": [
+          473,
+          174,
+          157
+        ],
+        "Keel": [
+          117,
+          659,
+          73
+        ],
+        "Prism": [
+          827,
+          597,
+          322
+        ]
+      }
+    },
+    {
+      "id": "25-2-control",
+      "pair": 24,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112724,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          484,
+          61
+        ],
+        "Diamond Port": [
+          473,
+          174,
+          157
+        ],
+        "Keel": [
+          117,
+          659,
+          73
+        ],
+        "Prism": [
+          827,
+          597,
+          322
+        ]
+      }
+    },
+    {
+      "id": "26-1-candidate",
+      "pair": 25,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112725,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          733,
+          589,
+          60
+        ],
+        "Diamond Port": [
+          107,
+          175,
+          76
+        ],
+        "Keel": [
+          335,
+          340,
+          104
+        ],
+        "Prism": [
+          263,
+          599,
+          128
+        ]
+      }
+    },
+    {
+      "id": "26-2-control",
+      "pair": 25,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112725,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          733,
+          589,
+          60
+        ],
+        "Diamond Port": [
+          107,
+          175,
+          76
+        ],
+        "Keel": [
+          335,
+          340,
+          104
+        ],
+        "Prism": [
+          263,
+          599,
+          128
+        ]
+      }
+    },
+    {
+      "id": "27-1-control",
+      "pair": 26,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112726,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          219,
+          147,
+          274
+        ],
+        "Diamond Port": [
+          192,
+          578,
+          22
+        ],
+        "Keel": [
+          782,
+          116,
+          57
+        ],
+        "Prism": [
+          555,
+          409,
+          131
+        ]
+      }
+    },
+    {
+      "id": "27-2-candidate",
+      "pair": 26,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112726,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          219,
+          147,
+          274
+        ],
+        "Diamond Port": [
+          192,
+          578,
+          22
+        ],
+        "Keel": [
+          782,
+          116,
+          57
+        ],
+        "Prism": [
+          555,
+          409,
+          131
+        ]
+      }
+    },
+    {
+      "id": "28-1-candidate",
+      "pair": 27,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112727,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          602,
+          881,
+          294
+        ],
+        "Diamond Port": [
+          331,
+          249,
+          11
+        ],
+        "Keel": [
+          378,
+          753,
+          178
+        ],
+        "Prism": [
+          783,
+          288,
+          32
+        ]
+      }
+    },
+    {
+      "id": "28-2-control",
+      "pair": 27,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112727,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          602,
+          881,
+          294
+        ],
+        "Diamond Port": [
+          331,
+          249,
+          11
+        ],
+        "Keel": [
+          378,
+          753,
+          178
+        ],
+        "Prism": [
+          783,
+          288,
+          32
+        ]
+      }
+    },
+    {
+      "id": "29-1-candidate",
+      "pair": 28,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112728,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          607,
+          217,
+          284
+        ],
+        "Diamond Port": [
+          241,
+          892,
+          182
+        ],
+        "Keel": [
+          831,
+          854,
+          232
+        ],
+        "Prism": [
+          484,
+          663,
+          232
+        ]
+      }
+    },
+    {
+      "id": "29-2-control",
+      "pair": 28,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112728,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "positions": {
+        "KeelHelm": [
+          607,
+          217,
+          284
+        ],
+        "Diamond Port": [
+          241,
+          892,
+          182
+        ],
+        "Keel": [
+          831,
+          854,
+          232
+        ],
+        "Prism": [
+          484,
+          663,
+          232
+        ]
+      }
+    },
+    {
+      "id": "30-1-candidate",
+      "pair": 29,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112729,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          253,
+          307,
+          69
+        ],
+        "Diamond Port": [
+          534,
+          117,
+          249
+        ],
+        "Keel": [
+          451,
+          855,
+          275
+        ],
+        "Prism": [
+          620,
+          563,
+          141
+        ]
+      }
+    },
+    {
+      "id": "30-2-control",
+      "pair": 29,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112729,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          253,
+          307,
+          69
+        ],
+        "Diamond Port": [
+          534,
+          117,
+          249
+        ],
+        "Keel": [
+          451,
+          855,
+          275
+        ],
+        "Prism": [
+          620,
+          563,
+          141
+        ]
+      }
+    },
+    {
+      "id": "31-1-control",
+      "pair": 30,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112730,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          400,
+          366,
+          272
+        ],
+        "Diamond Port": [
+          180,
+          726,
+          160
+        ],
+        "Keel": [
+          786,
+          269,
+          242
+        ],
+        "Prism": [
+          443,
+          741,
+          80
+        ]
+      }
+    },
+    {
+      "id": "31-2-candidate",
+      "pair": 30,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112730,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          400,
+          366,
+          272
+        ],
+        "Diamond Port": [
+          180,
+          726,
+          160
+        ],
+        "Keel": [
+          786,
+          269,
+          242
+        ],
+        "Prism": [
+          443,
+          741,
+          80
+        ]
+      }
+    },
+    {
+      "id": "32-1-control",
+      "pair": 31,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112731,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          877,
+          405,
+          15
+        ],
+        "Diamond Port": [
+          161,
+          565,
+          218
+        ],
+        "Keel": [
+          674,
+          566,
+          76
+        ],
+        "Prism": [
+          810,
+          889,
+          196
+        ]
+      }
+    },
+    {
+      "id": "32-2-candidate",
+      "pair": 31,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "melee",
+      "rounds": 5,
+      "seed": 2026112731,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "positions": {
+        "KeelHelm": [
+          877,
+          405,
+          15
+        ],
+        "Diamond Port": [
+          161,
+          565,
+          218
+        ],
+        "Keel": [
+          674,
+          566,
+          76
+        ],
+        "Prism": [
+          810,
+          889,
+          196
+        ]
+      }
+    },
+    {
+      "id": "33-1-candidate",
+      "pair": 32,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112732,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          324,
+          387,
+          264
+        ],
+        "Diamond Port": [
+          635,
+          434,
+          311
+        ]
+      }
+    },
+    {
+      "id": "33-2-control",
+      "pair": 32,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112732,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          324,
+          387,
+          264
+        ],
+        "Diamond Port": [
+          635,
+          434,
+          311
+        ]
+      }
+    },
+    {
+      "id": "34-1-control",
+      "pair": 33,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112733,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          288,
+          101,
+          308
+        ],
+        "Diamond Port": [
+          650,
+          321,
+          151
+        ]
+      }
+    },
+    {
+      "id": "34-2-candidate",
+      "pair": 33,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112733,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          288,
+          101,
+          308
+        ],
+        "Diamond Port": [
+          650,
+          321,
+          151
+        ]
+      }
+    },
+    {
+      "id": "35-1-candidate",
+      "pair": 34,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112734,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          127,
+          386,
+          161
+        ],
+        "Diamond Port": [
+          89,
+          109,
+          32
+        ]
+      }
+    },
+    {
+      "id": "35-2-control",
+      "pair": 34,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112734,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "positions": {
+        "KeelHelm": [
+          127,
+          386,
+          161
+        ],
+        "Diamond Port": [
+          89,
+          109,
+          32
+        ]
+      }
+    },
+    {
+      "id": "36-1-control",
+      "pair": 35,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112735,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          661,
+          305,
+          122
+        ],
+        "Diamond Port": [
+          249,
+          303,
+          132
+        ]
+      }
+    },
+    {
+      "id": "36-2-candidate",
+      "pair": 35,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112735,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          661,
+          305,
+          122
+        ],
+        "Diamond Port": [
+          249,
+          303,
+          132
+        ]
+      }
+    },
+    {
+      "id": "37-1-candidate",
+      "pair": 36,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112736,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "positions": {
+        "KeelHelm": [
+          613,
+          419,
+          205
+        ],
+        "Retcon": [
+          151,
+          186,
+          217
+        ]
+      }
+    },
+    {
+      "id": "37-2-control",
+      "pair": 36,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112736,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "positions": {
+        "KeelHelm": [
+          613,
+          419,
+          205
+        ],
+        "Retcon": [
+          151,
+          186,
+          217
+        ]
+      }
+    },
+    {
+      "id": "38-1-control",
+      "pair": 37,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112737,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          653,
+          91,
+          58
+        ],
+        "Retcon": [
+          341,
+          131,
+          139
+        ]
+      }
+    },
+    {
+      "id": "38-2-candidate",
+      "pair": 37,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112737,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          653,
+          91,
+          58
+        ],
+        "Retcon": [
+          341,
+          131,
+          139
+        ]
+      }
+    },
+    {
+      "id": "39-1-candidate",
+      "pair": 38,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112738,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "positions": {
+        "KeelHelm": [
+          540,
+          207,
+          41
+        ],
+        "Retcon": [
+          223,
+          406,
+          3
+        ]
+      }
+    },
+    {
+      "id": "39-2-control",
+      "pair": 38,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112738,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "positions": {
+        "KeelHelm": [
+          540,
+          207,
+          41
+        ],
+        "Retcon": [
+          223,
+          406,
+          3
+        ]
+      }
+    },
+    {
+      "id": "40-1-control",
+      "pair": 39,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112739,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          518,
+          424,
+          63
+        ],
+        "Retcon": [
+          710,
+          205,
+          178
+        ]
+      }
+    },
+    {
+      "id": "40-2-candidate",
+      "pair": 39,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112739,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          518,
+          424,
+          63
+        ],
+        "Retcon": [
+          710,
+          205,
+          178
+        ]
+      }
+    },
+    {
+      "id": "41-1-candidate",
+      "pair": 40,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112740,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ],
+      "positions": {
+        "KeelHelm": [
+          697,
+          357,
+          152
+        ],
+        "Walls": [
+          463,
+          192,
+          339
+        ]
+      }
+    },
+    {
+      "id": "41-2-control",
+      "pair": 40,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112740,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ],
+      "positions": {
+        "KeelHelm": [
+          697,
+          357,
+          152
+        ],
+        "Walls": [
+          463,
+          192,
+          339
+        ]
+      }
+    },
+    {
+      "id": "42-1-control",
+      "pair": 41,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112741,
+      "order": [
+        "Walls",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          606,
+          93,
+          161
+        ],
+        "Walls": [
+          474,
+          360,
+          358
+        ]
+      }
+    },
+    {
+      "id": "42-2-candidate",
+      "pair": 41,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112741,
+      "order": [
+        "Walls",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          606,
+          93,
+          161
+        ],
+        "Walls": [
+          474,
+          360,
+          358
+        ]
+      }
+    },
+    {
+      "id": "43-1-candidate",
+      "pair": 42,
+      "slot": 0,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112742,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ],
+      "positions": {
+        "KeelHelm": [
+          160,
+          392,
+          154
+        ],
+        "SpinBot": [
+          271,
+          93,
+          289
+        ]
+      }
+    },
+    {
+      "id": "43-2-control",
+      "pair": 42,
+      "slot": 1,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112742,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ],
+      "positions": {
+        "KeelHelm": [
+          160,
+          392,
+          154
+        ],
+        "SpinBot": [
+          271,
+          93,
+          289
+        ]
+      }
+    },
+    {
+      "id": "44-1-control",
+      "pair": 43,
+      "slot": 0,
+      "arm": "control",
+      "mode": "fixed",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112743,
+      "order": [
+        "SpinBot",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          473,
+          334
+        ],
+        "SpinBot": [
+          84,
+          342,
+          149
+        ]
+      }
+    },
+    {
+      "id": "44-2-candidate",
+      "pair": 43,
+      "slot": 1,
+      "arm": "candidate",
+      "mode": "fixed",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112743,
+      "order": [
+        "SpinBot",
+        "KeelHelm"
+      ],
+      "positions": {
+        "KeelHelm": [
+          337,
+          473,
+          334
+        ],
+        "SpinBot": [
+          84,
+          342,
+          149
+        ]
+      }
+    }
+  ],
+  "parent": "d2dc1922e5fd6ca07648d2de15505a27db2e606a",
+  "runtime": {
+    "host": "minimind",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "botPython": {
+      "version": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.2.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.2.2"
+        ],
+        [
+          "pycountry",
+          "24.6.1"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "15.0.1"
+        ]
+      ]
+    }
+  },
+  "serverJar": "/private/tmp/keelhelm-risk-v3-evidence/server.jar",
+  "assignment": {
+    "mechanism": "one secrets.randbelow(C(32,16)); lexicographic unranking",
+    "rank": 116078539,
+    "space": 601080390,
+    "candidateFirst": [
+      0,
+      1,
+      4,
+      6,
+      7,
+      8,
+      14,
+      16,
+      17,
+      18,
+      22,
+      24,
+      25,
+      27,
+      28,
+      29
+    ],
+    "createdUTC": "2026-11-06T13:16:29.721455+00:00",
+    "sourceSHA256": "85822d3b609d267a5cf888e57bc6f52a8b597541edc18ed18c0a0b383af1bc81"
+  },
+  "benchmark": {
+    "name": "isolated-risk",
+    "games": 88,
+    "rounds": 520,
+    "concurrency": 1
+  },
+  "freezeSHA256": "e862dc92c6586ae3c779a41b5be0337cc21e4dce59ae5d4450e05d7a7dd8dfb9",
+  "frozenInputFiles": 7010
+}
