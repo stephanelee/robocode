@@ -86,4 +86,11 @@ class MeleePolicyTest {
         assertEquals(0.1, MeleePolicy.power(200, 100, 0));
         assertTrue(MeleePolicy.power(200, 100, 1) <= 0.3);
     }
+    @org.junit.jupiter.api.Test void saturatedRequestsDoNotCountAsEffectiveMovementExposure() {
+        var self = new Phys.Pose(500, 500, 0, 8);
+        org.junit.jupiter.api.Assertions.assertFalse(MeleePolicy.effectiveDifference(self,
+                new MeleePolicy.Command(35,8),new MeleePolicy.Command(50,8),1000,1000));
+        org.junit.jupiter.api.Assertions.assertTrue(MeleePolicy.effectiveDifference(self,
+                new MeleePolicy.Command(0,8),new MeleePolicy.Command(50,8),1000,1000));
+    }
 }

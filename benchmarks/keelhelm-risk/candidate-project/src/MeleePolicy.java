@@ -124,9 +124,14 @@ final class MeleePolicy {
         destinationX = bestX; destinationY = bestY;
         if (predictive) {
             Command parent = toward(self,parentX,parentY), actual = toward(self,bestX,bestY);
-            if (parent.turn() != actual.turn() || parent.speed() != actual.speed()) riskDifferences++;
+            if (effectiveDifference(self, parent, actual, w, h)) riskDifferences++;
         }
         return toward(self, bestX, bestY);
+    }
+
+    static boolean effectiveDifference(Phys.Pose self, Command parent, Command actual, double w, double h) {
+        return !Phys.step(self, parent.turn(), parent.speed(), w, h)
+                .equals(Phys.step(self, actual.turn(), actual.speed(), w, h));
     }
 
     private double risk(int turn, Phys.Pose p, Phys.Pose origin, double energy, double w, double h) {
