@@ -13,6 +13,11 @@ class RiskContracts(unittest.TestCase):
             points=list(a['positions'].values())
             self.assertTrue(all(math.dist(x[:2],y[:2])>=250 for i,x in enumerate(points)for y in points[:i]))
         self.assertEqual(16,sum(g['scenario']=='melee'and g['slot']==0 and g['arm']=='candidate'for g in rows))
+    def test_native_sample_identity_differs_from_folder_alias(self):
+        g=next(g for g in c.make_schedule(list(range(16)))if g['scenario']=='SpinBot')
+        native=c.native_game(g)
+        self.assertIn('Spin Bot',native['order']);self.assertIn('Spin Bot',native['positions'])
+        self.assertNotIn('SpinBot',native['order']);self.assertEqual('SpinBot',g['scenario'])
     def test_sealed_assignment_reuse_and_tamper_rejection(self):
         with tempfile.TemporaryDirectory()as folder:
             p=Path(folder)/'draw.json';source=Path(folder)/'origin.py';source.write_text('source before draw')

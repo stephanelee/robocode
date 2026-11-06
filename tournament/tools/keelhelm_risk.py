@@ -34,26 +34,30 @@ def stage(g,f,out,run):
     for directory,(name,version)in zip(dirs,ids):
         folder=Path(directory);launch=folder/(folder.name+'.sh')
         if not launch.exists():
-            assert name in ('Walls','SpinBot') and (folder/(folder.name+'.java')).exists()
+            assert folder.name in ('Walls','SpinBot') and (folder/(folder.name+'.java')).exists()
             # Exact pinned native booter templates/jvm.boot command, unchanged source/API.
             launch.write_text('#!/bin/sh\nexec java -cp "../lib/*" "'+folder.name+'.java"\n');launch.chmod(0o755)
         launch.rename(folder/'.pairing-original.sh')
         launch.write_text('#!/bin/sh\nset -eu\nexport SERVER_URL="${SERVER_URL%/}/identity/'+quote(name,safe='')+'"\nexec "$(dirname "$0")/.pairing-original.sh"\n');launch.chmod(0o755)
     return dirs,ids
 
+def native_game(game):
+    rename=lambda n:'Spin Bot'if n=='SpinBot'else n
+    return dict(game,order=[rename(n)for n in game['order']],positions={rename(n):p for n,p in game['positions'].items()})
+
 def inspect_transport(path,game,ids):
     # Reuse the reviewed stream/handshake checks, with the manifest geometry.
     original=calibration.positions
     try:
         calibration.positions=lambda g:g['positions']
-        return calibration.inspect_transport(path,game,ids)
+        return calibration.inspect_transport(path,native_game(game),ids)
     finally:calibration.positions=original
 
 def starts(recording,game):
     original=calibration.positions
     try:
         calibration.positions=lambda g:g['positions']
-        return calibration.starts(recording,game)
+        return calibration.starts(recording,native_game(game))
     finally:calibration.positions=original
 
 def summarize(games,assignment):
@@ -85,7 +89,7 @@ def play(g,f,out,monitor):
         run.mkdir(parents=True);dirs,ids=stage(g,f,out,run);(run/'home').mkdir();(run/'recordings').mkdir();java=Path(f['java'])
         env={k:os.environ[k]for k in ('TMPDIR','LANG','LC_ALL','TZ')if k in os.environ}
         env.update(HOME=str(run/'home'),JAVA_HOME=str(java.parent.parent),PATH=str(java.parent)+':/usr/bin:/bin:/opt/homebrew/bin',ROBOCODE_PYTHON_BIN=f['python'],PYTHONNOUSERSITE='1',PYTHONDONTWRITEBYTECODE='1',ROBOCODE_ENV_FILE=str(run/'absent.env'),ROBOCODE_GUN_ENV_FILE=str(run/'absent-guns.env'),RUMBLE_JAVA_CACHE=str(Path(f['source'])/'.benchmark-cache/retcon-api'),KEEL_HELM_METRICS=str(run/'helm-metrics.txt'),KEEL_HELM_SEED=str(g['seed']),KEEL_SEED=str(g['seed']),PRISM_SEED=str(g['seed']))
-        config=dict(run=str(run),java=f['java'],serverJar=f['serverJar'],runner=str(Path(f['source'])/'.benchmark-cache/robocode-tankroyale-runner-1.4.0.jar'),adapter=str(ROOT/'tournament/scripts/PairedBattle.java'),rounds=g['rounds'],bots=dirs,identities=dict(ids),positions=g['positions']);core.save(run/'config.json',config)
+        config=dict(run=str(run),java=f['java'],serverJar=f['serverJar'],runner=str(Path(f['source'])/'.benchmark-cache/robocode-tankroyale-runner-1.4.0.jar'),adapter=str(ROOT/'tournament/scripts/PairedBattle.java'),rounds=g['rounds'],bots=dirs,identities=dict(ids),positions=native_game(g)['positions']);core.save(run/'config.json',config)
         cmd=[f['python'],str(ROOT/'tournament/tools/paired_transport.py'),str(run/'config.json')];core.save(run/'invocation.json',dict(command=cmd,environment=env));row['status']='attempted';print('START',g['id'],g['scenario'],flush=True)
         def check():
             if monitor.error:raise ValueError(monitor.error)
