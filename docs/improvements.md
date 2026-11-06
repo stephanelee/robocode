@@ -391,7 +391,7 @@ STOP before gameplay: preparation encountered official source-only Walls/SpinBot
 
 Second stage-only preflight stopped at the official sample's native identity `Spin Bot`, distinct from folder/schedule alias `SpinBot`; zero engine games/rounds. Preserve second freeze/source/log at `/private/tmp/keelhelm-risk-v2-evidence`, same original assignment draw. Correct identity mapping consistently for launch routing/positions/recording checks; all opponent bytes and registered comparison remain unchanged. Independent approval still pending; [PR #133](https://github.com/stephanelee/robocode/pull/133).
 
-## 2026-11-06 — retained-shot aiming diagnostic
+## 2026-11-06 — retained-shot aiming diagnostic (superseded counts)
 
 Offline only, zero new games/rounds. All 10,601 captured0.5 melee traces match physical shots/origins;9,969 range-crossing proxies observed,632 censored. Desired/circular mean angular errors9.65°/10.71° overall,9.97°/10.07° against Diamond Port. Conditional actual-trajectory geometry cannot establish competitive strength or counterfactual hit rate; prior gun rejection stands. Accept as diagnostic evidence only; no gameplay promotion/tuning, default0.2.1 exact. [Detailed report/raw evidence](improvements/keelhelm-aim-diagnostic-results.md), [PR #133](https://github.com/stephanelee/robocode/pull/133).
 
@@ -400,3 +400,7 @@ Offline aiming diagnostic correction: independent review found the first impleme
 ## 2026-11-06 — isolated predicted-risk movement
 
 REJECT improvement claim. Fresh serial minimind budget: 88 valid games / 520 completed rounds, zero partials/own skips. Melee mean share 32.5947%→31.9126% (−0.6821 pp), wins 76→71/160; exact one-sided randomized-assignment p=0.6551657641. Both +2 pp gain and p≤0.05 gates fail; exposure 10,131 and survival/all duel guards pass. All 12 duel pairs / 100 paired-round normalized trajectories and official scores match exactly. Independent raw/frozen/staged/transport/resource/cleanup audit passes; default 0.2.1 stays all 40 files/JAR exact. Preserve original A/A failure and prior risk rejection; no pooling/tuning/retry. Cumulative 3,790 complete + 3 historical partial rounds. [Report/raw evidence](improvements/keelhelm-risk-results.md), [protocol](improvements/keelhelm-risk-protocol.md), [PR #133](https://github.com/stephanelee/robocode/pull/133), [issue #134](https://github.com/stephanelee/robocode/issues/134).
+
+## 2026-11-06 — corrected retained-shot diagnostic
+
+Accept as offline diagnostic evidence only; no gameplay promotion or competitive-strength claim. Zero new games/rounds. Independent explicit-death correction verifies all 10,601 physical shots/origins, 9,952 crossings / 649 censored. V1's 17 dead-target crossings removed; unused V2's six alive-zero overcensors restored. All scan contexts/geometric errors/grouped summaries verify; originals/V2 failed assertion/source/log retained in durable archives. Old 9,969/632 and intermediate 9,946/655 counts are superseded. Default 0.2.1 and movement-study rejection unchanged. [Report/raw evidence](improvements/keelhelm-aim-diagnostic-results.md), [PR #133](https://github.com/stephanelee/robocode/pull/133).
