@@ -1,0 +1,80 @@
+{
+  "scope": "Exploratory read-only analysis of original paired observer recordings; zero games. First observed state divergence does not prove causal origin or explain all score variation.",
+  "pairs": [
+    {
+      "pair": 1,
+      "round": 1,
+      "firstDivergentTurn": 10,
+      "actors": {
+        "Diamond Port": {
+          "direction": {
+            "A": 90.0,
+            "B": 92.25
+          }
+        }
+      }
+    },
+    {
+      "pair": 5,
+      "round": 1,
+      "firstDivergentTurn": 14,
+      "actors": {
+        "Diamond Port": {
+          "direction": {
+            "A": 230.4861226369317,
+            "B": 231.75
+          }
+        }
+      }
+    },
+    {
+      "pair": 9,
+      "round": 1,
+      "firstDivergentTurn": 3,
+      "actors": {
+        "Keel": {
+          "gunDirection": {
+            "A": 25.0,
+            "B": 45.0
+          },
+          "radarDirection": {
+            "A": 339.9323966362948,
+            "B": 45.0
+          }
+        }
+      }
+    },
+    {
+      "pair": 13,
+      "round": 1,
+      "firstDivergentTurn": 3,
+      "actors": {
+        "Keel": {
+          "gunDirection": {
+            "A": 135.0,
+            "B": 115.0
+          },
+          "radarDirection": {
+            "A": 135.0,
+            "B": 69.93239663629481
+          }
+        }
+      }
+    }
+  ],
+  "diamondMoveSourceSHA256": "9513019f94e6052f86765a521ee8d938d8095e6d47d6174bce30623a8851c12f",
+  "frozenSourceVerified": true,
+  "meleeRandomCallSites": [
+    {
+      "line": 1105,
+      "text": "0, OldLocation(project(my_location, random.random() * math.pi * 2, 5 + random.random() * random.random() * 200), current_time)"
+    },
+    {
+      "line": 1122,
+      "text": "movement_stick = min(100 + random.random() * 100, distance_to_closest_bot)"
+    }
+  ],
+  "explicitRandomSeedOrInstanceReferencesInDiamondAndBotCore": [],
+  "interpretation": "Pinned Diamond Port melee mover calls module random.random for movement-stick length and synthetic recent-location risk probes. No explicit seeding call was found in the reviewed Diamond/bot_core Python source. This is a concrete residual randomness surface consistent with observed divergence; actual random draws/intents were not logged, so causal attribution is not established.",
+  "auditSourceSHA256": "c50c87a6beba2f5849de5a9b3d38d8ad25f64ba00efa27152be4df76be604b42"
+}
