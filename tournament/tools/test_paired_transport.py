@@ -129,4 +129,24 @@ class SocketContracts(unittest.IsolatedAsyncioTestCase):
     async def test_forwarded_bot_or_observer_terminal_makes_close_expected(self):
         for role in ['BotHandshake','ObserverHandshake']:
             with self.subTest(role=role):await self.normal_close_case(role,terminal=True)
+    async def test_authoritative_observer_end_allows_bot_shutdown_without_own_end_packet(self):
+        async def backend(ws):
+            await ws.send('{"type":"ServerHandshake","sessionId":"ok"}')
+            try:
+                role=json.loads(await ws.recv())['type']
+                if role=='ObserverHandshake':await ws.send('{"type":"GameEndedEventForObserver"}')
+                await ws.wait_closed()
+            except Exception:pass
+        native=await serve(backend,'127.0.0.1',0);relay=Relay(f'ws://127.0.0.1:{native.sockets[0].getsockname()[1]}',{'Alpha':'1'},None);proxy=await serve(relay.handler,'127.0.0.1',0);base=f'ws://127.0.0.1:{proxy.sockets[0].getsockname()[1]}'
+        try:
+            async with connect(base+'/identity/Alpha')as bot:
+                await bot.recv();await bot.send('{"type":"BotHandshake","name":"Alpha","version":"1","sessionId":"ok"}');await asyncio.sleep(.02)
+                async with connect(base)as observer:
+                    await observer.recv();await observer.send('{"type":"ObserverHandshake","sessionId":"ok"}');await observer.recv();await asyncio.sleep(.02)
+                    await bot.close();await observer.close()
+            await asyncio.sleep(.05);self.assertFalse(relay.errors);self.assertTrue(relay.game_ended)
+            self.assertTrue(all(r.get('expectedClose')=='game-ended'for r in relay.rows))
+        finally:
+            relay.closing=True;proxy.close();await asyncio.wait_for(proxy.wait_closed(),3);await relay.close();native.close();await asyncio.wait_for(native.wait_closed(),3)
+        self.assertFalse(native.connections)
 if __name__=='__main__':unittest.main()
