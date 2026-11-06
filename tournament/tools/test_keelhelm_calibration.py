@@ -46,7 +46,7 @@ class CalibrationContracts(unittest.TestCase):
         g=next(g for g in c.schedule()if g['mode']=='fixed'and g['scenario']=='Diamond Port');rows=[]
         for session,name in zip(['a','b'],sorted(g['order'])):
             before=dict(type='BotHandshake',name=name,version='1',sessionId=session);after=dict(before,initialPosition=dict(zip(('x','y','direction'),c.positions(g)[name])))
-            rows.append(dict(name=name,handshakeBefore=json.dumps(before),handshakeAfter=json.dumps(after),serverSessionId=session,rewrites=1,downInput='h',downOutput='h',downInputCount=1,downOutputCount=1,upAfterHandshakeInput='e',upAfterHandshakeOutput='e',upInputCount=1,upOutputCount=1))
+            rows.append(dict(path='/identity/'+name,name=name,handshakeBefore=json.dumps(before),handshakeAfter=json.dumps(after),serverSessionId=session,rewrites=1,downInput='h',downOutput='h',downInputCount=1,downOutputCount=1,upAfterHandshakeInput='e',upAfterHandshakeOutput='e',upInputCount=1,upOutputCount=1))
         value=dict(complete=True,cleanupErrors=[],relayErrors=[],runnerReturnCode=0,connections=rows)
         with tempfile.TemporaryDirectory()as temp:
             p=Path(temp)/'transport.json';p.write_text(json.dumps(value));c.inspect_transport(p,g,[(n,'1')for n in g['order']])

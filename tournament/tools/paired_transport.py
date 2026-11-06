@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import unquote
 from websockets.asyncio.client import connect
 from websockets.asyncio.server import serve
-from websockets.exceptions import ConnectionClosedOK
+from websockets.exceptions import ConnectionClosedOK,ConnectionClosedError
 
 SERVER_SHA='16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c'
 def rewrite_handshake(raw,name,version,position,session):
@@ -16,6 +16,16 @@ def rewrite_handshake(raw,name,version,position,session):
     value['initialPosition']=dict(zip(('x','y','direction'),position))
     assert before=={k:v for k,v in value.items()if k!='initialPosition'}
     return json.dumps(value,separators=(',',':'),ensure_ascii=False)
+
+def is_empty_front_probe(row):
+    hello=row.get('serverHandshake','');data=hello.encode();digest=hashlib.sha256(len(data).to_bytes(8,'big')+data).hexdigest()
+    try:valid=json.loads(hello).get('type')=='ServerHandshake'
+    except (ValueError,AttributeError):valid=False
+    return (valid and digest==row.get('downOutput'))and (row['path']=='/' and 'name'not in row and 'roleType'not in row
+            and row.get('upInputCount',0)==row.get('upOutputCount',0)==0
+            and row.get('downInputCount',0)==row.get('downOutputCount',0)==1
+            and row.get('downInput')==row.get('downOutput')
+            and row.get('serverHandshakeSent')is True and row.get('closeOrigin')=='up')
 
 class Relay:
     def __init__(self,url,identities,positions):
@@ -51,13 +61,14 @@ class Relay:
             if name is not None:
                 assert name not in self.seen,'Duplicate/reconnected bot';self.seen.add(name)
             backend,hello,session=self.pool.pop(name)if self.positions is not None and name is not None else await self.open_backend()
-            digest('downInput',hello);await front.send(hello);digest('downOutput',hello);row['messagesDown']+=1
+            row['serverHandshake']=hello
+            digest('downInput',hello);await front.send(hello);digest('downOutput',hello);row['messagesDown']+=1;row['serverHandshakeSent']=True
             async def up():
                 handshaken=False
                 async for raw in front:
                     digest('upInput',raw);out=raw
                     if not handshaken:
-                        msg=json.loads(raw)
+                        msg=json.loads(raw);row['roleType']=msg.get('type');row['roleHandshake']=raw
                         if name is not None:
                             out=rewrite_handshake(raw,name,self.identities[name],None if self.positions is None else self.positions[name],session)
                             row['handshakeBefore']=raw;row['handshakeAfter']=out;row['name']=name;row['serverSessionId']=session
@@ -71,10 +82,17 @@ class Relay:
             async def down():
                 async for raw in backend:
                     digest('downInput',raw);await front.send(raw);digest('downOutput',raw);row['messagesDown']+=1
-            tasks=[asyncio.create_task(up()),asyncio.create_task(down())]
+            tasks=[asyncio.create_task(up(),name='up'),asyncio.create_task(down(),name='down')]
             done,pending=await asyncio.wait(tasks,return_when=asyncio.FIRST_COMPLETED)
-            for task in done:task.result()
+            for task in done:
+                try:task.result();row.setdefault('closeOrigin',task.get_name())
+                except BaseException:row['closeOrigin']=task.get_name();raise
             for task in pending:task.cancel()
+        except ConnectionClosedError as error:
+            row.update({k:v.hexdigest()for k,v in hashes.items()})
+            if is_empty_front_probe(row) and error.rcvd is None and error.sent is None:
+                row['discoveryProbe']=True;row['probeClose']=repr(error)
+            elif not self.closing:self.errors.append(repr(error));row['error']=repr(error)
         except ConnectionClosedOK:pass
         except asyncio.CancelledError:raise
         except BaseException as e:
@@ -85,6 +103,7 @@ class Relay:
             if tasks:await asyncio.gather(*tasks,return_exceptions=True)
             if backend is not None:await backend.close()
             row.update({k:v.hexdigest()for k,v in hashes.items()})
+            if is_empty_front_probe(row):row['discoveryProbe']=True
     async def close(self):
         self.closing=True
         for ws,_,_ in self.pool.values():await ws.close()

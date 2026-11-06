@@ -45,6 +45,9 @@ def inspect_transport(path,game,ids):
     bots=[r for r in data['connections']if 'name'in r];assert sorted((r['name'],json.loads(r['handshakeAfter'])['version'])for r in bots)==sorted(ids)
     for r in data['connections']:
         assert not r.get('error')
+        if r['path']=='/'and'roleType'not in r:
+            from paired_transport import is_empty_front_probe
+            assert r.get('discoveryProbe')and is_empty_front_probe(r)
         assert r.get('upInputCount',0)==r.get('upOutputCount',0)
         for a,b in [('downInput','downOutput'),('upAfterHandshakeInput','upAfterHandshakeOutput')]:
             assert r[a]==r[b]and r.get(a+'Count',0)==r.get(b+'Count',0)
@@ -107,14 +110,17 @@ def summarize(games):
     return dict(means=output,pairs=pairs,gates=gates,decision='continue-to-new-movement-protocol'if all(gates.values())else'stop-measurement-not-ready')
 
 def prepare(a):
-    out=a.evidence.resolve();out.mkdir(parents=True,exist_ok=False);project=ROOT/'experiments/KeelHelm';assert core.sha(project/'KeelHelm.jar')==BASE
+    assert a.previous_audit is not None
+    previous=json.loads(a.previous_audit.read_text());assert previous['physicalCompletedRounds']==0 and previous['partialPhysicalRounds']==0 and not previous['changedFrozenFiles']
+    assert previous['freezeSHA256']=='81f66b2a5e5e1e67dc9250e7127b7618c5807906dd5df97f1a9829f893f2705e'
+    out=a.evidence.resolve();out.mkdir(parents=True,exist_ok=False);shutil.copy2(a.previous_audit,out/'prior-setup-audit.json');project=ROOT/'experiments/KeelHelm';assert core.sha(project/'KeelHelm.jar')==BASE
     shutil.copytree(project,out/'control-source',ignore=shutil.ignore_patterns('build','.gradle','__pycache__'))
     # Extract the exact release's server, never rebuild or patch it.
     import zipfile
     z=zipfile.ZipFile(a.source/'.benchmark-cache/robocode-tankroyale-runner-1.4.0.jar');server=z.read('robocode-tankroyale-server.jar');(out/'server.jar').write_bytes(server)
-    extras=[Path(__file__),ROOT/'tournament/tools/paired_transport.py',ROOT/'tournament/tools/test_paired_transport.py',ROOT/'tournament/tools/test_keelhelm_calibration.py',ROOT/'tournament/scripts/PairedBattle.java',ROOT/'docs/improvements/keelhelm-aa-protocol.md',out/'server.jar']
+    extras=[Path(__file__),ROOT/'tournament/tools/paired_transport.py',ROOT/'tournament/tools/test_paired_transport.py',ROOT/'tournament/tools/test_keelhelm_calibration.py',ROOT/'tournament/scripts/PairedBattle.java',ROOT/'docs/improvements/keelhelm-aa-protocol.md',out/'server.jar',ROOT/'docs/improvements/keelhelm-aa-continuation.md',out/'prior-setup-audit.json']
     f=core.collect(a.source.resolve(),out,a.pins.resolve(),a.java.absolute(),a.python.absolute(),control_jar_sha=BASE,schedule_rows=schedule(),extra_paths=extras,candidate_project=project)
-    f['serverJar']=str(out/'server.jar');f['benchmark']=dict(name='aa-calibration-v1',games=32,rounds=240,concurrency=1,jarSHA256=BASE);core.save(out/'freeze.json',f)
+    f['serverJar']=str(out/'server.jar');f['benchmark']=dict(name='aa-calibration-v2',games=32,rounds=240,concurrency=1,jarSHA256=BASE);core.save(out/'freeze.json',f)
     for g in f['schedule']:
         run=out/'preflight'/g['id'];run.mkdir(parents=True);dirs,ids=stage(g,f,out,run);assert len(set(dirs))==len(ids)==len(g['order'])
     print('PREPARED',core.sha(out/'freeze.json'),flush=True)
@@ -150,13 +156,13 @@ def run(a):
             try:row=play(g,f,out,monitor)
             finally:monitor.close()
             report['games'].append(row);report['waves'].append(dict(game=g['id'],samples=monitor.samples,resourceError=monitor.error));core.save(out/'results.json',report)
-            if row['status']!='complete'or monitor.error:raise ValueError(monitor.error or row.get('error'))
+            if row['status']!='complete'or monitor.error:raise ValueError(dict(slotError=row.get('error'),resourceError=monitor.error))
         report.update(status='complete',completedGames=32,completedRounds=240,summary=summarize(report['games']))
     except BaseException as error:report.update(status='invalid',error=repr(error));raise
     finally:core.save(out/'results.json',report)
     print(json.dumps(report['summary'],indent=2),flush=True)
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha')
+    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha');p.add_argument('--previous-audit',type=Path)
     for n in ['pins','java','python']:p.add_argument('--'+n,type=Path)
     a=p.parse_args()
     if a.prepare:prepare(a)

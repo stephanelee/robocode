@@ -66,4 +66,35 @@ class SocketContracts(unittest.IsolatedAsyncioTestCase):
         finally:
             relay.closing=True;proxy.close();await asyncio.wait_for(proxy.wait_closed(),3);await relay.close();native.close();await asyncio.wait_for(native.wait_closed(),3)
         self.assertFalse(native.connections)
+    async def probe_case(self,role=None,backend_abort=False):
+        async def backend(ws):
+            await ws.send('{"type":"ServerHandshake","sessionId":"ok"}')
+            if backend_abort:
+                await asyncio.sleep(.03);ws.transport.abort();return
+            try:
+                async for raw in ws:pass
+            except Exception:pass
+        native=await serve(backend,'127.0.0.1',0);relay=Relay(f'ws://127.0.0.1:{native.sockets[0].getsockname()[1]}',{'Alpha':'1'},None)
+        proxy=await serve(relay.handler,'127.0.0.1',0)
+        path='/identity/Alpha'if role=='BotHandshake'else'/'
+        try:
+            async with connect(f'ws://127.0.0.1:{proxy.sockets[0].getsockname()[1]}'+path)as front:
+                await front.recv()
+                if role:
+                    msg=dict(type=role,sessionId='ok')
+                    if role=='BotHandshake':msg.update(name='Alpha',version='1')
+                    await front.send(json.dumps(msg));await asyncio.sleep(.03)
+                if not backend_abort:front.transport.abort()
+                await asyncio.sleep(.08)
+            if role is None and not backend_abort:
+                self.assertFalse(relay.errors);self.assertTrue(relay.rows[0]['discoveryProbe']);self.assertEqual(0,relay.rows[0].get('upInputCount',0))
+            else:self.assertTrue(relay.errors);self.assertFalse(relay.rows[0].get('discoveryProbe',False))
+        finally:
+            relay.closing=True;proxy.close();await asyncio.wait_for(proxy.wait_closed(),3);await relay.close();native.close();await asyncio.wait_for(native.wait_closed(),3)
+        self.assertFalse(native.connections)
+    async def test_empty_root_readiness_abort_is_not_a_gameplay_failure(self):await self.probe_case()
+    async def test_bot_and_controller_abrupt_loss_remain_failures(self):
+        for role in ['BotHandshake','ControllerHandshake']:
+            with self.subTest(role=role):await self.probe_case(role)
+    async def test_backend_loss_is_never_a_front_probe(self):await self.probe_case(backend_abort=True)
 if __name__=='__main__':unittest.main()
