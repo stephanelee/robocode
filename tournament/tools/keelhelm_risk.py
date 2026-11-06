@@ -32,7 +32,11 @@ def make_schedule(assignment):
 def stage(g,f,out,run):
     dirs,ids=core.stage_bots(g,Path(f['source']),out,f,run)
     for directory,(name,version)in zip(dirs,ids):
-        folder=Path(directory);launch=folder/(folder.name+'.sh');assert launch.exists()
+        folder=Path(directory);launch=folder/(folder.name+'.sh')
+        if not launch.exists():
+            assert name in ('Walls','SpinBot') and (folder/(folder.name+'.java')).exists()
+            # Exact pinned native booter templates/jvm.boot command, unchanged source/API.
+            launch.write_text('#!/bin/sh\nexec java -cp "../lib/*" "'+folder.name+'.java"\n');launch.chmod(0o755)
         launch.rename(folder/'.pairing-original.sh')
         launch.write_text('#!/bin/sh\nset -eu\nexport SERVER_URL="${SERVER_URL%/}/identity/'+quote(name,safe='')+'"\nexec "$(dirname "$0")/.pairing-original.sh"\n');launch.chmod(0o755)
     return dirs,ids
@@ -97,21 +101,28 @@ def play(g,f,out,monitor):
     if run.exists():core.save(run/'result.json',row)
     print('END',g['id'],row['status'],row.get('error'),flush=True);return row
 
+def read_assignment(path,origin_source):
+    value=json.loads(path.read_text())
+    assert value['mechanism']=='one secrets.randbelow(C(32,16)); lexicographic unranking'
+    assert value['space']==math.comb(32,16)
+    assert type(value['rank'])is int
+    assert value['sourceSHA256']==core.sha(origin_source)
+    assert value['candidateFirst']==unrank(32,16,value['rank'])
+    assert datetime.fromisoformat(value['createdUTC']).utcoffset().total_seconds()==0
+    return value
+
 def prepare(a):
     out=a.evidence.resolve();out.mkdir(parents=True,exist_ok=True)
     assert not(out/'freeze.json').exists()
     project=ROOT/'benchmarks/keelhelm-risk/candidate-project'
     assert core.sha(ROOT/'experiments/KeelHelm/KeelHelm.jar')==BASE
     shutil.copytree(ROOT/'experiments/KeelHelm',out/'control-source',ignore=shutil.ignore_patterns('build','.gradle','__pycache__'))
-    # Draw once, exclusive-create, before deriving any treatment-labelled schedule.
-    draw=out/'assignment.json'
-    if not draw.exists():
-        rank=secrets.randbelow(math.comb(32,16))
-        with draw.open('x')as h:json.dump(dict(mechanism='one secrets.randbelow(C(32,16)); lexicographic unranking',rank=rank,space=math.comb(32,16),candidateFirst=unrank(32,16,rank),createdUTC=datetime.now(timezone.utc).isoformat(),sourceSHA256=core.sha(Path(__file__))),h,indent=2)
-    assignment=json.loads(draw.read_text());assert assignment['candidateFirst']==unrank(32,16,assignment['rank'])
+    assignment=read_assignment(a.assignment,a.assignment_source)
+    draw=out/'assignment.json';shutil.copy2(a.assignment,draw)
+    shutil.copy2(a.assignment_source,out/'assignment-origin-source.py')
     rows=make_schedule(assignment['candidateFirst']);core.save(out/'schedule.json',rows)
     with zipfile.ZipFile(a.source/'.benchmark-cache/robocode-tankroyale-runner-1.4.0.jar')as z:(out/'server.jar').write_bytes(z.read('robocode-tankroyale-server.jar'))
-    extras=core.files(ROOT/'benchmarks/keelhelm-risk/validation')+[Path(__file__),ROOT/'tournament/tools/keelhelm_randomization.py',ROOT/'tournament/tools/test_keelhelm_randomization.py',ROOT/'tournament/tools/test_keelhelm_risk.py',ROOT/'tournament/tools/keelhelm_calibration.py',ROOT/'tournament/tools/paired_transport.py',ROOT/'tournament/scripts/PairedBattle.java',ROOT/'docs/improvements/keelhelm-risk-protocol.md',out/'server.jar',draw,out/'schedule.json']
+    extras=core.files(ROOT/'benchmarks/keelhelm-risk/validation')+[Path(__file__),ROOT/'tournament/tools/keelhelm_randomization.py',ROOT/'tournament/tools/test_keelhelm_randomization.py',ROOT/'tournament/tools/test_keelhelm_risk.py',ROOT/'tournament/tools/keelhelm_calibration.py',ROOT/'tournament/tools/paired_transport.py',ROOT/'tournament/scripts/PairedBattle.java',ROOT/'docs/improvements/keelhelm-risk-protocol.md',out/'server.jar',draw,out/'assignment-origin-source.py',out/'schedule.json']
     f=core.collect(a.source.resolve(),out,a.pins.resolve(),a.java.absolute(),a.python.absolute(),control_jar_sha=BASE,schedule_rows=rows,extra_paths=extras,candidate_project=project)
     f['serverJar']=str(out/'server.jar');f['assignment']=assignment;f['benchmark']=dict(name='isolated-risk',games=88,rounds=520,concurrency=1);core.save(out/'freeze.json',f)
     for g in rows:
@@ -136,7 +147,7 @@ def run(a):
     print(json.dumps(report['summary'],indent=2),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha')
+    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--evidence',type=Path,required=True);p.add_argument('--prepare',action='store_true');p.add_argument('--approval-sha');p.add_argument('--assignment',type=Path);p.add_argument('--assignment-source',type=Path)
     for n in ['pins','java','python']:p.add_argument('--'+n,type=Path)
     a=p.parse_args()
     if a.prepare:prepare(a)
