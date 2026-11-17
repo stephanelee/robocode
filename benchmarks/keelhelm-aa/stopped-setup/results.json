@@ -1,0 +1,34 @@
+{
+  "status": "invalid",
+  "freezeSHA256": "81f66b2a5e5e1e67dc9250e7127b7618c5807906dd5df97f1a9829f893f2705e",
+  "plannedGames": 32,
+  "plannedRounds": 240,
+  "games": [
+    {
+      "id": "01-random-A",
+      "pair": 0,
+      "layout": 0,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112400,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "status": "attempted",
+      "error": "ValueError('Battle process failed: 1')"
+    }
+  ],
+  "waves": [
+    {
+      "game": "01-random-A",
+      "samples": 1,
+      "resourceError": "Insufficient wave resource samples"
+    }
+  ],
+  "error": "ValueError('Insufficient wave resource samples')"
+}
