@@ -325,3 +325,97 @@ public archival follows the user's existing authorization.
 [Protocol](tournament-post-melee-protocol.md),
 [measured report/raw evidence](tournament-post-melee-results.md),
 [PR #122](https://github.com/stephanelee/robocode/pull/122).
+
+## 2026-11-05 — KeelHelm melee v1: invalid lifecycle
+
+Consumed 40 physical rounds in two games; one valid control, one candidate with missing round-start telemetry and uncleared melee state. A preceding staging failure launched zero games. Reject the improvement claim; stop v1 with fourteen games unplayed. Preserve all recordings, source/JAR/runtime hashes, failed setup and callback reproduction. Register v2 separately; no pooling or resume. [Protocol](improvements/keelhelm-melee-v1-protocol.md), [measured failure/raw evidence](improvements/keelhelm-melee-v1-invalid.md), [PR #124](https://github.com/stephanelee/robocode/pull/124).
+
+## 2026-11-05 — KeelHelm melee 0.2.1: measured cohort improvement
+
+Accept for the bounded frozen top-four cohort: mean melee share 13.19% → 26.98% (+13.79 pp), first places 7/80 → 27/80. Retcon 92.92% vs 94.40% (-1.48 pp); Walls 95.02% vs 94.50%; SpinBot 100% both. All gates and independent raw audit pass; zero own skips, maximum logged loop 7 ms. Exactly 16 fresh games / 220 rounds, separate from invalid v1 with 40 rounds (260 project physical rounds total). Candidate/control/opponent/source/JAR/runtime hashes, all recordings, raw artifacts and failures retained. Production AIS parity passes; existing arm64 golden-test limitation disclosed. [Protocol](improvements/keelhelm-melee-v2-protocol.md), [measured report/raw evidence](improvements/keelhelm-melee-v2-results.md), [PR #124](https://github.com/stephanelee/robocode/pull/124).
+
+## 2026-11-05 — KeelHelm follow-up1: adaptive-gun
+
+Decision reject: melee 34.26% -> 30.75% (-3.51pp). Exactly20 games/260rounds; positive policy exposure3718; all evidence/resource guards valid. Other guard outcomes, source/JAR/runtime pins and retained raw artifacts are in the [full report](improvements/keelhelm-followup-1-adaptive-gun-results.md). [Protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No tuning or pooling; next accepted mask0.
+
+## 2026-11-05 — KeelHelm power initial attempt: invalid parallel timing
+
+Original study stopped: unchanged control skipped Round13 turns1/2/3; sibling finished20 rounds. Spend32completed physical rounds plus one partial(107ticks); no promotion, replacement, resume or pooling. Stages3/4unplayed. Resource guards passed; no cause established. CleanupEPERM recorded, no orphan processes found. Follow-up accounting292complete+1partial, project552complete+1partial including prior260. [Report/raw evidence](improvements/keelhelm-followup-2-original-invalid.md), [protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm follow-up2: accuracy-power
+
+Decision reject: melee 30.78% -> 30.61% (-0.17pp). Exactly20 games/260rounds; positive policy exposure3564; all evidence/resource guards valid. Other guard outcomes, source/JAR/runtime pins and retained raw artifacts are in the [full report](improvements/keelhelm-followup-2-accuracy-power-results.md). [Protocol](improvements/keelhelm-melee-followups-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No tuning or pooling; next accepted mask0.
+
+## 2026-11-05 — KeelHelm target-selection: invalid serial timing
+
+Stop the serial continuation: candidate skipped Round 18 turns 1/2/3 with only one engine game running. Two started games consumed 37 completed rounds plus one partial; eighteen stage-3 games and all stage-4 games remain unplayed. Resource guards and verified teardown passed; cause unknown. No promotion, retry or pooling. Serial spend is 297 completed plus one partial; total development accounting is 849 completed plus two partial. All new features remain disabled. [Failure report/raw evidence](improvements/keelhelm-followup-3-serial-invalid.md), [serial protocol](improvements/keelhelm-followups-serial-protocol.md), [PR 126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm timing D1: incomplete capture
+
+One complete20round baseline melee game, zero skips, valid raw recording/resources/cleanup; exit-only JFR0bytes leaves cause undetermined. Initial sandbox admission failure launched zero games; second D1b game unplayed. Reject timing/strength claims; preserve raw failed capture. Project869completed+2partial rounds. Zero-game live-dump fixture validates acquisition only. [Report/raw evidence](improvements/keelhelm-timing-d1-results.md), [prospective D2 protocol](improvements/keelhelm-next-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm timing D2: collector validation stop
+
+One completed round plus partialRound2through757, zero own skips; collector identity validation stopped the diagnostic before live dump. Readable5secondJFR retained: maxGC4.70ms, no captured causal round-start failure. No timing repair/reliability/strength claim. Resource/raw/cleanup audit passes; project870complete+3partial. No diagnostic retry. [Report/raw evidence](improvements/keelhelm-timing-d2-results.md), [prospective protocol](improvements/keelhelm-next-protocol.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm next 1: predicted-risk
+
+Decision reject: melee 25.96% → 33.17% (+7.21pp), policy exposure 6621. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1130 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-1-predicted-risk-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm profiler exact-shell fixture
+
+Zero games/rounds. Reproduce PATH launcher comm mismatch offline, then validate explicit pinned JAVA_HOME executable and retained identity rows with readable JFR/verified cleanup. Accept acquisition correction only; no game timing repair or competitive inference. Physical accounting unchanged. [Report/raw fixture evidence](improvements/keelhelm-timing-shell-fix.md), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — KeelHelm next 2: radar-revisit
+
+Decision reject: melee 35.31% → 29.84% (-5.48pp), policy exposure 1209. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1390 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-2-radar-revisit-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next 3: shot-obstruction
+
+Decision reject: melee 32.25% → 28.84% (-3.41pp), policy exposure 19. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1650 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-3-shot-obstruction-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next 4: duel-transfer
+
+Decision reject: melee 32.62% → 25.74% (-6.87pp), policy exposure 5622. Exactly20games/260rounds, all evidence guards pass. Next accepted mask 0. Project 1910 complete+3historicalpartial. [Report/raw evidence](improvements/keelhelm-next-4-duel-transfer-results.md), [protocol](improvements/keelhelm-next-implementations.md), [PR126](https://github.com/stephanelee/robocode/pull/126). No pooling/general-strength claim; prior timing cause unresolved.
+
+## 2026-11-05 — KeelHelm next program complete; accepted default preserved
+
+All four candidates reject under fixed gates. Exactly 80 valid games / 1,040 rounds on minimind, zero own skips, all independent raw/resource/source/cleanup checks pass. Project accounting: 1,910 completed rounds plus 3 historical partial rounds. Restore all 40 normal-project files from accepted published 0.2.1 source/JAR; preserve all 44 measured 0.4 project files separately as evidence outside eligible entrants. Both Java 17 rebuilds exactly match recorded JAR hashes;23 accepted-project and 39 rejected-project tests plus 16 Python checks pass. Packaging/fixtures consumed zero games; prior timing cause remains unresolved. [Final decisions/full reports](improvements/keelhelm-next-summary.md), [post-study validation](../benchmarks/keelhelm-next/post-study-validation.json), [PR126](https://github.com/stephanelee/robocode/pull/126).
+
+## 2026-11-05 — per-opponent learned melee displacement gun
+
+Decision: **reject** under prospectively fixed gates. Fresh minimind budget 40 cold serial games / 520 completed rounds, zero partials. Melee score share 29.87% → 31.52% (+1.65 pp); 6,349 physically confirmed changed shots. 30 Java 17 tests, source/JAR parity and independent raw/resource/staging/cleanup audit pass. All original evidence retained. Cumulative KeelHelm spend 2,510 complete plus 3 historical partial rounds, including the separate 80-round [PR #128 snapshot](https://github.com/stephanelee/robocode/pull/128), which is not pooled here. The first auditor uniqueness-assumption defect was corrected without changing games/scores/inputs; both versions are retained. Accepted 0.2.1 remains exact. [Report/raw evidence](improvements/keelhelm-learned-gun-results.md), [protocol](improvements/keelhelm-learned-gun-protocol.md), [PR #130](https://github.com/stephanelee/robocode/pull/130). Finite unpaired cohorts do not establish general strength.
+
+## 2026-11-05 — selective melee power from confirmed outcomes
+
+Decision: **reject** under fixed gates. Fresh minimind cost: 40 cold serial games / 520 completed rounds, zero partials. Melee share 30.04% → 31.60% (+1.55 pp); 85 confirmed power changes. 29 Java 17 tests, four Python contracts, source/JAR parity and independent raw/window/resource/staging/cleanup audit pass. All original evidence retained. Cumulative 3,030 complete plus 3 historical partial rounds; no pooling with prior studies. [Report/raw evidence](improvements/keelhelm-outcome-power-results.md), [protocol](improvements/keelhelm-outcome-power-protocol.md), [PR #130](https://github.com/stephanelee/robocode/pull/130). Accepted 0.2.1 remains exact on rejection; no strength claim from insufficient exposure or fixtures.
+
+Both independent studies are complete; the exact accepted default remains 0.2.1. [Final decisions and validation](improvements/keelhelm-aim-power-summary.md). No further gameplay or promotion is included.
+
+## 2026-11-06 — A/A calibration stopped during setup
+
+Decision: invalid setup, no measurement/strength claim. First slot aborted on an empty runner readiness probe; independent pinned bytecode confirms the runner receives ServerHandshake then aborts without a role. Zero engine games and zero complete/partial rounds; all7,017 frozen hashes unchanged and owned cleanup verified. The single resource sample is also insufficient; both primary relay and secondary resource errors are retained. Cumulative3,030 complete plus3historicalpartial rounds remains unchanged. No retry/resume; only zero-engine correction is allowed before fresh registration/review. [Detailed report/raw evidence](improvements/keelhelm-aa-stopped-setup.md), [PR #133](https://github.com/stephanelee/robocode/pull/133). This is a harness failure, not a diagnosis of historical gameplay skips.
+
+## 2026-11-06 — identical-code A/A calibration
+
+Valid acquisition / STOP measurement not ready.32cold serial games /240completed rounds on minimind, zero partials/own skips. Fixed melee A−B+3.5479pp fails2pp continuation allowance; fixed DP exact0pp, all20paired-round normalized bot-state trajectories identical. All original frozen/staged/transport/recording/resource/cleanup evidence independently validates. Diamond movement randomness and Keel scan-order sensitivity remain; no sole cause or strength claim. Default0.2.1 stays exact. Cumulative3,270complete+3historicalpartial; no pooling. [Report/raw evidence](improvements/keelhelm-aa-results.md), [protocol](improvements/keelhelm-aa-protocol.md), [PR #133](https://github.com/stephanelee/robocode/pull/133). Original movement route blocked; any redesign requires a genuinely fresh prospective protocol and independent review.
+
+## 2026-11-06 — predicted-risk stage-only preparation
+
+STOP before gameplay: preparation encountered official source-only Walls/SpinBot entries with no shell launcher. Zero games / zero rounds; no engine process launched. Preserve original freeze and single uniform assignment draw at `/private/tmp/keelhelm-risk-evidence` (rank 116078539); never redraw. Prospective correction wraps the pinned booter's exact JVM template command, changing only SERVER_URL identity routing, and separates immutable assignment custody from staging. Independent review required before games. [Protocol](improvements/keelhelm-risk-protocol.md), [issue #134](https://github.com/stephanelee/robocode/issues/134), [PR #133](https://github.com/stephanelee/robocode/pull/133). No competitive inference or promotion; default remains 0.2.1.
+
+Second stage-only preflight stopped at the official sample's native identity `Spin Bot`, distinct from folder/schedule alias `SpinBot`; zero engine games/rounds. Preserve second freeze/source/log at `/private/tmp/keelhelm-risk-v2-evidence`, same original assignment draw. Correct identity mapping consistently for launch routing/positions/recording checks; all opponent bytes and registered comparison remain unchanged. Independent approval still pending; [PR #133](https://github.com/stephanelee/robocode/pull/133).
+
+## 2026-11-06 — retained-shot aiming diagnostic (superseded counts)
+
+Offline only, zero new games/rounds. All 10,601 captured0.5 melee traces match physical shots/origins;9,969 range-crossing proxies observed,632 censored. Desired/circular mean angular errors9.65°/10.71° overall,9.97°/10.07° against Diamond Port. Conditional actual-trajectory geometry cannot establish competitive strength or counterfactual hit rate; prior gun rejection stands. Accept as diagnostic evidence only; no gameplay promotion/tuning, default0.2.1 exact. [Detailed report/raw evidence](improvements/keelhelm-aim-diagnostic-results.md), [PR #133](https://github.com/stephanelee/robocode/pull/133).
+
+Offline aiming diagnostic correction: independent review found the first implementation censored absent targets but could count same-tick retained dead states. Original derived archive `0ba1b0bec5289ee91a8ede0a34d14199c548736253500adb184718d79b4b0d5e` stays immutable. Apply the already registered death-censor rule explicitly (death-event turn/nonpositive energy excluded) and recompute after native movement acquisition ends. Zero new games/rounds; no policy/default change or strength claim. [PR #133](https://github.com/stephanelee/robocode/pull/133).
+
+## 2026-11-06 — isolated predicted-risk movement
+
+REJECT improvement claim. Fresh serial minimind budget: 88 valid games / 520 completed rounds, zero partials/own skips. Melee mean share 32.5947%→31.9126% (−0.6821 pp), wins 76→71/160; exact one-sided randomized-assignment p=0.6551657641. Both +2 pp gain and p≤0.05 gates fail; exposure 10,131 and survival/all duel guards pass. All 12 duel pairs / 100 paired-round normalized trajectories and official scores match exactly. Independent raw/frozen/staged/transport/resource/cleanup audit passes; default 0.2.1 stays all 40 files/JAR exact. Preserve original A/A failure and prior risk rejection; no pooling/tuning/retry. Cumulative 3,790 complete + 3 historical partial rounds. [Report/raw evidence](improvements/keelhelm-risk-results.md), [protocol](improvements/keelhelm-risk-protocol.md), [PR #133](https://github.com/stephanelee/robocode/pull/133), [issue #134](https://github.com/stephanelee/robocode/issues/134).
+
+## 2026-11-06 — corrected retained-shot diagnostic
+
+Accept as offline diagnostic evidence only; no gameplay promotion or competitive-strength claim. Zero new games/rounds. Independent explicit-death correction verifies all 10,601 physical shots/origins, 9,952 crossings / 649 censored. V1's 17 dead-target crossings removed; unused V2's six alive-zero overcensors restored. All scan contexts/geometric errors/grouped summaries verify; originals/V2 failed assertion/source/log retained in durable archives. Old 9,969/632 and intermediate 9,946/655 counts are superseded. Default 0.2.1 and movement-study rejection unchanged. [Report/raw evidence](improvements/keelhelm-aim-diagnostic-results.md), [PR #133](https://github.com/stephanelee/robocode/pull/133).

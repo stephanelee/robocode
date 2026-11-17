@@ -1,0 +1,560 @@
+{
+  "sourceCommit": "d2fa1dcf957ea34aea00542354363ff49d6edaa8",
+  "freezeSHA256": "5d75523c5cf3a465dc86df7d82d154cf9f964ca4a52a838cb5c0f5255f3fecec",
+  "runtime": {
+    "host": "minimind",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "botPython": {
+      "version": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.2.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.2.2"
+        ],
+        [
+          "pycountry",
+          "24.6.1"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "15.0.1"
+        ]
+      ]
+    }
+  },
+  "schedule": [
+    {
+      "id": "01-random-A",
+      "pair": 0,
+      "layout": 0,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112400,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "01-random-B",
+      "pair": 0,
+      "layout": 0,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112400,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "02-fixed-B",
+      "pair": 1,
+      "layout": 0,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112401,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "02-fixed-A",
+      "pair": 1,
+      "layout": 0,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112401,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "03-random-A",
+      "pair": 2,
+      "layout": 0,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112402,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "03-random-B",
+      "pair": 2,
+      "layout": 0,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112402,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "04-fixed-B",
+      "pair": 3,
+      "layout": 0,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112403,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "04-fixed-A",
+      "pair": 3,
+      "layout": 0,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112403,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "05-random-A",
+      "pair": 4,
+      "layout": 1,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112404,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "05-random-B",
+      "pair": 4,
+      "layout": 1,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112404,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "06-fixed-B",
+      "pair": 5,
+      "layout": 1,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112405,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "06-fixed-A",
+      "pair": 5,
+      "layout": 1,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112405,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "07-random-A",
+      "pair": 6,
+      "layout": 1,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112406,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "07-random-B",
+      "pair": 6,
+      "layout": 1,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112406,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "08-fixed-B",
+      "pair": 7,
+      "layout": 1,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112407,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "08-fixed-A",
+      "pair": 7,
+      "layout": 1,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112407,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "09-random-A",
+      "pair": 8,
+      "layout": 2,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112408,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "09-random-B",
+      "pair": 8,
+      "layout": 2,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112408,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "10-fixed-B",
+      "pair": 9,
+      "layout": 2,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112409,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "10-fixed-A",
+      "pair": 9,
+      "layout": 2,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112409,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "11-random-A",
+      "pair": 10,
+      "layout": 2,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112410,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "11-random-B",
+      "pair": 10,
+      "layout": 2,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112410,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "12-fixed-B",
+      "pair": 11,
+      "layout": 2,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112411,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "12-fixed-A",
+      "pair": 11,
+      "layout": 2,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112411,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "13-random-A",
+      "pair": 12,
+      "layout": 3,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112412,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "13-random-B",
+      "pair": 12,
+      "layout": 3,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112412,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "14-fixed-B",
+      "pair": 13,
+      "layout": 3,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112413,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "14-fixed-A",
+      "pair": 13,
+      "layout": 3,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "melee",
+      "rounds": 10,
+      "seed": 2026112413,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "15-random-A",
+      "pair": 14,
+      "layout": 3,
+      "mode": "random",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112414,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "15-random-B",
+      "pair": 14,
+      "layout": 3,
+      "mode": "random",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112414,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "16-fixed-B",
+      "pair": 15,
+      "layout": 3,
+      "mode": "fixed",
+      "arm": "B",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112415,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "16-fixed-A",
+      "pair": 15,
+      "layout": 3,
+      "mode": "fixed",
+      "arm": "A",
+      "scenario": "Diamond Port",
+      "rounds": 5,
+      "seed": 2026112415,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    }
+  ],
+  "frozenFiles": 7019,
+  "identicalJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "serverSHA256": "16c277795bd823c9eda0b650f1d09a418ff35cfe43d59b820c52d5e6816f905c",
+  "retconPin": "28981c7a469ac064194b41001cd7183ec5ecf189",
+  "opponentSource": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
+  "helperSHA256": {
+    "tools/keelhelm_melee.py": "02231b9d14ca2a41a39157b9e2995fa43b68a7a40c829bb9eb16f37d385b0792",
+    "tools/test_keelhelm_melee.py": "8458c3a8c75e1691172b884c2b07de9d5e0fbf4b285a8978609947c1ba9484c5",
+    "tournament/scripts/PairedBattle.java": "65d9b97b8f5ce5f50f22858f43db13ee1533d2d5447dfd64536f730df3c227f5",
+    "tournament/scripts/TournamentBattle.java": "13336dc71373893a8342279ce5db65972cfac9fffd20f7bb619aabe9cf8e5c2e",
+    "tournament/tools/keelhelm_calibration.py": "d2d95b736cd400f77c47ee752d835815afa9f3e1c184b465f317cd8ecf524c22",
+    "tournament/tools/paired_transport.py": "5d741ee251367db66b1b2ae13564bf4610eceda5ef8d17e99d1f4e3ec86ff2a0",
+    "tournament/tools/test_keelhelm_calibration.py": "7ca2cface79c45816c89e4c55cbb29d03ab65b6cbaaffc20307d9343221c5d05",
+    "tournament/tools/test_paired_transport.py": "e004dc2434d8e0acd87b14298f42282b69c16b3459c38f93f98e994bed72f752"
+  }
+}

@@ -1,0 +1,40 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :jar
+> Task :prepareBot
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test
+
+KeelContractTest > wallRoomShrinksNearWalls() PASSED
+
+KeelContractTest > speedLawMatchesPinnedServer() PASSED
+
+KeelContractTest > hitsShiftDanger() PASSED
+
+KeelContractTest > densityIsNormalizedAndCoversAll() PASSED
+
+KeelContractTest > knnReturnsClosest() PASSED
+
+KeelContractTest > halfWidthIsTangentAngleWhenAnnulusContainsBot() PASSED
+
+KeelContractTest > shadowBlocksOnlyWhereOurBulletCrossesTheWave() PASSED
+
+KeelContractTest > wallStopsBotAndZeroesSpeed() PASSED
+
+KeelContractTest > stepMovesOnOldHeadingThenTurnsWithNewSpeedLimit() PASSED
+
+KeelContractTest > stationaryDangerMatchesFootprintWidth() PASSED
+
+> Task :check
+> Task :build
+
+BUILD SUCCESSFUL in 2s
+6 actionable tasks: 5 executed, 1 up-to-date

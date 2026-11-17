@@ -1,0 +1,13 @@
+# KeelHelm timing D1: incomplete profiler capture
+
+Decision: no timing diagnosis and no competitive claim. Preserve the stopped diagnostic. D1's initial setup consumed zero games because the sandbox denied read-only process inspection. A separately recorded D1b used host inspection access and completed one cold20round top-four game on minimind with the accepted0.2.1 JAR; the second planned game was not started.
+
+Independent audit confirms all20 rounds, contiguous recording ticks/CRC/final official score, zero own skips, maximum logged loop5ms,35resource samples, minimum41% memory availability, no resource breach and verified cleanup. The loop timer excludes callbacks and round-boundary waits. A single non-reproduction under profiling does not prove reliability.
+
+The final JFR file was empty; the surviving926KiB repository chunk is unreadable in locked stream state. Actual pinned runner/booter bytecode contains a forced-shutdown path, which could explain missing exit-only capture, but the exact signal/phase in this game was not observed. No causal attribution is supported. The exact embedded API also permits WebSocket-thread join(1000) at round boundaries; that is a possible blocking path, not a demonstrated cause. Replacement startup alone establishes no reset race because it waits for the first tick.
+
+D1/D1b consumed20completed physical rounds and no partial rounds. Project development accounting becomes869completed plus two partial rounds. No gameplay source, JAR, heap, GC or deadline changed. Diagnostic acquisition added only bounded JFR to a staged launcher. No output is pooled with competitive experiments.
+
+All raw recordings, source/JAR/runtime freezes, execution snapshots, setup failure, resources, empty/locked profiler files and independent audit are retained outside Git in `robocode-keelhelm-followups/timing/d1-and-d1b.tar.gz`, SHA256 e832d559c2674de3612c43915d00bfa80f25f7f02b0b9173446664db15fce044. [Independent audit](../../benchmarks/keelhelm-timing-d1/independent-audit.json), [archive proof](../../benchmarks/keelhelm-timing-d1/artifact-proof.json), [zero-game setup evidence](../../benchmarks/keelhelm-timing-d1/zero-game-setup.json).
+
+The separately prospective D2 fixes capture through bounded live dumps. A zero-game sleeping-JVM fixture produced a readable456,748byte dump with verified cleanup; this establishes collector operation only, not game responsiveness or competitive strength. [Protocol](keelhelm-next-protocol.md), [issue125](https://github.com/stephanelee/robocode/issues/125), [PR126](https://github.com/stephanelee/robocode/pull/126).

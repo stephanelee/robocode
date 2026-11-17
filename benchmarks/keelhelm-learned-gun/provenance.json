@@ -1,0 +1,558 @@
+{
+  "acquisitionCommit": "ad493fa940be442feb938c553f494ad1c3d8552d",
+  "freezeSHA256": "be36934fb74a0a18b424f5d426e7342b7650ab7efcb1847faadddc8e51f18be0",
+  "frozenInputFiles": 6995,
+  "benchmark": {
+    "name": "learned-displacement-v1",
+    "games": 40,
+    "rounds": 520,
+    "concurrency": 1,
+    "controlJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+    "candidateJarSHA256": "80f19d7951dd7cb169d56720b0d6f12e219264c3aad0387d75fbefcf56dba3c1"
+  },
+  "runtime": {
+    "host": "minimind",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "java": "openjdk version \"25.0.5\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-25.0.5+8 (build 25.0.5+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.5+8 (build 25.0.5+8-LTS, mixed mode, sharing)\n",
+    "botPython": {
+      "version": "3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "packages": [
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "ast_serialize",
+          "0.13.1"
+        ],
+        [
+          "librt",
+          "0.16.0"
+        ],
+        [
+          "mypy",
+          "2.4.1"
+        ],
+        [
+          "mypy_extensions",
+          "1.2.0"
+        ],
+        [
+          "pathspec",
+          "1.1.1"
+        ],
+        [
+          "pip",
+          "26.2.2"
+        ],
+        [
+          "pycountry",
+          "24.6.1"
+        ],
+        [
+          "robocode-tank-royale",
+          "1.3.1"
+        ],
+        [
+          "setuptools",
+          "84.2.1"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ],
+        [
+          "websockets",
+          "15.0.1"
+        ]
+      ]
+    }
+  },
+  "schedule": [
+    {
+      "id": "01-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112200,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "01-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112200,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "02-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112201,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "02-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112201,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "03-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112202,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "03-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112202,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "04-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112203,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "04-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112203,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "05-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112204,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "05-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112204,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ]
+    },
+    {
+      "id": "06-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112205,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "06-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112205,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "07-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112206,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "07-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112206,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "08-melee-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112207,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "08-melee-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026112207,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ]
+    },
+    {
+      "id": "09-diamond-port-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112208,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "09-diamond-port-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112208,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "10-diamond-port-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112209,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "10-diamond-port-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112209,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "11-diamond-port-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112210,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "11-diamond-port-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112210,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ]
+    },
+    {
+      "id": "12-diamond-port-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112211,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "12-diamond-port-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026112211,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "13-retcon-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112212,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "13-retcon-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112212,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "14-retcon-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112213,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "14-retcon-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112213,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "15-retcon-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112214,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "15-retcon-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112214,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ]
+    },
+    {
+      "id": "16-retcon-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112215,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "16-retcon-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026112215,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "17-walls-control",
+      "arm": "control",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112216,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ]
+    },
+    {
+      "id": "17-walls-candidate",
+      "arm": "candidate",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112216,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ]
+    },
+    {
+      "id": "18-walls-candidate",
+      "arm": "candidate",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112217,
+      "order": [
+        "Walls",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "18-walls-control",
+      "arm": "control",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026112217,
+      "order": [
+        "Walls",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "19-spinbot-control",
+      "arm": "control",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112218,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ]
+    },
+    {
+      "id": "19-spinbot-candidate",
+      "arm": "candidate",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112218,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ]
+    },
+    {
+      "id": "20-spinbot-candidate",
+      "arm": "candidate",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112219,
+      "order": [
+        "SpinBot",
+        "KeelHelm"
+      ]
+    },
+    {
+      "id": "20-spinbot-control",
+      "arm": "control",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026112219,
+      "order": [
+        "SpinBot",
+        "KeelHelm"
+      ]
+    }
+  ],
+  "helpers": {
+    "tools/keelhelm_displacement.py": "3ba2af7f75be185463eb086f3e9486d2e5d75bc19f31ba470d58459819b26ae5",
+    "tools/keelhelm_followups.py": "a3df8ba82defbf8211010e13d611d2df06312dd8c5a06cb9c9dfb1e22fb0521e",
+    "tools/keelhelm_melee.py": "02231b9d14ca2a41a39157b9e2995fa43b68a7a40c829bb9eb16f37d385b0792",
+    "tools/keelhelm_resources.py": "13bb218910aed868bb79a2ad3e8b3bcfe32d6d8ad078ec0d263b5f8924e4e16c",
+    "tools/test_keelhelm_displacement.py": "822139e62f8554bc5f362913e275eed0ed5f661630b92e161a59c6ba9f6ce59c",
+    "tools/test_keelhelm_melee.py": "8458c3a8c75e1691172b884c2b07de9d5e0fbf4b285a8978609947c1ba9484c5",
+    "tournament/scripts/TournamentBattle.java": "13336dc71373893a8342279ce5db65972cfac9fffd20f7bb619aabe9cf8e5c2e"
+  },
+  "opponentSource": "1f6e6a38582838fe891330a0b3e7a7d9f1668279",
+  "retconSource": "28981c7a469ac064194b41001cd7183ec5ecf189",
+  "diamondPortSource": "67b68c22e41c18281a3fce9ef638e3c23a0b47cf"
+}

@@ -7,13 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Keel: experimental 1v1 duelist. Precise-intersection wave surfing over engine-exact paths (including
+ * KeelHelm: duel surfing plus a separate per-opponent minimum-risk melee policy.
+ * Precise-intersection wave surfing over engine-exact paths (including
  * Tank Royale's instant stop), KNN danger, and KNN guess-factor guns. Uses only its own legal scans,
  * state, commands and events; never reads opponent internals.
  */
 public final class KeelHelm extends Bot {
     private final Surfer surfer = new Surfer();
     private final Gun gun = new Gun();
+    private final MeleePolicy melee = new MeleePolicy();
+    private int meleeTurns, meleeShots, duelTransitions;
     private final Track me = new Track(), enemy = new Track();
     private final Map<Integer, Double> corrections = new HashMap<>();
     private int scanT = -1, round, orbitDir = 1, radarSign = 1, stuck = 0;
@@ -27,7 +30,8 @@ public final class KeelHelm extends Bot {
     /** Energy lead over the opponent above which Keel fires normal 1.2-power shots instead of 0.1 tokens. */
     static final double LEAD = 15, BASE_POWER = 1.2;
 
-    KeelHelm() { super(BotInfo.fromFile("KeelHelm.json")); }
+    KeelHelm() { this(BotInfo.fromFile("KeelHelm.json")); }
+    KeelHelm(BotInfo info) { super(info); }
     public static void main(String[] args) { new KeelHelm().start(); }
 
     private synchronized void mark(String value) {
@@ -42,6 +46,9 @@ public final class KeelHelm extends Bot {
         scanT = -1; ePrevT = -1; ePrev = null; stuck = 0; maxNanos = 0;
         orbitDir = new java.util.SplittableRandom(seed * 31 + round).nextBoolean() ? 1 : -1;
         radarSign = orbitDir;
+        // RoundStarted precedes the first tick: tick-backed API getters are unavailable here.
+        melee.newRound(0);
+        meleeTurns = 0; meleeShots = 0; duelTransitions = 0;
         mark("start");
     }
     @Override public void onRoundEnded(RoundEndedEvent e) {
@@ -50,16 +57,19 @@ public final class KeelHelm extends Bot {
                 + " stoppedRolloutSteps=" + surfer.stoppedRolloutSteps
                 + " headingChangedSteps=" + surfer.headingChangedSteps
                 + " secondWaveEvaluations=" + surfer.secondWaveEvaluations
-                + " executedStopNow=" + surfer.executedStopNow);
+                + " executedStopNow=" + surfer.executedStopNow
+                + " meleeTurns=" + meleeTurns + " meleeShots=" + meleeShots + " duelTransitions=" + duelTransitions);
         mark("end");
     }
     @Override public void onSkippedTurn(SkippedTurnEvent e) { mark("skip " + e.getTurnNumber()); }
     @Override public void onBulletHit(BulletHitBotEvent e) {
+        if (melee.active()) return;
         corrections.merge(e.getTurnNumber(), -e.getDamage(), Double::sum);
         dropOwn(e.getBullet().getBulletId());
     }
     @Override public void onBulletHitWall(BulletHitWallEvent e) { dropOwn(e.getBullet().getBulletId()); }
     @Override public void onBulletFired(BulletFiredEvent e) {
+        if (melee.active()) return;
         var b = e.getBullet();
         Phys.Pose o = me.get(e.getTurnNumber() - 1);
         if (o == null) return;
@@ -69,20 +79,30 @@ public final class KeelHelm extends Bot {
     private void dropOwn(int id) {
         if (surfer.bullets.removeIf(b -> b.id() == id)) surfer.reshade(getArenaWidth(), getArenaHeight());
     }
-    @Override public void onHitBot(HitBotEvent e) { corrections.merge(e.getTurnNumber(), -0.6, Double::sum); }
+    @Override public void onHitBot(HitBotEvent e) {
+        if (!melee.active()) corrections.merge(e.getTurnNumber(), -0.6, Double::sum);
+    }
     @Override public void onHitByBullet(HitByBulletEvent e) {
+        if (melee.active()) return;
         var b = e.getBullet();
         corrections.merge(e.getTurnNumber(), 3 * b.getPower(), Double::sum);
         surfer.hitBy(e.getTurnNumber(), b.getX(), b.getY(), b.getDirection(), b.getPower());
     }
     @Override public void onBulletHitBullet(BulletHitBulletEvent e) {
+        if (melee.active()) return;
         dropOwn(e.getBullet().getBulletId());
         var b = e.getHitBullet();
         surfer.bulletCollision(e.getTurnNumber(), b.getX(), b.getY(), b.getDirection(), b.getPower());
     }
 
     @Override public void onScannedBot(ScannedBotEvent e) {
+        if (melee.isDead(e.getScannedBotId())) return;
         int t = e.getTurnNumber();
+        if (getEnemyCount() > 1) {
+            melee.observe(e.getScannedBotId(), t, e.getX(), e.getY(), e.getDirection(), e.getSpeed(), e.getEnergy());
+            return;
+        }
+        enterDuel();
         if (t <= scanT) return;
         Phys.Pose p = new Phys.Pose(e.getX(), e.getY(), e.getDirection(), e.getSpeed());
         enemy.add(t, p, getX(), getY());
@@ -112,6 +132,34 @@ public final class KeelHelm extends Bot {
         gun.observe(t, p.x(), p.y());
         ePrev = p; ePrevEnergy = e.getEnergy(); ePrevT = t;
         ex = p.x(); ey = p.y(); eEnergy = e.getEnergy(); scanT = t;
+    }
+
+    @Override public void onBotDeath(BotDeathEvent e) { melee.died(e.getVictimId()); }
+
+    private void enterDuel() {
+        if (!melee.enterDuel(getEnemyCount())) return;
+        surfer.newRound(); gun.newRound(); me.clear(); enemy.clear(); corrections.clear();
+        scanT = -1; ePrevT = -1; ePrev = null; stuck = 0;
+        duelTransitions++;
+    }
+
+    private void playMelee(int t, Phys.Pose self, double w, double h) {
+        melee.activate();
+        meleeTurns++;
+        setRadarTurnRate(45 * radarSign);
+        MeleePolicy.Command command = melee.move(t, self, getEnergy(), w, h);
+        setTurnRate(command.turn()); setTargetSpeed(command.speed());
+        MeleePolicy.Opponent target = melee.target(t, self);
+        if (target == null) { setGunTurnRate(0); return; }
+        double d = Phys.distance(self.x(), self.y(), target.x, target.y);
+        double power = MeleePolicy.power(d, getEnergy(), target.energy);
+        Phys.Pose predicted = MeleePolicy.intercept(target, t, self, power, w, h);
+        double aim = Phys.bearing(self.x(), self.y(), predicted.x(), predicted.y());
+        double error = Phys.norm(aim - getGunDirection());
+        setGunTurnRate(error);
+        double halfWidth = Math.toDegrees(Math.atan(Phys.BOT_RADIUS / Math.max(36, d)));
+        if (t - target.turn <= 12 && getGunHeat() == 0 && Math.abs(error) <= halfWidth * 0.9
+                && getEnergy() > power + 0.5 && setFire(power)) meleeShots++;
     }
 
     private static int latDir(Phys.Pose target, double sx, double sy, int fallback) {
@@ -160,6 +208,13 @@ public final class KeelHelm extends Bot {
             int t = getTurnNumber();
             double w = getArenaWidth(), h = getArenaHeight();
             Phys.Pose self = new Phys.Pose(getX(), getY(), getDirection(), getSpeed());
+            if (getEnemyCount() > 1) {
+                playMelee(t, self, w, h);
+                maxNanos = Math.max(maxNanos, System.nanoTime() - start);
+                go();
+                continue;
+            }
+            enterDuel();
             me.add(t, self, scanT >= 0 ? ex : w / 2, scanT >= 0 ? ey : h / 2);
             surfer.update(t, self);
             if (scanT < 0 || t - scanT > 4) {

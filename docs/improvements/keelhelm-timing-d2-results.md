@@ -1,0 +1,13 @@
+# KeelHelm timing D2: stopped collector identity validation
+
+Decision: stop the diagnostic, retain all evidence, no timing repair or competitive claim. The collector rejected its owned-JVM identity check before the first live dump. Its raw ps output was not retained, so the exact failed assertion is unknown; the exact staged shell must be reproduced offline before correcting that check. The earlier sleeping-JVM fixture used an absolute Java command rather than the staged PATH invocation and did not cover that distinction. No additional diagnostic game is authorized by D2.
+
+One engine game started, consuming one completed round plus Round2 through turn757 (2,695 contiguous observed ticks). Recording CRC and tracked cleanup verify. No own skipped turn occurred; four resource samples show minimum58% memory availability and zero new Swapouts. Logged loop maximum6ms excludes callback/termination work and unfinished partial-round computation. Parent reaped with143; no tracked process remained.
+
+A useful limited artifact survived: the final JFR is readable,580,205bytes, one chunk spanning five seconds,78execution samples. Its nine GC pauses peaked at4.70ms; no captured one-second join was found. The longest113.58ms HttpClient park is an idle-worker queue wait, not evidence of delayed bot response. The short trace neither reproduces nor explains previous round-start failures; profiling can perturb timing. It does not establish responsiveness or strength.
+
+All7,015 frozen inputs verified at the independent stop audit. Accepted0.2.1 JAR, opponent pins, runtime, heap/GC and100000us deadline stayed unchanged. Project physical accounting is now **870 completed rounds plus three partial rounds**. This diagnostic is excluded from competitive populations. Independent review allows separately registered gameplay comparisons with unchanged strict guards and explicit unresolved timing limitations; it does not authorize a retry, relaxation or improvement claim.
+
+[Independent audit](../../benchmarks/keelhelm-timing-d2/independent-audit.json), [artifact proof](../../benchmarks/keelhelm-timing-d2/artifact-proof.json). Raw recordings, exact execution/source/JAR snapshots, unread/empty profiler outputs, readable JFR, parsed events, resource/invocation/cleanup evidence and zero-game JVM fixture are retained outside Git in `robocode-keelhelm-followups/timing/d2-stopped.tar.gz`, SHA256 a8ebb65fd48115612f4a1eef6acf37c6c6bd5e78fc1913dc7cf284499047d48b.
+
+[Prospective protocol](keelhelm-next-protocol.md), [fixed subsequent hypotheses](keelhelm-next-implementations.md), [issue125](https://github.com/stephanelee/robocode/issues/125), [PR126](https://github.com/stephanelee/robocode/pull/126).

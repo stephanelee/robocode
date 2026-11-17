@@ -1,0 +1,7 @@
+# KeelHelm profiler launcher: zero-game fixture correction
+
+The exact staged shell reproduced the collector's identity assertion: invoking Java through PATH reported `java` to ps, whereas the checker expected the absolute executable. The earlier direct-JVM fixture had not exercised this shell behavior. This reproduction explains a collector failure path; it does not prove which conjunct failed in the original D2 game because that game's ps row was not retained.
+
+The corrected staged launcher uses the already pinned `$JAVA_HOME/bin/java` explicitly, preserving heap, SerialGC, JFR settings and bot JAR. The collector now retains raw identity rows before checking PID/group/start-time/executable. A second exact-shell sleeping-JVM fixture produced a readable snapshot and verified cleanup. These fixtures consumed zero engine games and zero game rounds. They validate acquisition only; no gameplay timing failure was reproduced or repaired, and no competitive-strength claim is supported. No additional diagnostic game ran.
+
+[Before/after evidence and archive proof](../../benchmarks/keelhelm-timing-shell-fix/evidence.json). Both exact launchers, raw identity, JVM fixtures, collector/fixture source, snapshots, summary and cleanup are retained outside Git in robocode-keelhelm-followups/timing/exact-shell-fixtures.tar.gz, SHA256 c2ea05ecc91c95ac7eb7c45dfc8193c165e1a1fa0f9270af0166cfe15dab1fa5. Historical D2 inputs remain frozen in their original archive. [D2 report](keelhelm-timing-d2-results.md), [PR126](https://github.com/stephanelee/robocode/pull/126).

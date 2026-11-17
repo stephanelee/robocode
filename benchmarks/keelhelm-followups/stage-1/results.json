@@ -1,0 +1,2730 @@
+{
+  "status": "complete",
+  "stageConfig": {
+    "stage": 1,
+    "name": "adaptive-gun",
+    "newBit": 1,
+    "controlMask": 0,
+    "candidateMask": 1,
+    "controlJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+    "candidateJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+    "featureJarSHA256": "f305b7f4be7c3309207bdb1569e654bd98b804bb493e914b1b66bbf4dd3215c1",
+    "featureProjectManifestSHA256": "97162a8339d01277cbb5d017ca13a0844ab5307fa80f030440b54c9b5e5f216e",
+    "previousAuditSHA256": null
+  },
+  "freezeSHA256": "c7fc8d27c27f6db05ae589eaaa15f4ba1ad11b8ecaf1f5b14c18edeffa554d5f",
+  "plannedGames": 20,
+  "plannedRounds": 260,
+  "games": [
+    {
+      "id": "melee-1-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 4333,
+            "survival": 2550,
+            "bulletDamage": 1232,
+            "firstPlaces": 13
+          },
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 3989,
+            "survival": 2000,
+            "bulletDamage": 1748,
+            "firstPlaces": 6
+          },
+          {
+            "id": 1,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 3,
+            "totalScore": 2813,
+            "survival": 1350,
+            "bulletDamage": 1347,
+            "firstPlaces": 1
+          },
+          {
+            "id": 4,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 254,
+            "survival": 100,
+            "bulletDamage": 154,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 4333,
+        "survival": 2550,
+        "bulletDamage": 1232,
+        "firstPlaces": 13
+      },
+      "scoreShare": 0.38045482483097726,
+      "recording": "games/melee-1-control/recordings/game-2026-11-05-12-15-53.battle.gz",
+      "audit": {
+        "recordingSHA256": "0a4a3a42019b7cbcdac91f376a9cd65907ac26467b212162afca9785464f28ce",
+        "roundTurns": {
+          "1": 2140,
+          "2": 4538,
+          "3": 4020,
+          "4": 5628,
+          "5": 1211,
+          "6": 1513,
+          "7": 1721,
+          "8": 1235,
+          "9": 4448,
+          "10": 1460,
+          "11": 1026,
+          "12": 3801,
+          "13": 2034,
+          "14": 7163,
+          "15": 4321,
+          "16": 2011,
+          "17": 1468,
+          "18": 1207,
+          "19": 1860,
+          "20": 1133
+        },
+        "metrics": {
+          "shots": 3227,
+          "bulletHits": 412,
+          "wallHits": 1,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 19884,
+          "duelTicks": 31855
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=101 hitsTaken=6 gun=1 score=0.116/0.122 maxMs=8 stoppedRolloutSteps=133466 headingChangedSteps=19437 secondWaveEvaluations=17617 executedStopNow=165 meleeTurns=950 meleeShots=64 duelTransitions=1",
+        "1 end",
+        "2 start",
+        "2 stats shots=372 hitsTaken=39 gun=1 score=0.016/0.040 maxMs=1 stoppedRolloutSteps=238026 headingChangedSteps=47768 secondWaveEvaluations=46799 executedStopNow=452 meleeTurns=1026 meleeShots=70 duelTransitions=1",
+        "2 end",
+        "3 start",
+        "3 stats shots=619 hitsTaken=64 gun=0 score=0.058/0.047 maxMs=0 stoppedRolloutSteps=309414 headingChangedSteps=48948 secondWaveEvaluations=43836 executedStopNow=375 meleeTurns=1003 meleeShots=67 duelTransitions=1",
+        "3 end",
+        "4 start",
+        "4 stats shots=1001 hitsTaken=106 gun=1 score=0.044/0.057 maxMs=0 stoppedRolloutSteps=382340 headingChangedSteps=73805 secondWaveEvaluations=66092 executedStopNow=522 meleeTurns=926 meleeShots=62 duelTransitions=1",
+        "4 end",
+        "5 start",
+        "5 stats shots=1007 hitsTaken=106 gun=1 score=0.040/0.052 maxMs=0 stoppedRolloutSteps=9205 headingChangedSteps=1363 secondWaveEvaluations=880 executedStopNow=5 meleeTurns=1124 meleeShots=77 duelTransitions=1",
+        "5 end",
+        "6 start",
+        "6 stats shots=1029 hitsTaken=107 gun=1 score=0.052/0.054 maxMs=0 stoppedRolloutSteps=39177 headingChangedSteps=5632 secondWaveEvaluations=3629 executedStopNow=43 meleeTurns=1211 meleeShots=82 duelTransitions=1",
+        "6 end",
+        "7 start",
+        "7 stats shots=1029 hitsTaken=107 gun=1 score=0.052/0.054 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=723 meleeShots=49 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=1043 hitsTaken=107 gun=1 score=0.068/0.070 maxMs=0 stoppedRolloutSteps=25146 headingChangedSteps=3584 secondWaveEvaluations=2325 executedStopNow=25 meleeTurns=1067 meleeShots=71 duelTransitions=1",
+        "8 end",
+        "9 start",
+        "9 stats shots=1330 hitsTaken=142 gun=1 score=0.081/0.097 maxMs=0 stoppedRolloutSteps=286983 headingChangedSteps=54419 secondWaveEvaluations=49065 executedStopNow=327 meleeTurns=986 meleeShots=67 duelTransitions=1",
+        "9 end",
+        "10 start",
+        "10 stats shots=1330 hitsTaken=142 gun=1 score=0.076/0.091 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1393 meleeShots=97 duelTransitions=1",
+        "10 end",
+        "11 start",
+        "11 stats shots=1338 hitsTaken=145 gun=1 score=0.063/0.103 maxMs=0 stoppedRolloutSteps=42217 headingChangedSteps=5933 secondWaveEvaluations=2026 executedStopNow=33 meleeTurns=902 meleeShots=62 duelTransitions=1",
+        "11 end",
+        "12 start",
+        "12 stats shots=1569 hitsTaken=160 gun=0 score=0.099/0.052 maxMs=0 stoppedRolloutSteps=273644 headingChangedSteps=47243 secondWaveEvaluations=42447 executedStopNow=288 meleeTurns=705 meleeShots=47 duelTransitions=1",
+        "12 end",
+        "13 start",
+        "13 stats shots=1645 hitsTaken=164 gun=1 score=0.099/0.119 maxMs=0 stoppedRolloutSteps=104807 headingChangedSteps=15467 secondWaveEvaluations=13167 executedStopNow=113 meleeTurns=1104 meleeShots=77 duelTransitions=1",
+        "13 end",
+        "14 start",
+        "14 stats shots=2144 hitsTaken=226 gun=1 score=0.095/0.108 maxMs=0 stoppedRolloutSteps=430449 headingChangedSteps=84635 secondWaveEvaluations=86758 executedStopNow=658 meleeTurns=884 meleeShots=60 duelTransitions=1",
+        "14 end",
+        "15 start",
+        "15 stats shots=2422 hitsTaken=252 gun=0 score=0.113/0.110 maxMs=0 stoppedRolloutSteps=358735 headingChangedSteps=56991 secondWaveEvaluations=48476 executedStopNow=337 meleeTurns=810 meleeShots=52 duelTransitions=1",
+        "15 end",
+        "16 start",
+        "16 stats shots=2422 hitsTaken=252 gun=0 score=0.113/0.110 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=839 meleeShots=56 duelTransitions=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=2447 hitsTaken=255 gun=1 score=0.067/0.117 maxMs=0 stoppedRolloutSteps=32788 headingChangedSteps=5135 secondWaveEvaluations=3833 executedStopNow=14 meleeTurns=1162 meleeShots=78 duelTransitions=1",
+        "17 end",
+        "18 start",
+        "18 stats shots=2464 hitsTaken=256 gun=1 score=0.094/0.111 maxMs=0 stoppedRolloutSteps=44099 headingChangedSteps=5425 secondWaveEvaluations=2902 executedStopNow=27 meleeTurns=919 meleeShots=62 duelTransitions=1",
+        "18 end",
+        "19 start",
+        "19 stats shots=2528 hitsTaken=264 gun=1 score=0.121/0.150 maxMs=0 stoppedRolloutSteps=62152 headingChangedSteps=12436 secondWaveEvaluations=10965 executedStopNow=99 meleeTurns=1046 meleeShots=70 duelTransitions=1",
+        "19 end",
+        "20 start",
+        "20 stats shots=2528 hitsTaken=264 gun=1 score=0.121/0.150 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1101 meleeShots=75 duelTransitions=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-1-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110700,
+      "order": [
+        "KeelHelm",
+        "Diamond Port",
+        "Keel",
+        "Prism"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 4,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 1,
+            "totalScore": 4303,
+            "survival": 2200,
+            "bulletDamage": 1599,
+            "firstPlaces": 11
+          },
+          {
+            "id": 1,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 3295,
+            "survival": 1550,
+            "bulletDamage": 1595,
+            "firstPlaces": 2
+          },
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 3,
+            "totalScore": 3186,
+            "survival": 1850,
+            "bulletDamage": 1028,
+            "firstPlaces": 7
+          },
+          {
+            "id": 3,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 674,
+            "survival": 400,
+            "bulletDamage": 259,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 3,
+        "totalScore": 3186,
+        "survival": 1850,
+        "bulletDamage": 1028,
+        "firstPlaces": 7
+      },
+      "scoreShare": 0.27805899807994416,
+      "recording": "games/melee-1-candidate/recordings/game-2026-11-05-12-15-53.battle.gz",
+      "audit": {
+        "recordingSHA256": "0ee0e8055e9da08fdc80e44ac6a3a100e45a7e7285877d6fbc6013a3195d0281",
+        "roundTurns": {
+          "1": 2113,
+          "2": 1903,
+          "3": 4048,
+          "4": 3312,
+          "5": 1732,
+          "6": 2278,
+          "7": 1397,
+          "8": 1577,
+          "9": 1372,
+          "10": 2265,
+          "11": 1450,
+          "12": 1913,
+          "13": 5080,
+          "14": 2012,
+          "15": 1233,
+          "16": 1332,
+          "17": 3694,
+          "18": 1744,
+          "19": 2003,
+          "20": 1981
+        },
+        "metrics": {
+          "shots": 2406,
+          "bulletHits": 311,
+          "wallHits": 3,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 20326,
+          "duelTicks": 15185
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=0 hitsTaken=0 gun=0 score=0.200/0.100 maxMs=5 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=827 meleeShots=56 duelTransitions=0 features=1 virtualConfirmed=56 virtualResolved=54 meleeGunChoices=[9, 7, 40] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=0 hitsTaken=0 gun=0 score=0.200/0.100 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1123 meleeShots=76 duelTransitions=0 features=1 virtualConfirmed=132 virtualResolved=125 meleeGunChoices=[24, 14, 38] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=233 hitsTaken=15 gun=0 score=0.062/0.047 maxMs=1 stoppedRolloutSteps=224439 headingChangedSteps=42531 secondWaveEvaluations=39468 executedStopNow=346 meleeTurns=1108 meleeShots=75 duelTransitions=1 features=1 virtualConfirmed=207 virtualResolved=195 meleeGunChoices=[42, 26, 7] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=435 hitsTaken=40 gun=1 score=0.071/0.103 maxMs=0 stoppedRolloutSteps=245094 headingChangedSteps=42749 secondWaveEvaluations=37367 executedStopNow=386 meleeTurns=770 meleeShots=52 duelTransitions=1 features=1 virtualConfirmed=259 virtualResolved=239 meleeGunChoices=[32, 19, 1] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=487 hitsTaken=41 gun=1 score=0.044/0.054 maxMs=0 stoppedRolloutSteps=72785 headingChangedSteps=11007 secondWaveEvaluations=9206 executedStopNow=85 meleeTurns=1094 meleeShots=75 duelTransitions=1 features=1 virtualConfirmed=334 virtualResolved=307 meleeGunChoices=[42, 2, 31] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=571 hitsTaken=50 gun=1 score=0.087/0.103 maxMs=0 stoppedRolloutSteps=84405 headingChangedSteps=16133 secondWaveEvaluations=14646 executedStopNow=109 meleeTurns=1128 meleeShots=75 duelTransitions=1 features=1 virtualConfirmed=409 virtualResolved=376 meleeGunChoices=[22, 27, 26] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=592 hitsTaken=50 gun=1 score=0.073/0.090 maxMs=0 stoppedRolloutSteps=29847 headingChangedSteps=4560 secondWaveEvaluations=3329 executedStopNow=22 meleeTurns=1137 meleeShots=78 duelTransitions=1 features=1 virtualConfirmed=487 virtualResolved=448 meleeGunChoices=[43, 13, 22] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=592 hitsTaken=50 gun=1 score=0.073/0.090 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1129 meleeShots=78 duelTransitions=0 features=1 virtualConfirmed=565 virtualResolved=519 meleeGunChoices=[32, 34, 12] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=605 hitsTaken=50 gun=0 score=0.104/0.089 maxMs=0 stoppedRolloutSteps=23988 headingChangedSteps=3994 secondWaveEvaluations=2053 executedStopNow=16 meleeTurns=1164 meleeShots=79 duelTransitions=1 features=1 virtualConfirmed=644 virtualResolved=593 meleeGunChoices=[32, 31, 16] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=703 hitsTaken=59 gun=0 score=0.103/0.075 maxMs=0 stoppedRolloutSteps=106603 headingChangedSteps=17910 secondWaveEvaluations=17406 executedStopNow=128 meleeTurns=1053 meleeShots=73 duelTransitions=1 features=1 virtualConfirmed=717 virtualResolved=659 meleeGunChoices=[33, 39, 1] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end",
+        "11 start",
+        "11 stats shots=703 hitsTaken=59 gun=0 score=0.103/0.075 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=842 meleeShots=58 duelTransitions=0 features=1 virtualConfirmed=775 virtualResolved=710 meleeGunChoices=[23, 30, 5] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=703 hitsTaken=59 gun=0 score=0.103/0.075 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=951 meleeShots=65 duelTransitions=0 features=1 virtualConfirmed=840 virtualResolved=770 meleeGunChoices=[24, 5, 36] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "12 end",
+        "13 start",
+        "13 stats shots=1034 hitsTaken=95 gun=1 score=0.115/0.121 maxMs=0 stoppedRolloutSteps=325914 headingChangedSteps=62653 secondWaveEvaluations=56596 executedStopNow=414 meleeTurns=943 meleeShots=64 duelTransitions=1 features=1 virtualConfirmed=904 virtualResolved=828 meleeGunChoices=[26, 19, 19] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "13 end",
+        "14 start",
+        "14 stats shots=1063 hitsTaken=97 gun=0 score=0.120/0.101 maxMs=0 stoppedRolloutSteps=37921 headingChangedSteps=6306 secondWaveEvaluations=4757 executedStopNow=27 meleeTurns=1196 meleeShots=82 duelTransitions=1 features=1 virtualConfirmed=986 virtualResolved=904 meleeGunChoices=[45, 37, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=1063 hitsTaken=97 gun=0 score=0.120/0.101 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1031 meleeShots=69 duelTransitions=0 features=1 virtualConfirmed=1054 virtualResolved=967 meleeGunChoices=[12, 10, 46] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "15 end",
+        "16 start",
+        "16 stats shots=1067 hitsTaken=97 gun=0 score=0.086/0.072 maxMs=0 stoppedRolloutSteps=20534 headingChangedSteps=2402 secondWaveEvaluations=992 executedStopNow=34 meleeTurns=1152 meleeShots=79 duelTransitions=1 features=1 virtualConfirmed=1133 virtualResolved=1039 meleeGunChoices=[43, 9, 27] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=1067 hitsTaken=97 gun=0 score=0.086/0.072 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=602 meleeShots=41 duelTransitions=0 features=1 virtualConfirmed=1174 virtualResolved=1077 meleeGunChoices=[26, 3, 12] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "17 end",
+        "18 start",
+        "18 stats shots=1067 hitsTaken=97 gun=0 score=0.086/0.072 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1110 meleeShots=70 duelTransitions=0 features=1 virtualConfirmed=1244 virtualResolved=1144 meleeGunChoices=[0, 53, 17] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1067 hitsTaken=97 gun=0 score=0.086/0.072 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1078 meleeShots=75 duelTransitions=0 features=1 virtualConfirmed=1319 virtualResolved=1214 meleeGunChoices=[0, 45, 30] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1153 hitsTaken=101 gun=1 score=0.121/0.153 maxMs=0 stoppedRolloutSteps=112731 headingChangedSteps=17919 secondWaveEvaluations=16040 executedStopNow=153 meleeTurns=879 meleeShots=60 duelTransitions=1 features=1 virtualConfirmed=1379 virtualResolved=1268 meleeGunChoices=[0, 22, 38] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-2-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 3,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 4200,
+            "survival": 2400,
+            "bulletDamage": 1282,
+            "firstPlaces": 11
+          },
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 3353,
+            "survival": 1750,
+            "bulletDamage": 1344,
+            "firstPlaces": 6
+          },
+          {
+            "id": 4,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 3,
+            "totalScore": 3114,
+            "survival": 1650,
+            "bulletDamage": 1356,
+            "firstPlaces": 3
+          },
+          {
+            "id": 1,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 363,
+            "survival": 200,
+            "bulletDamage": 157,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 3,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 4200,
+        "survival": 2400,
+        "bulletDamage": 1282,
+        "firstPlaces": 11
+      },
+      "scoreShare": 0.38077969174977333,
+      "recording": "games/melee-2-candidate/recordings/game-2026-11-05-12-18-10.battle.gz",
+      "audit": {
+        "recordingSHA256": "fdbf88cd6d5d449a6e6a1edc05ce1a7fffed0d4db9dc12645bb507a33589c954",
+        "roundTurns": {
+          "1": 2354,
+          "2": 1208,
+          "3": 1801,
+          "4": 2320,
+          "5": 1292,
+          "6": 1480,
+          "7": 1327,
+          "8": 3192,
+          "9": 2064,
+          "10": 1970,
+          "11": 3094,
+          "12": 2316,
+          "13": 1898,
+          "14": 2276,
+          "15": 4423,
+          "16": 1794,
+          "17": 1196,
+          "18": 1506,
+          "19": 1442,
+          "20": 1074
+        },
+        "metrics": {
+          "shots": 2401,
+          "bulletHits": 349,
+          "wallHits": 2,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 20556,
+          "duelTicks": 17241
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=103 hitsTaken=8 gun=0 score=0.099/0.090 maxMs=4 stoppedRolloutSteps=113999 headingChangedSteps=19911 secondWaveEvaluations=18091 executedStopNow=129 meleeTurns=1104 meleeShots=76 duelTransitions=1 features=1 virtualConfirmed=76 virtualResolved=69 meleeGunChoices=[0, 29, 47] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=136 hitsTaken=10 gun=0 score=0.151/0.129 maxMs=1 stoppedRolloutSteps=55026 headingChangedSteps=7104 secondWaveEvaluations=6667 executedStopNow=23 meleeTurns=802 meleeShots=53 duelTransitions=1 features=1 virtualConfirmed=129 virtualResolved=116 meleeGunChoices=[1, 33, 19] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=167 hitsTaken=11 gun=1 score=0.075/0.092 maxMs=0 stoppedRolloutSteps=42676 headingChangedSteps=6770 secondWaveEvaluations=4972 executedStopNow=39 meleeTurns=1130 meleeShots=77 duelTransitions=1 features=1 virtualConfirmed=206 virtualResolved=188 meleeGunChoices=[0, 68, 9] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=259 hitsTaken=13 gun=1 score=0.080/0.115 maxMs=0 stoppedRolloutSteps=180157 headingChangedSteps=21590 secondWaveEvaluations=18302 executedStopNow=212 meleeTurns=913 meleeShots=62 duelTransitions=1 features=1 virtualConfirmed=268 virtualResolved=244 meleeGunChoices=[0, 29, 33] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=278 hitsTaken=16 gun=1 score=0.113/0.123 maxMs=0 stoppedRolloutSteps=87187 headingChangedSteps=7119 secondWaveEvaluations=4657 executedStopNow=30 meleeTurns=1020 meleeShots=70 duelTransitions=1 features=1 virtualConfirmed=337 virtualResolved=307 meleeGunChoices=[20, 32, 17] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=278 hitsTaken=16 gun=1 score=0.113/0.123 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1144 meleeShots=79 duelTransitions=0 features=1 virtualConfirmed=416 virtualResolved=379 meleeGunChoices=[52, 11, 16] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=307 hitsTaken=19 gun=1 score=0.058/0.100 maxMs=0 stoppedRolloutSteps=98134 headingChangedSteps=8334 secondWaveEvaluations=6665 executedStopNow=31 meleeTurns=954 meleeShots=65 duelTransitions=1 features=1 virtualConfirmed=481 virtualResolved=437 meleeGunChoices=[41, 12, 12] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=509 hitsTaken=35 gun=1 score=0.043/0.046 maxMs=0 stoppedRolloutSteps=155880 headingChangedSteps=31765 secondWaveEvaluations=28581 executedStopNow=243 meleeTurns=1146 meleeShots=80 duelTransitions=1 features=1 virtualConfirmed=561 virtualResolved=513 meleeGunChoices=[47, 27, 6] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=509 hitsTaken=35 gun=1 score=0.043/0.046 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1097 meleeShots=72 duelTransitions=0 features=1 virtualConfirmed=632 virtualResolved=582 meleeGunChoices=[40, 15, 16] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=592 hitsTaken=41 gun=1 score=0.087/0.123 maxMs=0 stoppedRolloutSteps=119471 headingChangedSteps=17794 secondWaveEvaluations=14438 executedStopNow=152 meleeTurns=914 meleeShots=63 duelTransitions=1 features=1 virtualConfirmed=695 virtualResolved=639 meleeGunChoices=[46, 0, 17] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end",
+        "11 start",
+        "11 stats shots=731 hitsTaken=54 gun=0 score=0.140/0.109 maxMs=0 stoppedRolloutSteps=160113 headingChangedSteps=27757 secondWaveEvaluations=23343 executedStopNow=177 meleeTurns=891 meleeShots=61 duelTransitions=1 features=1 virtualConfirmed=756 virtualResolved=694 meleeGunChoices=[24, 7, 30] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=791 hitsTaken=56 gun=0 score=0.083/0.068 maxMs=0 stoppedRolloutSteps=64988 headingChangedSteps=11481 secondWaveEvaluations=9826 executedStopNow=94 meleeTurns=1292 meleeShots=88 duelTransitions=1 features=1 virtualConfirmed=844 virtualResolved=777 meleeGunChoices=[46, 27, 15] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "12 end",
+        "13 start",
+        "13 stats shots=791 hitsTaken=56 gun=0 score=0.083/0.068 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1096 meleeShots=75 duelTransitions=0 features=1 virtualConfirmed=919 virtualResolved=848 meleeGunChoices=[6, 42, 27] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "13 end",
+        "14 start",
+        "14 stats shots=895 hitsTaken=66 gun=1 score=0.061/0.090 maxMs=0 stoppedRolloutSteps=109085 headingChangedSteps=21374 secondWaveEvaluations=17901 executedStopNow=197 meleeTurns=963 meleeShots=67 duelTransitions=1 features=1 virtualConfirmed=986 virtualResolved=908 meleeGunChoices=[22, 36, 9] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=1180 hitsTaken=87 gun=1 score=0.101/0.108 maxMs=0 stoppedRolloutSteps=273093 headingChangedSteps=52615 secondWaveEvaluations=48024 executedStopNow=274 meleeTurns=943 meleeShots=65 duelTransitions=1 features=1 virtualConfirmed=1051 virtualResolved=969 meleeGunChoices=[35, 30, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "15 end",
+        "16 start",
+        "16 stats shots=1259 hitsTaken=95 gun=1 score=0.059/0.099 maxMs=1 stoppedRolloutSteps=81158 headingChangedSteps=15864 secondWaveEvaluations=13226 executedStopNow=122 meleeTurns=826 meleeShots=56 duelTransitions=1 features=1 virtualConfirmed=1107 virtualResolved=1020 meleeGunChoices=[27, 28, 1] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=1273 hitsTaken=97 gun=1 score=0.046/0.131 maxMs=0 stoppedRolloutSteps=31257 headingChangedSteps=3679 secondWaveEvaluations=2431 executedStopNow=8 meleeTurns=1024 meleeShots=69 duelTransitions=1 features=1 virtualConfirmed=1176 virtualResolved=1083 meleeGunChoices=[37, 21, 11] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "17 end",
+        "18 start",
+        "18 stats shots=1283 hitsTaken=98 gun=1 score=0.108/0.111 maxMs=0 stoppedRolloutSteps=16292 headingChangedSteps=2159 secondWaveEvaluations=1466 executedStopNow=5 meleeTurns=1273 meleeShots=85 duelTransitions=1 features=1 virtualConfirmed=1261 virtualResolved=1161 meleeGunChoices=[0, 54, 31] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1314 hitsTaken=99 gun=0 score=0.105/0.088 maxMs=0 stoppedRolloutSteps=28883 headingChangedSteps=5125 secondWaveEvaluations=5001 executedStopNow=21 meleeTurns=1075 meleeShots=74 duelTransitions=1 features=1 virtualConfirmed=1335 virtualResolved=1229 meleeGunChoices=[19, 31, 24] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1314 hitsTaken=99 gun=0 score=0.105/0.088 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=945 meleeShots=59 duelTransitions=0 features=1 virtualConfirmed=1394 virtualResolved=1286 meleeGunChoices=[0, 31, 28] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-2-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110701,
+      "order": [
+        "Diamond Port",
+        "Keel",
+        "Prism",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 4000,
+            "survival": 2200,
+            "bulletDamage": 1341,
+            "firstPlaces": 11
+          },
+          {
+            "id": 4,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 3483,
+            "survival": 1700,
+            "bulletDamage": 1455,
+            "firstPlaces": 7
+          },
+          {
+            "id": 3,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 3,
+            "totalScore": 3042,
+            "survival": 1550,
+            "bulletDamage": 1422,
+            "firstPlaces": 0
+          },
+          {
+            "id": 2,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 930,
+            "survival": 550,
+            "bulletDamage": 305,
+            "firstPlaces": 2
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 4000,
+        "survival": 2200,
+        "bulletDamage": 1341,
+        "firstPlaces": 11
+      },
+      "scoreShare": 0.34919249236141425,
+      "recording": "games/melee-2-control/recordings/game-2026-11-05-12-18-10.battle.gz",
+      "audit": {
+        "recordingSHA256": "f582c9a3780ef43f0949a00655e9c68bac5da62ae11187e5d781ef5b98ad991b",
+        "roundTurns": {
+          "1": 1709,
+          "2": 1650,
+          "3": 4748,
+          "4": 1915,
+          "5": 4171,
+          "6": 4942,
+          "7": 2171,
+          "8": 1314,
+          "9": 4502,
+          "10": 2225,
+          "11": 1980,
+          "12": 1497,
+          "13": 1470,
+          "14": 2343,
+          "15": 1585,
+          "16": 1281,
+          "17": 2155,
+          "18": 2158,
+          "19": 1535,
+          "20": 1477
+        },
+        "metrics": {
+          "shots": 2863,
+          "bulletHits": 369,
+          "wallHits": 4,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 22335,
+          "duelTicks": 19909
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=9 hitsTaken=2 gun=0 score=0.200/0.100 maxMs=8 stoppedRolloutSteps=11172 headingChangedSteps=2327 secondWaveEvaluations=492 executedStopNow=21 meleeTurns=1579 meleeShots=101 duelTransitions=1",
+        "1 end",
+        "2 start",
+        "2 stats shots=9 hitsTaken=2 gun=0 score=0.200/0.100 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=892 meleeShots=60 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=299 hitsTaken=20 gun=0 score=0.110/0.099 maxMs=1 stoppedRolloutSteps=285094 headingChangedSteps=56082 secondWaveEvaluations=47679 executedStopNow=456 meleeTurns=997 meleeShots=66 duelTransitions=1",
+        "3 end",
+        "4 start",
+        "4 stats shots=357 hitsTaken=24 gun=1 score=0.104/0.135 maxMs=0 stoppedRolloutSteps=89074 headingChangedSteps=13103 secondWaveEvaluations=10128 executedStopNow=56 meleeTurns=1141 meleeShots=76 duelTransitions=1",
+        "4 end",
+        "5 start",
+        "5 stats shots=596 hitsTaken=47 gun=1 score=0.077/0.136 maxMs=0 stoppedRolloutSteps=240854 headingChangedSteps=47348 secondWaveEvaluations=40572 executedStopNow=361 meleeTurns=1216 meleeShots=85 duelTransitions=1",
+        "5 end",
+        "6 start",
+        "6 stats shots=899 hitsTaken=84 gun=1 score=0.029/0.084 maxMs=0 stoppedRolloutSteps=313531 headingChangedSteps=59962 secondWaveEvaluations=51605 executedStopNow=295 meleeTurns=1211 meleeShots=83 duelTransitions=1",
+        "6 end",
+        "7 start",
+        "7 stats shots=969 hitsTaken=88 gun=1 score=0.066/0.177 maxMs=0 stoppedRolloutSteps=99091 headingChangedSteps=16976 secondWaveEvaluations=11886 executedStopNow=103 meleeTurns=1230 meleeShots=82 duelTransitions=1",
+        "7 end",
+        "8 start",
+        "8 stats shots=969 hitsTaken=88 gun=1 score=0.066/0.177 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1154 meleeShots=79 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=1247 hitsTaken=118 gun=1 score=0.059/0.076 maxMs=0 stoppedRolloutSteps=264951 headingChangedSteps=51473 secondWaveEvaluations=48440 executedStopNow=361 meleeTurns=1051 meleeShots=70 duelTransitions=1",
+        "9 end",
+        "10 start",
+        "10 stats shots=1343 hitsTaken=123 gun=0 score=0.095/0.087 maxMs=0 stoppedRolloutSteps=120708 headingChangedSteps=19720 secondWaveEvaluations=17352 executedStopNow=143 meleeTurns=924 meleeShots=62 duelTransitions=1",
+        "10 end",
+        "11 start",
+        "11 stats shots=1343 hitsTaken=123 gun=0 score=0.095/0.087 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1235 meleeShots=67 duelTransitions=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=1371 hitsTaken=124 gun=0 score=0.124/0.110 maxMs=0 stoppedRolloutSteps=32427 headingChangedSteps=7646 secondWaveEvaluations=4721 executedStopNow=37 meleeTurns=967 meleeShots=64 duelTransitions=1",
+        "12 end",
+        "13 start",
+        "13 stats shots=1402 hitsTaken=126 gun=1 score=0.085/0.106 maxMs=0 stoppedRolloutSteps=63197 headingChangedSteps=8855 secondWaveEvaluations=6002 executedStopNow=50 meleeTurns=1079 meleeShots=73 duelTransitions=1",
+        "13 end",
+        "14 start",
+        "14 stats shots=1486 hitsTaken=128 gun=1 score=0.081/0.082 maxMs=0 stoppedRolloutSteps=88149 headingChangedSteps=16165 secondWaveEvaluations=13277 executedStopNow=81 meleeTurns=1165 meleeShots=78 duelTransitions=1",
+        "14 end",
+        "15 start",
+        "15 stats shots=1534 hitsTaken=129 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=60915 headingChangedSteps=9331 secondWaveEvaluations=8052 executedStopNow=49 meleeTurns=1015 meleeShots=67 duelTransitions=1",
+        "15 end",
+        "16 start",
+        "16 stats shots=1548 hitsTaken=131 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=18179 headingChangedSteps=2638 secondWaveEvaluations=2235 executedStopNow=25 meleeTurns=1075 meleeShots=73 duelTransitions=1",
+        "16 end",
+        "17 start",
+        "17 stats shots=1548 hitsTaken=131 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=907 meleeShots=62 duelTransitions=0",
+        "17 end",
+        "18 start",
+        "18 stats shots=1548 hitsTaken=131 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1347 meleeShots=79 duelTransitions=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1548 hitsTaken=131 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1089 meleeShots=74 duelTransitions=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1548 hitsTaken=131 gun=0 score=0.075/0.050 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1054 meleeShots=73 duelTransitions=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-3-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 4,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 3888,
+            "survival": 2300,
+            "bulletDamage": 1121,
+            "firstPlaces": 10
+          },
+          {
+            "id": 2,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 3554,
+            "survival": 1650,
+            "bulletDamage": 1733,
+            "firstPlaces": 4
+          },
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 3,
+            "totalScore": 3087,
+            "survival": 1600,
+            "bulletDamage": 1239,
+            "firstPlaces": 5
+          },
+          {
+            "id": 1,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 757,
+            "survival": 450,
+            "bulletDamage": 253,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 4,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 3888,
+        "survival": 2300,
+        "bulletDamage": 1121,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.3444976076555024,
+      "recording": "games/melee-3-control/recordings/game-2026-11-05-12-19-53.battle.gz",
+      "audit": {
+        "recordingSHA256": "8c4f0b7b72dfe0c017c5e16005b85741e91e070e52fce9585b54e1ee0a9a8e95",
+        "roundTurns": {
+          "1": 1503,
+          "2": 1515,
+          "3": 2047,
+          "4": 2226,
+          "5": 2219,
+          "6": 2170,
+          "7": 2312,
+          "8": 1303,
+          "9": 1273,
+          "10": 1224,
+          "11": 4450,
+          "12": 2133,
+          "13": 4682,
+          "14": 3147,
+          "15": 2900,
+          "16": 1339,
+          "17": 2089,
+          "18": 1153,
+          "19": 3537,
+          "20": 1977
+        },
+        "metrics": {
+          "shots": 2963,
+          "bulletHits": 376,
+          "wallHits": 0,
+          "botHits": 1,
+          "skippedTurns": 0,
+          "meleeTicks": 20556,
+          "duelTicks": 22381
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=33 hitsTaken=2 gun=0 score=0.131/0.090 maxMs=3 stoppedRolloutSteps=47042 headingChangedSteps=7341 secondWaveEvaluations=5594 executedStopNow=38 meleeTurns=1058 meleeShots=72 duelTransitions=1",
+        "1 end",
+        "2 start",
+        "2 stats shots=85 hitsTaken=4 gun=0 score=0.107/0.066 maxMs=1 stoppedRolloutSteps=82516 headingChangedSteps=13781 secondWaveEvaluations=10488 executedStopNow=128 meleeTurns=814 meleeShots=55 duelTransitions=1",
+        "2 end",
+        "3 start",
+        "3 stats shots=168 hitsTaken=6 gun=1 score=0.090/0.211 maxMs=1 stoppedRolloutSteps=118260 headingChangedSteps=16152 secondWaveEvaluations=14802 executedStopNow=149 meleeTurns=1008 meleeShots=68 duelTransitions=1",
+        "3 end",
+        "4 start",
+        "4 stats shots=242 hitsTaken=8 gun=0 score=0.173/0.153 maxMs=1 stoppedRolloutSteps=106401 headingChangedSteps=15567 secondWaveEvaluations=13709 executedStopNow=81 meleeTurns=1106 meleeShots=75 duelTransitions=1",
+        "4 end",
+        "5 start",
+        "5 stats shots=332 hitsTaken=16 gun=0 score=0.134/0.093 maxMs=0 stoppedRolloutSteps=115300 headingChangedSteps=19498 secondWaveEvaluations=15677 executedStopNow=113 meleeTurns=1127 meleeShots=78 duelTransitions=1",
+        "5 end",
+        "6 start",
+        "6 stats shots=428 hitsTaken=17 gun=1 score=0.126/0.163 maxMs=0 stoppedRolloutSteps=140808 headingChangedSteps=20968 secondWaveEvaluations=17792 executedStopNow=151 meleeTurns=848 meleeShots=58 duelTransitions=1",
+        "6 end",
+        "7 start",
+        "7 stats shots=501 hitsTaken=18 gun=1 score=0.100/0.126 maxMs=0 stoppedRolloutSteps=111775 headingChangedSteps=15063 secondWaveEvaluations=13149 executedStopNow=94 meleeTurns=1245 meleeShots=85 duelTransitions=1",
+        "7 end",
+        "8 start",
+        "8 stats shots=501 hitsTaken=18 gun=1 score=0.100/0.126 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1119 meleeShots=76 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=501 hitsTaken=18 gun=1 score=0.100/0.126 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1269 meleeShots=83 duelTransitions=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=501 hitsTaken=18 gun=1 score=0.100/0.126 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=967 meleeShots=65 duelTransitions=0",
+        "10 end",
+        "11 start",
+        "11 stats shots=754 hitsTaken=49 gun=0 score=0.063/0.058 maxMs=0 stoppedRolloutSteps=262593 headingChangedSteps=49874 secondWaveEvaluations=44066 executedStopNow=335 meleeTurns=1041 meleeShots=72 duelTransitions=1",
+        "11 end",
+        "12 start",
+        "12 stats shots=754 hitsTaken=49 gun=0 score=0.063/0.058 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1033 meleeShots=70 duelTransitions=0",
+        "12 end",
+        "13 start",
+        "13 stats shots=1067 hitsTaken=99 gun=0 score=0.139/0.058 maxMs=0 stoppedRolloutSteps=341108 headingChangedSteps=62056 secondWaveEvaluations=55633 executedStopNow=440 meleeTurns=818 meleeShots=55 duelTransitions=1",
+        "13 end",
+        "14 start",
+        "14 stats shots=1215 hitsTaken=116 gun=1 score=0.035/0.063 maxMs=0 stoppedRolloutSteps=149034 headingChangedSteps=28309 secondWaveEvaluations=25806 executedStopNow=185 meleeTurns=1152 meleeShots=75 duelTransitions=1",
+        "14 end",
+        "15 start",
+        "15 stats shots=1337 hitsTaken=130 gun=1 score=0.042/0.122 maxMs=0 stoppedRolloutSteps=142293 headingChangedSteps=25870 secondWaveEvaluations=19257 executedStopNow=113 meleeTurns=1038 meleeShots=71 duelTransitions=1",
+        "15 end",
+        "16 start",
+        "16 stats shots=1337 hitsTaken=130 gun=1 score=0.042/0.122 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=617 meleeShots=31 duelTransitions=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=1421 hitsTaken=132 gun=1 score=0.115/0.123 maxMs=0 stoppedRolloutSteps=121864 headingChangedSteps=17697 secondWaveEvaluations=15154 executedStopNow=142 meleeTurns=978 meleeShots=65 duelTransitions=1",
+        "17 end",
+        "18 start",
+        "18 stats shots=1421 hitsTaken=132 gun=1 score=0.115/0.123 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1133 meleeShots=76 duelTransitions=1",
+        "18 end",
+        "19 start",
+        "19 stats shots=1625 hitsTaken=158 gun=1 score=0.053/0.086 maxMs=0 stoppedRolloutSteps=221971 headingChangedSteps=40088 secondWaveEvaluations=35447 executedStopNow=251 meleeTurns=1004 meleeShots=67 duelTransitions=1",
+        "19 end",
+        "20 start",
+        "20 stats shots=1691 hitsTaken=168 gun=1 score=0.060/0.078 maxMs=0 stoppedRolloutSteps=81733 headingChangedSteps=13247 secondWaveEvaluations=11993 executedStopNow=83 meleeTurns=1176 meleeShots=80 duelTransitions=1",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-3-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110702,
+      "order": [
+        "Keel",
+        "Prism",
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 1,
+            "totalScore": 4514,
+            "survival": 2200,
+            "bulletDamage": 1768,
+            "firstPlaces": 12
+          },
+          {
+            "id": 3,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 2,
+            "totalScore": 3326,
+            "survival": 1850,
+            "bulletDamage": 1171,
+            "firstPlaces": 6
+          },
+          {
+            "id": 4,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 3,
+            "totalScore": 2982,
+            "survival": 1550,
+            "bulletDamage": 1333,
+            "firstPlaces": 2
+          },
+          {
+            "id": 1,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 613,
+            "survival": 400,
+            "bulletDamage": 204,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 3,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 2,
+        "totalScore": 3326,
+        "survival": 1850,
+        "bulletDamage": 1171,
+        "firstPlaces": 6
+      },
+      "scoreShare": 0.2908613904678618,
+      "recording": "games/melee-3-candidate/recordings/game-2026-11-05-12-19-53.battle.gz",
+      "audit": {
+        "recordingSHA256": "e24fe1a43306941244bb0793109b1e5ba309b505f94c63787d68bb634df1c200",
+        "roundTurns": {
+          "1": 1226,
+          "2": 2275,
+          "3": 1481,
+          "4": 2030,
+          "5": 2219,
+          "6": 1385,
+          "7": 4107,
+          "8": 3470,
+          "9": 1237,
+          "10": 1312,
+          "11": 1843,
+          "12": 1962,
+          "13": 3095,
+          "14": 2280,
+          "15": 1310,
+          "16": 2152,
+          "17": 4893,
+          "18": 2171,
+          "19": 1610,
+          "20": 1676
+        },
+        "metrics": {
+          "shots": 2420,
+          "bulletHits": 332,
+          "wallHits": 2,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 19813,
+          "duelTicks": 16441
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=21 hitsTaken=1 gun=0 score=0.230/0.171 maxMs=5 stoppedRolloutSteps=22986 headingChangedSteps=4444 secondWaveEvaluations=3145 executedStopNow=15 meleeTurns=963 meleeShots=64 duelTransitions=1 features=1 virtualConfirmed=64 virtualResolved=59 meleeGunChoices=[0, 6, 58] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=105 hitsTaken=6 gun=0 score=0.145/0.106 maxMs=1 stoppedRolloutSteps=127392 headingChangedSteps=18635 secondWaveEvaluations=15751 executedStopNow=132 meleeTurns=1090 meleeShots=74 duelTransitions=1 features=1 virtualConfirmed=137 virtualResolved=127 meleeGunChoices=[35, 1, 37] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=148 hitsTaken=8 gun=1 score=0.090/0.099 maxMs=1 stoppedRolloutSteps=70250 headingChangedSteps=9690 secondWaveEvaluations=7707 executedStopNow=68 meleeTurns=914 meleeShots=62 duelTransitions=1 features=1 virtualConfirmed=199 virtualResolved=184 meleeGunChoices=[40, 5, 17] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=148 hitsTaken=8 gun=1 score=0.090/0.099 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=928 meleeShots=63 duelTransitions=0 features=1 virtualConfirmed=262 virtualResolved=242 meleeGunChoices=[36, 5, 22] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=192 hitsTaken=11 gun=0 score=0.098/0.093 maxMs=0 stoppedRolloutSteps=60742 headingChangedSteps=10174 secondWaveEvaluations=7374 executedStopNow=79 meleeTurns=1329 meleeShots=92 duelTransitions=1 features=1 virtualConfirmed=354 virtualResolved=331 meleeGunChoices=[53, 0, 39] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=192 hitsTaken=11 gun=0 score=0.098/0.093 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=683 meleeShots=46 duelTransitions=0 features=1 virtualConfirmed=399 virtualResolved=372 meleeGunChoices=[8, 32, 5] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=405 hitsTaken=36 gun=0 score=0.110/0.084 maxMs=0 stoppedRolloutSteps=202390 headingChangedSteps=41029 secondWaveEvaluations=37046 executedStopNow=380 meleeTurns=1089 meleeShots=72 duelTransitions=1 features=1 virtualConfirmed=471 virtualResolved=438 meleeGunChoices=[21, 34, 17] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=202071 headingChangedSteps=37910 secondWaveEvaluations=33994 executedStopNow=340 meleeTurns=1056 meleeShots=73 duelTransitions=1 features=1 virtualConfirmed=544 virtualResolved=505 meleeGunChoices=[30, 25, 18] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=999 meleeShots=68 duelTransitions=0 features=1 virtualConfirmed=611 virtualResolved=565 meleeGunChoices=[31, 12, 24] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=933 meleeShots=57 duelTransitions=0 features=1 virtualConfirmed=668 virtualResolved=619 meleeGunChoices=[27, 0, 30] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end",
+        "11 start",
+        "11 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=667 meleeShots=44 duelTransitions=0 features=1 virtualConfirmed=712 virtualResolved=660 meleeGunChoices=[0, 0, 44] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1389 meleeShots=82 duelTransitions=0 features=1 virtualConfirmed=794 virtualResolved=738 meleeGunChoices=[34, 0, 48] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "12 end",
+        "13 start",
+        "13 stats shots=603 hitsTaken=59 gun=0 score=0.086/0.071 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=925 meleeShots=61 duelTransitions=0 features=1 virtualConfirmed=855 virtualResolved=795 meleeGunChoices=[40, 7, 14] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "13 end",
+        "14 start",
+        "14 stats shots=707 hitsTaken=64 gun=1 score=0.107/0.123 maxMs=0 stoppedRolloutSteps=158883 headingChangedSteps=22187 secondWaveEvaluations=19967 executedStopNow=176 meleeTurns=875 meleeShots=60 duelTransitions=1 features=1 virtualConfirmed=914 virtualResolved=848 meleeGunChoices=[28, 21, 10] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=707 hitsTaken=64 gun=1 score=0.107/0.123 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=940 meleeShots=64 duelTransitions=0 features=1 virtualConfirmed=978 virtualResolved=909 meleeGunChoices=[26, 18, 20] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "15 end",
+        "16 start",
+        "16 stats shots=779 hitsTaken=67 gun=0 score=0.148/0.146 maxMs=0 stoppedRolloutSteps=114116 headingChangedSteps=15777 secondWaveEvaluations=13373 executedStopNow=97 meleeTurns=1100 meleeShots=74 duelTransitions=1 features=1 virtualConfirmed=1052 virtualResolved=981 meleeGunChoices=[42, 20, 12] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=1120 hitsTaken=98 gun=1 score=0.076/0.110 maxMs=0 stoppedRolloutSteps=344711 headingChangedSteps=70357 secondWaveEvaluations=58760 executedStopNow=482 meleeTurns=666 meleeShots=45 duelTransitions=1 features=1 virtualConfirmed=1097 virtualResolved=1023 meleeGunChoices=[35, 1, 9] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "17 end",
+        "18 start",
+        "18 stats shots=1203 hitsTaken=107 gun=1 score=0.031/0.066 maxMs=0 stoppedRolloutSteps=112248 headingChangedSteps=17232 secondWaveEvaluations=15500 executedStopNow=99 meleeTurns=1115 meleeShots=77 duelTransitions=1 features=1 virtualConfirmed=1174 virtualResolved=1094 meleeGunChoices=[38, 21, 18] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1233 hitsTaken=111 gun=1 score=0.054/0.074 maxMs=0 stoppedRolloutSteps=33748 headingChangedSteps=5896 secondWaveEvaluations=5039 executedStopNow=35 meleeTurns=1246 meleeShots=86 duelTransitions=1 features=1 virtualConfirmed=1260 virtualResolved=1174 meleeGunChoices=[11, 75, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1233 hitsTaken=111 gun=1 score=0.054/0.074 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=897 meleeShots=34 duelTransitions=0 features=1 virtualConfirmed=1294 virtualResolved=1208 meleeGunChoices=[18, 16, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-4-candidate",
+      "arm": "candidate",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 1,
+            "totalScore": 4391,
+            "survival": 2250,
+            "bulletDamage": 1633,
+            "firstPlaces": 12
+          },
+          {
+            "id": 1,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 3306,
+            "survival": 1700,
+            "bulletDamage": 1451,
+            "firstPlaces": 3
+          },
+          {
+            "id": 4,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 3,
+            "totalScore": 3189,
+            "survival": 1800,
+            "bulletDamage": 1115,
+            "firstPlaces": 5
+          },
+          {
+            "id": 3,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 491,
+            "survival": 250,
+            "bulletDamage": 219,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 4,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 3,
+        "totalScore": 3189,
+        "survival": 1800,
+        "bulletDamage": 1115,
+        "firstPlaces": 5
+      },
+      "scoreShare": 0.28030236441944273,
+      "recording": "games/melee-4-candidate/recordings/game-2026-11-05-12-21-31.battle.gz",
+      "audit": {
+        "recordingSHA256": "9894268a557472b57a693da2e824a4c3f91b5bb1172558438810a02645e37f49",
+        "roundTurns": {
+          "1": 3283,
+          "2": 1409,
+          "3": 2077,
+          "4": 2975,
+          "5": 4277,
+          "6": 1444,
+          "7": 4605,
+          "8": 1384,
+          "9": 1896,
+          "10": 1792,
+          "11": 1650,
+          "12": 1428,
+          "13": 1564,
+          "14": 3526,
+          "15": 2903,
+          "16": 3893,
+          "17": 1796,
+          "18": 1329,
+          "19": 1998,
+          "20": 2426
+        },
+        "metrics": {
+          "shots": 2606,
+          "bulletHits": 324,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 18830,
+          "duelTicks": 19895
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=185 hitsTaken=18 gun=1 score=0.075/0.079 maxMs=5 stoppedRolloutSteps=185503 headingChangedSteps=35460 secondWaveEvaluations=31406 executedStopNow=219 meleeTurns=1085 meleeShots=74 duelTransitions=1 features=1 virtualConfirmed=74 virtualResolved=69 meleeGunChoices=[23, 3, 48] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=185 hitsTaken=18 gun=1 score=0.075/0.079 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1405 meleeShots=98 duelTransitions=1 features=1 virtualConfirmed=172 virtualResolved=161 meleeGunChoices=[20, 0, 78] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=185 hitsTaken=18 gun=1 score=0.075/0.079 maxMs=1 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1109 meleeShots=70 duelTransitions=0 features=1 virtualConfirmed=242 virtualResolved=228 meleeGunChoices=[19, 10, 41] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=185 hitsTaken=18 gun=1 score=0.075/0.079 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=626 meleeShots=42 duelTransitions=0 features=1 virtualConfirmed=284 virtualResolved=267 meleeGunChoices=[36, 3, 3] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=466 hitsTaken=50 gun=0 score=0.091/0.082 maxMs=0 stoppedRolloutSteps=278841 headingChangedSteps=53514 secondWaveEvaluations=48337 executedStopNow=440 meleeTurns=887 meleeShots=61 duelTransitions=1 features=1 virtualConfirmed=345 virtualResolved=321 meleeGunChoices=[31, 25, 5] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=513 hitsTaken=53 gun=1 score=0.054/0.080 maxMs=0 stoppedRolloutSteps=93418 headingChangedSteps=12300 secondWaveEvaluations=9253 executedStopNow=47 meleeTurns=722 meleeShots=50 duelTransitions=1 features=1 virtualConfirmed=395 virtualResolved=364 meleeGunChoices=[27, 21, 2] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=808 hitsTaken=88 gun=1 score=0.071/0.118 maxMs=0 stoppedRolloutSteps=318744 headingChangedSteps=57343 secondWaveEvaluations=51862 executedStopNow=376 meleeTurns=994 meleeShots=68 duelTransitions=1 features=1 virtualConfirmed=463 virtualResolved=425 meleeGunChoices=[57, 3, 8] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=808 hitsTaken=88 gun=1 score=0.071/0.118 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=781 meleeShots=51 duelTransitions=0 features=1 virtualConfirmed=514 virtualResolved=471 meleeGunChoices=[44, 7, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=872 hitsTaken=92 gun=0 score=0.109/0.087 maxMs=0 stoppedRolloutSteps=76682 headingChangedSteps=13058 secondWaveEvaluations=10961 executedStopNow=106 meleeTurns=1124 meleeShots=76 duelTransitions=1 features=1 virtualConfirmed=590 virtualResolved=542 meleeGunChoices=[55, 9, 12] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=872 hitsTaken=92 gun=0 score=0.109/0.087 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1075 meleeShots=74 duelTransitions=0 features=1 virtualConfirmed=663 virtualResolved=612 meleeGunChoices=[29, 3, 41] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end",
+        "11 start",
+        "11 stats shots=872 hitsTaken=92 gun=0 score=0.109/0.087 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1098 meleeShots=75 duelTransitions=0 features=1 virtualConfirmed=738 virtualResolved=681 meleeGunChoices=[28, 47, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=910 hitsTaken=95 gun=0 score=0.100/0.093 maxMs=0 stoppedRolloutSteps=60727 headingChangedSteps=8899 secondWaveEvaluations=6712 executedStopNow=66 meleeTurns=957 meleeShots=65 duelTransitions=1 features=1 virtualConfirmed=803 virtualResolved=739 meleeGunChoices=[40, 25, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "12 end",
+        "13 start",
+        "13 stats shots=910 hitsTaken=95 gun=0 score=0.100/0.093 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=932 meleeShots=64 duelTransitions=0 features=1 virtualConfirmed=867 virtualResolved=799 meleeGunChoices=[51, 4, 9] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "13 end",
+        "14 start",
+        "14 stats shots=1134 hitsTaken=117 gun=0 score=0.056/0.049 maxMs=0 stoppedRolloutSteps=246278 headingChangedSteps=44610 secondWaveEvaluations=38348 executedStopNow=358 meleeTurns=715 meleeShots=48 duelTransitions=1 features=1 virtualConfirmed=914 virtualResolved=844 meleeGunChoices=[36, 11, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=1289 hitsTaken=131 gun=0 score=0.084/0.043 maxMs=0 stoppedRolloutSteps=155777 headingChangedSteps=30177 secondWaveEvaluations=26106 executedStopNow=211 meleeTurns=958 meleeShots=65 duelTransitions=1 features=1 virtualConfirmed=979 virtualResolved=903 meleeGunChoices=[28, 16, 21] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "15 end",
+        "16 start",
+        "16 stats shots=1531 hitsTaken=152 gun=0 score=0.104/0.059 maxMs=0 stoppedRolloutSteps=292220 headingChangedSteps=50836 secondWaveEvaluations=43720 executedStopNow=308 meleeTurns=890 meleeShots=60 duelTransitions=1 features=1 virtualConfirmed=1039 virtualResolved=957 meleeGunChoices=[25, 6, 29] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "16 end",
+        "17 start",
+        "17 stats shots=1607 hitsTaken=156 gun=1 score=0.056/0.133 maxMs=0 stoppedRolloutSteps=141599 headingChangedSteps=16633 secondWaveEvaluations=14102 executedStopNow=94 meleeTurns=828 meleeShots=56 duelTransitions=1 features=1 virtualConfirmed=1095 virtualResolved=1006 meleeGunChoices=[23, 20, 13] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "17 end",
+        "18 start",
+        "18 stats shots=1607 hitsTaken=156 gun=1 score=0.056/0.133 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=885 meleeShots=56 duelTransitions=0 features=1 virtualConfirmed=1150 virtualResolved=1058 meleeGunChoices=[18, 16, 21] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "18 end",
+        "19 start",
+        "19 stats shots=1607 hitsTaken=156 gun=1 score=0.056/0.133 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=976 meleeShots=68 duelTransitions=0 features=1 virtualConfirmed=1218 virtualResolved=1121 meleeGunChoices=[39, 0, 29] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1607 hitsTaken=156 gun=1 score=0.056/0.133 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=774 meleeShots=50 duelTransitions=0 features=1 virtualConfirmed=1268 virtualResolved=1168 meleeGunChoices=[22, 5, 23] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "melee-4-control",
+      "arm": "control",
+      "scenario": "melee",
+      "rounds": 20,
+      "seed": 2026110703,
+      "order": [
+        "Prism",
+        "KeelHelm",
+        "Diamond Port",
+        "Keel"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 20,
+        "results": [
+          {
+            "id": 1,
+            "name": "Prism",
+            "version": "0.2.0",
+            "rank": 1,
+            "totalScore": 3404,
+            "survival": 1750,
+            "bulletDamage": 1393,
+            "firstPlaces": 5
+          },
+          {
+            "id": 3,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 3321,
+            "survival": 1750,
+            "bulletDamage": 1283,
+            "firstPlaces": 6
+          },
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 3,
+            "totalScore": 3258,
+            "survival": 1900,
+            "bulletDamage": 1021,
+            "firstPlaces": 8
+          },
+          {
+            "id": 4,
+            "name": "Keel",
+            "version": "0.1.0",
+            "rank": 4,
+            "totalScore": 1007,
+            "survival": 600,
+            "bulletDamage": 355,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 3,
+        "totalScore": 3258,
+        "survival": 1900,
+        "bulletDamage": 1021,
+        "firstPlaces": 8
+      },
+      "scoreShare": 0.2964513193812557,
+      "recording": "games/melee-4-control/recordings/game-2026-11-05-12-21-31.battle.gz",
+      "audit": {
+        "recordingSHA256": "017fe579d90826fac08f2677c9245b0f0b3a40b69ebfa7c6b9f72be4730832e9",
+        "roundTurns": {
+          "1": 1242,
+          "2": 2863,
+          "3": 1187,
+          "4": 1781,
+          "5": 1673,
+          "6": 1328,
+          "7": 1460,
+          "8": 4597,
+          "9": 1755,
+          "10": 1082,
+          "11": 2143,
+          "12": 1987,
+          "13": 1285,
+          "14": 2064,
+          "15": 6125,
+          "16": 1347,
+          "17": 1261,
+          "18": 1518,
+          "19": 1614,
+          "20": 1394
+        },
+        "metrics": {
+          "shots": 2373,
+          "bulletHits": 284,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 20309,
+          "duelTicks": 14127
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=18 hitsTaken=2 gun=0 score=0.170/0.097 maxMs=9 stoppedRolloutSteps=35337 headingChangedSteps=4513 secondWaveEvaluations=3132 executedStopNow=34 meleeTurns=1016 meleeShots=69 duelTransitions=1",
+        "1 end",
+        "2 start",
+        "2 stats shots=189 hitsTaken=19 gun=1 score=0.074/0.084 maxMs=1 stoppedRolloutSteps=173452 headingChangedSteps=30976 secondWaveEvaluations=29158 executedStopNow=276 meleeTurns=801 meleeShots=55 duelTransitions=1",
+        "2 end",
+        "3 start",
+        "3 stats shots=190 hitsTaken=20 gun=1 score=0.074/0.084 maxMs=1 stoppedRolloutSteps=11482 headingChangedSteps=564 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1164 meleeShots=80 duelTransitions=1",
+        "3 end",
+        "4 start",
+        "4 stats shots=190 hitsTaken=20 gun=1 score=0.074/0.084 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=833 meleeShots=56 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=190 hitsTaken=20 gun=1 score=0.074/0.084 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1301 meleeShots=87 duelTransitions=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=190 hitsTaken=20 gun=1 score=0.074/0.084 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=1023 meleeShots=69 duelTransitions=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=232 hitsTaken=25 gun=0 score=0.086/0.064 maxMs=0 stoppedRolloutSteps=45583 headingChangedSteps=7995 secondWaveEvaluations=6923 executedStopNow=36 meleeTurns=938 meleeShots=64 duelTransitions=1",
+        "7 end",
+        "8 start",
+        "8 stats shots=512 hitsTaken=54 gun=1 score=0.073/0.076 maxMs=0 stoppedRolloutSteps=301442 headingChangedSteps=54740 secondWaveEvaluations=46584 executedStopNow=349 meleeTurns=1146 meleeShots=78 duelTransitions=1",
+        "8 end",
+        "9 start",
+        "9 stats shots=529 hitsTaken=56 gun=1 score=0.073/0.076 maxMs=0 stoppedRolloutSteps=19449 headingChangedSteps=3018 secondWaveEvaluations=2728 executedStopNow=15 meleeTurns=1534 meleeShots=95 duelTransitions=1",
+        "9 end",
+        "10 start",
+        "10 stats shots=535 hitsTaken=59 gun=1 score=0.065/0.068 maxMs=0 stoppedRolloutSteps=42783 headingChangedSteps=3419 secondWaveEvaluations=1511 executedStopNow=11 meleeTurns=987 meleeShots=65 duelTransitions=1",
+        "10 end",
+        "11 start",
+        "11 stats shots=535 hitsTaken=59 gun=1 score=0.065/0.068 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=995 meleeShots=66 duelTransitions=0",
+        "11 end",
+        "12 start",
+        "12 stats shots=594 hitsTaken=63 gun=1 score=0.106/0.124 maxMs=0 stoppedRolloutSteps=64729 headingChangedSteps=11986 secondWaveEvaluations=9565 executedStopNow=63 meleeTurns=1216 meleeShots=82 duelTransitions=1",
+        "12 end",
+        "13 start",
+        "13 stats shots=630 hitsTaken=68 gun=1 score=0.092/0.100 maxMs=0 stoppedRolloutSteps=133033 headingChangedSteps=13226 secondWaveEvaluations=9719 executedStopNow=149 meleeTurns=759 meleeShots=51 duelTransitions=1",
+        "13 end",
+        "14 start",
+        "14 stats shots=630 hitsTaken=68 gun=1 score=0.092/0.100 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=950 meleeShots=63 duelTransitions=0",
+        "14 end",
+        "15 start",
+        "15 stats shots=961 hitsTaken=95 gun=0 score=0.106/0.081 maxMs=0 stoppedRolloutSteps=385876 headingChangedSteps=71487 secondWaveEvaluations=49895 executedStopNow=290 meleeTurns=874 meleeShots=57 duelTransitions=1",
+        "15 end",
+        "16 start",
+        "16 stats shots=977 hitsTaken=97 gun=0 score=0.067/0.051 maxMs=0 stoppedRolloutSteps=107268 headingChangedSteps=8164 secondWaveEvaluations=4252 executedStopNow=13 meleeTurns=1117 meleeShots=77 duelTransitions=1",
+        "16 end",
+        "17 start",
+        "17 stats shots=1001 hitsTaken=97 gun=1 score=0.097/0.176 maxMs=0 stoppedRolloutSteps=44080 headingChangedSteps=5788 secondWaveEvaluations=4769 executedStopNow=80 meleeTurns=888 meleeShots=59 duelTransitions=1",
+        "17 end",
+        "18 start",
+        "18 stats shots=1030 hitsTaken=100 gun=1 score=0.091/0.180 maxMs=0 stoppedRolloutSteps=39794 headingChangedSteps=6600 secondWaveEvaluations=4947 executedStopNow=66 meleeTurns=1142 meleeShots=77 duelTransitions=1",
+        "18 end",
+        "19 start",
+        "19 stats shots=1030 hitsTaken=100 gun=1 score=0.091/0.180 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=950 meleeShots=65 duelTransitions=0",
+        "19 end",
+        "20 start",
+        "20 stats shots=1030 hitsTaken=100 gun=1 score=0.091/0.180 maxMs=0 stoppedRolloutSteps=0 headingChangedSteps=0 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=668 meleeShots=46 duelTransitions=0",
+        "20 end"
+      ]
+    },
+    {
+      "id": "diamond-1-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026110704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 771,
+            "survival": 450,
+            "bulletDamage": 195,
+            "firstPlaces": 9
+          },
+          {
+            "id": 1,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 534,
+            "survival": 50,
+            "bulletDamage": 466,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 771,
+        "survival": 450,
+        "bulletDamage": 195,
+        "firstPlaces": 9
+      },
+      "scoreShare": 0.5908045977011495,
+      "recording": "games/diamond-1-control/recordings/game-2026-11-05-12-23-26.battle.gz",
+      "audit": {
+        "recordingSHA256": "c21b012e0c1396a8f57bd6e591c363ad61a131286e86a4e32e6284c0114d17da",
+        "roundTurns": {
+          "1": 4480,
+          "2": 4075,
+          "3": 4877,
+          "4": 4534,
+          "5": 4074,
+          "6": 2815,
+          "7": 5001,
+          "8": 5235,
+          "9": 4192,
+          "10": 2852
+        },
+        "metrics": {
+          "shots": 2990,
+          "bulletHits": 281,
+          "wallHits": 9,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 42135
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=354 hitsTaken=33 gun=0 score=0.070/0.048 maxMs=5 stoppedRolloutSteps=358864 headingChangedSteps=71962 secondWaveEvaluations=59150 executedStopNow=482 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=679 hitsTaken=59 gun=1 score=0.121/0.153 maxMs=1 stoppedRolloutSteps=327336 headingChangedSteps=63358 secondWaveEvaluations=55203 executedStopNow=428 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=1072 hitsTaken=108 gun=1 score=0.113/0.125 maxMs=0 stoppedRolloutSteps=389658 headingChangedSteps=74411 secondWaveEvaluations=66030 executedStopNow=475 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=1427 hitsTaken=139 gun=0 score=0.091/0.080 maxMs=0 stoppedRolloutSteps=341187 headingChangedSteps=68905 secondWaveEvaluations=61335 executedStopNow=516 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=1753 hitsTaken=175 gun=0 score=0.151/0.145 maxMs=0 stoppedRolloutSteps=318103 headingChangedSteps=66973 secondWaveEvaluations=54855 executedStopNow=383 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=1964 hitsTaken=200 gun=1 score=0.108/0.131 maxMs=0 stoppedRolloutSteps=193845 headingChangedSteps=41487 secondWaveEvaluations=34831 executedStopNow=254 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=2353 hitsTaken=245 gun=1 score=0.117/0.128 maxMs=0 stoppedRolloutSteps=377566 headingChangedSteps=76750 secondWaveEvaluations=66657 executedStopNow=372 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=2767 hitsTaken=294 gun=1 score=0.061/0.074 maxMs=0 stoppedRolloutSteps=400332 headingChangedSteps=81223 secondWaveEvaluations=70811 executedStopNow=517 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=3099 hitsTaken=332 gun=1 score=0.058/0.085 maxMs=0 stoppedRolloutSteps=334381 headingChangedSteps=66034 secondWaveEvaluations=55614 executedStopNow=401 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=3328 hitsTaken=352 gun=0 score=0.104/0.048 maxMs=0 stoppedRolloutSteps=233900 headingChangedSteps=44879 secondWaveEvaluations=40175 executedStopNow=243 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "diamond-1-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026110704,
+      "order": [
+        "KeelHelm",
+        "Diamond Port"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 843,
+            "survival": 500,
+            "bulletDamage": 202,
+            "firstPlaces": 9
+          },
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 408,
+            "survival": 0,
+            "bulletDamage": 408,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 843,
+        "survival": 500,
+        "bulletDamage": 202,
+        "firstPlaces": 9
+      },
+      "scoreShare": 0.6738609112709832,
+      "recording": "games/diamond-1-candidate/recordings/game-2026-11-05-12-23-26.battle.gz",
+      "audit": {
+        "recordingSHA256": "b94749f9cb8aaba067d2c323316edc7861e74ab6ddb44c7d1726fd6423f5f6d6",
+        "roundTurns": {
+          "1": 4745,
+          "2": 2962,
+          "3": 4424,
+          "4": 3505,
+          "5": 2928,
+          "6": 4179,
+          "7": 3210,
+          "8": 2839,
+          "9": 4117,
+          "10": 4624
+        },
+        "metrics": {
+          "shots": 2701,
+          "bulletHits": 271,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 37533
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=379 hitsTaken=42 gun=1 score=0.054/0.072 maxMs=4 stoppedRolloutSteps=375951 headingChangedSteps=76064 secondWaveEvaluations=64584 executedStopNow=571 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=612 hitsTaken=63 gun=1 score=0.121/0.127 maxMs=1 stoppedRolloutSteps=244221 headingChangedSteps=47660 secondWaveEvaluations=39482 executedStopNow=311 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=949 hitsTaken=96 gun=0 score=0.085/0.076 maxMs=0 stoppedRolloutSteps=338287 headingChangedSteps=67337 secondWaveEvaluations=59052 executedStopNow=466 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=1227 hitsTaken=126 gun=1 score=0.076/0.207 maxMs=2 stoppedRolloutSteps=284027 headingChangedSteps=54811 secondWaveEvaluations=46511 executedStopNow=346 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=1451 hitsTaken=145 gun=0 score=0.166/0.062 maxMs=0 stoppedRolloutSteps=260709 headingChangedSteps=48261 secondWaveEvaluations=41018 executedStopNow=198 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=1778 hitsTaken=171 gun=1 score=0.099/0.119 maxMs=0 stoppedRolloutSteps=332979 headingChangedSteps=65947 secondWaveEvaluations=55630 executedStopNow=315 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=2035 hitsTaken=194 gun=0 score=0.156/0.100 maxMs=0 stoppedRolloutSteps=256406 headingChangedSteps=51744 secondWaveEvaluations=41824 executedStopNow=299 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=2251 hitsTaken=208 gun=0 score=0.170/0.085 maxMs=0 stoppedRolloutSteps=230459 headingChangedSteps=43947 secondWaveEvaluations=37027 executedStopNow=218 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=2575 hitsTaken=238 gun=0 score=0.080/0.070 maxMs=0 stoppedRolloutSteps=318477 headingChangedSteps=65397 secondWaveEvaluations=53211 executedStopNow=466 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=2941 hitsTaken=274 gun=0 score=0.076/0.066 maxMs=0 stoppedRolloutSteps=367693 headingChangedSteps=73967 secondWaveEvaluations=59695 executedStopNow=441 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "diamond-2-candidate",
+      "arm": "candidate",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026110705,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 762,
+            "survival": 450,
+            "bulletDamage": 187,
+            "firstPlaces": 9
+          },
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 450,
+            "survival": 50,
+            "bulletDamage": 376,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 762,
+        "survival": 450,
+        "bulletDamage": 187,
+        "firstPlaces": 9
+      },
+      "scoreShare": 0.6287128712871287,
+      "recording": "games/diamond-2-candidate/recordings/game-2026-11-05-12-26-05.battle.gz",
+      "audit": {
+        "recordingSHA256": "1396901ba2a1df507f76729334b09919c5730649164253f113f2d23959a18195",
+        "roundTurns": {
+          "1": 4565,
+          "2": 4335,
+          "3": 4154,
+          "4": 4712,
+          "5": 3676,
+          "6": 4120,
+          "7": 1545,
+          "8": 3738,
+          "9": 4352,
+          "10": 3851
+        },
+        "metrics": {
+          "shots": 2777,
+          "bulletHits": 244,
+          "wallHits": 11,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 39048
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=361 hitsTaken=37 gun=1 score=0.048/0.059 maxMs=3 stoppedRolloutSteps=373455 headingChangedSteps=72890 secondWaveEvaluations=63043 executedStopNow=433 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=699 hitsTaken=66 gun=1 score=0.073/0.111 maxMs=1 stoppedRolloutSteps=374571 headingChangedSteps=67970 secondWaveEvaluations=57849 executedStopNow=345 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=1032 hitsTaken=100 gun=1 score=0.077/0.099 maxMs=0 stoppedRolloutSteps=330109 headingChangedSteps=67591 secondWaveEvaluations=56886 executedStopNow=401 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=1408 hitsTaken=148 gun=0 score=0.124/0.106 maxMs=0 stoppedRolloutSteps=388734 headingChangedSteps=76264 secondWaveEvaluations=63230 executedStopNow=451 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=1702 hitsTaken=176 gun=0 score=0.135/0.094 maxMs=0 stoppedRolloutSteps=295796 headingChangedSteps=57845 secondWaveEvaluations=49898 executedStopNow=418 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=2022 hitsTaken=212 gun=0 score=0.136/0.114 maxMs=0 stoppedRolloutSteps=341333 headingChangedSteps=64696 secondWaveEvaluations=53775 executedStopNow=338 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=2141 hitsTaken=224 gun=0 score=0.099/0.038 maxMs=0 stoppedRolloutSteps=123669 headingChangedSteps=24521 secondWaveEvaluations=20406 executedStopNow=168 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=2510 hitsTaken=255 gun=0 score=0.081/0.062 maxMs=0 stoppedRolloutSteps=284583 headingChangedSteps=55337 secondWaveEvaluations=49405 executedStopNow=415 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=2851 hitsTaken=290 gun=0 score=0.159/0.109 maxMs=0 stoppedRolloutSteps=354884 headingChangedSteps=70833 secondWaveEvaluations=57244 executedStopNow=439 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=3161 hitsTaken=320 gun=1 score=0.065/0.088 maxMs=0 stoppedRolloutSteps=296311 headingChangedSteps=62716 secondWaveEvaluations=50770 executedStopNow=379 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "diamond-2-control",
+      "arm": "control",
+      "scenario": "Diamond Port",
+      "rounds": 10,
+      "seed": 2026110705,
+      "order": [
+        "Diamond Port",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 773,
+            "survival": 450,
+            "bulletDamage": 198,
+            "firstPlaces": 9
+          },
+          {
+            "id": 2,
+            "name": "Diamond Port",
+            "version": "1.8.28",
+            "rank": 2,
+            "totalScore": 525,
+            "survival": 50,
+            "bulletDamage": 446,
+            "firstPlaces": 1
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 773,
+        "survival": 450,
+        "bulletDamage": 198,
+        "firstPlaces": 9
+      },
+      "scoreShare": 0.5955315870570108,
+      "recording": "games/diamond-2-control/recordings/game-2026-11-05-12-26-05.battle.gz",
+      "audit": {
+        "recordingSHA256": "7e1add30d19ead80ab7a9f8a830c9d48bebc8459fa28b799a4c81bbfd0600d3b",
+        "roundTurns": {
+          "1": 4400,
+          "2": 3037,
+          "3": 1127,
+          "4": 4667,
+          "5": 2879,
+          "6": 4389,
+          "7": 3213,
+          "8": 4473,
+          "9": 4295,
+          "10": 5232
+        },
+        "metrics": {
+          "shots": 2676,
+          "bulletHits": 248,
+          "wallHits": 2,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 37712
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=348 hitsTaken=36 gun=1 score=0.095/0.102 maxMs=4 stoppedRolloutSteps=362771 headingChangedSteps=72692 secondWaveEvaluations=56654 executedStopNow=467 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=589 hitsTaken=60 gun=1 score=0.063/0.082 maxMs=1 stoppedRolloutSteps=241892 headingChangedSteps=47645 secondWaveEvaluations=39993 executedStopNow=273 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=663 hitsTaken=72 gun=1 score=0.111/0.130 maxMs=0 stoppedRolloutSteps=141183 headingChangedSteps=21495 secondWaveEvaluations=16218 executedStopNow=134 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=1032 hitsTaken=114 gun=1 score=0.039/0.053 maxMs=0 stoppedRolloutSteps=372974 headingChangedSteps=73733 secondWaveEvaluations=60874 executedStopNow=519 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=1261 hitsTaken=135 gun=1 score=0.098/0.142 maxMs=0 stoppedRolloutSteps=225619 headingChangedSteps=43766 secondWaveEvaluations=38969 executedStopNow=281 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=1606 hitsTaken=174 gun=0 score=0.137/0.111 maxMs=0 stoppedRolloutSteps=356769 headingChangedSteps=70152 secondWaveEvaluations=57791 executedStopNow=434 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=1862 hitsTaken=203 gun=0 score=0.064/0.064 maxMs=0 stoppedRolloutSteps=279303 headingChangedSteps=54964 secondWaveEvaluations=42836 executedStopNow=316 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=2220 hitsTaken=237 gun=1 score=0.050/0.157 maxMs=0 stoppedRolloutSteps=342554 headingChangedSteps=70992 secondWaveEvaluations=62260 executedStopNow=444 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=2558 hitsTaken=270 gun=0 score=0.168/0.161 maxMs=0 stoppedRolloutSteps=341992 headingChangedSteps=65934 secondWaveEvaluations=57804 executedStopNow=381 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=2950 hitsTaken=309 gun=0 score=0.069/0.042 maxMs=0 stoppedRolloutSteps=366428 headingChangedSteps=76018 secondWaveEvaluations=65973 executedStopNow=441 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "retcon-1-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026110706,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 1030,
+            "survival": 500,
+            "bulletDamage": 358,
+            "firstPlaces": 10
+          },
+          {
+            "id": 2,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 72,
+            "survival": 0,
+            "bulletDamage": 72,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 1030,
+        "survival": 500,
+        "bulletDamage": 358,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.9346642468239564,
+      "recording": "games/retcon-1-control/recordings/game-2026-11-05-12-28-36.battle.gz",
+      "audit": {
+        "recordingSHA256": "78d948e7f94a6e6eedd1c47fff0c5a970a66d7995e88e4d5f8aa7d4981b5308b",
+        "roundTurns": {
+          "1": 922,
+          "2": 1103,
+          "3": 1035,
+          "4": 1077,
+          "5": 962,
+          "6": 828,
+          "7": 1098,
+          "8": 825,
+          "9": 910,
+          "10": 1061
+        },
+        "metrics": {
+          "shots": 628,
+          "bulletHits": 98,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 9821
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=55 hitsTaken=3 gun=0 score=0.145/0.138 maxMs=3 stoppedRolloutSteps=104114 headingChangedSteps=18708 secondWaveEvaluations=7695 executedStopNow=94 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=122 hitsTaken=3 gun=0 score=0.118/0.114 maxMs=1 stoppedRolloutSteps=117621 headingChangedSteps=20078 secondWaveEvaluations=10023 executedStopNow=105 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=184 hitsTaken=3 gun=1 score=0.133/0.145 maxMs=0 stoppedRolloutSteps=127434 headingChangedSteps=20154 secondWaveEvaluations=7586 executedStopNow=71 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=240 hitsTaken=5 gun=1 score=0.141/0.142 maxMs=0 stoppedRolloutSteps=107835 headingChangedSteps=19954 secondWaveEvaluations=7189 executedStopNow=85 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=302 hitsTaken=7 gun=1 score=0.077/0.177 maxMs=1 stoppedRolloutSteps=109423 headingChangedSteps=17889 secondWaveEvaluations=8108 executedStopNow=77 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=358 hitsTaken=7 gun=1 score=0.097/0.142 maxMs=1 stoppedRolloutSteps=63492 headingChangedSteps=14033 secondWaveEvaluations=9220 executedStopNow=98 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=426 hitsTaken=9 gun=1 score=0.108/0.163 maxMs=1 stoppedRolloutSteps=113392 headingChangedSteps=19514 secondWaveEvaluations=10011 executedStopNow=91 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=480 hitsTaken=10 gun=1 score=0.160/0.195 maxMs=0 stoppedRolloutSteps=83421 headingChangedSteps=15838 secondWaveEvaluations=7798 executedStopNow=59 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=534 hitsTaken=11 gun=1 score=0.156/0.178 maxMs=0 stoppedRolloutSteps=98359 headingChangedSteps=16503 secondWaveEvaluations=6427 executedStopNow=82 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=598 hitsTaken=11 gun=1 score=0.072/0.161 maxMs=0 stoppedRolloutSteps=122409 headingChangedSteps=19536 secondWaveEvaluations=9505 executedStopNow=83 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "retcon-1-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026110706,
+      "order": [
+        "KeelHelm",
+        "Retcon"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 1062,
+            "survival": 500,
+            "bulletDamage": 385,
+            "firstPlaces": 10
+          },
+          {
+            "id": 2,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 62,
+            "survival": 0,
+            "bulletDamage": 62,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 1062,
+        "survival": 500,
+        "bulletDamage": 385,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.9448398576512456,
+      "recording": "games/retcon-1-candidate/recordings/game-2026-11-05-12-28-36.battle.gz",
+      "audit": {
+        "recordingSHA256": "a16ed35689661d796d3e077c666192146623eee47c3534d2955e315ade0bfed6",
+        "roundTurns": {
+          "1": 999,
+          "2": 1138,
+          "3": 1004,
+          "4": 888,
+          "5": 882,
+          "6": 846,
+          "7": 1094,
+          "8": 1108,
+          "9": 931,
+          "10": 970
+        },
+        "metrics": {
+          "shots": 635,
+          "bulletHits": 105,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 9860
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=59 hitsTaken=3 gun=1 score=0.150/0.165 maxMs=12 stoppedRolloutSteps=110270 headingChangedSteps=19314 secondWaveEvaluations=7444 executedStopNow=94 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=123 hitsTaken=5 gun=0 score=0.118/0.090 maxMs=0 stoppedRolloutSteps=141052 headingChangedSteps=20303 secondWaveEvaluations=9200 executedStopNow=85 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=182 hitsTaken=8 gun=1 score=0.076/0.135 maxMs=1 stoppedRolloutSteps=122593 headingChangedSteps=19770 secondWaveEvaluations=9276 executedStopNow=73 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=239 hitsTaken=10 gun=1 score=0.169/0.190 maxMs=1 stoppedRolloutSteps=102530 headingChangedSteps=16015 secondWaveEvaluations=8556 executedStopNow=88 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=302 hitsTaken=10 gun=1 score=0.129/0.140 maxMs=1 stoppedRolloutSteps=66303 headingChangedSteps=15298 secondWaveEvaluations=11816 executedStopNow=108 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=361 hitsTaken=10 gun=0 score=0.201/0.173 maxMs=1 stoppedRolloutSteps=68469 headingChangedSteps=13372 secondWaveEvaluations=10498 executedStopNow=63 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=434 hitsTaken=11 gun=1 score=0.084/0.086 maxMs=2 stoppedRolloutSteps=102953 headingChangedSteps=18211 secondWaveEvaluations=10406 executedStopNow=88 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=497 hitsTaken=11 gun=1 score=0.074/0.145 maxMs=0 stoppedRolloutSteps=116410 headingChangedSteps=17342 secondWaveEvaluations=10833 executedStopNow=100 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=553 hitsTaken=12 gun=1 score=0.077/0.191 maxMs=1 stoppedRolloutSteps=111159 headingChangedSteps=16253 secondWaveEvaluations=7452 executedStopNow=76 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=619 hitsTaken=13 gun=1 score=0.107/0.162 maxMs=0 stoppedRolloutSteps=88275 headingChangedSteps=16389 secondWaveEvaluations=11381 executedStopNow=94 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "retcon-2-candidate",
+      "arm": "candidate",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026110707,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 1012,
+            "survival": 500,
+            "bulletDamage": 343,
+            "firstPlaces": 10
+          },
+          {
+            "id": 1,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 44,
+            "survival": 0,
+            "bulletDamage": 44,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 1012,
+        "survival": 500,
+        "bulletDamage": 343,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.9583333333333334,
+      "recording": "games/retcon-2-candidate/recordings/game-2026-11-05-12-28-48.battle.gz",
+      "audit": {
+        "recordingSHA256": "1d442f234490b162a71911506f35183dd40c341891fe65c5a6908713b7d5934f",
+        "roundTurns": {
+          "1": 1116,
+          "2": 1183,
+          "3": 1144,
+          "4": 1012,
+          "5": 939,
+          "6": 1123,
+          "7": 1189,
+          "8": 1011,
+          "9": 976,
+          "10": 1004
+        },
+        "metrics": {
+          "shots": 688,
+          "bulletHits": 96,
+          "wallHits": 5,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 10697
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=66 hitsTaken=1 gun=0 score=0.166/0.147 maxMs=4 stoppedRolloutSteps=132437 headingChangedSteps=18624 secondWaveEvaluations=11043 executedStopNow=83 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=139 hitsTaken=3 gun=1 score=0.056/0.098 maxMs=1 stoppedRolloutSteps=122274 headingChangedSteps=21622 secondWaveEvaluations=11673 executedStopNow=105 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=207 hitsTaken=5 gun=1 score=0.146/0.150 maxMs=1 stoppedRolloutSteps=137259 headingChangedSteps=22094 secondWaveEvaluations=10440 executedStopNow=85 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=265 hitsTaken=6 gun=1 score=0.098/0.148 maxMs=0 stoppedRolloutSteps=129862 headingChangedSteps=17934 secondWaveEvaluations=8153 executedStopNow=108 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=318 hitsTaken=6 gun=1 score=0.079/0.177 maxMs=0 stoppedRolloutSteps=97059 headingChangedSteps=16078 secondWaveEvaluations=5062 executedStopNow=98 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=390 hitsTaken=7 gun=1 score=0.109/0.136 maxMs=1 stoppedRolloutSteps=105159 headingChangedSteps=18241 secondWaveEvaluations=11628 executedStopNow=116 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=462 hitsTaken=8 gun=0 score=0.166/0.155 maxMs=1 stoppedRolloutSteps=131188 headingChangedSteps=20377 secondWaveEvaluations=11101 executedStopNow=116 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=521 hitsTaken=8 gun=1 score=0.088/0.194 maxMs=0 stoppedRolloutSteps=123678 headingChangedSteps=18112 secondWaveEvaluations=8378 executedStopNow=96 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=594 hitsTaken=8 gun=0 score=0.134/0.121 maxMs=0 stoppedRolloutSteps=108489 headingChangedSteps=18124 secondWaveEvaluations=7646 executedStopNow=105 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=659 hitsTaken=9 gun=1 score=0.102/0.104 maxMs=0 stoppedRolloutSteps=101158 headingChangedSteps=16301 secondWaveEvaluations=8969 executedStopNow=86 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "retcon-2-control",
+      "arm": "control",
+      "scenario": "Retcon",
+      "rounds": 10,
+      "seed": 2026110707,
+      "order": [
+        "Retcon",
+        "KeelHelm"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 10,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 1015,
+            "survival": 500,
+            "bulletDamage": 346,
+            "firstPlaces": 10
+          },
+          {
+            "id": 1,
+            "name": "Retcon",
+            "version": "0.2.0",
+            "rank": 2,
+            "totalScore": 66,
+            "survival": 0,
+            "bulletDamage": 66,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 1015,
+        "survival": 500,
+        "bulletDamage": 346,
+        "firstPlaces": 10
+      },
+      "scoreShare": 0.938945420906568,
+      "recording": "games/retcon-2-control/recordings/game-2026-11-05-12-28-48.battle.gz",
+      "audit": {
+        "recordingSHA256": "8277c5a8af2e2d08b32a2553482751e60496bd2982ed33ad8eb6b2dd5d880ef0",
+        "roundTurns": {
+          "1": 1413,
+          "2": 1073,
+          "3": 1120,
+          "4": 1049,
+          "5": 1137,
+          "6": 1066,
+          "7": 1237,
+          "8": 817,
+          "9": 808,
+          "10": 1029
+        },
+        "metrics": {
+          "shots": 701,
+          "bulletHits": 103,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 10749
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=86 hitsTaken=5 gun=1 score=0.117/0.132 maxMs=4 stoppedRolloutSteps=166413 headingChangedSteps=27414 secondWaveEvaluations=10429 executedStopNow=123 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=151 hitsTaken=6 gun=0 score=0.142/0.125 maxMs=1 stoppedRolloutSteps=128731 headingChangedSteps=18986 secondWaveEvaluations=9605 executedStopNow=95 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=225 hitsTaken=7 gun=1 score=0.119/0.144 maxMs=1 stoppedRolloutSteps=118855 headingChangedSteps=19446 secondWaveEvaluations=12204 executedStopNow=113 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=299 hitsTaken=7 gun=0 score=0.119/0.117 maxMs=1 stoppedRolloutSteps=102452 headingChangedSteps=18485 secondWaveEvaluations=11883 executedStopNow=111 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=373 hitsTaken=7 gun=1 score=0.080/0.108 maxMs=1 stoppedRolloutSteps=123362 headingChangedSteps=18647 secondWaveEvaluations=12372 executedStopNow=115 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end",
+        "6 start",
+        "6 stats shots=430 hitsTaken=7 gun=1 score=0.150/0.204 maxMs=1 stoppedRolloutSteps=104554 headingChangedSteps=17356 secondWaveEvaluations=8867 executedStopNow=90 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "6 end",
+        "7 start",
+        "7 stats shots=503 hitsTaken=10 gun=1 score=0.075/0.112 maxMs=0 stoppedRolloutSteps=144149 headingChangedSteps=23137 secondWaveEvaluations=9526 executedStopNow=114 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "7 end",
+        "8 start",
+        "8 stats shots=559 hitsTaken=11 gun=0 score=0.148/0.082 maxMs=0 stoppedRolloutSteps=73059 headingChangedSteps=13609 secondWaveEvaluations=8767 executedStopNow=79 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "8 end",
+        "9 start",
+        "9 stats shots=601 hitsTaken=12 gun=1 score=0.051/0.200 maxMs=0 stoppedRolloutSteps=102122 headingChangedSteps=17619 secondWaveEvaluations=6474 executedStopNow=89 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "9 end",
+        "10 start",
+        "10 stats shots=664 hitsTaken=13 gun=1 score=0.103/0.186 maxMs=0 stoppedRolloutSteps=124067 headingChangedSteps=20109 secondWaveEvaluations=8578 executedStopNow=67 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "10 end"
+      ]
+    },
+    {
+      "id": "walls-control",
+      "arm": "control",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026110708,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 5,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 827,
+            "survival": 250,
+            "bulletDamage": 436,
+            "firstPlaces": 5
+          },
+          {
+            "id": 1,
+            "name": "Walls",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 35,
+            "survival": 0,
+            "bulletDamage": 30,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 827,
+        "survival": 250,
+        "bulletDamage": 436,
+        "firstPlaces": 5
+      },
+      "scoreShare": 0.9593967517401392,
+      "recording": "games/walls-control/recordings/game-2026-11-05-12-28-59.battle.gz",
+      "audit": {
+        "recordingSHA256": "5e7ae03183853d70fdf4bd648a751762ba5f35507a3afcdbe2a0220e7b8a493e",
+        "roundTurns": {
+          "1": 337,
+          "2": 303,
+          "3": 185,
+          "4": 298,
+          "5": 341
+        },
+        "metrics": {
+          "shots": 97,
+          "bulletHits": 66,
+          "wallHits": 6,
+          "botHits": 6,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 1464
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=5 hitsTaken=1 gun=0 score=0.347/0.283 maxMs=2 stoppedRolloutSteps=40443 headingChangedSteps=3451 secondWaveEvaluations=65 executedStopNow=33 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=9 hitsTaken=1 gun=0 score=0.533/0.383 maxMs=0 stoppedRolloutSteps=19576 headingChangedSteps=3552 secondWaveEvaluations=0 executedStopNow=8 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=10 hitsTaken=1 gun=0 score=0.605/0.494 maxMs=0 stoppedRolloutSteps=70 headingChangedSteps=57 secondWaveEvaluations=0 executedStopNow=0 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=15 hitsTaken=3 gun=0 score=0.603/0.544 maxMs=1 stoppedRolloutSteps=17936 headingChangedSteps=2202 secondWaveEvaluations=0 executedStopNow=6 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=20 hitsTaken=3 gun=0 score=0.664/0.476 maxMs=0 stoppedRolloutSteps=46118 headingChangedSteps=4824 secondWaveEvaluations=536 executedStopNow=9 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end"
+      ]
+    },
+    {
+      "id": "walls-candidate",
+      "arm": "candidate",
+      "scenario": "Walls",
+      "rounds": 5,
+      "seed": 2026110708,
+      "order": [
+        "KeelHelm",
+        "Walls"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 5,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 786,
+            "survival": 250,
+            "bulletDamage": 415,
+            "firstPlaces": 5
+          },
+          {
+            "id": 1,
+            "name": "Walls",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 52,
+            "survival": 0,
+            "bulletDamage": 50,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 786,
+        "survival": 250,
+        "bulletDamage": 415,
+        "firstPlaces": 5
+      },
+      "scoreShare": 0.9379474940334129,
+      "recording": "games/walls-candidate/recordings/game-2026-11-05-12-28-59.battle.gz",
+      "audit": {
+        "recordingSHA256": "bfd33f486deb112f40d6ac75fa6ea78bb6d7a1edbd59a24f1c0aa31c7cfbc25b",
+        "roundTurns": {
+          "1": 554,
+          "2": 371,
+          "3": 275,
+          "4": 369,
+          "5": 256
+        },
+        "metrics": {
+          "shots": 128,
+          "bulletHits": 72,
+          "wallHits": 5,
+          "botHits": 4,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 1825
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=10 hitsTaken=3 gun=0 score=0.373/0.268 maxMs=3 stoppedRolloutSteps=53437 headingChangedSteps=6916 secondWaveEvaluations=571 executedStopNow=15 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=17 hitsTaken=4 gun=0 score=0.463/0.354 maxMs=0 stoppedRolloutSteps=35891 headingChangedSteps=6204 secondWaveEvaluations=0 executedStopNow=13 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=21 hitsTaken=4 gun=0 score=0.580/0.499 maxMs=0 stoppedRolloutSteps=20949 headingChangedSteps=3393 secondWaveEvaluations=253 executedStopNow=21 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=27 hitsTaken=5 gun=0 score=0.713/0.656 maxMs=0 stoppedRolloutSteps=21409 headingChangedSteps=3801 secondWaveEvaluations=0 executedStopNow=24 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=29 hitsTaken=5 gun=0 score=0.690/0.613 maxMs=0 stoppedRolloutSteps=26216 headingChangedSteps=1670 secondWaveEvaluations=0 executedStopNow=2 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end"
+      ]
+    },
+    {
+      "id": "spinbot-candidate",
+      "arm": "candidate",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026110709,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ],
+      "status": "complete",
+      "featureMask": 1,
+      "official": {
+        "numberOfRounds": 5,
+        "results": [
+          {
+            "id": 1,
+            "name": "KeelHelm",
+            "version": "0.3.0",
+            "rank": 1,
+            "totalScore": 767,
+            "survival": 250,
+            "bulletDamage": 389,
+            "firstPlaces": 5
+          },
+          {
+            "id": 2,
+            "name": "Spin Bot",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 0,
+            "survival": 0,
+            "bulletDamage": 0,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 1,
+        "name": "KeelHelm",
+        "version": "0.3.0",
+        "rank": 1,
+        "totalScore": 767,
+        "survival": 250,
+        "bulletDamage": 389,
+        "firstPlaces": 5
+      },
+      "scoreShare": 1.0,
+      "recording": "games/spinbot-candidate/recordings/game-2026-11-05-12-29-05.battle.gz",
+      "audit": {
+        "recordingSHA256": "93fb9165f875cab9942e0f289d66e7015a536f33dfdc37a23f88fc0b601c1656",
+        "roundTurns": {
+          "1": 539,
+          "2": 407,
+          "3": 422,
+          "4": 479,
+          "5": 468
+        },
+        "metrics": {
+          "shots": 166,
+          "bulletHits": 118,
+          "wallHits": 11,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 2315
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=9 hitsTaken=0 gun=0 score=0.484/0.352 maxMs=4 stoppedRolloutSteps=156706 headingChangedSteps=12311 secondWaveEvaluations=0 executedStopNow=94 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=15 hitsTaken=0 gun=0 score=0.490/0.392 maxMs=0 stoppedRolloutSteps=84749 headingChangedSteps=7080 secondWaveEvaluations=0 executedStopNow=72 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=21 hitsTaken=0 gun=0 score=0.653/0.572 maxMs=0 stoppedRolloutSteps=46893 headingChangedSteps=3965 secondWaveEvaluations=0 executedStopNow=43 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=29 hitsTaken=0 gun=0 score=0.741/0.714 maxMs=1 stoppedRolloutSteps=150810 headingChangedSteps=12466 secondWaveEvaluations=0 executedStopNow=89 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=37 hitsTaken=0 gun=0 score=0.760/0.665 maxMs=0 stoppedRolloutSteps=104792 headingChangedSteps=9308 secondWaveEvaluations=0 executedStopNow=60 meleeTurns=0 meleeShots=0 duelTransitions=0 features=1 virtualConfirmed=0 virtualResolved=0 meleeGunChoices=[0, 0, 0] powerChanges=0 smartDifferences=0 riskDifferences=0",
+        "5 end"
+      ]
+    },
+    {
+      "id": "spinbot-control",
+      "arm": "control",
+      "scenario": "SpinBot",
+      "rounds": 5,
+      "seed": 2026110709,
+      "order": [
+        "KeelHelm",
+        "SpinBot"
+      ],
+      "status": "complete",
+      "featureMask": 0,
+      "official": {
+        "numberOfRounds": 5,
+        "results": [
+          {
+            "id": 2,
+            "name": "KeelHelm",
+            "version": "0.2.1",
+            "rank": 1,
+            "totalScore": 767,
+            "survival": 250,
+            "bulletDamage": 389,
+            "firstPlaces": 5
+          },
+          {
+            "id": 1,
+            "name": "Spin Bot",
+            "version": "1.0",
+            "rank": 2,
+            "totalScore": 0,
+            "survival": 0,
+            "bulletDamage": 0,
+            "firstPlaces": 0
+          }
+        ]
+      },
+      "helm": {
+        "id": 2,
+        "name": "KeelHelm",
+        "version": "0.2.1",
+        "rank": 1,
+        "totalScore": 767,
+        "survival": 250,
+        "bulletDamage": 389,
+        "firstPlaces": 5
+      },
+      "scoreShare": 1.0,
+      "recording": "games/spinbot-control/recordings/game-2026-11-05-12-29-05.battle.gz",
+      "audit": {
+        "recordingSHA256": "64aed97f6b2d44368f142ce39ea11e34a7ada8c0c26a85ab23881b7b4d89486d",
+        "roundTurns": {
+          "1": 400,
+          "2": 460,
+          "3": 320,
+          "4": 548,
+          "5": 552
+        },
+        "metrics": {
+          "shots": 161,
+          "bulletHits": 109,
+          "wallHits": 0,
+          "botHits": 0,
+          "skippedTurns": 0,
+          "meleeTicks": 0,
+          "duelTicks": 2280
+        }
+      },
+      "telemetry": [
+        "1 start",
+        "1 stats shots=6 hitsTaken=0 gun=0 score=0.526/0.374 maxMs=5 stoppedRolloutSteps=53702 headingChangedSteps=5453 secondWaveEvaluations=0 executedStopNow=36 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "1 end",
+        "2 start",
+        "2 stats shots=12 hitsTaken=0 gun=0 score=0.709/0.553 maxMs=0 stoppedRolloutSteps=71979 headingChangedSteps=6435 secondWaveEvaluations=0 executedStopNow=39 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "2 end",
+        "3 start",
+        "3 stats shots=17 hitsTaken=0 gun=0 score=0.637/0.559 maxMs=0 stoppedRolloutSteps=46354 headingChangedSteps=5874 secondWaveEvaluations=0 executedStopNow=5 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "3 end",
+        "4 start",
+        "4 stats shots=25 hitsTaken=0 gun=0 score=0.704/0.562 maxMs=1 stoppedRolloutSteps=105100 headingChangedSteps=10455 secondWaveEvaluations=0 executedStopNow=33 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "4 end",
+        "5 start",
+        "5 stats shots=34 hitsTaken=0 gun=0 score=0.678/0.641 maxMs=1 stoppedRolloutSteps=134640 headingChangedSteps=11638 secondWaveEvaluations=0 executedStopNow=75 meleeTurns=0 meleeShots=0 duelTransitions=0",
+        "5 end"
+      ]
+    }
+  ],
+  "waves": [
+    {
+      "wave": 1,
+      "resourceError": null,
+      "samples": 68
+    },
+    {
+      "wave": 2,
+      "resourceError": null,
+      "samples": 52
+    },
+    {
+      "wave": 3,
+      "resourceError": null,
+      "samples": 49
+    },
+    {
+      "wave": 4,
+      "resourceError": null,
+      "samples": 58
+    },
+    {
+      "wave": 5,
+      "resourceError": null,
+      "samples": 79
+    },
+    {
+      "wave": 6,
+      "resourceError": null,
+      "samples": 75
+    },
+    {
+      "wave": 7,
+      "resourceError": null,
+      "samples": 6
+    },
+    {
+      "wave": 8,
+      "resourceError": null,
+      "samples": 6
+    },
+    {
+      "wave": 9,
+      "resourceError": null,
+      "samples": 3
+    },
+    {
+      "wave": 10,
+      "resourceError": null,
+      "samples": 4
+    }
+  ],
+  "completedGames": 20,
+  "completedRounds": 260,
+  "summary": {
+    "scenarios": {
+      "melee": {
+        "control": {
+          "meanShare": 0.3426490610572874,
+          "meanShareExact": "1466817798463/4280816628935",
+          "gameShares": [
+            0.38045482483097726,
+            0.34919249236141425,
+            0.3444976076555024,
+            0.2964513193812557
+          ],
+          "firstPlaces": 42
+        },
+        "candidate": {
+          "meanShare": 0.30750061117925553,
+          "meanShareExact": "252792535000721/822087910756565",
+          "gameShares": [
+            0.27805899807994416,
+            0.38077969174977333,
+            0.2908613904678618,
+            0.28030236441944273
+          ],
+          "firstPlaces": 29
+        },
+        "deltaPP": -3.5148449878031878
+      },
+      "Diamond Port": {
+        "control": {
+          "meanShare": 0.5931680923790801,
+          "meanShareExact": "669841/1129260",
+          "gameShares": [
+            0.5908045977011495,
+            0.5955315870570108
+          ],
+          "firstPlaces": 18
+        },
+        "candidate": {
+          "meanShare": 0.6512868912790559,
+          "meanShareExact": "109721/168468",
+          "gameShares": [
+            0.6738609112709832,
+            0.6287128712871287
+          ],
+          "firstPlaces": 18
+        },
+        "deltaPP": 5.811879889997586
+      },
+      "Retcon": {
+        "control": {
+          "meanShare": 0.9368048338652623,
+          "meanShareExact": "557990/595631",
+          "gameShares": [
+            0.9346642468239564,
+            0.938945420906568
+          ],
+          "firstPlaces": 20
+        },
+        "candidate": {
+          "meanShare": 0.9515865954922894,
+          "meanShareExact": "12835/13488",
+          "gameShares": [
+            0.9448398576512456,
+            0.9583333333333334
+          ],
+          "firstPlaces": 20
+        },
+        "deltaPP": 1.4781761627027226
+      },
+      "Walls": {
+        "control": {
+          "meanShare": 0.9593967517401392,
+          "meanShareExact": "827/862",
+          "gameShares": [
+            0.9593967517401392
+          ],
+          "firstPlaces": 5
+        },
+        "candidate": {
+          "meanShare": 0.9379474940334129,
+          "meanShareExact": "393/419",
+          "gameShares": [
+            0.9379474940334129
+          ],
+          "firstPlaces": 5
+        },
+        "deltaPP": -2.144925770672632
+      },
+      "SpinBot": {
+        "control": {
+          "meanShare": 1.0,
+          "meanShareExact": "1",
+          "gameShares": [
+            1.0
+          ],
+          "firstPlaces": 5
+        },
+        "candidate": {
+          "meanShare": 1.0,
+          "meanShareExact": "1",
+          "gameShares": [
+            1.0
+          ],
+          "firstPlaces": 5
+        },
+        "deltaPP": 0.0
+      }
+    },
+    "gates": {
+      "meleeShare": true,
+      "meleeGain": false,
+      "Diamond Port": true,
+      "Retcon": true,
+      "Walls": true,
+      "SpinBot": true,
+      "observedPolicyChange": true
+    },
+    "policyChangeExposure": 3718,
+    "decision": "reject"
+  }
+}

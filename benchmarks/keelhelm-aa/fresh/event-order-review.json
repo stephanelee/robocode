@@ -1,0 +1,79 @@
+{
+  "scope": "Exploratory observer-event order and frozen-source inspection; zero games. Observer-state trajectory equality does not establish event-list equality.",
+  "pairs": [
+    {
+      "pair": 9,
+      "round": 1,
+      "turn": 2,
+      "arms": {
+        "B": {
+          "recordingSHA256": "b4a237f32eddf0775ee5bd492366a31a9019a778f53fa7555db0aad6d4ab67ea",
+          "recordedKeelScanOrder": [
+            {
+              "scannedBotId": 3,
+              "name": "KeelHelm"
+            },
+            {
+              "scannedBotId": 4,
+              "name": "Prism"
+            }
+          ],
+          "skips": []
+        },
+        "A": {
+          "recordingSHA256": "51f26edc3d0f9671411eed0abe9cbc6c31ce902a7184481549eb56dc075708f8",
+          "recordedKeelScanOrder": [
+            {
+              "scannedBotId": 4,
+              "name": "Prism"
+            },
+            {
+              "scannedBotId": 3,
+              "name": "KeelHelm"
+            }
+          ],
+          "skips": []
+        }
+      }
+    },
+    {
+      "pair": 13,
+      "round": 1,
+      "turn": 2,
+      "arms": {
+        "B": {
+          "recordingSHA256": "0df5a8ebe79113809c659b56bfc2c6a7ef3eb978671d87db3887cd439f310c1c",
+          "recordedKeelScanOrder": [
+            {
+              "scannedBotId": 4,
+              "name": "Prism"
+            },
+            {
+              "scannedBotId": 3,
+              "name": "KeelHelm"
+            }
+          ],
+          "skips": []
+        },
+        "A": {
+          "recordingSHA256": "94b36385461ee64996a59fe9902643b8179d23ac2b5418f337725dfc76286e58",
+          "recordedKeelScanOrder": [
+            {
+              "scannedBotId": 3,
+              "name": "KeelHelm"
+            },
+            {
+              "scannedBotId": 4,
+              "name": "Prism"
+            }
+          ],
+          "skips": []
+        }
+      }
+    }
+  ],
+  "keelSourceSHA256": "7fc59025ab263e18773b8e7d1c9d4fc33f3ff72e10e00b3d9d405033ff67f9ff",
+  "sourceSensitivity": "Keel.onScannedBot returns when t<=scanT (line82); after first accepted same-turn scan it updates scanT and rejects further same-turn scans. Its subsequent radar/gun aims use that accepted enemy state.",
+  "limitation": "Recorded observer scan ordering differs atR1t2 before first normalized-state divergence atR1t3 in these two pairs. Bot-facing private callback ordering/intent frames were not independently captured here; this supports a concrete event-order sensitivity hypothesis, not proven causal attribution of all trajectory or score variation.",
+  "auditSourceSHA256": "6045b7bbf6dd426b11c19d084ffda565da5dc6116d0ad77225c0bc22ecd15ce1"
+}
