@@ -19,6 +19,14 @@ public class CrossfireReplay {
         final List<Double> closestAlternateErrorDegrees = new ArrayList<>();
     }
 
+    final boolean delayScans;
+    CrossfireReplay(boolean delayScans) { this.delayScans = delayScans; }
+
+    void observe(JsonObject e) {
+        policy.observe(integer(e, "scannedBotId"), integer(e, "turnNumber"), number(e,"x"), number(e,"y"),
+                number(e,"direction"), number(e,"speed"), number(e,"energy"));
+    }
+
     final MeleePolicy policy = new MeleePolicy();
     final Map<Integer, Counts> rounds = new TreeMap<>();
     int round, own, width, height, previousTurn;
@@ -50,14 +58,16 @@ public class CrossfireReplay {
         previousTurn = t;
         Counts counts = rounds.get(r);
         var events = msg.getAsJsonArray("events");
+        List<JsonObject> deferred = new ArrayList<>();
         JsonObject fired = null;
         for (var item : events) {
             var e = item.getAsJsonObject();
             switch (string(e, "type")) {
                 case "ScannedBotEvent" -> {
-                    if (integer(e, "scannedByBotId") == own)
-                        policy.observe(integer(e, "scannedBotId"), integer(e, "turnNumber"),
-                                number(e,"x"), number(e,"y"), number(e,"direction"), number(e,"speed"), number(e,"energy"));
+                    if (integer(e, "scannedByBotId") == own) {
+                        if (delayScans) deferred.add(e);
+                        else observe(e);
+                    }
                 }
                 case "BotDeathEvent" -> {
                     int victim = integer(e, "victimId");
@@ -90,6 +100,8 @@ public class CrossfireReplay {
                 previousShot = decide(t, state, counts);
             }
         }
+        // These scans first affect the next decision and retain their original scan timestamps.
+        deferred.forEach(this::observe);
     }
 
     void endRound() {
@@ -160,14 +172,14 @@ public class CrossfireReplay {
                 int r = Integer.parseInt(m.group(1));
                 Counts c = rounds.get(r);
                 if (!seenStats.add(r) || c.melee != Integer.parseInt(m.group(2))
-                        || c.matchedPhysical != Integer.parseInt(m.group(3))
-                        || c.predictedOnly + c.physicalOnly + c.unobservedNextTick != 0)
+                        || c.matchedPhysical + c.physicalOnly != Integer.parseInt(m.group(3))
+                        || (!delayScans && c.predictedOnly + c.physicalOnly + c.unobservedNextTick != 0))
                     throw new IOException("Melee decision or physical shot mismatch " + metrics + " round " + r);
             }
             m = crossfire.matcher(line);
             if (m.matches()) {
                 int r = Integer.parseInt(m.group(1));
-                if (!seenRequests.add(r) || rounds.get(r).alternateReady != Integer.parseInt(m.group(2)))
+                if (!seenRequests.add(r) || (!delayScans && rounds.get(r).alternateReady != Integer.parseInt(m.group(2))))
                     throw new IOException("Alternate request mismatch " + metrics + " round " + r);
             }
         }
@@ -176,7 +188,9 @@ public class CrossfireReplay {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) throw new IllegalArgumentException("Pass the stopped-attempt evidence directory");
+        boolean delayScans = args.length == 2 && args[1].equals("--previous-tick-scans");
+        if (args.length != 1 && !delayScans)
+            throw new IllegalArgumentException("Pass the evidence directory and optionally --previous-tick-scans");
         Path evidence = Path.of(args[0]);
         var audit = JsonParser.parseString(Files.readString(Path.of(
                 "benchmarks/keelhelm-crossfire/stopped-attempt/independent-outcome-review.json"))).getAsJsonObject();
@@ -196,7 +210,7 @@ public class CrossfireReplay {
             }
             String digest = sha(recording);
             if (!digest.equals(string(entry, "recordingSHA256"))) throw new IOException("Recording mismatch " + id);
-            var replay = new CrossfireReplay();
+            var replay = new CrossfireReplay(delayScans);
             try (var reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(recording)),
                     java.nio.charset.StandardCharsets.UTF_8))) {
                 for (String line; (line = reader.readLine()) != null;)
