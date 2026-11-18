@@ -11,6 +11,22 @@ import benchmark
 import retcon_stats
 
 
+def validate_battle(data):
+    """Reject incomplete startup results before interpreting any timing trace."""
+    if not isinstance(data, dict):
+        raise ValueError("Probe startup/result must be an official result object")
+    rows = data.get("results", [])
+    expected = {("Alpha", "1.0"), ("Beta", "1.0")}
+    if (type(data.get("numberOfRounds")) is not int or data["numberOfRounds"] != 1
+            or not isinstance(rows, list) or len(rows) != 2
+            or any(not isinstance(row, dict) for row in rows)
+            or any(type(row.get(key)) is not str for row in rows for key in ("name", "version"))
+            or {(row.get("name"), row.get("version")) for row in rows} != expected
+            or any(type(row.get("id")) is not int or row["id"] < 1 for row in rows)
+            or len({row["id"] for row in rows}) != 2):
+        raise ValueError("Probe startup/result roster must contain exactly Alpha 1.0 and Beta 1.0 for one round")
+
+
 def validate(records):
     """Derive visibility assertions from observed scans, not callback delivery order."""
     evidence = []
@@ -102,18 +118,25 @@ def run(args):
     env["ENGINE_TRACE_DIR"] = str(output)
     if Path(args.java).is_absolute():
         env["PATH"] = str(Path(args.java).parent) + os.pathsep + env.get("PATH", "")
+    stage = "execution"
     try:
         # Embedded official runner allocates its own server; never connects to interactive port 7654.
         benchmark.run_process([args.java, "-cp", str(runner), str(benchmark.ROOT / "tools" / "BenchmarkBattle.java"),
                                "1", "180", str(output / "battle.json"), *map(str, bots)],
                               benchmark.ROOT, env, output / "runner.log", 240)
+        stage = "roster"
+        battle = output / "battle.json"
+        report["battleSHA256"] = benchmark.digest(battle)
+        validate_battle(json.loads(battle.read_text(encoding="utf-8")))
+        stage = "trace"
         records = [json.loads(line) for label in ("Alpha", "Beta")
                    for line in (output / (label + ".jsonl")).read_text(encoding="utf-8").splitlines() if line.strip()]
+        stage = "timing"
         report["assertions"] = validate(records)
         report["rawSHA256"] = {label: benchmark.digest(output / (label + ".jsonl")) for label in ("Alpha", "Beta")}
         report["status"] = "verified"
     except Exception as error:
-        report.update(status="failed", error=str(error))
+        report.update(status="failed", failureStage=stage, error=str(error))
         raise
     finally:
         path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

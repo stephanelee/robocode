@@ -3,6 +3,13 @@ import copy
 import unittest
 import hashlib
 import json
+import contextlib
+import io
+from pathlib import Path
+import subprocess
+import tempfile
+from types import SimpleNamespace
+from unittest.mock import patch
 import engine_energy_trace
 
 
@@ -19,6 +26,87 @@ def fixture():
                 rows.append(dict(type="scan", turn=turn + offset, self=observer, enemy=enemy,
                                  energy=100 + (delta if offset == 1 else 0)))
     return rows
+
+
+def battle_fixture():
+    return dict(numberOfRounds=1, results=[dict(id=1, name="Alpha", version="1.0"),
+                                         dict(id=2, name="Beta", version="1.0")])
+
+
+class ProbeRosterTests(unittest.TestCase):
+    def test_exact_roster_accepts_reordered_ids_and_rejects_incomplete_or_wrong_results(self):
+        good = battle_fixture()
+        engine_energy_trace.validate_battle(good)
+        engine_energy_trace.validate_battle(dict(numberOfRounds=1, results=list(reversed(good["results"]))))
+        bad = [None, {}, dict(good, numberOfRounds=2), dict(good, numberOfRounds=True),
+               dict(good, results=good["results"][:1]), dict(good, results=good["results"] * 2)]
+        for key, value in (("id", 1), ("id", True), ("name", "Alpha"), ("version", "2.0"), ("name", [])):
+            changed = copy.deepcopy(good)
+            changed["results"][1][key] = value
+            bad.append(changed)
+        for data in bad:
+            with self.subTest(data=data), self.assertRaisesRegex(ValueError, "startup/result"):
+                engine_energy_trace.validate_battle(data)
+
+    def run_fixture(self, battle, records=None):
+        """Exercise the real run() staging/validation/report path, never a server."""
+        with tempfile.TemporaryDirectory() as directory, contextlib.ExitStack() as stack:
+            root = Path(directory)
+            output = root / "output"
+            def download(cache, name, expected):
+                cache.mkdir(parents=True, exist_ok=True)
+                path = cache / name
+                path.write_bytes(b"offline fixture")
+                return path
+            def extract(archive, target):
+                target.mkdir()
+                (target / "robocode-tankroyale-bot-api-1.4.0.jar").write_bytes(b"offline API fixture")
+            def execute(*args):
+                (output / "battle.json").write_text(json.dumps(battle), encoding="utf-8")
+                if records is not None:
+                    for identity, label in ((1, "Alpha"), (2, "Beta")):
+                        selected = [row for row in records if row["self"] == identity]
+                        (output / (label + ".jsonl")).write_text(
+                            "".join(json.dumps(row) + "\n" for row in selected), encoding="utf-8")
+            stack.enter_context(patch.object(engine_energy_trace.benchmark, "download", side_effect=download))
+            stack.enter_context(patch.object(engine_energy_trace.benchmark, "extract", side_effect=extract))
+            process = stack.enter_context(patch.object(engine_energy_trace.benchmark, "run_process", side_effect=execute))
+            stack.enter_context(patch.object(engine_energy_trace.subprocess, "run", return_value=
+                                           subprocess.CompletedProcess([], 0, "offline Java", "")))
+            stack.enter_context(patch.object(engine_energy_trace.subprocess, "check_output", return_value="fixture-head\n"))
+            stack.enter_context(patch.object(engine_energy_trace.retcon_stats, "os_provenance", return_value={}))
+            timing = stack.enter_context(patch.object(engine_energy_trace, "validate", wraps=engine_energy_trace.validate))
+            with contextlib.redirect_stdout(io.StringIO()):
+                try:
+                    engine_energy_trace.run(SimpleNamespace(output=output, cache=root / "cache", java="java"))
+                    error = None
+                except ValueError as failure:
+                    error = str(failure)
+            report = json.loads((output / "trace.json").read_text(encoding="utf-8"))
+            self.assertEqual(1, process.call_count, "No automatic retry")
+            self.assertEqual(battle, json.loads((output / "battle.json").read_text(encoding="utf-8")))
+            return report, error, timing.call_count
+
+    def test_real_entrypoint_reports_solo_startup_before_reading_absent_traces(self):
+        # Same one-Alpha roster retained in issue102; trace files deliberately absent.
+        solo = battle_fixture()
+        solo["results"].pop()
+        report, error, calls = self.run_fixture(solo)
+        self.assertIn("startup/result roster", error)
+        self.assertEqual(("failed", "roster"), (report["status"], report["failureStage"]))
+        self.assertIn("battleSHA256", report)
+        self.assertNotIn("assertions", report)
+        self.assertEqual(0, calls)
+
+    def test_real_entrypoint_keeps_timing_assertions_binding_after_valid_roster(self):
+        report, error, calls = self.run_fixture(battle_fixture(), fixture())
+        self.assertIsNone(error)
+        self.assertEqual(("verified", 4, 1), (report["status"], len(report["assertions"]), calls))
+        bad = fixture()
+        next(row for row in bad if row["type"] == "hitBy")["damage"] = 0
+        report, error, calls = self.run_fixture(battle_fixture(), bad)
+        self.assertIn("both probes", error)
+        self.assertEqual(("failed", "timing", 1), (report["status"], report["failureStage"], calls))
 
 
 class TraceValidatorTests(unittest.TestCase):
