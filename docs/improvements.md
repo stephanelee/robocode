@@ -456,3 +456,7 @@ Zero new games or rounds. Reconstructed all 60 previously recorded candidate rou
 ## KeelHelm melee damage attribution and midpoint aim
 
 Zero new games or rounds. Across 12 recorded candidate games and 60 original rounds, the official bullet-damage gap was 716 points. Diamond led in the melee firing phase. At 4,042 original melee shot opportunities the registered long-range aim correction gained five intended hits and lost 15, including a net loss of eight against Diamond. Reject this correction. The live stage did not qualify. [Report, reproduction and raw custody](improvements/keelhelm-midpoint-results.md) · [Paired evidence](../benchmarks/keelhelm-midpoint/shadow.json) · [PR #144](https://github.com/stephanelee/robocode/pull/144)
+
+## KeelHelm long-range melee firepower
+
+The 1.4-power band produced 20.24% more projected damage on 12 retained games. All 16 fresh minimind games / 68 rounds completed. Melee-phase damage rose from 986.38 to 1,087.41, while KeelHelm’s mean score share fell from 31.79% to 30.42% and round firsts fell from 11 to 7 of 20. Both builds beat Diamond 10–0 in the duels. Reject advancement under the registered score-share criterion and retain 0.2.1. [PR #146](https://github.com/stephanelee/robocode/pull/146) · [Report, reproduction and raw custody](improvements/keelhelm-long-range-power-results.md) · [Per-game data and recording hashes](../benchmarks/keelhelm-long-range-power/live-games.json)
