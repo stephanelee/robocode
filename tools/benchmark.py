@@ -11,6 +11,10 @@ from pathlib import Path
 import shutil
 import signal
 import subprocess
+import sys
+import tempfile
+import time
+import urllib.error
 import urllib.request
 import zipfile
 import retcon
@@ -30,17 +34,31 @@ def digest(path):
 
 
 def download(cache, name, expected):
+    """Fetch pinned bytes; retry only transient gateway/service HTTP responses."""
     cache.mkdir(parents=True, exist_ok=True)
     target = cache / name
     if not target.exists() or digest(target) != expected:
-        temporary = target.with_suffix(target.suffix + ".part")
+        # Each caller owns its temporary file; concurrent downloads cannot truncate it.
+        with tempfile.NamedTemporaryFile(dir=cache, prefix=target.name + ".", suffix=".part", delete=False) as stream:
+            temporary = Path(stream.name)
         request = urllib.request.Request(f"https://github.com/robocode-dev/tank-royale/releases/download/v{VERSION}/{name}", headers={"User-Agent": "AISurvivor-benchmark"})
-        with urllib.request.urlopen(request, timeout=60) as response, temporary.open("wb") as stream:
-            shutil.copyfileobj(response, stream)
-        if digest(temporary) != expected:
-            temporary.unlink()
-            raise ValueError(f"SHA256 mismatch: {name}")
-        temporary.replace(target)
+        try:
+            for delay in (1, 2, None):  # At most three requests; no retry for other failures.
+                try:
+                    with urllib.request.urlopen(request, timeout=60) as response, temporary.open("wb") as stream:
+                        shutil.copyfileobj(response, stream)
+                    break
+                except urllib.error.HTTPError as error:
+                    if error.code not in (502, 503, 504) or delay is None:
+                        raise
+                    error.close()
+                    print(f"Transient HTTP {error.code} downloading {name}; retrying in {delay}s", file=sys.stderr)
+                    time.sleep(delay)
+            if digest(temporary) != expected:
+                raise ValueError(f"SHA256 mismatch: {name}")
+            temporary.replace(target)
+        finally:
+            temporary.unlink(missing_ok=True)
     return target
 
 
