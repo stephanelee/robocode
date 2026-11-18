@@ -1,0 +1,475 @@
+{
+  "reviewedAt": "2026-11-18T13:59:36.697457+00:00",
+  "reviewer": "Independent stdlib Crossfire physical/transport/resource/statistical audit; no acquisition reducer imported",
+  "freezeSHA256": "7f29873466d57e890af00bceb3c1c44e18c12d95d672f9907aec868f3e92ee36",
+  "sourceCommit": "c084d70663310aec0b60a9b914932d8dde9d6363",
+  "originatingApprovalURL": "https://github.com/stephanelee/robocode/pull/139#pullrequestreview-5957866348",
+  "acquisitionReceiptSHA256": "dea944f837b7f386a5161c54eb71b9aa4562073f75d8f27063a95d58369bd02c",
+  "experimentStatus": "invalid",
+  "decision": "invalid-evidence-no-claim",
+  "completeGamesAudited": 25,
+  "completedRoundsAudited": 125,
+  "physicalCompletedRounds": 125,
+  "partialPhysicalRounds": 0,
+  "errors": [],
+  "changedFrozenFiles": [],
+  "frozenFilesVerified": 7005,
+  "stagedEntrantFilesVerified": 700,
+  "stagedGuestSharedFilesVerified": 2200,
+  "stagedWrappersVerified": 100,
+  "stagedSampleLibraryCopiesVerified": 0,
+  "incompleteGames": [],
+  "unplayedGameIDs": [
+    "crossfire-13-2-candidate",
+    "crossfire-14-1-control",
+    "crossfire-14-2-candidate",
+    "crossfire-15-1-candidate",
+    "crossfire-15-2-control",
+    "crossfire-16-1-control",
+    "crossfire-16-2-candidate",
+    "crossfire-17-1-control",
+    "crossfire-17-2-candidate",
+    "crossfire-18-1-candidate",
+    "crossfire-18-2-control",
+    "crossfire-19-1-control",
+    "crossfire-19-2-candidate",
+    "crossfire-20-1-control",
+    "crossfire-20-2-candidate",
+    "crossfire-21-1-control",
+    "crossfire-21-2-candidate",
+    "crossfire-22-1-candidate",
+    "crossfire-22-2-control",
+    "crossfire-23-1-candidate",
+    "crossfire-23-2-control",
+    "crossfire-24-1-control",
+    "crossfire-24-2-candidate",
+    "crossfire-25-1-candidate",
+    "crossfire-25-2-control",
+    "crossfire-26-1-control",
+    "crossfire-26-2-candidate",
+    "crossfire-27-1-candidate",
+    "crossfire-27-2-control",
+    "crossfire-28-1-control",
+    "crossfire-28-2-candidate",
+    "crossfire-29-1-candidate",
+    "crossfire-29-2-control",
+    "crossfire-30-1-candidate",
+    "crossfire-30-2-control",
+    "crossfire-31-1-candidate",
+    "crossfire-31-2-control",
+    "crossfire-32-1-candidate",
+    "crossfire-32-2-control",
+    "crossfire-33-1-candidate",
+    "crossfire-33-2-control",
+    "crossfire-34-1-control",
+    "crossfire-34-2-candidate",
+    "crossfire-35-1-candidate",
+    "crossfire-35-2-control",
+    "crossfire-36-1-control",
+    "crossfire-36-2-candidate",
+    "crossfire-37-1-candidate",
+    "crossfire-37-2-control",
+    "crossfire-38-1-control",
+    "crossfire-38-2-candidate",
+    "crossfire-39-1-candidate",
+    "crossfire-39-2-control",
+    "crossfire-40-1-control",
+    "crossfire-40-2-candidate",
+    "crossfire-41-1-candidate",
+    "crossfire-41-2-control",
+    "crossfire-42-1-control",
+    "crossfire-42-2-candidate",
+    "crossfire-43-1-candidate",
+    "crossfire-43-2-control",
+    "crossfire-44-1-control",
+    "crossfire-44-2-candidate"
+  ],
+  "independentSummary": {},
+  "controlJarSHA256": "19f779d4c4df97e9510f22bc561c0b19af0c07eaa1f1f3fd1d93f70992f7e55b",
+  "candidateJarSHA256": "fe6498d461ebc6c92e5d2d03e047c91771166c3d339e49ed647cf47966164d96",
+  "auditSources": {
+    "audit_outcomes.py": "d2081e5a29766ef52742e2245a2149a544a5f4e7c8f1eed7f0e87ae4a768cd9a",
+    "crossfire_evidence.py": "e22a3cb1234fcf246b38f3b802ca2e4a24777d942da123476719708c9f4b0e65",
+    "review-keelhelm-randomization.py": "204cb038322e8893b62fe4cae56843f32dd3a08abe00a3100201214afa033191"
+  },
+  "limitations": "Fresh fixed cohort only; randomization exact under sharp null/no cross-game interference. Opponent RNG/event ordering live. Intended alternate is not hit attribution; every physical hit retained. Unknown/mismatched private callbacks excluded from exposure. No automatic promotion/merge/extra games. This outcome artifact is not an acquisition approval or receipt.",
+  "games": [
+    {
+      "game": "crossfire-01-1-control",
+      "recordingSHA256": "d44776596453b05ba75150eba91a26576b692425349e3d2b0c1611e1a501b3bb",
+      "officialSHA256": "1d663aeb6e9c8163d03e7432886aec4ac08520b519dd6b9e97d820c969983df6",
+      "telemetrySHA256": "b555d441847e3ad8c4be256d481f87588c255f86037fbb7c6f511ddd8933e055",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-01-2-candidate",
+      "recordingSHA256": "95be9c87fb7f60da3bd6798d4a0a59e6f78eccb23429c99164faeae661704769",
+      "officialSHA256": "a3570cf3b1e2f2add0fe98bfbd945588728b8041400eeede25b512d1620d9c96",
+      "telemetrySHA256": "488dfc892689cd137d88d3bf9bbf818a663da1adca8326ee4ade95749c0d1c93",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-02-1-control",
+      "recordingSHA256": "daeef429df39e86213398b59e368a756dfdb5c82c446c35b367dd3452bf55fb5",
+      "officialSHA256": "59073b3bd0e96e3ae7cf6fae6d793c63f74ab8cc9af090e57e2345355b438587",
+      "telemetrySHA256": "c8a3f7d081657a45fa3a22711f63268151d04a4bcf9751accad3b50f0995b2a4",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-02-2-candidate",
+      "recordingSHA256": "6e631a7fc97ffa90fc87735a4a2013cb208e3bb4fee2aabe4dbf092f584a795a",
+      "officialSHA256": "272a44c26ac10876b8fdef774f4b785284ee844b970245b35e242d047524fb20",
+      "telemetrySHA256": "764090b41b32d048ec82c87a6f3939083a158c44d5fcc7befb050cde080baa4f",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-03-1-control",
+      "recordingSHA256": "e663c9c2bbb2350274a5f07dd250fcbc9e2e1e77f6d2a1902d4a76458538b14c",
+      "officialSHA256": "b27a6e412a991644481c394aa2e19abb5c573210fcc215db8d765eae9c5f49d7",
+      "telemetrySHA256": "8f16a639003d194e4c419ad5e0dacaf5b17b39b1dbd29600b7ebcd4a5194fbc0",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-03-2-candidate",
+      "recordingSHA256": "eb3a94b5eeb9ca5263f5e026862565513f95184bcbedb5acf5331ddee4d567e3",
+      "officialSHA256": "226724294350dbaee1a87254a5c7e9ff3aee76bd74b54c420c99e7fb54d7b9fc",
+      "telemetrySHA256": "7e7260908af3bdfd141a844d99939ae466262a8075ddec25b8fa4b8edb9ca4f3",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 6
+    },
+    {
+      "game": "crossfire-04-1-candidate",
+      "recordingSHA256": "be9b98900add64325cf96a31d0a38ef1e1b8265ad399ca90728cc06369e76283",
+      "officialSHA256": "b9ef304c811163d974380b38c36f2c54868a064330cf7661e8f38b7de78d99c0",
+      "telemetrySHA256": "160a1ee180cea1db6cafe3964b04594bd33b77d85ef80f36b02c6d936c2f854b",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-04-2-control",
+      "recordingSHA256": "d4af8f7e88b8171a2e86fe44d0b65ee5c00108186d4a3ef2caa93277f9ee1c00",
+      "officialSHA256": "2a4934910ff8acb8a3763cef74a2864fc9066b1046e62bc91c531006dcfcd1d4",
+      "telemetrySHA256": "d591c53dd08d32baa0e8a1b25680f84833472da174e89e0b6e27ee22469e503a",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-05-1-candidate",
+      "recordingSHA256": "0118f3913dfb93ad64bc5ec57303d498c2f75520f0eafc2a097e8206b2c5ab4f",
+      "officialSHA256": "a0ec7d638bfc3c5a14b648d6cf0e4b0992468c8387997ffbcd073df8bd9bc49f",
+      "telemetrySHA256": "b2544c0d1dd6b1b817537f487dc579372e039f31e570c39625ce406c2ee69cb1",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-05-2-control",
+      "recordingSHA256": "c30edfee84517d131c405f007b4c1654065b4bdf5e74c4e8355621c82b368f4d",
+      "officialSHA256": "2a6830a0d3d9b8b603dfbdbb9bf73ab422b739569bcea9692c72cc13c5dfee12",
+      "telemetrySHA256": "a92c216ba9f33120a97ce2852f133a12f8b2f677a77ea7aede5faa48e5996b36",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3
+    },
+    {
+      "game": "crossfire-06-1-candidate",
+      "recordingSHA256": "56f6c10262228c4f7f48836dc6fcd31a0ae7ff753f19dffd18396e27c5b38ae0",
+      "officialSHA256": "e696af5d7e489762b7d19cbf5485be27e04a6251ac0d2062d75b701deb44a49b",
+      "telemetrySHA256": "9900493a80b7a6e444ec61de26a4c69d3b23bd058b9737fbd9db4b3608dbe08f",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-06-2-control",
+      "recordingSHA256": "30b0ce82077340ddf6a475ece373dcaccc674fd8e709853d419dbd34ca70867a",
+      "officialSHA256": "c2bd2cbb043fcc255eba9fd8e1467d0758ddda537cf55991f1a5a29371378ba2",
+      "telemetrySHA256": "64f3d54e2eae1c6e46232cfea0e566de243c6441b6101a4e2f191e07e61f9a36",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3
+    },
+    {
+      "game": "crossfire-07-1-control",
+      "recordingSHA256": "9783c75896e6661cf32e22a3caf6f29f2b4a8bd9273ae713f9275f82f3ec8cf7",
+      "officialSHA256": "b62414e323014538fd4af3102f1d3d229b206f31a1257ca56d31a3abba40bc2f",
+      "telemetrySHA256": "951fc0c068e8e04b6c8c4200d8b87abfd85a124f1d1ddb6c8379dc117f210f15",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3
+    },
+    {
+      "game": "crossfire-07-2-candidate",
+      "recordingSHA256": "a57527b63f212b0c6e1ea6c5b1201bb69964721fde77df7f77df795c62c82f78",
+      "officialSHA256": "90539ecb32d7813e868e49289913dcb07803f2fed5953ea037d4bdc39026df72",
+      "telemetrySHA256": "f72dba96144f6fa2cab1b7a701f80acd7f8e2cf35aeaa105d0ed805a43f68abf",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-08-1-control",
+      "recordingSHA256": "fd01340634439cdcd56623413e176763fb5e3980c4e07c3569c4c0aeba8c93f0",
+      "officialSHA256": "61c1e5a7e9ea358a2eae30afd1f74f272f4cd206169c00844f88c656f83bf1b6",
+      "telemetrySHA256": "76db1e443cab5f61bffd93a9873e4cf5f1439049d3e5074befbdbaef70e9dbd7",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-08-2-candidate",
+      "recordingSHA256": "b46f9a1678aed8d28100fc4d0646489b0fc23948b1bfa62c54bdf0415ab5d915",
+      "officialSHA256": "5c6b16d9a9afae953fcf61d384cd78e59991bf331d5893046e5224e19292151f",
+      "telemetrySHA256": "7c4308f3b7cbc3326c3b5076290e8b14ca3012c537f661fab35affc4748e010d",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 3
+    },
+    {
+      "game": "crossfire-09-1-candidate",
+      "recordingSHA256": "a656f9dd3206b9cd73eab09d3457f356ef86c3662796c0d258f982bb7fb878b6",
+      "officialSHA256": "921c149c6def5676d2914baa1f7b3b51e3ba3d0ac3e021608053895add7cb6a5",
+      "telemetrySHA256": "34b085fa4760f3993635f6378d4bfe28b7f0cd54710913b2a8cc472aed17425e",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-09-2-control",
+      "recordingSHA256": "76d188b21c439a5b216b9548893147b5126bc00aca2863d711a03079b7159ee2",
+      "officialSHA256": "fc6b099413ac0440d5c9044752e7927844b05d643fb70ff72af2a95f1bf8a13e",
+      "telemetrySHA256": "8fe8db97d5c5c71c0aa651e4d733e81e309f7c133708f0bf2a9b796f190dc7d9",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5
+    },
+    {
+      "game": "crossfire-10-1-control",
+      "recordingSHA256": "35cbeaa402bf3f3c7c20e73294ac3ac23c3518e3cf245fcdc3a6c3debdcb8232",
+      "officialSHA256": "725cb0539e07c5db7b9d2226d38939d8670c22f71e13f248e947cad916b6cd28",
+      "telemetrySHA256": "217f8492160ee79873fefbc42dac3bfbb02c5efc18331d7b9ed7d7a2d3bd9d13",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5
+    },
+    {
+      "game": "crossfire-10-2-candidate",
+      "recordingSHA256": "4d9d34cc36670329414000ee8b2d61b54e4d95ea09459a2437169bc486b677cc",
+      "officialSHA256": "e64e138e835d8171c6d893af55f57a0b89a3fda917b56685d5e10e48d17822f9",
+      "telemetrySHA256": "b2f660756cf9d6965a5f4a08034dc7379741066ebd19cb96ecbb32199b147dd6",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5
+    },
+    {
+      "game": "crossfire-11-1-candidate",
+      "recordingSHA256": "19fed8c27476dbfbe33b71a9bb89d6f9a499263b7465ec4b8e1e536d5d85e84d",
+      "officialSHA256": "43f7cee0637a1fe79b6aea82a8817b45644b1bfc021aee5301bdbd214d9d0195",
+      "telemetrySHA256": "3b3f579859b1ce244be735877c774a31f70daa19a0c8af410aee10762e1956ed",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5
+    },
+    {
+      "game": "crossfire-11-2-control",
+      "recordingSHA256": "a8fcfebca2040cd90a563c4b30121867c22c6322313db915af13095166aa0bbf",
+      "officialSHA256": "50e513e976c55cb4eba6c89b2670cfe9cb8df8a600a40df600dacab27710d0c8",
+      "telemetrySHA256": "0aaf06ca90aeebbafbd06145afed8afeb63ff723ad089200c0e57a934a2178f8",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-12-1-candidate",
+      "recordingSHA256": "97c8b9a44b0238799b497fb136110b6487161c9e43c27c83acfa5aebf84d3bfd",
+      "officialSHA256": "3ffc9bc14b9718696c2edb12dcd608888a91dfde9a2aa07bac7054efec96c2e2",
+      "telemetrySHA256": "8b66737bbf4d9102f674e1574b487cc7a5bc010c79d4d73d7d0dc011e62529eb",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 4
+    },
+    {
+      "game": "crossfire-12-2-control",
+      "recordingSHA256": "a83f32c2b8d892c7d20b28f6a05604004141d198466690c74217a18912bdd990",
+      "officialSHA256": "4ee0b7fb7454bf75f0b1b5cddd6c3e51fe34344cfc68fd36dfd19a66c7f72293",
+      "telemetrySHA256": "b8627328587c4c5b6b426b2f9220dad17a90397230d3f6e7452f3bc5c508338a",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 14
+    },
+    {
+      "game": "crossfire-13-1-control",
+      "recordingSHA256": "ea18a634b6b7375ae3718468577a15020a3bf711138a6dcd7022ddacad0ae77b",
+      "officialSHA256": "6e3f97b508b72085fd4a629fc826d1a688c37f70d57791b7c9de8caae8cea4a5",
+      "telemetrySHA256": "bfef6562a54c09f19b22962bbe321c7137c34030fb98f12c6f3bb871dd889d55",
+      "roundsVerified": 5,
+      "ownSkips": 0,
+      "maximumLoggedLoopMs": 5
+    }
+  ],
+  "resources": [
+    {
+      "game": "crossfire-01-1-control",
+      "samples": 8,
+      "minimumAvailablePercent": 56,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-01-2-candidate",
+      "samples": 9,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-02-1-control",
+      "samples": 15,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-02-2-candidate",
+      "samples": 10,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-03-1-control",
+      "samples": 18,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-03-2-candidate",
+      "samples": 21,
+      "minimumAvailablePercent": 57,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-04-1-candidate",
+      "samples": 15,
+      "minimumAvailablePercent": 59,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-04-2-control",
+      "samples": 9,
+      "minimumAvailablePercent": 59,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-05-1-candidate",
+      "samples": 16,
+      "minimumAvailablePercent": 54,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-05-2-control",
+      "samples": 15,
+      "minimumAvailablePercent": 48,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-06-1-candidate",
+      "samples": 12,
+      "minimumAvailablePercent": 51,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-06-2-control",
+      "samples": 9,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-07-1-control",
+      "samples": 9,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-07-2-candidate",
+      "samples": 11,
+      "minimumAvailablePercent": 48,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-08-1-control",
+      "samples": 11,
+      "minimumAvailablePercent": 50,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-08-2-candidate",
+      "samples": 15,
+      "minimumAvailablePercent": 47,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-09-1-candidate",
+      "samples": 11,
+      "minimumAvailablePercent": 50,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-09-2-control",
+      "samples": 13,
+      "minimumAvailablePercent": 48,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-10-1-control",
+      "samples": 9,
+      "minimumAvailablePercent": 49,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-10-2-candidate",
+      "samples": 9,
+      "minimumAvailablePercent": 51,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-11-1-candidate",
+      "samples": 12,
+      "minimumAvailablePercent": 52,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-11-2-control",
+      "samples": 12,
+      "minimumAvailablePercent": 49,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-12-1-candidate",
+      "samples": 8,
+      "minimumAvailablePercent": 47,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-12-2-control",
+      "samples": 19,
+      "minimumAvailablePercent": 45,
+      "swapoutDelta": 0
+    },
+    {
+      "game": "crossfire-13-1-control",
+      "samples": 11,
+      "minimumAvailablePercent": 32,
+      "swapoutDelta": 0
+    }
+  ]
+}
