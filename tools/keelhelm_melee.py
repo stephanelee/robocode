@@ -115,7 +115,7 @@ def verify_inputs(freeze):
         if sha(p) != expected:
             raise ValueError('Frozen input changed: '+p)
 
-def audit(recording, official, game, identities):
+def audit(recording, official, game, identities, *, own_name='KeelHelm'):
     starts = ends = 0
     round_ends = []; ticks = {}; final = None; ids = set(); own = None
     metrics = dict(shots=0, bulletHits=0, wallHits=0, botHits=0, skippedTurns=0, meleeTicks=0, duelTicks=0)
@@ -127,7 +127,7 @@ def audit(recording, official, game, identities):
                 observed = sorted((r['name'],r['version']) for r in participants)
                 if observed != sorted(identities): raise ValueError('Recorded identities differ')
                 ids = {r['id'] for r in participants}
-                own = next(r['id'] for r in participants if r['name'] == 'KeelHelm')
+                own = next(r['id'] for r in participants if r['name'] == own_name)
                 size = (1000,1000) if game['scenario'] == 'melee' else (800,600)
                 if (setup['arenaWidth'], setup['arenaHeight']) != size or setup['numberOfRounds'] != game['rounds'] or setup['turnTimeout'] != 100000:
                     raise ValueError('Recorded setup differs')
@@ -254,12 +254,13 @@ def stage_bots(game, source, evidence, freeze, run):
     for name in game['order']:
         if name == 'KeelHelm':
             project = Path(freeze.get('candidateProject',str(ROOT/'experiments/KeelHelm'))) if game['arm']=='candidate' else evidence/'control-source'
-            base=project/'bot'; folder=name
+            folder = freeze.get('candidateFolder', name) if game['arm'] == 'candidate' else name
+            base=project/'bot'
         else:
             base=Path(freeze['bases'][name]); folder=name if name in ('Keel','Prism') else base.name
         dst=run/'bots'/folder; shutil.copytree(base,dst)
         if name in ('KeelHelm','Keel','Prism'):
-            jar=project/'KeelHelm.jar' if name=='KeelHelm' else source/f'experiments/{name}/{name}.jar'
+            jar=project/f'{folder}.jar' if name=='KeelHelm' else source/f'experiments/{name}/{name}.jar'
             shutil.copy2(jar,dst/jar.name)
         for sh in dst.glob('*.sh'): sh.chmod(0o755)
         d=json.loads(next(dst.glob('*.json')).read_text());identities.append((d['name'],d['version']));botdirs.append(str(dst))
