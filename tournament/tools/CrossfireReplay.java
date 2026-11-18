@@ -114,6 +114,7 @@ public class CrossfireReplay {
         c.melee++;
         var self = new Phys.Pose(number(state,"x"), number(state,"y"), number(state,"direction"), number(state,"speed"));
         var target = policy.target(turn, self); // Updates incumbent stickiness even while the gun cools.
+        onDecision(turn, state, self, target);
         if (number(state,"gunHeat") != 0) return null;
         c.cool++;
         if (target == null) return null;
@@ -157,6 +158,10 @@ public class CrossfireReplay {
         return selected;
     }
 
+    void onDecision(int turn, JsonObject state, Phys.Pose self, MeleePolicy.Opponent target) {
+        // Extension point for comparing causal alternatives on the same legal observations.
+    }
+
     static String sha(Path file) throws Exception {
         return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(file)));
     }
@@ -192,11 +197,19 @@ public class CrossfireReplay {
         if (args.length != 1 && !delayScans)
             throw new IllegalArgumentException("Pass the evidence directory and optionally --previous-tick-scans");
         Path evidence = Path.of(args[0]);
+        var games = readGames(evidence, () -> new CrossfireReplay(delayScans));
+        var output = new TreeMap<String, Map<Integer, Counts>>();
+        games.forEach((id, replay) -> output.put(id, replay.rounds));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(output));
+    }
+
+    static <T extends CrossfireReplay> Map<String, T> readGames(Path evidence,
+            java.util.function.Supplier<T> factory) throws Exception {
         var audit = JsonParser.parseString(Files.readString(Path.of(
                 "benchmarks/keelhelm-crossfire/stopped-attempt/independent-outcome-review.json"))).getAsJsonObject();
         Path loadedJar = Path.of(MeleeFire.class.getProtectionDomain().getCodeSource().getLocation().toURI());
         if (!sha(loadedJar).equals(string(audit, "candidateJarSHA256"))) throw new IOException("Candidate JAR mismatch");
-        var output = new TreeMap<String, Map<Integer, Counts>>();
+        var output = new TreeMap<String, T>();
         for (var item : audit.getAsJsonArray("games")) {
             var entry = item.getAsJsonObject();
             String id = string(entry, "game");
@@ -210,7 +223,7 @@ public class CrossfireReplay {
             }
             String digest = sha(recording);
             if (!digest.equals(string(entry, "recordingSHA256"))) throw new IOException("Recording mismatch " + id);
-            var replay = new CrossfireReplay(delayScans);
+            T replay = factory.get();
             try (var reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(recording)),
                     java.nio.charset.StandardCharsets.UTF_8))) {
                 for (String line; (line = reader.readLine()) != null;)
@@ -219,9 +232,9 @@ public class CrossfireReplay {
             replay.endRound();
             if (replay.rounds.size() != integer(entry, "roundsVerified")) throw new IOException("Round count " + id);
             replay.verifyTelemetry(dir.resolveSibling("helm-metrics.txt"), string(entry, "telemetrySHA256"));
-            output.put(id, replay.rounds);
+            output.put(id, replay);
         }
         if (output.size() != 12) throw new IOException("Incomplete candidate prefix");
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(output));
+        return output;
     }
 }
