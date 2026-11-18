@@ -452,3 +452,7 @@ INVALID acquisition / no competitive verdict. Single minimind attempt spent 25 c
 ## KeelHelm Crossfire replay diagnosis
 
 Zero new games or rounds. Reconstructed all 60 previously recorded candidate rounds and matched all 4,042 physical melee shots. Only 11 turns offered a fresh, affordable alternate inside 500 units after the incumbent could not fire. All missed the current gun direction by at least 45.70°. Delaying scan delivery one tick also yielded zero aligned alternatives and matched 3,988 of 4,042 physical shots. Retire the passive alternate-shot hypothesis on this prefix. Competitive strength remains unmeasured. [Report and reproduction](improvements/keelhelm-crossfire-replay.md) · [Round evidence](../benchmarks/keelhelm-crossfire/replay-diagnostic/rounds.json) · [Diagnostic PR #140](https://github.com/stephanelee/robocode/pull/140) · [Original PR #139](https://github.com/stephanelee/robocode/pull/139)
+
+## KeelHelm cooldown retargeting
+
+Rejected on the registered shot-opportunity gate. Across 12 retained games and 60 rounds, the shadow created 228 shots and displaced 239, a net loss of 11. All 4,042 original physical melee shots calibrated. Zero new games or rounds. The live Diamond comparison did not qualify. [PR #142](https://github.com/stephanelee/robocode/pull/142) · [Report and raw custody](improvements/keelhelm-cooldown-results.md) · [Per-game results](../benchmarks/keelhelm-cooldown-shadow/games.json)
