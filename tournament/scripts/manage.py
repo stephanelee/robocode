@@ -55,6 +55,8 @@ def site_url(config, stage=None, environment=None):
             or parsed.username is not None or parsed.password is not None
             or parsed.query or parsed.fragment):
         raise ValueError(f'Set {variable} to the website base URL returned by deployment (no credentials, query or fragment)')
+    if stage == 'exhibition':
+        return urljoin(base.rstrip('/') + '/', 'exhibition.html')
     if stage is None:
         return urljoin(base.rstrip('/') + '/', 'index.html')
     if not re.fullmatch(r'practice|swiss-[1-9][0-9]*|playoff-[1-9][0-9]*', stage):

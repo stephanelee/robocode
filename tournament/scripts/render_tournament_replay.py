@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 W, H, FPS, TURNS_PER_SECOND = 1280, 800, 20, 60
 BG, PANEL, LINE, INK, MUTED = '#091522', '#10243a', '#2b425f', '#eef5ff', '#a3b6cf'
-COLORS = ['#75bcff', '#f6c27b']
+COLORS = ['#75bcff', '#f6c27b', '#8ee0ba', '#c6a6ff']
 FONT_ROOT = Path('/System/Library/Fonts/Supplemental')
 
 
@@ -46,8 +46,8 @@ def main(args):
         raise ValueError('Expected the official observer recording format')
     setup = first['gameSetup']
     participants = sorted(first['participants'], key=lambda b: b['id'])
-    if len(participants) != 2 or setup['numberOfRounds'] != 20:
-        raise ValueError('This renderer expects the registered 20-round 1v1 game')
+    if len(participants) not in (2,4) or setup['numberOfRounds'] != 20:
+        raise ValueError('This renderer expects a registered 20-round two- or four-bot game')
     ids = [b['id'] for b in participants]
     names = {b['id']: b['name'] for b in participants}
     colors = dict(zip(ids, COLORS))
@@ -55,14 +55,18 @@ def main(args):
     places = {i: 0 for i in ids}
     through_round = 0
     ax, ay, aw, ah = 32, 128, 832, 624
+    if len(ids)==4:
+        scale=min(832/setup['arenaWidth'],624/setup['arenaHeight'])
+        aw,ah=round(setup['arenaWidth']*scale),round(setup['arenaHeight']*scale)
+        ax,ay=32+(832-aw)//2,128+(624-ah)//2
     sx, sy = aw / setup['arenaWidth'], ah / setup['arenaHeight']
     fonts = {n: font(n) for n in [12, 14, 16, 18, 22, 28, 36]}
-    bold = {n: font(n, True) for n in [18, 22, 28, 36, 46]}
+    bold = {n: font(n, True) for n in [14, 18, 22, 28, 36, 46]}
     base = Image.new('RGB', (W, H), BG)
     d = ImageDraw.Draw(base)
     game_label = f'GAME {args.game} OF 2' if args.game < 3 else 'TIE-BREAK GAME 3'
     d.text((32, 22), f'ROBOCODE CUP  /  {stage_label.upper()}  /  {game_label}', font=fonts[14], fill='#75bcff')
-    d.text((32, 49), names[ids[0]] + '  vs  ' + names[ids[1]], font=bold[28], fill=INK)
+    d.text((32, 49), ('  vs  '.join(names[i] for i in ids) if len(ids)==2 else ' / '.join(names[i] for i in ids)), font=bold[28 if len(ids)==2 else 22], fill=INK)
     d.text((32, 91), 'Recorded replay • all 20 battle rounds • accelerated playback', font=fonts[14], fill=MUTED)
     d.rounded_rectangle((ax-2, ay-2, ax+aw+2, ay+ah+2), radius=7, fill='#0c1c2c', outline=LINE, width=2)
     for x in range(50, setup['arenaWidth'], 50):
@@ -116,10 +120,10 @@ def main(args):
         draw.text((920, 231), f"Turn {tick.get('turnNumber',0):,}  •  {TURNS_PER_SECOND} turns/sec", font=fonts[14], fill=MUTED)
         draw.text((920, 276), 'LIVE ENERGY', font=fonts[14], fill=MUTED)
         for number, identity in enumerate(ids):
-            y = 307 + number*81
-            energy = max(0, bots.get(identity, {}).get('energy', 100))
-            draw.text((920,y), names[identity], font=bold[18], fill=colors[identity])
-            draw.text((1224,y), f'{energy:.1f}', font=fonts[18], fill=INK, anchor='ra')
+            y = 307 + number*(81 if len(ids)==2 else 42)
+            energy = max(0, bots.get(identity, {}).get('energy', 100 if len(ids)==2 else 0))
+            draw.text((920,y), names[identity], font=bold[18 if len(ids)==2 else 14], fill=colors[identity])
+            draw.text((1224,y), f'{energy:.1f}', font=fonts[18 if len(ids)==2 else 14], fill=INK, anchor='ra')
             draw.rounded_rectangle((920,y+30,1224,y+41), radius=4, fill='#071624')
             width = round(304*min(100,energy)/100)
             if width:
@@ -128,15 +132,15 @@ def main(args):
         draw.text((920, 501), 'OFFICIAL SCORE', font=fonts[14], fill=MUTED)
         draw.text((920, 526), f'After completed round {through_round}', font=fonts[12], fill=MUTED)
         for number, identity in enumerate(ids):
-            y = 558 + number*67
-            draw.text((920,y), names[identity], font=fonts[16], fill=colors[identity])
-            draw.text((1224,y-6), f'{scores[identity]:,}', font=bold[28], fill=INK, anchor='ra')
-            draw.text((920,y+26), f'First places: {places[identity]}', font=fonts[12], fill=MUTED)
+            y = 558 + number*(67 if len(ids)==2 else 37)
+            draw.text((920,y), names[identity], font=fonts[16 if len(ids)==2 else 14], fill=colors[identity])
+            draw.text((1224,y-6), f'{scores[identity]:,}', font=bold[28 if len(ids)==2 else 22], fill=INK, anchor='ra')
+            draw.text((920,y+(26 if len(ids)==2 else 20)), f'First places: {places[identity]}', font=fonts[12], fill=MUTED)
         draw.text((920, 713), 'Scores update at round end.', font=fonts[12], fill=MUTED)
         if message:
             draw.rounded_rectangle((150,376,746,493), radius=12, fill='#091522', outline='#75bcff', width=2)
             draw.text((448,405), message, font=bold[28], fill=INK, anchor='mm')
-            draw.text((448,454), f"{names[ids[0]]} {scores[ids[0]]:,}  /  {names[ids[1]]} {scores[ids[1]]:,}", font=fonts[18], fill=MUTED, anchor='mm')
+            draw.text((448,454), "  /  ".join(f"{names[i]} {scores[i]:,}" for i in ids), font=fonts[18 if len(ids)==2 else 14], fill=MUTED, anchor='mm')
         return image
 
     temporary = args.output.with_name(args.output.stem+'.partial.mp4')
@@ -190,7 +194,7 @@ def main(args):
             official = json.loads(args.official.read_text())
             assert scores == {b['id']: b['totalScore'] for b in official['results']}
         winner = max(ids, key=lambda identity:scores[identity])
-        message = f'Game {args.game} ends in a draw' if len(set(scores.values())) == 1 else names[winner]+f' wins game {args.game}'
+        message = f'Game {args.game} ends in a draw' if sum(score == max(scores.values()) for score in scores.values()) > 1 else names[winner]+f' wins game {args.game}'
         write(frame(last, message), FPS*4)
         process.stdin.close()
         if process.wait() != 0:
