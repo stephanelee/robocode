@@ -432,3 +432,11 @@ Accept as offline diagnostic evidence only; no gameplay promotion or competitive
 - **Diamond STOP24.** The hosted runtime differed from the frozen profile and the acquisition stopped before activation. Zero of 24 numeric cases and zero games ran. The attempt establishes an infrastructure rejection only. The runtime amendment is parked. [Report](https://github.com/stephanelee/robocode/blob/archive/meridian-stop24-2026-11/docs/improvements/diamond-stop-contract24-results.md) · [Evidence](https://github.com/stephanelee/robocode/tree/archive/meridian-stop24-2026-11/benchmarks/diamond-stop-contract24) · [PR #100](https://github.com/stephanelee/robocode/pull/100).
 
 [Archive index](improvements/meridian-stop24-archive.md).
+
+## 2026-11-17 — classify incomplete timing-probe rosters
+
+Require the exact Alpha/Beta official roster before loading timing traces, preserve
+the result hash, and report the failure stage. Eleven offline tests pass, including
+mocked actual-entrypoint regressions; no development games or gameplay changes.
+This does not prevent or explain the original startup failure; issue102 remains
+open. [Scope and remaining limitation](improvements/engine-probe-roster.md).
