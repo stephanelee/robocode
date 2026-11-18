@@ -24,6 +24,7 @@ public class CrossfireReplay {
     int round, own, width, height, previousTurn;
     boolean previousMelee, dead;
     MeleeFire.Aim previousShot;
+    double previousRay;
 
     void event(JsonObject msg) {
         String type = string(msg, "type");
@@ -71,7 +72,8 @@ public class CrossfireReplay {
         }
         if (previousMelee) {
             boolean matched = previousShot != null && fired != null
-                    && Math.abs(previousShot.power() - number(fired, "power")) < 1e-9;
+                    && Math.abs(previousShot.power() - number(fired, "power")) < 1e-9
+                    && Math.abs(Phys.norm(previousRay - number(fired, "direction"))) <= 1e-6;
             if (matched) counts.matchedPhysical++;
             else {
                 if (previousShot != null) counts.predictedOnly++;
@@ -84,6 +86,7 @@ public class CrossfireReplay {
             var state = item.getAsJsonObject();
             if (!dead && integer(state,"id") == own && integer(state,"enemyCount") > 1) {
                 previousMelee = true;
+                previousRay = number(state, "gunDirection");
                 previousShot = decide(t, state, counts);
             }
         }
