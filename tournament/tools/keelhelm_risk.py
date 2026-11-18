@@ -83,7 +83,7 @@ def summarize(games,assignment):
     gates=dict(meleeShare=exact['melee','candidate']>=Fraction(1,5),meleeGain=exact['melee','candidate']-exact['melee','control']>=Fraction(1,50),survival=survival['melee','candidate']-survival['melee','control']>=-Fraction(3,100),exposure=exposure>=100,randomization=Fraction(test['pExact'])<=Fraction(1,20),**{n:exact[n,'candidate']-exact[n,'control']>=-Fraction(1,20)for n in ['Diamond Port','Retcon','Walls','SpinBot']})
     return dict(scenarios=means,pairs=pairs,randomization=test,movementDifferences=exposure,gates=gates,decision='accept-measured-melee-improvement'if all(gates.values())else'reject-improvement-claim')
 
-def play(g,f,out,monitor):
+def play(g,f,out,monitor, *, risk_metrics=True):
     row=dict(**g,status='setup-failed');run=out/'games'/g['id']
     try:
         run.mkdir(parents=True);dirs,ids=stage(g,f,out,run);(run/'home').mkdir();(run/'recordings').mkdir();java=Path(f['java'])
@@ -99,7 +99,9 @@ def play(g,f,out,monitor):
         audit=core.audit(raw[0],official,g,ids);assert audit['metrics']['skippedTurns']==0
         telemetry=core.telemetry(run/'helm-metrics.txt',g['rounds']);transport=inspect_transport(run/'transport.json',g,ids);start=starts(raw[0],g)
         core.save(run/'starts.json',start);own=next(b for b in official['results']if b['name']=='KeelHelm')
-        differences=re.findall(r'riskDifferences=(\d+)',(run/'helm-metrics.txt').read_text());assert len(differences)==g['rounds']if g['arm']=='candidate'else not differences
+        differences=re.findall(r'riskDifferences=(\d+)',(run/'helm-metrics.txt').read_text())
+        if risk_metrics:
+            assert len(differences)==g['rounds'] if g['arm']=='candidate' else not differences
         row.update(movementDifferences=differences,status='complete',official=official,helm=own,audit=audit,telemetry=telemetry,transportAudit=transport,startAudit=start,recording=str(raw[0].relative_to(out)))
     except BaseException as error:row['error']=repr(error)
     if run.exists():core.save(run/'result.json',row)
