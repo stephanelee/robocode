@@ -440,3 +440,7 @@ the result hash, and report the failure stage. Eleven offline tests pass, includ
 mocked actual-entrypoint regressions; no development games or gameplay changes.
 This does not prevent or explain the original startup failure; issue102 remains
 open. [Scope and remaining limitation](improvements/engine-probe-roster.md).
+
+## 2026-11-18 — Crossfire zero-game host preflight
+
+Pregame audit correction only; zero competitive games/rounds, no assignment draw or acquisition receipt. Independent synthetic fixtures reproduced missing preceding-request melee-phase validation and same-bullet hit-event overwriting in the initial harness. Correct phase mismatches to unmatched/unknown (zero exposure) and preserve hit multiplicity. Pinned-runtime Crossfire/reused contracts pass 25 tests; clean Java 17 build passes 30 tests and reproduces the exact committed 830-entry candidate JAR. No strength claim, strategy change or baseline promotion; accepted KeelHelm/AISurvivor remain unchanged. Corrected exact head and eventual freeze require separate independent approval. [Protocol](improvements/keelhelm-crossfire-protocol.md), [issue #138](https://github.com/stephanelee/robocode/issues/138), [PR #139](https://github.com/stephanelee/robocode/pull/139).

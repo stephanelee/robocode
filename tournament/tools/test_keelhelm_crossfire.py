@@ -47,15 +47,18 @@ class CrossfireContracts(unittest.TestCase):
             self.assertIn('/identity/KeelHelm%20Crossfire',
                           (Path(folders[0]) / (crossfire.FOLDER + '.sh')).read_text())
 
-    def recording(self, path):
+    def recording(self, path, *, previous_enemies=2, multiple_hits=False):
         name = crossfire.CANDIDATE
         shot = dict(ownerId=1, bulletId=7, power=1.6, direction=0)
         rows = [
-            dict(type='GameStartedEventForObserver', participants=[dict(id=1, name=name), dict(id=2, name='Diamond Port')]),
-            dict(type='TickEventForObserver', roundNumber=1, turnNumber=12, botStates=[dict(id=1, energy=20)],
+            dict(type='GameStartedEventForObserver', participants=[dict(id=1, name=name), dict(id=2, name='Diamond Port'), dict(id=3, name='Prism')]),
+            dict(type='TickEventForObserver', roundNumber=1, turnNumber=11,
+                 botStates=[dict(id=1, energy=20, enemyCount=previous_enemies)], events=[]),
+            dict(type='TickEventForObserver', roundNumber=1, turnNumber=12, botStates=[dict(id=1, energy=20, enemyCount=1)],
                  events=[dict(type='BulletFiredEvent', turnNumber=12, bullet=shot)]),
             dict(type='TickEventForObserver', roundNumber=1, turnNumber=13, botStates=[dict(id=1, energy=19)],
-                 events=[dict(type='BulletHitBotEvent', bullet=shot, victimId=2, damage=7.6)]),
+                 events=[dict(type='BulletHitBotEvent', bullet=shot, victimId=2, damage=7.6)]
+                        + ([dict(type='BulletHitBotEvent', bullet=shot, victimId=3, damage=2.0)] if multiple_hits else [])),
             dict(type='RoundEndedEventForObserver', roundNumber=1,
                  results=[dict(id=1, firstPlaces=1), dict(id=2, firstPlaces=1)]),
         ]
@@ -83,6 +86,33 @@ class CrossfireContracts(unittest.TestCase):
                 crossfire.audit_alternates(path, telemetry[:2], game)
             with self.assertRaises(ValueError):
                 crossfire.audit_alternates(path, telemetry, dict(game, scenario='Diamond Port'))
+
+    def test_request_phase_is_previous_tick_and_unknown_does_not_count(self):
+        telemetry = ['1 crossfire requests=1 accepted=1 confirmed=1 unknown=0',
+                     '1 crossfireBullet turn=12 bullet=7 intendedTarget=2 power=1.6 direction=0']
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'recording.gz'
+            for enemies in (None, 1, 2):
+                self.recording(path, previous_enemies=enemies)
+                result = crossfire.audit_alternates(path, telemetry, dict(arm='candidate', rounds=1, scenario='melee'))
+                self.assertEqual(int(enemies == 2), len(result['matched']))
+                if enemies != 2:
+                    self.assertEqual([[1,7]], result['unmatchedCallback'])
+                    self.assertEqual('missing-or-nonmelee-request-state', result['unmatchedCallbackDetails'][0]['reason'])
+
+    def test_multiple_physical_hits_retain_all_events_without_single_attribution(self):
+        telemetry = ['1 crossfire requests=1 accepted=1 confirmed=1 unknown=0',
+                     '1 crossfireBullet turn=12 bullet=7 intendedTarget=2 power=1.6 direction=0']
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'recording.gz'
+            self.recording(path, multiple_hits=True)
+            result = crossfire.audit_alternates(path, telemetry, dict(arm='candidate', rounds=1, scenario='melee'))
+            shot = result['matched'][0]
+            self.assertEqual(2, result['ownBulletHits'])
+            self.assertEqual([7.6, 2.0], [hit['damage'] for hit in shot['hitEvents']])
+            self.assertTrue(shot['actualTargetAmbiguous'])
+            self.assertNotIn('actualTarget', shot)
+            self.assertNotIn('damage', shot)
 
     def test_all_gates_with_pass_fixture_and_tied_melee_reject(self):
         assignment = list(range(16))

@@ -102,6 +102,8 @@ def audit_alternates(recording, raw_rows, game):
                 'Crossfire intervention in a start-to-end duel')
 
     names, matched, hits, energy, wins = {}, {}, {}, {}, {}
+    previous_own = None
+    unmatched_reasons = {}
     own = None
     spent, shots, hit_count, ties = Fraction(), 0, 0, 0
     with gzip.open(recording, 'rt', encoding='utf-8') as stream:
@@ -120,6 +122,9 @@ def audit_alternates(recording, raw_rows, game):
             if event['type'] != 'TickEventForObserver':
                 continue
             r, turn = event['roundNumber'], event['turnNumber']
+            request_is_melee = (previous_own is not None and previous_own[:2] == (r, turn - 1)
+                                and previous_own[2] is not None and previous_own[2] > 1)
+            current_own = next((bot for bot in event['botStates'] if bot['id'] == own), None)
             for bot in event['botStates']:
                 if bot['id'] == own:
                     energy.setdefault(r, [bot['energy'], bot['energy']])[1] = bot['energy']
@@ -135,16 +140,28 @@ def audit_alternates(recording, raw_rows, game):
                         continue
                     expected_turn, target, power, direction = traces[key]
                     require(key not in matched and target in names and target != own, 'Invalid alternate identity')
-                    if (expected_turn == entry['turnNumber'] == turn and power == bullet['power']
+                    if (request_is_melee and expected_turn == entry['turnNumber'] == turn and power == bullet['power']
                             and abs(math.remainder(direction - bullet['direction'], 360)) <= 1e-6):
                         matched[key] = dict(round=r, turn=turn, bullet=key[1], intendedTarget=names[target],
-                                            power=power)
+                                            power=power, requestEnemyCount=previous_own[2])
+                    else:
+                        unmatched_reasons[key] = ('missing-or-nonmelee-request-state' if not request_is_melee
+                                                  else 'physical-turn-power-ray-mismatch')
                 elif entry['type'] == 'BulletHitBotEvent':
                     hit_count += 1
                     if key in traces:
-                        hits[key] = dict(actualTarget=names[entry['victimId']], damage=entry['damage'])
-    return dict(byRound=counts, matched=[dict(row, **hits.get(key, {})) for key, row in sorted(matched.items())],
+                        hits.setdefault(key, []).append(dict(actualTarget=names[entry['victimId']],
+                                                             damage=entry['damage'], turn=entry.get('turnNumber', turn)))
+            previous_own = ((r, turn, current_own.get('enemyCount')) if current_own is not None else None)
+    return dict(byRound=counts, matched=[dict(row, hitEvents=hits.get(key, []),
+                              actualTargetAmbiguous=len(hits.get(key, [])) > 1,
+                              **({k: hits[key][0][k] for k in ('actualTarget', 'damage')}
+                                 if len(hits.get(key, [])) == 1 else {}))
+                         for key, row in sorted(matched.items())],
                 unmatchedCallback=[list(key) for key in sorted(traces.keys() - matched.keys())],
+                unmatchedCallbackDetails=[dict(round=key[0], bullet=key[1],
+                                               reason=unmatched_reasons.get(key, 'no-physical-fire'))
+                                          for key in sorted(traces.keys() - matched.keys())],
                 ownShots=shots, ownBulletHits=hit_count, fireEnergy=float(spent), visibleRoundEnergy=energy,
                 firstPlaceTieRounds=ties, officialSnapshotFirstPlaces=wins)
 
