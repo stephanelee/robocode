@@ -456,3 +456,7 @@ Zero new games or rounds. Reconstructed all 60 previously recorded candidate rou
 ## KeelHelm melee damage attribution and midpoint aim
 
 Zero new games or rounds. Across 12 recorded candidate games and 60 original rounds, the official bullet-damage gap was 716 points. Diamond led in the melee firing phase. At 4,042 original melee shot opportunities the registered long-range aim correction gained five intended hits and lost 15, including a net loss of eight against Diamond. Reject this correction. The live stage did not qualify. [Report, reproduction and raw custody](improvements/keelhelm-midpoint-results.md) · [Paired evidence](../benchmarks/keelhelm-midpoint/shadow.json) · [PR #144](https://github.com/stephanelee/robocode/pull/144)
+
+## KeelHelm melee survival speed dip
+
+Rejected on the registered conservative incoming-damage test. Across 556 windows in 12 retained games / 60 rounds, 13 avoided and five new incoming contacts reduced in-window nominal damage from 184.25 to 148.07. Unresolved threats raised the conservative endpoint to 230.63; three of 12 games improved. Zero new games or rounds. Accepted 0.2.1 retained. [Report and original evidence custody](improvements/keelhelm-survival-results.md) · [Paired results](../benchmarks/keelhelm-survival/summary.json) · [PR #148](https://github.com/stephanelee/robocode/pull/148)
