@@ -12,7 +12,8 @@ public class SteeringReplay extends SurvivalPulseReplay {
                  String disposition) {}
     static class Damage {
         int originalHits, candidateHits, delayedBeyondPulse, introduced;
-        double original, candidate, unresolved, latent, truncation;
+        double original, candidate, originalPulse, originalFollow, candidatePulse, candidateFollow;
+        double unresolved, latent, truncation;
         double charged() { return candidate + unresolved + latent + truncation; }
     }
     static class Detail {
@@ -140,12 +141,19 @@ public class SteeringReplay extends SurvivalPulseReplay {
             var label = labels.get(id);
             var d = detail.damage.computeIfAbsent(label.group(), k -> new Damage());
             double damage = ray.damage();
-            if (base != null) { d.originalHits++; d.original += damage; }
+            if (base != null) {
+                d.originalHits++;
+                d.original += damage;
+                if (base.tick()-detail.start <= 8) d.originalPulse += damage;
+                else d.originalFollow += damage;
+            }
             String disposition;
             if (!score) disposition = "control";
             else if (candidate != null) {
                 d.candidateHits++;
                 d.candidate += damage;
+                if (candidate.tick()-detail.start <= 8) d.candidatePulse += damage;
+                else d.candidateFollow += damage;
                 if (base == null) d.introduced++;
                 if (base != null && base.tick()-detail.start <= 8 && candidate.tick()-detail.start > 8)
                     d.delayedBeyondPulse++;
