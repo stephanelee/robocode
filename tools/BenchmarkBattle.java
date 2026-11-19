@@ -12,8 +12,11 @@ public class BenchmarkBattle {
         int timeout = Integer.parseInt(args[1]);
         var bots = new ArrayList<BotEntry>();
         for (int i = 3; i < args.length; i++) bots.add(BotEntry.of(args[i]));
-        try (var runner = BattleRunner.create(b -> b.embeddedServer()
-                .suppressServerOutput().botConnectTimeout(Duration.ofSeconds(45)))) {
+        try (var runner = BattleRunner.create(b -> {
+            b.embeddedServer().suppressServerOutput().botConnectTimeout(Duration.ofSeconds(45));
+            String recordings = System.getProperty("engine.trace.recordingDir");
+            if (recordings != null) b.enableRecording(Path.of(recordings));
+        })) {
             Runtime.getRuntime().addShutdownHook(new Thread(runner::close));
             var setup = bots.size() == 2
                     ? BattleSetup.oneVsOne(s -> { s.setNumberOfRounds(rounds); s.setTurnTimeoutMicros(100000); })

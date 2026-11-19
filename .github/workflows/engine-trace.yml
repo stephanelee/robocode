@@ -32,6 +32,8 @@ jobs:
             build/engine-trace/trace.json
             build/engine-trace/Alpha.jsonl
             build/engine-trace/Beta.jsonl
+            build/engine-trace/*-startup.jsonl
+            build/engine-trace/startup-observer/*.battle.gz
             build/engine-trace/battle.json
             build/engine-trace/runner.log
           if-no-files-found: warn

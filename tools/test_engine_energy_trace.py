@@ -1,5 +1,6 @@
 """Validator regressions from recorded engine traces and explicit synthetic edge cases."""
 import copy
+import gzip
 import unittest
 import hashlib
 import json
@@ -63,6 +64,16 @@ class ProbeRosterTests(unittest.TestCase):
                 (target / "robocode-tankroyale-bot-api-1.4.0.jar").write_bytes(b"offline API fixture")
             def execute(*args):
                 (output / "battle.json").write_text(json.dumps(battle), encoding="utf-8")
+                (output / "runner.log").write_text("INFO: Starting game...\n", encoding="utf-8")
+                for label, phases in (("Alpha", ["connected", "gameStarted", "roundStarted", "firstTick"]),
+                                      ("Beta", ["connected", "gameStarted"])):
+                    (output / (label + "-startup.jsonl")).write_text(
+                        "".join(json.dumps({"phase": phase}) + "\n" for phase in phases), encoding="utf-8")
+                started = dict(type="GameStartedEventForObserver", participants=battle_fixture()["results"])
+                tick = dict(type="TickEventForObserver", roundNumber=1, turnNumber=1, botStates=battle["results"])
+                with gzip.open(output / "startup-observer" / "game-fixture.battle.gz", "wt", encoding="utf-8") as stream:
+                    for event in (started, tick):
+                        stream.write(json.dumps(event) + "\n")
                 if records is not None:
                     for identity, label in ((1, "Alpha"), (2, "Beta")):
                         selected = [row for row in records if row["self"] == identity]
@@ -97,6 +108,32 @@ class ProbeRosterTests(unittest.TestCase):
         self.assertIn("battleSHA256", report)
         self.assertNotIn("assertions", report)
         self.assertEqual(0, calls)
+        startup = report["startup"]
+        self.assertTrue(startup["runnerRequestedStart"])
+        self.assertEqual(["Alpha", "Beta"], [bot["name"] for bot in startup["observer"]["gameStarted"]])
+        self.assertEqual({"round": 1, "turn": 1, "ids": [1]}, startup["observer"]["firstRecordedTick"])
+        self.assertEqual(["connected", "gameStarted"], [e["phase"] for e in startup["probes"]["Beta"]])
+
+    def test_missing_startup_recording_does_not_fabricate_a_roster(self):
+        with tempfile.TemporaryDirectory() as directory:
+            startup = engine_energy_trace.startup_summary(Path(directory))
+        self.assertEqual({}, startup["observer"])
+        self.assertEqual([], startup["probes"]["Beta"])
+        self.assertEqual({"Alpha", "Beta", "observer"}, set(startup["errors"]))
+
+    def test_incomplete_observer_recording_preserves_the_known_start_roster(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            recordings = output / "startup-observer"
+            recordings.mkdir()
+            with gzip.open(recordings / "game-fixture.battle.gz", "wt", encoding="utf-8") as stream:
+                stream.write(json.dumps(dict(type="GameStartedEventForObserver",
+                                             participants=battle_fixture()["results"])) + "\n")
+                stream.write("{")
+            startup = engine_energy_trace.startup_summary(output)
+        self.assertEqual(["Alpha", "Beta"], [bot["name"] for bot in startup["observer"]["gameStarted"]])
+        self.assertNotIn("firstRecordedTick", startup["observer"])
+        self.assertIn("observer", startup["errors"])
 
     def test_real_entrypoint_keeps_timing_assertions_binding_after_valid_roster(self):
         report, error, calls = self.run_fixture(battle_fixture(), fixture())
