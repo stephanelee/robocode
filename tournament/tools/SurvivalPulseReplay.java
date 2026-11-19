@@ -161,6 +161,8 @@ public class SurvivalPulseReplay extends CrossfireReplay {
         if (full || ram || ownDied || integer(s,"enemyCount")<=1) finish(full,t,actual,alive);
     }
 
+    void onLaunch(Ray ray) {}
+
     void tick(JsonObject m) {
         int t=integer(m,"turnNumber");
         Map<Integer,Set<Integer>> victims=new HashMap<>(),collisions=new HashMap<>();
@@ -173,6 +175,7 @@ public class SurvivalPulseReplay extends CrossfireReplay {
             switch(type) {
                 case "BulletFiredEvent" -> {
                     var ray=new Ray(id,integer(b,"ownerId"),t,number(b,"power"),number(b,"x"),number(b,"y"),number(b,"direction"));
+                    onLaunch(ray);
                     physical.put(id,ray);
                     if (window!=null && ray.owner!=own) window.active.put(id,ray);
                 }
