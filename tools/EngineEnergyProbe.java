@@ -8,15 +8,38 @@ import java.util.Locale;
 public class EngineEnergyProbe extends Bot {
     private final String label;
     private final PrintWriter trace;
+    private final PrintWriter startup;
     private double bearing;
     private boolean seen, fired;
+    private boolean tickRecorded;
 
     EngineEnergyProbe(String label) throws IOException {
         super(BotInfo.fromFile(label + ".json"));
         this.label = label;
-        trace = new PrintWriter(Files.newBufferedWriter(Path.of(System.getenv("ENGINE_TRACE_DIR"), label + ".jsonl")));
+        Path output = Path.of(System.getenv("ENGINE_TRACE_DIR"));
+        trace = new PrintWriter(Files.newBufferedWriter(output.resolve(label + ".jsonl")));
+        startup = new PrintWriter(Files.newBufferedWriter(output.resolve(label + "-startup.jsonl")), true);
+        startup("processStarted", "");
     }
     public static void main(String[] args) throws Exception { new EngineEnergyProbe(args[0]).start(); }
+    private synchronized void startup(String phase, String fields) {
+        startup.printf(Locale.ROOT, "{\"phase\":\"%s\",\"timeMillis\":%d%s}%n",
+                phase, System.currentTimeMillis(), fields);
+    }
+    @Override public void onConnected(ConnectedEvent e) { startup("connected", ""); }
+    @Override public void onDisconnected(DisconnectedEvent e) { startup("disconnected", ""); }
+    @Override public void onGameStarted(GameStartedEvent e) {
+        startup("gameStarted", ",\"id\":" + e.getMyId());
+    }
+    @Override public void onRoundStarted(RoundStartedEvent e) {
+        startup("roundStarted", ",\"round\":" + e.getRoundNumber());
+    }
+    @Override public void onTick(TickEvent e) {
+        if (!tickRecorded) {
+            tickRecorded = true;
+            startup("firstTick", ",\"round\":" + e.getRoundNumber() + ",\"turn\":" + e.getTurnNumber());
+        }
+    }
     private static double normal(double angle) { return (angle % 360 + 540) % 360 - 180; }
     private void record(String type, int turn, String fields) {
         trace.printf(Locale.ROOT, "{\"type\":\"%s\",\"label\":\"%s\",\"turn\":%d,\"self\":%d,\"selfEnergy\":%.12f%s}%n",

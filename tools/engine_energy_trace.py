@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Record the real pinned engine's bullet/scan contract with two stationary probes."""
 import argparse
+import gzip
 import json
 import math
 import os
@@ -74,6 +75,48 @@ def validate(records):
     return evidence
 
 
+def startup_summary(output):
+    """Read independent startup evidence without requiring scan or damage callbacks."""
+    result = {"probes": {}, "observer": {}, "errors": {}}
+    runner_log = output / "runner.log"
+    if runner_log.is_file():
+        try:
+            with runner_log.open(encoding="utf-8", errors="replace") as stream:
+                result["runnerRequestedStart"] = any("INFO: Starting game..." in line for line in stream)
+        except OSError as error:
+            result["errors"]["runner"] = str(error)
+    for label in ("Alpha", "Beta"):
+        events = result["probes"][label] = []
+        try:
+            with (output / (label + "-startup.jsonl")).open(encoding="utf-8") as stream:
+                for line in stream:
+                    events.append(json.loads(line))
+        except (OSError, ValueError) as error:
+            result["errors"][label] = str(error)
+    recordings = sorted((output / "startup-observer").glob("*.battle.gz"))
+    observer = result["observer"]
+    if len(recordings) != 1:
+        result["errors"]["observer"] = f"Expected one observer recording, found {len(recordings)}"
+        return result
+    observer["recording"] = recordings[0].name
+    try:
+        with gzip.open(recordings[0], "rt", encoding="utf-8") as stream:
+            for line in stream:
+                row = json.loads(line)
+                if row["type"] == "GameStartedEventForObserver":
+                    observer["gameStarted"] = [
+                        {key: bot[key] for key in ("id", "name", "version")}
+                        for bot in row["participants"]]
+                elif row["type"] == "TickEventForObserver":
+                    observer["firstRecordedTick"] = dict(
+                        round=row["roundNumber"], turn=row["turnNumber"],
+                        ids=[bot["id"] for bot in row["botStates"]])
+                    break
+    except (OSError, ValueError, EOFError, KeyError, TypeError) as error:
+        result["errors"]["observer"] = str(error)
+    return result
+
+
 def run(args):
     output = args.output.resolve()
     if output.exists() and any(output.iterdir()):
@@ -121,7 +164,10 @@ def run(args):
     stage = "execution"
     try:
         # Embedded official runner allocates its own server; never connects to interactive port 7654.
-        benchmark.run_process([args.java, "-cp", str(runner), str(benchmark.ROOT / "tools" / "BenchmarkBattle.java"),
+        observer_output = output / "startup-observer"
+        observer_output.mkdir()
+        benchmark.run_process([args.java, "-Dengine.trace.recordingDir=" + str(observer_output),
+                               "-cp", str(runner), str(benchmark.ROOT / "tools" / "BenchmarkBattle.java"),
                                "1", "180", str(output / "battle.json"), *map(str, bots)],
                               benchmark.ROOT, env, output / "runner.log", 240)
         stage = "roster"
@@ -139,6 +185,7 @@ def run(args):
         report.update(status="failed", failureStage=stage, error=str(error))
         raise
     finally:
+        report["startup"] = startup_summary(output)
         path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report, indent=2), flush=True)
     return report
